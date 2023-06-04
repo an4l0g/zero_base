@@ -8,7 +8,7 @@ parsePart = function(key)
     end
 end
 
-setCustomization = function(custom)
+setCustomization = function(custom, update)
     local ped = PlayerPedId()
     for index, value in pairs(custom) do
         if (index ~= 'model' and index ~= 'modelhash') then
@@ -22,6 +22,7 @@ setCustomization = function(custom)
             else
                 SetPedComponentVariation(ped, index, value[1], value[2], (value[3] or 1))
             end
+            if (update) then TriggerEvent('zero:barberUpdate'); TriggerEvent('zero:tattooUpdate'); end;
         end
     end
 end 
@@ -47,7 +48,7 @@ SetCameraCoords = function(type, start)
     if (start) then RenderScriptCams(false, false, 0, 1, 0); DestroyCam(cam, false); end
     
     if (not DoesCamExist(cam)) then
-        cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
+        cam = CreateCam('DEFAULT_SCRIPTED_CAMERA', true)
         SetCamActive(cam, true)
         RenderScriptCams(true, true, 500, true, true)   
         pos = GetEntityCoords(ped)

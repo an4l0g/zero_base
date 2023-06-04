@@ -237,7 +237,22 @@ local openNuiShop = function(config, _oldCustom)
 
     drawVariations = getSkinShopDrawables(categoryVariation)
     drawProps = getSkinShopDrawables(categoryProp)
-    SendNUIMessage({ action = 'openSkinShop', type = config['shopType'], config = config['shopConfig'], oldCustom = _oldCustom, sex = sex, prefix = prefix, drawVariations = drawVariations, categoryVariation = categoryVariation, drawProps = drawProps, categoryProp = categoryProp })
+    
+    SendNUIMessage({ 
+        method = 'openSkinShop', 
+        data = {
+            type = config['shopType'], 
+            config = config['shopConfig'], 
+            oldCustom = _oldCustom, 
+            sex = sex, 
+            prefix = prefix, 
+            drawVariations = drawVariations, 
+            categoryVariation = categoryVariation, 
+            drawProps = drawProps, 
+            categoryProp = categoryProp 
+        }
+    })
+
     SetCameraCoords('all', true)
 end
 
@@ -253,7 +268,7 @@ openSkinShop = function(config, coords, heading)
     shopProvador()
     color = 0
 
-    if (config['hidePlayers']) then setPlayersVisible(true) end
+    if (config['hidePlayers']) then setPlayersVisible(true); end;
 
     SetEntityCoords(ped, coords)
     SetEntityHeading(ped, heading)
