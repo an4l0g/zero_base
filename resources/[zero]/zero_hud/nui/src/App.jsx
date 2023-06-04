@@ -47,7 +47,7 @@ function App() {
         updateEngineHealth: (value) => setEngineHealth(value),
         updateHudVehicle: (value) => setVehHud(value),
         updateHud: (value) => setHud(value),
-        updateStreet: (value) => setStreet(value),
+        // updateStreet: (value) => setStreet(value),
         updateSeatbelt: (value) => setSeatbelt(value),
         updateLocked: (value) => setLocked(value),
         updateTalking: (value) => setTalking(value),
@@ -63,6 +63,9 @@ function App() {
         },
         progress: ({ title, time }) => {
           launchProgressBar(title, time);
+        },
+        request: ({ title, time }) => {
+          launchRequest(title, time);
         },
       };
       const { method, data } = event.data;

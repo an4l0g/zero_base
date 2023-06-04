@@ -107,7 +107,7 @@ local checkPlayerLevels = function()
     local currentHealth = getHealth(ped)
     local currentArmour = getArmour(ped)
     local currentOxygen = getOxygen(ped) 
-    local currentStreet = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
+    -- local currentStreet = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
     local currentLocked = GetVehicleDoorLockStatus(veh)
     local currentFuel = 0.0
     local currentEngineHealth = 0.0
@@ -117,7 +117,7 @@ local checkPlayerLevels = function()
 
     updateHealth(currentHealth)
     updateArmour(currentArmour) 
-    updateStreet(currentStreet)
+    -- updateStreet(currentStreet)
     updateTime(currentTime)
     if not (LocalPlayer.state['gps']) then checkRadar(false) end
 
@@ -208,12 +208,4 @@ end)
 
 RegisterNetEvent('s9_hud:toggleHud',function(bool)
     SendNUIMessage({ method = 'updateHud', data = bool })
-end)
-
-RegisterCommand('cupom', function(source, args)
-    if (vSERVER.checkPermission('dono.permissao')) then
-        if (args[1]) then
-            updateCupom(args[1])
-        end
-    end
 end)
