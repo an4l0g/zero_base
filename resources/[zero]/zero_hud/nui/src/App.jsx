@@ -64,7 +64,8 @@ function App() {
         progress: ({ title, time }) => {
           launchProgressBar(title, time);
         },
-        request: ({ title, time }) => {
+        request: ({ id, title, time }) => {
+          console.log(id, title, time);
           launchRequest(title, time);
         },
       };

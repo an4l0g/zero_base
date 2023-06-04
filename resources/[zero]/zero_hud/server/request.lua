@@ -1,18 +1,13 @@
 requests = {}
 
-RegisterNetEvent('request', function(title, time)
-    local id = 'request:'..os.time()
+srv.request = function(source, title, time)
+    local id = 'request:'..source..':'..os.time()
     requests[id] = nil
 
-    SendNUIMessage({
-        method = 'request',
-        data = {
-            title = title,
-            time = time
-        }
-    })
-end)
+    cli.createRequest(source, id, title, time)
+end
+exports('request', srv.request)
 
-RegisterCommand('request', function()
-    TriggerEvent('request', 'Você quer casar comigo?', 5000)
+RegisterCommand('request', function(source, args)
+    srv.request(source, 'Você quer casar comigo?', 5000)
 end)
