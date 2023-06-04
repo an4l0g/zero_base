@@ -1,0 +1,3 @@
+local prompts = {}
+
+srv.prompt
