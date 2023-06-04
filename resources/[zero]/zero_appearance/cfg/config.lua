@@ -6,12 +6,6 @@ config = {}
 
 config.generalSkinShop = {
     ['all'] = {
-        ['blip'] = {
-            ['name'] = 'Loja de Roupas',
-            ['id'] = 73,
-            ['color'] = 13,
-            ['scale'] = 0.5
-        },
         ['shopType'] = 'exclude',
         ['hidePlayers'] = true,
         ['shopConfig'] = {
@@ -38,5 +32,12 @@ config.generalSkinShop = {
 }
 
 config.locsSkinShop = {
-    { ['showBlip'] = true, ['coord'] = vector4(70.87, -1399.49, 28.39, 359.29), ['config'] = 'all' }
+    { ['coord'] = vector4(70.87, -1399.49, 28.39, 359.29), ['config'] = 'all',
+        ['blip'] = {
+            ['name'] = 'Loja de Roupas',
+            ['id'] = 73,
+            ['color'] = 13,
+            ['scale'] = 0.5
+        }, 
+    }
 }
