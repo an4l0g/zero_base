@@ -1,6 +1,10 @@
 Tunnel = module('vrp','lib/Tunnel')
 
-vSERVER = Tunnel.getInterface(GetCurrentResourceName())
+cli = {}
+Tunnel.bindInterface(GetCurrentResourceName(), cli)
+hudServer = Tunnel.getInterface(GetCurrentResourceName())
+
+hud = true
 
 local toggleSeatbelt = function()
     if inVehicle and vehicleHudOn and hasSeatbelt then
@@ -14,7 +18,6 @@ end
 RegisterCommand('s9_hud:seatBelt', toggleSeatbelt)
 RegisterKeyMapping('s9_hud:seatBelt', '', 'keyboard', 'G')
 
-hud = true
 local toggleHud = function()
     hud = not hud
     TriggerEvent('s9_hud:toggleHud', hud)
