@@ -1,12 +1,12 @@
 local vSERVER = Tunnel.getInterface('skinShop')
 
-local locsConfig = config.locsSkinShop
-local generalConfig =  config.generalSkinShop
+local locsConfig = configSkinShop.locs
+local generalConfig =  configSkinShop.general
 
 local inSkinShop = false
 local nearestBlip = {}
 
-mainThread = function()
+local mainThread = function()
     local getNearestSkinShops = function()
         while true do
             if (not inSkinShop and not inMenu) then

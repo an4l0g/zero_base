@@ -1,4 +1,6 @@
-config.generalBarberShop = {
+configBarberShop = {}
+
+configBarberShop.general = {
     ['all'] = {
         ['shopType'] = 'all',
         ['hidePlayers'] = true,
@@ -45,7 +47,7 @@ config.generalBarberShop = {
     }
 }
 
-config.locsBarberShop = {
+configBarberShop.locs = {
     { ['coord'] = vector4(-815.59, -182.16, 36.66, 204.29), ['config'] = 'all',
         ['blip'] = {
             ['name'] = 'Barbearia',

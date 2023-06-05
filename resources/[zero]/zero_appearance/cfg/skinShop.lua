@@ -1,4 +1,6 @@
-config.generalSkinShop = {
+configSkinShop = {}
+
+configSkinShop.general = {
     ['all'] = {
         ['shopType'] = 'exclude',
         ['hidePlayers'] = true,
@@ -25,7 +27,7 @@ config.generalSkinShop = {
     }
 }
 
-config.locsSkinShop = {
+configSkinShop.locs = {
     { ['coord'] = vector4(70.87, -1399.49, 28.39, 359.29), ['config'] = 'all',
         ['blip'] = {
             ['name'] = 'Loja de Roupas',

@@ -1,13 +1,13 @@
 local vSERVER = Tunnel.getInterface('barberShop')
 
-local locsConfig = config.locsBarberShop
-local generalConfig =  config.generalBarberShop
+local locsConfig = configBarberShop.locs
+local generalConfig =  configBarberShop.general
 
 local inBarberShop = false
 local nearestBlip = {}
 
-mainThread = function()
-    local getNearestSkinShops = function()
+local mainThread = function()
+    local getNearestBarberShops = function()
         while true do
             if (not inBarberShop and not inMenu) then
                 local pedCoords = GetEntityCoords(PlayerPedId())
@@ -33,7 +33,7 @@ mainThread = function()
         end
     end
 
-    CreateThread(getNearestSkinShops)
+    CreateThread(getNearestBarberShops)
     addBlips(locsConfig)
 
     while true do
@@ -42,7 +42,7 @@ mainThread = function()
         if (not inBarberShop and not inMenu) then
             if (nearestBlip) and nearestBlip['coord'] then
                 idle = 4
-                DrawText3D(nearestBlip['coord'].x, nearestBlip['coord'].y, nearestBlip['coord'].z+0.5, '~b~[E]~w~ - Loja de Roupas')
+                DrawText3D(nearestBlip['coord'].x, nearestBlip['coord'].y, nearestBlip['coord'].z+0.7, '~b~[E]~w~ - Barbearia')
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
                     openBarberShop(generalConfig[nearestBlip['config']], nearestBlip['coord'].xyz, nearestBlip['coord'].w)
                 end
@@ -270,6 +270,7 @@ openBarberShop = function(config, coords, heading)
 
     SetNuiFocus(true, true)
     barberReset = true
+    inBarberShop = true
     oldCustom = getCustomization()
 
     SetEntityCoords(ped, coords)
