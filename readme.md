@@ -1,5 +1,10 @@
 # Zero Base
 
+## PM2
+
+Instale o pm2 utilizando o seguinte comando: `npm install pm2 -g`.
+Após isso, sempre que for iniciar a base, basta iniciar como administrador o arquivo `nui_start.bat`.
+
 ## Gitflow
 
 ### Nomes de Branches
