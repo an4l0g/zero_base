@@ -1,4 +1,5 @@
 RegisterNetEvent('notify', function(title, message, time)
+    if not time then time = 5000 end
     SendNUIMessage({
         method = 'notify',
         data = {

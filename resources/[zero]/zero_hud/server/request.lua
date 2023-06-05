@@ -1,13 +1,30 @@
+Tools = module('vrp','lib/Tools')
 requests = {}
 
-srv.request = function(source, title, time)
-    local id = 'request:'..source..':'..os.time()
-    requests[id] = nil
+idGenerator = Tools.newIDGenerator()
 
+srv.request = function(source, title, time)
+    if not time then time = 5000 end
+    local id = source..':'..idGenerator:gen()
+    local async_response = async()
+    requests[id] = async_response
     cli.createRequest(source, id, title, time)
+
+    SetTimeout(time, function()
+        async_response(false)
+        requests[id] = nil
+    end)
+
+    return async_response:wait()
 end
 exports('request', srv.request)
 
+srv.resultRequest = function(id, response)
+    local currentRequest = requests[id]
+    currentRequest(response)
+    requests[id] = nil
+end
+
 RegisterCommand('request', function(source, args)
-    srv.request(source, 'Você quer casar comigo?', 5000)
+    local result = srv.request(source, 'Você quer casar comigo?')
 end)

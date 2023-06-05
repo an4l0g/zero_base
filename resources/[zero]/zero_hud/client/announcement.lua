@@ -1,16 +1,17 @@
-RegisterNetEvent('announcement', function(questions)
+RegisterNetEvent('announcement', function(title, message, author, playAudio, time)
+    if not time then time = 5000 end
     SendNUIMessage({
         method = 'announcement',
         data = {
-            questions = questions
+            title = title,
+            message = message,
+            author = author,
+            playAudio = playAudio,
+            time = time
         }
     })
 end)
 
 RegisterCommand('anuncio', function()
-    TriggerEvent('announcement', {
-        'Qual seu nome?',
-        'Qual sua idade?',
-        'Com o que você trabalha?'
-    })
+    TriggerEvent('announcement', 'Prefeitura', 'Olá Zero!! Chupa meu cu', 'An4log', false)
 end)

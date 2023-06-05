@@ -2,7 +2,7 @@ Tunnel = module('vrp','lib/Tunnel')
 
 cli = {}
 Tunnel.bindInterface(GetCurrentResourceName(), cli)
-hudServer = Tunnel.getInterface(GetCurrentResourceName())
+srv = Tunnel.getInterface(GetCurrentResourceName())
 
 hud = true
 
