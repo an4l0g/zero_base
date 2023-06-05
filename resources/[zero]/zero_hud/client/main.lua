@@ -15,12 +15,12 @@ local toggleSeatbelt = function()
         if seatbeltOn then TriggerEvent('vrp_sound:source','belt',0.5) else TriggerEvent('vrp_sound:source','unbelt',0.5) end
     end
 end
-RegisterCommand('s9_hud:seatBelt', toggleSeatbelt)
-RegisterKeyMapping('s9_hud:seatBelt', '', 'keyboard', 'G')
+RegisterCommand('zero_hud:seatBelt', toggleSeatbelt)
+RegisterKeyMapping('zero_hud:seatBelt', '', 'keyboard', 'G')
 
 local toggleHud = function()
     hud = not hud
-    TriggerEvent('s9_hud:toggleHud', hud)
+    TriggerEvent('zero_hud:toggleHud', hud)
 end
 
 RegisterCommand('hud', toggleHud)
@@ -92,13 +92,13 @@ statusVehicle = function(bool,veh)
     if bool then
         vehicleHudOn = true
         startVehicle()
-        TriggerEvent('s9_hud:updateVehicleHud', true)
+        TriggerEvent('zero_hud:updateVehicleHud', true)
         if not (LocalPlayer.state['gps']) then checkRadar( not doesVehicleHasSeatbelt(veh) ) end
     else
         inVehicle = false
         vehicleHudOn = false
         if not (LocalPlayer.state['gps']) then checkRadar(false) end
-        TriggerEvent('s9_hud:updateVehicleHud', false)
+        TriggerEvent('zero_hud:updateVehicleHud', false)
     end
 end
 
@@ -160,9 +160,9 @@ local checkPlayerLevels = function()
         
         -- DESAPARECER A HUD NO MENU ( PAUSE ) | ( ESC )
         if IsPauseMenuActive() then
-			if not isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', false) TriggerEvent('s9_hud:toggleHud', false)  end
+			if not isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', false) TriggerEvent('zero_hud:toggleHud', false)  end
 		else
-			if isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', true) TriggerEvent('s9_hud:toggleHud', true) end
+			if isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', true) TriggerEvent('zero_hud:toggleHud', true) end
 		end
         Wait(500)
     end
@@ -205,10 +205,10 @@ RegisterNetEvent('pma-listners:setFrequency',function(radio)
     SendNUIMessage({ method = 'updateRadioChannel', data = radio })
 end)
 
-RegisterNetEvent('s9_hud:updateVehicleHud',function(bool)
+RegisterNetEvent('zero_hud:updateVehicleHud',function(bool)
     SendNUIMessage({ method = 'updateHudVehicle', data = bool })
 end)
 
-RegisterNetEvent('s9_hud:toggleHud',function(bool)
+RegisterNetEvent('zero_hud:toggleHud',function(bool)
     SendNUIMessage({ method = 'updateHud', data = bool })
 end)
