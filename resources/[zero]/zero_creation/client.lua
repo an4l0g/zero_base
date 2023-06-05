@@ -13,35 +13,25 @@ local tempCam = nil
 
 local cameras = {
     ['body'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']-1.5, generalConfig['spawnCreator']['y']+0.4, generalConfig['spawnCreator']['z']),
+        ['coords'] = vector3(generalConfig['spawnCreator']['x'], generalConfig['spawnCreator']['y']+0.5, generalConfig['spawnCreator']['z']),
+        ['heading'] = function()
+            local ped = PlayerPedId()
+            SetEntityHeading(ped, (generalConfig['spawnCreator'].w - 15.0))
+        end,
         ['anim'] = function()
             freezeAnim('move_f@multiplayer', 'idle')
         end
     },
     ['head'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']+0.5, generalConfig['spawnCreator']['y']-0.18, generalConfig['spawnCreator']['z']+0.15),
+        ['coords'] = vector3(generalConfig['spawnCreator']['x']+0.55, generalConfig['spawnCreator']['y']+0.2, generalConfig['spawnCreator']['z']+0.1),
+        ['heading'] = function()
+            local ped = PlayerPedId()
+            SetEntityHeading(ped, (generalConfig['spawnCreator'].w - 20.0))
+        end,        
         ['anim'] = function()
             freezeAnim('mp_sleep', 'bind_pose_180', 1, true)
         end
     },
-    ['eye'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']+0.85, generalConfig['spawnCreator']['y']-0.3, generalConfig['spawnCreator']['z']+0.17),
-        ['anim'] = function()
-            freezeAnim('mp_sleep', 'bind_pose_180', 1, true)
-        end
-    },
-    ['mouth'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']+0.85, generalConfig['spawnCreator']['y']-0.3, generalConfig['spawnCreator']['z']+0.12),
-        ['anim'] = function()
-            freezeAnim('mp_sleep', 'bind_pose_180', 1, true)
-        end
-    },
-    ['chest'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']+0.1, generalConfig['spawnCreator']['y']-0.05, generalConfig['spawnCreator']['z']-0.2),
-        ['anim'] = function()
-            freezeAnim('mp_sleep', 'bind_pose_180', 1, true)
-        end
-    }
 }
 
 local createCam = function(cameraName)
@@ -51,11 +41,12 @@ local createCam = function(cameraName)
     local cam = cameras[cameraName]
     local x, y, z = (cameras[cameraName]['coords']['x'] + GetEntityForwardX(ped) * 1.2), (cameras[cameraName]['coords']['y'] + GetEntityForwardY(ped) * 1.2), (cameras[cameraName]['coords']['z'] + 0.52)
     
-    tempCam = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA', vector3(x, y, z), (GetEntityRotation(ped, 2) + vector3(0.0, 0.0, 180)), GetGameplayCamFov())
+    tempCam = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA', vector3(x, y, z), (GetEntityRotation(ped) + vector3(0.0, 0.0, 180)), GetGameplayCamFov())
     SetCamActive(tempCam, true)
     RenderScriptCams(true, true, 1000, true, false)
 
     if (cam['anim']) then cam['anim']() end
+    if (cam['heading']) then cam['heading']() end
 end
 Citizen.CreateThread(function()
     cli.createCharacter()
@@ -156,6 +147,7 @@ end
 local currentCharacter = { 
     -- INICIO
     gender = 1,
+
     fatherId = 0, 
     motherId = 21,
     colorMother = 0, 
@@ -163,47 +155,90 @@ local currentCharacter = {
     shapeMix = 0, 
     skinMix = 0,
 
-    --
+    -- OLHOS
+    eyesColor = 0,
+    eyesOpening = 0,
+    eyebrowsHeight = 0,
+    eyebrowsWidth = 0,
+    eyebrowsModel = 0,
+    eyebrowsColor = 0,
+    eyebrowsOpacity = 1,
 
-    eyesColor = 0, 
-    eyebrowsHeight = 0, 
-    eyebrowsWidth = 0, 
+    -- NARIZ
     noseWidth = 0, 
     noseHeight = 0, 
     noseLength = 0, 
     noseBridge = 0, 
     noseTip = 0, 
     noseShift = 0, 
+
+    -- BOCHECHAS
     cheekboneHeight = 0, 
     cheekboneWidth = 0, 
     cheeksWidth = 0, 
+
+    -- BOCA
     lips = 0, 
     jawWidth = 0, 
     jawHeight = 0, 
+
+    -- Queixo
     chinLength = 0, 
     chinPosition = 0, 
     chinWidth = 0, 
     chinShape = 0, 
+
+    -- Pescoço
     neckWidth = 0, 
+
+    -- Cabelo
     hairModel = 4, 
     firstHairColor = 0, 
     secondHairColor = 0, 
-    eyebrowsModel = 0, 
-    eyebrowsColor = 0, 
+
+    -- Barba
     beardModel = -1, 
     beardColor = 0, 
+    beardOpacity = 1,
+
+    -- Pelo Corporal
     chestModel = -1, 
     chestColor = 0, 
+    chestOpacity = 1,
+
+    -- Blush
     blushModel = -1, 
     blushColor = 0, 
+    blushOpacity = 1,
+
+    -- Batom
     lipstickModel = -1, 
     lipstickColor = 0, 
+    lipstickOpacity = 1,
+
+    -- Manchas
     blemishesModel = -1, 
+    blemishesOpacity = 1,
+
+    -- Envelhecimento
     ageingModel = -1, 
+    ageingOpacity = 1,
+
+    -- Aspecto
     complexionModel = -1, 
+    complexionOpacity = 1,
+
+    -- Pele
     sundamageModel = -1, 
+    sundamageOpacity = 1,
+
+    -- Sardas
     frecklesModel = -1, 
-    makeupModel = -1 
+    frecklesOpacity = 1,
+
+    -- Maquiage
+    makeupModel = -1,
+    makeupOpacity = 1,
 }
 
 local setGender = function(gender)    
@@ -246,7 +281,8 @@ end
 
 initCreator = function()
     local ped = PlayerPedId()
-    TriggerEvent('s9_hud:toggleHud', false)
+    TriggerEvent('zero_weather:staticTime', { weather = 'EXTRASUNNY', hours = 14, minutes = 0 })
+    TriggerEvent('zero_hud:toggleHud', false)
     vSERVER.changeSession(GetPlayerServerId(PlayerId()))
     DoScreenFadeOut(500)
     Citizen.Wait(500)
@@ -368,123 +404,123 @@ function TaskUpdateFaceOptions()
 	SetPedFaceFeature(ped, 19, data.neckWidth)
 end
 
-local spawnCoords = vector4(724.9, 1200.53, 326.16,161.57479858398)
+-- local spawnCoords = vector4(724.9, 1200.53, 326.16,161.57479858398)
 
-Citizen.CreateThread(function()
-	SetNuiFocus(false, false)
-    TriggerScreenblurFadeOut(0)
-	if not LocalPlayer.state.spawned then
+-- Citizen.CreateThread(function()
+-- 	SetNuiFocus(false, false)
+--     TriggerScreenblurFadeOut(0)
+-- 	if not LocalPlayer.state.spawned then
 
-		local ped = PlayerPedId()
+-- 		local ped = PlayerPedId()
 
-        SetEntityVisible(ped, false)
-        SetEntityCollision(ped, false)
-        FreezeEntityPosition(ped, true)
+--         SetEntityVisible(ped, false)
+--         SetEntityCollision(ped, false)
+--         FreezeEntityPosition(ped, true)
 
-        local model = GetHashKey('mp_m_freemode_01')
-		RequestModel(model)
-		while not HasModelLoaded(model) do
-			RequestModel(model)
-			Citizen.Wait(0)
-		end
-		SetPlayerModel(PlayerId(), model)
-		SetModelAsNoLongerNeeded(model)
+--         local model = GetHashKey('mp_m_freemode_01')
+-- 		RequestModel(model)
+-- 		while not HasModelLoaded(model) do
+-- 			RequestModel(model)
+-- 			Citizen.Wait(0)
+-- 		end
+-- 		SetPlayerModel(PlayerId(), model)
+-- 		SetModelAsNoLongerNeeded(model)
         
-        ped = PlayerPedId()
+--         ped = PlayerPedId()
 
-		RequestCollisionAtCoord(spawnCoords.x, spawnCoords.y, spawnCoords.z)
-        SetEntityCoordsNoOffset(ped, spawnCoords.x, spawnCoords.y, spawnCoords.z, false, false, false, true)
-        NetworkResurrectLocalPlayer(spawnCoords.x, spawnCoords.y, spawnCoords.z, spawnCoords.w, true, true, false)
+-- 		RequestCollisionAtCoord(spawnCoords.x, spawnCoords.y, spawnCoords.z)
+--         SetEntityCoordsNoOffset(ped, spawnCoords.x, spawnCoords.y, spawnCoords.z, false, false, false, true)
+--         NetworkResurrectLocalPlayer(spawnCoords.x, spawnCoords.y, spawnCoords.z, spawnCoords.w, true, true, false)
 
-		SetPedDefaultComponentVariation(ped)
-        ClearPedTasksImmediately(ped)
-        RemoveAllPedWeapons(ped)
+-- 		SetPedDefaultComponentVariation(ped)
+--         ClearPedTasksImmediately(ped)
+--         RemoveAllPedWeapons(ped)
 
-        local time = GetGameTimer()
-        while (not HasCollisionLoadedAroundEntity(ped) and (GetGameTimer() - time) < 5000) do
-            Citizen.Wait(0)
-        end
+--         local time = GetGameTimer()
+--         while (not HasCollisionLoadedAroundEntity(ped) and (GetGameTimer() - time) < 5000) do
+--             Citizen.Wait(0)
+--         end
 
-        SetEntityVisible(ped, true)
-        SetEntityCollision(ped, true)
-        FreezeEntityPosition(ped, false)
-        SetPlayerInvincible(PlayerId(), false)
+--         SetEntityVisible(ped, true)
+--         SetEntityCollision(ped, true)
+--         FreezeEntityPosition(ped, false)
+--         SetPlayerInvincible(PlayerId(), false)
 
-        TriggerEvent('playerSpawned',{})
-		LocalPlayer.state.spawned = true
-	else
-		print("Ready spawned? Report to Developers.")
-	end
-end)
+--         TriggerEvent('playerSpawned',{})
+-- 		LocalPlayer.state.spawned = true
+-- 	else
+-- 		print("Ready spawned? Report to Developers.")
+-- 	end
+-- end)
 
-RegisterNetEvent('zero:SpawnSelector', function(select)
+-- RegisterNetEvent('zero:SpawnSelector', function(select)
 
-	ShutdownLoadingScreenNui()
-	ShutdownLoadingScreen()
-	DoScreenFadeIn(500)
-	while IsScreenFadingIn() do
-		Citizen.Wait(1)
-	end
+-- 	ShutdownLoadingScreenNui()
+-- 	ShutdownLoadingScreen()
+-- 	DoScreenFadeIn(500)
+-- 	while IsScreenFadingIn() do
+-- 		Citizen.Wait(1)
+-- 	end
 
-	if select then
+-- 	if select then
 
-		local ped = PlayerPedId()
-		local coords = GetEntityCoords(ped)
+-- 		local ped = PlayerPedId()
+-- 		local coords = GetEntityCoords(ped)
 
-		cam = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA',coords['x'],coords['y'],coords['z'] + 200.0,270.00,0.0,0.0,80.0,0,0)
-		SetCamActive(cam,true)
-		RenderScriptCams(true, false, 1, true, true)
+-- 		cam = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA',coords['x'],coords['y'],coords['z'] + 200.0,270.00,0.0,0.0,80.0,0,0)
+-- 		SetCamActive(cam,true)
+-- 		RenderScriptCams(true, false, 1, true, true)
 
-		SetEntityVisible(ped, false)
-		FreezeEntityPosition(ped, false)
+-- 		SetEntityVisible(ped, false)
+-- 		FreezeEntityPosition(ped, false)
 
-		SetNuiFocus(true, true)
-		TriggerScreenblurFadeIn(0)
-		SendNUIMessage({ method = 'open' })
+-- 		SetNuiFocus(true, true)
+-- 		TriggerScreenblurFadeIn(0)
+-- 		SendNUIMessage({ method = 'open' })
 
-	else
-		LocalPlayer.state.spawnSelected = true
-	end
-end)
+-- 	else
+-- 		LocalPlayer.state.spawnSelected = true
+-- 	end
+-- end)
 
-RegisterNUICallback('lastLocation', function()
-	local lastLocation = vSERVER.getLastPosition()
-	if lastLocation then
-		DoScreenFadeOut(3000)
-		Citizen.Wait(3000)
-		SetEntityCoords(PlayerPedId(), lastLocation, 0, 0, 0, 0)
+-- RegisterNUICallback('lastLocation', function()
+-- 	local lastLocation = vSERVER.getLastPosition()
+-- 	if lastLocation then
+-- 		DoScreenFadeOut(3000)
+-- 		Citizen.Wait(3000)
+-- 		SetEntityCoords(PlayerPedId(), lastLocation, 0, 0, 0, 0)
 
-		renderFunction()
+-- 		renderFunction()
 
-		DoScreenFadeIn(3000)
-		closeNui()
-		LocalPlayer.state.spawnSelected = true
-	end
-end)
+-- 		DoScreenFadeIn(3000)
+-- 		closeNui()
+-- 		LocalPlayer.state.spawnSelected = true
+-- 	end
+-- end)
 
-RegisterNUICallback('selectSpawn', function(data)
-	local ped = PlayerPedId()
-	local location = data['location']
-	if location then
-		local dataLoc = generalConfig['spawnLocations'][location]
-		if dataLoc then
-			if vSERVER.spawnPermission(dataLoc['permission']) then
-				DoScreenFadeOut(3000)
-				Citizen.Wait(3000)
-				SetEntityCoords(ped, dataLoc['coord'].x, dataLoc['coord'].y, dataLoc['coord'].z, 0, 0, 0, 0)
-				SetEntityHeading(ped, dataLoc['coord'].w)
+-- RegisterNUICallback('selectSpawn', function(data)
+-- 	local ped = PlayerPedId()
+-- 	local location = data['location']
+-- 	if location then
+-- 		local dataLoc = generalConfig['spawnLocations'][location]
+-- 		if dataLoc then
+-- 			if vSERVER.spawnPermission(dataLoc['permission']) then
+-- 				DoScreenFadeOut(3000)
+-- 				Citizen.Wait(3000)
+-- 				SetEntityCoords(ped, dataLoc['coord'].x, dataLoc['coord'].y, dataLoc['coord'].z, 0, 0, 0, 0)
+-- 				SetEntityHeading(ped, dataLoc['coord'].w)
 				
-				renderFunction()
+-- 				renderFunction()
 
-				DoScreenFadeIn(3000)
-				closeNui()
-				LocalPlayer.state.spawnSelected = true
-			else
-				SendNUIMessage({ method = 'open' })
-			end
-		end
-	end
-end)
+-- 				DoScreenFadeIn(3000)
+-- 				closeNui()
+-- 				LocalPlayer.state.spawnSelected = true
+-- 			else
+-- 				SendNUIMessage({ method = 'open' })
+-- 			end
+-- 		end
+-- 	end
+-- end)
 
 renderFunction = function()
 	local ped = PlayerPedId()
