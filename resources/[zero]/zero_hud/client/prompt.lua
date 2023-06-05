@@ -10,8 +10,10 @@ end
 
 RegisterNuiCallback('promptResult', function(data)
     srv.resultPrompt(data.responses)
+    SetNuiFocus(false, false)
 end)
 
 RegisterNuiCallback('closePrompt', function()
+    srv.resultPrompt(false)
     SetNuiFocus(false, false)
 end)

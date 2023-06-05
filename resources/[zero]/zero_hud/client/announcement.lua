@@ -1,5 +1,4 @@
 RegisterNetEvent('announcement', function(title, message, author, playAudio, time)
-    if not time then time = 5000 end
     SendNUIMessage({
         method = 'announcement',
         data = {
@@ -7,11 +6,8 @@ RegisterNetEvent('announcement', function(title, message, author, playAudio, tim
             message = message,
             author = author,
             playAudio = playAudio,
-            time = time
+            time = (time or 5000)
         }
     })
 end)
 
-RegisterCommand('anuncio', function()
-    TriggerEvent('announcement', 'Prefeitura', 'Olá Zero!! Chupa meu cu', 'An4log', false)
-end)

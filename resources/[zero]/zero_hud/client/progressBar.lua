@@ -3,11 +3,7 @@ RegisterNetEvent('progressBar', function(title, time)
         method = 'progress',
         data = {
             title = title,
-            time = time
+            time = (time or 10000)
         }
     })
-end)
-
-RegisterCommand('pbar', function()
-    TriggerEvent('progressBar', 'Equipe Zero', 5000)
 end)

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 prompts = {}
 
 srv.prompt = function(source, questions)
