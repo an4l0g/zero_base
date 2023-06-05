@@ -24,7 +24,3 @@ srv.resultRequest = function(id, response)
     currentRequest(response)
     requests[id] = nil
 end
-
-RegisterCommand('request', function(source, args)
-    local result = srv.request(source, 'Você quer casar comigo?')
-end)

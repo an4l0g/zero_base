@@ -22,7 +22,6 @@ cli.resultRequest = function(result)
             }
         })
         srv.resultRequest(currentRequest, result)
-        print('Respondendo', #requests, currentRequest, result)
         table.remove(requests, #requests)
     end
 end
