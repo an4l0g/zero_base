@@ -212,3 +212,7 @@ end)
 RegisterNetEvent('zero_hud:toggleHud',function(bool)
     SendNUIMessage({ method = 'updateHud', data = bool })
 end)
+
+RegisterNuiCallback('close', function()
+    SetNuiFocus(false, false)
+end)

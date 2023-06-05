@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import useNotification from "./hooks/useNotification";
 import Prompt from "./components/Prompt";
+import Clipboard from "./components/Clipboard";
 
 function App() {
   const [time, setTime] = useState("");
@@ -30,6 +31,7 @@ function App() {
   const [radio, setRadio] = useState(0);
   const [oxygen, setOxygen] = useState(-1);
   const [questions, setQuestions] = useState([]);
+  const [clipboard, setClipboard] = useState([]);
   // const [toxic, setToxic] = useState(0);
   // const [stress, setStress] = useState(0);
 
@@ -82,9 +84,12 @@ function App() {
         removeRequest: ({ id }) => {
           removeRequest(id);
         },
+        clipboard: (clipboard) => {
+          setClipboard(clipboard);
+        },
       };
       const { method, data } = event.data;
-      if (method) {
+      if (method && actions[method]) {
         actions[method](data);
       }
     },
@@ -106,6 +111,7 @@ function App() {
           <ToastContainer theme="dark" position="bottom-center" />
           <S.GlobalStyle />
           <Prompt questions={questions} setQuestions={setQuestions} />
+          <Clipboard clipboard={clipboard} setClipboard={setClipboard} />
           <S.WrapHud>
             <Logo />
             <TopInfos
