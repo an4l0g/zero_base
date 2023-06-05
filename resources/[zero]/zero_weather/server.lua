@@ -68,7 +68,6 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-    generateWeather()
     while true do
         Citizen.Wait(2000)
         if (not freezetime) then
