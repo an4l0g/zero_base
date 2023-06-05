@@ -10,8 +10,5 @@ call pm2 delete %nui_name% --silent
 cd %nui_path%
 call yarn build
 
-echo []
-
 :: iniciando processo
-call pm2 serve %nui_path_build% -s --name %nui_path_build% --port %nui_port%
-pause
+call pm2 serve %nui_path_build% -s --name %nui_name% --port %nui_port%
