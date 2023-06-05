@@ -1,6 +1,10 @@
 Tunnel = module('vrp','lib/Tunnel')
 
-vSERVER = Tunnel.getInterface(GetCurrentResourceName())
+cli = {}
+Tunnel.bindInterface(GetCurrentResourceName(), cli)
+srv = Tunnel.getInterface(GetCurrentResourceName())
+
+hud = true
 
 local toggleSeatbelt = function()
     if inVehicle and vehicleHudOn and hasSeatbelt then
@@ -11,13 +15,12 @@ local toggleSeatbelt = function()
         if seatbeltOn then TriggerEvent('vrp_sound:source','belt',0.5) else TriggerEvent('vrp_sound:source','unbelt',0.5) end
     end
 end
-RegisterCommand('s9_hud:seatBelt', toggleSeatbelt)
-RegisterKeyMapping('s9_hud:seatBelt', '', 'keyboard', 'G')
+RegisterCommand('zero_hud:seatBelt', toggleSeatbelt)
+RegisterKeyMapping('zero_hud:seatBelt', '', 'keyboard', 'G')
 
-hud = true
 local toggleHud = function()
     hud = not hud
-    TriggerEvent('s9_hud:toggleHud', hud)
+    TriggerEvent('zero_hud:toggleHud', hud)
 end
 
 RegisterCommand('hud', toggleHud)
@@ -89,13 +92,13 @@ statusVehicle = function(bool,veh)
     if bool then
         vehicleHudOn = true
         startVehicle()
-        TriggerEvent('s9_hud:updateVehicleHud', true)
+        TriggerEvent('zero_hud:updateVehicleHud', true)
         if not (LocalPlayer.state['gps']) then checkRadar( not doesVehicleHasSeatbelt(veh) ) end
     else
         inVehicle = false
         vehicleHudOn = false
         if not (LocalPlayer.state['gps']) then checkRadar(false) end
-        TriggerEvent('s9_hud:updateVehicleHud', false)
+        TriggerEvent('zero_hud:updateVehicleHud', false)
     end
 end
 
@@ -107,7 +110,7 @@ local checkPlayerLevels = function()
     local currentHealth = getHealth(ped)
     local currentArmour = getArmour(ped)
     local currentOxygen = getOxygen(ped) 
-    local currentStreet = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
+    -- local currentStreet = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
     local currentLocked = GetVehicleDoorLockStatus(veh)
     local currentFuel = 0.0
     local currentEngineHealth = 0.0
@@ -117,7 +120,7 @@ local checkPlayerLevels = function()
 
     updateHealth(currentHealth)
     updateArmour(currentArmour) 
-    updateStreet(currentStreet)
+    -- updateStreet(currentStreet)
     updateTime(currentTime)
     if not (LocalPlayer.state['gps']) then checkRadar(false) end
 
@@ -157,9 +160,9 @@ local checkPlayerLevels = function()
         
         -- DESAPARECER A HUD NO MENU ( PAUSE ) | ( ESC )
         if IsPauseMenuActive() then
-			if not isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', false) TriggerEvent('s9_hud:toggleHud', false)  end
+			if not isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', false) TriggerEvent('zero_hud:toggleHud', false)  end
 		else
-			if isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', true) TriggerEvent('s9_hud:toggleHud', true) end
+			if isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', true) TriggerEvent('zero_hud:toggleHud', true) end
 		end
         Wait(500)
     end
@@ -202,18 +205,10 @@ RegisterNetEvent('pma-listners:setFrequency',function(radio)
     SendNUIMessage({ method = 'updateRadioChannel', data = radio })
 end)
 
-RegisterNetEvent('s9_hud:updateVehicleHud',function(bool)
+RegisterNetEvent('zero_hud:updateVehicleHud',function(bool)
     SendNUIMessage({ method = 'updateHudVehicle', data = bool })
 end)
 
-RegisterNetEvent('s9_hud:toggleHud',function(bool)
+RegisterNetEvent('zero_hud:toggleHud',function(bool)
     SendNUIMessage({ method = 'updateHud', data = bool })
-end)
-
-RegisterCommand('cupom', function(source, args)
-    if (vSERVER.checkPermission('dono.permissao')) then
-        if (args[1]) then
-            updateCupom(args[1])
-        end
-    end
 end)

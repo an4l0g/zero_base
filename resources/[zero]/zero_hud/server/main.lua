@@ -4,6 +4,7 @@ vRP = Proxy.getInterface("vRP")
 
 srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
+cli = Tunnel.getInterface(GetCurrentResourceName())
 
 srv.checkPermission = function(permission)
     local _source = source

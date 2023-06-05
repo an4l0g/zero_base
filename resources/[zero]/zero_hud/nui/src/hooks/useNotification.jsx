@@ -4,8 +4,11 @@ import { VscRadioTower, VscBell } from "react-icons/vsc";
 import { BsClockHistory } from "react-icons/bs";
 import { AiOutlineQuestion } from "react-icons/ai";
 import AudioAdmMessage from "../assets/sounds/message.ogg";
+import { useRef } from "react";
 
 function useNotification() {
+  const requests = useRef({});
+
   const launchNotify = (title, message, time = 5000) => {
     toast(
       <GS.ContainerNotify>
@@ -31,8 +34,15 @@ function useNotification() {
     );
   };
 
-  const launchRequest = (title, time = 5000) => {
-    toast(
+  const removeRequest = (id) => {
+    toast.dismiss(requests.current[id]);
+    let newRequestsList = requests.current;
+    delete newRequestsList[id];
+    requests.current = newRequestsList;
+  };
+
+  const launchRequest = (id, title, time = 5000) => {
+    requests.current[id] = toast(
       <GS.ContainerNotify>
         <AiOutlineQuestion />
         <GS.ContentNotify>
@@ -47,7 +57,10 @@ function useNotification() {
           </GS.RequestActions>
         </GS.ContentNotify>
       </GS.ContainerNotify>,
-      { autoClose: time, position: "top-center" }
+      {
+        autoClose: time,
+        position: "top-center",
+      }
     );
   };
 
@@ -75,6 +88,7 @@ function useNotification() {
     launchOrgNotify,
     launchProgressBar,
     launchRequest,
+    removeRequest,
   };
 }
 
