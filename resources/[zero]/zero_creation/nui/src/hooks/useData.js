@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ParentsList from "../components/Appearance/Parents/parents.json";
+import useRequest from "./useRequest";
 
 function useData() {
   // Identity
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [gender, setGender] = useState(0);
+  const [gender, setGender] = useState("masculino");
   const [age, setAge] = useState(18);
 
   // Parents
   const [fatherId, setFatherId] = useState(0);
   const [motherId, setMotherId] = useState(ParentsList.length - 1);
-  const [resemblance, setResemblance] = useState(0);
+  const [shapeMix, setShapeMix] = useState(0);
   const [colorFather, setColorFather] = useState(0);
   const [colorMother, setColorMother] = useState(0);
   const [skinMix, setSkinMix] = useState(0);
@@ -23,7 +24,7 @@ function useData() {
   const [eyebrowsWidth, setEyebrowsWidth] = useState(0);
   const [eyebrowsModel, setEyebrowsModel] = useState(0);
   const [eyebrowsColor, setEyebrowsColor] = useState(0);
-  const [eyebrowsOpacity, setEyebrowsOpacity] = useState(0);
+  const [eyebrowsOpacity, setEyebrowsOpacity] = useState(1);
 
   const [noseWidth, setNoseWidth] = useState(0);
   const [noseHeight, setNoseHeight] = useState(0);
@@ -48,52 +49,186 @@ function useData() {
   const [neckWidth, setNeckWidth] = useState(0);
 
   // Hair
-  const [hairModel, setHairModel] = useState(0);
+  const [hairModel, setHairModel] = useState(4);
   const [firstHairColor, setFirstHairColor] = useState(0);
   const [secondHairColor, setSecondHairColor] = useState(0);
 
-  const [beardModel, setBeardModel] = useState(0);
+  const [beardModel, setBeardModel] = useState(-1);
   const [beardColor, setBeardColor] = useState(0);
-  const [beardOpacity, setBeardOpacity] = useState(0);
+  const [beardOpacity, setBeardOpacity] = useState(1);
 
-  const [chestModel, setChestModel] = useState(0);
+  const [chestModel, setChestModel] = useState(-1);
   const [chestColor, setChestColor] = useState(0);
-  const [chestOpacity, setChestOpacity] = useState(0);
+  const [chestOpacity, setChestOpacity] = useState(1);
 
-  const [blushModel, setBlushModel] = useState(0);
+  const [blushModel, setBlushModel] = useState(-1);
   const [blushColor, setBlushColor] = useState(0);
-  const [blushOpacity, setBlushOpacity] = useState(0);
+  const [blushOpacity, setBlushOpacity] = useState(1);
 
-  const [lipstickModel, setLipstickModel] = useState(0);
+  const [lipstickModel, setLipstickModel] = useState(-1);
   const [lipstickColor, setLipstickColor] = useState(0);
-  const [lipstickOpacity, setLipstickOpacity] = useState(0);
+  const [lipstickOpacity, setLipstickOpacity] = useState(1);
 
-  const [blemishesModel, setBlemishesModel] = useState(0);
-  const [blemishesOpacity, setBlemishesOpacity] = useState(0);
+  const [blemishesModel, setBlemishesModel] = useState(-1);
+  const [blemishesOpacity, setBlemishesOpacity] = useState(1);
 
-  const [ageingModel, setAgeingModel] = useState(0);
-  const [ageingOpacity, setAgeingOpacity] = useState(0);
+  const [ageingModel, setAgeingModel] = useState(-1);
+  const [ageingOpacity, setAgeingOpacity] = useState(1);
 
-  const [complexionModel, setComplexionModel] = useState(0);
-  const [complexionOpacity, setComplexionOpacity] = useState(0);
+  const [complexionModel, setComplexionModel] = useState(-1);
+  const [complexionOpacity, setComplexionOpacity] = useState(1);
 
-  const [sundamageModel, setSundamageModel] = useState(0);
-  const [sundamageOpacity, setSundamageOpacity] = useState(0);
+  const [sundamageModel, setSundamageModel] = useState(-1);
+  const [sundamageOpacity, setSundamageOpacity] = useState(1);
 
-  const [frecklesModel, setFrecklesModel] = useState(0);
-  const [frecklesOpacity, setFrecklesOpacity] = useState(0);
+  const [frecklesModel, setFrecklesModel] = useState(-1);
+  const [frecklesOpacity, setFrecklesOpacity] = useState(1);
 
-  const [makeupModel, setMakeupModel] = useState(0);
-  const [makeupOpacity, setMakeupOpacity] = useState(0);
+  const [makeupModel, setMakeupModel] = useState(-1);
+  const [makeupOpacity, setMakeupOpacity] = useState(1);
 
-  useEffect(() => {}, [
+  const { request } = useRequest();
+
+  const handleChangeCharacter = useCallback(() => {
+    request("changeCharacter", {
+      name,
+      surname,
+      gender,
+      age,
+      fatherId,
+      motherId,
+      shapeMix,
+      colorFather,
+      colorMother,
+      skinMix,
+      eyesColor,
+      eyesOpening,
+      eyebrowsHeight,
+      eyebrowsWidth,
+      eyebrowsModel,
+      eyebrowsColor,
+      eyebrowsOpacity,
+      noseWidth,
+      noseHeight,
+      noseLength,
+      noseBridge,
+      noseTip,
+      noseShift,
+      cheekboneHeight,
+      cheekboneWidth,
+      cheeksWidth,
+      lips,
+      jawWidth,
+      jawHeight,
+      chinLength,
+      chinPosition,
+      chinWidth,
+      chinShape,
+      neckWidth,
+      hairModel,
+      firstHairColor,
+      secondHairColor,
+      beardModel,
+      beardColor,
+      beardOpacity,
+      chestModel,
+      chestColor,
+      chestOpacity,
+      blushModel,
+      blushColor,
+      blushOpacity,
+      lipstickModel,
+      lipstickColor,
+      lipstickOpacity,
+      blemishesModel,
+      blemishesOpacity,
+      ageingModel,
+      ageingOpacity,
+      complexionModel,
+      complexionOpacity,
+      sundamageModel,
+      sundamageOpacity,
+      frecklesModel,
+      frecklesOpacity,
+      makeupModel,
+      makeupOpacity,
+    });
+  }, [
+    request,
     name,
     surname,
     gender,
     age,
     fatherId,
     motherId,
-    resemblance,
+    shapeMix,
+    colorFather,
+    colorMother,
+    skinMix,
+    eyesColor,
+    eyesOpening,
+    eyebrowsHeight,
+    eyebrowsWidth,
+    eyebrowsModel,
+    eyebrowsColor,
+    eyebrowsOpacity,
+    noseWidth,
+    noseHeight,
+    noseLength,
+    noseBridge,
+    noseTip,
+    noseShift,
+    cheekboneHeight,
+    cheekboneWidth,
+    cheeksWidth,
+    lips,
+    jawWidth,
+    jawHeight,
+    chinLength,
+    chinPosition,
+    chinWidth,
+    chinShape,
+    neckWidth,
+    hairModel,
+    firstHairColor,
+    secondHairColor,
+    beardModel,
+    beardColor,
+    beardOpacity,
+    chestModel,
+    chestColor,
+    chestOpacity,
+    blushModel,
+    blushColor,
+    blushOpacity,
+    lipstickModel,
+    lipstickColor,
+    lipstickOpacity,
+    blemishesModel,
+    blemishesOpacity,
+    ageingModel,
+    ageingOpacity,
+    complexionModel,
+    complexionOpacity,
+    sundamageModel,
+    sundamageOpacity,
+    frecklesModel,
+    frecklesOpacity,
+    makeupModel,
+    makeupOpacity,
+  ]);
+
+  useEffect(() => {
+    handleChangeCharacter();
+  }, [
+    handleChangeCharacter,
+    name,
+    surname,
+    gender,
+    age,
+    fatherId,
+    motherId,
+    shapeMix,
     colorFather,
     colorMother,
     skinMix,
@@ -160,7 +295,7 @@ function useData() {
     // Parents
     fatherId: { get: fatherId, set: setFatherId },
     motherId: { get: motherId, set: setMotherId },
-    resemblance: { get: resemblance, set: setResemblance },
+    shapeMix: { get: shapeMix, set: setShapeMix },
     colorFather: { get: colorFather, set: setColorFather },
     colorMother: { get: colorMother, set: setColorMother },
     skinMix: { get: skinMix, set: setSkinMix },

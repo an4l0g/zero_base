@@ -8,7 +8,7 @@ import Slider from "../../Slider";
 import useData from "../../../hooks/useData";
 
 function Parents() {
-  const { fatherId, motherId, resemblance, colorFather, colorMother, skinMix } =
+  const { fatherId, motherId, shapeMix, colorFather, colorMother, skinMix } =
     useData();
 
   return (
@@ -34,8 +34,8 @@ function Parents() {
         label={`Sem. ${ParentsList[fatherId.get].name} / Sem. ${
           ParentsList[motherId.get].name
         }`}
-        value={resemblance.get}
-        setValue={resemblance.set}
+        value={shapeMix.get}
+        setValue={shapeMix.set}
         min={-1}
         middle={0}
         max={1}
