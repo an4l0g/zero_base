@@ -9,9 +9,15 @@ import Identity from "./Identity";
 import Parents from "./Parents";
 import Face from "./Face";
 import Hair from "./Hair";
+import useRequest from "../../hooks/useRequest";
 
 function Appearance() {
   const [tab, setTab] = useState("identity");
+  const { request } = useRequest();
+
+  const handleFinish = async () => {
+    await request("finish");
+  };
 
   return (
     <S.Container>
@@ -51,7 +57,7 @@ function Appearance() {
             <GiComb />
             <span>Salão</span>
           </S.TabButton>
-          <S.TabButton className="finish">
+          <S.TabButton className="finish" onClick={handleFinish}>
             <AiOutlineCheckCircle />
             <span>Finalizar</span>
           </S.TabButton>

@@ -28,7 +28,7 @@ export const GlobalStyle = createGlobalStyle`
       }
 
       body {
-        background-image: url('https://images-ext-2.discordapp.net/external/PmgXOKK-Gx8CsgtU7ThcRzHHpybHunoV4x-x1SSFfug/https/i.imgur.com/pUqwKGV.jpg?width=1920&height=1080');
+        /* background-image: url('https://images-ext-2.discordapp.net/external/PmgXOKK-Gx8CsgtU7ThcRzHHpybHunoV4x-x1SSFfug/https/i.imgur.com/pUqwKGV.jpg?width=1920&height=1080'); */
         background-attachment: fixed;
         background-repeat: no-repeat;
         background-size: cover;

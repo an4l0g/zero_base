@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Slider from "../Slider";
 import * as S from "./styles";
-
 import { BiFace, BiBody } from "react-icons/bi";
+import useRequest from "../../hooks/useRequest";
 
 function Pov() {
   const [pov, setPov] = useState("head");
   const [rotate, setRotate] = useState(0);
+  const { request } = useRequest();
+
+  const handleChangePov = useCallback(async () => {
+    await request("changePov", {
+      pov,
+      rotate,
+    });
+  }, [pov, rotate, request]);
+
+  useEffect(() => {
+    handleChangePov();
+  }, [pov, rotate, handleChangePov]);
 
   return (
     <S.Container>

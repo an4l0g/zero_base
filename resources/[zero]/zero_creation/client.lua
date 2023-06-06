@@ -58,6 +58,7 @@ cli.createCharacter = function()
         createCam('body')
     end
     FreezeEntityPosition(PlayerPedId(), true)
+    SetNuiFocus(true, true)
     SendNUIMessage({ action = 'open' })
 end
 
@@ -562,3 +563,15 @@ closeNui = function()
 	SetNuiFocus(false, false)
     TriggerScreenblurFadeOut(0)
 end
+
+RegisterNuiCallback('changeCharacter', function(data)
+    print(json.encode(data))
+end)
+
+RegisterNuiCallback('changePov', function(data)
+    print(json.encode(data))
+end)
+
+RegisterNuiCallback('finish', function(data)
+    print("Finalizou")
+end)
