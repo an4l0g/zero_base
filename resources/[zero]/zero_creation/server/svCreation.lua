@@ -1,10 +1,10 @@
-local generalConfig = config.general
+local generalConfig = configCreator.general
 
 srv = {}
 Tunnel.bindInterface('Creation', srv)
 vCLIENT = Tunnel.getInterface('Creation')
 
-vRP._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character) VALUES (@user_id, @controller, @user_character)')
+vRP._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character, rh) VALUES (@user_id, @controller, @user_character, @rh)')
 vRP._prepare('zero_character/verifyUser', 'SELECT controller FROM zero_creation WHERE user_id = @user_id')
 vRP._prepare('zero_character/saveUser', 'UPDATE zero_creation SET user_character = @user_character WHERE user_id = @user_id')
 
@@ -44,7 +44,8 @@ end
 local userLogin = {}
 
 AddEventHandler('vRP:playerSpawn', function(user_id, source)
-    vRP.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}' })
+    local bloodGroup = generalConfig.bloodGroup
+    vRP.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}', rh = bloodGroup[math.random(#bloodGroup)] })
 
     vCLIENT.loadingPlayer(source, false) 
     local query = vRP.query('zero_character/verifyUser', { user_id = user_id })[1]
