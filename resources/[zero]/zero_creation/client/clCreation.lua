@@ -2,7 +2,7 @@ cli = {}
 Tunnel.bindInterface('Creation', cli)
 vSERVER = Tunnel.getInterface('Creation')
 
-local generalConfig = config.general
+local generalConfig = configCreator.general
 
 local float = function(number)
 	number = (number + 0.00000)
