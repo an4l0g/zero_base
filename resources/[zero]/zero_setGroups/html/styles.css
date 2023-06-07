@@ -1,3 +1,10 @@
+:root {
+  --primary: rgb(0, 153, 255);
+  --primary-opacity: rgba(0, 153, 255, 0.2);
+  --dark: rgb(0, 0, 0);
+  --dark-opacity: rgba(0, 0, 0, 0.7);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -17,11 +24,11 @@
 
 ::-webkit-scrollbar-thumb {
   border-radius: 30px;
-  background: #bbff00;
+  background: var(--primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #bbff00;
+  background: var(--primary);
 }
 
 body,
@@ -57,7 +64,12 @@ body {
 }
 
 #gbSetGroup .wrapper .content {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--dark-opacity);
+  background-image: linear-gradient(
+    to bottom right,
+    var(--primary-opacity) 10%,
+    var(--dark-opacity)
+  );
   width: 600px;
   border-radius: 5px;
   display: flex;
@@ -71,12 +83,12 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
 }
 
 #gbSetGroup .wrapper .content .header b {
-  color: #bbff00;
+  color: var(--primary);
 }
 
 #gbSetGroup .wrapper .content .header button {
@@ -163,7 +175,7 @@ body {
 }
 
 #gbSetGroup #add-group button {
-  background-color: #bbff00df;
+  background-color: var(--primary);
   width: 100%;
   height: 40px;
   font-weight: bold;
