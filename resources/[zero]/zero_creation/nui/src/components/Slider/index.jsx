@@ -26,12 +26,13 @@ function Slider({
         />
         <S.FullSlider>
           <S.Root
+            defaultValue={[value]}
             {...rest}
             max={max}
             min={min}
             step={step}
             onValueChange={(v) => {
-              setValue(v);
+              setValue(v[0]);
             }}
           >
             <S.Track>

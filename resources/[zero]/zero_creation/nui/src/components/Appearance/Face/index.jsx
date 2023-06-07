@@ -44,12 +44,11 @@ function Face() {
         label="Cor dos olhos"
         value={eyesColor.get}
         setValue={eyesColor.set}
-        min={-1}
+        min={0}
         middle={0}
-        max={1}
-        step={0.01}
+        max={31}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Abertura dos olhos"
@@ -57,10 +56,9 @@ function Face() {
         setValue={eyesOpening.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<VscEye />} title="Sobrancelhas" space={true} />
       <Slider
@@ -69,10 +67,9 @@ function Face() {
         setValue={eyebrowsHeight.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Largura das Sobrancelhas"
@@ -80,21 +77,19 @@ function Face() {
         setValue={eyebrowsWidth.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Modelo das Sobrancelhas"
         value={eyebrowsModel.get}
         setValue={eyebrowsModel.set}
-        min={-1}
+        min={0}
         middle={0}
-        max={1}
-        step={0.01}
+        max={33}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <ColorPicker
         label="Cor das Sobrancelhas"
@@ -107,10 +102,9 @@ function Face() {
         setValue={eyebrowsOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<GiNoseFront />} title="Nariz" space={true} />
       <Slider
@@ -119,10 +113,9 @@ function Face() {
         setValue={noseWidth.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Altura do nariz"
@@ -130,10 +123,9 @@ function Face() {
         setValue={noseHeight.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Comprimento do nariz"
@@ -141,10 +133,9 @@ function Face() {
         setValue={noseLength.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Ponte nasal"
@@ -152,10 +143,9 @@ function Face() {
         setValue={noseBridge.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Ponta do nariz"
@@ -163,10 +153,9 @@ function Face() {
         setValue={noseTip.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Variação do nariz"
@@ -174,10 +163,9 @@ function Face() {
         setValue={noseShift.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<CgSmileNoMouth />} title="Bochechas" space={true} />
       <Slider
@@ -186,10 +174,9 @@ function Face() {
         setValue={cheekboneHeight.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Largura dos ossos da bochecha"
@@ -197,10 +184,9 @@ function Face() {
         setValue={cheekboneWidth.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Largura da bochecha"
@@ -208,10 +194,9 @@ function Face() {
         setValue={cheeksWidth.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<GiLips />} title="Boca" space={true} />
       <Slider
@@ -220,10 +205,9 @@ function Face() {
         setValue={lips.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Largura da mandíbula"
@@ -231,10 +215,9 @@ function Face() {
         setValue={jawWidth.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Altura da mandíbula"
@@ -242,10 +225,9 @@ function Face() {
         setValue={jawHeight.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<SiEgghead />} title="Queixo" space={true} />
       <Slider
@@ -254,10 +236,9 @@ function Face() {
         setValue={chinLength.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Posição do queixo"
@@ -265,10 +246,9 @@ function Face() {
         setValue={chinPosition.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Largura do queixo"
@@ -276,10 +256,9 @@ function Face() {
         setValue={chinWidth.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Formato do queixo"
@@ -287,10 +266,9 @@ function Face() {
         setValue={chinShape.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
     </S.Container>
   );
