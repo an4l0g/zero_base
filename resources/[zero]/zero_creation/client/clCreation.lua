@@ -81,7 +81,6 @@ cli.createCharacter = function()
     end
     FreezeEntityPosition(PlayerPedId(), true)
     SetNuiFocus(true, true)
-    print('aqui')
     SendNUIMessage({ action = 'open' })
 end
 
@@ -541,9 +540,7 @@ RegisterNuiCallback('finish', function(data)
     SetNuiFocus(false, false)
     if (vSERVER.verifyName(identity.firstname, identity.lastname)) then
         vSERVER.saveIdentity(identity)
-        print(json.encode(currentCharacter.blemishesOpacity))
         vSERVER.saveCharacter(currentCharacter)
-        print('PASSOU')
         finishCreator()
     end
 end)
