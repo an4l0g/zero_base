@@ -1,3 +1,5 @@
+vSERVER = Tunnel.getInterface(GetCurrentResourceName())
+
 local configHomes = config.homes
 
 local inHome = false
@@ -22,6 +24,7 @@ mainThread = function()
                         local distance = #(pedCoords - v[1].xyz)
                         if (distance <= 0.3) then
                             nearestBlip = configHomes[k]
+                            nearestBlip.name = k
                         end
                     end
                 end
@@ -40,7 +43,7 @@ mainThread = function()
                 idle = 4
                 DrawMarker(1, nearestBlip[1].x, nearestBlip[1].y, (nearestBlip[1].z-0.97), 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0, 153, 255, 255, 0, 0, 0, 1)
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
-
+                    vSERVER.tryEnterHome(nearestBlip.name)
                 end
             end
         end

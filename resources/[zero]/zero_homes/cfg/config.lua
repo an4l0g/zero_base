@@ -4,6 +4,10 @@ vRP = Proxy.getInterface('vRP')
 
 config = {}
 
+config.general = {
+    lateFee = 15, -- TAXA ATRASADA (PADRÃO 15 DIAS)
+}
+
 config.homes = {
     ['Homes0001'] = { vector3(996.77, -729.57, 57.82), type = 'modern', perm = nil  },
     ['Homes0002'] = { vector3(-213.38,-1618.15,38.05), type = 'high', perm = nil  },
