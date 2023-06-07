@@ -11,6 +11,7 @@ end
 
 local atualCam = ''
 local tempCam = nil
+
 local cameras = {
     ['body'] = {
         ['coords'] = vector3(generalConfig['spawnCreator']['x']-1, generalConfig['spawnCreator']['y']+0.9, generalConfig['spawnCreator']['z']),
