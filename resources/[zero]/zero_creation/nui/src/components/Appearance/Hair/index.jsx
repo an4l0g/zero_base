@@ -45,12 +45,11 @@ function Hair() {
         label="Modelo de cabelo"
         value={hairModel.get}
         setValue={hairModel.set}
-        min={-1}
+        min={0}
         middle={0}
-        max={1}
-        step={0.01}
+        max={75}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <ColorPicker
         label="Cor de cabelo 1"
@@ -69,10 +68,9 @@ function Hair() {
         setValue={beardModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={28}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <ColorPicker
         label="Cor da barba"
@@ -85,10 +83,9 @@ function Hair() {
         setValue={beardOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<BiBody />} title="Pelos corporais" space={true} />
       <Slider
@@ -97,10 +94,9 @@ function Hair() {
         setValue={chestModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={16}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <ColorPicker
         label="Cor dos pelos"
@@ -113,10 +109,9 @@ function Hair() {
         setValue={chestOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<RiBrushLine />} title="Maquiagem" space={true} />
       <Slider
@@ -125,10 +120,9 @@ function Hair() {
         setValue={blushModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={6}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <ColorPicker
         label="Cor do blush"
@@ -141,10 +135,9 @@ function Hair() {
         setValue={blushOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Modelo do batom"
@@ -152,10 +145,9 @@ function Hair() {
         setValue={lipstickModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={9}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <ColorPicker
         label="Cor do batom"
@@ -168,10 +160,9 @@ function Hair() {
         setValue={lipstickOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Modelo de Manchas"
@@ -179,10 +170,9 @@ function Hair() {
         setValue={blemishesModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={23}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Opacidade de Manchas"
@@ -190,10 +180,9 @@ function Hair() {
         setValue={blemishesOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Modelo de envelhecimento"
@@ -201,10 +190,9 @@ function Hair() {
         setValue={ageingModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={14}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Intensidade de envelhecimento"
@@ -212,10 +200,9 @@ function Hair() {
         setValue={ageingOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Aspecto"
@@ -223,10 +210,9 @@ function Hair() {
         setValue={complexionModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={11}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Opacidade de aspecto"
@@ -234,10 +220,9 @@ function Hair() {
         setValue={complexionOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Danos de sol"
@@ -245,10 +230,9 @@ function Hair() {
         setValue={sundamageModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={10}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Intensidade dos danos de sol"
@@ -256,10 +240,9 @@ function Hair() {
         setValue={sundamageOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Sardas"
@@ -267,10 +250,9 @@ function Hair() {
         setValue={frecklesModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={17}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Intensidade das sardas"
@@ -278,10 +260,9 @@ function Hair() {
         setValue={frecklesOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Maquiagem"
@@ -289,10 +270,9 @@ function Hair() {
         setValue={makeupModel.set}
         min={-1}
         middle={0}
-        max={1}
-        step={0.01}
+        max={74}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Opacidade da maquiagem"
@@ -300,10 +280,9 @@ function Hair() {
         setValue={makeupOpacity.set}
         min={-1}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
     </S.Container>
   );

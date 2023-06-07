@@ -7,6 +7,6 @@ version '0.1'
 
 ui_page "http://localhost:5173"
 
-client_scripts { 'client.lua' }
-server_scripts { 'server.lua' }
-shared_scripts { '@vrp/lib/utils.lua', 'config/*.lua' }              
+client_scripts { 'client/*.lua' }
+server_scripts { 'server/*.lua' }
+shared_scripts { '@vrp/lib/utils.lua', 'cfg/*.lua' }              

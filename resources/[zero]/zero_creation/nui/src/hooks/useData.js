@@ -24,7 +24,7 @@ function useData() {
   const [eyebrowsWidth, setEyebrowsWidth] = useState(0);
   const [eyebrowsModel, setEyebrowsModel] = useState(0);
   const [eyebrowsColor, setEyebrowsColor] = useState(0);
-  const [eyebrowsOpacity, setEyebrowsOpacity] = useState(1);
+  const [eyebrowsOpacity, setEyebrowsOpacity] = useState(0.99);
 
   const [noseWidth, setNoseWidth] = useState(0);
   const [noseHeight, setNoseHeight] = useState(0);
@@ -49,43 +49,43 @@ function useData() {
   const [neckWidth, setNeckWidth] = useState(0);
 
   // Hair
-  const [hairModel, setHairModel] = useState(4);
+  const [hairModel, setHairModel] = useState(0);
   const [firstHairColor, setFirstHairColor] = useState(0);
   const [secondHairColor, setSecondHairColor] = useState(0);
 
   const [beardModel, setBeardModel] = useState(-1);
   const [beardColor, setBeardColor] = useState(0);
-  const [beardOpacity, setBeardOpacity] = useState(1);
+  const [beardOpacity, setBeardOpacity] = useState(0.99);
 
   const [chestModel, setChestModel] = useState(-1);
   const [chestColor, setChestColor] = useState(0);
-  const [chestOpacity, setChestOpacity] = useState(1);
+  const [chestOpacity, setChestOpacity] = useState(0.99);
 
   const [blushModel, setBlushModel] = useState(-1);
   const [blushColor, setBlushColor] = useState(0);
-  const [blushOpacity, setBlushOpacity] = useState(1);
+  const [blushOpacity, setBlushOpacity] = useState(0.99);
 
   const [lipstickModel, setLipstickModel] = useState(-1);
   const [lipstickColor, setLipstickColor] = useState(0);
-  const [lipstickOpacity, setLipstickOpacity] = useState(1);
+  const [lipstickOpacity, setLipstickOpacity] = useState(0.99);
 
   const [blemishesModel, setBlemishesModel] = useState(-1);
-  const [blemishesOpacity, setBlemishesOpacity] = useState(1);
+  const [blemishesOpacity, setBlemishesOpacity] = useState(0.99);
 
   const [ageingModel, setAgeingModel] = useState(-1);
-  const [ageingOpacity, setAgeingOpacity] = useState(1);
+  const [ageingOpacity, setAgeingOpacity] = useState(0.99);
 
-  const [complexionModel, setComplexionModel] = useState(-1);
-  const [complexionOpacity, setComplexionOpacity] = useState(1);
+  const [complexionModel, setComplexionModel] = useState(-0.99);
+  const [complexionOpacity, setComplexionOpacity] = useState(0.99);
 
   const [sundamageModel, setSundamageModel] = useState(-1);
-  const [sundamageOpacity, setSundamageOpacity] = useState(1);
+  const [sundamageOpacity, setSundamageOpacity] = useState(0.99);
 
   const [frecklesModel, setFrecklesModel] = useState(-1);
-  const [frecklesOpacity, setFrecklesOpacity] = useState(1);
+  const [frecklesOpacity, setFrecklesOpacity] = useState(0.99);
 
   const [makeupModel, setMakeupModel] = useState(-1);
-  const [makeupOpacity, setMakeupOpacity] = useState(1);
+  const [makeupOpacity, setMakeupOpacity] = useState(0.99);
 
   const { request } = useRequest();
 

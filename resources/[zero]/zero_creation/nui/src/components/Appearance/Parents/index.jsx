@@ -36,46 +36,42 @@ function Parents() {
         }`}
         value={shapeMix.get}
         setValue={shapeMix.set}
-        min={-1}
+        min={0}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
       <Title icon={<BsPaintBucket />} title="Tom de pele" space={true} />
       <Slider
         label={`Cor ${ParentsList[fatherId.get].name}`}
         value={colorFather.get}
         setValue={colorFather.set}
-        min={-1}
+        min={0}
         middle={0}
-        max={1}
-        step={0.01}
+        max={44}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label={`Cor ${ParentsList[motherId.get].name}`}
         value={colorMother.get}
         setValue={colorMother.set}
-        min={-1}
+        min={0}
         middle={0}
-        max={1}
-        step={0.01}
+        max={44}
+        step={1}
         ruler={true}
-        defaultValue={[0]}
       />
       <Slider
         label="Tom de pele"
         value={skinMix.get}
         setValue={skinMix.set}
-        min={-1}
+        min={0}
         middle={0}
-        max={1}
+        max={0.99}
         step={0.01}
         ruler={true}
-        defaultValue={[0]}
       />
     </S.Container>
   );

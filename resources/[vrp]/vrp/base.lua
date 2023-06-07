@@ -477,6 +477,18 @@ RegisterNetEvent('vRPcli:playerSpawned', function()
 	end
 end)
 
+------------------------------------------------------------------
+-- PROMPT & REQUEST
+------------------------------------------------------------------
+vRP.prompt = function(source, questions)
+	return exports['zero_hud']:prompt(source, questions)
+end
+
+vRP.request = function(source, title, time)
+	return exports['zero_hud']:request(source, title, time)
+end
+------------------------------------------------------------------
+
 -- function exports['vrp']:getDayHours(seconds)
 --     local days = math.floor(seconds/86400)
 --     seconds = seconds - days * 86400
