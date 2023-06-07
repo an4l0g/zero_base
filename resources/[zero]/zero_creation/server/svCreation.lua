@@ -53,7 +53,6 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
         if (query['controller'] == 1) then
             if (not userLogin[user_id]) then
                 userLogin[user_id] = true
-                print('FIRST SPAWN')
             else
 
             end
