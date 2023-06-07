@@ -5,7 +5,7 @@ import { BiFace, BiBody } from "react-icons/bi";
 import useRequest from "../../hooks/useRequest";
 
 function Pov() {
-  const [pov, setPov] = useState("head");
+  const [pov, setPov] = useState("body");
   const [rotate, setRotate] = useState(0);
   const { request } = useRequest();
 
