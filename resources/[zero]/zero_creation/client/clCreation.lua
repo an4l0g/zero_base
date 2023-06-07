@@ -50,9 +50,9 @@ local createCam = function(cameraName)
     if (cam['heading']) then cam['heading']() end
 end
 
-local deleteCam = function()
+local deleteCam = function(render)
     SetCamActive(tempCam, false)
-    RenderScriptCams(false, true, 0, true, true)
+    if (render) then RenderScriptCams(false, true, 0, true, true); end;
 	tempCam = nil
 end
 
@@ -336,7 +336,7 @@ finishCreator = function()
     SetEntityHealth(ped, GetPedMaxHealth(ped))
     FreezeEntityPosition(ped, false)
     vSERVER.changeSession(0)
-    deleteCam()
+    deleteCam(true)
     Citizen.Wait(1000)
     DoScreenFadeIn(1000)
 end
