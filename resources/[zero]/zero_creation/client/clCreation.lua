@@ -2,7 +2,7 @@ cli = {}
 Tunnel.bindInterface('Creation', cli)
 vSERVER = Tunnel.getInterface('Creation')
 
-local generalConfig = config.general
+local generalConfig = configCreator.general
 
 local float = function(number)
 	number = (number + 0.00000)
@@ -11,6 +11,7 @@ end
 
 local atualCam = ''
 local tempCam = nil
+
 local cameras = {
     ['body'] = {
         ['coords'] = vector3(generalConfig['spawnCreator']['x']-1, generalConfig['spawnCreator']['y']+0.9, generalConfig['spawnCreator']['z']),
@@ -50,9 +51,9 @@ local createCam = function(cameraName)
     if (cam['heading']) then cam['heading']() end
 end
 
-local deleteCam = function()
+local deleteCam = function(render)
     SetCamActive(tempCam, false)
-    RenderScriptCams(false, true, 0, true, true)
+    if (render) then RenderScriptCams(false, true, 0, true, true); end;
 	tempCam = nil
 end
 
@@ -336,7 +337,7 @@ finishCreator = function()
     SetEntityHealth(ped, GetPedMaxHealth(ped))
     FreezeEntityPosition(ped, false)
     vSERVER.changeSession(0)
-    deleteCam()
+    deleteCam(true)
     Citizen.Wait(1000)
     DoScreenFadeIn(1000)
 end
