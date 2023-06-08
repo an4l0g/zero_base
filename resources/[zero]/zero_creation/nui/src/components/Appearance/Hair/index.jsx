@@ -3,69 +3,45 @@ import * as S from "./styles";
 import { GiComb, GiBeard } from "react-icons/gi";
 import { BiBody } from "react-icons/bi";
 import { RiBrushLine } from "react-icons/ri";
-import useData from "../../../hooks/useData";
 import Slider from "../../Slider";
 import ColorPicker from "../../ColorPicker";
+import { useContext } from "react";
+import CharacterContext from "../../../contexts/CharacterContext";
 
 function Hair() {
-  const {
-    hairModel,
-    firstHairColor,
-    secondHairColor,
-    beardModel,
-    beardColor,
-    beardOpacity,
-    chestModel,
-    chestColor,
-    chestOpacity,
-    blushModel,
-    blushColor,
-    blushOpacity,
-    lipstickModel,
-    lipstickColor,
-    lipstickOpacity,
-    blemishesModel,
-    blemishesOpacity,
-    ageingModel,
-    ageingOpacity,
-    complexionModel,
-    complexionOpacity,
-    sundamageModel,
-    sundamageOpacity,
-    frecklesModel,
-    frecklesOpacity,
-    makeupModel,
-    makeupOpacity,
-  } = useData();
+  const { character, setCharacter } = useContext(CharacterContext);
 
   return (
     <S.Container>
       <Title icon={<GiComb />} title="Cabelo" />
       <Slider
         label="Modelo de cabelo"
-        value={hairModel.get}
-        setValue={hairModel.set}
+        value={character.hairModel}
+        setValue={(val) => setCharacter((old) => ({ ...old, hairModel: val }))}
         min={0}
-        middle={0}
         max={75}
         step={1}
         ruler={true}
       />
       <ColorPicker
         label="Cor de cabelo 1"
-        value={firstHairColor.get}
-        setValue={firstHairColor.set}
+        value={character.firstHairColor}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, firstHairColor: val }))
+        }
       />
       <ColorPicker
         label="Cor de cabelo 2"
-        value={secondHairColor.get}
-        setValue={secondHairColor.set}
+        value={character.secondHairColor}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, secondHairColor: val }))
+        }
       />
       <Title icon={<GiBeard />} title="Barba" space={true} />
       <Slider
         label="Modelo de barba"
-        value={beardModel.get}
-        setValue={beardModel.set}
+        value={character.beardModel}
+        setValue={(val) => setCharacter((old) => ({ ...old, beardModel: val }))}
         min={-1}
         middle={0}
         max={28}
@@ -74,13 +50,15 @@ function Hair() {
       />
       <ColorPicker
         label="Cor da barba"
-        value={beardColor.get}
-        setValue={beardColor.set}
+        value={character.beardColor}
+        setValue={(val) => setCharacter((old) => ({ ...old, beardColor: val }))}
       />
       <Slider
         label="Opacidade da barba"
-        value={beardOpacity.get}
-        setValue={beardOpacity.set}
+        value={character.beardOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, beardOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -90,8 +68,8 @@ function Hair() {
       <Title icon={<BiBody />} title="Pelos corporais" space={true} />
       <Slider
         label="Modelo dos pelos"
-        value={chestModel.get}
-        setValue={chestModel.set}
+        value={character.chestModel}
+        setValue={(val) => setCharacter((old) => ({ ...old, chestModel: val }))}
         min={-1}
         middle={0}
         max={16}
@@ -100,13 +78,15 @@ function Hair() {
       />
       <ColorPicker
         label="Cor dos pelos"
-        value={chestColor.get}
-        setValue={chestColor.set}
+        value={character.chestColor}
+        setValue={(val) => setCharacter((old) => ({ ...old, chestColor: val }))}
       />
       <Slider
         label="Opacidade dos pelos"
-        value={chestOpacity.get}
-        setValue={chestOpacity.set}
+        value={character.chestOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, chestOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -116,8 +96,8 @@ function Hair() {
       <Title icon={<RiBrushLine />} title="Maquiagem" space={true} />
       <Slider
         label="Modelo de blush"
-        value={blushModel.get}
-        setValue={blushModel.set}
+        value={character.blushModel}
+        setValue={(val) => setCharacter((old) => ({ ...old, blushModel: val }))}
         min={-1}
         middle={0}
         max={6}
@@ -126,13 +106,15 @@ function Hair() {
       />
       <ColorPicker
         label="Cor do blush"
-        value={blushColor.get}
-        setValue={blushColor.set}
+        value={character.blushColor}
+        setValue={(val) => setCharacter((old) => ({ ...old, blushColor: val }))}
       />
       <Slider
         label="Opacidade de blush"
-        value={blushOpacity.get}
-        setValue={blushOpacity.set}
+        value={character.blushOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, blushOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -141,8 +123,10 @@ function Hair() {
       />
       <Slider
         label="Modelo do batom"
-        value={lipstickModel.get}
-        setValue={lipstickModel.set}
+        value={character.lipstickModel}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, lipstickModel: val }))
+        }
         min={-1}
         middle={0}
         max={9}
@@ -151,13 +135,17 @@ function Hair() {
       />
       <ColorPicker
         label="Cor do batom"
-        value={lipstickColor.get}
-        setValue={lipstickColor.set}
+        value={character.lipstickColor}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, lipstickColor: val }))
+        }
       />
       <Slider
         label="Opacidade do batom"
-        value={lipstickOpacity.get}
-        setValue={lipstickOpacity.set}
+        value={character.lipstickOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, lipstickOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -166,8 +154,10 @@ function Hair() {
       />
       <Slider
         label="Modelo de Manchas"
-        value={blemishesModel.get}
-        setValue={blemishesModel.set}
+        value={character.blemishesModel}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, blemishesModel: val }))
+        }
         min={-1}
         middle={0}
         max={23}
@@ -176,8 +166,10 @@ function Hair() {
       />
       <Slider
         label="Opacidade de Manchas"
-        value={blemishesOpacity.get}
-        setValue={blemishesOpacity.set}
+        value={character.blemishesOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, blemishesOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -186,8 +178,10 @@ function Hair() {
       />
       <Slider
         label="Modelo de envelhecimento"
-        value={ageingModel.get}
-        setValue={ageingModel.set}
+        value={character.ageingModel}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, ageingModel: val }))
+        }
         min={-1}
         middle={0}
         max={14}
@@ -196,8 +190,10 @@ function Hair() {
       />
       <Slider
         label="Intensidade de envelhecimento"
-        value={ageingOpacity.get}
-        setValue={ageingOpacity.set}
+        value={character.ageingOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, ageingOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -206,8 +202,10 @@ function Hair() {
       />
       <Slider
         label="Aspecto"
-        value={complexionModel.get}
-        setValue={complexionModel.set}
+        value={character.complexionModel}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, complexionModel: val }))
+        }
         min={-1}
         middle={0}
         max={11}
@@ -216,8 +214,10 @@ function Hair() {
       />
       <Slider
         label="Opacidade de aspecto"
-        value={complexionOpacity.get}
-        setValue={complexionOpacity.set}
+        value={character.complexionOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, complexionOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -226,8 +226,10 @@ function Hair() {
       />
       <Slider
         label="Danos de sol"
-        value={sundamageModel.get}
-        setValue={sundamageModel.set}
+        value={character.sundamageModel}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, sundamageModel: val }))
+        }
         min={-1}
         middle={0}
         max={10}
@@ -236,8 +238,10 @@ function Hair() {
       />
       <Slider
         label="Intensidade dos danos de sol"
-        value={sundamageOpacity.get}
-        setValue={sundamageOpacity.set}
+        value={character.sundamageOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, sundamageOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -246,8 +250,10 @@ function Hair() {
       />
       <Slider
         label="Sardas"
-        value={frecklesModel.get}
-        setValue={frecklesModel.set}
+        value={character.frecklesModel}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, frecklesModel: val }))
+        }
         min={-1}
         middle={0}
         max={17}
@@ -256,8 +262,10 @@ function Hair() {
       />
       <Slider
         label="Intensidade das sardas"
-        value={frecklesOpacity.get}
-        setValue={frecklesOpacity.set}
+        value={character.frecklesOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, frecklesOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
@@ -266,8 +274,10 @@ function Hair() {
       />
       <Slider
         label="Maquiagem"
-        value={makeupModel.get}
-        setValue={makeupModel.set}
+        value={character.makeupModel}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, makeupModel: val }))
+        }
         min={-1}
         middle={0}
         max={74}
@@ -276,8 +286,10 @@ function Hair() {
       />
       <Slider
         label="Opacidade da maquiagem"
-        value={makeupOpacity.get}
-        setValue={makeupOpacity.set}
+        value={character.makeupOpacity}
+        setValue={(val) =>
+          setCharacter((old) => ({ ...old, makeupOpacity: val }))
+        }
         min={-1}
         middle={0}
         max={0.99}
