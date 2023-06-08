@@ -38,7 +38,6 @@ Citizen.CreateThread(function()
         if (not inSkinShop and not nui) then
             if (nearestBlip) and nearestBlip['coord'] then
                 idle = 4
-                -- print('aqui')
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
                     openSkinShop(generalConfig[nearestBlip['config']], nearestBlip['coord'].xyz, nearestBlip['coord'].w)
                 end
