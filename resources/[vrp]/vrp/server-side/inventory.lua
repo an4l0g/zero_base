@@ -11,13 +11,11 @@ vRP.giveInventoryItem = function(user_id,idname,amount)
 	if user_id and idname and amount then
 		exports.zero_inventory:giveInventoryItem(user_id, idname, amount)
 	end
-	-- TriggerEvent("vRP:events","inventory:itemGived",{ user_id = user_id, idname = idname, amount = amount })
 end
 
 vRP.tryGetInventoryItem = function(user_id,idname,amount)
 	if user_id and idname and amount then
 		if exports.zero_inventory:tryGetInventoryItem(user_id, idname, amount) then
-			-- TriggerEvent("vRP:events","inventory:itemLosed",{ user_id = user_id, idname = idname, amount = amount })
 			return true
 		end
 	end
@@ -53,7 +51,6 @@ end
 
 vRP.setInventoryMaxWeight = function(user_id,max)
     exports.zero_inventory:setInventoryMaxWeight(user_id, max)
-    TriggerEvent("vRP:events","inventory:maxWeight",{ user_id = user_id, max = max })
 end
 
 vRP.varyInventoryMaxWeight = function(user_id,vary)
@@ -67,7 +64,6 @@ vRP.clearInventory = function(user_id)
 	local source = vRP.getUserSource(user_id)
 	if source then
 		exports.zero_inventory:clearInventory(user_id)
-		TriggerEvent("vRP:events","inventory:Cleaned",{user_id = user_id})
 		if not vRP.hasPermission(user_id,'mochila.permissao') then
 			vRP.setInventoryMaxWeight(user_id, 6)
 			SetPedComponentVariation(GetPlayerPed(source), 5, 0);
@@ -76,10 +72,7 @@ vRP.clearInventory = function(user_id)
 end
 
 
-local webhookdied = "https://discord.com/api/webhooks/1039968286647009300/AuhMoqwTHmJwosEnLbp6LRC--uPPNVqUSlLWhGhn1tzmmh-3Oil3ochcYv7SVeQ3y34d"
---========================================================================================
--- Muamba Inventory
---========================================================================================
+local webhookdied = ""
 vRP.itemBodyList = function(item)
 	return exports.zero_inventory:getItemInfo(item) or {}
 end
