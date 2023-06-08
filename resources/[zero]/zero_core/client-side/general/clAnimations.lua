@@ -48,6 +48,7 @@ end)
 
 RegisterNetEvent('zero_animation:sharedClearAnimation', function()
     local ped = PlayerPedId()
+    vRP.DeletarObjeto()
     ClearPedTasks(ped); DetachEntity(ped, true, false);
 end)
 
@@ -59,9 +60,11 @@ RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
     vRP.DeletarObjeto()
     local syncOption = emote.syncOption
     local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
-    if (syncOption.attachTo) then
-        AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, 0),
-        syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+    if (syncOption) then
+        if (syncOption.attachTo) then
+            AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, syncOption.bone),
+            syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+        end
     end
 
     if (emote.extra) then emote.extra() end
@@ -87,9 +90,11 @@ RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)
     vRP.DeletarObjeto()
     local syncOption = emote.syncOption
     local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
-    if (syncOption.attachTo) then
-        AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, 0),
-        syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+    if (syncOption) then
+        if (syncOption.attachTo) then
+            AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, syncOption.bone),
+            syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+        end
     end
 
     if (emote.extra) then emote.extra() end
@@ -142,6 +147,17 @@ apontarThread = function(state)
             Citizen.InvokeNative(0xD5BB4025AE449A4E,ped,'Heading',camHeading*-1.0+1.0)
             Citizen.InvokeNative(0xB0A6CFD2C69C1088,ped,'isBlocked',blocked)
             Citizen.InvokeNative(0xB0A6CFD2C69C1088,ped,'isFirstPerson',Citizen.InvokeNative(0xEE778F8C7E1142E2,Citizen.InvokeNative(0x19CAFA3C87F7C2FF))==4)
+            Citizen.Wait(1)
+        end
+    end)
+end
+
+local disableStart = false
+disableActions = function(state)
+    disableStart = state
+    Citizen.CreateThread(function()
+        while (disableStart) do
+            DisableControlAction(0, 21, true)
             Citizen.Wait(1)
         end
     end)

@@ -48,6 +48,5 @@ RegisterCommand('ec', function(source, args)
 end)
 
 RegisterNetEvent('zero_animation:sharedServer', function(target)
-    print(target)
     TriggerClientEvent('zero_animation:sharedClearAnimation', target)
 end)

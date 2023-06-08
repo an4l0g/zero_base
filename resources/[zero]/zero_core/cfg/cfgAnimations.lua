@@ -1,5 +1,7 @@
 configs = {}
 
+local cancelKeyMapping = false
+
 configs.animations = {
     ['keyMapping'] = {
         ['cruzarBraco'] = {
@@ -7,7 +9,7 @@ configs.animations = {
             text = 'Animação - Cruzar o Braço',
             action = function()
                 local ped = PlayerPedId()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@heists@heist_corona@single_team', 'single_team_loop_boss', 3)) then
                         vRP.DeletarObjeto()
                     else
@@ -23,7 +25,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'mini@strip_club@idles@bouncer@base', 'base', 3)) then
                         vRP.DeletarObjeto()
                     else
@@ -39,7 +41,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@mp_player_intselfiethe_bird', 'idle_a', 3)) then
                         vRP.DeletarObjeto()
                     else
@@ -55,7 +57,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
                         vRP.DeletarObjeto()
                     else
@@ -82,7 +84,9 @@ configs.animations = {
                 local menuCelular = vRP.getMenuCelular()
                 TriggerEvent('vRP:CancelAnimations')
                 TriggerEvent('zero_animations:cancelSharedAnimation')
+                cancelKeyMapping = false
                 if (GetEntityHealth(ped) > 101 and not menuCelular) then
+                    disableActions(false)
                     vRP.DeletarObjeto()
                     ClearPedTasks(ped)
                 end
@@ -94,7 +98,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
                         vRP.DeletarObjeto()
                     else
@@ -110,7 +114,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@mugging3', 'handsup_standing_base', 3) then
                         vRP.DeletarObjeto()
                     else
@@ -126,7 +130,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     vRP.playAnim(true, {{ 'anim@mp_player_intincarthumbs_upbodhi@ps@', 'enter' }}, false)
                 end
             end
@@ -137,7 +141,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     vRP.playAnim(true, {{ 'rcmnigel1c', 'hailing_whistle_waive_a' }}, false)
                 end
             end
@@ -148,7 +152,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     vRP.playAnim(true, {{ 'anim@mp_player_intcelebrationmale@salute', 'salute' }}, false)
                 end
             end
@@ -159,7 +163,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     vRP.playAnim(true, {{ 'anim@mp_player_intselfiethumbs_up', 'idle_a' }}, false)
                 end
             end
@@ -170,7 +174,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     vRP.playAnim(true, {{ 'anim@mp_player_intupperface_palm', 'idle_a' }}, false)
                 end
             end
@@ -181,7 +185,7 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
-                if (GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     vRP.CarregarAnim('anim@mp_point')
                     if (not LocalPlayer.state.animApontar) then
                         SetPedCurrentWeaponVisible(ped, 0, 1, 1, 1)
@@ -223,7 +227,8 @@ configs.animations = {
         },
     },
     ['shared'] = {
-        ['giveostopio'] = {
+        ['otoscopio'] = {
+            title = '[Médico] - Otoscopia',
             dict = 'gndostopiomedic@animations',
             anim = 'gndostopiomedic_clip',
             prop = 'gnd_ostopio_medic_prop',
@@ -233,6 +238,7 @@ configs.animations = {
             andar = false,
             loop = true,
             extra = function()
+                cancelKeyMapping = true
                 RequestAnimDict('gndostopiomedic@animations')
                 while (not HasAnimDictLoaded('gndostopiomedic@animations')) do Citizen.Wait(0); end;
                 TaskPlayAnim(PlayerPedId(), 'gndostopiomedic@animations', 'gndostopiomedic_clip', 4.0, 4.0, -1, 50, 0.0)
@@ -246,19 +252,21 @@ configs.animations = {
                 yRot = 0.0,
                 zRot = 280.0
             },
-            otherAnim = 'receivepaciente',
+            otherAnim = 'otoscopio2',
             type = 'hospital',
             perm = 'hospital.permissao'
         },
-        ['receivepaciente'] = {
+        ['otoscopio2'] = {
+            title = '[Paciente] - Otoscopia',
             dict = 'gndostopiopacient@animations',
             anim = 'gndostopiopacient_clip',
             andar = false,
             loop = true,
-            type = 'hospital',
-            perm = 'hospital.permissao'
+            otherAnim = 'otoscopio',
+            type = 'hospital'
         },
-        ['giveostopiokid'] = {
+        ['otoscopio3'] = {
+            title = '[Médico] - Otoscopia criança',
             dict = 'gndkidotoscopiomedic@animations',
             anim = 'gndkidotoscopiomedic_clip',
             prop = 'gnd_ostopio_medic_prop',
@@ -268,6 +276,7 @@ configs.animations = {
             andar = false,
             loop = true,
             extra = function()
+                cancelKeyMapping = true
                 RequestAnimDict('gndkidotoscopiomedic@animations')
                 while (not HasAnimDictLoaded('gndkidotoscopiomedic@animations')) do Citizen.Wait(0); end;
                 TaskPlayAnim(PlayerPedId(), 'gndkidotoscopiomedic@animations', 'gndkidotoscopiomedic_clip', 4.0, 4.0, -1, 10, 0.0)
@@ -281,28 +290,484 @@ configs.animations = {
                 yRot = 0.0,
                 zRot = 280.0
             },
-            otherAnim = 'receivepacientekid',
+            otherAnim = 'otoscopio4',
             type = 'hospital',
             perm = 'hospital.permissao'
         },
-        ['receivepacientekid'] = {
+        ['otoscopio4'] = {
+            title = '[Paciente] - Otoscopia criança',
             dict = 'gndkidotoscopiopacient@animations',
             anim = 'gndkidotoscopiopacient_clip',
             andar = false,
             loop = true,
+            otherAnim = 'otoscopio3',
+            type = 'hospital'
+        },
+        ['cadeiraderodas'] = {
+            title = '[Médico] - Cadeira de rodas',
+            dict = 'gndempurrandochairwhell@animations',
+            anim = 'gndempurrandochairwhell_clip',
+            prop = 'gnd_cadeira_de_rodas_prop',
+            flag = 50,
+            hand = 28422,
+            pos = { 0.81, 0.09, -0.24, 51.64, -91.5, 160.97 },
+            andar = true,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+                RequestAnimDict('gndempurrandochairwhell@animations')
+                while (not HasAnimDictLoaded('gndempurrandochairwhell@animations')) do Citizen.Wait(0); end;
+                TaskPlayAnim(PlayerPedId(), 'gndempurrandochairwhell@animations', 'gndempurrandochairwhell_clip', 4.0, 4.0, -1, 50, 0.0)
+                disableActions(true)
+            end,
+            syncOption = {
+                attachTo = false,
+                bone = 28442,
+                xPos = 0.81,
+                yPos = 0.09,
+                zPos = -0.24,
+                xRot = 51.64,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'cadeiraderodas2',
             type = 'hospital',
-            perm = 'hospital.permissao'
+            perm = 'hospital.permissao'  
+        },
+        ['cadeiraderodas2'] = {
+            title = '[Paciente] - Cadeira de rodas',
+            dict = 'gndcadeirantepernaquebrada@animations',
+            anim = 'gndcadeirantepernaquebrada_clip',
+            andar = false,
+            loop = true,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.0,
+                yPos = 0.8,
+                zPos = 0.0,
+                xRot = -49.31,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'cadeiraderodas',
+            type = 'hospital'
+        },
+        ['casal'] = {
+            title = '[Mulher] - Holdface',
+            dict = 'genesismods@bmv_holdfacef',
+            anim = 'holdfacef',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.0,
+                yPos = 0.37,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 180.0
+            },
+            otherAnim = 'casal2',
+            type = 'casal'
+        },
+        ['casal2'] = {
+            title = '[Homem] - Holdface',
+            dict = 'genesismods@bmv_holdfacem',
+            anim = 'holdfacem',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal',
+            type = 'casal'
+        },
+        ['casal3'] = {
+            title = '[Mulher] - Holdhands',
+            dict = 'genesismods@bmv_holdhandsf',
+            anim = 'holdhandsf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.0,
+                yPos = 0.61,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 180.0
+            },
+            otherAnim = 'casal4',
+            type = 'casal'
+        },
+        ['casal4'] = {
+            title = '[Homem] - Holdhands',
+            dict = 'genesismods@bmv_holdhandsm',
+            anim = 'holdhandsm',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal3',
+            type = 'casal'
+        },
+        ['casal5'] = {
+            title = '[Mulher] - Hug',
+            dict = 'genesismods@bmv_hugf',
+            anim = 'hugf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = -0.22,
+                yPos = -0.15,
+                zPos = -0.01,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'casal6',
+            type = 'casal'
+        },
+        ['casal6'] = {
+            title = '[Homem] - Hug',
+            dict = 'genesismods@bmv_hugm',
+            anim = 'hugm',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal5',
+            type = 'casal'
+        },
+        ['casal7'] = {
+            title = '[Mulher] - Hug 2',
+            dict = 'genesismods@bmv_hug2f',
+            anim = 'hug2f',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.075,
+                yPos = 0.35,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 180.0
+            },
+            otherAnim = 'casal8',
+            type = 'casal'
+        },
+        ['casal8'] = {
+            title = '[Homem] - Hug 2',
+            dict = 'genesismods@bmv_hug2m',
+            anim = 'hug2m',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal7',
+            type = 'casal'
+        },
+        ['casal9'] = {
+            title = '[Mulher] - Kissing hand',
+            dict = 'genesismods@bmv_kissinghandf',
+            anim = 'kissinghandf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.3,
+                yPos = 0.4,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 180.0
+            },
+            otherAnim = 'casal10',
+            type = 'casal'
+        },
+        ['casal10'] = {
+            title = '[Homem] - Kissing hand',
+            dict = 'genesismods@bmv_kissinghandm',
+            anim = 'kissinghandm',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal9',
+            type = 'casal'
+        },
+        ['casal11'] = {
+            title = '[Mulher] - Laying',
+            dict = 'genesismods@bmv_layingf',
+            anim = 'layingf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 1.4,
+                yPos = -0.005,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'casal12',
+            type = 'casal'
+        },
+        ['casal12'] = {
+            title = '[Homem] - Laying',
+            dict = 'genesismods@bmv_layingm',
+            anim = 'layingm',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal11',
+            type = 'casal'
+        },
+        ['casal13'] = {
+            title = '[Mulher] - Stare',
+            dict = 'genesismods@bmv_staref',
+            anim = 'staref',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = -0.05,
+                yPos = -0.4,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 180.0
+            },
+            otherAnim = 'casal14',
+            type = 'casal'
+        },
+        ['casal14'] = {
+            title = '[Homem] - Stare',
+            dict = 'genesismods@bmv_starem',
+            anim = 'starem',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal13',
+            type = 'casal'
+        },
+        ['casal15'] = {
+            title = '[Mulher] - Pedido',
+            dict = 'genesismods@bmv_proposalf',
+            anim = 'proposalf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = -0.2,
+                yPos = 1.0,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 180.0
+            },
+            otherAnim = 'casal16',
+            type = 'casal'
+        },
+        ['casal16'] = {
+            title = '[Homem] - Pedido',
+            dict = 'genesismods@bmv_proposalm',
+            anim = 'proposalm',
+            prop = 'love_anel_genesis',
+            flag = 50,
+            hand = 28422,
+            pos = { 0.08, 0.03, -0.08, 220.0, 11.51, 280.0 },
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'casal15',
+            type = 'casal'
+        },
+        ['sexo'] = {
+            title = '[Mulher] - 69',
+            dict = 'genesismods@oralfixation_69f',
+            anim = '69f',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = -0.6,
+                yPos = 0.0,
+                zPos = 0.1,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'sexo2',
+            type = 'nsfw'
+        },
+        ['sexo2'] = {
+            title = '[Homem] - 69',
+            dict = 'genesismods@oralfixation_69m',
+            anim = '69m',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            otherAnim = 'sexo',
+            type = 'casal'
+        },
+        ['sexo3'] = {
+            title = '[Mulher] - Blowjob',
+            dict = 'genesismods@oralfixation_blowjobf',
+            anim = 'blowjobf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.0,
+                yPos = -0.6,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'sexo4',
+            type = 'nsfw'
+        },
+        ['sexo4'] = {
+            title = '[Homem] - Blowjob',
+            dict = 'genesismods@oralfixation_blowjobm',
+            anim = 'blowjobm',
+            andar = false,
+            loop = true,
+            otherAnim = 'sexo3',
+            type = 'nsfw'
+        },
+        ['sexo5'] = {
+            title = '[Mulher] - Deepthroat',
+            dict = 'genesismods@oralfixation_deepthroatf',
+            anim = 'deepthroatf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.0,
+                yPos = -0.6,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'sexo6',
+            type = 'nsfw'
+        },
+        ['sexo6'] = {
+            title = '[Homem] - Deepthroat',
+            dict = 'genesismods@oralfixation_deepthroatm',
+            anim = 'deepthroatm',
+            andar = false,
+            loop = true,
+            otherAnim = 'sexo5',
+            type = 'nsfw'
+        },
+        ['sexo7'] = {
+            title = '[Mulher] - Licking',
+            dict = 'genesismods@oralfixation_lickingf',
+            anim = 'lickingf',
+            andar = false,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+            end,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.0,
+                yPos = -0.8,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'sexo8',
+            type = 'nsfw'
+        },
+        ['sexo8'] = {
+            title = '[Homem] - Licking',
+            dict = 'genesismods@oralfixation_lickingm',
+            anim = 'lickingm',
+            andar = false,
+            loop = true,
+            otherAnim = 'sexo7',
+            type = 'nsfw'
         },
     },
     ['animations'] = {
         ['continencia'] = {
+            title = 'Continência vibrante',
             dict = 'genesismodssalute',
-            anim = 'idle',
-            andar = true,
-            loop = true,
+            anim = 'salute',
+            andar = false,
+            loop = false,
             type = 'cumprimentos'
         },
         ['continencia2'] = {
+            title = 'Continência',
             dict = 'mp_player_int_uppersalute',
             anim = 'mp_player_int_salute',
             andar = true,
@@ -310,6 +775,7 @@ configs.animations = {
             type = 'cumprimentos'
         },
         ['raiox'] = {
+            title = 'Raio X',
             dict = 'gndraioxavaliando@animations',
             anim = 'gndraioxavaliando_clip',
             prop = 'gnd_raio_x_paper',
@@ -322,6 +788,80 @@ configs.animations = {
 	            TaskPlayAnim(PlayerPedId(), 'gndraioxavaliando@animations', 'gndraioxavaliando_clip', 4.0, 4.0, -1, 50, 0.0)
             end,
             andar = false,
+            loop = true,
+            type = 'hospital'
+        },
+        ['testededo'] = {
+            title = 'Teste de dedo',
+            prop = 'gnd_test_dedo_prop',
+            flag = 50,
+            hand = 28422,
+            pos = { 0.14, 0.03, -0.03, -34.12, 11.51, -108.09 },
+            andar = false,
+            loop = true,
+            type = 'hospital'
+        },
+        ['soro'] = {
+            title = 'Soro',
+            dict = 'gndpacientecarregandosoro@animations',
+            anim = 'gndpacientecarregandosoro_clip',
+            prop = 'gnd_prop_soro',
+            flag = 50,
+            hand = 60309,
+            pos = { 0.0, -0.28, 0.04, -97.4, -98.66, 10.89 },
+            extra = function()
+                disableActions(true)
+                RequestAnimDict('gndpacientecarregandosoro@animations')
+                while not HasAnimDictLoaded('gndpacientecarregandosoro@animations') do Citizen.Wait(0); end;
+	            TaskPlayAnim(PlayerPedId(), 'gndpacientecarregandosoro@animations', 'gndpacientecarregandosoro_clip', 4.0, 4.0, -1, 49, 0.0)
+            end,
+            andar = true,
+            loop = true,
+            type = 'hospital'
+        },
+        ['inalacao'] = {
+            title = 'Inalação',
+            dict = 'gndinalacaopacientepackhospital@animations',
+            anim = 'gndinalacaopacientepackhospital_clip',
+            prop = 'gnd_inalacao_prop',
+            flag = 50,
+            hand = 60309,
+            pos = { 0.09, 0.01, 0.04, -191.18, -2.42, 113.74 },
+            extra = function()
+                RequestAnimDict('gndinalacaopacientepackhospital@animations')
+                while not HasAnimDictLoaded('gndinalacaopacientepackhospital@animations') do Citizen.Wait(0); end;
+	            TaskPlayAnim(PlayerPedId(), 'gndinalacaopacientepackhospital@animations', 'gndinalacaopacientepackhospital_clip', 4.0, 4.0, -1, 15, 0.0)
+            end,
+            andar = true,
+            loop = true,
+            type = 'hospital'
+        },
+        ['medico'] = {
+            title = 'Maleta de utensílios',
+            prop = 'gnd_bag_paramedic',
+            flag = 50,
+            hand = 28422,
+            pos = { 0.19, -0.01, 0.03, 6.04, -87.58, -124.32 },
+            extra = function()
+                RequestModel(GetHashKey('gnd_bag_paramedic'))
+                while not HasModelLoaded(GetHashKey('gnd_bag_paramedic')) do Citizen.Wait(10); end;
+            end,
+            andar = true,
+            loop = true,
+            type = 'hospital',
+            perm = 'hospital.permissao'
+        },
+        ['medico2'] = {
+            title = 'Maleta do desfribilador',
+            prop = 'gnd_desfribilador_maleta',
+            flag = 50,
+            hand = 28422,
+            pos = { 0.2, 0.0, 0.04, -14.52, -84.7, 68.97 },
+            extra = function()
+                RequestModel(GetHashKey('gnd_desfribilador_maleta'))
+                while not HasModelLoaded(GetHashKey('gnd_desfribilador_maleta')) do Citizen.Wait(10); end;
+            end,
+            andar = true,
             loop = true,
             type = 'hospital'
         },
