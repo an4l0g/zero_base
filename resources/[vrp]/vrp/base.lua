@@ -263,7 +263,7 @@ end
 -- PEGAR ID E SOURCE DO JOGADOR
 ------------------------------------------------------------------
 vRP.getUserId = function(source)
-	if source ~= nil then
+	if (source ~= nil) then
 		local ids = GetPlayerIdentifiers(source)
 		if ids ~= nil and #ids > 0 then
 			return cacheUsers['users'][ids[1]]

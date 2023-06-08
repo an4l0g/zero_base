@@ -4,7 +4,6 @@ Proxy = module('vrp','lib/Proxy')
 Tools = module('vrp','lib/Tools')
 
 --Globals
-config = {}
 webhooks = {}
 
 -- Proxies
