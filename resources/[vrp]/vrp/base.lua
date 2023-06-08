@@ -389,7 +389,7 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 				if (GetPlayerName(cacheUsers['user_sources'][user_id]) ~= nil) then
 					deferrals.done('Olá '..name..', verificamos que o seu passaporte se encontra com problemas, tente logar novamente.')
 					TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-					DropPlayer(cacheUsers['user_sources'][user_id], '[GRUPO BRAZUCA]: Você foi kikado, tente logar novamente!')
+					DropPlayer(cacheUsers['user_sources'][user_id], '[ZERO]: Você foi kikado, tente logar novamente!')
 					return
 				end
 			end
