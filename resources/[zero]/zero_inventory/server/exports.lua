@@ -22,16 +22,20 @@ sInventory.giveBagItem = function(bagType, item, amount)
                 if result ~= nil then
                     updatedSlots = result
                 else
-                    config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_full_bag_error)
+                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_full_bag_error)
                 end
             end
-            sInventory.modifyBag(bagType, updatedSlots)
+            if updatedSlots then
+                sInventory.modifyBag(bagType, updatedSlots)
+                return true
+            end
         else
             updatedSlots[0] = { index = item, amount = amount }
             vRP.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = bagType, weight = 0 })
+            return true
         end
     else
-        config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item)
+        config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
     end
 end
 exports("giveBagItem", sInventory.giveBagItem)
@@ -66,7 +70,7 @@ sInventory.giveInventoryItem = function(user_id, item, amount)
                     if result ~= nil then
                         updatedSlots = result
                     else
-                        config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_full_bag_error)
+                        config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_full_bag_error)
                     end
                 end
                 sInventory.modifyBag('bag:'..user_id, updatedSlots)
@@ -75,7 +79,7 @@ sInventory.giveInventoryItem = function(user_id, item, amount)
                 vRP.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = 'bag:'..user_id, weight = config.bag_max_weight })
             end
         else
-            config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item)
+            config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
         end
     end)
     if (not ok) then
@@ -97,7 +101,6 @@ sInventory.tryGetInventoryItem = function(user_id, index, amount)
     local isRemovedItem = false
 
     for k,v in pairs(slots) do
-        print(json.encode(v))
         if v.index == index and tonumber(v.amount) >= tonumber(amount) then
             local currentAmount = tonumber(v.amount) - tonumber(amount)
             if currentAmount > 0 then
@@ -117,7 +120,7 @@ sInventory.tryGetInventoryItem = function(user_id, index, amount)
                 if currentAmount > 0 then
                     hotbarSlots[tostring(k)].amount = currentAmount
                 else 
-                    thotbarSlots[tostring(k)] = nil
+                    hotbarSlots[tostring(k)] = nil
                 end
                 isRemovedItem = true
                 break;
@@ -199,7 +202,7 @@ sInventory.clearInventory = function(user_id)
 
     vRP.execute('zero_inventory:deleteBag', { bag_type = 'bag:'..user_id })
     vRP.execute('zero_inventory:deleteBag', { bag_type = 'hotbar:'..user_id })
-    config.functions.serverNotify(source, '-', config.texts.notify_title, config.texts.notify_success_delete_bag('USER_'..user_id))
+    config.functions.serverNotify(source, config.texts.notify_title, config.texts.notify_success_delete_bag('USER_'..user_id))
 end
 exports('clearInventory', sInventory.clearInventory)
 

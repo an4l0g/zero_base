@@ -58,11 +58,11 @@ renderChests = function()
                         if hasPermission then 
                             cInventory.openInventory('open', currentType)
                         else 
-                            config.functions.clientNotify('-', config.texts.notify_title, config.texts.notify_no_has_permission, 5000)
+                            config.functions.clientNotify(config.texts.notify_title, config.texts.notify_no_has_permission, 5000)
                         end
                     end
                 else 
-                    config.functions.clientNotify('-', config.texts.notify_title, config.texts.notify_nearest_player, 5000)
+                    config.functions.clientNotify(config.texts.notify_title, config.texts.notify_nearest_player, 5000)
                 end
             end
         else
@@ -83,14 +83,10 @@ hotbarListener = function()
                 local hotbar = sInventory.getHotbar()
                 local currentIndex = nil
 
-                for i,c in pairs(hotbar) do
-                    if c.pos == v then
-                        currentIndex = c.index
-                    end
-                end
+                currentIndex = hotbar[tostring(v)]
 
                 if currentIndex ~= nil and not (disableActions) then
-                    sInventory.useItem(currentIndex, amount)
+                    sInventory.useItem(currentIndex.index, amount)
                 end
             end
         end

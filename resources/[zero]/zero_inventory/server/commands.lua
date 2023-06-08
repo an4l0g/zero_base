@@ -8,9 +8,9 @@ RegisterCommand('item', function(source, args)
     if vRP.hasPermission(user_id, 'admin.permissao') then
         if config.items[item] then
             sInventory.giveInventoryItem(user_id, item, amount)    
-            configs.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_receive_item(amount, item))
+            configs.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_receive_item(amount, item))
         else
-            config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item)
+            config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
         end
 
         local identity = vRP.getUserIdentity(user_id)
@@ -34,6 +34,6 @@ RegisterCommand('clearground', function(source, args)
         droppedItems = {}
         TriggerClientEvent('updateDroppedItems', -1, droppedItems)
     else
-        config.functions.serverNotify(source, '-', config.texts.notify_title, config.texts.notify_no_has_permission)
+        config.functions.serverNotify(source, config.texts.notify_title, config.texts.notify_no_has_permission)
     end
 end)

@@ -1,5 +1,5 @@
 config.functions = {
-    clientNotify = function(msg_type, title, msg, time)
+    clientNotify = function(title, msg, time)
         TriggerEvent(
             'notify',
             title,
@@ -7,7 +7,7 @@ config.functions = {
             time
         )
     end,
-    serverNotify = function(source, msg_type, title, msg, time)
+    serverNotify = function(source, title, msg, time)
         local _source = source 
         TriggerClientEvent(
             'notify',

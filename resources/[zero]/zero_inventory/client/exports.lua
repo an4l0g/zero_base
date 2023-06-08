@@ -32,16 +32,20 @@ cInventory.openInventory = function(action, chestType, lootId)
 end
 exports('openInventory', cInventory.openInventory)
 
-cInventory.closeInventory = function()
+cInventory.closeInventory = function(data)
     verifyNearest = false
+    if data and data.message then
+        config.functions.clientNotify(config.texts.notify_title, data.message, 5000)
+    end
     disableActions = false
-    SendNUIMessage({ action = 'close' })
     SetNuiFocus(false, false)
-    FreezeEntityPosition(PlayerPedId(), false)
-
+    SendNUIMessage({
+        action = 'close'
+    })
+    
     local ped = PlayerPedId()
     if (pedCache[ped]) then
-        sInventory.callBackInteractions(pedCache[ped].receiveRequest, pedCache[ped].sendRequest)
+        sInventory.callBackInteractions(sendersTable[1], sendersTable[2])
         pedCache[ped] = nil
     else
         sInventory.checkAction()

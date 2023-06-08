@@ -33,4 +33,5 @@ config.texts = {
     gloveTitle = 'Porta Luva',
     notify_no_register_vehicle = 'Veículo não registrado!',
     notify_locked_vehicle = 'Veículo trancado!',
+    no_space = 'Você não possui slots disponíveis!',
 }

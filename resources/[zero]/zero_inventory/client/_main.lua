@@ -22,23 +22,7 @@ RegisterNetEvent('updateInventory', function()
 end)
 
 RegisterNuiCallback('closeInventory', function(data)
-    verifyNearest = false
-    if data.message then
-        config.functions.clientNotify('-', config.texts.notify_title, data.message, 5000)
-    end
-    disableActions = false
-    SetNuiFocus(false, false)
-    SendNUIMessage({
-        action = 'close'
-    })
-
-    local ped = PlayerPedId()
-    if (pedCache[ped]) then
-        sInventory.callBackInteractions(sendersTable[1], sendersTable[2])
-        pedCache[ped] = nil
-    else
-        sInventory.checkAction()
-    end
+    cInventory.closeInventory(data)
 end)
 
 RegisterNetEvent('zero_inventory:enableActions', function()
@@ -47,8 +31,4 @@ end)
 
 RegisterNetEvent('zero_inventory:disableActions', function()
     disableActions = true
-end)
-
-RegisterCommand('cds', function()
-    print(GetEntityCoords(PlayerPedId()))
 end)

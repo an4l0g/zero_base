@@ -34,6 +34,8 @@ export const ContentItem = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-weight: 100;
+    text-transform: uppercase;
 
     &:hover > .onHoverAppears {
       opacity: 1;
@@ -48,16 +50,16 @@ export const ContentItem = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 `;
 
 export const ItemWeight = styled.span`
   ${({ theme }) => css`
     color: ${theme.colors.text_primary};
-    font-size: 8px;
+    font-size: 0.55rem;
     position: absolute;
-    top: 4px;
+    top: 2px;
     right: 2px;
   `}
 `;
@@ -66,9 +68,9 @@ export const ItemAmount = styled.span`
   ${({ theme }) => css`
     color: ${theme.colors.text_primary};
     position: absolute;
-    font-size: 8px;
-    left: 4px;
-    top: 4px;
+    font-size: 0.55rem;
+    left: 3px;
+    top: 3px;
   `}
 `;
 
@@ -76,8 +78,8 @@ export const ItemName = styled.span`
   ${({ theme }) => css`
     color: ${theme.colors.text_primary};
     position: absolute;
-    font-size: 8px;
-    bottom: 4px;
+    font-size: 0.55rem;
+    bottom: 2px;
   `}
 `;
 

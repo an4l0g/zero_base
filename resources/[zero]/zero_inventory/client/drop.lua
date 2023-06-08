@@ -23,10 +23,10 @@ end)
 
 RegisterNuiCallback('dropItem', function(data)
     sInventory.dropItem(data.item, data.pos, data.amount)
-    cInventory.animation('pickup_object', 'pickup_low')
+    cInventory.animation('pickup_object', 'pickup_low', false)
 end)
 
 RegisterNuiCallback('getDroppedItem', function(data)
     sInventory.getDroppedItem(data.id, data.amount)
-    cInventory.animation('pickup_object', 'pickup_low')
+    cInventory.animation('pickup_object', 'pickup_low', false)
 end)

@@ -1,6 +1,4 @@
 cInventory.getChestInfo = function(chestType, lootId)
-    print(chestType, lootId)
-
     local chest = {}
     local chestInfo = split(chestType, ':')
     local prefix = chestInfo[1]
@@ -51,7 +49,7 @@ end
 RegisterKeyMapping("openCarChest", "Abrir Porta Malas/Luvas", 'KEYBOARD', "pageup")
 RegisterCommand("openCarChest", function()
     if vRP.getNearestPlayer(config.marker_dropped_item_distance + 1) ~= nil then
-        config.functions.clientNotify('-', config.texts.notify_title, config.texts.notify_nearest_player, 5000)
+        config.functions.clientNotify(config.texts.notify_title, config.texts.notify_nearest_player, 5000)
         return
     end
     local ped = PlayerPedId() 
@@ -67,10 +65,10 @@ RegisterCommand("openCarChest", function()
                     cInventory.openInventory('open', 'trunk:'..veh.carName..':'..veh.ownerId)
                 end
             else
-                config.functions.clientNotify('-', config.texts.notify_title, config.texts.notify_no_register_vehicle, 5000)
+                config.functions.clientNotify(config.texts.notify_title, config.texts.notify_no_register_vehicle, 5000)
             end
         else 
-            config.functions.clientNotify('-', config.texts.notify_title, config.texts.notify_locked_vehicle, 5000)
+            config.functions.clientNotify(config.texts.notify_title, config.texts.notify_locked_vehicle, 5000)
         end
     end
 end)

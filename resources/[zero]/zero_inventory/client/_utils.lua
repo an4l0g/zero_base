@@ -11,13 +11,6 @@ cInventory.create3DText = function(x, y, z, text, size)
 	DrawRect(_x,_y+0.0125,0.01+factor,0.03,0,0,0,80)
 end
 
-cInventory.animation = function(dict, anim)
-    local playerPed = PlayerPedId()
-
-    RequestAnimDict(dict)
-    while not HasAnimDictLoaded(anim) do
-        Citizen.Wait(100)
-    end
-
-    TaskPlayAnim(playerPed, dict, anim, 8.0, -8.0, -1, 0, 0, false, false, false)
+cInventory.animation = function(dict, anim, loop)
+    vRP.playAnim(true,{{dict,anim}},loop)
 end

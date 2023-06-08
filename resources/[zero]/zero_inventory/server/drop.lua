@@ -38,7 +38,7 @@ sInventory.dropItem = function(item, pos, amount)
         
         TriggerClientEvent('updateDroppedItems', -1, droppedItems)
     else
-        config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item)
+        config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
     end
 end
 
@@ -63,7 +63,7 @@ sInventory.getDroppedItem = function(id, amount)
     if currentItem ~= nil then
         sInventory.giveInventoryItem(user_id, currentItem, amount)
     else
-        config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item)
+        config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
     end
 
     TriggerClientEvent('updateDroppedItems', -1, droppedItems)

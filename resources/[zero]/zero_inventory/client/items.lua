@@ -12,7 +12,7 @@ RegisterNuiCallback('sendItem', function(data)
     if nearestPlayer ~= nil then
         sInventory.sendItem(nearestPlayer, data.item, data.amount)
     else
-        config.functions.clientNotify('-', config.texts.notify_title, config.texts.notify_nearest_player, 5000)
+        config.functions.clientNotify(config.texts.notify_title, config.texts.notify_nearest_player, 5000)
     end
 end)
 

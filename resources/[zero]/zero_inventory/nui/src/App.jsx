@@ -47,6 +47,11 @@ function App() {
     };
   }, []);
 
+  const close = async () => {
+    setShowInventory(false);
+    await request("closeInventory");
+  };
+
   return (
     <>
       {showInventory && (

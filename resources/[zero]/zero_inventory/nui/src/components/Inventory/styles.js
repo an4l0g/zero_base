@@ -39,6 +39,8 @@ export const HeadTitle = styled.strong`
   ${({ theme }) => css`
     color: ${theme.colors.text_primary};
     font-size: 0.8rem;
+    font-weight: 100;
+    text-transform: uppercase;
   `}
 `;
 
@@ -46,6 +48,7 @@ export const Kg = styled.div`
   ${({ theme }) => css`
     font-size: 0.8rem;
     color: ${theme.colors.text_primary};
+    font-weight: 400;
 
     &.full {
       color: ${theme.colors.error()};

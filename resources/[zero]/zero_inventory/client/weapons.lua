@@ -24,7 +24,6 @@ end
 
 
 cInventory.addAmmo = function(index, amount)
-    print("TESTI", amount)
     AddAmmoToPed(PlayerPedId(), index, tonumber(amount))
 end
 
@@ -41,7 +40,7 @@ cInventory.unequipWeapon = function(index)
         sInventory.giveInventoryItem(0, string.lower('m_'..index), ammoCount)
     end
     cInventory.closeInventory()
-    config.functions.clientNotify('-', config.texts.notify_title, config.texts.notify_unequip_weapon(config.items[string.lower(index)].name), 5000)
+    config.functions.clientNotify(config.texts.notify_title, config.texts.notify_unequip_weapon(config.items[string.lower(index)].name), 5000)
 end 
 
 RegisterNuiCallback('unequipWeapon', function(data)

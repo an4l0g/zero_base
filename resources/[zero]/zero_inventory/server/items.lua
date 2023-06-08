@@ -3,9 +3,10 @@
 -- -- Se houver posição disponível, retorna a bag atualizada
 -- -- Se não houver posição disponível, retorna nil
 sInventory.addNewItem = function(slots, max_slots, item, amount)
+    
     local updatedSlots = slots
     local createdItem = false 
-    for i=0,tonumber(max_slots) do
+    for i=0,tonumber(max_slots - 1) do
         local usedPos = false
         if slots[tostring(i)] then
             usedPos = true
@@ -55,16 +56,19 @@ sInventory.sendItem = function(user_source, index, amount)
     local id = vRP.getUserId(_source)
     local user_id = vRP.getUserId(user_source)
 
+    
     if sInventory.tryGetInventoryItem(id, index, amount) then
         if sInventory.tryAddInventoryItem(user_id, index, amount) then
-            config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_send_item(amount, config.items[index].name))
-            config.functions.serverNotify(user_source, '-', config.texts.notify_title, config.texts.notify_receive_item(amount, config.items[index].name))
+            cInventory.animation(_source, 'mp_common', 'givetake1_a', false)
+            cInventory.animation(user_source, 'mp_common', 'givetake1_a', false)
+            config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_send_item(amount, config.items[index].name))
+            config.functions.serverNotify(user_source, config.texts.notify_title, config.texts.notify_receive_item(amount, config.items[index].name))
         else
             sInventory.giveBagItem('bag:'..id, index, amount)
-            config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_player_no_weight)
+            config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_player_no_weight)
         end
     else
-        config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_player_no_item)
+        config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_player_no_item)
     end
     TriggerClientEvent('inventory:close', _source)
 end
@@ -73,8 +77,6 @@ sInventory.useItem = function(index, amount)
     local _source = source
     local user_id = vRP.getUserId(_source)
     local item = config.items[index]
-
-    print('testeeee', amount)
 
     webhook(config.webhooks.useItems, '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
 
@@ -97,12 +99,12 @@ sInventory.useItem = function(index, amount)
             if weapons[string.upper(index)] == nil then
                 if vRP.tryGetInventoryItem(user_id, index, 1) then
                     vRPclient.giveWeapons(_source, {[index] = { ammo = ammo }}, false, GlobalState.weaponToken)
-                    config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_equip_weapon(vRP.itemNameList(index)), 5000)
+                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(vRP.itemNameList(index)), 5000)
                 else 
-                    config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
+                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
                 end
             else
-                config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_weapon_already_equiped, 5000)
+                config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_weapon_already_equiped, 5000)
             end
         end
         
@@ -110,9 +112,7 @@ sInventory.useItem = function(index, amount)
             local newIndex = string.gsub(index, 'm_', '')
             local currentWeapon = weapons[string.upper(newIndex)]
             
-            print(json.encode(weapons))
             if currentWeapon ~= nil then
-                print("Passou")
                 local customTotalAmmo = 250
                 if newIndex == 'weapon_petrolcan' then
                     customTotalAmmo = 4000
@@ -127,12 +127,12 @@ sInventory.useItem = function(index, amount)
                 end
                 if vRP.tryGetInventoryItem(user_id, newIndex, currentAmmo) then
                     cInventory.addAmmo(_source, newIndex, currentAmmo)
-                    config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_equip_weapon(vRP.itemNameList(index)), 5000)
+                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(vRP.itemNameList(index)), 5000)
                 else
-                    config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
+                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
                 end
             else
-                config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_no_weapon_ammo, 5000)
+                config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_no_weapon_ammo, 5000)
             end
         end
     end
@@ -169,15 +169,13 @@ sInventory.changeItemPosition = function(cItem, cPos, nItem, nPos, amount)
     local cSlots = sInventory.getBag(cItem.bagType)
     
     if not sInventory.validateItem(cSlots, cItem, cPos) then 
-        config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
+        config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
         cInventory.closeInventory(_source)
-        return 
     end
     if cItem.bagType == nItem.bagType then
         if not sInventory.validateItem(cSlots, nItem, nPos) then 
-            config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
+            config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
             cInventory.closeInventory(_source)
-            return 
         end
         
         if cItem.index == nItem.index then
@@ -200,18 +198,15 @@ sInventory.changeItemPosition = function(cItem, cPos, nItem, nPos, amount)
                     cSlots[tostring(nPos)] = newItem
                 end
             else 
-                print("E6")
                 cSlots[tostring(cPos)] = nItem
                 cSlots[tostring(nPos)] = cItem 
             end
         end
     else
-        print("E7")
         nSlots = sInventory.getBag(nItem.bagType)
         
         if not sInventory.validateItem(nSlots, nItem, nPos) then 
-            print("E8")
-            config.functions.serverNotify(_source, '-', config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
+            config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
             cInventory.closeInventory(_source)
             return 
         end
@@ -219,11 +214,23 @@ sInventory.changeItemPosition = function(cItem, cPos, nItem, nPos, amount)
         local max_slots = 0
         
         if tonumber(cItem.amount) == tonumber(amount) then 
-            cSlots[tostring(cPos)] = nil
-            sInventory.giveBagItem(nItem.bagType, cItem.index, amount)
+            local result = sInventory.giveBagItem(nItem.bagType, cItem.index, amount)
+            if result then
+                cSlots[tostring(cPos)] = nil
+            else
+                config.functions.serverNotify(_source, config.texts.notify_title, config.texts.no_space, 5000)
+                cInventory.closeInventory(_source)
+                return
+            end
         else
-            cSlots[tostring(cPos)].amount = cItem.amount - amount
-            sInventory.giveBagItem(nItem.bagType, cItem.index, amount)
+            local result = sInventory.giveBagItem(nItem.bagType, cItem.index, amount)
+            if result then 
+                cSlots[tostring(cPos)].amount = cItem.amount - amount
+            else
+                config.functions.serverNotify(_source, config.texts.notify_title, config.texts.no_space, 5000)
+                cInventory.closeInventory(_source)
+                return
+            end
         end
     end
     

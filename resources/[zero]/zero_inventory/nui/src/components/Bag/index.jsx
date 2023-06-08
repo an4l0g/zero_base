@@ -18,7 +18,7 @@ function Bag({
   const generateWeight = useMemo(() => {
     let currentSlots = slots;
 
-    if (bagType === "player") {
+    if (bagType.includes("bag")) {
       currentSlots = [...Object.values(slots), ...Object.values(hotbar.slots)];
     } else {
       currentSlots = Object.values(slots);

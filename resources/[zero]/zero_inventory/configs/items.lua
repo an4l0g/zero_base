@@ -3015,7 +3015,6 @@ config.items = {
 
 
 function consumableItem(index)
-    print(index)
    local _source = source
    local user_id = vRP.getUserId(_source)
    local customTimeout = 10000
@@ -3206,7 +3205,6 @@ function adoptPet(pet)
 end
 
 function pescar(source, user_id, item)
-    print(user_id, item, vRP.hasPermission(user_id, "hab-pesca.permissao"))
     if true then
         local lucky = 0
         if item == 'vara-pesca-pro' then
