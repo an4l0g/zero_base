@@ -88,7 +88,6 @@ end
 resetClothes = function()
     local clothes = {
         [GetHashKey('mp_m_freemode_01')] = {
-            ['gender'] = 'male',
             ['mask'] = { 0, 0, 0 }, -- 1
             ['hair'] = { 0, 0, 0 }, -- 2
             ['torso'] = { 15, 0, 2 }, -- 3
@@ -107,7 +106,6 @@ resetClothes = function()
             ['bracelet'] = { -1, 0 } --p7
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            ['gender'] = 'female',
             ['mask'] = { 0, 0, 0 }, -- 1
             ['hair'] = { 0, 0, 0 }, -- 2
             ['torso'] = { 15, 0, 1 }, -- 3
@@ -270,7 +268,7 @@ local currentCharacter = {
     makeupOpacity = 0.99,
 }
 
-local atualGender = 'masculino'
+local currentGender = 'masculino'
 
 local setGender = function(gender) 
     local ped = PlayerPedId()
@@ -301,11 +299,7 @@ local setGender = function(gender)
 
     resetClothes()
 
-    if (gender == 'male') then
-        SetPedHeadBlendData(ped, 21, 0, 0, 21, 0, 0, 0.8, 0.8, 0.0, false)
-    else
-        SetPedHeadBlendData(ped, 21, 0, 0, 21, 0, 0, 0.2, 0.2, 0.0, false)
-    end
+    SetPedHeadBlendData(ped, 0, 21, 0, 0, 0, 0, 0.6, 0.0, 0.0, false)
 end
 
 initCreator = function()
@@ -389,7 +383,8 @@ RegisterNuiCallback('changeCharacter', function(data)
 
     -- GENDER
     currentCharacter.gender = data.gender
-    if (atualGender ~= data.gender) then
+    if (currentGender ~= data.gender) then
+        currentGender = data.gender
         if (data.gender == 'masculino') then setGender('male'); else setGender('female'); end;
     end
 
