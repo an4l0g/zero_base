@@ -4,18 +4,21 @@ import { AiOutlineIdcard, AiOutlineCheckCircle } from "react-icons/ai";
 import { RiParentLine } from "react-icons/ri";
 import { BiFace } from "react-icons/bi";
 import { GiComb } from "react-icons/gi";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Identity from "./Identity";
 import Parents from "./Parents";
 import Face from "./Face";
 import Hair from "./Hair";
 import useRequest from "../../hooks/useRequest";
+import CreationContext from "../../contexts/CreationContext";
 
 function Appearance() {
   const [tab, setTab] = useState("identity");
   const { request } = useRequest();
+  const { setCreation } = useContext(CreationContext);
 
   const handleFinish = async () => {
+    setCreation(false);
     await request("finish");
   };
 
