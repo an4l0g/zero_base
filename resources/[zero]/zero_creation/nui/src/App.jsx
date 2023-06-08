@@ -11,7 +11,6 @@ function App() {
   const nuiMessage = useCallback(
     (event) => {
       const { action } = event.data;
-      console.log("TESTE", action);
 
       if (action === "open") setCreation(true);
     },
