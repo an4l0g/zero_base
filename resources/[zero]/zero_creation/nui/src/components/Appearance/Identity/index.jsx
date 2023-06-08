@@ -4,10 +4,11 @@ import Title from "../Title";
 import Slider from "../../Slider";
 import { AiOutlineIdcard } from "react-icons/ai";
 import Select from "../../Select";
-import useData from "../../../hooks/useData";
+import { useContext } from "react";
+import CharacterContext from "../../../contexts/CharacterContext";
 
 function Identity() {
-  const { name, surname, gender, age } = useData();
+  const { character, setCharacter } = useContext(CharacterContext);
 
   return (
     <S.Container>
@@ -15,25 +16,31 @@ function Identity() {
       <Input
         label="Nome"
         placeholder="Ex: Arnaldo"
-        value={name.get}
-        onChange={(e) => name.set(e.target.value)}
+        value={character.name}
+        onChange={(e) =>
+          setCharacter((old) => ({ ...old, name: e.target.value }))
+        }
       />
       <Input
         label="Sobrenome"
         placeholder="Ex: Da Silva"
-        value={surname.get}
-        onChange={(e) => surname.set(e.target.value)}
+        value={character.surname}
+        onChange={(e) =>
+          setCharacter((old) => ({ ...old, surname: e.target.value }))
+        }
       />
       <Select
-        value={gender.get}
-        onChange={(val) => gender.set(val)}
+        value={character.gender}
+        onChange={(val) => {
+          setCharacter((old) => ({ ...old, gender: val }));
+        }}
         placeholder="Gênero"
         options={["masculino", "feminino"]}
       />
       <Slider
         label="Idade"
-        value={age.get}
-        setValue={age.set}
+        value={character.age}
+        setValue={(val) => setCharacter((old) => ({ ...old, age: val }))}
         ruler={true}
         min={18}
         max={100}

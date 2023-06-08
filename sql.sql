@@ -58,6 +58,7 @@ create table zero_user_data (
     primary key(user_id)
 );
 
+
 create table zero_creation(
   user_id int unsigned not null,
   controller tinyint not null,

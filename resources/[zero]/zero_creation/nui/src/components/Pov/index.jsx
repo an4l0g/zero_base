@@ -6,7 +6,7 @@ import useRequest from "../../hooks/useRequest";
 
 function Pov() {
   const [pov, setPov] = useState("body");
-  const [rotate, setRotate] = useState(0);
+  const [rotate, setRotate] = useState(50);
   const { request } = useRequest();
 
   const handleChangePov = useCallback(async () => {
