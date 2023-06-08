@@ -1,60 +1,9 @@
-local configAnimations = config.animations
+local configAnimations = configs.animations
 
 for index, value in pairs(configAnimations.keyMapping) do
     RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)
     RegisterCommand('+'..index, function() value.action() end)
 end
-
-RegisterNetEvent('zero_animations:setAnimShared', function(anim)
-    local ped = PlayerPedId()
-    local emote = configAnimations.shared[anim]
-    vRP.DeletarObjeto()
-    if (emote.extra) then emote.extra() end
-    if (emote.pos) then
-        local emoteDict = emote.dict or nil
-        local emoteAnim = emote.anim or nil
-        if (emoteDict) then vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
-        vRP.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
-    elseif emote.prop then
-        vRP.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
-    elseif emote.dict then
-        vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
-    else
-        vRP._playAnim(false, { task = emote.anim }, false)
-    end
-end)
-
-RegisterNetEvent('zero_animations:setAnimShared2', function(anim, source)
-    local ped = GetPlayerPed(GetPlayerFromServerId(source))
-    local heading = GetEntityHeading(ped)
-    local coords = GetOffsetFromEntityInWorldCoords(ped, 0.0, 1.0, 0.0)
-    local emote = configAnimations.shared[anim]
-    if (emote) and (emote.syncOption) then
-        local SyncOffsetFront = emote.syncOption.SyncOffsetFront
-        if (SyncOffsetFront) then coords = GetOffsetFromEntityInWorldCoords(ped, 0.0, SyncOffsetFront, 0.0); end;
-    end
-    
-    local playerPed = PlayerPedId()
-    SetEntityHeading(playerPed, (heading - 180.1))
-    SetEntityCoordsNoOffset(playerPed, coords.x, coords.y, coords.z, 0)
-
-    Wait(300)
-
-    vRP.DeletarObjeto()
-    if (emote.extra) then emote.extra() end
-    if (emote.pos) then
-        local emoteDict = emote.dict or nil
-        local emoteAnim = emote.anim or nil
-        if (emoteDict) then vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop) end;
-        vRP.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2],emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
-    elseif (emote.prop) then
-        vRP.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
-    elseif (emote.dict) then
-        vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
-    else
-        vRP._playAnim(false, { task = emote.anim }, false)
-    end
-end)
 
 RegisterNetEvent('zero_animations:setAnim', function(anim)
     local ped = PlayerPedId()
@@ -83,6 +32,78 @@ RegisterNetEvent('zero_animations:setAnim', function(anim)
                 vRP._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
             end
         end
+    end
+end)
+
+local sharedAnimation
+
+RegisterNetEvent('zero_animations:cancelSharedAnimation', function()
+    local ped = PlayerPedId()
+    ClearPedTasks(ped); DetachEntity(ped, true, false);
+    if (sharedAnimation) then
+        TriggerServerEvent('zero_animation:sharedServer', sharedAnimation)
+        sharedAnimation = nil
+    end
+end)
+
+RegisterNetEvent('zero_animation:sharedClearAnimation', function()
+    local ped = PlayerPedId()
+    ClearPedTasks(ped); DetachEntity(ped, true, false);
+end)
+
+RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
+    sharedAnimation = target
+    local ped = PlayerPedId()
+    local emote = configAnimations.shared[anim]
+
+    vRP.DeletarObjeto()
+    local syncOption = emote.syncOption
+    local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
+    if (syncOption.attachTo) then
+        AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, 0),
+        syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+    end
+
+    if (emote.extra) then emote.extra() end
+    if (emote.pos) then
+        local emoteDict = emote.dict or nil
+        local emoteAnim = emote.anim or nil
+        if (emoteDict) then vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
+        vRP.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+    elseif emote.prop then
+        vRP.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+    elseif emote.dict then
+        vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
+    else
+        vRP._playAnim(false, { task = emote.anim }, false)
+    end
+end)
+
+RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)   
+    sharedAnimation = target
+    local ped = PlayerPedId()
+    local emote = configAnimations.shared[anim]
+
+    vRP.DeletarObjeto()
+    local syncOption = emote.syncOption
+    local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
+    if (syncOption.attachTo) then
+        AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, 0),
+        syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+    end
+
+    if (emote.extra) then emote.extra() end
+    if (emote.pos) then
+        local emoteDict = emote.dict or nil
+        local emoteAnim = emote.anim or nil
+        if (emoteDict) then vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop) end;
+        vRP.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2],emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+    elseif (emote.prop) then
+        vRP.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+    elseif (emote.dict) then
+        vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
+    else
+        vRP._playAnim(false, { task = emote.anim }, false)
     end
 end)
 

@@ -1,4 +1,4 @@
-local configAnimations = config.animations
+local configAnimations = configs.animations
 
 local checkAnimPermissions = function(_source, _userId, permission)
     if (_userId) then
@@ -39,10 +39,15 @@ RegisterCommand('ec', function(source, args)
             if checkAnimPermissions(_source, _userId, animation.perm) then
                 local nSource = vRPclient.getNearestPlayer(source, 2)
                 if (GetEntityHealth(GetPlayerPed(nSource)) > 101) then 
-                    TriggerClientEvent('zero_animations:setAnimShared', _source, args[1])
-                    TriggerClientEvent('zero_animations:setAnimShared2', nSource, anim.otherAnim, _source)
+                    TriggerClientEvent('zero_animations:setAnimShared', _source, args[1], nSource)
+                    TriggerClientEvent('zero_animations:setAnimShared2', nSource, animation.otherAnim, _source)
                 end
             end
         end
     end
+end)
+
+RegisterNetEvent('zero_animation:sharedServer', function(target)
+    print(target)
+    TriggerClientEvent('zero_animation:sharedClearAnimation', target)
 end)

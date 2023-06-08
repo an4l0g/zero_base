@@ -1,6 +1,6 @@
-config = {}
+configs = {}
 
-config.animations = {
+configs.animations = {
     ['keyMapping'] = {
         ['cruzarBraco'] = {
             key = 'f1',
@@ -81,6 +81,7 @@ config.animations = {
                 local ped = PlayerPedId()
                 local menuCelular = vRP.getMenuCelular()
                 TriggerEvent('vRP:CancelAnimations')
+                TriggerEvent('zero_animations:cancelSharedAnimation')
                 if (GetEntityHealth(ped) > 101 and not menuCelular) then
                     vRP.DeletarObjeto()
                     ClearPedTasks(ped)
@@ -222,19 +223,76 @@ config.animations = {
         },
     },
     ['shared'] = {
-        ['ostopio'] = {
+        ['giveostopio'] = {
             dict = 'gndostopiomedic@animations',
             anim = 'gndostopiomedic_clip',
             prop = 'gnd_ostopio_medic_prop',
             flag = 50,
             hand = 28422,
             pos = { 0.06, 0.07, 0.01, -104.0, 182.0, 24.4 },
+            andar = false,
+            loop = true,
             extra = function()
                 RequestAnimDict('gndostopiomedic@animations')
                 while (not HasAnimDictLoaded('gndostopiomedic@animations')) do Citizen.Wait(0); end;
                 TaskPlayAnim(PlayerPedId(), 'gndostopiomedic@animations', 'gndostopiomedic_clip', 4.0, 4.0, -1, 50, 0.0)
-            end
-        }
+            end,
+            syncOption = {
+                attachTo = true,
+                xPos = -0.45,
+                yPos = -0.05,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 280.0
+            },
+            otherAnim = 'receivepaciente',
+            type = 'hospital',
+            perm = 'hospital.permissao'
+        },
+        ['receivepaciente'] = {
+            dict = 'gndostopiopacient@animations',
+            anim = 'gndostopiopacient_clip',
+            andar = false,
+            loop = true,
+            type = 'hospital',
+            perm = 'hospital.permissao'
+        },
+        ['giveostopiokid'] = {
+            dict = 'gndkidotoscopiomedic@animations',
+            anim = 'gndkidotoscopiomedic_clip',
+            prop = 'gnd_ostopio_medic_prop',
+            flag = 50,
+            hand = 28422,
+            pos = { 0.07, 0.1, -0.01, -93.73, -189.5, 30.0 },
+            andar = false,
+            loop = true,
+            extra = function()
+                RequestAnimDict('gndkidotoscopiomedic@animations')
+                while (not HasAnimDictLoaded('gndkidotoscopiomedic@animations')) do Citizen.Wait(0); end;
+                TaskPlayAnim(PlayerPedId(), 'gndkidotoscopiomedic@animations', 'gndkidotoscopiomedic_clip', 4.0, 4.0, -1, 10, 0.0)
+            end,
+            syncOption = {
+                attachTo = true,
+                xPos = -0.18,
+                yPos = -0.01,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 280.0
+            },
+            otherAnim = 'receivepacientekid',
+            type = 'hospital',
+            perm = 'hospital.permissao'
+        },
+        ['receivepacientekid'] = {
+            dict = 'gndkidotoscopiopacient@animations',
+            anim = 'gndkidotoscopiopacient_clip',
+            andar = false,
+            loop = true,
+            type = 'hospital',
+            perm = 'hospital.permissao'
+        },
     },
     ['animations'] = {
         ['continencia'] = {
@@ -251,6 +309,21 @@ config.animations = {
             loop = true,
             type = 'cumprimentos'
         },
-        
+        ['raiox'] = {
+            dict = 'gndraioxavaliando@animations',
+            anim = 'gndraioxavaliando_clip',
+            prop = 'gnd_raio_x_paper',
+            flag = 50,
+            hand = 28422,
+            pos = { 0.07, 0.09, -0.16, -54.53, 89.82, 11.75 },
+            extra = function()
+                RequestAnimDict('gndraioxavaliando@animations')
+                while not HasAnimDictLoaded('gndraioxavaliando@animations') do Citizen.Wait(0); end;
+	            TaskPlayAnim(PlayerPedId(), 'gndraioxavaliando@animations', 'gndraioxavaliando_clip', 4.0, 4.0, -1, 50, 0.0)
+            end,
+            andar = false,
+            loop = true,
+            type = 'hospital'
+        },
     } 
 }
