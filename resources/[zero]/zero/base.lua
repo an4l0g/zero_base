@@ -1,6 +1,6 @@
-Tunnel = module('vrp', 'lib/Tunnel')
-Proxy = module('vrp', 'lib/Proxy')
-Tools = module('vrp', 'lib/Tools')
+Tunnel = module('zero', 'lib/Tunnel')
+Proxy = module('zero', 'lib/Proxy')
+Tools = module('zero', 'lib/Tools')
 
 vRP = {}
 Proxy.addInterface("vRP", vRP)
@@ -153,24 +153,6 @@ vRP.createNewUser = function(ids)
 end
 ------------------------------------------------------------------
 	
-------------------------------------------------------------------
--- VERIFICAR JOGADOR BANIDO + BANIR JOGADOR
-------------------------------------------------------------------
-vRP.isBanned = function(user_id)
-	local rows = vRP.query("vRP/get_banned", { user_id = user_id })
-	if #rows > 0 then
-		if (rows[1].banned == 1) then
-			return true
-		end
-	end
-	return false
-end
-
-vRP.setBanned = function(user_id, banned)
-	vRP.execute("vRP/set_banned", { user_id = user_id, banned = banned })
-end
-------------------------------------------------------------------
-
 ------------------------------------------------------------------
 -- VERIFICAR WHITELIST + SETAR WHITELIST
 ------------------------------------------------------------------
@@ -396,17 +378,20 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 
 			--- BANS
 			deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
-			if vRP.isBanned(user_id) then 
+			-- if vRP.isBanned(user_id) then 
+			if (exports['zero_core']:isBanned(user_id)) then
 				deferrals.done("Você foi banido da cidade. Seu ID é "..user_id)
 				TriggerEvent("queue:playerConnectingRemoveQueues",ids)
 				return
 			end
+
 			-- local temp_banned = exports["gb_core"]:isTempBanned(user_id)
 			-- if temp_banned then
 			-- 	deferrals.done("Você foi banido temporariamente da cidade. Seu ID é "..user_id.."\nUnban automatico em: "..temp_banned.display)
 			-- 	TriggerEvent("queue:playerConnectingRemoveQueues",ids)
 			-- 	return
 			-- end
+
 			--- WHITELIST
 			deferrals.update('Olá '..name..', estamos carregando as whitelists do servidor...')
 			if (cacheUsers['rusers'][user_id] == nil) then

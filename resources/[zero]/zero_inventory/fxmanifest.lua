@@ -1,4 +1,4 @@
-shared_script "@vrp/lib/lib.lua" 
+shared_script "@zero/lib/lib.lua" 
 lua54 'yes'
 fx_version "bodacious"
 game "gta5"
@@ -17,7 +17,7 @@ server_scripts {
 }
 
 shared_scripts {
-    "@vrp/lib/utils.lua",
+    "@zero/lib/utils.lua",
     "configs/*.lua",
     "crosscript/_queue.lua",
 }

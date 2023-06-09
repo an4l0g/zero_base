@@ -1,5 +1,5 @@
-local Tunnel = module("vrp","lib/Tunnel")
-local Proxy = module("vrp","lib/Proxy")
+local Tunnel = module("zero","lib/Tunnel")
+local Proxy = module("zero","lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 
 srv = {}

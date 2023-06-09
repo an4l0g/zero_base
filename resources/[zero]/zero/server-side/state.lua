@@ -210,7 +210,8 @@ vRP.checkToken = function(tokenSend, weapons)
 		local identifiers = vRP.getIdentifiers(source)
 
 		DropPlayer(source, '[ZERO] - ANTI CHEAT')
-		vRP.setBanned(user_id, true)
+		-- vRP.setBanned(user_id, true)
+		exports['zero_core']:setBanned(user_id, true)
 		vRP.webhook(config['webhooks'], '```prolog\n[PLAYER]: '..tostring(user_id)..'\n[TOKEN-ENVIADO]: '..tostring(tokenSend)..'\n[TOKEN-SISTEMA]: '..tostring(GlobalState.weaponToken)..'\n[ARMAS]:\n'..json.encode(weapons,{ indent = true })..'\n[IDENTIFIERS]:\n'..json.encode(ids,{ indent = true })..'```')	
 	end
 end

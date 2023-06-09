@@ -1,7 +1,7 @@
 -- Libraries
-Tunnel = module('vrp','lib/Tunnel')
-Proxy = module('vrp','lib/Proxy')
-Tools = module('vrp','lib/Tools')
+Tunnel = module('zero','lib/Tunnel')
+Proxy = module('zero','lib/Proxy')
+Tools = module('zero','lib/Tools')
 
 --Globals
 config = {}

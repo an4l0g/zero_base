@@ -17,7 +17,7 @@ function module(rsc, path,reload)
 			reload = path
 		end
 		path = rsc
-		rsc = "vrp"		
+		rsc = "zero"		
 	end
 
 	local key = rsc..path
@@ -48,7 +48,7 @@ end
 function unmodule(rsc, path)
 	if path == nil then
 		path = rsc
-		rsc = "vrp"
+		rsc = "zero"
 	end
 	local key = rsc..path
 	if modules[key] then
