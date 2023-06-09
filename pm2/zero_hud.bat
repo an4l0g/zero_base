@@ -1,7 +1,7 @@
 :: zero_hud
 set nui_name="zero_hud"
-set nui_path="C:\zero_base\server-data\resources\[zero]\zero_hud\nui"
-set nui_path_build="C:\zero_base\server-data\resources\[zero]\zero_hud\nui\dist"
+set nui_path=%BASE_PATH%\server-data\resources\[zero]\zero_hud\nui
+set nui_path_build=%BASE_PATH%\server-data\resources\[zero]\zero_hud\nui\dist
 set nui_port=8501
 
 call pm2 delete %nui_name% --silent

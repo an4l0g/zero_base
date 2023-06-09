@@ -1,6 +1,6 @@
 @echo off
 
-set BASE_PATH=C:\Users\an4log\Desktop\zero_base\server-data
+set BASE_PATH=
 
 cd %BASE_PATH% 
 call zero_hud.bat
