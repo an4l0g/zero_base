@@ -58,18 +58,20 @@ create table zero_user_data (
     primary key(user_id)
 );
 
-
 create table zero_creation(
   user_id int unsigned not null,
   controller tinyint not null,
   user_character json not null,
+  rh varchar(3) not null,
   primary key(user_id)
 );
 
-create table zero_inventory(
-	slots json not null,
-    user_id int not null,
-    weight int not null,
-    bag_type varchar(30) not null,
-    primary key(user_id, bag_type)
-)
+create table zero_homes(
+    user_id int unsigned not null,
+    home varchar(50) not null,
+    home_owner tinyint not null,
+        garages tinyint not null,
+        tax varchar(20) not null,
+        configs json not null,
+    primary key(user_id)
+);

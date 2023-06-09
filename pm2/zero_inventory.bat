@@ -1,7 +1,7 @@
 :: zero_inventory
 set nui_name="zero_inventory"
-set nui_path="C:\Users\an4log\Desktop\zero_base\server-data\resources\[zero]\zero_inventory\nui"
-set nui_path_build="C:\Users\an4log\Desktop\zero_base\server-data\resources\[zero]\zero_inventory\nui\dist"
+set nui_path=%BASE_PATH%\resources\[zero]\zero_inventory\nui
+set nui_path_build=%BASE_PATH%\resources\[zero]\zero_inventory\nui\dist
 set nui_port=8502
 
 call pm2 delete %nui_name% --silent
