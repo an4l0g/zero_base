@@ -5,24 +5,24 @@ var playlist = [
   //     "artist": "MC Paulinho o LOKO",
   //     "mp3": "http://189.127.164.170/songs/halloween.mp3"
   // },
-  {
-    song: "Brazuca City",
-    album: "Brazuca",
-    artist: "MC Paulinho o LOKO",
-    mp3: "http://189.127.164.170/songs/brazuca.mp3",
-  },
-  {
-    song: "Rodinha da Bike",
-    album: "Brazuca",
-    artist: "MC Paulinho o LOKO",
-    mp3: "http://189.127.164.170/songs/brazuca2.mp3",
-  },
-  {
-    song: "Tchais",
-    album: "Brazuca",
-    artist: "MC Paulinho o LOKO",
-    mp3: "http://189.127.164.170/songs/tchais.mp3",
-  },
+  // {
+  //   song: "Brazuca City",
+  //   album: "Brazuca",
+  //   artist: "MC Paulinho o LOKO",
+  //   mp3: "http://189.127.164.170/songs/brazuca.mp3",
+  // },
+  // {
+  //   song: "Rodinha da Bike",
+  //   album: "Brazuca",
+  //   artist: "MC Paulinho o LOKO",
+  //   mp3: "http://189.127.164.170/songs/brazuca2.mp3",
+  // },
+  // {
+  //   song: "Tchais",
+  //   album: "Brazuca",
+  //   artist: "MC Paulinho o LOKO",
+  //   mp3: "http://189.127.164.170/songs/tchais.mp3",
+  // },
 ];
 
 var rot = 0;
