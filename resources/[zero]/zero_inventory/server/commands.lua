@@ -14,7 +14,7 @@ RegisterCommand('item', function(source, args)
         end
 
         local identity = vRP.getUserIdentity(user_id)
-        vRP.webhook(config.webhooks.addItem,"```prolog\n[zero_inventory]\n[/ADDITEM]\n[PLAYER]: "..user_id.." | "..identity.name.." "..identity.firstname.." \n[ADICIONOU ITEM NO INVENTÁRIO]\n[ITEM] "..item.."\n[QUANTIDADE]: "..amount.."\n[NOME]: "..vRP.itemNameList(item).." "..os.date("\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").." \r```")
+        zero.webhook(config.webhooks.addItem,"```prolog\n[zero_inventory]\n[/ADDITEM]\n[PLAYER]: "..user_id.." | "..identity.name.." "..identity.firstname.." \n[ADICIONOU ITEM NO INVENTÁRIO]\n[ITEM] "..item.."\n[QUANTIDADE]: "..amount.."\n[NOME]: "..vRP.itemNameList(item).." "..os.date("\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").." \r```")
     end
 end)
 
@@ -23,7 +23,7 @@ RegisterCommand('cinv', function(source, args)
     local user_id = (args[1] or vRP.getUserId(source))
     if vRP.hasPermission(user_id, 'dono.permissao') then
         sInventory.clearInventory(user_id)
-        vRP.webhook(config.webhooks.delBag,"```prolog\n[zero_inventory]\n[/DELBAG]\n[PLAYER]: "..user_id.." | "..identity.name.." "..identity.firstname.." \n[DELETOU UMA BAG]\n[BAG_TYPE]: "..bag_type.." "..os.date("\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").." \r```")
+        zero.webhook(config.webhooks.delBag,"```prolog\n[zero_inventory]\n[/DELBAG]\n[PLAYER]: "..user_id.." | "..identity.name.." "..identity.firstname.." \n[DELETOU UMA BAG]\n[BAG_TYPE]: "..bag_type.." "..os.date("\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").." \r```")
     end
 end)
 

@@ -148,6 +148,3 @@ zero.tryFullPayment = function(user_id, value)
 	return false
 end
 exports('tryFullPayment', zero.tryFullPayment)
-
-AddEventHandler('vRP:playerJoin', function(user_id, source, name)
-end)

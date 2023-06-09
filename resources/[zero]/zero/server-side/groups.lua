@@ -113,18 +113,16 @@ end
 -- ADD USER GROUP
 ------------------------------------------------------------------
 vRP.addUserGroup = function(user_id, group, grade)
+	print(user_id, group, grade)
 	local hasGroup, hasGrade = vRP.hasGroup(user_id, group)
 	if (not hasGroup) then
 		local ngroup = groups[group]
 		if ngroup then
 			if (not grade) then
-				if ngroup['information'] then
-					grade = ngroup['information']['grades_default']
-				else
-					grade = group
-				end
+				grade = (ngroup.information.grades_default or group)
 			end
 
+			print(grade)
 			local affected = vRP.execute('vRP/add_user_group',{ user_id = user_id, groupId = group, gradeId = grade })
 			if affected > 0 then
 				if (ngroup['information']) and ngroup['information']['groupType'] ~= nil then

@@ -32,7 +32,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
                 users = users..value.id..', '
             end
             print('^5[ZERO SYSTEM]^7 IP BANIDO: '..playerIP..' | PLAYER: '..user_id..' | IDS: '..users)
-            vRP.webhook(webhooks.ipbanned, '```prolog\n[ZERO SYSTEM - IP BANNED]\n[PASSAPORTE]: '..user_id..'\n[IP BANNED]: '..(playerIP or '0.0.0')..'\n\n[USERS]: '..users..'\n'..((banido and '[BANIDO AUTOMATICAMENTE]\n') or '')..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+            zero.webhook(webhooks.ipbanned, '```prolog\n[ZERO SYSTEM - IP BANNED]\n[PASSAPORTE]: '..user_id..'\n[IP BANNED]: '..(playerIP or '0.0.0')..'\n\n[USERS]: '..users..'\n'..((banido and '[BANIDO AUTOMATICAMENTE]\n') or '')..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
         end
     end
     for i = 0, userTokens do
@@ -43,7 +43,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
                 if (userIsBanned(getUserTokens.user_id)) then
                     setUserBanned(user_id, true)
                     DropPlayer(source, '[ZERO SYSTEM] Você já foi banido neste servidor.\n[ID ANTIGO]: '..getUserTokens.user_id..'\n[ID ATUAL]: '..user_id..'\nEntre em contato conosco em nosso discord. discord.gg/example')
-                    vRP.webhook(webhooks.hwid, '```prolog\n[ZERO SYSTEM - HWID BANNED]\n[PASSAPORTE]: '..user_id..'\n[ID BANNED]: '..getUserTokens.user_id..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+                    zero.webhook(webhooks.hwid, '```prolog\n[ZERO SYSTEM - HWID BANNED]\n[PASSAPORTE]: '..user_id..'\n[ID BANNED]: '..getUserTokens.user_id..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
                 end
             else
                 vRP.execute('zero_hwid/setUserTokens', { token = token, user_id = user_id } )

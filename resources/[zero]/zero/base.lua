@@ -16,15 +16,11 @@ exportTable(vRP)
 -- Tunnel.bindInterface("vRP",tvRP)
 vRPclient = Tunnel.getInterface("vRP")
 
-------------------------------------------------------------------
--- WEBHOOK
-------------------------------------------------------------------
-vRP.webhook = function(link, message)
+zero.webhook = function(link, message)
 	if link and message and link ~= '' then
 		PerformHttpRequest(link, function(err, text, headers) end, 'POST', json.encode({ content = message }), { ['Content-Type'] = 'application/json' })
 	end
 end
-------------------------------------------------------------------
 
 cacheUsers = {}
 cacheUsers.users = {}
@@ -39,9 +35,7 @@ local cached_prepares = {}
 local cached_queries = {}
 local prepared_queries = {}
 local db_initialized = false
-------------------------------------------------------------------
--- DATABASE
-------------------------------------------------------------------
+
 vRP.registerDBDriver = function(name, on_init, on_prepare, on_query)
 	if not db_drivers[name] then
 		db_drivers[name] = { on_init, on_prepare, on_query }
@@ -94,16 +88,11 @@ end
 vRP.scalar = function(name, params)
 	return vRP.query(name, params, "scalar")
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- FORMAT
-------------------------------------------------------------------
 vRP.format = function(n)
 	local left, num, right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
 	return left..(num:reverse():gsub('(%d%d%d)','%1.'):reverse())..right
 end
-------------------------------------------------------------------
 
 zero.isBanned = function(user_id)
 	return exports['zero_core']:isBanned(user_id)
@@ -113,9 +102,6 @@ zero.setBanned = function(user_id, banned)
 	return exports['zero_core']:setBanned(user_id, banned)
 end
 
-------------------------------------------------------------------
--- PEGAR IDENTIFIERS DO USUÁRIO
-------------------------------------------------------------------
 vRP.getIdentifiers = function(source)
     local identifiers = {}
     for i = 0, GetNumPlayerIdentifiers(source)-1 do
@@ -129,46 +115,27 @@ end
 
 vRP.getUserIdByIdentifiers = function(ids)
 	if (ids) then
-		if (type(ids) == 'table') then
-			for i = 1, #ids do
-				if (string.find(ids[i], "ip:") == nil) then
-					local rows = vRP.query('vRP/userid_byidentifier', { identifier = ids[i] })
-					if (#rows > 0)then
-						return rows[1].user_id
-					end
+		for i = 1, #ids do
+			if (string.find(ids[i], 'ip:') == nil) then
+				local rows = vRP.query('zero_framework/getIdentifier', { identifier = ids[i] })
+				if (#rows > 0) then
+					return rows[1].user_id
 				end
 			end
-		else
-			local rows = vRP.query('vRP/userid_byidentifier', { identifier = ids })
-			if (#rows > 0) then
-				return rows[1].user_id
-			end
 		end
-		vRP.createNewUser(ids)
+		local generateNewUser = vRP.insert('zero_framework/createUser')
+		if (generateNewUser > 0) then
+			local user_id = generateNewUser
+			for l, w in pairs(ids) do
+				if (string.find(w, 'ip:') == nil) then
+					vRP.execute('zero_framework/addIdentifier', { user_id = user_id, identifier = w })
+				end
+			end
+			return user_id
+		end
 	end
 end
-------------------------------------------------------------------
-
-------------------------------------------------------------------
--- CRIAR NOVO PASSAPORTE
-------------------------------------------------------------------
-vRP.createNewUser = function(ids)
-	local new_userid = vRP.insert("vRP/create_user", {})
-	if (new_userid) > 0 then
-		local user_id = new_userid
-		for l,w in pairs(ids) do
-			if (string.find(w,"ip:") == nil) then
-				vRP.execute("vRP/add_identifier",{ user_id = user_id, identifier = w })
-			end
-		end
-		return user_id
-	end
-end
-------------------------------------------------------------------
 	
-------------------------------------------------------------------
--- VERIFICAR WHITELIST + SETAR WHITELIST
-------------------------------------------------------------------
 vRP.isWhitelisted = function(user_id)
 	local rows = vRP.query("vRP/get_whitelisted", { user_id = user_id })
 	if #rows > 0 then
@@ -180,11 +147,7 @@ end
 vRP.setWhitelisted = function(user_id,whitelisted)
 	vRP.execute("vRP/set_whitelisted", { user_id = user_id, whitelisted = whitelisted })
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- USER DATA
-------------------------------------------------------------------
 vRP.getUData = function(user_id, key)
 	local rows = vRP.query("vRP/get_userdata", { user_id = user_id, key = key })
 	if #rows > 0 then
@@ -249,10 +212,6 @@ vRP.setKeyTempTable = function(user_id,key,value)
 	end
 end
 ------------------------------------------------------------------
-
--- function exports['vrp']:getPlayerEndpoint(player)
--- 	return GetPlayerEP(player) or "0.0.0.0"
--- end
 
 ------------------------------------------------------------------
 -- PEGAR ID E SOURCE DO JOGADOR
@@ -334,7 +293,7 @@ vRP.dropPlayer = function(source, reason)
 			
 			if (identifiers['steam']) then steamUrl = '\n**STEAM URL:** https://steamcommunity.com/profiles/'..tonumber(identifiers['steam']:gsub('steam:', ''), 16) end
 			if (identifiers['discord']) then discordId = '\n**DISCORD:** <@'..identifiers['discord']:gsub('discord:', '')..'>' end
-			vRP.webhook(config['webhooks']['exit'], '```prolog\n[LOG]: SAIU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[MOTIVO DA SAÍDA]: '..(reason or 'NÃO IDENTIFICADO')..'\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
+			zero.webhook(config['webhooks']['exit'], '```prolog\n[LOG]: SAIU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[MOTIVO DA SAÍDA]: '..(reason or 'NÃO IDENTIFICADO')..'\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
 				
 			local save = json.encode(userTable)
 			if (save ~= 'null') then vRP.setUData(user_id, 'vRP:datatable', save) end
@@ -354,7 +313,6 @@ end
 ------------------------------------------------------------------
 task_save_datatables = function()
 	SetTimeout(30000, task_save_datatables); 
-	TriggerEvent('vRP:save')
 	for k, v in pairs(cacheUsers['user_tables']) do
 		vRP.setUData(k, 'vRP:datatable', json.encode(v))
 	end
@@ -391,8 +349,7 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 
 			--- BANS
 			deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
-			local isBanned = exports['zero_core']:isBanned(user_id)
-			if (isBanned) then
+			if (zero.isBanned(user_id)) then
 				deferrals.done("Você foi banido da cidade. Seu ID é "..user_id)
 				TriggerEvent("queue:playerConnectingRemoveQueues",ids)
 				return
@@ -430,7 +387,7 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 
 				if (identifiers['steam']) then steamUrl = '\n**STEAM URL:** https://steamcommunity.com/profiles/'..tonumber(identifiers['steam']:gsub('steam:', ''), 16) end
 				if (identifiers['discord']) then discordId = '\n**DISCORD:** <@'..identifiers['discord']:gsub('discord:', '')..'>' end
-				vRP.webhook(config['webhooks']['join'], '```prolog\n[LOG]: ENTROU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
+				zero.webhook(config['webhooks']['join'], '```prolog\n[LOG]: ENTROU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
 
 				deferrals.done()	
 				vRP.execute('vRP/set_login', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
@@ -471,7 +428,7 @@ RegisterNetEvent('vRPcli:playerSpawned', function()
 		TriggerEvent("vRP:playerSpawn",user_id,source,first_spawn)
 		Player(source).state["vRP:user_id"] = user_id
 	else
-		vRP.webhook(webhookdisc,"```prolog\n[BUG]: Invalid Source\n[SOURCE]: "..tostring(source).."\n[IDS]: "..json.encode(GetPlayerIdentifiers(source)).."```")	
+		zero.webhook(webhookdisc,"```prolog\n[BUG]: Invalid Source\n[SOURCE]: "..tostring(source).."\n[IDS]: "..json.encode(GetPlayerIdentifiers(source)).."```")	
 	end
 end)
 
@@ -535,7 +492,7 @@ end
 --                 exports["gb_core"]:insertBanRecord(user_id,true,-1,"[ANTI-FLOOD] "..tostring(key))
 
 --                 DropPlayer(source, "Hoje não! Hoje não! Hoje sim!")
--- 				vRP.webhook(webhook_antiflood, "```prolog\n[ID]: "..user_id.." \n[ANTI-FLOOD]: "..key.."\n"..os.date("\n\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
+-- 				zero.webhook(webhook_antiflood, "```prolog\n[ID]: "..user_id.." \n[ANTI-FLOOD]: "..key.."\n"..os.date("\n\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
 --             end
 --         else
 --             flood[key][source]=nil
@@ -556,7 +513,7 @@ end
 -- 			if (reason == "Game crashed: gta-core-five.dll!CrashCommand (0x0)") then
 -- 				vRP.setBanned(user_id, true)
 -- 				exports["gb_core"]:insertBanRecord(user_id,true,-1,"FORÇOU CRASH")
--- 				vRP.webhook(webhookCrash, "```prolog\n[USER_ID]: "..user_id.."\n[UTILIZOU COMANDO _CRASH]"..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
+-- 				zero.webhook(webhookCrash, "```prolog\n[USER_ID]: "..user_id.."\n[UTILIZOU COMANDO _CRASH]"..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
 -- 			end
 -- 		end
 -- 	end

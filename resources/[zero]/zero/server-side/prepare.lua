@@ -1,9 +1,9 @@
 ---------------------------------------------------------------------------------------------------------------------------------
 -- BASE.LUA
 ---------------------------------------------------------------------------------------------------------------------------------
-vRP.prepare("vRP/create_user", "INSERT INTO zero_users(whitelist,banned) VALUES(false,false)")
-vRP.prepare("vRP/add_identifier", "INSERT IGNORE INTO zero_user_ids(identifier,user_id) VALUES(@identifier,@user_id)")
-vRP.prepare("vRP/userid_byidentifier", "SELECT user_id FROM zero_user_ids WHERE identifier = @identifier")
+vRP.prepare('zero_framework/createUser', 'insert into zero_users (whitelist, banned) values (false, false)')
+vRP.prepare('zero_framework/addIdentifier', 'insert into zero_user_ids (identifier, user_id) values (@identifier, @user_id) on duplicate key update user_id = @user_id')
+vRP.prepare('zero_framework/getIdentifier', 'select user_id from zero_user_ids where identifier = @identifier')
 vRP.prepare("vRP/set_userdata", "REPLACE INTO zero_user_data(user_id,dkey,dvalue) VALUES(@user_id,@key,@value)")
 vRP.prepare("vRP/get_userdata", "SELECT dvalue FROM zero_user_data WHERE user_id = @user_id AND dkey = @key")
 vRP.prepare("vRP/set_srvdata", "REPLACE INTO zero_srv_data(dkey,dvalue) VALUES(@key,@value)")
