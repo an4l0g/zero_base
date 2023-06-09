@@ -2,7 +2,7 @@
 -- BASE.LUA
 ---------------------------------------------------------------------------------------------------------------------------------
 vRP.prepare("vRP/create_user", "INSERT INTO zero_users(whitelist,banned) VALUES(false,false)")
-vRP.prepare("vRP/add_identifier", "INSERT INTO zero_user_ids(identifier,user_id) VALUES(@identifier,@user_id)")
+vRP.prepare("vRP/add_identifier", "INSERT IGNORE INTO zero_user_ids(identifier,user_id) VALUES(@identifier,@user_id)")
 vRP.prepare("vRP/userid_byidentifier", "SELECT user_id FROM zero_user_ids WHERE identifier = @identifier")
 vRP.prepare("vRP/set_userdata", "REPLACE INTO zero_user_data(user_id,dkey,dvalue) VALUES(@user_id,@key,@value)")
 vRP.prepare("vRP/get_userdata", "SELECT dvalue FROM zero_user_data WHERE user_id = @user_id AND dkey = @key")
