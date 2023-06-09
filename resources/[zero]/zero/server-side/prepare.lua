@@ -32,9 +32,14 @@ vRP.prepare('vRP/updt_user_active', 'UPDATE zero_user_groups SET active = @activ
 ---------------------------------------------------------------------------------------------------------------------------------
 -- MONEY.LUA
 ---------------------------------------------------------------------------------------------------------------------------------
-vRP.prepare("vRP/money_init_user","INSERT IGNORE INTO zero_user_moneys(user_id,wallet,bank) VALUES(@user_id,@wallet,@bank)")
-vRP.prepare("vRP/get_money","SELECT wallet,bank FROM zero_user_moneys WHERE user_id = @user_id")
-vRP.prepare("vRP/set_money","UPDATE zero_user_moneys SET wallet = @wallet, bank = @bank WHERE user_id = @user_id")
+vRP.prepare('zero_framework/money_init_user','INSERT IGNORE INTO zero_user_moneys(user_id,wallet,bank) VALUES(@user_id,@wallet,@bank)')
+vRP.prepare('zero_framework/getAllMoney', 'select wallet, bank, paypal from zero_user_moneys where user_id = @user_id')
+vRP.prepare('zero_framework/getWalletMoney', 'select wallet from zero_user_moneys where user_id = @user_id')
+vRP.prepare('zero_framework/getBankMoney', 'select bank from zero_user_moneys where user_id = @user_id')
+vRP.prepare('zero_framework/getPaypalMoney', 'select paypal from zero_user_moneys where user_id = @user_id')
+vRP.prepare('zero_framework/setMoney', 'update zero_user_moneys set wallet = @wallet where user_id = @user_id')
+vRP.prepare('zero_framework/setBankMoney', 'update zero_user_moneys set bank = @bank where user_id = @user_id')
+vRP.prepare('zero_framework/setPaypalMoney', 'update zero_user_moneys set paypal = @paypal where user_id = @user_id')
 ---------------------------------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------

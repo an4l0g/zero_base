@@ -2,6 +2,11 @@ Tunnel = module('zero', 'lib/Tunnel')
 Proxy = module('zero', 'lib/Proxy')
 Tools = module('zero', 'lib/Tools')
 
+zero = {}
+Proxy.addInterface('zero', zero)
+Tunnel.bindInterface('zero', zero)
+exportTable(zero)
+
 vRP = {}
 Proxy.addInterface("vRP", vRP)
 Tunnel.bindInterface("vRP", vRP)
@@ -99,6 +104,14 @@ vRP.format = function(n)
 	return left..(num:reverse():gsub('(%d%d%d)','%1.'):reverse())..right
 end
 ------------------------------------------------------------------
+
+zero.isBanned = function(user_id)
+	return exports['zero_core']:isBanned(user_id)
+end
+
+zero.setBanned = function(user_id, banned)
+	return exports['zero_core']:setBanned(user_id, banned)
+end
 
 ------------------------------------------------------------------
 -- PEGAR IDENTIFIERS DO USUÁRIO
@@ -378,8 +391,8 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 
 			--- BANS
 			deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
-			-- if vRP.isBanned(user_id) then 
-			if (exports['zero_core']:isBanned(user_id)) then
+			local isBanned = exports['zero_core']:isBanned(user_id)
+			if (isBanned) then
 				deferrals.done("Você foi banido da cidade. Seu ID é "..user_id)
 				TriggerEvent("queue:playerConnectingRemoveQueues",ids)
 				return

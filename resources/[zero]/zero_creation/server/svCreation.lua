@@ -30,6 +30,7 @@ srv.saveIdentity = function(table)
     local _userId = vRP.getUserId(_source)
     if (_userId) then
         vRP.execute('vRP/update_user_first_spawn', { user_id = _userId, firstname = table.firstname, lastname = table.lastname, age = table.age  } )
+        vRP.execute('zero_framework/money_init_user', { user_id = user_id, wallet = 5000, bank = 25000 })
     end
 end
 

@@ -1,170 +1,153 @@
-------------------------------------------------------------------
--- GET MONEY
-------------------------------------------------------------------
-vRP.getMoney = function(user_id)
-	local tmp = vRP.getUserTmpTable(user_id)
-	if (tmp) then
-		return (tmp.wallet or 0)
+zero.getAllMoney = function(user_id)
+	local query = vRP.query('zero_framework/getAllMoney', { user_id = user_id })[1]
+	if (query) then
+		local totalValue = 0
+		totalValue = parseInt(query.wallet + query.bank + query.paypal)
+		return (totalValue or 0)
 	end
 	return 0
 end
-------------------------------------------------------------------
+exports('getAllMoney', zero.getAllMoney)
 
-------------------------------------------------------------------
--- SET MONEY
-------------------------------------------------------------------
-vRP.setMoney = function(user_id, value)
-	local tmp = vRP.getUserTmpTable(user_id)
-	if (tmp) then tmp.wallet = value end
-end
-------------------------------------------------------------------
-
-------------------------------------------------------------------
--- TRY PAYMENT
-------------------------------------------------------------------
-vRP.tryPayment = function(user_id, amount)
-	if (amount >= 0) then
-		local money = vRP.getMoney(user_id)
-		if (money >= amount) then
-			vRP.setMoney(user_id, (money - amount))
-			return true			
-		end
-	end
-	return false
-end
-------------------------------------------------------------------
-
-------------------------------------------------------------------
--- GIVE MONEY
-------------------------------------------------------------------
-vRP.giveMoney = function(user_id, amount)
-	user_id = parseInt(user_id)
-	if (amount >= 0) then
-		vRP.setMoney(user_id, (vRP.getMoney(user_id) + amount))
-	end
-end
-------------------------------------------------------------------
-
-------------------------------------------------------------------
--- GIVE BANK MONEY
-------------------------------------------------------------------
-vRP.getBankMoney = function(user_id)
-	local tmp = vRP.getUserTmpTable(user_id)
-	if (tmp) then
-		return (tmp.bank or 0)
+zero.getMoney = function(user_id)
+	local query = vRP.query('zero_framework/getWalletMoney', { user_id = user_id })[1]
+	if (query) then
+		return (query.wallet or 0)
 	end
 	return 0
 end
-------------------------------------------------------------------
+exports('getMoney', zero.getMoney)
 
-------------------------------------------------------------------
--- SET BANK MONEY
-------------------------------------------------------------------
-vRP.setBankMoney = function(user_id, value)
-	user_id = parseInt(user_id)
-	local tmp = vRP.getUserTmpTable(user_id)
-	if (tmp) then tmp.bank = value end
+zero.getBankMoney = function(user_id)
+	local query = vRP.query('zero_framework/getBankMoney', { user_id = user_id })[1]
+	if (query) then
+		return (query.bank or 0)
+	end
+	return 0
 end
-------------------------------------------------------------------
+exports('getBankMoney', zero.getBankMoney)
 
-------------------------------------------------------------------
--- TRY BANK PAYMENT
-------------------------------------------------------------------
-vRP.tryBankPayment = function(user_id, amount)
-	if (amount >= 0) then
-		local money = vRP.getBankMoney(user_id)
-		if (money >= amount) then
-			vRP.setBankMoney(user_id, (money - amount))
+zero.getPaypalMoney = function(user_id)
+	local query = vRP.query('zero_framework/getPaypalMoney', { user_id = user_id })[1]
+	if (query) then
+		return (query.paypal or 0)
+	end
+	return 0
+end
+exports('getPaypalMoney', zero.getPaypalMoney)
+
+zero.setMoney = function(user_id, value)
+	vRP.execute('zero_framework/setMoney', { user_id = user_id, wallet = value } )
+end
+exports('setMoney', zero.setMoney)
+
+zero.setBankMoney = function(user_id, value)
+	vRP.execute('zero_framework/setBankMoney', { user_id = user_id, bank = value } )
+end
+
+zero.setPaypalMoney = function(user_id, value)
+	vRP.execute('zero_framework/setPaypalMoney', { user_id = user_id, paypal = value } )
+end
+
+zero.tryPayment = function(user_id, value)
+	if (value > 0) then
+		local money = zero.getMoney(user_id)
+		if (money >= value) then
+			zero.setMoney(user_id, parseInt(money - value))
 			return true
 		end
 	end
 	return false
 end
-------------------------------------------------------------------
+exports('tryPayment', zero.tryPayment)
 
-------------------------------------------------------------------
--- GIVE BANK MONEY
-------------------------------------------------------------------
-vRP.giveBankMoney = function(user_id, amount)
-	user_id = parseInt(user_id)
-	if (amount >= 0) then
-		vRP.setBankMoney(user_id, (vRP.getBankMoney(user_id) + amount))
+zero.giveMoney = function(user_id, value)
+	if (value > 0) then
+		local money = zero.getMoney(user_id)
+		zero.setMoney(user_id, parseInt(money + value))
 	end
 end
-------------------------------------------------------------------
+exports('giveMoney', zero.giveMoney)
 
-------------------------------------------------------------------
--- TRY WITHDRAW
-------------------------------------------------------------------
-vRP.tryWithdraw = function(user_id, amount)
-	if (amount >= 0) then
-		local money = vRP.getBankMoney(user_id)
-		if (money >= amount) then
-			vRP.setBankMoney(user_id, (money - amount))
-			vRP.giveMoney(user_id, amount)
+zero.giveBankMoney = function(user_id, value)
+	if (value > 0) then
+		local money = zero.getBankMoney(user_id)
+		zero.setBankMoney(user_id, parseInt(money + value))
+	end
+end
+exports('giveBankMoney', zero.giveBankMoney)
+
+zero.givePaypalMoney = function(user_id, value)
+	if (value > 0) then
+		local money = zero.getPaypalMoney(user_id)
+		zero.setPaypalMoney(user_id, parseInt(money + value))
+	end
+end
+exports('givePaypalMoney', zero.givePaypalMoney)
+
+zero.tryBankPayment = function(user_id, value)
+	if (value > 0) then
+		local money = zero.getBankMoney(user_id)
+		if (money >= value) then
+			zero.setBankMoney(user_id, parseInt(money - value))
 			return true
 		end
 	end
 	return false
 end
-------------------------------------------------------------------
+exports('tryBankPayment', zero.tryBankPayment)
 
-------------------------------------------------------------------
--- TRY DEPOSIT
-------------------------------------------------------------------
-vRP.tryDeposit = function(user_id, amount)
-	if amount >= 0 then
-		if vRP.tryPayment(user_id, amount) then
-			vRP.giveBankMoney(user_id, amount)
+zero.tryPaypalPayment = function(user_id, value)
+	if (value > 0) then
+		local money = zero.getPaypalMoney(user_id)
+		if (money >= value) then
+			zero.setPaypalMoney(user_id, parseInt(money - value))
 			return true
 		end
 	end
 	return false
 end
-------------------------------------------------------------------
+exports('tryBankPayment', zero.tryBankPayment)
 
-------------------------------------------------------------------
--- TRY FULL PAYMENT
-------------------------------------------------------------------
-vRP.tryFullPayment = function(user_id, amount)
-	if (amount >= 0) then
-		local money = vRP.getMoney(user_id)
-		if (money >= amount) then
-			return vRP.tryPayment(user_id, amount)
+zero.tryWithdraw = function(user_id, value)
+	if (value > 0) then
+		local money = zero.getBankMoney(user_id)
+		if (money >= value) then
+			zero.setBankMoney(user_id, parseInt(money - value))
+			zero.giveMoney(user_id, value)
+			return true
+		end
+	end
+	return false
+end
+exports('tryWithdraw', zero.tryWithdraw)
+
+zero.tryDeposit = function(user_id, value)
+	if (value > 0) then
+		if zero.tryPayment(user_id, value) then
+			zero.giveBankMoney(user_id, value)
+			return true
+		end
+	end
+	return false
+end
+exports('tryDeposit', zero.tryDeposit)
+
+zero.tryFullPayment = function(user_id, value)
+	if (value > 0) then
+		if (zero.getMoney(user_id) >= value) then
+			return zero.tryPayment(user_id, value)
+		elseif (zero.getBankMoney(user_id) >= value) then
+			return zero.tryBankPayment(user_id, value)
 		else
-			if (vRP.tryWithdraw(user_id, (amount - money))) then
-				return vRP.tryPayment(user_id, amount)
+			if (zero.getPaypalMoney(user_id) >= value) then
+				return zero.tryPaypalPayment(user_id, value)
 			end
 		end
 	end
 	return false
 end
-------------------------------------------------------------------
+exports('tryFullPayment', zero.tryFullPayment)
 
 AddEventHandler('vRP:playerJoin', function(user_id, source, name)
-	vRP.execute('vRP/money_init_user', { user_id = user_id, wallet = config['initMoney']['wallet'], bank = config['initMoney']['bank'] })
-	
-	local tmp = vRP.getUserTmpTable(user_id)
-	if tmp then
-		local rows = vRP.query("vRP/get_money",{ user_id = user_id })
-		if (#rows > 0) then
-			tmp.bank = rows[1].bank
-			tmp.wallet = rows[1].wallet
-		end
-	end
-end)
-
-AddEventHandler('vRP:playerLeave', function(user_id, source)
-	local tmp = vRP.getUserTmpTable(user_id)
-	if (tmp and tmp.wallet and tmp.bank) then
-		vRP.execute('vRP/set_money', { user_id = user_id, wallet = tmp.wallet, bank = tmp.bank })
-	end
-end)
-
-AddEventHandler('vRP:save', function()
-	for index, value in pairs(cacheUsers['user_tmp_tables']) do
-		if (value.wallet and value.bank) then
-			vRP.execute("vRP/set_money",{ user_id = index, wallet = value.wallet, bank = value.bank })
-		end
-	end
 end)
