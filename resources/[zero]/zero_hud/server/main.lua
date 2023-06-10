@@ -8,8 +8,8 @@ cli = Tunnel.getInterface(GetCurrentResourceName())
 
 srv.checkPermission = function(permission)
     local _source = source
-    local _userId = vRP.getUserId(_source)
-    if (_userId) and vRP.hasPermission(_userId, permission) then
+    local _userId = zero.getUserId(_source)
+    if (_userId) and zero.hasPermission(_userId, permission) then
         return true
     end
     return false

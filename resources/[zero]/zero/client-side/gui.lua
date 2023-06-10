@@ -1,4 +1,4 @@
-vRP.getMenuCelular = function()
+zero.getMenuCelular = function()
 	return menu_celular
 end
 
@@ -41,18 +41,18 @@ end)
 local objIDS = Tools.newIDGenerator()
 local objects = {}
 
-vRP.loadAnimSet = function(dict)
+zero.loadAnimSet = function(dict)
 	RequestAnimSet(dict)
 	while not HasAnimSetLoaded(dict) do Citizen.Wait(10) end
 	SetPedMovementClipset(PlayerPedId(), dict, 0.25)
 end
 
-vRP.CarregarAnim = function(dict)
+zero.CarregarAnim = function(dict)
 	RequestAnimDict(dict)
 	while not HasAnimDictLoaded(dict) do Citizen.Wait(10) end
 end
 
-vRP.CarregarObjeto = function(dict, anim, prop, flag, hand, pos1, pos2, pos3, pos4, pos5, pos6)
+zero.CarregarObjeto = function(dict, anim, prop, flag, hand, pos1, pos2, pos3, pos4, pos5, pos6)
 	local ped = PlayerPedId()
 
 	RequestModel(GetHashKey(prop))
@@ -70,7 +70,7 @@ vRP.CarregarObjeto = function(dict, anim, prop, flag, hand, pos1, pos2, pos3, po
 		Citizen.InvokeNative(0xAD738C3085FE7E11,object,true,true)
 		objects[id] = object
 	else
-		vRP.CarregarAnim(dict)
+		zero.CarregarAnim(dict)
 		TaskPlayAnim(ped,dict,anim,3.0,3.0,-1,flag,0,0,0,0)
 		local coords = GetOffsetFromEntityInWorldCoords(ped,0.0,0.0,-5.0)
 		local object = CreateObject(GetHashKey(prop),coords.x,coords.y,coords.z,true,true,true)
@@ -83,8 +83,8 @@ vRP.CarregarObjeto = function(dict, anim, prop, flag, hand, pos1, pos2, pos3, po
 	return id
 end
 
-vRP.DeletarObjeto = function(id)
-	vRP.stopAnim(true)
+zero.DeletarObjeto = function(id)
+	zero.stopAnim(true)
 	TriggerEvent('animationsEvent', 'binoculos', false)
 	TriggerEvent('animationsEvent', 'camera2', false)
 	if id and objects[id] then
@@ -112,7 +112,7 @@ AddEventHandler("syncclean",function(index)
 			if IsEntityAVehicle(v) then
 				SetVehicleDirtLevel(v,0.0)
 				SetVehicleUndriveable(v,false)
-				vRP.DeletarObjeto()
+				zero.DeletarObjeto()
 			end
 		end
 	end

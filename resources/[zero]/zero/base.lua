@@ -14,10 +14,10 @@ exportTable(vRP)
 
 -- tvRP = {}
 -- Tunnel.bindInterface("vRP",tvRP)
-vRPclient = Tunnel.getInterface("vRP")
+vRPclient = Tunnel.getInterface("zero")
 
 zero.webhook = function(link, message)
-	if link and message and link ~= '' then
+	if (link and message and link ~= '') then
 		PerformHttpRequest(link, function(err, text, headers) end, 'POST', json.encode({ content = message }), { ['Content-Type'] = 'application/json' })
 	end
 end
@@ -36,7 +36,7 @@ local cached_queries = {}
 local prepared_queries = {}
 local db_initialized = false
 
-vRP.registerDBDriver = function(name, on_init, on_prepare, on_query)
+zero.registerDBDriver = function(name, on_init, on_prepare, on_query)
 	if not db_drivers[name] then
 		db_drivers[name] = { on_init, on_prepare, on_query }
 		if name == baseConfig.db.driver then
@@ -57,7 +57,7 @@ vRP.registerDBDriver = function(name, on_init, on_prepare, on_query)
 	end
 end
 
-vRP.prepare = function(name, query)
+zero.prepare = function(name, query)
 	prepared_queries[name] = true
 	if db_initialized then
 		db_driver[2](name,query)
@@ -66,7 +66,7 @@ vRP.prepare = function(name, query)
 	end
 end
 
-vRP.query = function(name, params, mode)
+zero.query = function(name, params, mode)
 	if not mode then mode = "query" end
 	if db_initialized then
 		return db_driver[3](name,params or {},mode)
@@ -77,19 +77,19 @@ vRP.query = function(name, params, mode)
 	end
 end
 
-vRP.execute = function(name, params)
-	return vRP.query(name, params, "execute")
+zero.execute = function(name, params)
+	return zero.query(name, params, "execute")
 end
 
-vRP.insert = function(name, params)
-	return vRP.query(name, params, "insert")
+zero.insert = function(name, params)
+	return zero.query(name, params, "insert")
 end
 
-vRP.scalar = function(name, params)
-	return vRP.query(name, params, "scalar")
+zero.scalar = function(name, params)
+	return zero.query(name, params, "scalar")
 end
 
-vRP.format = function(n)
+zero.format = function(n)
 	local left, num, right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
 	return left..(num:reverse():gsub('(%d%d%d)','%1.'):reverse())..right
 end
@@ -102,7 +102,7 @@ zero.setBanned = function(user_id, banned)
 	return exports['zero_core']:setBanned(user_id, banned)
 end
 
-vRP.getIdentifiers = function(source)
+zero.getIdentifiers = function(source)
     local identifiers = {}
     for i = 0, GetNumPlayerIdentifiers(source)-1 do
         local id = GetPlayerIdentifier(source, i)
@@ -113,74 +113,62 @@ vRP.getIdentifiers = function(source)
     return identifiers
 end
 
-vRP.getUserIdByIdentifiers = function(ids)
+zero.getUserIdByIdentifiers = function(ids)
 	if (ids) then
 		for i = 1, #ids do
 			if (string.find(ids[i], 'ip:') == nil) then
-				local rows = vRP.query('zero_framework/getIdentifier', { identifier = ids[i] })
+				local rows = zero.query('zero_framework/getIdentifier', { identifier = ids[i] })
 				if (#rows > 0) then
 					return rows[1].user_id
 				end
 			end
 		end
-		local generateNewUser = vRP.insert('zero_framework/createUser')
+		local generateNewUser = zero.insert('zero_framework/createUser')
 		if (generateNewUser > 0) then
 			local user_id = generateNewUser
 			for l, w in pairs(ids) do
 				if (string.find(w, 'ip:') == nil) then
-					vRP.execute('zero_framework/addIdentifier', { user_id = user_id, identifier = w })
+					zero.execute('zero_framework/addIdentifier', { user_id = user_id, identifier = w })
 				end
 			end
 			return user_id
 		end
 	end
 end
-	
-vRP.isWhitelisted = function(user_id)
-	local rows = vRP.query("vRP/get_whitelisted", { user_id = user_id })
-	if #rows > 0 then
-		return rows[1].whitelisted
-	end
-	return false
-end
 
-vRP.setWhitelisted = function(user_id,whitelisted)
-	vRP.execute("vRP/set_whitelisted", { user_id = user_id, whitelisted = whitelisted })
-end
-
-vRP.getUData = function(user_id, key)
-	local rows = vRP.query("vRP/get_userdata", { user_id = user_id, key = key })
+zero.getUData = function(user_id, key)
+	local rows = zero.query("vRP/get_userdata", { user_id = user_id, key = key })
 	if #rows > 0 then
 		return rows[1].dvalue
 	end
 	return ""
 end
 
-vRP.setUData = function(user_id, key, value)
-	vRP.execute("vRP/set_userdata", { user_id = user_id, key = key, value = value })
+zero.setUData = function(user_id, key, value)
+	zero.execute("vRP/set_userdata", { user_id = user_id, key = key, value = value })
 end
 
-vRP.getSData = function(key)
-	local rows = vRP.query("vRP/get_srvdata", { key = key })
+zero.getSData = function(key)
+	local rows = zero.query("vRP/get_srvdata", { key = key })
 	if #rows > 0 then
 		return rows[1].dvalue
 	end
 	return ""
 end
 
-vRP.setSData = function(key, value)
-	vRP.execute("vRP/set_srvdata",{ key = key, value = value })
+zero.setSData = function(key, value)
+	zero.execute("vRP/set_srvdata",{ key = key, value = value })
 end
 
-vRP.remSData = function(dkey)
-	vRP.execute("vRP/rem_srv_data",{ dkey = dkey })
+zero.remSData = function(dkey)
+	zero.execute("vRP/rem_srv_data",{ dkey = dkey })
 end
 ------------------------------------------------------------------
 
 ------------------------------------------------------------------
 -- Get Users
 ------------------------------------------------------------------
-vRP.getUsers = function()
+zero.getUsers = function()
 	local users = {}
 	for k, v in pairs(cacheUsers['user_sources']) do
 		users[k] = v
@@ -192,21 +180,21 @@ end
 ------------------------------------------------------------------
 -- TABELAS TEMPORÁRIAS
 ------------------------------------------------------------------
-vRP.getUserDataTable = function(user_id)
+zero.getUserDataTable = function(user_id)
 	return cacheUsers['user_tables'][user_id]
 end
 
-vRP.setKeyDataTable = function(user_id,key,value)
+zero.setKeyDataTable = function(user_id,key,value)
 	if cacheUsers['user_tables'][user_id] then
 		cacheUsers['user_tables'][user_id][key] = value
 	end
 end
 
-vRP.getUserTmpTable = function(user_id)
+zero.getUserTmpTable = function(user_id)
 	return cacheUsers['user_tmp_tables'][user_id]
 end
 
-vRP.setKeyTempTable = function(user_id,key,value)
+zero.setKeyTempTable = function(user_id,key,value)
 	if cacheUsers['user_tmp_tables'][user_id] then
 		cacheUsers['user_tmp_tables'][user_id][key] = value
 	end
@@ -216,7 +204,7 @@ end
 ------------------------------------------------------------------
 -- PEGAR ID E SOURCE DO JOGADOR
 ------------------------------------------------------------------
-vRP.getUserId = function(source)
+zero.getUserId = function(source)
 	if source ~= nil then
 		local ids = GetPlayerIdentifiers(source)
 		if ids ~= nil and #ids > 0 then
@@ -227,7 +215,7 @@ vRP.getUserId = function(source)
 	return nil
 end
 
-vRP.getUserSource = function(user_id)
+zero.getUserSource = function(user_id)
 	return cacheUsers['user_sources'][user_id]
 end
 ------------------------------------------------------------------
@@ -240,7 +228,7 @@ concatInv = function(TableInv)
 	if TableInv and type(TableInv) == 'table' then
 		for k, v in pairs(TableInv) do
 			if k ~= nil and v ~= nil then
-				txt = '\n   ' .. vRP.format(v.amount or 0) .. 'x ' .. (vRP.itemNameList(v.item) or v.item) .. txt
+				txt = '\n   ' .. zero.format(v.amount or 0) .. 'x ' .. (zero.itemNameList(v.item) or v.item) .. txt
 			end
 		end
 		if txt == '' then
@@ -256,7 +244,7 @@ concatArmas = function(TableInv)
 	local txt = ''
 	if TableInv and type(TableInv) == 'table' then
 		for k, v in pairs(TableInv) do
-			txt = '\n   ' .. (vRP.itemNameList('wbody|'..k) or k) .. ' [' .. tostring(v.ammo) .. ']' .. txt
+			txt = '\n   ' .. (zero.itemNameList('wbody|'..k) or k) .. ' [' .. tostring(v.ammo) .. ']' .. txt
 		end
 		if txt == '' then
 			return 'DESARMADO'
@@ -271,21 +259,21 @@ end
 ------------------------------------------------------------------
 -- KICK
 ------------------------------------------------------------------
-vRP.kick = function(source, reason)
+zero.kick = function(source, reason)
 	DropPlayer(source, reason)
 end
 
-vRP.dropPlayer = function(source, reason)
+zero.dropPlayer = function(source, reason)
 	if (source) then
-		local user_id = vRP.getUserId(source)
-		local userTable = vRP.getUserDataTable(user_id)
+		local user_id = zero.getUserId(source)
+		local userTable = zero.getUserDataTable(user_id)
 
 		local sPed = GetPlayerPed(source)
 		if (not DoesEntityExist(sPed)) then return; end;
 
 		if (user_id) then
 			local health, items, weapons = GetEntityHealth(sPed), concatInv(userTable['inventory']), concatArmas(userTable['weapons'])	
-			local identifiers = vRP.getIdentifiers(source)
+			local identifiers = zero.getIdentifiers(source)
 			local steamId, steamUrl, discordId = '\n**STEAM HEX:** '..(identifiers['steam'] or 'Offline'), '', ''
 
 			TriggerEvent('vRP:playerLeave', user_id, source)
@@ -296,7 +284,7 @@ vRP.dropPlayer = function(source, reason)
 			zero.webhook(config['webhooks']['exit'], '```prolog\n[LOG]: SAIU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[MOTIVO DA SAÍDA]: '..(reason or 'NÃO IDENTIFICADO')..'\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
 				
 			local save = json.encode(userTable)
-			if (save ~= 'null') then vRP.setUData(user_id, 'vRP:datatable', save) end
+			if (save ~= 'null') then zero.setUData(user_id, 'vRP:datatable', save) end
 
 			cacheUsers['users'][cacheUsers['rusers'][user_id]] = nil
 			cacheUsers['rusers'][user_id] = nil
@@ -314,7 +302,7 @@ end
 task_save_datatables = function()
 	SetTimeout(30000, task_save_datatables); 
 	for k, v in pairs(cacheUsers['user_tables']) do
-		vRP.setUData(k, 'vRP:datatable', json.encode(v))
+		zero.setUData(k, 'vRP:datatable', json.encode(v))
 	end
 	-- print('^2[DataTable]:^7 o banco de dados foi salvo com sucesso.')
 end
@@ -334,7 +322,7 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 	local source = source
 	if (ids ~= nil and #ids > 0) then
 		deferrals.update('Olá '..name..', estamos carregando as identidades do servidor...')
-		local user_id = vRP.getUserIdByIdentifiers(ids)
+		local user_id = zero.getUserIdByIdentifiers(ids)
 		if user_id then
 
 			--- DUPLICATE LOGIN
@@ -373,16 +361,16 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 				cacheUsers['user_tmp_tables'][user_id] = {}
 				cacheUsers['user_sources'][user_id] = source
 
-				local data = json.decode(vRP.getUData(user_id, 'vRP:datatable'))
+				local data = json.decode(zero.getUData(user_id, 'vRP:datatable'))
 				if type(data) == 'table' then cacheUsers['user_tables'][user_id] = data end
 				
-				vRP.setKeyTempTable(user_id, 'spawns', 0)
+				zero.setKeyTempTable(user_id, 'spawns', 0)
 
 				TriggerEvent('vRP:playerJoin', user_id, source, name)
 				
-				local userTable = vRP.getUserDataTable(user_id)
+				local userTable = zero.getUserDataTable(user_id)
 				local health, items, weapons = GetEntityHealth(sPed), concatInv(userTable['inventory']), concatArmas(userTable['weapons'])	
-				local identifiers = vRP.getIdentifiers(source)
+				local identifiers = zero.getIdentifiers(source)
 				local steamId, steamUrl, discordId = '\n**STEAM HEX:** '..(identifiers['steam'] or 'Offline'), '', ''
 
 				if (identifiers['steam']) then steamUrl = '\n**STEAM URL:** https://steamcommunity.com/profiles/'..tonumber(identifiers['steam']:gsub('steam:', ''), 16) end
@@ -390,9 +378,9 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 				zero.webhook(config['webhooks']['join'], '```prolog\n[LOG]: ENTROU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
 
 				deferrals.done()	
-				vRP.execute('vRP/set_login', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
+				zero.execute('vRP/set_login', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
 			else
-				vRP.setKeyTempTable(user_id, 'spawns', 0)
+				zero.setKeyTempTable(user_id, 'spawns', 0)
 
 				TriggerEvent('vRP:playerRejoin', user_id, source, name)
 				deferrals.done()
@@ -411,11 +399,11 @@ end)
 
 RegisterNetEvent('vRPcli:playerSpawned', function()
 	local source = source
-	local user_id = vRP.getUserId(source)
+	local user_id = zero.getUserId(source)
 	if user_id then
 		cacheUsers['user_sources'][user_id] = source
 		
-		local tmp = vRP.getUserTmpTable(user_id)
+		local tmp = zero.getUserTmpTable(user_id)
 		if tmp then
 			tmp.spawns = tmp.spawns+1
 			first_spawn = (tmp.spawns == 1)
@@ -435,11 +423,11 @@ end)
 ------------------------------------------------------------------
 -- PROMPT & REQUEST
 ------------------------------------------------------------------
-vRP.prompt = function(source, questions)
+zero.prompt = function(source, questions)
 	return exports['zero_hud']:prompt(source, questions)
 end
 
-vRP.request = function(source, title, time)
+zero.request = function(source, title, time)
 	return exports['zero_hud']:request(source, title, time)
 end
 ------------------------------------------------------------------
@@ -486,9 +474,9 @@ end
 --         if(os.time()-delayflood[key][source]<1)then
 --             flood[key][source]= flood[key][source] + 1
 --             if(flood[key][source]==limite)then
---                 local user_id = vRP.getUserId(source)
+--                 local user_id = zero.getUserId(source)
 
---                 vRP.setBanned(user_id,true)
+--                 zero.setBanned(user_id,true)
 --                 exports["gb_core"]:insertBanRecord(user_id,true,-1,"[ANTI-FLOOD] "..tostring(key))
 
 --                 DropPlayer(source, "Hoje não! Hoje não! Hoje sim!")
@@ -506,12 +494,12 @@ end
 -- AddEventHandler('playerDropped', function(reason)
 --     local _source = source
 -- 	if (_source) then
--- 		vRP.dropPlayer(_source, reason)
+-- 		zero.dropPlayer(_source, reason)
 
--- 		local user_id = vRP.getUserId(_source)
+-- 		local user_id = zero.getUserId(_source)
 -- 		if user_id then
 -- 			if (reason == "Game crashed: gta-core-five.dll!CrashCommand (0x0)") then
--- 				vRP.setBanned(user_id, true)
+-- 				zero.setBanned(user_id, true)
 -- 				exports["gb_core"]:insertBanRecord(user_id,true,-1,"FORÇOU CRASH")
 -- 				zero.webhook(webhookCrash, "```prolog\n[USER_ID]: "..user_id.."\n[UTILIZOU COMANDO _CRASH]"..os.date("\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
 -- 			end

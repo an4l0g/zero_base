@@ -1,7 +1,7 @@
 local state_ready = false
 local weapon_list = {}	
 
-vRP.playerStateReady = function(state)
+zero.playerStateReady = function(state)
 	state_ready = state
 end
 
@@ -39,7 +39,7 @@ Citizen.CreateThread(function()
 			-- HEALTH SAVE
 			if state_cache.health_tick >= 5 then
 				
-				local health = vRP.getHealth()
+				local health = zero.getHealth()
 				if (health ~= state_cache.health) then
 					state_cache.health = health
 					vRPserver._updateHealth(health)		
@@ -52,7 +52,7 @@ Citizen.CreateThread(function()
 			-- ARMOR SAVE
 			if state_cache.armor_tick >= 5 then
 				
-				local armor = vRP.getArmour()
+				local armor = zero.getArmour()
 				if (armor ~= state_cache.armor) then
 					state_cache.armor = armor
 					vRPserver._updateArmor(armor)		
@@ -64,7 +64,7 @@ Citizen.CreateThread(function()
 			end
 			-- CUSTOMIZATION SAVE
 			if state_cache.customs_tick >= 10 then
-				local customs = vRP.getCustomization()
+				local customs = zero.getCustomization()
 				if (json.encode(customs) ~= json.encode(state_cache.customs)) then
 					state_cache.customs = customs
 					vRPserver._updateCustomization(customs)
@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
 			end
 			-- WEAPONS SAVE
 			if state_cache.weapons_tick >= 2 then
-				local weapons = vRP.getWeapons()
+				local weapons = zero.getWeapons()
 				if (json.encode(weapons) ~= json.encode(state_cache.weapons)) then
 					state_cache.weapons = weapons
 					vRPserver._updateWeapons(weapons)						
@@ -93,9 +93,9 @@ end)
 RegisterNetEvent('save:database',function()
 	if IsPlayerPlaying(PlayerId()) and state_ready and (not LocalPlayer.state['inArena']) then
 		local coords = GetEntityCoords(PlayerPedId(),true)
-		local health = vRP.getHealth()
-		local armor = vRP.getArmour()
-		local customs = vRP.getCustomization()
+		local health = zero.getHealth()
+		local armor = zero.getArmour()
+		local customs = zero.getCustomization()
 		
 		if ( #(coords - state_cache.coords) >= 2 ) then
 			state_cache.coords = coords
@@ -122,7 +122,7 @@ end)
 
 RegisterNetEvent('save:weapons',function()
 	if state_ready and (not LocalPlayer.state['inArena']) then
-		vRPserver._updateWeapons(vRP.getWeapons())
+		vRPserver._updateWeapons(zero.getWeapons())
 	end
 end)
 
@@ -177,12 +177,12 @@ local weapon_types = {
 	"WEAPON_BALL"
 }
 
-vRP.clearWeapons = function()
+zero.clearWeapons = function()
     RemoveAllPedWeapons(PlayerPedId(), true)
 	weapon_list = {}
 end
 
-vRP.getWeapons = function()
+zero.getWeapons = function()
 	local player = PlayerPedId()
 	local ammo_types = {}
 	local weapons = {}
@@ -200,16 +200,16 @@ vRP.getWeapons = function()
 			end
 		end
 	end
-	return vRP.legalWeaponsChecker(weapons)
+	return zero.legalWeaponsChecker(weapons)
 end
 
-vRP.replaceWeapons = function(weapons, token)
-	local old_weapons = vRP.getWeapons()
-	vRP.giveWeapons(weapons,true,token)
+zero.replaceWeapons = function(weapons, token)
+	local old_weapons = zero.getWeapons()
+	zero.giveWeapons(weapons,true,token)
 	return old_weapons
 end
 
-vRP.giveWeapons = function(weapons, clear_before, token)
+zero.giveWeapons = function(weapons, clear_before, token)
 	vRPserver._checkToken(token,weapons)
 	local player = PlayerPedId()
 	if clear_before then
@@ -225,13 +225,13 @@ vRP.giveWeapons = function(weapons, clear_before, token)
 	end
 end
 
-vRP.getWeaponsLegal = function()								
+zero.getWeaponsLegal = function()								
 	return weapon_list
 end
 
-vRP.legalWeaponsChecker = function(weapon)
+zero.legalWeaponsChecker = function(weapon)
 	local weapon = weapon
-	local weapons_legal = vRP.getWeaponsLegal()
+	local weapons_legal = zero.getWeaponsLegal()
 	local ilegal = false
 	local ilegal_log = {}
 	for v, b in pairs(weapon) do
@@ -241,19 +241,19 @@ vRP.legalWeaponsChecker = function(weapon)
 	  	end
 	end
 	if ilegal then
-		vRP.giveWeapons(weapons_legal, true, GlobalState.weaponToken)
+		zero.giveWeapons(weapons_legal, true, GlobalState.weaponToken)
 		weapon = weapons_legal
 		vRPserver.weaponsChecker(ilegal_log)						 
 	end
 	return weapon
 end	
 
-vRP.setArmour = function(amount)
+zero.setArmour = function(amount)
 	--SetPedArmour(PlayerPedId(),amount)
 	TriggerEvent('carrinho', amount)
 end
 
-vRP.getArmour = function()
+zero.getArmour = function()
 	return GetPedArmour(PlayerPedId())
 end
 
@@ -265,7 +265,7 @@ local parse_part = function(key)
 	end
 end
 
-vRP.getDrawables = function(part)
+zero.getDrawables = function(part)
 	local isprop, index = parse_part(part)
 	if isprop then
 		return GetNumberOfPedPropDrawableVariations(PlayerPedId(),index)
@@ -274,7 +274,7 @@ vRP.getDrawables = function(part)
 	end
 end
 
-vRP.getDrawableTextures = function(part,drawable)
+zero.getDrawableTextures = function(part,drawable)
 	local isprop, index = parse_part(part)
 	if isprop then
 		return GetNumberOfPedPropTextureVariations(PlayerPedId(),index,drawable)
@@ -283,7 +283,7 @@ vRP.getDrawableTextures = function(part,drawable)
 	end
 end
 
-vRP.getCustomization = function()
+zero.getCustomization = function()
 	local ped = PlayerPedId()
 	local custom = {}
 	custom.modelhash = GetEntityModel(ped)
@@ -298,7 +298,7 @@ vRP.getCustomization = function()
 	return custom
 end
 
-vRP.setCustomization = function(custom)
+zero.setCustomization = function(custom)
 	local r = async()
 	Citizen.CreateThread(function()
 		if custom then
@@ -320,14 +320,14 @@ vRP.setCustomization = function(custom)
                 end
 
                 if HasModelLoaded(mhash) then
-                    local weapons = vRP.getWeapons()
-                    local armour = vRP.getArmour()
-                    local health = vRP.getHealth()
+                    local weapons = zero.getWeapons()
+                    local armour = zero.getArmour()
+                    local health = zero.getHealth()
 
                     SetPlayerModel(PlayerId(),mhash)
-                    vRP.setHealth(health)
-                    vRP.giveWeapons(weapons,true,GlobalState.weaponToken)
-                    vRP.setArmour(armour)
+                    zero.setHealth(health)
+                    zero.giveWeapons(weapons,true,GlobalState.weaponToken)
+                    zero.setArmour(armour)
                     SetModelAsNoLongerNeeded(mhash)
                 end
             end

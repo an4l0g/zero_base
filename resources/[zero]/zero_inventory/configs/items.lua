@@ -49,7 +49,7 @@ config.items = {
         interaction = function(source, user_id)
             local inWater = cInventory.getWaterHeight(source)
             if inWater then
-                if vRP.tryGetInventoryItem(user_id, 'garrafa-vazia', 1) then
+                if zero.tryGetInventoryItem(user_id, 'garrafa-vazia', 1) then
                     TriggerClientEvent('zero_inventory:disableActions', source)
                     TriggerClientEvent('cancelando', source, true)
                     vRPclient._playAnim(source, true, {{'amb@medic@standing@kneel@base', 'base'}}, true)
@@ -57,7 +57,7 @@ config.items = {
                         3000,
                         function()
                             TriggerClientEvent('zero_inventory:enableActions', source)
-                            vRP.giveInventoryItem(user_id, 'agua-contaminada', 1)
+                            zero.giveInventoryItem(user_id, 'agua-contaminada', 1)
                             vRPclient._stopAnim(source, true)
                             TriggerClientEvent('cancelando', source, false)
                         end
@@ -340,9 +340,9 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.tryGetInventoryItem(user_id, 'bau-medio', 1) then
+            if zero.tryGetInventoryItem(user_id, 'bau-medio', 1) then
                 if (not exports["zBrazuca"]:homesUpdateChest(user_id, 50)) then
-                    vRP.giveInventoryItem(user_id, 'bau-medio', 1)
+                    zero.giveInventoryItem(user_id, 'bau-medio', 1)
                 end
             end
         end
@@ -375,9 +375,9 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.getInventoryMaxWeight(user_id) < 25 then
-                if vRP.tryGetInventoryItem(user_id, 'mochila-pequena', 1) then
-                    vRP.setInventoryMaxWeight(user_id, 25)
+            if zero.getInventoryMaxWeight(user_id) < 25 then
+                if zero.tryGetInventoryItem(user_id, 'mochila-pequena', 1) then
+                    zero.setInventoryMaxWeight(user_id, 25)
                     SetPedComponentVariation(GetPlayerPed(source), 5, 4, 0, 3);
                     TriggerClientEvent(
                         'Notify',
@@ -409,7 +409,7 @@ config.items = {
         usable = true,
         interaction = function(source, user_id)
             if (not Player(source).state["zSafes:inside"]) then
-                if vRP.tryGetInventoryItem(user_id, 'flare', 1) then
+                if zero.tryGetInventoryItem(user_id, 'flare', 1) then
                     local coords = GetEntityCoords(GetPlayerPed(source))
                     if exports['zBrazuca']:createAirdrop(vector3(coords.x, coords.y, coords.z-0.7)) then
                         TriggerClientEvent(
@@ -420,7 +420,7 @@ config.items = {
                             5000
                         )
                     else
-                        vRP.giveInventoryItem(user_id, 'flare', 1)
+                        zero.giveInventoryItem(user_id, 'flare', 1)
                         TriggerClientEvent(
                             'Notify',
                             source,
@@ -451,8 +451,8 @@ config.items = {
 
         usable = true,
             interaction = function(source, user_id)
-                if vRP.hasPermission(user_id, "hab-mecanica") then
-                    if vRP.tryGetInventoryItem(user_id, "repairkit", 1) then
+                if zero.hasPermission(user_id, "hab-mecanica") then
+                    if zero.tryGetInventoryItem(user_id, "repairkit", 1) then
                         if not vRPclient.isInVehicle(source) then
                             local cliVehicle, vehNet = vRPclient.vehList(source, 11)
                             if cliVehicle then
@@ -628,7 +628,7 @@ config.items = {
                     )
                     local taskResult = cTASKBAR.taskTwo(source)
                     if taskResult then
-                        if vRP.tryGetInventoryItem(user_id, 'pneu', 1, true) then
+                        if zero.tryGetInventoryItem(user_id, 'pneu', 1, true) then
                             fixBurstTyres(-1, vehNet)
                         end
                     end
@@ -666,7 +666,7 @@ config.items = {
                             vRPclient._stopAnim(source,false)
 
                             local coords = GetEntityCoords(GetPlayerPed(source))
-                            local identity = vRP.getUserIdentity(user_id)
+                            local identity = zero.getUserIdentity(user_id)
                             local data = exports["zGarages"]:getVehicleData(vehNet)
                             if data.user_id then
                                 webhook(webhooks.lockpick,'```prolog\n[LOCKPICK SUCESSO]\n[LADRÃO]: '..user_id..' | '..identity.name..' '..identity.firstname..'\n[LOCALIZAÇÃO]: '..street..' \n[DONO DO VEÍCULO]: '..data.user_id..' \n[MODELO DO CARRO]: '..data.model..' \n[PLACA]: '..data.plate..' \n[CDS]: '..tostring(coords)..os.date('\n[DATA]: %d/%m/%Y - [HORA]: %H:%M:%S')..' \r```')
@@ -676,7 +676,7 @@ config.items = {
                         end
                     end
                     if (math.random(1, 100) > 50) then
-                        vRP.tryGetInventoryItem(user_id, 'chave-micha', 1)
+                        zero.tryGetInventoryItem(user_id, 'chave-micha', 1)
                         TriggerClientEvent('Notify', source, 'aviso', 'Chave micha', 'Oh não! A chave quebrou!', 5000)
                     end
                     TriggerClientEvent('cancelando', source, false)
@@ -753,7 +753,7 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.tryGetInventoryItem(user_id, "racao-animal", 1) then
+            if zero.tryGetInventoryItem(user_id, "racao-animal", 1) then
                 TriggerClientEvent('feedPet', source)
             end
         end
@@ -855,7 +855,7 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.tryGetInventoryItem(user_id, 'cigarro-organico', 1) then
+            if zero.tryGetInventoryItem(user_id, 'cigarro-organico', 1) then
                 TriggerClientEvent('zero_inventory:disableActions', source)
                 TriggerClientEvent('cancelando', source, false)
                 TriggerClientEvent('progress', source, 20000, 'Fumando cigarro orgânico...')
@@ -866,7 +866,7 @@ config.items = {
                         TriggerClientEvent('zero_inventory:enableActions', source)
                         vRPclient._DeletarObjeto(source)
                         vRPclient._stopAnim(source, false)
-                        vRP.setStress(user_id, 0)
+                        zero.setStress(user_id, 0)
                         TriggerClientEvent('Notify', source, 'Sanidade mental', 'Sua sanidade mental foi recuperada!', 5000)
                     end
                 )   
@@ -1060,7 +1060,7 @@ config.items = {
         usable = true,
         interaction = function(source, user_id)
             if vRPclient.getHealth(source) < 251 then
-                if vRP.tryGetInventoryItem(user_id, 'bandagem', 1) then
+                if zero.tryGetInventoryItem(user_id, 'bandagem', 1) then
                     TriggerClientEvent('zero_inventory:disableActions', source)
                     threadBandagem(user_id, 250)
                     vRPclient._CarregarObjeto(
@@ -1201,7 +1201,7 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if (vRP.tryGetInventoryItem(user_id, 'repolho-estragado', 1)) then
+            if (zero.tryGetInventoryItem(user_id, 'repolho-estragado', 1)) then
                 TriggerClientEvent('zero_inventory:disableActions', source)
                 vRPclient._CarregarObjeto(
                     source,
@@ -1395,7 +1395,7 @@ config.items = {
 
             if nplayer then
                 if vRPclient.isInComa(nplayer) then
-                    if vRP.tryGetInventoryItem(user_id, 'medkit', 1) then
+                    if zero.tryGetInventoryItem(user_id, 'medkit', 1) then
                         TriggerClientEvent('zero_inventory:disableActions', source)
                         TriggerClientEvent('progress', source, timeout, 'Reanimando...')
                         TriggerClientEvent('cancelando', source, true)
@@ -1407,10 +1407,10 @@ config.items = {
                                 TriggerClientEvent('cancelando', source, false)
                                 vRPclient._stopAnim(source, false)
                                 if GetEntityHealth(GetPlayerPed(source)) > 101 then
-                                    local nuser_id = vRP.getUserId(nplayer)
+                                    local nuser_id = zero.getUserId(nplayer)
                                     vRPclient.killGod(nplayer)
                                     vRPclient.setHealth(nplayer, 110)    
-                                    vRP.varyToxic(nuser_id, -100)                      
+                                    zero.varyToxic(nuser_id, -100)                      
                                 end  
                             end
                         )
@@ -1426,7 +1426,7 @@ config.items = {
                     )
                 end
             else
-                if vRP.tryGetInventoryItem(user_id, 'medkit', 1) then
+                if zero.tryGetInventoryItem(user_id, 'medkit', 1) then
                     TriggerClientEvent('progress', source, timeout, 'Utilizando kit medico...')
                     TriggerClientEvent('cancelando', source, true)
                     vRPclient._CarregarObjeto(
@@ -1447,7 +1447,7 @@ config.items = {
                             if GetEntityHealth(GetPlayerPed(source)) > 101 then
                                 vRPclient.killGod(source)
                                 vRPclient.setHealth(source, 400)
-                                vRP.varyToxic(user_id, -100)
+                                zero.varyToxic(user_id, -100)
                             end
                         end
                     )
@@ -1513,7 +1513,7 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.tryGetInventoryItem(user_id, 'mascara-gas', 1) then
+            if zero.tryGetInventoryItem(user_id, 'mascara-gas', 1) then
                 SetPedComponentVariation(GetPlayerPed(source), 1, 175);
                 TriggerClientEvent(
                     'Notify',
@@ -1680,7 +1680,7 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.tryGetInventoryItem(user_id, 'carticket', 1) then
+            if zero.tryGetInventoryItem(user_id, 'carticket', 1) then
                 exports['zGarages']:giveRandomVehicle(source, user_id)
             end
         end
@@ -1923,9 +1923,9 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.getInventoryMaxWeight(user_id) < 90 then
-                if vRP.tryGetInventoryItem(user_id, 'mochila-grande', 1) then
-                    vRP.setInventoryMaxWeight(user_id, 90)
+            if zero.getInventoryMaxWeight(user_id) < 90 then
+                if zero.tryGetInventoryItem(user_id, 'mochila-grande', 1) then
+                    zero.setInventoryMaxWeight(user_id, 90)
                     SetPedComponentVariation(GetPlayerPed(source), 5, 82, 15);
                     TriggerClientEvent(
                         'Notify',
@@ -2030,7 +2030,7 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if (vRP.tryGetInventoryItem(user_id, 'abobora-estragada', 1)) then
+            if (zero.tryGetInventoryItem(user_id, 'abobora-estragada', 1)) then
                 TriggerClientEvent('zero_inventory:disableActions', source)
                 vRPclient._CarregarObjeto(
                     source,
@@ -2256,10 +2256,10 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.tryGetInventoryItem(user_id, 'carvao', 5) and vRP.tryGetInventoryItem(user_id, 'pedaco-metal', 1) then
+            if zero.tryGetInventoryItem(user_id, 'carvao', 5) and zero.tryGetInventoryItem(user_id, 'pedaco-metal', 1) then
                 local broke = math.random(0, 10)
                 if broke <= 3 then
-                    if vRP.tryGetInventoryItem(user_id, 'pederneira', 1) then
+                    if zero.tryGetInventoryItem(user_id, 'pederneira', 1) then
                         TriggerClientEvent('Notify', source, 'Inventário', 'Sua pederneira quebrou!', 5000)
                     end
                 end
@@ -2282,9 +2282,9 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.tryGetInventoryItem(user_id, 'bau-pequeno', 1) then
+            if zero.tryGetInventoryItem(user_id, 'bau-pequeno', 1) then
                 if (not exports["zBrazuca"]:homesUpdateChest(user_id, 25)) then
-                    vRP.giveInventoryItem(user_id, 'bau-pequeno', 1)
+                    zero.giveInventoryItem(user_id, 'bau-pequeno', 1)
                 end
             end
         end
@@ -2297,9 +2297,9 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-              if vRP.tryGetInventoryItem(user_id, 'bau-grande', 1) then
+              if zero.tryGetInventoryItem(user_id, 'bau-grande', 1) then
                 if (not exports["zBrazuca"]:homesUpdateChest(user_id, 100)) then
-                    vRP.giveInventoryItem(user_id, 'bau-grande', 1)
+                    zero.giveInventoryItem(user_id, 'bau-grande', 1)
                 end
             end
         end
@@ -2390,9 +2390,9 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.getInventoryMaxWeight(user_id) < 125 then
-                if vRP.tryGetInventoryItem(user_id, 'mochila-extra-grande', 1) then
-                    vRP.setInventoryMaxWeight(user_id, 125)
+            if zero.getInventoryMaxWeight(user_id) < 125 then
+                if zero.tryGetInventoryItem(user_id, 'mochila-extra-grande', 1) then
+                    zero.setInventoryMaxWeight(user_id, 125)
                     SetPedComponentVariation(GetPlayerPed(source), 5, 86, 18);
                     TriggerClientEvent(
                         'Notify',
@@ -2441,9 +2441,9 @@ config.items = {
 
         usable = true,
         interaction = function(source, user_id)
-            if vRP.getInventoryMaxWeight(user_id) < 55 then
-                if vRP.tryGetInventoryItem(user_id, 'mochila-media', 1) then
-                    vRP.setInventoryMaxWeight(user_id, 55)
+            if zero.getInventoryMaxWeight(user_id) < 55 then
+                if zero.tryGetInventoryItem(user_id, 'mochila-media', 1) then
+                    zero.setInventoryMaxWeight(user_id, 55)
                     SetPedComponentVariation(GetPlayerPed(source), 5, 53, 6, 3);
                     TriggerClientEvent(
                         'Notify',
@@ -3016,7 +3016,7 @@ config.items = {
 
 function consumableItem(index)
    local _source = source
-   local user_id = vRP.getUserId(_source)
+   local user_id = zero.getUserId(_source)
    local customTimeout = 10000
 
    local cItem = config.items[index]
@@ -3031,8 +3031,8 @@ function consumableItem(index)
 --         return 
 --     end
 
-   if vRP.tryGetInventoryItem(user_id, index, 1) then
-    TriggerClientEvent('progress', _source, customTimeout, "Consumindo "..vRP.itemNameList(index).."...")
+   if zero.tryGetInventoryItem(user_id, index, 1) then
+    TriggerClientEvent('progress', _source, customTimeout, "Consumindo "..zero.itemNameList(index).."...")
     if cItem.animation then 
         if cItem.animation.prop then
             vRPclient._CarregarObjeto(_source, cItem.animation.anim[1], cItem.animation.anim[2], cItem.animation.prop, cItem.animation.anim[3], cItem.animation.anim[4])
@@ -3046,13 +3046,13 @@ function consumableItem(index)
         local consumable = cItem.consumable
         
         if consumable.hunger and consumable.hunger ~= 0 then
-            vRP.varyHunger(user_id, consumable.hunger)
+            zero.varyHunger(user_id, consumable.hunger)
         end
         if consumable.thirst and consumable.thirst ~= 0 then
-            vRP.varyThirst(user_id, consumable.thirst)
+            zero.varyThirst(user_id, consumable.thirst)
         end
         if consumable.toxic > 0 then
-            vRP.varyToxic(user_id, consumable.toxic)
+            zero.varyToxic(user_id, consumable.toxic)
             TriggerClientEvent(
                 'Notify',
                 _source,
@@ -3063,12 +3063,12 @@ function consumableItem(index)
             )
         end
         if cItem.afterItem then 
-            vRP.giveInventoryItem(user_id, cItem.afterItem, 1)
+            zero.giveInventoryItem(user_id, cItem.afterItem, 1)
         end
         
         if consumable.buff then
             vRPclient._playAnim(_source, false, {{'mini@triathlon', 'idle_e'}}, false)
-            vRP.addUserGroup(user_id, consumable.buff, consumable.buff)
+            zero.addUserGroup(user_id, consumable.buff, consumable.buff)
             TriggerClientEvent(
                 'Notify',
                 _source,
@@ -3098,7 +3098,7 @@ function consumableItem(index)
             _source,
             'sucesso',
             'Inventário',
-            'Você consumiu ' .. vRP.itemNameList(index) .. '.',
+            'Você consumiu ' .. zero.itemNameList(index) .. '.',
             5000
         )
     end)
@@ -3107,14 +3107,14 @@ end
 
 function healing(item)
     local _source = source
-    local user_id = vRP.getUserId(source)
+    local user_id = zero.getUserId(source)
     local drug = config.items[item]
     if (user_id) and drug then
         local currentHealth = vRPclient.getHealth(_source)
         if (currentHealth > 250) or item == 'antibiotico' then
-            if vRP.tryGetInventoryItem(user_id, item, 1) then
+            if zero.tryGetInventoryItem(user_id, item, 1) then
                 TriggerClientEvent('zero_inventory:closeInventory', _source)
-                TriggerClientEvent('progress', _source, 6000, 'Tomando '..vRP.itemNameList(item))
+                TriggerClientEvent('progress', _source, 6000, 'Tomando '..zero.itemNameList(item))
                 vRPclient._CarregarObjeto(_source, 'amb@world_human_drinking@beer@male@idle_a', 'idle_a', 'ng_proc_drug01a002', 48, 28422)
                 Citizen.SetTimeout(6000, function()
                     vRPclient._DeletarObjeto(_source)
@@ -3138,7 +3138,7 @@ function healing(item)
 
                 if (drugsConfig.heal_toxic) then
                     while toxicHealTimes < drugsConfig.heal_toxic_times do
-                        vRP._varyToxic(user_id, drugsConfig.heal_toxic)
+                        zero._varyToxic(user_id, drugsConfig.heal_toxic)
                         toxicHealTimes = toxicHealTimes + 1
                         Citizen.Wait(3000)
                     end
@@ -3195,8 +3195,8 @@ end
 
 function adoptPet(pet)
     local _source = source 
-    local user_id = vRP.getUserId(_source)
-    if vRP.tryGetInventoryItem(user_id, pet, 1) then
+    local user_id = zero.getUserId(_source)
+    if zero.tryGetInventoryItem(user_id, pet, 1) then
         local pet_type = splitString(pet,"-")[2]
         if pet_type then
             TriggerClientEvent('createPet', _source, pet_type)
@@ -3221,7 +3221,7 @@ function pescar(source, user_id, item)
         
         local inWater, distance = cInventory.getWaterHeight(source)
         if inWater then
-            if vRP.tryGetInventoryItem(user_id, 'isca', 1) then
+            if zero.tryGetInventoryItem(user_id, 'isca', 1) then
                 TriggerClientEvent('cancelando', source, true)
                 TriggerClientEvent('zero_inventory:disableActions', source, true)
                 TriggerClientEvent('emotes', source, 'pescar')
@@ -3232,7 +3232,7 @@ function pescar(source, user_id, item)
                     for k, fish in pairs(fishes) do
                         local random = math.random(0, 100)
                         local chance = fish['chance']
-                        if vRP.getInventoryItemAmount(user_id, "pe-coelho") then
+                        if zero.getInventoryItemAmount(user_id, "pe-coelho") then
                             chance = chance + 5
                         end
 
@@ -3244,9 +3244,9 @@ function pescar(source, user_id, item)
 
                     if currentFish == '' then currentFish = 'tilapia' end
 
-                    if (vRP.getItemWeight(currentFish)+vRP.getInventoryWeight(user_id)) <= vRP.getInventoryMaxWeight(user_id) then
+                    if (zero.getItemWeight(currentFish)+zero.getInventoryWeight(user_id)) <= zero.getInventoryMaxWeight(user_id) then
                         TriggerClientEvent('Notify', source, "Inventário", 'Pesca', 'Você pescou um(a) <b>'..currentFish..'</b>!', 5000)
-                        vRP.giveInventoryItem(user_id, currentFish, 1)
+                        zero.giveInventoryItem(user_id, currentFish, 1)
                     else 
                         TriggerClientEvent('Notify', source, "Inventário", 'Inventário', 'Você não possui espaço na mochila!', 5000)
                     end

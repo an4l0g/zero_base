@@ -1,4 +1,4 @@
-vRP.getNearestVehicles = function(radius, network)
+zero.getNearestVehicles = function(radius, network)
 	local r = {}
 	local pCDS = GetEntityCoords(PlayerPedId())
 	for _,veh in pairs(GetGamePool("CVehicle")) do
@@ -18,9 +18,9 @@ vRP.getNearestVehicles = function(radius, network)
 	return r
 end
 
-vRP.getNearestVehicle = function(radius, network)
+zero.getNearestVehicle = function(radius, network)
 	local veh
-	local vehs = vRP.getNearestVehicles(radius,network)
+	local vehs = zero.getNearestVehicles(radius,network)
 	local min = radius+0.0001
 	for _veh,dist in pairs(vehs) do
 		if dist < min then
@@ -31,18 +31,18 @@ vRP.getNearestVehicle = function(radius, network)
 	return veh 
 end
 
-vRP.ejectVehicle = function()
+zero.ejectVehicle = function()
 	local ped = PlayerPedId()
 	if IsPedSittingInAnyVehicle(ped) then
 		TaskLeaveVehicle(ped,GetVehiclePedIsIn(ped),4160)
 	end
 end
 
-vRP.isInVehicle = function()
+zero.isInVehicle = function()
 	return IsPedSittingInAnyVehicle(PlayerPedId())
 end
 
-vRP.GetVehicleSeat = function()
+zero.GetVehicleSeat = function()
 	local ped = PlayerPedId()
 	local vehicle = GetVehiclePedIsIn(ped)
 	if vehicle > 0 then
@@ -58,11 +58,11 @@ end
 local vehicles = {}
 RegisterNetEvent('vRP:clearVehicleCache', function() vehicles = {}; end)
 
-vRP.vehList = function(radius)
+zero.vehList = function(radius)
 	local ped = PlayerPedId()
 	local veh = GetVehiclePedIsUsing(ped)
 	if (not IsPedInAnyVehicle(ped)) then
-		veh = vRP.getNearestVehicle(radius)
+		veh = zero.getNearestVehicle(radius)
 	end
 	if IsEntityAVehicle(veh) then
 		local hash = GetEntityModel(veh)

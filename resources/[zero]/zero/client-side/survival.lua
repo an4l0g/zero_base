@@ -3,45 +3,45 @@ local timer_default = 180
 local deathtimer = timer_default
 --============================================
 
-function vRP.varyHealth(variation)
+function zero.varyHealth(variation)
 	local ped = PlayerPedId()
 	local n = math.floor(GetEntityHealth(ped)+variation)
 	SetEntityHealth(ped,n)
 end
 
-function vRP.getHealth()
+function zero.getHealth()
 	return GetEntityHealth(PlayerPedId())
 end
 
-function vRP.setHealth(health)
+function zero.setHealth(health)
 	SetEntityHealth(PlayerPedId(),parseInt(health))
 end
 
-function vRP.setFriendlyFire(flag)
+function zero.setFriendlyFire(flag)
 	NetworkSetFriendlyFireOption(flag)
 	SetCanAttackFriendly(PlayerPedId(),flag,flag)
 end
 
-function vRP.isInComa()
+function zero.isInComa()
 	return nocauteado
 end
 
-function vRP.getDeathTimer()
+function zero.getDeathTimer()
 	return deathtimer
 end
 
-function vRP.setTimeComa(t)
+function zero.setTimeComa(t)
 	if nocauteado then
 		deathtimer = parseInt(t)
 		return true
 	end
 end
 
-function vRP.killComa(time)
-	return vRP.setTimeComa(time or 60)
+function zero.killComa(time)
+	return zero.setTimeComa(time or 60)
 end
 
-function vRP.killGod()
+function zero.killGod()
 	nocauteado = false
 	deathtimer = timer_default
 	local ped = PlayerPedId()
@@ -58,7 +58,7 @@ function vRP.killGod()
 	ClearPedSecondaryTask(ped)
 end
 
-function vRP.PrisionGod()
+function zero.PrisionGod()
 	nocauteado = false
 	deathtimer = timer_default
 	local ped = PlayerPedId()
@@ -129,8 +129,8 @@ function threadNocauted()
 			-- 			SetEntityInvincible(ped,false)
 			-- 			ClearPedBloodDamage(ped)
 
-			-- 			vRP.killGod()
-			-- 			vRP.setHealth(400)
+			-- 			zero.killGod()
+			-- 			zero.setHealth(400)
 			-- 			TriggerEvent("carrinho",0)						
 
 			-- 			SetTimeout(5000,function()
@@ -145,7 +145,7 @@ function threadNocauted()
 			-- end
 			if not IsPedInAnyVehicle(ped) then
 				if not IsEntityPlayingAnim(ped,"misslamar1dead_body", "dead_idle",3) then
-					vRP.playAnim(false,{{"misslamar1dead_body", "dead_idle"}},true)
+					zero.playAnim(false,{{"misslamar1dead_body", "dead_idle"}},true)
 				end
 			else
 				if IsEntityPlayingAnim(ped,"misslamar1dead_body", "dead_idle",3) then
@@ -222,8 +222,8 @@ reviveNocuted = function()
 			SetEntityInvincible(ped,false)
 			ClearPedBloodDamage(ped)
 
-			vRP.killGod()
-			vRP.setHealth(400)
+			zero.killGod()
+			zero.setHealth(400)
 			vRPserver._updateHealth(400)
 			TriggerEvent("carrinho",0)						
 
@@ -260,7 +260,7 @@ end)
 --========================================================================================
 -- HUNGER / THIRST
 --========================================================================================
-function vRP.getSpeed()
+function zero.getSpeed()
 	local speed = GetEntityVelocity(PlayerPedId())
 	return math.sqrt(speed.x*speed.x+speed.y*speed.y+speed.z*speed.z)
 end
@@ -275,8 +275,8 @@ Citizen.CreateThread(function()
 			local vhunger = 0
 
 			-- on foot, increase thirst/hunger in function of velocity
-			if IsPedOnFoot(ped) and not vRP.isNoclip() then
-				local factor = math.min(vRP.getSpeed(),10)
+			if IsPedOnFoot(ped) and not zero.isNoclip() then
+				local factor = math.min(zero.getSpeed(),10)
 				vthirst = vthirst+1*factor
 				vhunger = vhunger+0.5*factor
 			end

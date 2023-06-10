@@ -39,5 +39,5 @@ Citizen.CreateThreadNow(function()
         print( debug.traceback('^1[vRP] Not prepared query: '..tostring(name)..'') )
     end
     
-    vRP.registerDBDriver('oxmysql', ox_init, ox_prepare, ox_query)
+    zero.registerDBDriver('oxmysql', ox_init, ox_prepare, ox_query)
 end)

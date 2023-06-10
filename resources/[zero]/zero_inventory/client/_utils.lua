@@ -12,5 +12,5 @@ cInventory.create3DText = function(x, y, z, text, size)
 end
 
 cInventory.animation = function(dict, anim, loop)
-    vRP.playAnim(true,{{dict,anim}},loop)
+    zero.playAnim(true,{{dict,anim}},loop)
 end

@@ -7,7 +7,7 @@ hotkeys = {
 }
 
 RegisterNuiCallback('sendItem', function(data)
-    local nearestPlayer = vRP.getNearestPlayer(2)
+    local nearestPlayer = zero.getNearestPlayer(2)
 
     if nearestPlayer ~= nil then
         sInventory.sendItem(nearestPlayer, data.item, data.amount)

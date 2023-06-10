@@ -3,7 +3,7 @@ local users = groupConfig.users
 ------------------------------------------------------------------
 -- GET GROUPS
 ------------------------------------------------------------------
-vRP.getGroups = function()
+zero.getGroups = function()
 	return groups
 end
 ------------------------------------------------------------------
@@ -11,7 +11,7 @@ end
 ------------------------------------------------------------------
 -- GET GROUP TITLE
 ------------------------------------------------------------------
-vRP.getGroupTitle = function(group, grade)
+zero.getGroupTitle = function(group, grade)
 	local _groups = groups[group]
 	if (_groups) and _groups['information'] then
 		if (grade) then
@@ -30,7 +30,7 @@ end
 ------------------------------------------------------------------
 -- GET GROUP TYPE
 ------------------------------------------------------------------
-vRP.getGroupType = function(group)
+zero.getGroupType = function(group)
 	local _groups = groups[group]
 	if (_groups) and _groups['information'] then
 		return _groups['information']['groupType']
@@ -41,7 +41,7 @@ end
 ------------------------------------------------------------------
 -- IS GROUP WITH GRADES
 ------------------------------------------------------------------
-vRP.isGroupWithGrades = function(group, retGrades)
+zero.isGroupWithGrades = function(group, retGrades)
 	local _groups = groups[group]
 	if (_group) and _groups['information'] then	
 		if (_groups['information']['grades']) then
@@ -58,8 +58,8 @@ end
 ------------------------------------------------------------------
 -- GET USER GROUPS
 ------------------------------------------------------------------
-vRP.getUserGroups = function(user_id)
-	local rows = vRP.query('vRP/get_user_groups', { user_id = user_id })
+zero.getUserGroups = function(user_id)
+	local rows = zero.query('vRP/get_user_groups', { user_id = user_id })
 	local cb = {}
 	for _,row in ipairs(rows) do
 		cb[row.groupId] = { grade = row.gradeId, active = (row.active == 1) }
@@ -71,8 +71,8 @@ end
 ------------------------------------------------------------------
 -- HAS GROUP
 ------------------------------------------------------------------
-vRP.hasGroup = function(user_id, group)
-	local grade = vRP.scalar('vRP/get_user_group_grade', { user_id = user_id, groupId = group })
+zero.hasGroup = function(user_id, group)
+	local grade = zero.scalar('vRP/get_user_group_grade', { user_id = user_id, groupId = group })
 	return (grade ~= nil), grade
 end
 ------------------------------------------------------------------
@@ -80,8 +80,8 @@ end
 ------------------------------------------------------------------
 -- GET USER GROUP BY TYPE
 ------------------------------------------------------------------
-vRP.getUserGroupByType = function(user_id, gtype)
-	local user_groups = vRP.getUserGroups(user_id)
+zero.getUserGroupByType = function(user_id, gtype)
+	local user_groups = zero.getUserGroups(user_id)
 	for index, value in pairs(user_groups) do
 		local _groups = group[k]
 		if (_groups[k]) then
@@ -98,13 +98,13 @@ end
 ------------------------------------------------------------------
 -- HAS GROUP ACTIVE AND SET
 ------------------------------------------------------------------
-vRP.hasGroupActive = function(user_id, group)
-	local active = vRP.scalar('vRP/get_user_group_active', { user_id = user_id, groupId = group })
+zero.hasGroupActive = function(user_id, group)
+	local active = zero.scalar('vRP/get_user_group_active', { user_id = user_id, groupId = group })
 	return (active == 1)
 end
 
-vRP.setGroupActive = function(user_id, group, active)
-	local affected = vRP.execute('vRP/updt_user_active', { user_id = user_id, groupId = group, active = (active == true) })
+zero.setGroupActive = function(user_id, group, active)
+	local affected = zero.execute('vRP/updt_user_active', { user_id = user_id, groupId = group, active = (active == true) })
 	return (affected > 0)
 end
 ------------------------------------------------------------------
@@ -112,9 +112,8 @@ end
 ------------------------------------------------------------------
 -- ADD USER GROUP
 ------------------------------------------------------------------
-vRP.addUserGroup = function(user_id, group, grade)
-	print(user_id, group, grade)
-	local hasGroup, hasGrade = vRP.hasGroup(user_id, group)
+zero.addUserGroup = function(user_id, group, grade)
+	local hasGroup, hasGrade = zero.hasGroup(user_id, group)
 	if (not hasGroup) then
 		local ngroup = groups[group]
 		if ngroup then
@@ -122,17 +121,16 @@ vRP.addUserGroup = function(user_id, group, grade)
 				grade = (ngroup.information.grades_default or group)
 			end
 
-			print(grade)
-			local affected = vRP.execute('vRP/add_user_group',{ user_id = user_id, groupId = group, gradeId = grade })
+			local affected = zero.execute('vRP/add_user_group',{ user_id = user_id, groupId = group, gradeId = grade })
 			if affected > 0 then
 				if (ngroup['information']) and ngroup['information']['groupType'] ~= nil then
-					local user_groups = vRP.getUserGroups(user_id)
+					local user_groups = zero.getUserGroups(user_id)
 					for index, value in pairs(user_groups) do
 						if (index ~= group) then
 							local _groups = groups[index]
 							if (_groups) and _groups['information'] then
 								if (_groups['information']['groupType'] == ngroup['information']['groupType']) then
-									vRP.removeUserGroup(user_id, index)
+									zero.removeUserGroup(user_id, index)
 								end
 							end
 						end
@@ -145,7 +143,7 @@ vRP.addUserGroup = function(user_id, group, grade)
 	else
 		if grade then
 			if (hasGrade ~= grade) then
-				vRP.execute('vRP/updt_user_group', { user_id = user_id, groupId = group, gradeId = grade })
+				zero.execute('vRP/updt_user_group', { user_id = user_id, groupId = group, gradeId = grade })
 				return true
 			end
 		end
@@ -156,8 +154,8 @@ end
 ------------------------------------------------------------------
 -- REMOVE USER GROUP
 ------------------------------------------------------------------
-vRP.removeUserGroup = function(user_id, group)
-	local affected = vRP.execute('vRP/rem_user_group',{ user_id = user_id, groupId = group })
+zero.removeUserGroup = function(user_id, group)
+	local affected = zero.execute('vRP/rem_user_group',{ user_id = user_id, groupId = group })
 	if affected > 0 then
 		TriggerEvent('vRP:playerLeaveGroup', user_id, group, (groups[group]['information']['groupType'] or ''))
 		return true
@@ -168,9 +166,9 @@ end
 ------------------------------------------------------------------
 -- HAS PERMISSION
 ------------------------------------------------------------------
--- vRP.hasPermission(user_id,'+Policia.Sargento') | Cargo Igual ou Maior que Sargento
--- vRP.hasPermission(user_id,'@Policia.Sargento') | Cargo identico a Sargento
-vRP.hasPermission = function(user_id, perm)
+-- zero.hasPermission(user_id,'+Policia.Sargento') | Cargo Igual ou Maior que Sargento
+-- zero.hasPermission(user_id,'@Policia.Sargento') | Cargo identico a Sargento
+zero.hasPermission = function(user_id, perm)
 	local fchar = string.sub(perm, 1, 1)
 	if fchar == '+' then
 		local _perm = string.sub(perm,2,string.len(perm))
@@ -181,7 +179,7 @@ vRP.hasPermission = function(user_id, perm)
 			local groupConfig = groups[paramGroup]
 			if groupConfig and groupConfig['information'] and groupConfig['information']['grades'] then
 				local targetLevel = groupConfig['information']['grades'][paramGrade]['level']
-				local inGroup, inGrade = vRP.hasGroup(user_id, paramGroup)
+				local inGroup, inGrade = zero.hasGroup(user_id, paramGroup)
 				if inGroup then
 					local currLevel = groupConfig['information']['grades'][inGrade]['level']
 					return currLevel >= targetLevel
@@ -196,14 +194,14 @@ vRP.hasPermission = function(user_id, perm)
 			local paramGrade = parts[2]
 			local groupConfig = groups[paramGroup]
 			if groupConfig then
-				local inGroup, inGrade = vRP.hasGroup(user_id, paramGroup)
+				local inGroup, inGrade = zero.hasGroup(user_id, paramGroup)
 				if inGroup and inGrade == paramGrade then
-					return vRP.hasGroupActive(user_id, paramGroup)
+					return zero.hasGroupActive(user_id, paramGroup)
 				end
 			end
 		end
 	else
-		local user_groups = vRP.getUserGroups(user_id)
+		local user_groups = zero.getUserGroups(user_id)
 		for k, value in pairs(user_groups) do
 			if (value) then
 				local _groups = groups[k]
@@ -224,10 +222,10 @@ end
 ------------------------------------------------------------------
 -- GET USERS BY PERMISSION
 ------------------------------------------------------------------
-vRP.getUsersByPermission = function(perm)
+zero.getUsersByPermission = function(perm)
 	local users = {}
 	for index, _ in pairs(cacheUsers['rusers']) do
-		if vRP.hasPermission(tonumber(index), perm) then
+		if zero.hasPermission(tonumber(index), perm) then
 			table.insert(users, tonumber(index))
 		end
 	end
@@ -240,7 +238,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 		local _user = users[user_id]
 		if _user then
 			for _, value in pairs(_user) do
-				vRP.addUserGroup(user_id, value)
+				zero.addUserGroup(user_id, value)
 			end
 		end
 	end

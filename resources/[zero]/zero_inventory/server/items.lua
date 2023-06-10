@@ -53,8 +53,8 @@ end
 
 sInventory.sendItem = function(user_source, index, amount)
     local _source = source
-    local id = vRP.getUserId(_source)
-    local user_id = vRP.getUserId(user_source)
+    local id = zero.getUserId(_source)
+    local user_id = zero.getUserId(user_source)
 
     
     if sInventory.tryGetInventoryItem(id, index, amount) then
@@ -75,7 +75,7 @@ end
 
 sInventory.useItem = function(index, amount)
     local _source = source
-    local user_id = vRP.getUserId(_source)
+    local user_id = zero.getUserId(_source)
     local item = config.items[index]
 
     webhook(config.webhooks.useItems, '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
@@ -97,9 +97,9 @@ sInventory.useItem = function(index, amount)
 
         if item.type == 'weapon' then
             if weapons[string.upper(index)] == nil then
-                if vRP.tryGetInventoryItem(user_id, index, 1) then
+                if zero.tryGetInventoryItem(user_id, index, 1) then
                     vRPclient.giveWeapons(_source, {[index] = { ammo = ammo }}, false, GlobalState.weaponToken)
-                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(vRP.itemNameList(index)), 5000)
+                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(zero.itemNameList(index)), 5000)
                 else 
                     config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
                 end
@@ -125,9 +125,9 @@ sInventory.useItem = function(index, amount)
                 else
                     currentAmmo = freeAmmo
                 end
-                if vRP.tryGetInventoryItem(user_id, newIndex, currentAmmo) then
+                if zero.tryGetInventoryItem(user_id, newIndex, currentAmmo) then
                     cInventory.addAmmo(_source, newIndex, currentAmmo)
-                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(vRP.itemNameList(index)), 5000)
+                    config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(zero.itemNameList(index)), 5000)
                 else
                     config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
                 end

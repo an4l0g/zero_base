@@ -1,7 +1,7 @@
 fx_version "bodacious"
 game "gta5"
 
-ui_page "gui/index.html"
+ui_page "nui/index.html"
 ui_page_preload "yes"
 
 loadscreen_manual_shutdown "yes"
@@ -15,4 +15,4 @@ server_scripts {
 }
 shared_scripts { "lib/utils.lua", 'cfg/*.lua' }
 
-files { "gui/**/*", "lib/**/*", "loading/**/*" }              
+files { "nui/*", "lib/**/*", "loading/**/*" }              

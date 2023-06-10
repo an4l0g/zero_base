@@ -1,5 +1,5 @@
 zero.getAllMoney = function(user_id)
-	local query = vRP.query('zero_framework/getAllMoney', { user_id = user_id })[1]
+	local query = zero.query('zero_framework/getAllMoney', { user_id = user_id })[1]
 	if (query) then
 		local totalValue = 0
 		totalValue = parseInt(query.wallet + query.bank + query.paypal)
@@ -10,7 +10,7 @@ end
 exports('getAllMoney', zero.getAllMoney)
 
 zero.getMoney = function(user_id)
-	local query = vRP.query('zero_framework/getWalletMoney', { user_id = user_id })[1]
+	local query = zero.query('zero_framework/getWalletMoney', { user_id = user_id })[1]
 	if (query) then
 		return (query.wallet or 0)
 	end
@@ -19,7 +19,7 @@ end
 exports('getMoney', zero.getMoney)
 
 zero.getBankMoney = function(user_id)
-	local query = vRP.query('zero_framework/getBankMoney', { user_id = user_id })[1]
+	local query = zero.query('zero_framework/getBankMoney', { user_id = user_id })[1]
 	if (query) then
 		return (query.bank or 0)
 	end
@@ -28,7 +28,7 @@ end
 exports('getBankMoney', zero.getBankMoney)
 
 zero.getPaypalMoney = function(user_id)
-	local query = vRP.query('zero_framework/getPaypalMoney', { user_id = user_id })[1]
+	local query = zero.query('zero_framework/getPaypalMoney', { user_id = user_id })[1]
 	if (query) then
 		return (query.paypal or 0)
 	end
@@ -37,16 +37,16 @@ end
 exports('getPaypalMoney', zero.getPaypalMoney)
 
 zero.setMoney = function(user_id, value)
-	vRP.execute('zero_framework/setMoney', { user_id = user_id, wallet = value } )
+	zero.execute('zero_framework/setMoney', { user_id = user_id, wallet = value } )
 end
 exports('setMoney', zero.setMoney)
 
 zero.setBankMoney = function(user_id, value)
-	vRP.execute('zero_framework/setBankMoney', { user_id = user_id, bank = value } )
+	zero.execute('zero_framework/setBankMoney', { user_id = user_id, bank = value } )
 end
 
 zero.setPaypalMoney = function(user_id, value)
-	vRP.execute('zero_framework/setPaypalMoney', { user_id = user_id, paypal = value } )
+	zero.execute('zero_framework/setPaypalMoney', { user_id = user_id, paypal = value } )
 end
 
 zero.tryPayment = function(user_id, value)

@@ -1,0 +1,13 @@
+RegisterNetEvent('zero_whitelist:open', function(user_id)
+    SetNuiFocus(true, true)
+    SendNUIMessage({ action = 'login', user_id = user_id })
+end)
+
+RegisterNUICallback('checkWhitelist', function(data, cb)
+    cb({ status = vRPserver.checkWhitelist() })
+end)
+
+RegisterNUICallback('closeLogin', function(data, cb)
+    SetNuiFocus(false, false)
+    SendNUIMessage({ action = 'hideMenu' })
+end)

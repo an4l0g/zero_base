@@ -3,22 +3,22 @@ local vCLIENT = Tunnel.getInterface('Commands')
 -- GOD
 ---------------------------------------
 RegisterCommand('god', function(source, args)
-    local _userId = vRP.getUserId(source)
-    if (_userId) and vRP.hasPermission(_userId, 'staff.permissao') then
-        local _identity = vRP.getUserIdentity(_userId)
+    local _userId = zero.getUserId(source)
+    if (_userId) and zero.hasPermission(_userId, 'staff.permissao') then
+        local _identity = zero.getUserIdentity(_userId)
         if (args[1]) then
-            local nPlayer = vRP.getUserSource(args[1])
+            local nPlayer = zero.getUserSource(args[1])
             if (nPlayer) then
                 vRPclient.killGod(nPlayer)
                 vRPclient.setHealth(nPlayer, 400) 
-                vRP.varyHunger(other_id, -100)     
-                vRP.varyThirst(other_id, -100)          
+                zero.varyHunger(other_id, -100)     
+                zero.varyThirst(other_id, -100)          
 			end
         else
             vRPclient.killGod(source)
 			vRPclient.setHealth(source, 400)
-            vRP.varyHunger(_userId, -100)     
-            vRP.varyThirst(_userId, -100)    
+            zero.varyHunger(_userId, -100)     
+            zero.varyThirst(_userId, -100)    
         end
         zero.webhook(webhooks.god, '```prolog\n[/GOD]\n[STAFF]: #'.._userId..' '.._identity.firstname..' '.._identity.lastname..' \n[REVIVEU]: '..(args[1] or _userId)..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
@@ -28,10 +28,10 @@ end)
 -- NOCLIP
 ---------------------------------------
 RegisterCommand('nc', function(source)
-	local _userId = vRP.getUserId(source)
-    if (_userId) and vRP.hasPermission(_userId, 'staff.permissao') then
-        local _identity = vRP.getUserIdentity(_userId)
-		vRPclient.toggleNoclip(source)        
+	local _userId = zero.getUserId(source)
+    if (_userId) and zero.hasPermission(_userId, 'staff.permissao') then
+        local _identity = zero.getUserIdentity(_userId)
+		vRPclient.toggleNoclip(source) 
         zero.webhook(webhooks.nc, '```prolog\n[/NC]\n[STAFF]: #'.._userId..' '.._identity.firstname..' '.._identity.lastname..' \n[NOCLIP]: '..tostring(vRPclient.isNoclip(source))..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')    
 	end
 end)
@@ -40,9 +40,9 @@ end)
 -- TPWAY
 ---------------------------------------
 RegisterCommand('tpway', function(source)
-	local _userId = vRP.getUserId(source)
-    if (_userId) and vRP.hasPermission(_userId, 'staff.permissao') then
-        local _identity = vRP.getUserIdentity(_userId)
+	local _userId = zero.getUserId(source)
+    if (_userId) and zero.hasPermission(_userId, 'staff.permissao') then
+        local _identity = zero.getUserIdentity(_userId)
         vCLIENT.tpToWayFunction(source)
         zero.webhook(webhooks.tpway, '```prolog\n[/TPWAY]\n[STAFF]: #'.._userId..' '.._identity.firstname..' '.._identity.lastname..'\n[TELEPORTOU]: PARA WAYPOINT\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
@@ -52,10 +52,10 @@ end)
 -- TPCDS
 ---------------------------------------
 RegisterCommand('tpcds', function(source)
-    local _userId = vRP.getUserId(source)
-    if (_userId) and vRP.hasPermission(_userId, 'staff.permissao') then
-        local _identity = vRP.getUserIdentity(_userId)
-        local promptCoords = vRP.prompt(source, { 'Coordenadas' })
+    local _userId = zero.getUserId(source)
+    if (_userId) and zero.hasPermission(_userId, 'staff.permissao') then
+        local _identity = zero.getUserIdentity(_userId)
+        local promptCoords = zero.prompt(source, { 'Coordenadas' })
         if (not promptCoords) then return; end;
 
         local coords = {}

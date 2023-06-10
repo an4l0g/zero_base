@@ -1,5 +1,5 @@
 AddEventHandler('vRP:playerSpawn', function(user_id, source, _firstSpawn)
-	local data = vRP.getUserDataTable(user_id)
+	local data = zero.getUserDataTable(user_id)
 	if (_firstSpawn) then
 		if (data.customization == nil) then data.customization = stateConfig.default_customization end
 		vRPclient.setCustomization(source, data.customization) 
@@ -30,7 +30,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, _firstSpawn)
 		end
 	
 		-- VERIFICAR ESSE CODIGO DA MOCHILA
-		-- if (not vRP.hasPermission(user_id, 'mochila.permissao')) then vRP.setInventoryMaxWeight(user_id,6) end
+		-- if (not zero.hasPermission(user_id, 'mochila.permissao')) then zero.setInventoryMaxWeight(user_id,6) end
 
 		if (data.customization) then vRPclient.setCustomization(source, data.customization) end
 	end
@@ -42,11 +42,11 @@ end)
 ------------------------------------------------------------------
 -- UPDATE POS
 ------------------------------------------------------------------
-vRP.updatePos = function(x, y, z)
-	local user_id = vRP.getUserId(source)
+zero.updatePos = function(x, y, z)
+	local user_id = zero.getUserId(source)
 	if user_id then
-		local data = vRP.getUserDataTable(user_id)
-		local tmp = vRP.getUserTmpTable(user_id)
+		local data = zero.getUserDataTable(user_id)
+		local tmp = zero.getUserTmpTable(user_id)
 		if data and (not tmp or not tmp.home_stype) then
 			data.position = { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
 		end
@@ -57,10 +57,10 @@ end
 ------------------------------------------------------------------
 -- UPDATE POS
 ------------------------------------------------------------------
-vRP.updateArmor = function(armor)
-	local user_id = vRP.getUserId(source)
+zero.updateArmor = function(armor)
+	local user_id = zero.getUserId(source)
 	if user_id then
-		local data = vRP.getUserDataTable(user_id)
+		local data = zero.getUserDataTable(user_id)
 		if (data) then data.armour = armor end
 	end
 end
@@ -69,10 +69,10 @@ end
 ------------------------------------------------------------------
 -- UPDATE WEAPONS
 ------------------------------------------------------------------
-vRP.updateWeapons = function(weapons)
-	local user_id = vRP.getUserId(source)
+zero.updateWeapons = function(weapons)
+	local user_id = zero.getUserId(source)
 	if user_id then
-		local data = vRP.getUserDataTable(user_id)
+		local data = zero.getUserDataTable(user_id)
 		if (data) then data.weapons = weapons end
 	end
 end
@@ -81,10 +81,10 @@ end
 ------------------------------------------------------------------
 -- UPDATE CUSTOMIZATION
 ------------------------------------------------------------------
-vRP.updateCustomization = function(customization)
-	local user_id = vRP.getUserId(source)
+zero.updateCustomization = function(customization)
+	local user_id = zero.getUserId(source)
 	if user_id then
-		local data = vRP.getUserDataTable(user_id)
+		local data = zero.getUserDataTable(user_id)
 		if (data) then data.customization = customization end
 	end
 end
@@ -93,10 +93,10 @@ end
 ------------------------------------------------------------------
 -- UPDATE CUSTOMIZATION
 ------------------------------------------------------------------
-vRP.updateHealth = function(health)
-	local user_id = vRP.getUserId(source)
+zero.updateHealth = function(health)
+	local user_id = zero.getUserId(source)
 	if user_id then
-		local data = vRP.getUserDataTable(user_id)
+		local data = zero.getUserDataTable(user_id)
 		if (data) then data.health = health end
 	end
 end
@@ -105,37 +105,37 @@ end
 ------------------------------------------------------------------
 -- CLEAR AFTER DIE
 ------------------------------------------------------------------
--- tvRP.clearAfterDie = function()
+-- tzero.clearAfterDie = function()
 --     local source = source
---     local user_id = vRP.getUserId(source)
+--     local user_id = zero.getUserId(source)
 --     if user_id then
 		
--- 		vRP.setMoney(user_id,0)
+-- 		zero.setMoney(user_id,0)
 -- 		vRPclient._clearWeapons(source)
 -- 		vRPclient._setHandcuffed(source,false)
 
--- 		vRP.varyThirst(user_id,-100)
--- 		vRP.varyHunger(user_id,-100)
+-- 		zero.varyThirst(user_id,-100)
+-- 		zero.varyHunger(user_id,-100)
 
--- 		local alicaPrata = (vRP.getInventoryItemAmount(user_id,'aliancaprata') > 0)
--- 		local alicaOuro = (vRP.getInventoryItemAmount(user_id,'aliancaouro') > 0)
+-- 		local alicaPrata = (zero.getInventoryItemAmount(user_id,'aliancaprata') > 0)
+-- 		local alicaOuro = (zero.getInventoryItemAmount(user_id,'aliancaouro') > 0)
 
--- 		vRP.clearInventory(user_id)
+-- 		zero.clearInventory(user_id)
 
 -- 		if alicaPrata then
--- 			vRP.giveInventoryItem(user_id,'aliancaprata',1)
+-- 			zero.giveInventoryItem(user_id,'aliancaprata',1)
 -- 		end
 -- 		if aliancaOuro then
--- 			vRP.giveInventoryItem(user_id,'aliancaouro',1)
+-- 			zero.giveInventoryItem(user_id,'aliancaouro',1)
 -- 		end
 
--- 		if vRP.hasPermission(user_id, 'vip.permissao') then
--- 			vRP.giveInventoryItem(user_id,'radio',1)
--- 			vRP.giveInventoryItem(user_id,'celular',1)
+-- 		if zero.hasPermission(user_id, 'vip.permissao') then
+-- 			zero.giveInventoryItem(user_id,'radio',1)
+-- 			zero.giveInventoryItem(user_id,'celular',1)
 -- 		end
 
--- 		if (not vRP.hasPermission(user_id,"mochila.permissao")) then
--- 			vRP.setInventoryMaxWeight(user_id,6)
+-- 		if (not zero.hasPermission(user_id,"mochila.permissao")) then
+-- 			zero.setInventoryMaxWeight(user_id,6)
 -- 		end
 
 -- 		return true
@@ -149,7 +149,7 @@ end
 ------------------------------------------------------------------
 local timersCooldown = {}
 
-vRP.getUserTimer = function(user_id, timerType)
+zero.getUserTimer = function(user_id, timerType)
 	if (user_id and timerType) then
 		if timersCooldown[user_id] then
 			return timersCooldown[user_id][timerType]
@@ -158,7 +158,7 @@ vRP.getUserTimer = function(user_id, timerType)
 	return false
 end
 
-vRP.setUserTimer = function(user_id, timerType, seconds)
+zero.setUserTimer = function(user_id, timerType, seconds)
 	if (user_id and timerType and seconds) then
 		if not (timersCooldown[user_id]) then
 			timersCooldown[user_id] = {}	
@@ -187,10 +187,10 @@ threadTimer = function(user_id, timerType, time)
 end
 
 RegisterCommand('procurado', function(source)
-	local user_id = vRP.getUserId(source)
+	local user_id = zero.getUserId(source)
 	if user_id then
-		if (vRP.getUserTimer(user_id, 'wanted')) then
-			TriggerClientEvent('Notify', source, 'sucesso', 'Você está sendo <b>procurado</b>! Tempo: <b>'..vRP.getUserTimer(user_id, 'wanted')..' segundos</b>.')
+		if (zero.getUserTimer(user_id, 'wanted')) then
+			TriggerClientEvent('Notify', source, 'sucesso', 'Você está sendo <b>procurado</b>! Tempo: <b>'..zero.getUserTimer(user_id, 'wanted')..' segundos</b>.')
 		else
 			TriggerClientEvent('Notify', source, 'negado', 'Você não está sendo <b>procurado</b>!')
 		end
@@ -203,14 +203,14 @@ end)
 ------------------------------------------------------------------
 GlobalState.weaponToken = math.random(50000,70000)
 
-vRP.checkToken = function(tokenSend, weapons)
+zero.checkToken = function(tokenSend, weapons)
 	local source = source
 	if (GlobalState.weaponToken ~= tokenSend) then
-		local user_id = vRP.getUserId(source)
-		local identifiers = vRP.getIdentifiers(source)
+		local user_id = zero.getUserId(source)
+		local identifiers = zero.getIdentifiers(source)
 
 		DropPlayer(source, '[ZERO] - ANTI CHEAT')
-		-- vRP.setBanned(user_id, true)
+		-- zero.setBanned(user_id, true)
 		exports['zero_core']:setBanned(user_id, true)
 		zero.webhook(config['webhooks'], '```prolog\n[PLAYER]: '..tostring(user_id)..'\n[TOKEN-ENVIADO]: '..tostring(tokenSend)..'\n[TOKEN-SISTEMA]: '..tostring(GlobalState.weaponToken)..'\n[ARMAS]:\n'..json.encode(weapons,{ indent = true })..'\n[IDENTIFIERS]:\n'..json.encode(ids,{ indent = true })..'```')	
 	end

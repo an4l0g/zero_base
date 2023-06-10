@@ -1,19 +1,19 @@
-vRP.computeItemsWeight = function(items)
+zero.computeItemsWeight = function(items)
 	local weight = 0
 	for k,v in pairs(items) do
-		local iweight = vRP.getItemWeight(k)
+		local iweight = zero.getItemWeight(k)
 		weight = weight+iweight*v.amount
 	end
 	return weight
 end
 
-vRP.giveInventoryItem = function(user_id,idname,amount)
+zero.giveInventoryItem = function(user_id,idname,amount)
 	if user_id and idname and amount then
 		exports.zero_inventory:giveInventoryItem(user_id, idname, amount)
 	end
 end
 
-vRP.tryGetInventoryItem = function(user_id,idname,amount)
+zero.tryGetInventoryItem = function(user_id,idname,amount)
 	if user_id and idname and amount then
 		if exports.zero_inventory:tryGetInventoryItem(user_id, idname, amount) then
 			return true
@@ -22,11 +22,11 @@ vRP.tryGetInventoryItem = function(user_id,idname,amount)
 	return false
 end
 
-vRP.getInventoryItemAmount = function(user_id,idname)
+zero.getInventoryItemAmount = function(user_id,idname)
 	return exports.zero_inventory:getInventoryItemAmount(user_id, idname)
 end
 
-vRP.getInventory = function(user_id)
+zero.getInventory = function(user_id)
 	local data = exports.zero_inventory:getInventory(user_id)
 	if data then
 		local old_format = {}
@@ -41,31 +41,31 @@ vRP.getInventory = function(user_id)
 	end
 end
 
-vRP.getInventoryWeight = function(user_id)
+zero.getInventoryWeight = function(user_id)
 	return exports.zero_inventory:getInventoryWeight(user_id)
 end
 
-vRP.getInventoryMaxWeight = function(user_id)
+zero.getInventoryMaxWeight = function(user_id)
     return exports.zero_inventory:getInventoryMaxWeight(user_id) 
 end
 
-vRP.setInventoryMaxWeight = function(user_id,max)
+zero.setInventoryMaxWeight = function(user_id,max)
     exports.zero_inventory:setInventoryMaxWeight(user_id, max)
 end
 
-vRP.varyInventoryMaxWeight = function(user_id,vary)
-    local max = vRP.getInventoryMaxWeight(user_id)
+zero.varyInventoryMaxWeight = function(user_id,vary)
+    local max = zero.getInventoryMaxWeight(user_id)
     if max then
-        vRP.setInventoryMaxWeight(user_id,max+vary)
+        zero.setInventoryMaxWeight(user_id,max+vary)
     end
 end
 
-vRP.clearInventory = function(user_id)
-	local source = vRP.getUserSource(user_id)
+zero.clearInventory = function(user_id)
+	local source = zero.getUserSource(user_id)
 	if source then
 		exports.zero_inventory:clearInventory(user_id)
-		if not vRP.hasPermission(user_id,'mochila.permissao') then
-			vRP.setInventoryMaxWeight(user_id, 6)
+		if not zero.hasPermission(user_id,'mochila.permissao') then
+			zero.setInventoryMaxWeight(user_id, 6)
 			SetPedComponentVariation(GetPlayerPed(source), 5, 0);
 		end		
 	end
@@ -73,31 +73,31 @@ end
 
 
 local webhookdied = ""
-vRP.itemBodyList = function(item)
+zero.itemBodyList = function(item)
 	return exports.zero_inventory:getItemInfo(item) or {}
 end
 
-vRP.itemExists = function(item)
-	return (vRP.itemBodyList(item).name ~= nil)
+zero.itemExists = function(item)
+	return (zero.itemBodyList(item).name ~= nil)
 end
 
-vRP.itemNameList = function(item)
-	return vRP.itemBodyList(item).name
+zero.itemNameList = function(item)
+	return zero.itemBodyList(item).name
 end
 
-vRP.itemIndexList = function(item)
+zero.itemIndexList = function(item)
 	return item
 end
 
-vRP.itemTypeList = function(item)
-	return vRP.itemBodyList(item).type
+zero.itemTypeList = function(item)
+	return zero.itemBodyList(item).type
 end
 
-vRP.getItemWeight = function(item)
-	return (vRP.itemBodyList(item).weight or 0)
+zero.getItemWeight = function(item)
+	return (zero.itemBodyList(item).weight or 0)
 end
 
-vRP.getItemDefinition = function(item)
-    local data = vRP.itemBodyList(item)
+zero.getItemDefinition = function(item)
+    local data = zero.itemBodyList(item)
 	return data.name,(data.weight or 0)
 end

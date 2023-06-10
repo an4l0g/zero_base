@@ -13,9 +13,9 @@ local Queue = {
 ------------------------------------------------------------------
 function Queue:IsPriority(ids)
 	local upriority = 0
-	local user_id = vRP.getUserIdByIdentifiers(ids)
+	local user_id = zero.getUserIdByIdentifiers(ids)
 	if (user_id) then
-		for group, _ in pairs(vRP.getUserGroups(user_id)) do
+		for group, _ in pairs(zero.getUserGroups(user_id)) do
 			if (config.priorityGroups[group]) then
 				if (config.priorityGroups[group] > upriority) then
 					upriority = config.priorityGroups[group]
@@ -32,9 +32,9 @@ end
 -- VERIFICAR OS CARGOS DA MANUTENÇÃO
 ------------------------------------------------------------------
 function Queue:IsAuthMaintenanceMode(ids)
-	local user_id = vRP.getUserIdByIdentifiers(ids)
+	local user_id = zero.getUserIdByIdentifiers(ids)
 	if (user_id) then
-		for group, _ in pairs(vRP.getUserGroups(user_id)) do
+		for group, _ in pairs(zero.getUserGroups(user_id)) do
 			if (config.maintenaneGroups[group]) then
 				return true
 			end
@@ -472,7 +472,7 @@ RegisterCommand('fila', function(source)
 	if source == 0 then 
 		print('^2[FILA DO SERVIDOR]:^7 '..Queue:GetSize()..' jogadores.')
 	else
-		if (vRP.hasPermission(vRP.getUserId(source), 'staff.permissao')) then
+		if (zero.hasPermission(zero.getUserId(source), 'staff.permissao')) then
 			TriggerClientEvent('Notify', source, 'aviso', '<b>FILA:</b><br>'..Queue:GetSize()..' jogadores se encontram na fila, para entrar no servidor!')
 		end
 	end

@@ -9,7 +9,7 @@ local sourceVerification = function(source)
     if (source == 0) then 
         allow = true
     else
-        allow = vRP.hasPermission(vRP.getUserId(source), 'dono.permissao')
+        allow = zero.hasPermission(zero.getUserId(source), 'dono.permissao')
     end
     return allow 
 end

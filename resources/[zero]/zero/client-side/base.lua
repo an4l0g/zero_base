@@ -2,25 +2,25 @@ Tunnel = module('zero', 'lib/Tunnel')
 Proxy = module('zero', 'lib/Proxy')
 Tools = module('zero', 'lib/Tools')
 
-vRP = {}
-Tunnel.bindInterface('vRP', vRP)
-Proxy.addInterface('vRP', vRP)
-exportTable(vRP)
+zero = {}
+Tunnel.bindInterface('zero', zero)
+Proxy.addInterface('zero', zero)
+exportTable(zero)
 
-vRPserver = Tunnel.getInterface('vRP')
+vRPserver = Tunnel.getInterface('zero')
 
-vRP.teleport = function(x, y, z)
+zero.teleport = function(x, y, z)
 	if string.find(type(x), 'vec') then x, y, z = table.unpack(x) end
 	SetEntityCoords(PlayerPedId(), x+0.0001, y+0.0001, z+0.0001, 1, 0, 0, 1)
 	vRPserver.updatePos(x, y, z)
 end
 
-vRP.isInside = function()
+zero.isInside = function()
 	local pCoord = GetEntityCoords(PlayerPedId())
 	return not (GetInteriorAtCoords(pCoord.x, pCoord.y, pCoord.z) == 0)
 end
 
-vRP.getCamDirection = function()
+zero.getCamDirection = function()
 	local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(PlayerPedId())
 	local pitch = GetGameplayCamRelativePitch()
 	local x = -math.sin(heading*math.pi/180.0)
@@ -35,7 +35,7 @@ vRP.getCamDirection = function()
 	return x, y, z
 end
 
-vRP.getNearestPlayers = function(radius)
+zero.getNearestPlayers = function(radius)
 	local r = {}
 	local pid = PlayerId()
 	local pCDS = GetEntityCoords(PlayerPedId(),true)
@@ -52,9 +52,9 @@ vRP.getNearestPlayers = function(radius)
 	return r
 end
 
-vRP.getNearestPlayer = function(radius)
+zero.getNearestPlayer = function(radius)
 	local p = nil
-	local players = vRP.getNearestPlayers(radius)
+	local players = zero.getNearestPlayers(radius)
 	local min = radius+0.0001
 	for k,v in pairs(players) do
 		if v < min then
@@ -68,19 +68,19 @@ end
 local anims = {}
 local anim_ids = Tools.newIDGenerator()
 
-vRP.playAnim = function(upper, seq, looping)
+zero.playAnim = function(upper, seq, looping)
 	if seq.task then
-		vRP.stopAnim(true)
+		zero.stopAnim(true)
 
 		local ped = PlayerPedId()
 		if seq.task == 'PROP_HUMAN_SEAT_CHAIR_MP_PLAYER' then
-			local x,y,z = vRP.getPosition()
+			local x,y,z = zero.getPosition()
 			TaskStartScenarioAtPosition(ped,seq.task,x,y,z-1,GetEntityHeading(ped),0,0,false)
 		else
 			TaskStartScenarioInPlace(ped,seq.task,0,not seq.play_exit)
 		end
 	else
-		vRP.stopAnim(upper)
+		zero.stopAnim(upper)
 
 		local flags = 0
 		if upper then flags = flags+48 end
@@ -133,7 +133,7 @@ vRP.playAnim = function(upper, seq, looping)
 	end
 end
 
-vRP.stopAnim = function(upper)
+zero.stopAnim = function(upper)
 	anims = {}
 	if upper then
 		ClearPedSecondaryTask(PlayerPedId())
@@ -142,11 +142,11 @@ vRP.stopAnim = function(upper)
 	end
 end
 
-vRP.playSound = function(dict, name)
+zero.playSound = function(dict, name)
 	PlaySoundFrontend(-1, dict, name, false)
 end
 
-vRP.playScreenEffect = function(name, duration)
+zero.playScreenEffect = function(name, duration)
 	if duration < 0 then
 		StartScreenEffect(name,0,true)
 	else

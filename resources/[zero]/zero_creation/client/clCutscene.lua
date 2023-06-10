@@ -155,6 +155,13 @@ AddEventHandler('introCinematic:start', function()
 	for pedIdx = 0, 6, 1 do DeleteEntity(peds[pedIdx]); end;
 	PrepareMusicEvent('AC_STOP')
 	TriggerMusicEvent('AC_STOP')
+    Wait(50000)
+    StartFade()
+    Citizen.Wait(1500)
+    TriggerServerEvent('zero_whitelist:server')
+    TriggerEvent('zero_hud:toggleHud', true)
+    Citizen.Wait(1000)
+    EndFade()
 end)
 
 GeneratePed = function(modelString, modelString2, playerId)

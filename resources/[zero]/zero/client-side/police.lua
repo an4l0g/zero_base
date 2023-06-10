@@ -1,6 +1,6 @@
 local noclip = false
 
-function vRP.toggleNoclip()
+function zero.toggleNoclip()
 	noclip = not noclip
 	local ped = PlayerPedId()
 	if noclip then
@@ -12,7 +12,7 @@ function vRP.toggleNoclip()
 				local ped = PlayerPedId()
 				local pCDS = GetEntityCoords(ped)
 				local x,y,z = pCDS.x,pCDS.y,pCDS.z
-				local dx,dy,dz = vRP.getCamDirection()
+				local dx,dy,dz = zero.getCamDirection()
 				local speed = 0.8
 	
 				SetEntityVelocity(ped,0.0001,0.0001,0.0001)
@@ -41,73 +41,73 @@ function vRP.toggleNoclip()
 	end
 end
 
-function vRP.isNoclip()
+function zero.isNoclip()
 	return noclip
 end
 
 local handcuffed = false
-function vRP.toggleHandcuff()
+function zero.toggleHandcuff()
 	handcuffed = not handcuffed
 	SetEnableHandcuffs(PlayerPedId(),handcuffed)
 	if handcuffed then
-		vRP.playAnim(true,{{"mp_arresting","idle"}},true)
+		zero.playAnim(true,{{"mp_arresting","idle"}},true)
 	else
-		vRP.stopAnim(true)
+		zero.stopAnim(true)
 	end
 end
 
-function vRP.setHandcuffed(flag)
+function zero.setHandcuffed(flag)
 	if handcuffed ~= flag then
-		vRP.toggleHandcuff()
+		zero.toggleHandcuff()
 	end
 end
 
-function vRP.setFreeze(bool)
+function zero.setFreeze(bool)
 	FreezeEntityPosition(PlayerPedId(),bool)
 end
 
-function vRP.isHandcuffed()
+function zero.isHandcuffed()
 	return handcuffed
 end
 
-exports("isHandcuffed",vRP.isHandcuffed)
+exports("isHandcuffed",zero.isHandcuffed)
 
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(15000)
 		if handcuffed then
-			vRP.playAnim(true,{{"mp_arresting","idle"}},true)
+			zero.playAnim(true,{{"mp_arresting","idle"}},true)
 		end
 	end
 end)
 
 local capuz = false
-function vRP.toggleCapuz()
+function zero.toggleCapuz()
 	capuz = not capuz
 	if capuz then
-		vRP.setDiv("capuz",".div_capuz { background: #000; margin-top: -150px; margin: 0; padding: 0; width: 100vw; height: 100vh; }","")
+		zero.setDiv("capuz",".div_capuz { background: #000; margin-top: -150px; margin: 0; padding: 0; width: 100vw; height: 100vh; }","")
 		SetPedComponentVariation(PlayerPedId(),1,69,2,2)
 	else
-		vRP.removeDiv("capuz")
+		zero.removeDiv("capuz")
 		SetPedComponentVariation(PlayerPedId(),1,0,0,2)
 	end
 end
 
-function vRP.setCapuz(flag)
+function zero.setCapuz(flag)
 	if capuz ~= flag then
-		vRP.toggleCapuz()
+		zero.toggleCapuz()
 	end
 end
 
-function vRP.isCapuz()
+function zero.isCapuz()
 	return capuz
 end
 
 local mala = false
-function vRP.toggleMalas()
+function zero.toggleMalas()
 	mala = not mala
 	ped = PlayerPedId()
-	vehicle = vRP.getNearestVehicle(7)
+	vehicle = zero.getNearestVehicle(7)
 
 	if IsEntityAVehicle(vehicle) then
 		if mala then
@@ -138,26 +138,26 @@ AddEventHandler("syncmala",function(index)
 	end
 end)
 
-function vRP.setMalas(flag)
+function zero.setMalas(flag)
 	if mala ~= flag then
-		vRP.toggleMalas()
+		zero.toggleMalas()
 	end
 end
 
-function vRP.isMalas()
+function zero.isMalas()
 	return mala
 end
 
-function vRP.getNoCarro()
+function zero.getNoCarro()
 	return IsPedInAnyVehicle(PlayerPedId())
 end
 
-function vRP.getCarroClass(vehicle)
+function zero.getCarroClass(vehicle)
 	return GetVehicleClass(vehicle) == 0 or GetVehicleClass(vehicle) == 1 or GetVehicleClass(vehicle) == 2 or GetVehicleClass(vehicle) == 3 or GetVehicleClass(vehicle) == 4 or GetVehicleClass(vehicle) == 5 or GetVehicleClass(vehicle) == 6 or GetVehicleClass(vehicle) == 7 or GetVehicleClass(vehicle) == 9 or GetVehicleClass(vehicle) == 12
 end
 
-function vRP.putInNearestVehicleAsPassenger(radius)
-	local veh = vRP.getNearestVehicle(radius)
+function zero.putInNearestVehicleAsPassenger(radius)
+	local veh = zero.getNearestVehicle(radius)
 	if IsEntityAVehicle(veh) then
 		for i=1,math.max(GetVehicleMaxNumberOfPassengers(veh),3) do
 			if IsVehicleSeatFree(veh,i) then
