@@ -110,6 +110,6 @@ end)
 AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 	local identity = zero.getUserIdentity(user_id)
 	if (identity) then
-		vRPclient._setRegistrationNumber(source, (identity.registration or 'AA000AAA'))
+		zeroClient._setRegistrationNumber(source, (identity.registration or 'AA000AAA'))
 	end
 end)

@@ -262,7 +262,7 @@ sInventory.getFuel = function(pid)
             SetTimeout(30*60000,function() recent_pumps[pid] = nil; end)
 
             TriggerClientEvent('progress', source, 10000, 'Coletando combustível...')
-            vRPclient._playAnim(source, false, {'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female'}, true)
+            zeroClient._playAnim(source, false, {'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female'}, true)
             SetTimeout(
                 10000,
                 function()
@@ -279,7 +279,7 @@ sInventory.getFuel = function(pid)
                     else
                         TriggerClientEvent('Notify',source,"Inventário", 'Inventário','Nenhum combustível foi encontrado!', 5000)
                     end
-                    vRPclient._stopAnim(source,false)
+                    zeroClient._stopAnim(source,false)
                 end
             )
         else

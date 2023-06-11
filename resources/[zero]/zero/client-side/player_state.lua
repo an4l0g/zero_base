@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
 				local coords = GetEntityCoords(PlayerPedId(),true)			
 				if ( #(coords - state_cache.coords) >= 2 ) then
 					state_cache.coords = coords
-					vRPserver._updatePos(coords.x,coords.y,coords.z)				
+					zeroServer._updatePos(coords.x,coords.y,coords.z)				
 				end
 				state_cache.coords_tick = 0
 
@@ -42,7 +42,7 @@ Citizen.CreateThread(function()
 				local health = zero.getHealth()
 				if (health ~= state_cache.health) then
 					state_cache.health = health
-					vRPserver._updateHealth(health)		
+					zeroServer._updateHealth(health)		
 				end
 				state_cache.health_tick = 0
 
@@ -55,7 +55,7 @@ Citizen.CreateThread(function()
 				local armor = zero.getArmour()
 				if (armor ~= state_cache.armor) then
 					state_cache.armor = armor
-					vRPserver._updateArmor(armor)		
+					zeroServer._updateArmor(armor)		
 				end
 				state_cache.armor_tick = 0
 
@@ -67,7 +67,7 @@ Citizen.CreateThread(function()
 				local customs = zero.getCustomization()
 				if (json.encode(customs) ~= json.encode(state_cache.customs)) then
 					state_cache.customs = customs
-					vRPserver._updateCustomization(customs)
+					zeroServer._updateCustomization(customs)
 				end	
 				state_cache.customs_tick = 0
 			else
@@ -78,7 +78,7 @@ Citizen.CreateThread(function()
 				local weapons = zero.getWeapons()
 				if (json.encode(weapons) ~= json.encode(state_cache.weapons)) then
 					state_cache.weapons = weapons
-					vRPserver._updateWeapons(weapons)						
+					zeroServer._updateWeapons(weapons)						
 				end
 				state_cache.weapons_tick = 0
 			else
@@ -99,22 +99,22 @@ RegisterNetEvent('save:database',function()
 		
 		if ( #(coords - state_cache.coords) >= 2 ) then
 			state_cache.coords = coords
-			vRPserver._updatePos(coords.x,coords.y,coords.z)				
+			zeroServer._updatePos(coords.x,coords.y,coords.z)				
 		end
 
 		if (health ~= state_cache.health) then
 			state_cache.health = health
-			vRPserver._updateHealth(health)		
+			zeroServer._updateHealth(health)		
 		end
 
 		if (armor ~= state_cache.armor) then
 			state_cache.armor = armor
-			vRPserver._updateArmor(armor)		
+			zeroServer._updateArmor(armor)		
 		end
 
 		if (json.encode(customs) ~= json.encode(state_cache.customs)) then
 			state_cache.customs = customs
-			vRPserver._updateCustomization(customs)
+			zeroServer._updateCustomization(customs)
 		end	
 		
 	end
@@ -122,7 +122,7 @@ end)
 
 RegisterNetEvent('save:weapons',function()
 	if state_ready and (not LocalPlayer.state['inArena']) then
-		vRPserver._updateWeapons(zero.getWeapons())
+		zeroServer._updateWeapons(zero.getWeapons())
 	end
 end)
 
@@ -210,18 +210,14 @@ zero.replaceWeapons = function(weapons, token)
 end
 
 zero.giveWeapons = function(weapons, clear_before, token)
-	vRPserver._checkToken(token,weapons)
+	zeroServer._checkToken(token, weapons)
 	local player = PlayerPedId()
-	if clear_before then
-		RemoveAllPedWeapons(player,true)
-		weapon_list = {}	
-	end
-
-	for k,weapon in pairs(weapons) do
-		local hash = GetHashKey(k)
-		local ammo = weapon.ammo or 0
-		GiveWeaponToPed(player,hash,ammo,false)
-		weapon_list[string.upper(k)] = weapon
+	print(json.encode(weapons))
+	if (clear_before) then RemoveAllPedWeapons(player, true); weapon_list = {}; end;
+	for weapon, value in pairs(weapons) do
+		local ammo = (value.ammo or 0)
+		GiveWeaponToPed(player, GetHashKey(weapon), ammo, false)
+		weapon_list[string.upper(k)] = value
 	end
 end
 
@@ -243,7 +239,7 @@ zero.legalWeaponsChecker = function(weapon)
 	if ilegal then
 		zero.giveWeapons(weapons_legal, true, GlobalState.weaponToken)
 		weapon = weapons_legal
-		vRPserver.weaponsChecker(ilegal_log)						 
+		zeroServer.weaponsChecker(ilegal_log)						 
 	end
 	return weapon
 end	
@@ -351,6 +347,7 @@ zero.setCustomization = function(custom)
 			end
 			TriggerEvent("nyoModule:barberUpdate")
 			TriggerEvent("nyoModule:tattooUpdate")
+			TriggerServerEvent('zero_whitelist:server')
 		end
 		r()
 	end)

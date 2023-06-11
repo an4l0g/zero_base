@@ -1,3 +1,5 @@
+local config = module('zero', 'cfg/general')
+
 local language = config.language
 
 local Queue = {

@@ -1,4 +1,4 @@
-use an4log_base_zombies;
+use zero_roleplay;
 
 create table zero_inventory(
 	slots json not null,

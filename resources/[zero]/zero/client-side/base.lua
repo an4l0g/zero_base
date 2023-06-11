@@ -7,12 +7,12 @@ Tunnel.bindInterface('zero', zero)
 Proxy.addInterface('zero', zero)
 exportTable(zero)
 
-vRPserver = Tunnel.getInterface('zero')
+zeroServer = Tunnel.getInterface('zero')
 
 zero.teleport = function(x, y, z)
 	if string.find(type(x), 'vec') then x, y, z = table.unpack(x) end
 	SetEntityCoords(PlayerPedId(), x+0.0001, y+0.0001, z+0.0001, 1, 0, 0, 1)
-	vRPserver.updatePos(x, y, z)
+	zeroServer.updatePos(x, y, z)
 end
 
 zero.isInside = function()

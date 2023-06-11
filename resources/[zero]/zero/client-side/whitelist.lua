@@ -4,7 +4,7 @@ RegisterNetEvent('zero_whitelist:open', function(user_id)
 end)
 
 RegisterNUICallback('checkWhitelist', function(data, cb)
-    cb({ status = vRPserver.checkWhitelist() })
+    cb({ status = zeroServer.checkWhitelist() })
 end)
 
 RegisterNUICallback('closeLogin', function(data, cb)

@@ -1,9 +1,12 @@
-local groups = groupConfig.groups
-local users = groupConfig.users
+local config = module('zero', 'cfg/groups')
+
+local groups = config.groups
+local users = config.users
 ------------------------------------------------------------------
 -- GET GROUPS
 ------------------------------------------------------------------
 zero.getGroups = function()
+	print(groups)
 	return groups
 end
 ------------------------------------------------------------------
@@ -246,8 +249,8 @@ end)
 
 RegisterCommand('reloadgroups', function(source)
     if (source == 0) then
-		groups = groupConfig.groups
-		users = groupConfig.users
+		groups = config.groups
+		users = config.users
 		TriggerEvent('vRP:groupsRefresh')
         print('^2[vRP]^7 Groups Reloaded')		
     end

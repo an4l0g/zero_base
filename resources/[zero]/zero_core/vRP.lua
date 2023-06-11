@@ -10,11 +10,11 @@ webhooks = {}
 -- Proxies
 if IsDuplicityVersion() then
     zero = Proxy.getInterface('zero')
-    vRPclient = Tunnel.getInterface('zero')
+    zeroClient = Tunnel.getInterface('zero')
     idgens = Tools.newIDGenerator()
 else
     zero = Proxy.getInterface('zero')
-    vRPserver = Tunnel.getInterface('zero')
+    zeroServer = Tunnel.getInterface('zero')
 
     drawTxt = function(text,font,x,y,scale,r,g,b,a)
         SetTextFont(font)

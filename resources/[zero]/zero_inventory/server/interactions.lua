@@ -11,7 +11,7 @@ RegisterCommand('saquear', function(source)
         local user_id = zero.getUserId(source)
         if (user_id) then
             if not (inAction[user_id]) then
-                local nearestPlayerSource = vRPclient.getNearestPlayer(source, 2.0)
+                local nearestPlayerSource = zeroClient.getNearestPlayer(source, 2.0)
                 if (nearestPlayerSource) then
                     local nearestPlayerId = zero.getUserId(nearestPlayerSource)
                     if not (inAction[nearestPlayerId]) then
@@ -41,7 +41,7 @@ RegisterCommand('roubar', function(source)
         local user_id = zero.getUserId(source)
         if (user_id) then
             if not (inAction[user_id]) then
-                local nearestPlayerSource = vRPclient.getNearestPlayer(source, 2.0)
+                local nearestPlayerSource = zeroClient.getNearestPlayer(source, 2.0)
                 if (nearestPlayerSource) then
                     local nearestPlayerId = zero.getUserId(nearestPlayerSource)
                     if not (inAction[nearestPlayerId]) then
@@ -52,7 +52,7 @@ RegisterCommand('roubar', function(source)
                                 loseSanity(source, user_id)
                                 FreezeEntityPosition(GetPlayerPed(source), true)
                                 TriggerClientEvent('emotes', source, 'mexer')
-                                vRPclient.playAnim(nearestPlayerSource, true,{{'random@arrests@busted','idle_a'}},true)
+                                zeroClient.playAnim(nearestPlayerSource, true,{{'random@arrests@busted','idle_a'}},true)
                                 TriggerClientEvent('zero_inventory:disableActions', nearestPlayerSource)
                                 cInventory.openInventory(source, 'open', 'bag:'..nearestPlayerId)
                                 cInventory.checkNui(nearestPlayerSource, { nearestPlayerSource, source }, GetEntityCoords(GetPlayerPed(source)), 1.8)
@@ -78,7 +78,7 @@ RegisterCommand('revistar', function(source)
         local user_id = zero.getUserId(source)
         if (user_id) then
             if not (inAction[user_id]) then
-                local nearestPlayerSource = vRPclient.getNearestPlayer(source, 2.0)
+                local nearestPlayerSource = zeroClient.getNearestPlayer(source, 2.0)
                 if (nearestPlayerSource) then
                     local nearestPlayerId = zero.getUserId(nearestPlayerSource)
                     if not (inAction[nearestPlayerId]) then
@@ -88,7 +88,7 @@ RegisterCommand('revistar', function(source)
                             if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) >= 101 then
                                 TriggerClientEvent('zero_inventory:disableActions', nearestPlayerSource)
                                 TriggerClientEvent('emotes', source, 'mexer')
-                                vRPclient.playAnim(nearestPlayerSource, true,{{'random@arrests@busted','idle_a'}},true)
+                                zeroClient.playAnim(nearestPlayerSource, true,{{'random@arrests@busted','idle_a'}},true)
                                 cInventory.openInventory(source, 'open', 'bag:'..nearestPlayerId)
                                 cInventory.checkNui(nearestPlayerSource, { nearestPlayerSource, source }, GetEntityCoords(GetPlayerPed(source)), 1.8)
                             else

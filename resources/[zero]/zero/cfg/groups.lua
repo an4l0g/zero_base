@@ -1,6 +1,7 @@
-groupConfig = {}
 -- PERMISSÃO DEFAULT DA STAFF SERÁ staff.permissao
-groupConfig.groups = {
+config = {}
+
+config.groups = {
 	['Dono'] = {
 		information = {
 			title = 'Dono',
@@ -23,7 +24,9 @@ groupConfig.groups = {
 	}
 }
 
-groupConfig.users = {
+config.users = {
 	[1] = { 'Dono' },
-	[158] = { 'Dono' }
+	[2] = { 'Dono' }
 }
+
+return config

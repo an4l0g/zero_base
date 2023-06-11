@@ -93,12 +93,12 @@ sInventory.useItem = function(index, amount)
     end
 
     if item.type == 'weapon' or item.type == 'wammo' then
-        local weapons = vRPclient.getWeapons(_source)
+        local weapons = zeroClient.getWeapons(_source)
 
         if item.type == 'weapon' then
             if weapons[string.upper(index)] == nil then
                 if zero.tryGetInventoryItem(user_id, index, 1) then
-                    vRPclient.giveWeapons(_source, {[index] = { ammo = ammo }}, false, GlobalState.weaponToken)
+                    zeroClient.giveWeapons(_source, {[index] = { ammo = ammo }}, false, GlobalState.weaponToken)
                     config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(zero.itemNameList(index)), 5000)
                 else 
                     config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)

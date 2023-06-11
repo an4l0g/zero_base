@@ -69,7 +69,7 @@ zero.vehList = function(radius)
 		local displayName = GetDisplayNameFromVehicleModel(hash)
 
 		if (not vehicles[hash]) then 
-			local model, info = vRPserver.vehHashData(hash, displayName)
+			local model, info = zeroServer.vehHashData(hash, displayName)
 			if model then 
 				vehicles[hash] = info
 				vehicles[hash].model = model

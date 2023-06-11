@@ -1,3 +1,5 @@
+local config = module('zero', 'cfg/general')
+
 Tunnel = module('zero', 'lib/Tunnel')
 Proxy = module('zero', 'lib/Proxy')
 Tools = module('zero', 'lib/Tools')
@@ -7,14 +9,7 @@ Proxy.addInterface('zero', zero)
 Tunnel.bindInterface('zero', zero)
 exportTable(zero)
 
-vRP = {}
-Proxy.addInterface("vRP", vRP)
-Tunnel.bindInterface("vRP", vRP)
-exportTable(vRP)
-
--- tvRP = {}
--- Tunnel.bindInterface("vRP",tvRP)
-vRPclient = Tunnel.getInterface("zero")
+zeroClient = Tunnel.getInterface("zero")
 
 zero.webhook = function(link, message)
 	if (link and message and link ~= '') then
@@ -39,9 +34,9 @@ local db_initialized = false
 zero.registerDBDriver = function(name, on_init, on_prepare, on_query)
 	if not db_drivers[name] then
 		db_drivers[name] = { on_init, on_prepare, on_query }
-		if name == baseConfig.db.driver then
+		if name == 'oxmysql' then
 			db_driver = db_drivers[name]
-			local ok = on_init(baseConfig.db)
+			local ok = on_init('oxmysql')
 			if ok then
 				db_initialized = true
 				for _,prepare in pairs(cached_prepares) do

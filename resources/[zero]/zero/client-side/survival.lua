@@ -51,7 +51,7 @@ function zero.killGod()
 	end
 	TransitionFromBlurred(1000)
 	SetEntityHealth(ped,130)
-	vRPserver._updateHealth(130)
+	zeroServer._updateHealth(130)
 	SetEntityInvincible(ped,false)
 	ClearPedBloodDamage(ped)	
 	ClearPedTasks(ped)
@@ -67,7 +67,7 @@ function zero.PrisionGod()
 		NetworkResurrectLocalPlayer(pCDS.x,pCDS.y,pCDS.z,true,true,false)
 		TransitionFromBlurred(1000)
 		SetEntityHealth(ped,120)
-		vRPserver._updateHealth(120)
+		zeroServer._updateHealth(120)
 		SetEntityInvincible(ped,false)
 		ClearPedBloodDamage(ped)	
 		ClearPedTasks(ped)
@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
 				local pCDS = GetEntityCoords(ped)
 				NetworkResurrectLocalPlayer(pCDS.x,pCDS.y,pCDS.z,true,true,false)		
 				
-				vRPserver._updateHealth(101)
+				zeroServer._updateHealth(101)
 				SetEntityHealth(ped,101)
 				SetEntityInvincible(ped,true)
 				if IsPedInAnyVehicle(ped) then
@@ -118,7 +118,7 @@ function threadNocauted()
 			-- else
 			-- 	drawTxt("PRESSIONE ~g~E ~w~PARA VOLTAR AO AEROPORTO OU AGUARDE POR SOCORRO MÉDICO",4,0.5,0.92,0.5,255,255,255,255)
 			-- 	if IsControlJustPressed(0,38) and (not IsEntityAttached(ped)) then
-			-- 		if vRPserver.clearAfterDie() then
+			-- 		if zeroServer.clearAfterDie() then
 			-- 			DoScreenFadeOut(1000)
 			-- 			TransitionFromBlurred(1000)
 
@@ -206,7 +206,7 @@ end
 reviveNocuted = function()
 	local ped = PlayerPedId()
 	if (not IsEntityAttached(ped)) then
-		if vRPserver.clearAfterDie() then
+		if zeroServer.clearAfterDie() then
 
 			DoScreenFadeOut(1000)
 			TransitionFromBlurred(1000)
@@ -224,7 +224,7 @@ reviveNocuted = function()
 
 			zero.killGod()
 			zero.setHealth(400)
-			vRPserver._updateHealth(400)
+			zeroServer._updateHealth(400)
 			TriggerEvent("carrinho",0)						
 
 			SetTimeout(5000,function()
@@ -295,10 +295,10 @@ Citizen.CreateThread(function()
 
 			-- do variation
 			if vthirst ~= 0 then
-				vRPserver._varyThirst(vthirst/12.0)
+				zeroServer._varyThirst(vthirst/12.0)
 			end
 			if vhunger ~= 0 then
-				vRPserver._varyHunger(vhunger/12.0)
+				zeroServer._varyHunger(vhunger/12.0)
 			end
 		end
 	end

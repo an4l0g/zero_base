@@ -1,42 +1,44 @@
+local config = module('zero', 'cfg/player_state')
+
 AddEventHandler('vRP:playerSpawn', function(user_id, source, _firstSpawn)
 	local data = zero.getUserDataTable(user_id)
 	if (_firstSpawn) then
-		if (data.customization == nil) then data.customization = stateConfig.default_customization end
-		vRPclient.setCustomization(source, data.customization) 
+		if (data.customization == nil) then data.customization = config.default_customization end
+		zeroClient.setCustomization(source, data.customization) 
 
-		if (data.position) then vRPclient.teleport(source, data.position.x, data.position.y, data.position.z) end
+		if (data.position) then zeroClient.teleport(source, data.position.x, data.position.y, data.position.z) end
 
 		if (data.health) then
-			vRPclient.setHealth(source, data.health)
+			zeroClient.setHealth(source, data.health)
 			Citizen.SetTimeout(10000, function()
-				if (vRPclient.isInComa(source)) then
-					vRPclient.killComa(source)
+				if (zeroClient.isInComa(source)) then
+					zeroClient.killComa(source)
 				end
 			end)
 		end
 
-		if (data.weapons) then vRPclient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken) end		
+		if (data.weapons) then zeroClient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken) end		
 
 		if (data.armour) then
 			Citizen.SetTimeout(10000, function()
-				vRPclient.setArmour(source, data.armour)
+				zeroClient.setArmour(source, data.armour)
 			end)
 		end
 	else
-		if (vRPclient.isHandcuffed(source)) then
-			vRPclient._setHandcuffed(source, true)
+		if (zeroClient.isHandcuffed(source)) then
+			zeroClient._setHandcuffed(source, true)
 		else
-			vRPclient._setHandcuffed(source, false)
+			zeroClient._setHandcuffed(source, false)
 		end
 	
 		-- VERIFICAR ESSE CODIGO DA MOCHILA
 		-- if (not zero.hasPermission(user_id, 'mochila.permissao')) then zero.setInventoryMaxWeight(user_id,6) end
 
-		if (data.customization) then vRPclient.setCustomization(source, data.customization) end
+		if (data.customization) then zeroClient.setCustomization(source, data.customization) end
 	end
 
-	vRPclient._setFriendlyFire(source, true)
-	vRPclient._playerStateReady(source, true)
+	zeroClient._setFriendlyFire(source, true)
+	zeroClient._playerStateReady(source, true)
 end)
 
 ------------------------------------------------------------------
@@ -111,8 +113,8 @@ end
 --     if user_id then
 		
 -- 		zero.setMoney(user_id,0)
--- 		vRPclient._clearWeapons(source)
--- 		vRPclient._setHandcuffed(source,false)
+-- 		zeroClient._clearWeapons(source)
+-- 		zeroClient._setHandcuffed(source,false)
 
 -- 		zero.varyThirst(user_id,-100)
 -- 		zero.varyHunger(user_id,-100)
