@@ -81,3 +81,11 @@ create table zero_hwid (
     user_id int not null,
     primary key(token, user_id)
 );
+
+create table zero_inventory(
+	slots json not null,
+    user_id int not null,
+    weight int not null,
+    bag_type varchar(30) not null,
+    primary key(user_id, bag_type)
+)

@@ -1,5 +1,5 @@
 zero = Proxy.getInterface('zero')
-vRPclient = Tunnel.getInterface('vRP')
+zeroClient = Tunnel.getInterface('zero')
 
 cInventory = Tunnel.getInterface('zero_inventory')
 

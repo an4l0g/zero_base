@@ -1,5 +1,4 @@
 local state_ready = false
-local weapon_list = {}	
 
 zero.playerStateReady = function(state)
 	state_ready = state
@@ -89,7 +88,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
-
 RegisterNetEvent('save:database',function()
 	if IsPlayerPlaying(PlayerId()) and state_ready and (not LocalPlayer.state['inArena']) then
 		local coords = GetEntityCoords(PlayerPedId(),true)
@@ -126,127 +124,52 @@ RegisterNetEvent('save:weapons',function()
 	end
 end)
 
-local weapon_types = {
-	"WEAPON_DAGGER",
-	"WEAPON_RAYPISTOL",
-	"WEAPON_BAT",
-	"WEAPON_BOTTLE",
-	"WEAPON_CROWBAR",
-	"WEAPON_FLASHLIGHT",
-	"WEAPON_GOLFCLUB",
-	"WEAPON_HAMMER",
-	"WEAPON_HATCHET",
-	"WEAPON_KNUCKLE",
-	"WEAPON_KNIFE",
-	"WEAPON_MACHETE",
-	"WEAPON_SWITCHBLADE",
-	"WEAPON_NIGHTSTICK",
-	"WEAPON_WRENCH",
-	"WEAPON_BATTLEAXE",
-	"WEAPON_POOLCUE",
-	"WEAPON_STONE_HATCHET",
-	"WEAPON_PISTOL",
-	"WEAPON_HEAVYPISTOL",
-	"WEAPON_PISTOL_MK2",
-	"WEAPON_COMBATPISTOL",
-	"WEAPON_STUNGUN",
-	"WEAPON_SNSPISTOL",
-	"WEAPON_MACHINEPISTOL",
-	"WEAPON_REVOLVER",
-	"WEAPON_MUSKET",
-	"WEAPON_FLARE",
-	"GADGET_PARACHUTE",
-	"WEAPON_FIREEXTINGUISHER",
-	"WEAPON_MICROSMG",
-	"WEAPON_SMG",
-	"WEAPON_SMG_MK2",
-	"WEAPON_ASSAULTSMG",
-	"WEAPON_COMBATPDW",
-	"WEAPON_SAWNOFFSHOTGUN",
-	"WEAPON_PUMPSHOTGUN",
-	"WEAPON_CARBINERIFLE",
-	"WEAPON_SPECIALCARBINE_MK2",
-	"WEAPON_ASSAULTRIFLE_MK2",
-	"WEAPON_PETROLCAN",
-	"WEAPON_CARBINERIFLE_MK2",
-	"WEAPON_SNIPERRIFLE",
-	"WEAPON_FLAREGUN",
-	"WEAPON_BULLPUPRIFLE_MK2",
-	"WEAPON_FLARE",
-	"WEAPON_SMOKEGRENADE",
-	"WEAPON_BALL"
-}
+local config = module('zero', 'cfg/weapons')
+local weapon_types = config.weapons
 
 zero.clearWeapons = function()
     RemoveAllPedWeapons(PlayerPedId(), true)
-	weapon_list = {}
 end
 
 zero.getWeapons = function()
 	local player = PlayerPedId()
 	local ammo_types = {}
 	local weapons = {}
-	for k,v in pairs(weapon_types) do
-		local hash = GetHashKey(v)
-		if HasPedGotWeapon(player,hash) then
-			local weapon = {}
-			weapons[v] = weapon
-			local atype = Citizen.InvokeNative(0x7FEAD38B326B9F74,player,hash) -- GET_PED_AMMO_TYPE_FROM_WEAPON
-			if ammo_types[atype] == nil then
-				ammo_types[atype] = true
-				weapon.ammo = GetAmmoInPedWeapon(player,hash)
+	for index, weapon in pairs(weapon_types) do
+		local weaponHash = GetHashKey(weapon)
+		if (HasPedGotWeapon(player, weaponHash)) then
+			local tableWeapons = {}
+			weapons[weapon] = tableWeapons
+			local ammoType = Citizen.InvokeNative(0x7FEAD38B326B9F74, player, weaponHash)
+			if not (ammo_types[ammoType]) then
+				ammo_types[ammoType] = true
+				tableWeapons.ammo = GetAmmoInPedWeapon(player, weaponHash)
 			else
-				weapon.ammo = 0
+				tableWeapons.ammo = 0
 			end
 		end
 	end
-	return zero.legalWeaponsChecker(weapons)
+	return weapons
 end
 
 zero.replaceWeapons = function(weapons, token)
 	local old_weapons = zero.getWeapons()
-	zero.giveWeapons(weapons,true,token)
+	zero.giveWeapons(weapons, true, token)
 	return old_weapons
 end
 
 zero.giveWeapons = function(weapons, clear_before, token)
 	zeroServer._checkToken(token, weapons)
 	local player = PlayerPedId()
-	print(json.encode(weapons))
-	if (clear_before) then RemoveAllPedWeapons(player, true); weapon_list = {}; end;
+	if (clear_before) then RemoveAllPedWeapons(player, true); end;
 	for weapon, value in pairs(weapons) do
 		local ammo = (value.ammo or 0)
 		GiveWeaponToPed(player, GetHashKey(weapon), ammo, false)
-		weapon_list[string.upper(k)] = value
 	end
 end
-
-zero.getWeaponsLegal = function()								
-	return weapon_list
-end
-
-zero.legalWeaponsChecker = function(weapon)
-	local weapon = weapon
-	local weapons_legal = zero.getWeaponsLegal()
-	local ilegal = false
-	local ilegal_log = {}
-	for v, b in pairs(weapon) do
-	  	if not weapons_legal[v] then
-			table.insert(ilegal_log,v)
-			ilegal = true 
-	  	end
-	end
-	if ilegal then
-		zero.giveWeapons(weapons_legal, true, GlobalState.weaponToken)
-		weapon = weapons_legal
-		zeroServer.weaponsChecker(ilegal_log)						 
-	end
-	return weapon
-end	
 
 zero.setArmour = function(amount)
-	--SetPedArmour(PlayerPedId(),amount)
-	TriggerEvent('carrinho', amount)
+	SetPedArmour(PlayerPedId(), amount)
 end
 
 zero.getArmour = function()

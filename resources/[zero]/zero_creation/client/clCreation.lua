@@ -295,7 +295,7 @@ local setGender = function(gender)
     end
 
     local weapons = (zero.getWeapons() or {})
-    -- zero.giveWeapons(weapons, true)
+    zero.giveWeapons(weapons, true, GlobalState.weaponToken)
 
     resetClothes()
 
