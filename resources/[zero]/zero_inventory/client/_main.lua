@@ -9,7 +9,7 @@ disableActions = false
 currentChestType = nil
 currentLootId = nil
 
-RegisterKeyMapping("openInventory", "Abrir mochila", 'KEYBOARD', "Oem_3")
+RegisterKeyMapping("openInventory", "Abrir inventario", 'KEYBOARD', "Oem_3")
 RegisterCommand("openInventory", function()
     local playerPed = PlayerPedId()
     if not disableActions and GetEntityHealth(playerPed) > 101 then
