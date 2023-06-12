@@ -90,7 +90,6 @@ end
 exports("giveInventoryItem", sInventory.giveInventoryItem)
 
 sInventory.tryGetInventoryItem = function(user_id, index, amount)
-    print(user_id, index, amount)
     index = string.lower(index)
     
     local items = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })

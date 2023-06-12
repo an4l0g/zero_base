@@ -5,7 +5,6 @@ zero = Proxy.getInterface("zero")
 local baseGroups = {}
 
 function painelSysGroups()
-    print(zero.getGroups())
     baseGroups = {}
     for group, groupData in pairs(zero.getGroups()) do
         if groupData._config and groupData._config.grades then

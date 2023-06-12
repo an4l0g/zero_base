@@ -6,7 +6,6 @@ local users = config.users
 -- GET GROUPS
 ------------------------------------------------------------------
 zero.getGroups = function()
-	print(groups)
 	return groups
 end
 ------------------------------------------------------------------
