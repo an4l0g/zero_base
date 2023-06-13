@@ -50,7 +50,7 @@ renderChests = function()
                 elseif v.type == 'cla' then
                     currentType = k
                 end 
-                if not vRP.getNearestPlayer(config.marker_dropped_item_distance) or isPrivate then
+                if not zero.getNearestPlayer(config.marker_dropped_item_distance) or isPrivate then
                     if v.permission == nil then
                         cInventory.openInventory('open', currentType)
                     else

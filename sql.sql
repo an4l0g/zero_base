@@ -70,9 +70,9 @@ create table zero_homes(
     user_id int unsigned not null,
     home varchar(50) not null,
     home_owner tinyint not null,
-        garages tinyint not null,
-        tax varchar(20) not null,
-        configs json not null,
+    garages tinyint not null,
+    tax varchar(20) not null,
+    configs json not null,
     primary key(user_id)
 );
 
@@ -88,3 +88,9 @@ create table zero_inventory(
     weight int not null,
     primary key(bag_type)    
 )
+
+create table zero_hwid (
+    token varchar(100) not null,
+    user_id int not null,
+    primary key(token, user_id)
+);

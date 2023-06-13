@@ -6,15 +6,15 @@ end
 
 sInventory.getUserId = function()
     local _source = source
-    return vRP.getUserId(_source)
+    return zero.getUserId(_source)
 end
 
 sInventory.getGloveSize = function(vname)
-    return vRP.vehicleGlove(vname)
+    return zero.vehicleGlove(vname)
 end
 
 sInventory.getTrunkSize = function(vname)
-    return vRP.vehicleChest(vname)
+    return zero.vehicleChest(vname)
 end
 
 sInventory.getVehOwnerId = function(vnetid)
@@ -24,7 +24,7 @@ end
 
 sInventory.hasPermission = function(permission)
     local _source = source
-    local user_id = vRP.getUserId(_source)
+    local user_id = zero.getUserId(_source)
 
-    return vRP.hasPermission(user_id, permission)
+    return zero.hasPermission(user_id, permission)
 end

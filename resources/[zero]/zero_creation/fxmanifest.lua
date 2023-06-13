@@ -9,4 +9,4 @@ ui_page "http://localhost:8503"
 
 client_scripts { 'client/*.lua' }
 server_scripts { 'server/*.lua' }
-shared_scripts { '@vrp/lib/utils.lua', 'cfg/*.lua' }              
+shared_scripts { '@zero/lib/utils.lua', 'cfg/*.lua' }              
