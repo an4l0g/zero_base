@@ -4,7 +4,6 @@ Proxy = module('zero','lib/Proxy')
 Tools = module('zero','lib/Tools')
 
 --Globals
-config = {}
 webhooks = {}
 
 -- Proxies
