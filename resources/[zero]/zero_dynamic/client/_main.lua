@@ -14,15 +14,6 @@ cDynamic.openOrUpdateNui = function()
     SendNUIMessage({
         action = 'open',
         favorites = sDynamic.getFavorites(),
-        status = { -- FAZ ESSA MERDA AQUI DANIEL
-            isHandcuffed = false,
-            isMedic = true,
-            isPolice = false,
-            isCriminal = false,
-            isInsideCar = false,
-            isCloseCar = true,
-            isClosePlayer = true,
-        }
     })
 end
 
