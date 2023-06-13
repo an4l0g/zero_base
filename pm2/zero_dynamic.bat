@@ -8,6 +8,8 @@ call pm2 delete %nui_name% --silent
 
 :: buildando
 cd %nui_path%
+call yarn install
+cd %nui_path%
 call yarn build
 
 :: iniciando processo

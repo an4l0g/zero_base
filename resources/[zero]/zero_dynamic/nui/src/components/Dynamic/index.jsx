@@ -44,17 +44,14 @@ function Dynamic() {
   }, [setCategory]);
 
   const handleToggleFavorite = (action, value) => {
-    console.log(action, value, isFavorite(action, value));
     let favoriteAction = action;
     if (value) {
       favoriteAction = favoriteAction + ":" + value;
     }
 
     if (isFavorite(action, value)) {
-      console.log("teste 1");
       request("deleteFavorite", { action: favoriteAction });
     } else {
-      console.log("teste 2", favoriteAction);
       request("setFavorite", { action: favoriteAction });
     }
   };
