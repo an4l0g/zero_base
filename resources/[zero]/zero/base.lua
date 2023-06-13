@@ -199,13 +199,8 @@ end
 ------------------------------------------------------------------
 -- PEGAR ID E SOURCE DO JOGADOR
 ------------------------------------------------------------------
-<<<<<<< HEAD:resources/[vrp]/vrp/base.lua
-vRP.getUserId = function(source)
-	if (source ~= nil) then
-=======
 zero.getUserId = function(source)
 	if source ~= nil then
->>>>>>> 4d1c12255cf08626ccc8fc5fbc497987c28a94e4:resources/[zero]/zero/base.lua
 		local ids = GetPlayerIdentifiers(source)
 		if ids ~= nil and #ids > 0 then
 			return cacheUsers['users'][ids[1]]
