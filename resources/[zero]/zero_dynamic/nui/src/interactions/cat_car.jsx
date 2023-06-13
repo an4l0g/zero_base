@@ -1,0 +1,75 @@
+import { RiPlayFill } from "react-icons/ri";
+import { GiCarDoor } from "react-icons/gi";
+
+export default [
+  {
+    title: "Ligar luzes",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    category: "car",
+  },
+  {
+    title: "Emprestar chave",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    category: "car",
+  },
+  {
+    title: "Portas",
+    icon: <GiCarDoor />,
+    type: "category",
+    action: "carDoors",
+    value: "doors",
+    category: "car",
+  },
+  {
+    title: "Abrir porta 1",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    value: 1,
+    category: "doors",
+  },
+  {
+    title: "Abrir porta 2",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    value: 2,
+    category: "doors",
+  },
+  {
+    title: "Abrir porta 3",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    value: 3,
+    category: "doors",
+  },
+  {
+    title: "Abrir porta 4",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    value: 4,
+    category: "doors",
+  },
+  {
+    title: "Abrir capô",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    value: 5,
+    category: "doors",
+  },
+  {
+    title: "Abrir porta-malas",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carDoors",
+    value: 6,
+    category: "doors",
+  },
+];

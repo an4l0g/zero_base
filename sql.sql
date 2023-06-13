@@ -76,16 +76,21 @@ create table zero_homes(
     primary key(user_id)
 );
 
+create table zero_dynamic(
+    user_id int unsigned not null,
+    action varchar(50) not null,
+    primary key(user_id, action)
+)
+
+create table zero_inventory(
+    bag_type varchar(25) not null,
+    slots json not null,
+    weight int not null,
+    primary key(bag_type)    
+)
+
 create table zero_hwid (
     token varchar(100) not null,
     user_id int not null,
     primary key(token, user_id)
 );
-
-create table zero_inventory(
-	slots json not null,
-    user_id int not null,
-    weight int not null,
-    bag_type varchar(30) not null,
-    primary key(user_id, bag_type)
-)
