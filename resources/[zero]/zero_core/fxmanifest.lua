@@ -4,4 +4,4 @@ game 'gta5'
 
 client_scripts { 'client-side/**/*' }
 server_scripts { 'server-side/**/*' }                                                        
-shared_scripts { '@vrp/lib/utils.lua', 'cfg/**.lua', 'vRP.lua' }
+shared_scripts { '@zero/lib/utils.lua', 'cfg/**.lua', 'vRP.lua' }

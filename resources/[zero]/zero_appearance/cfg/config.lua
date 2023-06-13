@@ -1,6 +1,6 @@
-Tunnel = module('vrp', 'lib/Tunnel')
-Proxy = module('vrp', 'lib/Proxy')
-vRP = Proxy.getInterface('vRP')
+Tunnel = module('zero', 'lib/Tunnel')
+Proxy = module('zero', 'lib/Proxy')
+zero = Proxy.getInterface('zero')
 
 config = {}
 

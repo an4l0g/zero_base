@@ -1,5 +1,5 @@
-Proxy = module("vrp","lib/Proxy")
-Tunnel = module("vrp", "lib/Tunnel")
+Proxy = module("zero","lib/Proxy")
+Tunnel = module("zero", "lib/Tunnel")
 
 config = {
         bag_max_weight = 6,

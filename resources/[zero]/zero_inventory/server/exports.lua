@@ -3,7 +3,7 @@ sInventory.giveBagItem = function(bagType, item, amount)
     item = string.lower(item)
     if config.items[item] then
         local slots = nil
-        local items = vRP.query('zero_inventory:getBag', { bag_type = bagType })
+        local items = zero.query('zero_inventory:getBag', { bag_type = bagType })
         if #items > 0 then slots = json.decode(items[1].slots) end
         local updatedSlots = {}
 
@@ -31,7 +31,7 @@ sInventory.giveBagItem = function(bagType, item, amount)
             end
         else
             updatedSlots[0] = { index = item, amount = amount }
-            vRP.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = bagType, weight = 0 })
+            zero.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = bagType, weight = 0 })
             return true
         end
     else
@@ -45,7 +45,7 @@ local tasking = {}
 sInventory.giveInventoryItem = function(user_id, item, amount)
     local _source = source
     if user_id == 0 then
-        user_id = vRP.getUserId(_source)
+        user_id = zero.getUserId(_source)
     end
 
     while tasking[user_id] do
@@ -57,7 +57,7 @@ sInventory.giveInventoryItem = function(user_id, item, amount)
         item = string.lower(item)
         if config.items[item] then
             local slots = nil
-            local items = vRP.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
+            local items = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
             if #items > 0 then slots = json.decode(items[1].slots) end
             local updatedSlots = {}
             
@@ -76,7 +76,7 @@ sInventory.giveInventoryItem = function(user_id, item, amount)
                 sInventory.modifyBag('bag:'..user_id, updatedSlots)
             else
                 updatedSlots[0] = { index = item, amount = amount }
-                vRP.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = 'bag:'..user_id, weight = config.bag_max_weight })
+                zero.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = 'bag:'..user_id, weight = config.bag_max_weight })
             end
         else
             config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
@@ -92,8 +92,8 @@ exports("giveInventoryItem", sInventory.giveInventoryItem)
 sInventory.tryGetInventoryItem = function(user_id, index, amount)
     index = string.lower(index)
     
-    local items = vRP.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
-    local hotbarItems = vRP.query('zero_inventory:getBag', { bag_type = 'hotbar:'..user_id })
+    local items = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
+    local hotbarItems = zero.query('zero_inventory:getBag', { bag_type = 'hotbar:'..user_id })
     local slots = {}
     local hotbarSlots = {}
     if #items > 0 then slots = json.decode(items[1].slots) end
@@ -128,8 +128,8 @@ sInventory.tryGetInventoryItem = function(user_id, index, amount)
         end
     end
 
-    vRP.execute('zero_inventory:updateBag', { slots = json.encode(slots), bag_type = 'bag:'..user_id })
-    vRP.execute('zero_inventory:updateBag', { slots = json.encode(hotbarSlots), bag_type = 'hotbar:'..user_id })
+    zero.execute('zero_inventory:updateBag', { slots = json.encode(slots), bag_type = 'bag:'..user_id })
+    zero.execute('zero_inventory:updateBag', { slots = json.encode(hotbarSlots), bag_type = 'hotbar:'..user_id })
     return isRemovedItem;
 end
 exports("tryGetInventoryItem", sInventory.tryGetInventoryItem)
@@ -166,8 +166,8 @@ end
 exports('getInventory', sInventory.getInventory)
 
 sInventory.getInventoryWeight = function(user_id)
-    local bag = vRP.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })[1]
-    local hotbar = vRP.query('zero_inventory:getBag', { bag_type = 'hotbar:'..user_id })[1]
+    local bag = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })[1]
+    local hotbar = zero.query('zero_inventory:getBag', { bag_type = 'hotbar:'..user_id })[1]
 
     local totalWeight = 0
     
@@ -186,29 +186,29 @@ end
 exports('getInventoryWeight', sInventory.getInventoryWeight)
 
 sInventory.getInventoryMaxWeight = function(user_id)
-    local bag = vRP.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })[1] or { weight = config.bag_max_weight }
+    local bag = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })[1] or { weight = config.bag_max_weight }
     return bag.weight
 end
 exports('getInventoryMaxWeight', sInventory.getInventoryMaxWeight)
 
 sInventory.setInventoryMaxWeight = function(user_id, weight)
-    vRP.query('zero_inventory:updateBagWeight', { weight = weight, bag_type = 'bag:'..user_id })
+    zero.query('zero_inventory:updateBagWeight', { weight = weight, bag_type = 'bag:'..user_id })
 end
 exports('setInventoryMaxWeight', sInventory.setInventoryMaxWeight)
 
 sInventory.clearInventory = function(user_id)
-    local _source = vRP.getUserSource(user_id)
+    local _source = zero.getUserSource(user_id)
     cInventory.unequipAllWeapons(_source)
 
-    vRP.execute('zero_inventory:deleteBag', { bag_type = 'bag:'..user_id })
-    vRP.execute('zero_inventory:deleteBag', { bag_type = 'hotbar:'..user_id })
+    zero.execute('zero_inventory:deleteBag', { bag_type = 'bag:'..user_id })
+    zero.execute('zero_inventory:deleteBag', { bag_type = 'hotbar:'..user_id })
     config.functions.serverNotify(source, config.texts.notify_title, config.texts.notify_success_delete_bag('USER_'..user_id))
 end
 exports('clearInventory', sInventory.clearInventory)
 
 sInventory.tryAddInventoryItem = function(user_id, index, amount)
     local slots = nil
-    local items = vRP.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
+    local items = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
     if #items > 0 then slots = json.decode(items[1].slots) end
 
     local totalWeight = 0
@@ -255,31 +255,31 @@ exports('getItemInfo', sInventory.getItemInfo)
 sInventory.getFuel = function(pid)
     local source = source
     if (not recent_pumps[pid]) then
-        local user_id = vRP.getUserId(source)
-        if vRP.getInventoryItemAmount(user_id, "mangueira") > 0 and vRP.getInventoryItemAmount(user_id, "garrafa-vazia") > 0 then
+        local user_id = zero.getUserId(source)
+        if zero.getInventoryItemAmount(user_id, "mangueira") > 0 and zero.getInventoryItemAmount(user_id, "garrafa-vazia") > 0 then
             
             recent_pumps[pid] = true
             SetTimeout(30*60000,function() recent_pumps[pid] = nil; end)
 
             TriggerClientEvent('progress', source, 10000, 'Coletando combustível...')
-            vRPclient._playAnim(source, false, {'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female'}, true)
+            zeroClient._playAnim(source, false, {'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female'}, true)
             SetTimeout(
                 10000,
                 function()
                     local randomFuel = math.random(1,100)
                     local randomHose = math.random(1,3)
                     if randomHose == 1 then 
-                        vRP.tryGetInventoryItem(user_id, "mangueira", 1)
+                        zero.tryGetInventoryItem(user_id, "mangueira", 1)
                         TriggerClientEvent('Notify',source,"Inventário", 'Inventário','Sua mangueira furou e foi descartada!', 5000)
                     end
                     if randomFuel <= 20 then 
-                        vRP.tryGetInventoryItem(user_id, "garrafa-vazia", 1)
-                        vRP.giveInventoryItem(user_id, "wammo|WEAPON_PETROLCAN", 2250)
+                        zero.tryGetInventoryItem(user_id, "garrafa-vazia", 1)
+                        zero.giveInventoryItem(user_id, "wammo|WEAPON_PETROLCAN", 2250)
                         TriggerClientEvent('Notify',source,"Inventário", 'Inventário','Você encontrou uma quantidade satisfatória de combustível!', 5000)
                     else
                         TriggerClientEvent('Notify',source,"Inventário", 'Inventário','Nenhum combustível foi encontrado!', 5000)
                     end
-                    vRPclient._stopAnim(source,false)
+                    zeroClient._stopAnim(source,false)
                 end
             )
         else

@@ -22,9 +22,9 @@ config.functions = {
         if data then return data.user_id; end;
     end,
     isHandcuffed = function()
-        return vRP.isHandcuffed()
+        return zero.isHandcuffed()
     end,
     getGloveSize = function(vname)
-        return vRP.vehicleGlove(vname)
+        return zero.vehicleGlove(vname)
     end,
 }

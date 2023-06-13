@@ -6,7 +6,7 @@ end
 
 sInventory.dropItem = function(item, pos, amount)
     local _source = source
-    local user_id = vRP.getUserId(_source)    
+    local user_id = zero.getUserId(_source)    
         
     if sInventory.tryGetInventoryItem(user_id, item.index, amount) then
         local playerCoords = GetEntityCoords(GetPlayerPed(_source))
@@ -44,7 +44,7 @@ end
 
 sInventory.getDroppedItem = function(id, amount)
     local _source = source
-    local user_id = vRP.getUserId(_source)
+    local user_id = zero.getUserId(_source)
     local currentItem = nil
 
     for i,v in pairs(droppedItems) do

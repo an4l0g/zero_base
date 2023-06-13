@@ -1,5 +1,5 @@
-local Tunnel = module("vrp","lib/Tunnel")
-local Proxy = module("vrp","lib/Proxy")
+local Tunnel = module("zero","lib/Tunnel")
+local Proxy = module("zero","lib/Proxy")
 vRP = Proxy.getInterface("vRP")
 
 srv = {}
@@ -8,8 +8,8 @@ cli = Tunnel.getInterface(GetCurrentResourceName())
 
 srv.checkPermission = function(permission)
     local _source = source
-    local _userId = vRP.getUserId(_source)
-    if (_userId) and vRP.hasPermission(_userId, permission) then
+    local _userId = zero.getUserId(_source)
+    if (_userId) and zero.hasPermission(_userId, permission) then
         return true
     end
     return false
