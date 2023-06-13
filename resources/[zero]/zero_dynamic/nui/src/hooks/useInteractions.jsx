@@ -1,13 +1,14 @@
 import { useContext, useState } from "react";
-import interactions from "../interactions";
 import useRequest from "./useRequest";
 import DynamicContext from "../contexts/DynamicContext";
+import AllInteractions from "../interactions";
 
 const useInteractions = () => {
   const { request } = useRequest();
   const [category, setCategory] = useState(["main"]);
   const [search, setSearch] = useState("");
   const { setDynamic } = useContext(DynamicContext);
+  const { formattedWithFavorites, isFavorite } = AllInteractions();
 
   const handleClickInteraction = async (interaction) => {
     if (interaction.type === "category") {
@@ -28,11 +29,12 @@ const useInteractions = () => {
 
   return {
     handleClickInteraction,
-    interactions,
+    interactions: formattedWithFavorites(),
     search,
     setSearch,
     category,
     setCategory,
+    isFavorite,
   };
 };
 

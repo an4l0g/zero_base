@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const Container = styled.ul`
+export const Container = styled.div`
   ${({ theme }) => css`
     width: 300px;
     margin-left: 20%;
@@ -92,21 +92,18 @@ export const Item = styled.li`
   ${({ theme }) => css`
     border: 1px solid ${theme.colors.shape(0.15)};
     background: ${theme.colors.shape(0.05)};
-    padding: 0.5rem;
+    min-height: 2rem;
+    height: 2rem;
     border-radius: 3px;
     font-size: 0.7rem;
     text-transform: uppercase;
     color: ${theme.colors.shape()};
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     cursor: pointer;
+    padding: 0;
     transition: background-color 0.5s;
-
-    & > svg {
-      font-size: 1rem;
-      color: ${theme.colors.primary()};
-    }
+    justify-content: space-between;
 
     &:hover {
       background-color: ${theme.colors.shape(0.2)};
@@ -123,6 +120,42 @@ export const EmptyFeedback = styled.strong`
     color: ${theme.colors.shape()};
 
     & > strong {
+      color: ${theme.colors.primary()};
+    }
+  `}
+`;
+
+export const ItemDescription = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+    flex: 1;
+    padding: 0 0.5rem;
+
+    & > svg {
+      font-size: 1rem;
+      color: ${theme.colors.primary()};
+    }
+  `}
+`;
+
+export const FavButton = styled.button`
+  ${({ theme }) => css`
+    color: ${theme.colors.primary(0.6)};
+    background-color: ${theme.colors.primary(0)};
+    border: 0;
+    width: 2.1rem;
+    height: 100%;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+
+    &:hover {
       color: ${theme.colors.primary()};
     }
   `}

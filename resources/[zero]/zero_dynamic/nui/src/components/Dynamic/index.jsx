@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import useInteractions from "../../hooks/useInteractions";
 import * as S from "./styles";
 import { BiChevronLeft } from "react-icons/bi";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import useRequest from "../../hooks/useRequest";
 
 function Dynamic() {
   const searchRef = useRef();
@@ -12,7 +14,9 @@ function Dynamic() {
     setCategory,
     interactions,
     handleClickInteraction,
+    isFavorite,
   } = useInteractions();
+  const { request } = useRequest();
 
   useEffect(() => {
     searchRef.current.focus();
@@ -39,6 +43,22 @@ function Dynamic() {
     });
   }, [setCategory]);
 
+  const handleToggleFavorite = (action, value) => {
+    console.log(action, value, isFavorite(action, value));
+    let favoriteAction = action;
+    if (value) {
+      favoriteAction = favoriteAction + ":" + value;
+    }
+
+    if (isFavorite(action, value)) {
+      console.log("teste 1");
+      request("deleteFavorite", { action: favoriteAction });
+    } else {
+      console.log("teste 2", favoriteAction);
+      request("setFavorite", { action: favoriteAction });
+    }
+  };
+
   return (
     <S.Container>
       <S.Title>
@@ -61,19 +81,34 @@ function Dynamic() {
         {filteredInteractions.length > 0 ? (
           <>
             {filteredInteractions.map((interaction) => (
-              <S.Item
-                key={interaction.title}
-                onClick={() => handleClickInteraction(interaction)}
-              >
-                {interaction.icon}
-                {interaction.title}
+              <S.Item key={interaction.title}>
+                <S.ItemDescription
+                  onClick={() => handleClickInteraction(interaction)}
+                >
+                  {interaction.icon}
+                  {interaction.title}
+                </S.ItemDescription>
+                {interaction.type !== "category" && (
+                  <S.FavButton
+                    onClick={() =>
+                      handleToggleFavorite(
+                        interaction.action,
+                        interaction.value
+                      )
+                    }
+                  >
+                    {isFavorite(interaction.action, interaction.value) ? (
+                      <AiFillStar />
+                    ) : (
+                      <AiOutlineStar />
+                    )}
+                  </S.FavButton>
+                )}
               </S.Item>
             ))}
           </>
         ) : (
-          <S.EmptyFeedback>
-            Nada foi encontrado <strong>!</strong>
-          </S.EmptyFeedback>
+          <S.EmptyFeedback>Nada foi encontrado!</S.EmptyFeedback>
         )}
       </S.ActionList>
     </S.Container>

@@ -11,9 +11,13 @@ function App() {
 
   const nuiMessage = useCallback(
     (event) => {
-      const { action } = event.data;
-      1;
-      if (action === "open") setDynamic(true);
+      const { action, favorites, status } = event.data;
+      if (action === "open") {
+        setDynamic({
+          favorites,
+          status,
+        });
+      }
     },
     [setDynamic]
   );
@@ -22,19 +26,19 @@ function App() {
     window.addEventListener("message", nuiMessage);
     window.onkeydown = async (data) => {
       if (data.keyCode == 27) {
-        setDynamic(false);
-        await request("close");
+        setDynamic({});
+        request("close");
       }
     };
 
     return () => {
       window.removeEventListener("message", nuiMessage);
     };
-  }, [nuiMessage, request]);
+  }, [nuiMessage, request, setDynamic]);
 
   return (
     <>
-      {dynamic && (
+      {dynamic.status && (
         <>
           <GS.GlobalStyle />
           <GS.Wrap>
