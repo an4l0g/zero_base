@@ -2,7 +2,7 @@ cli = {}
 Tunnel.bindInterface('Creation', cli)
 vSERVER = Tunnel.getInterface('Creation')
 
-local generalConfig = configCreator.general
+generalConfig = configCreator.general
 
 local float = function(number)
 	number = (number + 0.00000)
@@ -51,7 +51,7 @@ local createCam = function(cameraName)
     if (cam['heading']) then cam['heading']() end
 end
 
-local deleteCam = function(render)
+deleteCam = function(render)
     SetCamActive(tempCam, false)
     if (render) then RenderScriptCams(false, true, 0, true, true); end;
 	tempCam = nil
@@ -88,7 +88,6 @@ end
 resetClothes = function()
     local clothes = {
         [GetHashKey('mp_m_freemode_01')] = {
-            ['gender'] = 'male',
             ['mask'] = { 0, 0, 0 }, -- 1
             ['hair'] = { 0, 0, 0 }, -- 2
             ['torso'] = { 15, 0, 2 }, -- 3
@@ -107,7 +106,6 @@ resetClothes = function()
             ['bracelet'] = { -1, 0 } --p7
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            ['gender'] = 'female',
             ['mask'] = { 0, 0, 0 }, -- 1
             ['hair'] = { 0, 0, 0 }, -- 2
             ['torso'] = { 15, 0, 1 }, -- 3
@@ -270,7 +268,7 @@ local currentCharacter = {
     makeupOpacity = 0.99,
 }
 
-local atualGender = 'masculino'
+local currentGender = 'masculino'
 
 local setGender = function(gender) 
     local ped = PlayerPedId()
@@ -296,16 +294,22 @@ local setGender = function(gender)
         SetPedArmour(ped, currentArmour)
     end
 
-    local weapons = (vRP.getWeapons() or {})
-    -- vRP.giveWeapons(weapons, true)
+    local weapons = (zero.getWeapons() or {})
+    zero.giveWeapons(weapons, true, GlobalState.weaponToken)
 
     resetClothes()
 
-    if (gender == 'male') then
-        SetPedHeadBlendData(ped, 21, 0, 0, 21, 0, 0, 0.8, 0.8, 0.0, false)
-    else
-        SetPedHeadBlendData(ped, 21, 0, 0, 21, 0, 0, 0.2, 0.2, 0.0, false)
-    end
+    SetPedHeadBlendData(ped, 0, 21, 0, 0, 0, 0, 0.6, 0.0, 0.0, false)
+end
+
+StartFade = function()
+	DoScreenFadeOut(500)
+	while (IsScreenFadingOut()) do Citizen.Wait(1); end;
+end
+
+EndFade = function()
+	DoScreenFadeIn(500)
+	while (IsScreenFadingIn()) do Citizen.Wait(1); end;
 end
 
 initCreator = function()
@@ -313,8 +317,8 @@ initCreator = function()
     TriggerEvent('zero_weather:staticTime', { weather = 'EXTRASUNNY', hours = 14, minutes = 0 })
     TriggerEvent('zero_hud:toggleHud', false)
     vSERVER.changeSession(GetPlayerServerId(PlayerId()))
-    DoScreenFadeOut(500)
-    Citizen.Wait(500)
+    StartFade()
+    Citizen.Wait(1500)
     teleport(ped, generalConfig['spawnCreator'].xyz)
     SetEntityHeading(ped, generalConfig['spawnCreator'].w)
     SetEntityHealth(ped, GetPedMaxHealth(ped))
@@ -322,24 +326,23 @@ initCreator = function()
     SetEntityHealth(ped, GetPedMaxHealth(ped))  
     SetFacialIdleAnimOverride(ped, 'pose_normal_1', 0)
     Citizen.Wait(1000)
-    DoScreenFadeIn(1000)
+    EndFade()
 end
 
 finishCreator = function()
     local ped = PlayerPedId()
     TriggerEvent('zero_weather:staticTime', false)
-    TriggerEvent('zero_hud:toggleHud', true)
-    DoScreenFadeOut(500)
+    StartFade()
     Citizen.Wait(1500)
-    TriggerEvent('introCinematic:start')
     teleport(ped, generalConfig.spawnAfterCreator.xyz)
     SetEntityHeading(ped, generalConfig.spawnAfterCreator.w)
     SetEntityHealth(ped, GetPedMaxHealth(ped))
     FreezeEntityPosition(ped, false)
     vSERVER.changeSession(0)
     deleteCam(true)
+    TriggerEvent('introCinematic:start')
     Citizen.Wait(1000)
-    DoScreenFadeIn(1000)
+    EndFade()
 end
 
 cli.loadingPlayer = function(stats)
@@ -389,7 +392,8 @@ RegisterNuiCallback('changeCharacter', function(data)
 
     -- GENDER
     currentCharacter.gender = data.gender
-    if (atualGender ~= data.gender) then
+    if (currentGender ~= data.gender) then
+        currentGender = data.gender
         if (data.gender == 'masculino') then setGender('male'); else setGender('female'); end;
     end
 

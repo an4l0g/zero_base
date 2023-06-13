@@ -7,4 +7,4 @@ version '0.1'
 
 client_scripts { 'client-side/*.lua' }
 server_scripts { 'server-side/*.lua' }
-shared_scripts { '@vrp/lib/utils.lua', 'cfg/*.lua' }              
+shared_scripts { '@zero/lib/utils.lua', 'cfg/*.lua' }              

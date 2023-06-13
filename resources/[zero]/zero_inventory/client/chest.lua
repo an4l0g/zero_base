@@ -48,13 +48,13 @@ end
 
 RegisterKeyMapping("openCarChest", "Abrir Porta Malas/Luvas", 'KEYBOARD', "pageup")
 RegisterCommand("openCarChest", function()
-    if vRP.getNearestPlayer(config.marker_dropped_item_distance + 1) ~= nil then
+    if zero.getNearestPlayer(config.marker_dropped_item_distance + 1) ~= nil then
         config.functions.clientNotify(config.texts.notify_title, config.texts.notify_nearest_player, 5000)
         return
     end
     local ped = PlayerPedId() 
     if GetEntityHealth(ped) > 101 and not config.functions.isHandcuffed() and not IsPedBeingStunned(ped) and not IsPlayerFreeAiming(ped) then
-        local vehicle,vnetid,placa,vname,lock,banned,trunk  = vRP.vehList(5)
+        local vehicle,vnetid,placa,vname,lock,banned,trunk  = zero.vehList(5)
         local veh = { isLocked = lock, carName = vname, ownerId = sInventory.getVehOwnerId(vnetid) } 
         if veh.isLocked == 1 then
             if veh.ownerId then
