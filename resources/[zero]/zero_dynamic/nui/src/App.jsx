@@ -13,7 +13,6 @@ function App() {
     (event) => {
       const { action, favorites } = event.data;
       if (action === "open") {
-        console.log("TESTE");
         setDynamic({
           favorites,
         });
@@ -38,7 +37,7 @@ function App() {
 
   return (
     <>
-      {dynamic.status && (
+      {dynamic.favorites && (
         <>
           <GS.GlobalStyle />
           <GS.Wrap>
