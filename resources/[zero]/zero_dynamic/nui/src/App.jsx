@@ -11,11 +11,10 @@ function App() {
 
   const nuiMessage = useCallback(
     (event) => {
-      const { action, favorites, status } = event.data;
+      const { action, favorites } = event.data;
       if (action === "open") {
         setDynamic({
           favorites,
-          status,
         });
       }
     },
@@ -38,7 +37,7 @@ function App() {
 
   return (
     <>
-      {dynamic.status && (
+      {dynamic.favorites && (
         <>
           <GS.GlobalStyle />
           <GS.Wrap>
