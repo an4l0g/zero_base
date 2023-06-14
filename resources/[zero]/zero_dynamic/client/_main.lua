@@ -10,6 +10,7 @@ RegisterCommand("openDynamic", function()
 end)
 
 cDynamic.openOrUpdateNui = function()
+    print("TEste")
     SetNuiFocus(true, true)
     SendNUIMessage({
         action = 'open',
