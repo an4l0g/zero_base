@@ -1,5 +1,5 @@
-Proxy = module('vrp', 'lib/Proxy')
-vRP = Proxy.getInterface('vRP')
+Proxy = module('zero', 'lib/Proxy')
+zero = Proxy.getInterface('zero')
 
 config = {}
 

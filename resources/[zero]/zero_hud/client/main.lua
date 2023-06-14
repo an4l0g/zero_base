@@ -1,4 +1,4 @@
-Tunnel = module('vrp','lib/Tunnel')
+Tunnel = module('zero','lib/Tunnel')
 
 cli = {}
 Tunnel.bindInterface(GetCurrentResourceName(), cli)

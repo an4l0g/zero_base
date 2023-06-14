@@ -1,5 +1,5 @@
 cInventory.getWeaponsBag = function()
-    local weapons = vRP.getWeapons()
+    local weapons = zero.getWeapons()
     local formattedWeapons = {}
 
     for k,v in sPairs(weapons) do
@@ -15,7 +15,7 @@ cInventory.getWeaponsBag = function()
 end
 
 cInventory.unequipAllWeapons = function()
-    local weapons = vRP.getWeapons()
+    local weapons = zero.getWeapons()
 
     for k,v in pairs(weapons) do
         cInventory.unequipWeapon(k)

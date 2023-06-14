@@ -70,8 +70,38 @@ create table zero_homes(
     user_id int unsigned not null,
     home varchar(50) not null,
     home_owner tinyint not null,
-        garages tinyint not null,
-        tax varchar(20) not null,
-        configs json not null,
+    garages tinyint not null,
+    tax varchar(20) not null,
+    configs json not null,
     primary key(user_id)
+);
+
+create table zero_dynamic(
+    user_id int unsigned not null,
+    action varchar(50) not null,
+    primary key(user_id, action)
+)
+
+create table zero_inventory(
+    bag_type varchar(25) not null,
+    slots json not null,
+    weight int not null,
+    primary key(bag_type)    
+)
+
+create table zero_hwid (
+    token varchar(100) not null,
+    user_id int not null,
+    primary key(token, user_id)
+);
+
+create table zero_hospital(
+doctor_id int unsigned not null,
+service_type char(1) not null,
+patient_id int unsigned not null,
+product varchar(30),
+amount int, 
+total_price double not null,
+service_date datetime not null,
+primary key (doctor_id,patient_id,service_type,service_date)
 );
