@@ -1,31 +1,28 @@
 import { useCallback, useContext, useEffect } from "react";
-import Dynamic from "./components/Dynamic";
-import * as GS from "./styles";
-import useRequest from "./hooks/useRequest";
-import DynamicContext from "./contexts/DynamicContext";
+import Garage from "./components/Garage";
+import * as S from "./styles";
+import useRequest from "./hook/useRequest";
+import GarageContext from "./contexts/GarageContext";
 
 function App() {
-  const { dynamic, setDynamic } = useContext(DynamicContext);
-
+  const { garage, setGarage } = useContext(GarageContext);
   const { request } = useRequest();
 
   const nuiMessage = useCallback(
     (event) => {
-      const { action, favorites } = event.data;
+      const { action, cars } = event.data;
       if (action === "open") {
-        setDynamic({
-          favorites,
-        });
+        setGarage({ cars });
       }
     },
-    [setDynamic]
+    [setGarage]
   );
 
   useEffect(() => {
     window.addEventListener("message", nuiMessage);
     window.onkeydown = async (data) => {
       if (data.keyCode == 27) {
-        setDynamic({});
+        setGarage({});
         request("close");
       }
     };
@@ -33,16 +30,16 @@ function App() {
     return () => {
       window.removeEventListener("message", nuiMessage);
     };
-  }, [nuiMessage, request, setDynamic]);
+  }, [nuiMessage, request, setGarage]);
 
   return (
     <>
-      {dynamic.favorites && (
+      {garage.cars && (
         <>
-          <GS.GlobalStyle />
-          <GS.Wrap>
-            <Dynamic />
-          </GS.Wrap>
+          <S.GlobalStyle />
+          <S.Wrap>
+            <Garage />
+          </S.Wrap>
         </>
       )}
     </>
