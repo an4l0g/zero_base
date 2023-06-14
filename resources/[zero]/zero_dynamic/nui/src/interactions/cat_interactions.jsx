@@ -15,7 +15,7 @@ export default [
     category: "interactions",
   },
   {
-    title: "Algemar",
+    title: "Algemar/Desalgemar",
     icon: <RiPlayFill />,
     type: "action",
     action: "handcuff",
