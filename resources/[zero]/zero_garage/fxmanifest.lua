@@ -5,4 +5,4 @@ ui_page 'http://localhost:8505'
 
 client_scripts { 'client/*.lua' }
 server_scripts { 'server/*.lua' }
-shared_scripts { '@zero/lib/utils.lua', 'config.lua' }
+shared_scripts { '@zero/lib/utils.lua', 'main.lua', 'cfg/*.lua' }
