@@ -13,6 +13,8 @@ zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (
 zero._prepare('zero_garage/setDetained', 'update zero_user_vehicles set detained = @detained where user_id = @user_id and vehicle = @vehicle')
 zero._prepare('zero_garage/setIPVA', 'update zero_user_vehicles set ipva = @ipva where user_id = @user_id and vehicle = @vehicle')
 zero._prepare('zero_garage/updateState', 'update zero_user_vehicles set state = @state where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/getVehiclePlate', 'select plate from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/delVehicle', 'delete from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
 
 srv.checkPermissions = function(perm)
     local source = source
@@ -30,6 +32,17 @@ srv.checkPermissions = function(perm)
             return zero.hasPermission(user_id, perm)
         end
         return true
+    end
+end
+
+srv.getVehiclePlate = function(vehicle)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local query = zero.query('zero_garage/getVehiclePlate', { user_id = user_id, vehicle = vehicle })[1]
+        if (query) then
+            return query.plate
+        end
     end
 end
 
@@ -132,7 +145,7 @@ end
 local findVehicle = function(user_id, model)
     for _, vehicle in ipairs(GetAllVehicles()) do
         local state = Entity(vehicle).state
-        if (state['veh:user_id'] == user_id) and (state['veh:model'] == model) then return vehicle; end;
+        if (state['veh:user_id'] == user_id) and (state['veh:model'] == model) then print(vehicle) return vehicle; end;
     end
 end
 
@@ -152,7 +165,7 @@ srv.spawnVehicle = function(vehicle, id)
             if (not findVehicle(user_id, vehicle)) then
                 local veh = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = vehicle })[1]
                 if (not veh) then
-                    zero.execute('zero_garage/addVehicle', { user_id = user_id, vehicle = vehicle, plate = generatePlate(), chassis = generateChassis(), ipva = os.time(), service = 1 })
+                    addVehicle(user_id, vehicle, 1)
                     veh = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = vehicle })[1]
                 end
 
@@ -339,10 +352,10 @@ RegisterCommand('chaves', function(source, args)
             local nIdentity = zero.getUserIdentity(nuserId)
             if (vehState.user_id == user_id) then
                 if (args[1] == 'add') then
-                    keys[args[1]]()
+                    keys['add']()
                 elseif (args[1] == 'rem') then
                     if (nuser_id == carKeys[vnetid]) then
-                        keys[args[1]]()
+                        keys['rem']()
                     end
                 end
             end
@@ -352,6 +365,8 @@ end)
 
 local webhooks = {}
 webhooks.dv = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF'
+webhooks.addCar = 'https://discord.com/api/webhooks/1119153735852109846/tBEaSaLLmPrVPB2uFiEtFYfePV8H8RGvixMAosVf8eM5q68JfVAFwA4PHPFA6SQFsRVs'
+webhooks.remCar = 'https://discord.com/api/webhooks/1119153781138014281/v_-1xJPxmjTuCXhWo3L9hSihrk7IjZIQzvTDSwRRkj0k-LZX63dSM2mCCUpF7J8g_tol'
 
 RegisterCommand('dv', function(source)
     local user_id = zero.getUserId(source)
@@ -361,7 +376,43 @@ RegisterCommand('dv', function(source)
         if (vnetid) then
             local vehState = srv.getVehicleData(vnetid)
             vCLIENT.tryDeleteVehicle(source, vnetid)
-            zero.webhook(webhooks.dv, '```prolog\n[PASSAPORTE]: '..user_id..' | '..identity.firstname..' '..identity.lastname..' \n[USOU]: /dv\n[EM]: '..vehState.model..' \n[DONO]: '..vehState.user_id..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            zero.webhook(webhooks.dv, '```prolog\n[PASSAPORTE]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[USOU]: /dv\n[EM]: '..vehState.model..' \n[DONO]: '..vehState.user_id..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+    end
+end)
+
+RegisterCommand('addcar', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(source)
+    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+        local prompt = zero.prompt(source, { 'Passaporte', 'Veículo' })
+        if (prompt) then
+            if (prompt[1] and prompt[2]) then
+                prompt[1] = parseInt(prompt[1])
+                addVehicle(prompt[1], prompt[2])
+                TriggerClientEvent('notify', source, 'Garagem', 'Você adicionou o veículo <b>'..prompt[2]..'</b> para o id <b>'..prompt[1]..'</b>.')
+                local nIdentity = zero.getUserIdentity(prompt[1])
+                zero.webhook(webhooks.addCar, '```prolog\n[/ADDCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[ADICIONOU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            end
+        end
+    end
+end)
+
+RegisterCommand('remcar', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(source)
+    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+        local prompt = zero.prompt(source, { 'Passaporte', 'Veículo' })
+        if (prompt) then
+            if (prompt[1] and prompt[2]) then
+                prompt[1] = parseInt(prompt[1])
+                delVehicle(prompt[1], prompt[2])
+                TriggerClientEvent('notify', source, 'Garagem', 'Você removeu o veículo <b>'..prompt[2]..'</b> do id <b>'..prompt[1]..'</b>.')
+                local nIdentity = zero.getUserIdentity(prompt[1])
+                zero.webhook(webhooks.remCar, '```prolog\n[/REMCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[REMOVEU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            end
         end
     end
 end)

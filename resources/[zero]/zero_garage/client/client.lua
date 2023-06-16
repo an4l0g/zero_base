@@ -1,5 +1,6 @@
 RegisterCommand('cds',function()
     print(GetEntityCoords(PlayerPedId()), GetEntityHeading(PlayerPedId()))
+    print(GetVehiclePedIsIn(PlayerPedId()))
 end)
 
 local cli = {}
@@ -319,11 +320,21 @@ cli.vehicleClientLock = function(vehid, lock)
 end
 
 RegisterNuiCallback('saveNextVeh', function()
-    print('Guardar veículo próximo')
+    local vehicle, vnetid = zero.vehList(15.0)
+    if (vnetid) then cli.tryDeleteVehicle(vnetid); end;
 end)
 
+local getNetVeh = function(plate)
+    for _, veh in pairs(GetGamePool('CVehicle')) do
+        local vehPlate = GetVehicleNumberPlateText(veh)
+        if (vehPlate == plate) then return VehToNet(veh); end;
+    end
+end
+
 RegisterNuiCallback('saveVeh', function(data)
-    print('Guardar veículo: '..data.spawn)
+    local plate = vSERVER.getVehiclePlate(data.spawn)
+    local netVeh = getNetVeh(plate)
+    if (netVeh) then cli.tryDeleteVehicle(netVeh); end;
 end)
 
 RegisterNuiCallback('useVeh', function(data)

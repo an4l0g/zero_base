@@ -11,10 +11,10 @@ configs.animations = {
                 local ped = PlayerPedId()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@heists@heist_corona@single_team', 'single_team_loop_boss', 3)) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{ 'anim@heists@heist_corona@single_team', 'single_team_loop_boss' }}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{ 'anim@heists@heist_corona@single_team', 'single_team_loop_boss' }}, true)
                     end
                 end
             end
@@ -24,13 +24,13 @@ configs.animations = {
             text = 'Animação - Aguardar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'mini@strip_club@idles@bouncer@base', 'base', 3)) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{ 'mini@strip_club@idles@bouncer@base', 'base' }}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{ 'mini@strip_club@idles@bouncer@base', 'base' }}, true)
                     end
                 end
             end
@@ -40,13 +40,13 @@ configs.animations = {
             text = 'Animação - Dedo do meio',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@mp_player_intselfiethe_bird', 'idle_a', 3)) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{ 'anim@mp_player_intselfiethe_bird', 'idle_a' }}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{ 'anim@mp_player_intselfiethe_bird', 'idle_a' }}, true)
                     end
                 end
             end
@@ -56,14 +56,14 @@ configs.animations = {
             text = 'Animação - Se render',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.CarregarAnim('random@arrests')
-                        vRP.CarregarAnim('random@arrests@busted')
+                        zero.DeletarObjeto()
+                        zero.CarregarAnim('random@arrests')
+                        zero.CarregarAnim('random@arrests@busted')
                         TaskPlayAnim(ped, 'random@arrests', 'idle_2_hands_up', 8.0, 1.0, -1, 2, 0, 0, 0, 0)
                         Wait(4000)
                         TaskPlayAnim(ped, 'random@arrests', 'kneeling_arrest_idle', 8.0, 1.0, -1, 2, 0, 0, 0, 0)
@@ -81,13 +81,13 @@ configs.animations = {
             text = 'Animação - Cancelar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 TriggerEvent('vRP:CancelAnimations')
                 TriggerEvent('zero_animations:cancelSharedAnimation')
                 cancelKeyMapping = false
                 if (GetEntityHealth(ped) > 101 and not menuCelular) then
                     disableActions(false)
-                    vRP.DeletarObjeto()
+                    zero.DeletarObjeto()
                     ClearPedTasks(ped)
                 end
             end
@@ -97,13 +97,13 @@ configs.animations = {
             text = 'Animação - Mãos na cabeça',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{'random@arrests@busted', 'idle_a'}}, true)    
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{'random@arrests@busted', 'idle_a'}}, true)    
                     end            
                 end
             end
@@ -113,13 +113,13 @@ configs.animations = {
             text = 'Animação - Levantar as mãos',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@mugging3', 'handsup_standing_base', 3) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{'random@mugging3', 'handsup_standing_base'}}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{'random@mugging3', 'handsup_standing_base'}}, true)
                     end
                 end
             end
@@ -129,9 +129,9 @@ configs.animations = {
             text = 'Animação - Joia duplo',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intincarthumbs_upbodhi@ps@', 'enter' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intincarthumbs_upbodhi@ps@', 'enter' }}, false)
                 end
             end
         },
@@ -140,9 +140,9 @@ configs.animations = {
             text = 'Animação - Assobiar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'rcmnigel1c', 'hailing_whistle_waive_a' }}, false)
+                    zero.playAnim(true, {{ 'rcmnigel1c', 'hailing_whistle_waive_a' }}, false)
                 end
             end
         },
@@ -151,9 +151,9 @@ configs.animations = {
             text = 'Animação - Saudação',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intcelebrationmale@salute', 'salute' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intcelebrationmale@salute', 'salute' }}, false)
                 end
             end
         },
@@ -162,9 +162,9 @@ configs.animations = {
             text = 'Animação - Joia',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intselfiethumbs_up', 'idle_a' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intselfiethumbs_up', 'idle_a' }}, false)
                 end
             end
         },
@@ -173,9 +173,9 @@ configs.animations = {
             text = 'Animação - Facepalm',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intupperface_palm', 'idle_a' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intupperface_palm', 'idle_a' }}, false)
                 end
             end
         },
@@ -184,9 +184,9 @@ configs.animations = {
             text = 'Animação - Apontar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.CarregarAnim('anim@mp_point')
+                    zero.CarregarAnim('anim@mp_point')
                     if (not LocalPlayer.state.animApontar) then
                         SetPedCurrentWeaponVisible(ped, 0, 1, 1, 1)
                         SetPedConfigFlag(ped, 36, 1)
@@ -213,7 +213,7 @@ configs.animations = {
                 if (IsPedInAnyVehicle(ped)) then
                     local vehicle = GetVehiclePedIsIn(ped,false)
                     if (GetPedInVehicleSeat(vehicle,-1) == ped) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                         local running = Citizen.InvokeNative(0xAE31E7DF9B5B132E,vehicle)
                         SetVehicleEngineOn(vehicle,not running,true,true)
                         if (running) then

@@ -122,3 +122,13 @@ generateChassis = function()
 	return nchassi
 end
 exports('generateChassis', generateChassis)
+
+addVehicle = function(user_id, vehicle, service)
+	zero.execute('zero_garage/addVehicle', { user_id = user_id, vehicle = vehicle, plate = generatePlate(), chassis = generateChassis(), ipva = os.time(), service = service })
+end
+exports('addVehicle', addVehicle)
+
+delVehicle = function(user_id, vehicle)
+	zero.execute('zero_garage/delVehicle', { user_id = user_id, vehicle = vehicle })
+end
+exports('delVehicle', delVehicle)
