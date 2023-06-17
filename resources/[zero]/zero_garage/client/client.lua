@@ -221,7 +221,7 @@ cli.settingVehicle = function(vnet, state, plate, custom)
     local timeOut = (GetGameTimer() + 4000)
     while (not NetworkDoesEntityExistWithNetworkId(vnet)) do
         Citizen.Wait(10)
-        if (GetGameTimer() > timeout) then return; end;
+        if (GetGameTimer() > timeOut) then return; end;
     end
 
     local nveh = NetworkGetEntityFromNetworkId(vnet)
@@ -251,6 +251,10 @@ cli.settingVehicle = function(vnet, state, plate, custom)
         -- EVENTO TUNING
         return true
     end
+end
+
+cli.returnToNet = function(vehicle)
+    return VehToNet(vehicle)
 end
 
 cli.tryDeleteVehicle = function(vnet)
@@ -319,6 +323,50 @@ cli.vehicleClientLock = function(vehid, lock)
 	end
 end
 
+cli.getHash = function(vehiclehash)
+    local vehicle = zero.getNearestVehicle(7.0)
+    local vehiclehash = GetEntityModel(vehicle)
+    return vehiclehash
+end
+
+local vehAnchor = false
+
+cli.getVehicleAnchor = function()
+    return vehAnchor, (vehAnchor and 'Destravando o veículo...' or 'Travando o veículo...')
+end
+
+cli.vehicleAnchor = function(vnet, bool)
+	if (NetworkDoesNetworkIdExist(vnet)) then
+		local vehicle = NetToVeh(vnet)
+		if (IsEntityAVehicle(vehicle)) then
+			if (bool ~= nil) then
+				TriggerEvent('notify', 'Garagem', 'O veículo foi <b>'..((bool and 'travado') or 'destravado')..'</b>.')
+				FreezeEntityPosition(vehicle, (bool == true))
+			else
+				vehAnchor = (not vehAnchor)
+				TriggerEvent('notify', 'Garagem', 'O veículo foi <b>'..((vehAnchor and 'travado') or 'destravado')..'</b>.')
+				FreezeEntityPosition(vehicle, (vehAnchor == true))
+			end
+		end
+	end
+end
+
+local boatanchor = false
+
+cli.boatAnchor = function(vehicle)
+	if (IsEntityAVehicle(vehicle) and GetVehicleClass(vehicle) == 14) then
+		if (boatanchor) then
+			TriggerEvent('notify', 'Garagem', 'O <b>barco</b> foi desancorado.')
+			FreezeEntityPosition(vehicle, false)
+			boatanchor = false
+		else
+			TriggerEvent('notify', 'Garagem', 'O <b>barco</b> foi ancorado.')
+			FreezeEntityPosition(vehicle, true)
+			boatanchor = true
+		end
+	end
+end
+
 RegisterNuiCallback('saveNextVeh', function()
     local vehicle, vnetid = zero.vehList(15.0)
     if (vnetid) then cli.tryDeleteVehicle(vnetid); end;
@@ -343,4 +391,21 @@ end)
 
 RegisterNuiCallback('close', function()
     SetNuiFocus(false, false)
+end)
+
+RegisterNetEvent('syncreparar',function(index)
+	if (NetworkDoesNetworkIdExist(index)) then
+		local v = NetToVeh(index)
+		if (DoesEntityExist(v)) then
+			local fuel = GetVehicleFuelLevel(v)
+			if (IsEntityAVehicle(v)) then
+				SetVehicleFixed(v)
+				SetVehicleDirtLevel(v, 0.0)
+				SetVehicleUndriveable(v, false)
+				Citizen.InvokeNative(0xAD738C3085FE7E11, v, true, true)
+				SetVehicleOnGroundProperly(v)
+				SetVehicleFuelLevel(v, fuel)
+			end
+		end
+	end
 end)

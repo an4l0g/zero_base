@@ -9,12 +9,18 @@ zero._prepare('zero_garage/getVehicles', 'select * from zero_user_vehicles where
 zero._prepare('zero_garage/getVehiclesWithVeh', 'select * from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
 zero._prepare('zero_garage/getVehiclesWithPlate', 'select * from zero_user_vehicles where plate = @plate')
 zero._prepare('zero_garage/getVehiclesWithChassis', 'select * from zero_user_vehicles where chassis = @chassis')
-zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (user_id, vehicle, plate, chassis, service, ipva, detained, rented, state, custom) values (@user_id, @vehicle, @plate, @chassis, @service, @ipva, 0, 0, "{}", "{}")')
 zero._prepare('zero_garage/setDetained', 'update zero_user_vehicles set detained = @detained where user_id = @user_id and vehicle = @vehicle')
 zero._prepare('zero_garage/setIPVA', 'update zero_user_vehicles set ipva = @ipva where user_id = @user_id and vehicle = @vehicle')
 zero._prepare('zero_garage/updateState', 'update zero_user_vehicles set state = @state where user_id = @user_id and vehicle = @vehicle')
 zero._prepare('zero_garage/getVehiclePlate', 'select plate from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
 zero._prepare('zero_garage/delVehicle', 'delete from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/setRented', 'update zero_user_vehicles set rented = @rented where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/getVehicleWithPlate', 'select user_id, vehicle from zero_user_vehicles where plate = @plate')
+zero._prepare('zero_garage/updatePlate', 'update zero_user_vehicles set plate = @plate where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/getVehicleOwn', 'select * from zero_user_vehicles where user_id = @user_id and service = 0')
+zero._prepare('zero_garage/getGarages', 'select garages from zero_users where id = @id')
+zero._prepare('zero_garage/getVehByPlate', 'select * from zero_user_vehicles where plate = @plate')
+zero._prepare('zero_garage/getVehByChassis', 'select * from zero_user_vehicles where chassis = @chassis')
 
 srv.checkPermissions = function(perm)
     local source = source
@@ -145,7 +151,7 @@ end
 local findVehicle = function(user_id, model)
     for _, vehicle in ipairs(GetAllVehicles()) do
         local state = Entity(vehicle).state
-        if (state['veh:user_id'] == user_id) and (state['veh:model'] == model) then print(vehicle) return vehicle; end;
+        if (state['veh:user_id'] == user_id) and (state['veh:model'] == model) then return vehicle; end;
     end
 end
 
@@ -306,6 +312,16 @@ deleteVehicle = function(vehnet)
     end
 end
 
+local webhooks = {}
+webhooks.dv = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF'
+webhooks.dvArea = 'https://discord.com/api/webhooks/1119313191684550746/HUVLo3Qrt9XvOoyr04DNXWcHGUgzZzWUVPRJw_G1zqSCrD9NzApykPRFDBqT6bV8LKfk'
+webhooks.dvAll = 'https://discord.com/api/webhooks/1119322941763633202/PYQLW7s3YB5nDWwGSOofbWaKl7EgDvQZak_DxK1k_QBfOez2UsfcbGNcOdoliVZmOLxs'
+webhooks.addCar = 'https://discord.com/api/webhooks/1119153735852109846/tBEaSaLLmPrVPB2uFiEtFYfePV8H8RGvixMAosVf8eM5q68JfVAFwA4PHPFA6SQFsRVs'
+webhooks.remCar = 'https://discord.com/api/webhooks/1119153781138014281/v_-1xJPxmjTuCXhWo3L9hSihrk7IjZIQzvTDSwRRkj0k-LZX63dSM2mCCUpF7J8g_tol'
+webhooks.car = 'https://discord.com/api/webhooks/1119303684229173278/k21NIsYyJotaqQ9DOTzi8udIchv-r4ESiLgFcqeNLh9-TQF_ASwrTmsjfjxhJYFWMStd'
+webhooks.chave = 'https://discord.com/api/webhooks/1119327519745785927/qwfadofORxl2q5RLltSivL5WpaRjcKZEWVhz_309xQJy2R83YAQlczWyzCKO1xL_KPo-'
+webhooks.fix = 'https://discord.com/api/webhooks/1119461044285345802/cMk-_vciddjT3zuq4tUkUkxjmR-uC7iHi-FsE2sMp7utV-hAkw3Ii8pZ4dgEq_DEL7UB'
+
 local carKeys = {}
 
 srv.vehicleLock = function()
@@ -320,20 +336,121 @@ srv.vehicleLock = function()
                 if (not zeroClient.isInVehicle(source)) then zeroClient._playAnim(source, true, {{ 'anim@mp_player_intmenu@key_fob@', 'fob_click' }}, false); end;
                 TriggerClientEvent('zero_sound:vehicle', -1, vnetid, 15.0, 'lock', 0.05)
                 if (lock == 1) then
-                    TriggerClientEvent('notify', source, 'Garagem', 'O veículo foi <b>trancado</b> com sucesso.')
+                    TriggerClientEvent('notify', source, 'Garagem', 'O veículo foi <b>trancado</b> com sucesso.', 1000)
                 else
-                    TriggerClientEvent('notify', source, 'Garagem', 'O veículo foi <b>destrancado</b> com sucesso.')
+                    TriggerClientEvent('notify', source, 'Garagem', 'O veículo foi <b>destrancado</b> com sucesso.', 1000)
                 end
             end
         end
     end
 end
 
+RegisterCommand('vehs', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        if (args[1] == 'vender') then
+            local prompt = zero.prompt(source, { 'Veículo que você deseja vender', 'Valor do veículo', 'Passaporte do jogador que irá receber o veículo' })
+            if (prompt) then
+                if (prompt[1] and prompt[2] and prompt[3]) then
+                    prompt[2] = parseInt(prompt[2])
+                    prompt[3] = parseInt(prompt[3])
+
+                    local model = prompt[1]
+                    local vname = vehicleName(model)
+                    local myVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = model })[1]
+                    if (myVehicle) then
+                        if ((vehicleType(model) == 'exclusive') or (vehicleType(model) == 'vip') or (myVehicle.rented ~= '0')) then
+                            TriggerClientEvent('notify', source, 'Garagem', 'Este <b>veículo</b> não pode ser vendido.')
+                        else
+                            local nUser = prompt[3]
+                            local price = prompt[2]
+                            local nSource = zero.getUserSource(nUser)
+                            local identity = zero.getUserIdentity(user_id)
+                            local nIdentity = zero.getUserIdentity(nUser)
+                            if (price > 0) then
+                                if (zero.request(source, 'Deseja vender um <b>'..vname..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> por <b>R$'..zero.format(price)..'</b> ?', 60)) then
+                                    if (zero.request(nSource, 'Aceita comprar um <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> por <b>R$'..zero.format(price)..'</b> ?', 60)) then
+                                        local userVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = nUser, vehicle = model })[1]
+                                        if (userVehicle) then
+                                            TriggerClientEvent('notify', source, 'negado', 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já possui este modelo de veículo')
+                                        else
+                                            local vqtd = 0
+                                            local vehicles = zero.query('zero_garage/getVehicleOwn', { user_id = nUser })
+                                            for _, v in ipairs(vehicles) do
+                                                local vtype = vehicleType(v.vehicle)
+                                                if (vtype ~= 'exclusive' and vtype ~= 'vip') then vqtd = vqtd + 1; end;
+
+                                                local maxGarages = zero.query('zero_garage/getGarages', { id = nUser })[1]
+                                                maxGarages = maxGarages.garages
+                                                if (vqtd < maxGarages) then
+                                                    if (zero.tryFullPayment(nUser, price)) then
+                                                        addVehicle(nUser, model, 0)
+                                                        delVehicle(user_id, model)
+
+                                                        TriggerClientEvent('notify', source, 'Garagem', 'Você vendeu <b>'..vname..'</b> e recebeu <b>R$'..zero.format(nUser)..'</b>.')
+                                                        TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu as chaves do veículo <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> e pagou <b>R$'..zero.format(nUser)..'</b>.')
+                                                        
+                                                        zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                                                        zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                                                        
+                                                        zero.giveBankMoney(user_id, nUser)
+                                                        local vehEntity = findVehicle(user_id, model)
+                                                        if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
+                                                    else
+                                                        TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>dinheiro</b> o suficiente.')
+										                TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não possui <b>dinheiro</b> o suficiente.')
+                                                    end
+                                                else
+                                                    TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>vagas</b> em sua garagem.')
+										            TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não <b>vagas</b> em sua garagem.')
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end 
+                        end
+                    else
+                        TriggerClientEvent('notify', source, 'Garagem', 'Você não possui esse <b>veículo</b> em sua garagem.')
+                    end
+                end
+            end
+        else
+            local vehicle = zero.query('zero_garage/getVehicleOwn', { user_id = user_id })
+            if (#vehicle > 0) then
+                local carNames = {}
+                for k, v in pairs(vehicle) do
+                    table.insert(carNames, '<b>'..vehicleMaker(v.vehicle)..' '..vehicleName(v.vehicle)..'</b> ('..v.vehicle..')')
+                end
+                carNames = table.concat(carNames, '<br>')
+                TriggerClientEvent('notify', source, 'Garagem', 'Seus veículos:<br>'..carNames, 30000)
+            else
+                TriggerClientEvent('notify', source, 'Garagem', 'Você não possui um <b>veículo</b>.')
+            end
+        end
+    end
+end)
+
 local keys = {
-    ['add'] = function(source, vname)
-        local request = zero.request(source, 'Dar a chave reserva do veículo <b>'..vehicleName(vname)..'</b>')
+    ['add'] = function(source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
+        local request = zero.request(source, 'Dar a chave reserva do veículo <b>'..vehicleName(vname)..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> ?', 60)
+        if (request) then
+            carKeys[vnetid] = nuserId
+            zeroClient._playAnim(source, true, {{ 'mp_common', 'givetake1_a' }}, false)
+            zeroClient._playAnim(nSource, true, {{ 'mp_common', 'givetake1_a' }}, false)
+            TriggerClientEvent('notify', source, 'Garagem', 'Você deu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.', 8000)
+            TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b>.', 8000)
+            zero.webhook(webhooks.chave, '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[EMPRESTOU CHAVE RESERVA]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
     end,
-    ['rem'] = function()
+    ['rem'] = function(source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
+        carKeys[vnetid] = nil
+        zeroClient._playAnim(nSource, true, {{ 'mp_common', 'givetake1_a' }}, false)
+        zeroClient._playAnim(source, true, {{ 'mp_common', 'givetake1_a' }}, false)
+        TriggerClientEvent('notify', source, 'Garagem', 'Você removeu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.', 8000)
+        TriggerClientEvent('notify', nSource, 'Garagem', 'Você perdeu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b>.', 8000)
+        zero.webhook(webhooks.chave, '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[RECOLHEU CHAVE RESERVA]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
 }
 
@@ -352,21 +469,20 @@ RegisterCommand('chaves', function(source, args)
             local nIdentity = zero.getUserIdentity(nuserId)
             if (vehState.user_id == user_id) then
                 if (args[1] == 'add') then
-                    keys['add']()
+                    keys['add'](source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
                 elseif (args[1] == 'rem') then
                     if (nuser_id == carKeys[vnetid]) then
-                        keys['rem']()
+                        keys['rem'](source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
                     end
+                else
+                    TriggerClientEvent('notify', source, 'Garagem', 'Tente novamente digitando: <br><b>- /chaves add</b><br><b>- /chaves rem</b>')
                 end
             end
         end
+    else
+        TriggerClientEvent('notify', source, 'Garagem', 'Tente novamente digitando: <br/><b>- /chaves add</b><br/><b>- /chaves rem</b>')
     end
 end)
-
-local webhooks = {}
-webhooks.dv = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF'
-webhooks.addCar = 'https://discord.com/api/webhooks/1119153735852109846/tBEaSaLLmPrVPB2uFiEtFYfePV8H8RGvixMAosVf8eM5q68JfVAFwA4PHPFA6SQFsRVs'
-webhooks.remCar = 'https://discord.com/api/webhooks/1119153781138014281/v_-1xJPxmjTuCXhWo3L9hSihrk7IjZIQzvTDSwRRkj0k-LZX63dSM2mCCUpF7J8g_tol'
 
 RegisterCommand('dv', function(source)
     local user_id = zero.getUserId(source)
@@ -378,6 +494,53 @@ RegisterCommand('dv', function(source)
             vCLIENT.tryDeleteVehicle(source, vnetid)
             zero.webhook(webhooks.dv, '```prolog\n[PASSAPORTE]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[USOU]: /dv\n[EM]: '..vehState.model..' \n[DONO]: '..vehState.user_id..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
+    end
+end)
+
+RegisterCommand('dvarea', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        local prompt = zero.prompt(source, { 'Distância' })
+        if (prompt[1]) then
+            prompt[1] = parseInt(prompt[1])
+            local getVehicles = zeroClient.getNearestVehicles(source, prompt[1])
+            local deleteCount = 0
+            for veh, _ in pairs(getVehicles) do
+                local vnetid = vCLIENT.returnToNet(source, veh)
+                local vehicle = NetworkGetEntityFromNetworkId(vnetid)
+                local ped = GetPedInVehicleSeat(vehicle, -1)
+                if (not ped or ped <= 0) then
+                    vCLIENT.tryDeleteVehicle(source, vnetid)
+                    deleteCount = deleteCount + 1
+                end
+            end
+            TriggerClientEvent('notify', source, 'Garagem', 'Foram deletados <b>'..deleteCount..'</b> veículos.')
+            zero.webhook(webhooks.dvArea, '```prolog\n[/DVAREA]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU]: '..deleteCount..' veículos\n[RADIUS]: '..prompt[1]..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+    end
+end)
+
+RegisterCommand('dvall', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        TriggerClientEvent('announcement', -1, 'Garagem', 'Todos os <b>veículos</b> que não possuem alguém dentro, serão deletados em <b>60 segundos</b>.', 'Prefeitura', true, 10000)
+        Citizen.Wait(30000)
+        TriggerClientEvent('announcement', -1, 'Garagem', 'Todos os <b>veículos</b> que não possuem alguém dentro, serão deletados em <b>30 segundos</b>.', 'Prefeitura', true, 10000)
+        Citizen.Wait(30000)
+        local deleteCount = 0
+        for _, veh in ipairs(GetAllVehicles()) do
+            local ped = GetPedInVehicleSeat(veh, -1)
+            if (not ped or ped <= 0) then 
+                DeleteEntity(veh)     
+                deleteCount = deleteCount + 1
+            end
+        end
+        TriggerClientEvent('announcement', -1, 'Garagem', 'Foram deletados <b>'..deleteCount..'</b> veículos.')
+        zero.webhook(webhooks.dvAll, '```prolog\n[/DVALL]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU]: '..deleteCount..' veículos\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
 end)
 
@@ -415,4 +578,194 @@ RegisterCommand('remcar', function(source)
             end
         end
     end
+end)
+
+RegisterCommand('car', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+        if (args[1]) then
+            local spawn = string.lower(args[1])
+            local loadModel = vCLIENT.loadModel(source, spawn, 30000, 60000)
+            if (loadModel) then
+                local ped = GetPlayerPed(source)
+                local pCoord = GetEntityCoords(ped)
+                local heading = GetEntityHeading(ped)
+                local bucket = GetPlayerRoutingBucket(source)
+
+                local userVehicle = (zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = spawn })[1] or {})
+                local plate = (userVehicle.plate or identity.registration)
+
+                local vehHandle;
+                if config.client_spawn then
+                    local vehnet = vCLIENT.clientSpawn(source, GetHashKey(spawn), vector3(pCoord.x, pCoord.y, pCoord.z - 0.5), heading, plate)
+                    vehHandle = NetworkGetEntityFromNetworkId(vehnet)
+                    while (vehHandle == 0) do
+                        vehHandle = NetworkGetEntityFromNetworkId(vehnet)
+                        Citizen.Wait(1)
+                    end
+                else
+                    vehHandle = Citizen.InvokeNative(`CREATE_AUTOMOBILE`, GetHashKey(spawn), vector3(pCoord.x, pCoord.y, pCoord.z - 0.3), heading)
+                end
+                
+                if vehHandle and (vehHandle > 0) then
+                    if _Regis then _Regis(vehHandle) end
+                    
+                    local owner = NetworkGetEntityOwner(vehHandle)
+                    while (owner == 1) do
+                        owner = DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle)
+                        Citizen.Wait(1)
+                    end
+                    if (not owner) then return; end;
+                    
+                    SetVehicleNumberPlateText(vehHandle, plate)
+                    SetVehicleDoorsLocked(vehHandle, 2)
+                    
+                    if (bucket > 0) then SetEntityRoutingBucket(vehHandle, bucket); end;
+                    
+                    local stateBag = Entity(vehHandle).state
+                    stateBag['veh:plate'] = plate
+                    stateBag['veh:user_id'] = user_id
+                    stateBag['veh:model'] = spawn
+                    
+                    local netHandle = NetworkGetNetworkIdFromEntity(vehHandle)
+                    
+                    vCLIENT.settingVehicle(source, netHandle, srv.processState({}), plate, json.decode(userVehicle.custom))
+                    SetPedIntoVehicle(ped, vehHandle, -1)
+                    
+                    zero.webhook(webhooks.car, '```prolog\n[/CAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SPAWNOU]: '..spawn..'\n[COORDS]: '..pCoord..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                end
+            end
+        end
+    end
+end)
+
+RegisterCommand('hash', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        TriggerClientEvent('clipboard', source, 'Hash do Veículo', vCLIENT.getHash(source))
+    end
+end)
+
+RegisterCommand('travar',function(source)
+	local source = source
+	local user_id = zero.getUserId(source)
+	if (user_id) and zero.hasPermission(user_id, 'policia.permissao') then
+        if (zeroClient.isInVehicle(source)) then
+            local vehicle, vnetid = zeroClient.vehList(source, -1)
+            if (vnetid) then
+                local _, notify = vCLIENT.getVehicleAnchor(source)
+                TriggerClientEvent('progressBar', source, notify, 5000)
+                SetTimeout(5000,function() vCLIENT.vehicleAnchor(source, vnetid) end)
+            end
+        else
+            TriggerClientEvent('notify', source, 'Garagem', 'Você tem que estar dentro de um <b>veículo</b> para utilizar este comando.')
+        end
+	end
+end)
+
+RegisterCommand('ancorar', function(source)
+    local source = source
+	local user_id = zero.getUserId(source)
+	if (user_id) then
+        if (zeroClient.isInVehicle(source)) then
+            local vehicle = zeroClient.vehList(source, -1)
+            if (vehicle) then vCLIENT.boatAnchor(source, vehicle); end;
+        else
+            TriggerClientEvent('notify', source, 'Garagem', 'Você tem que estar dentro de um <b>barco</b> para utilizar este comando.')
+        end
+	end
+end)
+
+RegisterCommand('fix', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        local vehicle = zeroClient.getNearestVehicle(source, 12.0)
+        if (vehicle) then
+            local vehicle, vnetid, placa, vname, lock, banned = zeroClient.vehList(source, 3.0)
+            if (vnetid) then
+                local vehState = srv.getVehicleData(vnetid)
+                TriggerClientEvent('syncreparar', -1, vnetid)
+                zero.webhook(webhooks.fix, '```prolog\n[/FIX]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[FIX]: '..vehState.model..'\n[DONO]: '..vehState.user_id..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            end
+        end
+    end
+end)
+
+RegisterCommand('placa', function(source, args, rawCommand)
+    local source = source
+	local user_id = zero.getUserId(source)
+	if (user_id and zero.hasPermission(user_id, 'staff.permissao') or zero.hasPermission(user_id, 'policia.permissao') or zero.hasPermission(user_id, 'desmanche.permissao')) then
+		if (args[1]) then
+			local placa = sanitizeString(rawCommand:sub(7), '<>', false)
+			local user_id, model, chassis = getVehicleInfosWithPlate(placa)
+			if (user_id) then
+				local identity = zero.getUserIdentity(user_id)
+				if (identity) then
+					local vehicleName = vehicleMaker(model)..' '..vehicleName(model)
+					zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
+					TriggerClientEvent('notify', source, 'Garagem','<b>Placa:</b> '..placa..'</center><br><b>Proprietário: </b>'..identity.firstname..' '..identity.lastname..'<br><b>Telefone: </b>'..identity.phone..'<br><br><b>Chassis</b>: '..(chassis or 'Não encontrado')..'<br><b>Modelo: </b>'..vehicleName, 20000)
+				end
+			else
+				TriggerClientEvent('notify', source, 'Garagem','A <b>placa</b> é inválida ou veículo de um americano.')
+			end
+		else
+			local vehicle, vnetid, placa, vname, lock, banned = zeroClient.vehList(source, 7.0)
+			if (vnetid) then
+				local vehState = srv.getVehicleData(vnetid)
+				if (vehState.user_id) then
+					local identity = zero.getUserIdentity(vehState.user_id)
+					if (identity) then
+						local vehicleName = vehicleMaker(vehState.model)..' '..vehicleName(vehState.model)
+                        zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
+                        TriggerClientEvent('notify', source, 'Garagem', '<b>Placa:</b> '..placa..'</center><br><b>Proprietário: </b>'..identity.firstname..' '..identity.lastname..'<br><b>Telefone: </b>'..identity.phone..'<br><br><b>Chassis</b>: '..(vehState.chassis or 'Não encontrado')..'<br><b>Modelo: </b>'..vehicleName, 20000)
+					end
+				else
+					TriggerClientEvent('notify', source, 'Garagem','A <b>placa</b> é inválida ou veículo de um americano.')
+				end
+			end
+		end
+	end
+end)
+
+RegisterCommand('chassis',function(source, args, rawCommand)
+    local source = source
+	local user_id = zero.getUserId(source)
+	if (user_id) and zero.hasPermission(user_id, 'policia.permissao') then
+		if (args[1]) then
+			local chassis = sanitizeString(rawCommand:sub(9),"<>",false)
+			local vehQuery = zero.query('zero_garage/getVehByChassis', { chassis = chassis })[1]
+			if (vehQuery.vehicle) then
+				local identity = zero.getUserIdentity(vehQuery.user_id)
+				if (identity) then
+					local vehicleName = vehicleMaker(vehQuery.vehicle)..' '..vehicleName(vehQuery.vehicle)
+					zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
+					TriggerClientEvent('notify', source, 'Garagem', '<b>Chassis: </b>'..chassis..'<br><b>Proprietário: </b>'..identity.firstname..' '..identity.lastname..'<br><b>Telefone: </b>'..identity.phone..'<br><br><b>Placa:</b> '..vehQuery.plate..'<br><b>Modelo: </b>'..vehicleName, 20000)
+				end
+			else
+				TriggerClientEvent('notify', source, 'Garagem', 'O <b>chassis</b> é inválido.')
+			end
+		end
+	end
+end)
+
+AddEventHandler('onResourceStart', function(resourceName)
+  	if (GetCurrentResourceName() == resourceName) then 
+        TriggerClientEvent('zero:clearVehicleCache', -1)
+
+        local rentedVehs = zero.query('zero_garage/getRented')
+        local nowClock = os.time()
+        local count = 0
+        for _, veh in pairs(rentedVehs) do
+            if (parseInt(veh.rented) < nowClock) then
+                delVehicle(veh.user_id, veh.vehicle)
+            end
+            count = count + 1
+        end
+        print('^5[Zero Garage]^7 foram deletados '..count..' veiculos alugado.')
+	end
 end)

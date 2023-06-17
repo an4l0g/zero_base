@@ -132,3 +132,26 @@ delVehicle = function(user_id, vehicle)
 	zero.execute('zero_garage/delVehicle', { user_id = user_id, vehicle = vehicle })
 end
 exports('delVehicle', delVehicle)
+
+setRentedVehicle = function(user_id, vehicle, days)
+	local timing = (((days > 0) and (os.time() + math.floor(days*24*60*60))) or 0)
+	zero.execute('zero_garage/setRented', { user_id = user_id, vehicle = vehicle, rented = timing })
+end
+exports('setRentedVehicle', setRentedVehicle)
+
+updateVehiclePlate = function(source, user_id, vehicle, plate)
+	local query = zero.query('zero_garage/getVehicleWithPlate', { plate = plate })[1]
+	if (not query) then
+		zero.execute('zero_garage/updatePlate', { user_id = user_id, vehicle = vehicle, plate = plate })
+		TriggerClientEvent('notify', source, 'Garagem', 'A placa do seu <b>veículo</b> foi alterada com sucesso.')
+	else
+		TriggerClientEvent('notify', source, 'Garagem', 'Já possui um <b>veículo</b> com esta placa.')
+	end
+end
+exports('updateVehiclePlate', updateVehiclePlate)
+
+getVehicleInfosWithPlate = function(plate)
+	local vehData = zero.query('zero_garage/getVehByPlate', { plate = (plate or '') })[1]
+    if (vehData) then return vehData.user_id, vehData.vehicle, vehData.chassis; end;
+end
+exports('getVehicleInfosWithPlate', getVehicleInfosWithPlate)
