@@ -21,6 +21,8 @@ zero._prepare('zero_garage/getVehicleOwn', 'select * from zero_user_vehicles whe
 zero._prepare('zero_garage/getGarages', 'select garages from zero_users where id = @id')
 zero._prepare('zero_garage/getVehByPlate', 'select * from zero_user_vehicles where plate = @plate')
 zero._prepare('zero_garage/getVehByChassis', 'select * from zero_user_vehicles where chassis = @chassis')
+zero._prepare('zero_garage/getRented', 'select user_id, vehicle, rented from zero_user_vehicles where rented != "0" ')
+zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (user_id, vehicle, plate, chassis, service, ipva) values (@user_id, @vehicle, @plate, @chassis, @service, @ipva)')
 
 srv.checkPermissions = function(perm)
     local source = source
