@@ -21,7 +21,7 @@ zero._prepare('zero_garage/getVehicleOwn', 'select * from zero_user_vehicles whe
 zero._prepare('zero_garage/getGarages', 'select garages from zero_users where id = @id')
 zero._prepare('zero_garage/getVehByPlate', 'select * from zero_user_vehicles where plate = @plate')
 zero._prepare('zero_garage/getVehByChassis', 'select * from zero_user_vehicles where chassis = @chassis')
-zero._prepare('zero_garage/getRented', 'select user_id, vehicle, rented from zero_user_vehicles where rented != "0" ')
+zero._prepare('zero_garage/getRented', 'select user_id, vehicle, rented from zero_user_vehicles where rented <> ""')
 zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (user_id, vehicle, plate, chassis, service, ipva) values (@user_id, @vehicle, @plate, @chassis, @service, @ipva)')
 
 srv.checkPermissions = function(perm)
@@ -181,7 +181,7 @@ srv.spawnVehicle = function(vehicle, id)
                     -- CHECAR MULTAS
                     if (veh.detained == 1) then
                         local value = parseInt(vehiclePrice(vehicle) * config.taxDetained)
-                        local request = zero.request(source, 'Veículo na detenção, deseja acionar o seguro pagando <b>R$'..zero.format(value)..'</b>?', 60)
+                        local request = zero.request(source, 'Veículo na detenção, deseja acionar o seguro pagando R$'..zero.format(value)..'?', 60000)
                         if (request) then
                             if (zero.tryFullPayment(user_id, value)) then
                                 setDetained(user_id, vehicle, 0)
@@ -195,7 +195,7 @@ srv.spawnVehicle = function(vehicle, id)
                         end
                     elseif (veh.detained == 2) then
                         local value = parseInt(vehiclePrice(vehicle) * config.taxSafe)
-                        local request = zero.request(source, 'Veículo na retenção, deseja acionar o seguro pagando <b>R$'..zero.format(value)..'</b>?', 60)
+                        local request = zero.request(source, 'Veículo na retenção, deseja acionar o seguro pagando R$'..zero.format(value)..'?', 60000)
                         if (request) then
                             if (zero.tryFullPayment(user_id, value)) then
                                 setDetained(user_id, vehicle, 0)
@@ -211,7 +211,7 @@ srv.spawnVehicle = function(vehicle, id)
 
                     if (os.time() >= parseInt(veh.ipva + config.ipvaDays)) then
                         local priceTax = parseInt(vehiclePrice(vehicle) * config.taxIPVA)
-                        local request = zero.request(source, 'Deseja pagar o <b>Vehicle Tax</b> do veículo <b>'..vehicleName(vehicle)..'</b> por <b>R$'..zero.format(priceTax)..'</b>?', 60)
+                        local request = zero.request(source, 'Deseja pagar o Vehicle Tax do veículo '..vehicleName(vehicle)..' por R$'..zero.format(priceTax)..'?', 60000)
                         if (request) then
                             if (zero.tryFullPayment(user_id, priceTax)) then
                                 zero.execute('zero_garage/setIPVA', { user_id = user_id, vehicle = vehicle, ipva = os.time() })
@@ -362,7 +362,7 @@ RegisterCommand('vehs', function(source, args)
                     local vname = vehicleName(model)
                     local myVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = model })[1]
                     if (myVehicle) then
-                        if ((vehicleType(model) == 'exclusive') or (vehicleType(model) == 'vip') or (myVehicle.rented ~= '0')) then
+                        if ((vehicleType(model) == 'exclusive') or (vehicleType(model) == 'vip') or (myVehicle.rented ~= '')) then
                             TriggerClientEvent('notify', source, 'Garagem', 'Este <b>veículo</b> não pode ser vendido.')
                         else
                             local nUser = prompt[3]
@@ -371,11 +371,11 @@ RegisterCommand('vehs', function(source, args)
                             local identity = zero.getUserIdentity(user_id)
                             local nIdentity = zero.getUserIdentity(nUser)
                             if (price > 0) then
-                                if (zero.request(source, 'Deseja vender um <b>'..vname..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> por <b>R$'..zero.format(price)..'</b> ?', 60)) then
-                                    if (zero.request(nSource, 'Aceita comprar um <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> por <b>R$'..zero.format(price)..'</b> ?', 60)) then
+                                if (zero.request(source, 'Deseja vender um '..vname..' para '..nIdentity.firstname..' '..nIdentity.lastname..' por R$'..zero.format(price)..' ?', 60000)) then
+                                    if (zero.request(nSource, 'Aceita comprar um '..vname..' de '..identity.firstname..' '..identity.lastname..' por R$'..zero.format(price)..'?', 60000)) then
                                         local userVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = nUser, vehicle = model })[1]
                                         if (userVehicle) then
-                                            TriggerClientEvent('notify', source, 'negado', 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já possui este modelo de veículo')
+                                            TriggerClientEvent('notify', source, 'Garagem', 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já possui este modelo de veículo')
                                         else
                                             local vqtd = 0
                                             local vehicles = zero.query('zero_garage/getVehicleOwn', { user_id = nUser })
@@ -426,7 +426,7 @@ RegisterCommand('vehs', function(source, args)
                     table.insert(carNames, '<b>'..vehicleMaker(v.vehicle)..' '..vehicleName(v.vehicle)..'</b> ('..v.vehicle..')')
                 end
                 carNames = table.concat(carNames, '<br>')
-                TriggerClientEvent('notify', source, 'Garagem', 'Seus veículos:<br>'..carNames, 30000)
+                TriggerClientEvent('notify', source, 'Garagem', 'Seus veículos:<br>'..carNames)
             else
                 TriggerClientEvent('notify', source, 'Garagem', 'Você não possui um <b>veículo</b>.')
             end
@@ -436,7 +436,7 @@ end)
 
 local keys = {
     ['add'] = function(source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
-        local request = zero.request(source, 'Dar a chave reserva do veículo <b>'..vehicleName(vname)..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> ?', 60)
+        local request = zero.request(source, 'Dar a chave reserva do veículo '..vehicleName(vname)..' para '..nIdentity.firstname..' '..nIdentity.lastname..'?', 60000)
         if (request) then
             carKeys[vnetid] = nuserId
             zeroClient._playAnim(source, true, {{ 'mp_common', 'givetake1_a' }}, false)
@@ -473,7 +473,7 @@ RegisterCommand('chaves', function(source, args)
                 if (args[1] == 'add') then
                     keys['add'](source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
                 elseif (args[1] == 'rem') then
-                    if (nuser_id == carKeys[vnetid]) then
+                    if (nuserId == carKeys[vnetid]) then
                         keys['rem'](source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
                     end
                 else
