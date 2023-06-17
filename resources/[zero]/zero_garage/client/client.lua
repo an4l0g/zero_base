@@ -1,8 +1,3 @@
-RegisterCommand('cds',function()
-    print(GetEntityCoords(PlayerPedId()), GetEntityHeading(PlayerPedId()))
-    print(GetVehiclePedIsIn(PlayerPedId()))
-end)
-
 local cli = {}
 Tunnel.bindInterface('zeroGarage', cli)
 local vSERVER = Tunnel.getInterface('zeroGarage')
@@ -394,7 +389,7 @@ RegisterNuiCallback('close', function()
     SetNuiFocus(false, false)
 end)
 
-RegisterNetEvent('syncreparar',function(index)
+RegisterNetEvent('syncreparar', function(index)
 	if (NetworkDoesNetworkIdExist(index)) then
 		local v = NetToVeh(index)
 		if (DoesEntityExist(v)) then
@@ -410,3 +405,135 @@ RegisterNetEvent('syncreparar',function(index)
 		end
 	end
 end)
+
+local vehicleTrunk, vehNetTrunk = nil
+
+updateTrunkInfos = function()
+	vehicleTrunk, vehNetTrunk = zero.vehList(5.0)
+end
+
+local inTrunk = false
+
+RegisterNetEvent('zero_garage:enterTrunk')
+AddEventHandler('zero_garage:enterTrunk', function()
+    local ped = PlayerPedId()
+	local vehicle, vehNet, vehPlate, vehName, vehLock, vehBlock, vehHealth = zero.vehList(5.0)
+    if (not inTrunk) then
+		local isopen = GetVehicleDoorAngleRatio(vehicle, 4)
+		if (DoesEntityExist(vehicle) and not IsPedInAnyVehicle(ped)) then
+			if (GetVehicleDoorLockStatus(vehicle) == 1 and vSERVER.checkTrunk(vehNet)) then
+				local trunk = GetEntityBoneIndexByName(vehicle, 'boot')
+				if (trunk ~= -1) then
+					local coords = GetEntityCoords(ped)
+					local coordsEnt = GetWorldPositionOfEntityBone(vehicle, trunk)
+					local distance = #(coords - coordsEnt)
+					if (distance <= 3.0) then
+						if (GetVehicleDoorAngleRatio(vehicle, 5) < 0.9 and GetVehicleDoorsLockedForPlayer(vehicle, PlayerId()) ~= 1) then
+							vSERVER.insertTrunk(vehNet)
+							updateTrunkInfos()
+							SetCarBootOpen(vehicle)
+							SetEntityVisible(ped, false, false)
+							Citizen.Wait(750)
+							AttachEntityToEntity(ped, vehicle, -1, 0.0, -2.2, 0.5, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+							inTrunk = true
+							trunkThread()
+							Citizen.Wait(500)
+							SetVehicleDoorShut(vehicle, 5)
+						end
+					end
+				end
+			end
+		end
+	else
+		vSERVER.removeTrunk(vehNet)
+    end
+end)
+
+RegisterNetEvent('zero_garage:checkTrunk')
+AddEventHandler('zero_garage:checkTrunk', function()
+	local ped = PlayerPedId()
+	if (inTrunk) then
+		local vehicle = GetEntityAttachedTo(ped)
+		if (DoesEntityExist(vehicle)) then
+			SetCarBootOpen(vehicle)
+			Citizen.Wait(750)
+			inTrunk = false
+			vSERVER.removeTrunk(vehNetTrunk)
+			vehicleTrunk, vehNetTrunk = nil
+			DetachEntity(ped, false, false)
+			SetEntityVisible(ped, true, false)
+			SetEntityCoords(ped, GetOffsetFromEntityInWorldCoords(ped, 0.0, -1.5, -0.75))
+			Citizen.Wait(500)
+			SetVehicleDoorShut(vehicle, 5)
+		end
+	end
+end)
+
+trunkThread = function()
+	Citizen.CreateThread(function()
+		while (inTrunk) do
+			local idle = 500
+			if (inTrunk) then
+				local ped = PlayerPedId()
+				local vehicle = GetEntityAttachedTo(ped)
+				if (DoesEntityExist(vehicle)) then
+					idle = 5
+
+					drawTxt('PRESSIONE ~b~E~w~ PARA SAIR DO PORTA-MALAS', 7, 0.5, 0.9, 0.5, 255, 255, 255, 255)
+
+					DisableControlAction(1,73,true)
+					DisableControlAction(1,29,true)
+					DisableControlAction(1,47,true)
+					DisableControlAction(1,187,true)
+					DisableControlAction(1,189,true)
+					DisableControlAction(1,190,true)
+					DisableControlAction(1,188,true)
+					DisableControlAction(1,311,true)
+					DisableControlAction(1,245,true)
+					DisableControlAction(1,257,true)
+					DisableControlAction(1,167,true)
+					DisableControlAction(1,140,true)
+					DisableControlAction(1,141,true)
+					DisableControlAction(1,142,true)
+					DisableControlAction(1,137,true)
+					DisableControlAction(1,37,true)
+					DisablePlayerFiring(ped,true)
+
+					if (IsEntityVisible(ped)) then SetEntityVisible(ped, false, false); end;
+
+					if (IsControlJustPressed(1, 38)) then
+						SetCarBootOpen(vehicle)
+						Citizen.Wait(750)
+						inTrunk = false
+						vSERVER.removeTrunk(vehNetTrunk)
+						vehicleTrunk, vehNetTrunk = nil
+						DetachEntity(ped, false, false)
+						SetEntityVisible(ped, true, false)
+						SetEntityCoords(ped, GetOffsetFromEntityInWorldCoords(ped, 0.0, -1.5, -0.75))
+						Citizen.Wait(500)
+						SetVehicleDoorShut(vehicle, 5)
+					end
+				else
+					inTrunk = false
+					vSERVER.removeTrunk(vehNetTrunk)
+					vehicleTrunk, vehNetTrunk = nil
+					DetachEntity(ped, false, false)
+					SetEntityVisible(ped, true, false)
+					SetEntityCoords(ped, GetOffsetFromEntityInWorldCoords(ped, 0.0, -1.5, -0.75))
+				end
+			end
+			Citizen.Wait(timeDistance)
+		end
+	end)
+end
+
+drawTxt = function(text, font, x, y, scale, r, g, b, a)
+	SetTextFont(font)
+	SetTextScale(scale, scale)
+	SetTextColour(r, g, b, a)
+	SetTextOutline()
+	SetTextCentre(1)
+	SetTextEntry('STRING')
+	AddTextComponentString(text)
+	DrawText(x, y)
+end

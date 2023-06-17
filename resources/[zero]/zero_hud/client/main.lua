@@ -106,11 +106,10 @@ local checkPlayerLevels = function()
     Wait(1000)
     local veh = GetVehiclePedIsIn(ped, false)
     local ped = PlayerPedId()
-    local x,y,z = table.unpack(GetEntityCoords(ped))
+    -- local x,y,z = table.unpack(GetEntityCoords(ped))
     local currentHealth = getHealth(ped)
     local currentArmour = getArmour(ped)
     local currentOxygen = getOxygen(ped) 
-    -- local currentStreet = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
     local currentLocked = GetVehicleDoorLockStatus(veh)
     local currentFuel = 0.0
     local currentEngineHealth = 0.0
@@ -127,18 +126,18 @@ local checkPlayerLevels = function()
     while true do
         ped = PlayerPedId()
         veh = GetVehiclePedIsIn(ped, false)
-        x,y,z = table.unpack(GetEntityCoords(ped))
+        -- x,y,z = table.unpack(GetEntityCoords(ped))
         local health = getHealth(ped)
         local armour = getArmour(ped)
         local oxygen = getOxygen(ped) 
         local time = getTime()
-        local street = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
+        -- local street = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
         local locked = GetVehicleDoorLockStatus(veh)
 
         if currentHealth ~= health then currentHealth = health; updateHealth(currentHealth); end
         if currentArmour ~= armour then currentArmour = armour; updateArmour(currentArmour); end
         if currentOxygen ~= oxygen then currentOxygen = oxygen; updateOxygen(currentOxygen); end
-        if currentStreet ~= street then currentStreet = street; updateStreet(currentStreet); end
+        -- if currentStreet ~= street then currentStreet = street; updateStreet(currentStreet); end
         if currentTime ~= time then currentTime = time; updateTime(currentTime); end
         if currentLocked ~= locked then currentLocked = locked; updateLocked(currentLocked == 2); end
 
@@ -160,15 +159,15 @@ local checkPlayerLevels = function()
         
         -- DESAPARECER A HUD NO MENU ( PAUSE ) | ( ESC )
         if IsPauseMenuActive() then
-			if not isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', false) TriggerEvent('zero_hud:toggleHud', false)  end
+			if not isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('zero_hud:toggleHud', false)  end
 		else
-			if isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('Notify:Toogle', true) TriggerEvent('zero_hud:toggleHud', true) end
+			if isPauseMenu then isPauseMenu = not isPauseMenu TriggerEvent('zero_hud:toggleHud', true) end
 		end
         Wait(500)
     end
 end
 
-local needs = { hunger=0, thirst=0 }
+local needs = { hunger = 0, thirst = 0 }
 
 local threadFomeSede = function()
     while true do
