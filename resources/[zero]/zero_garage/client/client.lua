@@ -1,8 +1,3 @@
-RegisterCommand('cds',function()
-    print(GetEntityCoords(PlayerPedId()), GetEntityHeading(PlayerPedId()))
-    print(GetVehiclePedIsIn(PlayerPedId()))
-end)
-
 local cli = {}
 Tunnel.bindInterface('zeroGarage', cli)
 local vSERVER = Tunnel.getInterface('zeroGarage')
