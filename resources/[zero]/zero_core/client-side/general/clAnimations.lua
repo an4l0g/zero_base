@@ -8,28 +8,28 @@ end
 RegisterNetEvent('zero_animations:setAnim', function(anim)
     local ped = PlayerPedId()
     local emote = configAnimations.animations[anim]
-    vRP.DeletarObjeto()
+    zero.DeletarObjeto()
     if (not IsPedInAnyVehicle(ped) and not emote.carros) then       
         if (emote.extra) then emote.extra(); end;
         if emote.pos then
             local emoteDict = (emote.dict or nil)
             local emoteAnim = (emote.anim or nil)
-            if (emoteDict) then vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
-            vRP.CarregarObjeto(emoteDict, emoteAnim, emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+            if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
+            zero.CarregarObjeto(emoteDict, emoteAnim, emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
         elseif (emote.prop) then
-            vRP.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+            zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
         elseif (emote.dict) then
-            vRP._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
+            zero._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
         else
-            vRP._playAnim(false, { task = emote.anim }, false)
+            zero._playAnim(false, { task = emote.anim }, false)
         end
     else
         if (IsPedInAnyVehicle(ped) and emote.carros) then
             local vehicle = GetVehiclePedIsIn(ped,false)
             if (GetPedInVehicleSeat(vehicle,-1) == ped or GetPedInVehicleSeat(vehicle,1) == ped) and (anim == 'sexo4') then
-                vRP._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
+                zero._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
             elseif (GetPedInVehicleSeat(vehicle, 0) == ped or GetPedInVehicleSeat(vehicle,2) == ped) and (anim == 'sexo5' or anim == 'sexo6') then
-                vRP._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
+                zero._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
             end
         end
     end
@@ -48,7 +48,7 @@ end)
 
 RegisterNetEvent('zero_animation:sharedClearAnimation', function()
     local ped = PlayerPedId()
-    vRP.DeletarObjeto()
+    zero.DeletarObjeto()
     ClearPedTasks(ped); DetachEntity(ped, true, false);
 end)
 
@@ -57,7 +57,7 @@ RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]
 
-    vRP.DeletarObjeto()
+    zero.DeletarObjeto()
     local syncOption = emote.syncOption
     local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
     if (syncOption) then
@@ -71,14 +71,14 @@ RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
     if (emote.pos) then
         local emoteDict = emote.dict or nil
         local emoteAnim = emote.anim or nil
-        if (emoteDict) then vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
-        vRP.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+        if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
+        zero.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
     elseif emote.prop then
-        vRP.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+        zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
     elseif emote.dict then
-        vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
+        zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
     else
-        vRP._playAnim(false, { task = emote.anim }, false)
+        zero._playAnim(false, { task = emote.anim }, false)
     end
 end)
 
@@ -87,7 +87,7 @@ RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]
 
-    vRP.DeletarObjeto()
+    zero.DeletarObjeto()
     local syncOption = emote.syncOption
     local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
     if (syncOption) then
@@ -101,14 +101,14 @@ RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)
     if (emote.pos) then
         local emoteDict = emote.dict or nil
         local emoteAnim = emote.anim or nil
-        if (emoteDict) then vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop) end;
-        vRP.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2],emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+        if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop) end;
+        zero.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2],emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
     elseif (emote.prop) then
-        vRP.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+        zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
     elseif (emote.dict) then
-        vRP._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
+        zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
     else
-        vRP._playAnim(false, { task = emote.anim }, false)
+        zero._playAnim(false, { task = emote.anim }, false)
     end
 end)
 

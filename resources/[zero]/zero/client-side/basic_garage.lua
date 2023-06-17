@@ -1,7 +1,7 @@
 zero.getNearestVehicles = function(radius, network)
 	local r = {}
 	local pCDS = GetEntityCoords(PlayerPedId())
-	for _,veh in pairs(GetGamePool("CVehicle")) do
+	for _,veh in pairs(GetGamePool('CVehicle')) do
 		local vCDS = GetEntityCoords(veh)
 		local distance = #(pCDS - vCDS)
 		if distance <= radius then
@@ -56,14 +56,12 @@ zero.GetVehicleSeat = function()
 end
 
 local vehicles = {}
-RegisterNetEvent('vRP:clearVehicleCache', function() vehicles = {}; end)
+RegisterNetEvent('zero:clearVehicleCache', function() vehicles = {}; end)
 
 zero.vehList = function(radius)
 	local ped = PlayerPedId()
 	local veh = GetVehiclePedIsUsing(ped)
-	if (not IsPedInAnyVehicle(ped)) then
-		veh = zero.getNearestVehicle(radius)
-	end
+	if (not IsPedInAnyVehicle(ped)) then veh = zero.getNearestVehicle(radius); end;
 	if IsEntityAVehicle(veh) then
 		local hash = GetEntityModel(veh)
 		local displayName = GetDisplayNameFromVehicleModel(hash)
@@ -84,7 +82,7 @@ zero.vehList = function(radius)
 			local tuning = { GetNumVehicleMods(veh,13),GetNumVehicleMods(veh,12),GetNumVehicleMods(veh,15),GetNumVehicleMods(veh,11),GetNumVehicleMods(veh,16) }
 			return veh,VehToNet(veh),GetVehicleNumberPlateText(veh),data.model,lock,data.banned,trunk,displayName,GetStreetNameFromHashKey(GetStreetNameAtCoord(vehcoords.x,vehcoords.y,vehcoords.z)),tuning
 		end
-		print("^1[vRP] Vehicle ["..hash.."] -> ["..displayName.."]^0")
+		print('^5[Zero Garage] Vehicle ['..hash..'] -> ['..displayName..']^0')
 		return veh,VehToNet(veh)
 	end
 end
