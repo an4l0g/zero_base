@@ -17,7 +17,7 @@ cDynamic.openOrUpdateNui = function()
     SendNUIMessage({
         action = 'open',
         favorites = sDynamic.getFavorites(),
-        print(json.encode(exports['zero_core']:getAllAnimations()))
+        -- print(json.encode(exports['zero_core']:getAllAnimations()))
     })
 end
 
@@ -26,7 +26,11 @@ RegisterNuiCallback('close', function()
 end)
 
 RegisterNuiCallback('handleAction', function(data)
-    TriggerServerEvent('zero_interactions:'..data.action, data.value)
+    if (data.side == 'client') then
+        TriggerEvent('zero_interactions:'..data.action, data.value)
+    else
+        TriggerServerEvent('zero_interactions:'..data.action, data.value)
+    end
 end)
 
 RegisterNuiCallback('setFavorite', function(data)

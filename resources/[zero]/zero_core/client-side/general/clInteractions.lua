@@ -45,3 +45,122 @@ RegisterNetEvent('carregar', function(_source)
 		DetachEntity(ped, true, false)
 	end
 end)
+
+local PlayerData = {}
+PlayerData['temp:wins'] = false
+
+RegisterCommand('wins', function()
+	local vehicle = zero.getNearestVehicle(5)
+	if (IsEntityAVehicle(vehicle)) then
+		PlayerData['temp:wins'] = (not PlayerData['temp:wins'])
+		TriggerServerEvent('trywins', VehToNet(vehicle), PlayerData['temp:wins'])
+	end
+end)
+
+RegisterNetEvent('zero_interactions:carWins', function()
+    local vehicle = zero.getNearestVehicle(5)
+	if (IsEntityAVehicle(vehicle)) then
+		PlayerData['temp:wins'] = (not PlayerData['temp:wins'])
+		TriggerServerEvent('trywins', VehToNet(vehicle), PlayerData['temp:wins'])
+	end
+end)
+
+RegisterNetEvent('syncwins', function(index, open)
+	if NetworkDoesNetworkIdExist(index) then
+		local v = NetToVeh(index)
+		if DoesEntityExist(v) then
+			if IsEntityAVehicle(v) then
+				if open then
+					RollDownWindow(v,0)
+					RollDownWindow(v,1)
+					RollDownWindow(v,2)
+					RollDownWindow(v,3)
+				else
+					RollUpWindow(v,0)
+					RollUpWindow(v,1)
+					RollUpWindow(v,2)
+					RollUpWindow(v,3)
+				end
+			end
+		end
+	end
+end)
+
+RegisterCommand('doors', function(source, args)
+	local vehicle = zero.getNearestVehicle(7.0)
+	if (IsEntityAVehicle(vehicle)) then
+		TriggerServerEvent('trydoors', VehToNet(vehicle), parseInt(args[1]))
+	end
+end)
+
+RegisterNetEvent('zero_interactions:carDoors', function(value)
+    local vehicle = zero.getNearestVehicle(7.0)
+	if (IsEntityAVehicle(vehicle)) then
+		TriggerServerEvent('trydoors', VehToNet(vehicle), value)
+	end
+end)
+
+RegisterNetEvent('syncdoors', function(index, door)
+    print(door)
+	if (NetworkDoesNetworkIdExist(index)) then
+		local v = NetToVeh(index)
+		if (DoesEntityExist(v)) then
+			if (IsEntityAVehicle(v)) then
+				if (door == 1) then
+					if (GetVehicleDoorAngleRatio(v, 0) == 0) then
+						SetVehicleDoorOpen(v, 0, 0, 0)
+					else
+						SetVehicleDoorShut(v, 0, 0)
+					end
+				elseif (door == 2) then
+					if (GetVehicleDoorAngleRatio(v, 1) == 0) then
+						SetVehicleDoorOpen(v, 1, 0, 0)
+					else
+						SetVehicleDoorShut(v, 1, 0)
+					end
+				elseif (door == 3) then
+					if (GetVehicleDoorAngleRatio(v, 2) == 0) then
+						SetVehicleDoorOpen(v, 2, 0, 0)
+					else
+						SetVehicleDoorShut(v, 2, 0)
+					end
+				elseif (door == 4) then
+					if (GetVehicleDoorAngleRatio(v, 3) == 0) then
+						SetVehicleDoorOpen(v, 3, 0, 0)
+					else
+						SetVehicleDoorShut(v, 3, 0)
+					end
+                elseif (door == 5) then
+                    if (GetVehicleDoorAngleRatio(v,5) == 0) then
+                        SetVehicleDoorOpen(v,5,0,0)
+                    else
+                        SetVehicleDoorShut(v,5,0)
+                    end
+                elseif (door == 6) then
+                    if (GetVehicleDoorAngleRatio(v,4) == 0) then
+                        SetVehicleDoorOpen(v,4,0,0)
+                    else
+                        SetVehicleDoorShut(v,4,0)
+                    end
+				else
+                    local isopen = (GetVehicleDoorAngleRatio(v, 0) and GetVehicleDoorAngleRatio(v, 1))
+					if (isopen == 0) then
+						SetVehicleDoorOpen(v, 0 ,0 ,0)
+						SetVehicleDoorOpen(v, 1 ,0 ,0)
+						SetVehicleDoorOpen(v, 2 ,0 ,0)
+						SetVehicleDoorOpen(v, 3 ,0 ,0)
+                        SetVehicleDoorOpen(v, 4, 0, 0)
+                        SetVehicleDoorOpen(v, 5, 0, 0)
+					else
+						SetVehicleDoorShut(v, 0, 0)
+						SetVehicleDoorShut(v, 1, 0)
+						SetVehicleDoorShut(v, 2, 0)
+						SetVehicleDoorShut(v, 3, 0)
+                        SetVehicleDoorShut(v, 4, 0)
+                        SetVehicleDoorShut(v, 5, 0)
+					end
+				end
+			end
+		end
+	end
+end)
