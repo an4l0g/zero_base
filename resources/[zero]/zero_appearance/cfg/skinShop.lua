@@ -1,17 +1,11 @@
+configSkinShop = {}
+
 Tunnel = module('zero', 'lib/Tunnel')
 Proxy = module('zero', 'lib/Proxy')
 zero = Proxy.getInterface('zero')
 
-config = {}
-
-config.generalSkinShop = {
+configSkinShop.general = {
     ['all'] = {
-        ['blip'] = {
-            ['name'] = 'Loja de Roupas',
-            ['id'] = 73,
-            ['color'] = 13,
-            ['scale'] = 0.5
-        },
         ['shopType'] = 'exclude',
         ['hidePlayers'] = true,
         ['shopConfig'] = {
@@ -37,6 +31,13 @@ config.generalSkinShop = {
     }
 }
 
-config.locsSkinShop = {
-    { ['showBlip'] = true, ['coord'] = vector4(70.87, -1399.49, 28.39, 359.29), ['config'] = 'all' }
+configSkinShop.locs = {
+    { ['coord'] = vector4(70.87, -1399.49, 28.39, 359.29), ['config'] = 'all',
+        ['blip'] = {
+            ['name'] = 'Loja de Roupas',
+            ['id'] = 73,
+            ['color'] = 13,
+            ['scale'] = 0.5
+        }, 
+    }
 }
