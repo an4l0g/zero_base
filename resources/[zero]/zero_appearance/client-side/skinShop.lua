@@ -134,16 +134,6 @@ local getDrawables = function()
     return pedDrawables
 end
 
-local getSkinShopDrawables = function(part)
-    local ped = PlayerPedId()
-    local isProp, index = parsePart(part)
-    if (isProp) then
-        return GetNumberOfPedPropDrawableVariations(ped, index)
-    else
-        return GetNumberOfPedDrawableVariations(ped, index)
-    end
-end
-
 local changeSkinShopClothes = function(dados, tipo, cor)
     local ped = PlayerPedId()
     local isProp, index = parsePart(dados)
@@ -252,7 +242,6 @@ local openNuiShop = function(config, _oldCustom)
     end
 
     drawVariations = getDrawables()
-    drawProps = getSkinShopDrawables(categoryProp)
     
     SendNUIMessage({ 
         method = 'openSkinShop', 
