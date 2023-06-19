@@ -817,6 +817,7 @@ RegisterCommand('ancorar', function(source)
 end)
 
 RegisterNetEvent('zero_interactions:carAncorar', function()
+    local source = source
     if (zeroClient.isInVehicle(source)) then
         local vehicle = zeroClient.vehList(source, -1)
         if (vehicle) then vCLIENT.boatAnchor(source, vehicle); end;

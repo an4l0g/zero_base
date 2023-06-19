@@ -80,3 +80,20 @@ RegisterCommand('arma', function(source, args)
         end
     end
 end)
+
+---------------------------------------
+-- RMASCARA
+---------------------------------------
+RegisterCommand('rmascara', function(source)
+	local user_id = vRP.getUserId(source)
+    local identity = vRP.getUserIdentity(user_id)
+	if (user_id and vRP.hasPermission(user_id, 'polpar.permissao')) then
+		local nplayer = vRPclient.getNearestPlayer(source, 2)
+		if (nplayer) then
+            local nUser = vRP.getUserId(nplayer)
+			local nIdentity = vRP.getUserIdentity(nUser)
+			TriggerClientEvent('rmascara', nplayer)
+			vRP.webhook(webhooks.policeCommands, '```prolog\n[/RMASCARA]\n[USER_ID]: '..user_id..' | '..identity.name..' '..identity.firstname..'\n[RETIROU A MASCARA DO]\n[JOGADOR]: '..nUser..' | '..nIdentity.name..' '..nIdentity.firstname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+		end
+	end
+end)
