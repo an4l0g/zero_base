@@ -1,2 +1,6 @@
 node_modules
+/cache
 /keys.cfg
+/pm2.bat
+.vite
+nui/dist

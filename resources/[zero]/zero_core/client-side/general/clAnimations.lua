@@ -1,0 +1,164 @@
+local configAnimations = configs.animations
+
+for index, value in pairs(configAnimations.keyMapping) do
+    RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)
+    RegisterCommand('+'..index, function() value.action() end)
+end
+
+RegisterNetEvent('zero_animations:setAnim', function(anim)
+    local ped = PlayerPedId()
+    local emote = configAnimations.animations[anim]
+    zero.DeletarObjeto()
+    if (not IsPedInAnyVehicle(ped) and not emote.carros) then       
+        if (emote.extra) then emote.extra(); end;
+        if emote.pos then
+            local emoteDict = (emote.dict or nil)
+            local emoteAnim = (emote.anim or nil)
+            if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
+            zero.CarregarObjeto(emoteDict, emoteAnim, emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+        elseif (emote.prop) then
+            zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+        elseif (emote.dict) then
+            zero._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
+        else
+            zero._playAnim(false, { task = emote.anim }, false)
+        end
+    else
+        if (IsPedInAnyVehicle(ped) and emote.carros) then
+            local vehicle = GetVehiclePedIsIn(ped,false)
+            if (GetPedInVehicleSeat(vehicle,-1) == ped or GetPedInVehicleSeat(vehicle,1) == ped) and (anim == 'sexo4') then
+                zero._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
+            elseif (GetPedInVehicleSeat(vehicle, 0) == ped or GetPedInVehicleSeat(vehicle,2) == ped) and (anim == 'sexo5' or anim == 'sexo6') then
+                zero._playAnim(emote.andar, {{emote.dict,emote.anim}}, emote.loop)
+            end
+        end
+    end
+end)
+
+local sharedAnimation
+
+RegisterNetEvent('zero_animations:cancelSharedAnimation', function()
+    local ped = PlayerPedId()
+    ClearPedTasks(ped); DetachEntity(ped, true, false);
+    if (sharedAnimation) then
+        TriggerServerEvent('zero_animation:sharedServer', sharedAnimation)
+        sharedAnimation = nil
+    end
+end)
+
+RegisterNetEvent('zero_animation:sharedClearAnimation', function()
+    local ped = PlayerPedId()
+    zero.DeletarObjeto()
+    ClearPedTasks(ped); DetachEntity(ped, true, false);
+end)
+
+RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
+    sharedAnimation = target
+    local ped = PlayerPedId()
+    local emote = configAnimations.shared[anim]
+
+    zero.DeletarObjeto()
+    local syncOption = emote.syncOption
+    local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
+    if (syncOption) then
+        if (syncOption.attachTo) then
+            AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, syncOption.bone),
+            syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+        end
+    end
+
+    if (emote.extra) then emote.extra() end
+    if (emote.pos) then
+        local emoteDict = emote.dict or nil
+        local emoteAnim = emote.anim or nil
+        if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
+        zero.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+    elseif emote.prop then
+        zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+    elseif emote.dict then
+        zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
+    else
+        zero._playAnim(false, { task = emote.anim }, false)
+    end
+end)
+
+RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)   
+    sharedAnimation = target
+    local ped = PlayerPedId()
+    local emote = configAnimations.shared[anim]
+
+    zero.DeletarObjeto()
+    local syncOption = emote.syncOption
+    local pedTarget = GetPlayerPed(GetPlayerFromServerId(target))
+    if (syncOption) then
+        if (syncOption.attachTo) then
+            AttachEntityToEntity(ped, pedTarget, GetPedBoneIndex(pedTarget, syncOption.bone),
+            syncOption.xPos, syncOption.yPos, syncOption.zPos, syncOption.xRot, syncOption.yRot, syncOption.zRot, true, true, false, false, 2, true)
+        end
+    end
+
+    if (emote.extra) then emote.extra() end
+    if (emote.pos) then
+        local emoteDict = emote.dict or nil
+        local emoteAnim = emote.anim or nil
+        if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop) end;
+        zero.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2],emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+    elseif (emote.prop) then
+        zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
+    elseif (emote.dict) then
+        zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop)
+    else
+        zero._playAnim(false, { task = emote.anim }, false)
+    end
+end)
+
+local apontarStart = false
+
+apontarThread = function(state) 
+    apontarStart = state
+    Citizen.CreateThread(function()
+        while (apontarStart) do
+            local ped = PlayerPedId()
+            local camPitch = GetGameplayCamRelativePitch()
+            if camPitch < -70.0 then
+                camPitch = -70.0
+            elseif camPitch > 42.0 then
+                camPitch = 42.0
+            end
+            camPitch = (camPitch + 70.0) / 112.0
+
+            local camHeading = GetGameplayCamRelativeHeading()
+            local cosCamHeading = Cos(camHeading)
+            local sinCamHeading = Sin(camHeading)
+            if camHeading < -180.0 then
+                camHeading = -180.0
+            elseif camHeading > 180.0 then
+                camHeading = 180.0
+            end
+            camHeading = (camHeading + 180.0) / 360.0
+
+            local blocked = 0
+            local nn = 0
+            local coords = GetOffsetFromEntityInWorldCoords(ped,(cosCamHeading*-0.2)-(sinCamHeading*(0.4*camHeading+0.3)),(sinCamHeading*-0.2)+(cosCamHeading*(0.4*camHeading+0.3)),0.6)
+            local ray = Cast_3dRayPointToPoint(coords.x,coords.y,coords.z-0.2,coords.x,coords.y,coords.z+0.2,0.4,95,ped,7);
+            nn,blocked,coords,coords = GetRaycastResult(ray)
+
+            Citizen.InvokeNative(0xD5BB4025AE449A4E,ped,'Pitch',camPitch)
+            Citizen.InvokeNative(0xD5BB4025AE449A4E,ped,'Heading',camHeading*-1.0+1.0)
+            Citizen.InvokeNative(0xB0A6CFD2C69C1088,ped,'isBlocked',blocked)
+            Citizen.InvokeNative(0xB0A6CFD2C69C1088,ped,'isFirstPerson',Citizen.InvokeNative(0xEE778F8C7E1142E2,Citizen.InvokeNative(0x19CAFA3C87F7C2FF))==4)
+            Citizen.Wait(1)
+        end
+    end)
+end
+
+local disableStart = false
+disableActions = function(state)
+    disableStart = state
+    Citizen.CreateThread(function()
+        while (disableStart) do
+            DisableControlAction(0, 21, true)
+            Citizen.Wait(1)
+        end
+    end)
+end

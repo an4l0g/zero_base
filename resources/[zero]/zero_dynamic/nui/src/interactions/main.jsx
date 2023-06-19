@@ -1,0 +1,45 @@
+import { GiMedicalPack } from "react-icons/gi";
+import { HiOutlineUsers } from "react-icons/hi";
+import { MdOutlineLocalPolice } from "react-icons/md";
+import { IoIosBody } from "react-icons/io";
+import { LuCar } from "react-icons/lu";
+
+const interactions = [
+  {
+    title: "Interações",
+    icon: <HiOutlineUsers />,
+    type: "category",
+    category: "main",
+    value: "interactions",
+  },
+  {
+    title: "Polícia",
+    icon: <MdOutlineLocalPolice />,
+    type: "category",
+    category: "main",
+    value: "police",
+  },
+  {
+    title: "Animações",
+    icon: <IoIosBody />,
+    type: "category",
+    category: "main",
+    value: "animations",
+  },
+  {
+    title: "Carro",
+    icon: <LuCar />,
+    type: "category",
+    category: "main",
+    value: "car",
+  },
+  {
+    title: "Medicina",
+    icon: <GiMedicalPack />,
+    type: "category",
+    category: "main",
+    value: "medic",
+  },
+];
+
+export default interactions;

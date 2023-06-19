@@ -8,7 +8,8 @@ import Velocimeter from "./components/Velocimeter";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import useNotification from "./hooks/useNotification";
-// import Prompt from "./components/Prompt";
+import Prompt from "./components/Prompt";
+import Clipboard from "./components/Clipboard";
 
 function App() {
   const [time, setTime] = useState("");
@@ -29,11 +30,18 @@ function App() {
   const [thirst, setThirst] = useState(0);
   const [radio, setRadio] = useState(0);
   const [oxygen, setOxygen] = useState(-1);
+  const [questions, setQuestions] = useState([]);
+  const [clipboard, setClipboard] = useState([]);
   // const [toxic, setToxic] = useState(0);
   // const [stress, setStress] = useState(0);
 
-  const { launchNotify, launchProgressBar, launchRequest, launchOrgNotify } =
-    useNotification();
+  const {
+    launchNotify,
+    launchProgressBar,
+    launchRequest,
+    launchOrgNotify,
+    removeRequest,
+  } = useNotification();
 
   const nuiMessage = useCallback(
     (event) => {
@@ -47,7 +55,7 @@ function App() {
         updateEngineHealth: (value) => setEngineHealth(value),
         updateHudVehicle: (value) => setVehHud(value),
         updateHud: (value) => setHud(value),
-        updateStreet: (value) => setStreet(value),
+        // updateStreet: (value) => setStreet(value),
         updateSeatbelt: (value) => setSeatbelt(value),
         updateLocked: (value) => setLocked(value),
         updateTalking: (value) => setTalking(value),
@@ -61,16 +69,31 @@ function App() {
         notify: ({ title, message, time }) => {
           launchNotify(title, message, time);
         },
+        announcement: ({ title, message, author, playAudio, time }) => {
+          launchOrgNotify(title, message, author, playAudio, time);
+        },
         progress: ({ title, time }) => {
           launchProgressBar(title, time);
         },
+        request: ({ id, title, time }) => {
+          launchRequest(id, title, time);
+        },
+        prompt: ({ questions }) => {
+          setQuestions(questions);
+        },
+        removeRequest: ({ id }) => {
+          removeRequest(id);
+        },
+        clipboard: (clipboard) => {
+          setClipboard(clipboard);
+        },
       };
       const { method, data } = event.data;
-      if (method) {
+      if (method && actions[method]) {
         actions[method](data);
       }
     },
-    [launchNotify, launchProgressBar]
+    [launchNotify, launchProgressBar, launchRequest, removeRequest]
   );
 
   useEffect(() => {
@@ -87,7 +110,8 @@ function App() {
         <>
           <ToastContainer theme="dark" position="bottom-center" />
           <S.GlobalStyle />
-          {/* <Prompt /> */}
+          <Prompt questions={questions} setQuestions={setQuestions} />
+          <Clipboard clipboard={clipboard} setClipboard={setClipboard} />
           <S.WrapHud>
             <Logo />
             <TopInfos

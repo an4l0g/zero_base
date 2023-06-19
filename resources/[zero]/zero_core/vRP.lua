@@ -1,20 +1,19 @@
 -- Libraries
-Tunnel = module('vrp','lib/Tunnel')
-Proxy = module('vrp','lib/Proxy')
-Tools = module('vrp','lib/Tools')
+Tunnel = module('zero','lib/Tunnel')
+Proxy = module('zero','lib/Proxy')
+Tools = module('zero','lib/Tools')
 
 --Globals
-config = {}
 webhooks = {}
 
 -- Proxies
 if IsDuplicityVersion() then
-    vRP = Proxy.getInterface('vRP')
-    vRPclient = Tunnel.getInterface('vRP')
+    zero = Proxy.getInterface('zero')
+    zeroClient = Tunnel.getInterface('zero')
     idgens = Tools.newIDGenerator()
 else
-    vRP = Proxy.getInterface('vRP')
-    vRPserver = Tunnel.getInterface('vRP')
+    zero = Proxy.getInterface('zero')
+    zeroServer = Tunnel.getInterface('zero')
 
     drawTxt = function(text,font,x,y,scale,r,g,b,a)
         SetTextFont(font)
