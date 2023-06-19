@@ -7,12 +7,13 @@ import Main from "./main";
 import Interactions from "./cat_interactions";
 import Couple from "./cat_couple";
 import Car from "./cat_car";
+import Police from "./cat_police";
 
 export const AllInteractions = () => {
   const { dynamic } = useContext(DynamicContext);
 
   const interactionsList = useMemo(() => {
-    return [...Main, ...Interactions, ...Couple, ...Car];
+    return [...Main, ...Interactions, ...Couple, ...Car, ...Police];
   }, []);
 
   const isFavorite = (action, value) => {

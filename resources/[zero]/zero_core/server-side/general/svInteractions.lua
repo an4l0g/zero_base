@@ -93,3 +93,25 @@ RegisterNetEvent('zero_interactions:carregar', function()
         end
     end
 end)
+
+RegisterNetEvent('zero_interactions:vestimenta', function(value)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
+        local nplayer = zeroClient.getNearestPlayer(source, 2)
+        if (nplayer) then
+            local nUser = zero.getUserId(nplayer)
+            local nIdentity = zero.getUserIdentity(nUser)
+            if (value == 'rmascara') then
+                TriggerClientEvent('zero_commands_police:clothes', nplayer, 'rmascara')
+                zero.webhook(webhooks.policeCommands, '```prolog\n[/RMASCARA]\n[USER_ID]: #'..user_id..' '..identity.name..' '..identity.firstname..'\n[RETIROU A MASCARA DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.name..' '..nIdentity.firstname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            elseif (value == 'rchapeu') then
+                TriggerClientEvent('zero_commands_police:clothes', nplayer, 'rchapeu')
+			    zero.webhook(webhooks.policeCommands, '```prolog\n[/RCHAPEU]\n[USER_ID]: #'..user_id..' '..identity.name..' '..identity.firstname..'\n[RETIROU O CHAPEU DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.name..' '..nIdentity.firstname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            end
+        else
+            TriggerClientEvent('notify', source, 'Interação Policia', 'Você não se encontra próximo de um <b>cidadão</b>.')
+        end
+	end
+end)

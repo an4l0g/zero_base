@@ -43,3 +43,15 @@ cli.tpToWayFunction = function()
 
     SetEntityCoordsNoOffset(entity,x,y,z,0,0,1)
 end
+
+---------------------------------------
+-- COMMANDS
+---------------------------------------
+RegisterNetEvent('zero_commands_police:clothes', function(part)
+    local ped = PlayerPedId()
+    if (part == 'rmascara') then
+	    SetPedComponentVariation(ped, 1, 0, 0, 2)
+    elseif (part == 'rchapeu') then
+        ClearPedProp(ped, 0)
+    end
+end)

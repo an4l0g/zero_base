@@ -85,15 +85,48 @@ end)
 -- RMASCARA
 ---------------------------------------
 RegisterCommand('rmascara', function(source)
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
+		local nplayer = zeroClient.getNearestPlayer(source, 2)
+		if (nplayer) then
+            local nUser = zero.getUserId(nplayer)
+			local nIdentity = zero.getUserIdentity(nUser)
+			TriggerClientEvent('zero_commands_police:clothes', nplayer, 'rmascara')
+			zero.webhook(webhooks.policeCommands, '```prolog\n[/RMASCARA]\n[USER_ID]: #'..user_id..' '..identity.name..' '..identity.firstname..'\n[RETIROU A MASCARA DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.name..' '..nIdentity.firstname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        else
+            TriggerClientEvent('notify', source, 'Remover Máscara', 'Você não se encontra próximo de um <b>cidadão</b>.')
+        end
+	end
+end)
+
+---------------------------------------
+-- RMASCARA
+---------------------------------------
+RegisterCommand('rchapeu', function(source)
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id,'polpar.permissao') then
+		local nplayer = zeroClient.getNearestPlayer(source,2)
+		if (nplayer) then
+            local nUser = zero.getUserId(nplayer)
+			local nIdentity = zero.getUserIdentity(nUser)
+            TriggerClientEvent('zero_commands_police:clothes', nplayer, 'rchapeu')
+			zero.webhook(webhooks.policeCommands, '```prolog\n[/RCHAPEU]\n[USER_ID]: #'..user_id..' '..identity.name..' '..identity.firstname..'\n[RETIROU O CHAPEU DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.name..' '..nIdentity.firstname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        else
+            TriggerClientEvent('notify', source, 'Remover Chápeu', 'Você não se encontra próximo de um <b>cidadão</b>.')
+        end
+	end
+end)
+
+---------------------------------------
+-- CONE
+---------------------------------------
+RegisterCommand('cone', function(source)
 	local user_id = vRP.getUserId(source)
     local identity = vRP.getUserIdentity(user_id)
-	if (user_id and vRP.hasPermission(user_id, 'polpar.permissao')) then
-		local nplayer = vRPclient.getNearestPlayer(source, 2)
-		if (nplayer) then
-            local nUser = vRP.getUserId(nplayer)
-			local nIdentity = vRP.getUserIdentity(nUser)
-			TriggerClientEvent('rmascara', nplayer)
-			vRP.webhook(webhooks.policeCommands, '```prolog\n[/RMASCARA]\n[USER_ID]: '..user_id..' | '..identity.name..' '..identity.firstname..'\n[RETIROU A MASCARA DO]\n[JOGADOR]: '..nUser..' | '..nIdentity.name..' '..nIdentity.firstname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-		end
+	if (user_id) and vRP.hasPermission(user_id, 'polpar.permissao') then
+		TriggerClientEvent('cone', source, args[1])
+		vRP.webhook(webhooks.policeCommands,'```prolog\n[/CONE]\n[USER_ID]: #'..user_id..' '..identity.name..' '..identity.firstname..'\n[CRIOU UM CONE NA]\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 	end
 end)
