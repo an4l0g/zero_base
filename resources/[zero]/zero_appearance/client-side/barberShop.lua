@@ -310,7 +310,7 @@ openBarberShop = function(config, coords, heading)
 
     if (config['hidePlayers']) then setPlayersVisible(true); end;
 
-    oldC = getBarberOverlay()
+    -- oldC = getBarberOverlay()
     barberData['oldCharacter'] = LocalPlayer.state['oldPedCustom']
 
     SendNUIMessage({
