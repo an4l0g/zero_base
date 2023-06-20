@@ -56,7 +56,7 @@ local mainThread = function()
         if (not inBarberShop and not inMenu) then
             if (nearestBlip) and nearestBlip['coord'] then
                 idle = 4
-                DrawText3D(nearestBlip['coord'].x, nearestBlip['coord'].y, nearestBlip['coord'].z+0.7, '~b~[E]~w~ - Barbearia')
+                DrawMarker(27, nearestBlip.coord.x, nearestBlip.coord.y, nearestBlip.coord.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
                     openBarberShop(generalConfig[nearestBlip['config']], nearestBlip['coord'].xyz, nearestBlip['coord'].w)
                 end
@@ -69,26 +69,6 @@ end
 CreateThread(mainThread)
 
 local barberData = {
-    parts = {
-        ['Defeitos'] = 0,
-        ['Barba'] = 1,
-        ['Sobrancelhas'] = 2,
-        ['Envelhecimento'] = 3,
-        ['Maquiagem'] = 4,
-        ['Blush'] = 5,
-        ['Rugas'] = 6,
-        ['Batom'] = 8,
-        ['Sardas'] = 9,
-        ['Cabelo no Peito'] = 10,
-        ['Manchas no Corpo'] = 11,
-        ['Cabelo'] = 12,
-        ['Cor Sec. do Cabelo'] = 13
-    },
-
-    character = {
-
-    },
-
     oldCharacter = {
         ['0'] = 0,
         ['1'] = 0,
@@ -102,41 +82,11 @@ local barberData = {
         ['10'] = 0,
         ['12'] = 0,
         ['13'] = 0,                
-    },
-
-    carroCompras = {
-        ['0'] = false,
-        ['1'] = false,
-        ['2'] = false,
-        ['3'] = false,
-        ['4'] = false,
-        ['5'] = false,
-        ['6'] = false,
-        ['8'] = false,
-        ['9'] = false,              
-        ['10'] = false,
-        ['12'] = false,
-        ['13'] = false,              
     }
 }
 
-local value = 0
-local totalValue = 0
-local barberReset = false
 local oldCustom = {}
-local oldC
-
-local updateBarberCompras = function()
-    value = 0 
-    for index, value in pairs(barberData['carroCompras']) do
-        if barberData['carroCompras'][index] == true then
-            local amount = configShop[tonumber(index)]['price']
-            valor = (valor + amount)
-        end
-    end
-    totalValue = value
-    return value
-end
+local old_custom = {}
 
 local setPedCustom = function()
     local ped = PlayerPedId()
@@ -262,29 +212,11 @@ local getDrawables = function()
     return pedDrawables[playerModel]
 end
 
-local getBarberOverlay = function()
-    local bConfig = LocalPlayer.state['pedCustom']
-    local overlay = {
-        ['0'] = { bConfig.blemishesModel, 0 },
-        ['1'] = { bConfig.beardModel, bConfig.beardColor },            
-        ['2'] = { bConfig.eyebrowsModel, bConfig.eyebrowsColor },            
-        ['3'] = { bConfig.ageingModel, 0 },            
-        ['4'] = { bConfig.makeupModel, 0 },            
-        ['5'] = { bConfig.blushModel, bConfig.blushColor },
-        ['6'] = { bConfig.complexionModel, 0 },
-        ['8'] = { bConfig.lipstickModel, bConfig.lipstickColor },
-        ['9'] = { bConfig.frecklesModel, 0 },            
-        ['10'] = { bConfig.chestModel, bConfig.chestColor },
-        ['12'] = { bConfig.hairModel, bConfig.firstHairColor },
-        ['13'] = { bConfig.hairModel, bConfig.secondHairColor },
-    }
-    return overlay
-end
-
-local setBarberRoupa = function()
-    local modelHash = old_custom.modelhash
+local setBarberRoupa = function(roupaPelado)
+    local ped = PlayerPedId()
+    local model = GetEntityModel(ped)
     local idleCopy = {}
-    for l,w in pairs(configShop.roupaPelado[modelHash]) do
+    for l,w in pairs(roupaPelado[model]) do
         idleCopy[l] = w
     end
 
@@ -296,10 +228,10 @@ openBarberShop = function(config, coords, heading)
     local model = GetEntityModel(ped)
 
     SetNuiFocus(true, true)
-    barberReset = true
     inBarberShop = true
     oldCustom = getCustomization()
 
+    FreezeEntityPosition(ped, true)
     SetEntityCoords(ped, coords)
     SetEntityHeading(ped, heading)
     ClearPedTasks(ped)
@@ -310,7 +242,6 @@ openBarberShop = function(config, coords, heading)
 
     if (config['hidePlayers']) then setPlayersVisible(true); end;
 
-    -- oldC = getBarberOverlay()
     barberData['oldCharacter'] = LocalPlayer.state['oldPedCustom']
 
     SendNUIMessage({
@@ -323,7 +254,7 @@ openBarberShop = function(config, coords, heading)
         }
     })
 
-    setBarberRoupa()
+    setBarberRoupa(config.roupaPelado)
     SetCameraCoords('all', true)
 end
 

@@ -42,7 +42,7 @@ local mainThread = function()
         if (not inSkinShop and not inMenu) then
             if (nearestBlip) and nearestBlip['coord'] then
                 idle = 4
-                DrawText3D(nearestBlip['coord'].x, nearestBlip['coord'].y, nearestBlip['coord'].z+0.5, '~b~[E]~w~ - Loja de Roupas')
+                DrawMarker(27, nearestBlip.coord.x, nearestBlip.coord.y, nearestBlip.coord.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
                     openSkinShop(generalConfig[nearestBlip['config']], nearestBlip['coord'].xyz, nearestBlip['coord'].w)
                 end
@@ -55,66 +55,6 @@ end
 CreateThread(mainThread)
 
 local oldCustom = {}
-local configShop = {}
-local categoryVariation = 1
-local categoryProp = 'p1'
-local color = 0
-local value = 0
-local totalValue = 0
-local shopConfig = {
-    parts = {
-        mascara = 1,
-        mao = 3,
-        calca = 4,
-        mochila = 5,
-        sapato = 6,
-        gravata = 7,
-        camisa = 8,
-        colete = 9,
-        decals = 10,
-        jaqueta = 11,
-        bone = 'p0',
-        oculos = 'p1',
-        brinco = 'p2',
-        relogio = 'p6',
-        bracelete = 'p7',
-        outfit = 'outfit'
-    },
-    
-    carroCompras = {
-        mascara = false,
-        mao = false,
-        calca = false,
-        mochila = false,
-        sapato = false,
-        gravata = false,
-        camisa = false,
-        colete = false,
-        decals = false,
-        jaqueta = false,
-        bone = false,
-        oculos = false,
-        brinco = false,
-        relogio = false,
-        bracelete = false
-    },
-
-    old = {
-
-    }
-}
-
-local updateSkinCompras = function()
-    value = 0 
-    for index, value in pairs(shopConfig['carroCompras']) do
-        if (shopConfig['carroCompras'][index] == true) then
-            local amount = configShop[index]['price']
-            value = (value + amount)
-        end
-    end
-    totalValue = value
-    return value
-end
 
 local getDrawables = function()
     local ped = PlayerPedId()
@@ -135,29 +75,29 @@ local getDrawables = function()
 end
 
 local changeSkinShopClothes = function(dados, tipo, cor)
-    local ped = PlayerPedId()
-    local isProp, index = parsePart(dados)
-    if (isProp) then 
-        if (tipo == -1) then 
-            ClearPedProp(ped, index)
-        else      
-            SetPedPropIndex(ped, index, tipo, cor, 1)
-        end  
-    else 
-        SetPedComponentVariation(ped, index, tipo, cor, 1)
-    end
+    -- local ped = PlayerPedId()
+    -- local isProp, index = parsePart(dados)
+    -- if (isProp) then 
+    --     if (tipo == -1) then 
+    --         ClearPedProp(ped, index)
+    --     else      
+    --         SetPedPropIndex(ped, index, tipo, cor, 1)
+    --     end  
+    -- else 
+    --     SetPedComponentVariation(ped, index, tipo, cor, 1)
+    -- end
     
-    custom = getCustomization()
-    custom.modelhash = nil
+    -- custom = getCustomization()
+    -- custom.modelhash = nil
 
-    aux = oldCustom[dados]
-    v = custom[dados]
+    -- aux = oldCustom[dados]
+    -- v = custom[dados]
 
-    if (v[1] ~= aux[1] and shopConfig['old'][dados] ~= 'custom') then shopConfig['carroCompras'][dados] = true; shopConfig['old'][dados] = 'custom'; end
-    if (v[1] == aux[1] and shopConfig['old'][dados] == 'custom') then shopConfig['carroCompras'][dados] = false; shopConfig['old'][dados] = '0'; end
+    -- -- if (v[1] ~= aux[1] and shopConfig['old'][dados] ~= 'custom') then shopConfig['carroCompras'][dados] = true; shopConfig['old'][dados] = 'custom'; end
+    -- -- if (v[1] == aux[1] and shopConfig['old'][dados] == 'custom') then shopConfig['carroCompras'][dados] = false; shopConfig['old'][dados] = '0'; end
 
-    price = updateSkinCompras()
-    SendNUIMessage({ action = 'updateSkinShopPrice', value = price })
+    -- price = updateSkinCompras()
+    -- SendNUIMessage({ action = 'updateSkinShopPrice', value = price })
 end
 
 local shopProvador = function() 
@@ -178,7 +118,7 @@ end
 local closeNuiShop = function(reset)
     local ped = PlayerPedId()
     ClearPedTasks(ped)
-    SetNuiFocus(false, false)
+    -- SetNuiFocus(false, false)
     FreezeEntityPosition(ped, false)
     SetEntityInvincible(ped, false)
     setPlayersVisible(false)
@@ -240,8 +180,6 @@ local openNuiShop = function(config, _oldCustom)
             end
         end
     end
-
-    drawVariations = getDrawables()
     
     SendNUIMessage({ 
         method = 'openSkinShop', 
@@ -249,7 +187,7 @@ local openNuiShop = function(config, _oldCustom)
             type = config['shopType'], 
             config = config['shopConfig'], 
             sex = sex, 
-            drawVariations = drawVariations
+            drawVariations = getDrawables()
         }
     })
 
@@ -260,8 +198,6 @@ openSkinShop = function(config, coords, heading)
     local ped = PlayerPedId()
     inMenu = true
     inSkinShop = true
-    value = 0
-    totalValue = 0
     oldCustom = getCustomization()
     configShop = config['shopConfig']
 
@@ -280,30 +216,30 @@ openSkinShop = function(config, coords, heading)
 end
 
 RegisterNUICallback('changeSkinShopMenuColor', function(data, cb)
-    local ped = PlayerPedId()
+    -- local ped = PlayerPedId()
 
-    local dPart = data.part;
-    local dId = data.itemId;
-    local menu = data.menu;
+    -- local dPart = data.part;
+    -- local dId = data.itemId;
+    -- local menu = data.menu;
     
-    local isProp, index = parsePart(dPart)
-    if (isProp) then 
-        max = GetNumberOfPedPropTextureVariations(ped, index, dId)
-    else 
-        max = GetNumberOfPedTextureVariations(ped, index, dId)
-    end
+    -- local isProp, index = parsePart(dPart)
+    -- if (isProp) then 
+    --     max = GetNumberOfPedPropTextureVariations(ped, index, dId)
+    -- else 
+    --     max = GetNumberOfPedTextureVariations(ped, index, dId)
+    -- end
 
-    if (data.menuChange) then 
-        SendNUIMessage({
-            action = 'updateSkinShopColor',
-            menu = menu,
-            drawa = max,
-            roupaId = dId
-        })
-    end 
+    -- if (data.menuChange) then 
+    --     SendNUIMessage({
+    --         action = 'updateSkinShopColor',
+    --         menu = menu,
+    --         drawa = max,
+    --         roupaId = dId
+    --     })
+    -- end 
 
-    local change = data.change;
-    if (change and change ~= 0) then changeSkinShopClothes(dPart, dId, data.color); end
+    -- local change = data.change;
+    -- if (change and change ~= 0) then changeSkinShopClothes(dPart, dId, data.color); end
 end)
 
 RegisterNUICallback('changeSkinShopPart', function(data,cb)
