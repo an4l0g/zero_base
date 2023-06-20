@@ -1,9 +1,9 @@
 import { RiPlayFill } from "react-icons/ri";
-import { GiClothes } from "react-icons/gi";
+import { GiClothes, GiPoliceOfficerHead } from "react-icons/gi";
 
 export default [
   {
-    title: "Retirar vestimenta",
+    title: "Retirar",
     icon: <GiClothes />,
     type: "category",
     action: "vestimenta",
@@ -25,5 +25,83 @@ export default [
     action: "vestimenta",
     value: "rchapeu",
     category: "vestimenta",
+  },
+  {
+    title: "Retirar capuz",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "vestimenta",
+    value: "rcapuz",
+    category: "vestimenta",
+  },
+  {
+    title: "Acessórios",
+    icon: <GiPoliceOfficerHead />,
+    type: "category",
+    action: "acessorios",
+    value: "acessorios",
+    category: "police",
+  },
+  {
+    title: "Colocar cone",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "acessorios",
+    value: "cone",
+    category: "acessorios",
+  },
+  {
+    title: "Deletar cone",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "acessorios",
+    value: "coned",
+    category: "acessorios",
+  },
+  {
+    title: "Colocar barreira",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "acessorios",
+    value: "barreira",
+    category: "acessorios",
+  },
+  {
+    title: "Deletar barreira",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "acessorios",
+    value: "barreirad",
+    category: "acessorios",
+  },
+  {
+    title: "Colocar spike",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "acessorios",
+    value: "spike",
+    category: "acessorios",
+  },
+  {
+    title: "Deletar spike",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "acessorios",
+    value: "spiked",
+    category: "acessorios",
+  },
+  {
+    title: "Retirar do veículo",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "rv",
+    category: "police",
+  },
+  {
+    title: "Colocar no veículo",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "cv",
+    category: "police",
   },
 ];
