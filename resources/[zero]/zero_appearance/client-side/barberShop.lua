@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-=======
-
-
-RegisterCommand('ped',function()
-while not HasModelLoaded('mp_f_freemode_01') do
-        RequestModel('mp_f_freemode_01')
-        Citizen.Wait(10)
-    end
-    if HasModelLoaded('mp_f_freemode_01') then
-        SetPlayerModel(PlayerId(),'mp_f_freemode_01')     
-        SetPedDefaultComponentVariation(PlayerPedId())
-    end
-    SetModelAsNoLongerNeeded('mp_f_freemode_01')
-end)
-
->>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
 local vSERVER = Tunnel.getInterface('barberShop')
 
 local locsConfig = configBarberShop.locs
@@ -231,7 +214,6 @@ local setPedCustom = function()
     SetPedHeadOverlayColor(ped, 4, 0, 10, 15)
 end
 
-<<<<<<< HEAD
 local getBarberShopDrawables = function(part)
     ped = PlayerPedId()
     if (part == 12) then
@@ -251,40 +233,6 @@ local getBarberShopTextures = function(part)
     else
         return 64
     end
-=======
-local getDrawables = function()
-    local ped = PlayerPedId()
-    local playerModel = GetEntityModel(ped)
-    local pedDrawables = {
-        [GetHashKey('mp_m_freemode_01')] = {
-            blemishes = GetNumHeadOverlayValues(0),
-            beard = GetNumHeadOverlayValues(1),
-            eyebrows = GetNumHeadOverlayValues(2),
-            hair = GetNumberOfPedDrawableVariations(ped, 2),
-            ageing = GetNumHeadOverlayValues(3),
-            makeup = GetNumHeadOverlayValues(4),
-            blush = GetNumHeadOverlayValues(5),
-            complexion = GetNumHeadOverlayValues(6),
-            sundamage = GetNumHeadOverlayValues(7),
-            lipstick = GetNumHeadOverlayValues(8),
-            freckles = GetNumHeadOverlayValues(9),
-            chestModel = GetNumHeadOverlayValues(10),
-        },
-        [GetHashKey('mp_f_freemode_01')] = {
-            blemishes = GetNumHeadOverlayValues(0),
-            eyebrows = GetNumHeadOverlayValues(2),
-            hair = GetNumberOfPedDrawableVariations(ped, 2),
-            ageing = GetNumHeadOverlayValues(3),
-            makeup = GetNumHeadOverlayValues(4),
-            blush = GetNumHeadOverlayValues(5),
-            complexion = GetNumHeadOverlayValues(6),
-            sundamage = GetNumHeadOverlayValues(7),
-            lipstick = GetNumHeadOverlayValues(8),
-            freckles = GetNumHeadOverlayValues(9),
-        },
-    }
-    return pedDrawables[playerModel]
->>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
 end
 
 local getBarberOverlay = function()
@@ -329,22 +277,14 @@ openBarberShop = function(config, coords, heading)
     SetEntityHeading(ped, heading)
     ClearPedTasks(ped)
 
-<<<<<<< HEAD
     local drawables = getBarberShopDrawables(12)
     local textures = getBarberShopTextures(12)
-=======
-    local drawables = getDrawables()
->>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
 
     LocalPlayer.state['oldPedCustom'] = LocalPlayer.state['pedCustom']
 
     if (config['hidePlayers']) then setPlayersVisible(true); end;
 
-<<<<<<< HEAD
     oldC = getBarberOverlay()
-=======
-    -- oldC = getBarberOverlay()
->>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
     barberData['oldCharacter'] = LocalPlayer.state['oldPedCustom']
 
     SendNUIMessage({
@@ -352,17 +292,12 @@ openBarberShop = function(config, coords, heading)
         data = {
             type = config['shopType'],
             config = config['shopConfig'],
-<<<<<<< HEAD
             oldPart = oldC,
             sex = (model == `mp_m_freemode_01` and 'Male' or 'Female'),
             prefix = (model == `mp_f_freemode_01` and 'M' or 'F'),
             category = 12,
             drawables = drawables,
             textures = textures
-=======
-            sex = (model == GetHashKey('mp_m_freemode_01') and 'male' or 'female'),
-            drawables = drawables
->>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
         }
     })
 
