@@ -23,6 +23,14 @@ export default [
     category: "interactions",
   },
   {
+    title: "Enviar dinheiro",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "enviar",
+    closeLater: true,
+    category: "interactions",
+  },
+  {
     title: "Casal",
     icon: <AiOutlineHeart />,
     type: "category",

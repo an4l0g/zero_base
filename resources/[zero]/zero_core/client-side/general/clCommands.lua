@@ -175,6 +175,9 @@ Citizen.CreateThread(function()
 	end
 end)
 
+---------------------------------------
+-- TOW
+---------------------------------------
 local PlayerData = {}
 
 PlayerData['mec:tow'] = nil
@@ -213,4 +216,34 @@ RegisterNetEvent('synctow', function(vehid01,vehid02,mod)
 			end
 		end
 	end
+end)
+
+---------------------------------------
+-- CAR COLOR
+---------------------------------------
+RegisterNetEvent('zero_core:carcolor', function(veh, r, g, b, prim)
+    if (IsEntityAVehicle(veh)) then
+        if (prim) then
+            SetVehicleCustomPrimaryColour(veh, r, g, b)    
+        else
+            SetVehicleCustomSecondaryColour(veh, r, g, b)
+        end
+    end
+end)
+
+---------------------------------------
+-- UNCUFF
+---------------------------------------
+RegisterNetEvent('zero_core:uncuff', function()
+	local ped = PlayerPedId()
+	zero._setHandcuffed(false)
+	SetPedComponentVariation(ped,7,0,0,2)
+end)
+
+---------------------------------------
+-- SYNCAREA
+---------------------------------------
+RegisterNetEvent('syncarea', function(x, y, z, radius)
+    ClearAreaOfVehicles(x, y, z, (radius or 2000.0), false, false, false, false, false)
+    ClearAreaOfEverything(x, y, z, (radius or 2000.0), false, false, false, false)
 end)

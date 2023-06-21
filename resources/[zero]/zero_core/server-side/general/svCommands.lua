@@ -232,6 +232,268 @@ end)
 RegisterServerEvent('trytow', function(vehid01, vehid02, mod)
 	TriggerClientEvent('synctow', -1, vehid01, vehid02, mod)
 end)
+
+---------------------------------------
+-- CHATS
+---------------------------------------
+RegisterCommand('mec', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'mecanico.permissao') then
+        if (args[1]) then
+            TriggerClientEvent('chatMessage', -1, '[ZERO MECÂNICA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+            zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[MEC]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+	end
+end)
+
+RegisterCommand('mc', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'mecanico.permissao') then
+        if (args[1]) then
+            local group = zero.getUsersByPermission('mecanico.permissao')
+            for _, v in pairs(group) do
+                local nSource = zero.getUserSource(parseInt(v))
+                if (nSource) then
+                    async(function()
+                        TriggerClientEvent('chatMessage', -1, '[CENTRAL MEC] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+                        zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[MEC CENTRAL]\n[JOGADOR]: '..user_id..' | '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    end)
+                end
+            end
+        end
+	end
+end)
+
+RegisterCommand('pre', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            TriggerClientEvent('chatMessage', -1, '[ZERO PREFEITURA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+            zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[PREFEITURA]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+	end
+end)
+
+RegisterCommand('pc', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local group = zero.getUsersByPermission('staff.permissao')
+            for _, v in pairs(group) do
+                local nSource = zero.getUserSource(parseInt(v))
+                if (nSource) then
+                    async(function()
+                        TriggerClientEvent('chatMessage', -1, '[CENTRAL PREFEITURA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+                        zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[PREFEITURA CENTRAL]\n[JOGADOR]: '..user_id..' | '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    end)
+                end
+            end
+        end
+	end
+end)
+
+RegisterCommand('190', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'policia.permissao') then
+        if (args[1]) then
+            TriggerClientEvent('chatMessage', -1, '[ZERO POLÍCIA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+            zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[190]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+	end
+end)
+
+RegisterCommand('pd', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'policia.permissao') then
+        if (args[1]) then
+            local group = zero.getUsersByPermission('policia.permissao')
+            for _, v in pairs(group) do
+                local nSource = zero.getUserSource(parseInt(v))
+                if (nSource) then
+                    async(function()
+                        TriggerClientEvent('chatMessage', -1, '[CENTRAL POLÍCIA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+                        zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[POLÍCIA CENTRAL]\n[JOGADOR]: '..user_id..' | '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    end)
+                end
+            end
+        end
+	end
+end)
+
+RegisterCommand('192', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'hospital.permissao') then
+        if (args[1]) then
+            TriggerClientEvent('chatMessage', -1, '[ZERO HOSPITAL] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+            zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[192]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+	end
+end)
+
+RegisterCommand('hp', function(source, args, raw)
+    local source = source
+	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+	if (user_id) and zero.hasPermission(user_id, 'hospital.permissao') then
+        if (args[1]) then
+            local group = zero.getUsersByPermission('hospital.permissao')
+            for _, v in pairs(group) do
+                local nSource = zero.getUserSource(parseInt(v))
+                if (nSource) then
+                    async(function()
+                        TriggerClientEvent('chatMessage', -1, '[CENTRAL HOSPITAL] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+                        zero.webhook(webhooks.chat, '```prolog\n[CHATS ORG]\n[HOSPITAL CENTRAL]\n[JOGADOR]: '..user_id..' | '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    end)
+                end
+            end
+        end
+	end
+end)
+
+---------------------------------------
+-- ENVIAR
+---------------------------------------
+RegisterCommand('enviar', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) then
+        local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+        local nUser = zero.getUserId(nPlayer)
+        local nIdentity = zero.getUserIdentity(nUser)
+        if (nPlayer) then
+            local amount = parseInt(args[1])
+            if (amount > 0) then
+                if (zero.tryPayment(user_id, amount)) then
+                    zero.giveMoney(nUser, amount)
+                    zeroClient._playAnim(source, true, {{ 'mp_common', 'givetake1_a' }}, false)
+			        zeroClient._playAnim(nPlayer, true, {{ 'mp_common', 'givetake1_a' }}, false)
+                    TriggerClientEvent('notify', source, 'Enviar', 'Você enviou <b>R$'..zero.format(amount)..'</b>.')
+                    TriggerClientEvent('notify', nPlayer, 'Enviar', 'Você recebeu <b>R$'..zero.format(amount)..'</b>.')
+                    zero.webhook(webhooks.enviar, '```prolog\n[/ENVIAR]\n[ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[ENVIOU]: R$'..vRP.format(amount)..' \n[PARA O ID]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                else
+                    TriggerClientEvent('notify', source, 'Enviar', 'Você não possui essa quantia de <b>dinheiro</b> em mãos.')
+                end
+            end
+        else
+            TriggerClientEvent('notify', source, 'Enviar', 'Você não se encontra próximo de um <b>cidadão</b>.')
+        end
+    end
+end)
+
+---------------------------------------
+-- ANÚNCIOS
+---------------------------------------
+RegisterCommand('adm', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity =  zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        local message = zero.prompt(source, { 'Mensagem' })
+        if (message[1]) then
+            TriggerClientEvent('announcement', -1, 'Prefeitura', message[1], identity.firstname, true, 30000)
+            zero.webhook(webhooks.anuncios, '```prolog\n[/ADM]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..message[1]..' \n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+    end
+end)
+
+RegisterCommand('anuncio', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity =  zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') or zero.hasPermission(user_id, 'mecanico.permissao') then
+        local message = zero.prompt(source, { 'Título', 'Mensagem' })
+        if (message[1]) then
+            TriggerClientEvent('announcement', -1, message[1], message[2], identity.firstname, true, 30000)
+            zero.webhook(webhooks.anuncios, '```prolog\n[/ANUNCIO]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[TÍTULO]: '..message[1]..'\n[MENSAGEM]: '..message[2]..' \n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+    end
+end)
+
+---------------------------------------
+-- CAR COLOR
+---------------------------------------
+RegisterCommand('carcolor', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+        local vehicle = zeroClient.getNearestVehicle(source, 7.0)
+        if (vehicle) then
+            local prompt = zero.prompt(source, { 'RGB Color(255, 255, 255)' })
+            if (prompt[1]) then
+                local rgb = sanitizeString(prompt[1], '0123456789,', true)
+                local r, g, b = table.unpack(splitString(rgb, ','))
+                TriggerClientEvent('zero_core:carcolor', source, vehicle, parseInt(r), parseInt(g), parseInt(b), (args[1] ~= '2') )   
+                TriggerClientEvent('notify', source, 'Car Color','A cor do <b>veículo</b> foi alterada.')
+                zero.webhook(webhooks.carColor, '```prolog\n[/CARCOLOR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RGB]: '..prompt[1]..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            end
+        end
+    end
+end)
+
+---------------------------------------
+-- UNCUFF
+---------------------------------------
+RegisterCommand('uncuff', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+        if (zero.isHandcuffed(source)) then
+            TriggerClientEvent('zero_core:uncuff', source)
+            zero.webhook(webhooks.unCuff, '```prolog\n[/UNCUFF]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SE DESALGEMOU] \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        else
+            TriggerClientEvent('notify', source, 'Uncuff', 'Você não se encontra <b>algemado</b>.')
+        end
+    end
+end)
+
+---------------------------------------
+-- LIMPARAREA
+---------------------------------------
+RegisterCommand('limpararea', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        local pCoord = GetEntityCoords(GetPlayerPed(source))
+        TriggerClientEvent('syncarea', -1, pCoord.x, pCoord.y, pCoord.z)
+        zero.webhook(webhooks.limparArea, '```prolog\n[/LIMPARAREA]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[COORDS]: '..tostring(pCoord)..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+    end
+end)
+
+---------------------------------------
+-- SKIN
+---------------------------------------
+RegisterCommand('skin', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+        local nPlayer = zero.getUserSource(parseInt(args[1]))
+        if (nPlayer) then
+            local nUser = zero.getUserId(nPlayer)
+            local nIdentity = zero.getUserIdentity(nUser)
+            
+        end
+    end
+end)
+
 ---------------------------------------
 -- TRY DELETE OBJ
 ---------------------------------------

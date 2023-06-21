@@ -1,6 +1,6 @@
 vCLIENT = Tunnel.getInterface('chat')
 
-local webhookChat = ''
+local webhookChat = 'https://discord.com/api/webhooks/1121126378612473966/Gf93900hWsmaZs3cLVLmxSVU7eX_JbRJsgC07KqcrE0p9I4AXjgnloC4-Ts_I0zgb1BG'
 
 RegisterServerEvent('chat:messageEntered')
 AddEventHandler('chat:messageEntered', function(message)
@@ -9,7 +9,7 @@ AddEventHandler('chat:messageEntered', function(message)
 	if user_id then
 		local identity = zero.getUserIdentity(user_id)
 		if identity then
-			TriggerClientEvent('chatMessage', source, 'Bruce Wayne', { 0, 153, 255 },message)
+			TriggerClientEvent('chatMessage', source, identity.firstname..' '..identity.lastname, { 0, 153, 255 },message)
 			local players = zeroClient.getNearestPlayers(source, 35)
 			for k,v in pairs(players) do
 				async(function()
@@ -17,8 +17,7 @@ AddEventHandler('chat:messageEntered', function(message)
 				end)
 			end
 		end
-        local coord = GetEntityCoords(GetPlayerPed(source))
-		zero.webhook(webhookChat,'```prolog\n[CHATS ORG]\n[GLOBAL]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..message..'\n[COORDENADA]: '..tostring(coord)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        zero.webhook(webhookChat, '```prolog\n[CHATS GERAL]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..message..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 	end
 end)
 
