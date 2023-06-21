@@ -183,7 +183,7 @@ PlayerData['mec:towed'] = nil
 RegisterNetEvent('vTow',function()
 	local vehicle = GetPlayersLastVehicle()
 	if IsVehicleModel(vehicle,GetHashKey('flatbed')) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		PlayerData['mec:towed'] = vRP.getNearestVehicle(7)
+		PlayerData['mec:towed'] = zero.getNearestVehicle(7)
 		if IsEntityAVehicle(vehicle) and IsEntityAVehicle(PlayerData['mec:towed']) then
 			if PlayerData['mec:tow'] then
 				TriggerServerEvent('trytow',VehToNet(vehicle),VehToNet(PlayerData['mec:tow']),'out')
@@ -199,7 +199,7 @@ RegisterNetEvent('vTow',function()
 	end
 end)
 
-RegisterNetEvent('synctow',function(vehid01,vehid02,mod)
+RegisterNetEvent('synctow', function(vehid01,vehid02,mod)
 	if NetworkDoesNetworkIdExist(vehid01) and NetworkDoesNetworkIdExist(vehid02) then
 		local vehicle = NetToEnt(vehid01)
 		local towed = NetToEnt(vehid02)

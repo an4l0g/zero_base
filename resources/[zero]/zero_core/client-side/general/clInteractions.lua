@@ -101,7 +101,6 @@ RegisterNetEvent('zero_interactions:carDoors', function(value)
 end)
 
 RegisterNetEvent('syncdoors', function(index, door)
-    print(door)
 	if (NetworkDoesNetworkIdExist(index)) then
 		local v = NetToVeh(index)
 		if (DoesEntityExist(v)) then

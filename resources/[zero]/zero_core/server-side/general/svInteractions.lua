@@ -184,3 +184,11 @@ RegisterNetEvent('zero_interactions:rv', function()
         end
 	end
 end)
+
+RegisterNetEvent('zero_interactions:tow', function()
+    local source = source
+	local user_id = zero.getUserId(source)
+	if (user_id) and zero.hasPermission(user_id, 'mecanico.permissao') then
+		TriggerClientEvent('vTow', source)
+	end
+end)
