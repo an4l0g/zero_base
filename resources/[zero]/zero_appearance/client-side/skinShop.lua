@@ -116,6 +116,7 @@ local updateSkinCompras = function()
     return value
 end
 
+<<<<<<< HEAD
 local getSkinShopDrawables = function(part)
     local ped = PlayerPedId()
     local isProp, index = parsePart(part)
@@ -138,6 +139,38 @@ local changeSkinShopClothes = function(dados, tipo, cor)
     else 
         SetPedComponentVariation(ped, index, tipo, cor, 1)
     end
+=======
+local getDrawables = function()
+    local ped = PlayerPedId()
+    local pedDrawables = {
+        torso = { GetNumberOfPedDrawableVariations(ped, 3), '3' },
+        legs = { GetNumberOfPedDrawableVariations(ped, 4), '4' },
+        hands = { GetNumberOfPedDrawableVariations(ped, 5), '5' },
+        fool = { GetNumberOfPedDrawableVariations(ped, 6), '6' },
+        accessories = { GetNumberOfPedDrawableVariations(ped, 8), '8' },
+        acessories2 = { GetNumberOfPedDrawableVariations(ped, 9), '9' },
+        decals = { GetNumberOfPedDrawableVariations(ped, 10), '10' },
+        torso2 = { GetNumberOfPedDrawableVariations(ped, 11), '11' },
+        helmet = { GetNumberOfPedPropDrawableVariations(ped, 0), 'p0' },
+        glasses = { GetNumberOfPedPropDrawableVariations(ped, 1), 'p1' },
+        ear = { GetNumberOfPedPropDrawableVariations(ped, 2), 'p2' }
+    }
+    return pedDrawables
+end
+
+local changeSkinShopClothes = function(dados, tipo, cor)
+    local ped = PlayerPedId()
+    local isProp, index = parsePart(dados)
+    if (isProp) then 
+        if (tipo == -1) then 
+            ClearPedProp(ped, index)
+        else      
+            SetPedPropIndex(ped, index, tipo, cor, 1)
+        end  
+    else 
+        SetPedComponentVariation(ped, index, tipo, cor, 1)
+    end
+>>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
     
     custom = getCustomization()
     custom.modelhash = nil
@@ -212,13 +245,13 @@ local openNuiShop = function(config, _oldCustom)
     local ped = PlayerPedId()
     SetNuiFocus(true, true)
 
-    local pedModel = GetEntityModel(ped)
     local sex = ''
-    local prefix = ''
+    local pedModel = GetEntityModel(ped)
+    
     if (pedModel == GetHashKey('mp_m_freemode_01')) then
-        sex = 'Male'; prefix = 'M';
+        sex = 'male'
     elseif (pedModel == GetHashKey('mp_f_freemode_01')) then
-        sex = 'Female'; prefix = 'F';
+        sex = 'female'
     else
         local customPeds = config['customPeds']
         if (customPeds) then
@@ -226,23 +259,30 @@ local openNuiShop = function(config, _oldCustom)
             if (allowed) then
                 if type(allowed) == 'string' then
                     sex = allowed
-                    prefix = allowed:sub(1,1)
                 else
                     sex = 'Male'
+<<<<<<< HEAD
                     prefix = 'M'
+=======
+>>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
                 end
             end
         end
     end
 
+<<<<<<< HEAD
     drawVariations = getSkinShopDrawables(categoryVariation)
     drawProps = getSkinShopDrawables(categoryProp)
+=======
+    drawVariations = getDrawables()
+>>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
     
     SendNUIMessage({ 
         method = 'openSkinShop', 
         data = {
             type = config['shopType'], 
             config = config['shopConfig'], 
+<<<<<<< HEAD
             oldCustom = _oldCustom, 
             sex = sex, 
             prefix = prefix, 
@@ -250,6 +290,10 @@ local openNuiShop = function(config, _oldCustom)
             categoryVariation = categoryVariation, 
             drawProps = drawProps, 
             categoryProp = categoryProp 
+=======
+            sex = sex, 
+            drawVariations = drawVariations
+>>>>>>> 4809b034288c6d51944a8ea5fd50834c1103829f
         }
     })
 
