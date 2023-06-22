@@ -203,7 +203,11 @@ end)
 ------------------------------------------------------------------
 -- WEAPON PROTECT
 ------------------------------------------------------------------
-GlobalState.weaponToken = math.random(50000,70000)
+GlobalState.weaponToken = 404
+Citizen.SetTimeout(2000,function()
+	math.randomseed(GetGameTimer())
+	GlobalState.weaponToken = math.random(50000,70000)
+end)
 
 zero.checkToken = function(tokenSend, weapons)
 	local source = source
