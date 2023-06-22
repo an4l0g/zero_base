@@ -2,12 +2,12 @@ sProduction = Tunnel.getInterface('zero_production')
 
 nearbyProduction = nil
 
-openProduction = function(products, title, cType)
+openProduction = function(products, title, org)
     SetNuiFocus(true, true)
     SendNUIMessage({
         action = 'open',
         title = title,
-        type = cType,
+        org = org,
         products = products
     })
 end
@@ -17,8 +17,8 @@ RegisterNuiCallback('close', function()
 end)
 
 RegisterNuiCallback('production', function(data)
-    if sProduction.validateProduction(data.index, data.amount, data.type) then 
-        local product = configs.products[data.type][data.index]
+    if sProduction.validateProduction(data.index, data.amount, data.org) then 
+        local product = configs.productions[data.org].products[data.index]
         local delay = product.delay * data.amount
         TriggerEvent('blockPed', true)
         zero.playAnim(false, {{'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female'}}, true)
@@ -26,7 +26,7 @@ RegisterNuiCallback('production', function(data)
         Wait(delay)
         TriggerEvent('blockPed', false)
         ClearPedTasks(PlayerPedId())
-        sProduction.giveItem(data.index, data.amount)
+        sProduction.giveItem(data.index, data.amount, data.org)
     else
         TriggerEvent("notify", 'Produção', 'Você não possui material suficiente!')
     end
@@ -69,13 +69,14 @@ Citizen.CreateThread(function()
             local distance = #(pedCoords - v.coords)
             if (distance <= 5.0) then
                 nearbyProduction = v
+                nearbyProduction.index = k
             end
         end
         if (nearbyProduction) and nearbyProduction['coords'] then
             idle = 4
             DrawText3D(nearbyProduction.coords.x, nearbyProduction.coords.y, nearbyProduction.coords.z+0.07, '~b~[E]~w~ - ['..nearbyProduction.label..'] Produção')
             if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
-                openProduction(nearbyProduction.products, nearbyProduction.label, nearbyProduction.type)
+                openProduction(nearbyProduction.products, nearbyProduction.label, nearbyProduction.index)
             end
         end
         Citizen.Wait(idle)
