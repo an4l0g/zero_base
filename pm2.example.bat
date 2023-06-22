@@ -8,6 +8,8 @@ cd %BASE_PATH%\pm2
 call zero_inventory.bat
 cd %BASE_PATH%\pm2
 call zero_creation.bat
+cd %BASE_PATH%\pm2
+call zero_production.bat
 
 echo [zero_base] Todas as NUIs foram iniciadas
 pause

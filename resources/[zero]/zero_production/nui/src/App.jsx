@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import Production from "./components/Production";
 import * as S from "./styles";
 import useRequest from "./hooks/useRequest";
@@ -8,17 +8,20 @@ function App() {
   const { production, setProduction } = useContext(ProductionContext);
   const { request } = useRequest();
 
-  const nuiMessage = useCallback((event) => {
-    const { action, products, title, type } = event.data;
-    console.log(event.data);
-    if (action === "open") {
-      setProduction({
-        title,
-        products,
-        type,
-      });
-    }
-  }, []);
+  const nuiMessage = useCallback(
+    (event) => {
+      const { action, products, title, org } = event.data;
+      console.log(event.data);
+      if (action === "open") {
+        setProduction({
+          title,
+          products,
+          org,
+        });
+      }
+    },
+    [setProduction]
+  );
 
   useEffect(() => {
     window.addEventListener("message", nuiMessage);
@@ -32,7 +35,7 @@ function App() {
     return () => {
       window.removeEventListener("message", nuiMessage);
     };
-  }, [nuiMessage, request]);
+  }, [nuiMessage, request, setProduction]);
 
   return (
     <>

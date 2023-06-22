@@ -30,7 +30,7 @@ function Production({ data }) {
     request("production", {
       index: productIndex,
       amount,
-      type: data.type,
+      org: data.org,
     });
     request("close");
     setProduction({});

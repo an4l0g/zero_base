@@ -14,13 +14,12 @@ configs.products = {
             max_amount = 5,
             delay = 1000,
             materials = {
-                ['agua'] = { name = 'Agua', amount = 2 },
-                ['frango-ensopado'] = { name = 'Frango Ensopado', amount = 3 },
+                ['agua'] = { name = 'Agua', amount = 1 },
             }
         }
     }
 }
 
 configs.productions = {
-    { coords = vec3(-75.17, -819.11, 326.17), products = configs.products.guns, label = 'Armas', type = 'guns' }, -- Fac 1
+    ['fac1'] = { coords = vec3(-75.17, -819.11, 326.17), products = configs.products.guns, label = 'Armas', webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' },
 }
