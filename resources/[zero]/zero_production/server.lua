@@ -4,7 +4,6 @@ Tunnel.bindInterface('zero_production', sProduction);
 sProduction.validateProduction = function(index, amount, org)
     local _source = source
     local user_id = zero.getUserId(_source)
-    print(org)
 
     local validatedProduction = true
     local materials = configs.productions[org].products[index].materials
