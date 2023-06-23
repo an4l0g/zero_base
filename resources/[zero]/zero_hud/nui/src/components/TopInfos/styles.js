@@ -4,7 +4,7 @@ export const Wrap = styled.ul`
   position: absolute;
   display: flex;
   flex-wrap: wrap;
-  top: 25px;
+  top: 1rem;
   right: 25px;
   list-style: none;
   gap: 1rem;

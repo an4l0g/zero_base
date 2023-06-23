@@ -162,3 +162,35 @@ disableActions = function(state)
         end
     end)
 end
+
+local animations = {}
+generateAnimations = function()
+    local sharedList = {}
+    for index, value in pairs(configAnimations.shared) do
+        sharedList = {
+            title = value.title,
+            category = value.category,
+            type = 'action',
+            value = { 'shared', index }
+        }
+        table.insert(animations, sharedList)
+    end
+
+    local animList = {}
+    for index, value in pairs(configAnimations.animations) do
+        animList = {
+            title = value.title,
+            category = value.category,
+            type = 'action',
+            value = { 'animations', index }
+        }
+        table.insert(animations, sharedList)
+    end
+end
+
+getAllAnimations = function()
+    return animations
+end
+exports('getAllAnimations', getAllAnimations)
+
+CreateThread(generateAnimations)

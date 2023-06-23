@@ -1,6 +1,6 @@
 local cam = nil
 
-local model = GetHashKey('a_m_y_hipster_02')
+local model = GetHashKey('mp_m_freemode_01')
 local spawnCoords = vector4(724.9, 1200.53, 326.16,161.57479858398)
 
 Citizen.CreateThread(function()

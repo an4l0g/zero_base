@@ -2,11 +2,14 @@ sDynamic = Tunnel.getInterface('zero_dynamic')
 cDynamic = {}
 
 Tunnel.bindInterface('zero_dynamic', cDynamic)
+zero = Proxy.getInterface('zero')
 
 RegisterKeyMapping("openDynamic", "Abrir ações possíveis", 'KEYBOARD', "F9")
 RegisterCommand("openDynamic", function()
-    -- DANIEL, VERIFICA AQUI SE A PESSOA TA MORTA
-    cDynamic.openOrUpdateNui()
+    local ped = PlayerPedId()
+    if (GetEntityHealth(ped) > 101 and not zero.isHandcuffed()) then
+        cDynamic.openOrUpdateNui()
+    end
 end)
 
 cDynamic.openOrUpdateNui = function()
@@ -14,6 +17,7 @@ cDynamic.openOrUpdateNui = function()
     SendNUIMessage({
         action = 'open',
         favorites = sDynamic.getFavorites(),
+        -- print(json.encode(exports['zero_core']:getAllAnimations()))
     })
 end
 
@@ -22,7 +26,11 @@ RegisterNuiCallback('close', function()
 end)
 
 RegisterNuiCallback('handleAction', function(data)
-    sDynamic.handleAction(data.action, data.value)
+    if (data.side == 'client') then
+        TriggerEvent('zero_interactions:'..data.action, data.value)
+    else
+        TriggerServerEvent('zero_interactions:'..data.action, data.value)
+    end
 end)
 
 RegisterNuiCallback('setFavorite', function(data)
