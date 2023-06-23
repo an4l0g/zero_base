@@ -43,7 +43,6 @@ AddEventHandler('zero_sound:variation:fixed',function(x,y,z,maxdistance,sound,re
 	if distance <= maxdistance then
 		local vol = (1 - (distance/maxdistance))+(reinforcement or default_reinforcement)
 		if vol > 1 then	vol = 1 end
-		--print(vol)	
 		SendNUIMessage({ transactionType = 'playSound', transactionFile = sound, transactionVolume = tonumber(string.format("%.2f",vol)) })
 	end
 end)
