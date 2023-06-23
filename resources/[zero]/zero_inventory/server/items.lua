@@ -125,8 +125,7 @@ sInventory.useItem = function(index, amount)
                 else
                     currentAmmo = freeAmmo
                 end
-
-                if zero.tryGetInventoryItem(user_id, newIndex, currentAmmo) then
+                if zero.tryGetInventoryItem(user_id, index, currentAmmo) then
                     cInventory.addAmmo(_source, newIndex, currentAmmo)
                     config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(zero.itemNameList(index)), 5000)
                 else

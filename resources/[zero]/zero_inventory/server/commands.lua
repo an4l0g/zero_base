@@ -21,6 +21,7 @@ end)
 -- Limpa hotbar e bag do player
 RegisterCommand('cinv', function(source, args)
     local user_id = (args[1] or zero.getUserId(source))
+    print(user_id, zero.hasPermission(user_id, 'dono.permissao'))
     if zero.hasPermission(user_id, 'dono.permissao') then
         sInventory.clearInventory(user_id)
         zero.webhook(config.webhooks.delBag,"```prolog\n[zero_inventory]\n[/DELBAG]\n[PLAYER]: "..user_id.." | "..identity.name.." "..identity.firstname.." \n[DELETOU UMA BAG]\n[BAG_TYPE]: "..bag_type.." "..os.date("\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").." \r```")
