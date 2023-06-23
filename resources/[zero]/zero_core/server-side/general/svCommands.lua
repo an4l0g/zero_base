@@ -1018,3 +1018,285 @@ RegisterCommand('umsg', function(source, args)
         end
     end
 end)
+
+---------------------------------------
+-- BANSRC
+---------------------------------------
+RegisterCommand('bansrc', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = parseInt(args[1])
+            if (nSource) then
+                if (GetPlayerName(nSource)) then
+                    local nUser = zero.getUserIdByIdentifiers(GetPlayerIdentifiers(nSource))
+                    if (nUser ~= -1) then
+                        local prompt = zero.prompt(source, { 'Motivo' })
+                        if (prompt[1]:gsub(' ','') == '') then return; end;
+                        if (prompt[1]) then
+                            exports[GetCurrentResourceName()]:setBanned(nUser, true)
+                            DropPlayer(nSource, 'Você foi banido da nossa cidade.\nSeu passaporte: #'..nUser..'\n Motivo: '..prompt[1]..'\nAutor: '..identity.firstname..' '..identity.lastname)
+                            TriggerClientEvent('notify', source, 'Banimento', 'Você baniu a source <b>'..nSource..'</b> da cidade.')
+                            zero.webhook(webhooks.bansrc, '```prolog\n[/BANSRC]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[BANIU SOURCE]: '..nSource..' \n[ID RELACIONADO]: '..nUser..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+---------------------------------------
+-- TPTO SRC
+---------------------------------------
+RegisterCommand('tptosrc', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            SetEntityCoords(source, GetEntityCoords(GetPlayerPed(parseInt(args[1]))))
+        end
+    end
+end)
+
+---------------------------------------
+-- CHECK BUGADO
+---------------------------------------
+RegisterCommand('checkbugados', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        local message = ''
+        for _, v in ipairs(GetPlayers()) do 
+            local pName = GetPlayerName(v)
+            local uId = vRP.getUserId(tonumber(v))
+            if (not uId) then 
+                message = message .. string.format('</br> <b>%s</b> | Source: <b>%s</b> | Ready: %s',pName,v,((Player(v).state.ready) and 'Sim' or 'Não'))
+            end
+        end
+        TriggerClientEvent('notify', source, 'Check Bugados', ((message ~= '') and message or 'Sem usuários bugados no momento!'))
+    end
+end)
+
+---------------------------------------
+-- SCREENSHOT SOURCE
+---------------------------------------
+RegisterCommand('screensrc', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        local nSource = parseInt(args[1])
+        if (nSource > 0) then
+            local ids = zero.getIdentifiers(source)
+            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(nSource, webhooks.srcscreen, { encoding = 'jpg', quality = 0.7 },
+                {
+                    username = '[SCREENSHOT] Source',
+                    content = '```prolog\n[SOURCE]: '..nSource..'\n[IDS]: '..json.encode(ids, { indent = true })..' \n[Admin]: '..GetPlayerName(source)..'```'
+                }, 30000, function(error) end
+            )
+        end
+    end
+end)
+
+---------------------------------------
+-- KICK SOURCE
+---------------------------------------
+RegisterCommand('kicksrc', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = parseInt(args[1])
+            if (nSource) then
+                if (GetPlayerName(nSource)) then
+                    local prompt = zero.prompt(source, { 'Motivo' })
+                    if (prompt[1]) then
+                        DropPlayer(nSource, 'Você foi kikado da nossa cidade.\nSua source: #'..nSource..'\n Motivo: '..prompt[1]..'\nAutor: '..identity.firstname..' '..identity.lastname)
+                        TriggerClientEvent('notify', source, 'Kick Source', 'Voce kickou o source <b>'..args[1]..'</b> da cidade.')
+                        zero.webhook(webhooks.kicksrc, '```prolog\n[/KICKSRC]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[BANIU SOURCE]: '..nSource..' \n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    end
+                end
+            end
+        end
+    end
+end)
+
+---------------------------------------
+-- RESET PLAYER
+---------------------------------------
+local resetList = {}
+
+local queries = {
+    { query = 'DELETE FROM smartphone_blocks WHERE phone IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id) OR user_id = :user_id'},
+    { query = 'DELETE FROM smartphone_calls WHERE target IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id) OR initiator IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_contacts WHERE owner IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id) OR phone IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_gallery WHERE user_id = :user_id'},
+    { query = 'DELETE FROM smartphone_bank_invoices WHERE payee_id = :user_id OR payer_id = :user_id'},
+    { query = 'DELETE FROM smartphone_instagram_followers WHERE profile_id IN (SELECT id FROM smartphone_instagram WHERE user_id = :user_id) OR follower_id IN (SELECT id FROM smartphone_instagram WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_instagram_likes WHERE post_id IN (SELECT id FROM smartphone_instagram_posts WHERE profile_id IN (SELECT id FROM smartphone_instagram WHERE user_id = :user_id) AND post_id IS NULL) OR profile_id IN (SELECT id FROM smartphone_instagram WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_instagram_notifications WHERE profile_id IN (SELECT id FROM smartphone_instagram WHERE user_id = :user_id) OR author_id IN (SELECT id FROM smartphone_instagram WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_instagram_posts WHERE profile_id IN (SELECT id FROM smartphone_instagram WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_instagram WHERE user_id = :user_id'},
+    { query = 'DELETE FROM smartphone_olx WHERE user_id = :user_id'},
+    { query = 'DELETE FROM smartphone_tinder_messages WHERE sender IN (SELECT id FROM smartphone_tinder WHERE user_id = :user_id) OR target IN (SELECT id FROM smartphone_tinder WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_tinder_rating WHERE profile_id IN (SELECT id FROM smartphone_tinder WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_tinder WHERE user_id = :user_id'},
+    { query = 'DELETE FROM smartphone_twitter_tweets WHERE profile_id IN (SELECT id FROM smartphone_twitter_profiles WHERE user_id = :user_id) OR tweet_id IN (SELECT id FROM smartphone_twitter_profiles WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_twitter_likes WHERE profile_id IN (SELECT id FROM smartphone_twitter_profiles WHERE user_id = :user_id) OR tweet_id IN (SELECT id FROM smartphone_twitter_profiles WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_twitter_profiles WHERE user_id = :user_id'},
+    { query = 'DELETE FROM smartphone_whatsapp_groups WHERE owner IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_whatsapp_messages WHERE channel_id IN (SELECT id FROM smartphone_whatsapp_channels WHERE sender IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id) OR target IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id))'},
+    { query = 'DELETE FROM smartphone_whatsapp_channels WHERE sender IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id) OR target IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM smartphone_whatsapp WHERE owner IN (SELECT phone FROM vrp_user_identities WHERE user_id = :user_id)'},
+    { query = 'DELETE FROM vrp_user_identities WHERE user_id = :user_id'},
+    { query = 'DELETE FROM vrp_homes WHERE user_id = :user_id'},
+    { query = 'DELETE FROM gb_box WHERE user_id = :user_id'},
+    { query = 'DELETE FROM gb_facs_user_goals WHERE user_id = :user_id'},
+    { query = 'DELETE FROM gb_facs_user_goals WHERE user_id = :user_id'},
+    { query = 'DELETE FROM gb_gamepass WHERE user_id = :user_id'},
+    { query = 'DELETE FROM gb_identity WHERE user_id = :user_id'},
+    { query = 'DELETE FROM gb_namoro WHERE user_id = :user_id OR relacionamentoCom = :user_id'},
+    { query = 'DELETE FROM gb_register WHERE user_id = :user_id'},
+    { query = 'DELETE FROM gb_reward WHERE user_id = :user_id'},
+    -- { query = 'DELETE FROM vrp_banco WHERE user_id = :user_id'},
+    -- { query = 'DELETE FROM core_killsystem WHERE user_id = :user_id'},
+    { query = 'DELETE FROM vrp_user_groups WHERE user_id = :user_id'},
+	{ query = 'DELETE FROM vrp_user_moneys WHERE user_id = :user_id'},
+    { query = 'DELETE FROM vrp_user_data WHERE user_id = :user_id'},	
+	{ query = 'DELETE FROM vrp_user_vehicles WHERE user_id = :user_id'},
+    { query = 'DELETE FROM vrp_mdt WHERE user_id = :user_id'},
+}
+
+local reset_player = function(user_id)
+	local _queries = queries
+	for _id,_ in pairs(_queries) do
+		_queries[_id].values = { ['user_id'] = user_id }
+	end
+	exports.oxmysql:transaction(_queries, function()
+		zero.resetIdentity(user_id)
+	end)
+end
+
+AddEventHandler('vRP:playerLeave', function(user_id, source)
+	local source = source
+	if _reset_list[source] then
+		print('RESETOU ('..user_id..')')
+		reset_player(user_id)
+	end
+end)
+
+RegisterCommand('resetplayer', function(source, args)
+    local text = ''
+    local user_id
+	if (source ~= 0) then user_id = zero.getUserId(source) end
+	if (source == 0 or user_id) then
+        if (source == 0 or zero.hasPermission(user_id, 'dono.permissao')) then
+            local nUser = tonumber(args[1])
+            if (nUser <= 0) then return; end;
+
+            local nIdentity = zero.getUserIdentity(nUser)
+            if (nIdentity) then
+                if (source == 0) or zero.request(source, 'Tem certeza em resetar o passaporte '..nUser..'?', 30000) then
+                    local nSource = zero.getUserSource(nUser)
+                    if (nSource) then
+                        resetList[nSource] = true
+                        DropPlayer(nSource, 'Você foi resetado.')
+                    else
+                        reset_player(nUser)
+                    end
+                    if (source == 0) then
+                        text = 'CONSOLE'
+                        print('^5[AVISO]^7 Voce resetou o ID #^5'..nUser..'^7 ^5'..nIdentity.firstname..' '..nIdentity.lastname..'^7')
+                    else
+                        text = '#'..user_id..' '..identity.firstname..' '..identity.lastname
+                        TriggerClientEvent('notify', source, 'Reset Player', 'Você resetou o passaporte <b>'..nUser..'</b>.')
+                    end
+                    zero.webhook(webhooks.resetplayer, '```prolog\n[/RESETPLAYER]\n[STAFF]: '..text..'\n[RESETADO]: '..nUser..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                end
+            else
+                if (source ~= 0) then TriggerClientEvent('notify', source, 'Reset Player', 'Jogador <b>inexistente</b>.') end
+            end
+        end
+    end
+end)
+
+---------------------------------------
+-- SC HACK
+---------------------------------------
+RegisterCommand('schack',function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'player.noclip') then
+        TriggerClientEvent('MQCU:getfodido', source)
+    end
+end)
+
+---------------------------------------
+-- ROUTING BUCKETS
+---------------------------------------
+RegisterCommand('gbucket', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+        if (args[1]) then
+            local nUser = parseInt(args[1])
+            local nSource = zero.getUserSource(nUser)
+            if (nSource) and GetPlayerName(nSource) then
+                TriggerClientEvent('notify', source, 'Get Bucket', 'O jogador <b>'..nUser..'</b> está na Sessão <b>'..GetPlayerRoutingBucket(nSource)..'</b>.', 8000)
+            else
+                TriggerClientEvent('notify', source, 'Get Bucket', 'O jogador <b>'..nUser..'</b> não foi encontrado.', 8000)
+            end
+        else
+            TriggerClientEvent('notify', source, 'Get Bucket', 'Você está na Sessão <b>'..GetPlayerRoutingBucket(source)..'</b>.', 8000)
+        end
+    end
+end)
+
+RegisterCommand('sbucket', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+        if (args[1] and args[2]) then
+            local nUser = parseInt(args[1])
+            local nSource = zero.getUserSource(nUser)
+            local bucket = parseInt(args[2])
+            if (nSource and GetPlayerName(nSource)) and (bucket >= 0) then
+                SetPlayerRoutingBucket(nSource, bucket)
+                TriggerClientEvent('notify', source, 'Set Bucket', 'O jogador <b>'..nUser..'</b> foi setado na sessão <b>'..bucket..'</b>.', 8000)
+                zero.webhook(webhooks.bucket, '```prolog\n[/SBUCKET]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[SETOU]: '..nUser..'\n[SESSÃO]: '..bucket..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            else
+                TriggerClientEvent('notify', source, 'Set Bucket', 'O jogador <b>'..nUser..'</b> não foi encontrado.', 8000)
+            end
+        end
+    end
+end)
+
+---------------------------------------
+-- RG2
+---------------------------------------
+RegisterCommand('rg2', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nUser = parseInt(args[1])
+            local bankMoney = zero.getBankMoney(nUser)
+            local paypalMoney = zero.getPaypalMoney(nUser)
+            local walletMoney = zero.getMoney(nUser)
+
+            local groups = ''
+            for gp, i in pairs(zero.getUserGroups(nUser)) do
+                groups = groups..'<br>'..gp..' ('..i.grade..')'
+            end
+
+            TriggerClientEvent('notify', source, 'Registro', 'Passaporte: <b>#'..nUser..'</b><br>Registro: <b>'..identity.registration..'</b><br>Nome: <b>'..identity.firstname..' '..identity.lastname..'</b><br>Idade: <b>'..identity.age..'</b><br>Telefone: <b>'..identity.phone..'</b><br>Carteira: <b>'..zero.format(parseInt(walletMoney))..'</b><br>Banco: <b>'..zero.format(parseInt(bankMoney))..'</b><br>Sets: <b>'..groups..'</b>', 25000)
+        end
+    end
+end)
