@@ -24,7 +24,6 @@ end
 
 
 cInventory.addAmmo = function(index, amount)
-    print(index, amount)
     AddAmmoToPed(PlayerPedId(), index, tonumber(amount))
 end
 
