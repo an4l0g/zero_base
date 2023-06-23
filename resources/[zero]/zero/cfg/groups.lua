@@ -8,6 +8,7 @@ config.groups = {
 			groupType = 'staff'
 		},
 		'dono.permissao',
+		'manager.permissao',
 		'diretor.permissao',
 		'coordenador.permissao',
 		'admin.permissao',
