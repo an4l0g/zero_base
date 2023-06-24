@@ -1,5 +1,6 @@
 local cli = {}
 Tunnel.bindInterface('Nitro', cli)
+local vSERVER = Tunnel.getInterface('Nitro')
 
 local display = false
 
@@ -24,23 +25,26 @@ local install = false
 
 cli.installNitro = function()
     install = true
+    local installing = false
     Citizen.CreateThread(function()
         while (install) do
-            local idle = 1000
+            local idle = 1500
             local ped = PlayerPedId()
             local pCoord = GetEntityCoords(ped)
             local pVehicle = GetClosestVehicle(pCoord, 3.001, 0, 71)
             if (pVehicle and not IsPedInAnyVehicle(ped)) then
                 local engine = GetWorldPositionOfEntityBone(pVehicle, GetEntityBoneIndexByName(pVehicle, 'engine'))
                 local distance = #(pCoord - engine)
+                idle = 4
                 if (distance <= 3.0) then
-                    idle = 4
                     DrawMarker(0, engine.x, engine.y, engine.z+0.7, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 153, 255, 155, 1, 0, 0, 1)
-                    if (distance <= 1.2 and IsControlJustPressed(0, 38)) then
+                    if (distance <= 1.5 and IsControlJustPressed(0, 38) and vSERVER.getNitro()) then
+                        installing = true
                         zero._playAnim(false, {{ 'mini@repair', 'fixing_a_player' }}, true)
                         PlaySoundFromEntity(-1, 'Bar_Unlock_And_Raise', pVehicle, 'DLC_IND_ROLLERCOASTER_SOUNDS', 0, 0)
                         SetVehicleDoorOpen(pVehicle, 4, 0, 0)
                         SetEntityHeading(ped, (GetEntityHeading(pVehicle) - 180))
+                        
                         TriggerEvent('cancelando', true)
                         FreezeEntityPosition(ped, true)
                         FreezeEntityPosition(pVehicle, true)
@@ -60,8 +64,9 @@ cli.installNitro = function()
                             SendNUIMessage({ type = 'purgeLevel', purge = 0 })
                             install = false
                         end)
-                    end
+                    end      
                 end
+                if (IsControlJustPressed(0, 168) and not installing) then install = false; end;
             end
             Citizen.Wait(idle)
         end
@@ -329,8 +334,10 @@ AddStateBagChangeHandler('purge', nil, function(bagName, key, value, reserved, r
         local rightPurge = StartParticleFxLoopedOnEntity('ent_sht_steam', entity, off.x + 0.5, off.y - 0.2, off.z + 0.2, 40.0, 20.0, 0.0, 0.3, false, false, false)
         purge[entity] = {left = leftPurge, right = rightPurge}
     else
-        StopParticleFxLooped(purge[entity].left)
-        StopParticleFxLooped(purge[entity].right)
+        if (purge[entity]) then
+            StopParticleFxLooped(purge[entity].left)
+            StopParticleFxLooped(purge[entity].right)
+        end
         purge[entity] = nil
     end
 end)

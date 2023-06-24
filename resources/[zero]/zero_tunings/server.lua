@@ -1,11 +1,18 @@
+local srv = {}
+Tunnel.bindInterface('Nitro', srv)
 local vCLIENT = Tunnel.getInterface('Nitro')
 
-startNitro = function()
+srv.getNitro = function()
     local source = source
-    vCLIENT.installNitro(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        if (zero.tryGetInventoryItem(user_id, 'nitro', 1)) then
+            return true
+        end
+        TriggerClientEvent('notify', source, 'Nitro', 'Você não possui <b>nitro</b> em sua mochila.')
+        return false
+    end
 end
-
-exports('installNitro', startNitro)
 
 RegisterNetEvent('ND_Nitro:purge', function(status, vehid)
     local source = source
@@ -35,7 +42,13 @@ RegisterNetEvent('ND_Nitro:flames', function(status, vehid)
     end
 end)
 
-RegisterCommand('teste', function(source)
-
-    vCLIENT.installNitro(source)
-end)
+startInstallNitro = function(source)
+    local user_id = zero.getUserId(source)
+    if (zero.getInventoryItemAmount(user_id, 'nitro') > 0) then
+        vCLIENT.installNitro(source)
+        TriggerClientEvent('notify', source, 'Nitro', 'Caso queira <b>cancelar</b> a instalação, pressione <b>F7</b>.', 10000)
+    else
+        TriggerClientEvent('notify', source, 'Nitro', 'Você não possui <b>nitro</b> em sua mochila.')
+    end
+end
+exports('startInstallNitro', startInstallNitro)

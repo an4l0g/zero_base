@@ -11,6 +11,11 @@ this = exports['zero_inventory']
 config.items = {
     ['algema'] = { name = 'Algema', type = 'common', weight = 0.5 },
     ['chave-algema'] = { name = 'Chave da Algema', type = 'common', weight = 0.5 },
+    ['nitro'] = { name = 'Nitro', type = 'common', weight = 1.0, usable = true,
+        interaction = function(source, user_id)
+            exports['zero_tunings']:startInstallNitro(source)
+        end
+    },
     ----------------------------------------------------------------------------
     -- Armas
     ----------------------------------------------------------------------------
