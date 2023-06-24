@@ -149,137 +149,140 @@ RegisterCommand('-nitro', function()
     end
 end)
 
-local startUi = function()
-    local ped = PlayerPedId()
-    local veh = GetVehiclePedIsIn(ped)
-    if (veh and GetPedInVehicleSeat(veh, -1) == ped) then
-        if (not display and hasNitro(veh)) then
-            Citizen.Wait(500)
-            display = true
-
-            local nosLevel, purgeLevel = getValuesNitro(veh)
-            SendNUIMessage({ type = 'nosLevel', nos = nosLevel })
-            SendNUIMessage({ type = 'purgeLevel', purge = purgeLevel })
-            SendNUIMessage({ type = 'status', display = display })
-        end
-    end
-end
-
 AddEventHandler('gameEventTriggered', function(event, args)
     if (event == 'CEventNetworkPlayerEnteredVehicle') then
         local id = args[1]
         if (id == PlayerId()) then
-            startUi()
+            local ped = PlayerPedId()
+            local veh = GetVehiclePedIsIn(ped)
+            if (veh and GetPedInVehicleSeat(veh, -1) == ped) then
+                if (not display and hasNitro(veh)) then
+                    Citizen.Wait(500)
+                    display = true
+
+                    local nosLevel, purgeLevel = getValuesNitro(veh)
+                    SendNUIMessage({ type = 'nosLevel', nos = nosLevel })
+                    SendNUIMessage({ type = 'purgeLevel', purge = purgeLevel })
+                    SendNUIMessage({ type = 'status', display = display })
+                end
+                nitroThread(ped)
+            end
         end
     end
 end)
 
-Citizen.CreateThread(function()
-    startUi()
-    while true do
-        local idle = 1500
-        local ped = PlayerPedId()
-        local veh = GetVehiclePedIsIn(ped)
-        if (IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101) then
-            if (veh and hasNitro(veh)) then
-                idle = 500
-                nosLevel, purgeLevel = getValuesNitro(veh)
-                if (nosLevel < 1) then
-                    setNitro(veh, false)
-                    
-                    display = false
-                    SendNUIMessage({ type = 'status', display = display })
+local thread = false
 
-                    activated = false
-                    TriggerServerEvent('ND_Nitro:flames', false)
-                    SetVehicleBoostActive(veh, activated)
-                    SetVehicleCheatPowerIncrease(veh, 1.0)
-                    screen = false
-                    StopGameplayCamShaking(true)
-                    SetTransitionTimecycleModifier('default', 0.35)
-                    EnableVehicleExhaustPops(veh, true)
-                end
+nitroThread = function(ped)
+    thread = true
+    Citizen.CreateThread(function()
+        local veh
+        while (thread) do
+            local idle = 1500
+            local veh = GetVehiclePedIsIn(ped)
+            if (IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101) then
+                if (veh and hasNitro(veh)) then
+                    idle = 500
+                    nosLevel, purgeLevel = getValuesNitro(veh)
+                    if (nosLevel < 1) then
+                        setNitro(veh, false)
+                        
+                        display = false
+                        SendNUIMessage({ type = 'status', display = display })
 
-                if (activated and nosLevel > 0) then
-                    local lvl = nosLevel - 1.0
-                    DecorSetFloat(veh, 'ND_NITRO_NOS', lvl)
-                    SendNUIMessage({ type = 'nosLevel', nos = lvl })
+                        activated = false
+                        TriggerServerEvent('ND_Nitro:flames', false)
+                        SetVehicleBoostActive(veh, activated)
+                        SetVehicleCheatPowerIncrease(veh, 1.0)
+                        screen = false
+                        StopGameplayCamShaking(true)
+                        SetTransitionTimecycleModifier('default', 0.35)
+                        EnableVehicleExhaustPops(veh, true)
+                    end
 
-                    if (purgeLevel < 100) then
-                        local lvl = purgeLevel + 4.0
+                    if (activated and nosLevel > 0) then
+                        local lvl = nosLevel - 1.0
+                        DecorSetFloat(veh, 'ND_NITRO_NOS', lvl)
+                        SendNUIMessage({ type = 'nosLevel', nos = lvl })
+
+                        if (purgeLevel < 100) then
+                            local lvl = purgeLevel + 4.0
+                            DecorSetFloat(veh, 'ND_NITRO_PURGE', lvl)
+                            SendNUIMessage({ type = 'purgeLevel', purge = lvl })
+                        end
+                    end
+
+                    if (purging and purgeLevel > 0) then
+                        local lvl = purgeLevel - 15.0
                         DecorSetFloat(veh, 'ND_NITRO_PURGE', lvl)
                         SendNUIMessage({ type = 'purgeLevel', purge = lvl })
+                    elseif (purging and purgeLevel < 0) then
+                        local lvl = nosLevel - 5.0
+                        DecorSetFloat(veh, 'ND_NITRO_NOS', lvl)
+                        SendNUIMessage({ type = 'nosLevel', nos = lvl })
                     end
-                end
 
-                if (purging and purgeLevel > 0) then
-                    local lvl = purgeLevel - 15.0
-                    DecorSetFloat(veh, 'ND_NITRO_PURGE', lvl)
-                    SendNUIMessage({ type = 'purgeLevel', purge = lvl })
-                elseif (purging and purgeLevel < 0) then
-                    local lvl = nosLevel - 5.0
-                    DecorSetFloat(veh, 'ND_NITRO_NOS', lvl)
-                    SendNUIMessage({ type = 'nosLevel', nos = lvl })
-                end
+                    if (nosLevel > 0 and purgeLevel < 100) then
+                        if (activated) then
+                            local model = GetEntityModel(veh)
+                            local maxSpeed = GetVehicleModelMaxSpeed(model)
+                            local speed = GetEntitySpeed(veh)
+                            local kmh = math.floor(speed * 3.6)
+                            local multiplier =  (6.0 * maxSpeed / speed)
+                            SetVehicleCheatPowerIncrease(veh, multiplier)
 
-                if (nosLevel > 0 and purgeLevel < 100) then
-                    if (activated) then
-                        local model = GetEntityModel(veh)
-                        local maxSpeed = GetVehicleModelMaxSpeed(model)
-                        local speed = GetEntitySpeed(veh)
-                        local kmh = math.floor(speed * 3.6)
-                        local multiplier =  (6.0 * maxSpeed / speed)
-                        SetVehicleCheatPowerIncrease(veh, multiplier)
+                            if screen and kmh < 96.0 then
+                                screen = false
+                                StopGameplayCamShaking(true)
+                                SetTransitionTimecycleModifier('default', 0.35)
+                            elseif not screen and kmh > 96.0 then
+                                screen = true
+                                SetTimecycleModifier('rply_motionblur')
+                                ShakeGameplayCam('SKY_DIVING_SHAKE', 0.25)
+                            end
 
-                        if screen and kmh < 96.0 then
-                            screen = false
-                            StopGameplayCamShaking(true)
-                            SetTransitionTimecycleModifier('default', 0.35)
-                        elseif not screen and kmh > 96.0 then
-                            screen = true
-                            SetTimecycleModifier('rply_motionblur')
-                            ShakeGameplayCam('SKY_DIVING_SHAKE', 0.25)
+                            EnableVehicleExhaustPops(veh, false)
                         end
-
-                        EnableVehicleExhaustPops(veh, false)
+                    elseif (activated) then
+                        activated = false
+                        TriggerServerEvent('ND_Nitro:flames', false)
+                        SetVehicleBoostActive(veh, activated)
+                        SetVehicleCheatPowerIncrease(veh, 1.0)
+                        screen = false
+                        StopGameplayCamShaking(true)
+                        SetTransitionTimecycleModifier('default', 0.35)
+                        EnableVehicleExhaustPops(veh, true)
                     end
-                elseif (activated) then
-                    activated = false
-                    TriggerServerEvent('ND_Nitro:flames', false)
-                    SetVehicleBoostActive(veh, activated)
-                    SetVehicleCheatPowerIncrease(veh, 1.0)
-                    screen = false
-                    StopGameplayCamShaking(true)
-                    SetTransitionTimecycleModifier('default', 0.35)
-                    EnableVehicleExhaustPops(veh, true)
                 end
+            else
+                thread = false
             end
-        else
-            if (activated) then
-                activated = false
-                TriggerServerEvent('ND_Nitro:flames', false, VehToNet(veh))
-                SetVehicleBoostActive(veh, activated)
-                SetVehicleCheatPowerIncrease(veh, 1.0)
-            end
-            if (screen) then
-                screen = false
-                StopGameplayCamShaking(true)
-                SetTransitionTimecycleModifier('default', 0.35)
-                Citizen.Wait(1000)
-                EnableVehicleExhaustPops(veh, true)
-            end
-            if (purging) then
-                purging = false
-                TriggerServerEvent('ND_Nitro:purge', false, VehToNet(veh))
-            end
-            if (display) then
-                display = false
-                SendNUIMessage({ type = 'status', display = display })
-            end
+            Citizen.Wait(idle)
         end
-        Citizen.Wait(idle)
-    end
-end)
+        if (display) then
+            display = false
+            SendNUIMessage({ type = 'status', display = display })
+        end
+        if (activated) then
+            activated = false
+            TriggerServerEvent('ND_Nitro:flames', false, VehToNet(veh))
+            SetVehicleBoostActive(veh, activated)
+            SetVehicleCheatPowerIncrease(veh, 1.0)
+        end
+        if (screen) then
+            screen = false
+            StopGameplayCamShaking(true)
+            SetTransitionTimecycleModifier('default', 0.35)
+            Citizen.Wait(1000)
+            EnableVehicleExhaustPops(veh, true)
+        end
+        if (purging) then
+            purging = false
+            TriggerServerEvent('ND_Nitro:purge', false, VehToNet(veh))
+        end
+        veh = nil
+    end)
+end
 
 AddStateBagChangeHandler('flames', nil, function(bagName, key, value, reserved, replicated)
     if value == nil then return end

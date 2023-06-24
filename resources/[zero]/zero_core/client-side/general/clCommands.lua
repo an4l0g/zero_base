@@ -149,32 +149,41 @@ RegisterNetEvent('spike', function(arg)
 	end
 end)
 
-Citizen.CreateThread(function()
-	local spikeHash = GetHashKey('p_ld_stinger_s')
-	while true do
-		local _sleep = 1000
-		local ped = PlayerPedId()
-		local veh = GetVehiclePedIsIn(ped,false)
-		if (veh > 0) then
-			local vcoord = GetEntityCoords(veh)
-			local spike = GetClosestObjectOfType(vcoord.x,vcoord.y,vcoord.z,1.0,spikeHash,false,false,false)
-			if (spike > 0) then
-				SetVehicleTyreBurst(veh, 0, true, 1000.0)
-				SetVehicleTyreBurst(veh, 1, true, 1000.0)
-				SetVehicleTyreBurst(veh, 2, true, 1000.0)
-				SetVehicleTyreBurst(veh, 3, true, 1000.0)
-				SetVehicleTyreBurst(veh, 4, true, 1000.0)
-				SetVehicleTyreBurst(veh, 5, true, 1000.0)
-				SetVehicleTyreBurst(veh, 6, true, 1000.0)
-				SetVehicleTyreBurst(veh, 7, true, 1000.0)
-				TriggerServerEvent('trydeleteobj',ObjToNet(spike))
-				Citizen.Wait(2000)
-			end
-			_sleep = 5
+AddEventHandler('gameEventTriggered', function(event, args)
+    if (event == 'CEventNetworkPlayerEnteredVehicle') then
+		if (args[1] == PlayerId()) then
+			spikeThread()
 		end
-		Citizen.Wait(_sleep)
 	end
 end)
+
+spikeThread = function()
+	Citizen.CreateThread(function()
+		local spikeHash = GetHashKey('p_ld_stinger_s')
+		local ped = PlayerPedId()
+		while (IsPedInAnyVehicle(ped)) do
+			local _sleep = 1000
+			local veh = GetVehiclePedIsIn(ped,false)
+			if (veh > 0) then
+				local vcoord = GetEntityCoords(veh)
+				local spike = GetClosestObjectOfType(vcoord.x,vcoord.y,vcoord.z,1.0,spikeHash,false,false,false)
+				if (spike > 0) then
+					_sleep = 5
+					SetVehicleTyreBurst(veh, 0, true, 1000.0)
+					SetVehicleTyreBurst(veh, 1, true, 1000.0)
+					SetVehicleTyreBurst(veh, 2, true, 1000.0)
+					SetVehicleTyreBurst(veh, 3, true, 1000.0)
+					SetVehicleTyreBurst(veh, 4, true, 1000.0)
+					SetVehicleTyreBurst(veh, 5, true, 1000.0)
+					SetVehicleTyreBurst(veh, 6, true, 1000.0)
+					SetVehicleTyreBurst(veh, 7, true, 1000.0)
+					TriggerServerEvent('trydeleteobj',ObjToNet(spike))
+				end
+			end
+			Citizen.Wait(_sleep)
+		end
+	end)
+end
 
 ---------------------------------------
 -- TOW
