@@ -28,3 +28,7 @@ sInventory.hasPermission = function(permission)
 
     return zero.hasPermission(user_id, permission)
 end
+
+sInventory.extract = function(string)
+    return string:match(":(.*)")
+end
