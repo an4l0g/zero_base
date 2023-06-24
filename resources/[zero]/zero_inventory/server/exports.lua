@@ -196,13 +196,14 @@ sInventory.setInventoryMaxWeight = function(user_id, weight)
 end
 exports('setInventoryMaxWeight', sInventory.setInventoryMaxWeight)
 
-sInventory.clearInventory = function(user_id)
+sInventory.clearInventory = function(source, user_id)
     local _source = zero.getUserSource(user_id)
     -- cInventory.unequipAllWeapons(_source)
-
-    zero.execute('zero_inventory:deleteBag', { bag_type = 'bag:'..user_id })
-    zero.execute('zero_inventory:deleteBag', { bag_type = 'hotbar:'..user_id })
-    config.functions.serverNotify(currentSource, config.texts.notify_title, config.texts.notify_success_delete_bag('USER_'..user_id))
+    if exports.zero_hud:request(source, 'Deseja realmente limpar o inventário do id '..user_id..'?') then
+        zero.execute('zero_inventory:deleteBag', { bag_type = 'bag:'..user_id })
+        zero.execute('zero_inventory:deleteBag', { bag_type = 'hotbar:'..user_id })
+        config.functions.serverNotify(source, config.texts.notify_title, config.texts.notify_success_delete_bag('do jogador de id '..user_id))
+    end 
 end
 exports('clearInventory', sInventory.clearInventory)
 
