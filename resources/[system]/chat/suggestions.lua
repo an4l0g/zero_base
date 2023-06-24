@@ -463,9 +463,7 @@ local suggestions = {
 	-- }
 }
 
-RegisterNetEvent('reloadSuggestion', function()
-	local source = source
-	local user_id = zero.getUserId(source)
+RegisterNetEvent('reloadSuggestion', function(source, user_id)
 	if (user_id) then
 		local __suggestions__ = {}
 		for _,v in pairs(suggestions) do
@@ -482,7 +480,7 @@ RegisterNetEvent('reloadSuggestion', function()
 end)
 
 AddEventHandler("vRP:playerSpawn",function(user_id,source)
-	TriggerEvent('reloadSuggestion', source)
+	TriggerEvent('reloadSuggestion', source, user_id)
 end)
 
 AddEventHandler("chat:addedGroup",function(user_id)
