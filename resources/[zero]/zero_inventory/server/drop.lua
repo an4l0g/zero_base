@@ -81,7 +81,7 @@ end
 
 AddEventHandler("vRP:playerSpawn", function(_,source,first_spawn)
     if first_spawn then
-        for k,v in sPairs(droppedItems) do
+        for k,v in pairs(droppedItems) do
             TriggerClientEvent('setDrop', source, v)
         end
     end

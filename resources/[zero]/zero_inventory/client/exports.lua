@@ -34,6 +34,7 @@ exports('openInventory', cInventory.openInventory)
 
 cInventory.closeInventory = function(data)
     verifyNearest = false
+    nearbyVehicle = nil
     if data and data.message then
         config.functions.clientNotify(config.texts.notify_title, data.message, 5000)
     end

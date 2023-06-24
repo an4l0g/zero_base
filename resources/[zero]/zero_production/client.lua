@@ -69,9 +69,11 @@ Citizen.CreateThread(function()
         local pedCoords = GetEntityCoords(ped)
         for k, v in pairs(configs.productions) do
             local distance = #(pedCoords - v.coords)
-            if (distance <= 5.0) then
+            if (distance <= 5) then
                 nearbyProduction = v
                 nearbyProduction.index = k
+            else
+                nearbyProduction = nil
             end
         end
         if (nearbyProduction) and nearbyProduction['coords'] then

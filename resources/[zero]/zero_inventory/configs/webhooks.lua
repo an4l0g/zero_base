@@ -6,4 +6,5 @@ config.webhooks = {
     dropItem = 'https://discord.com/api/webhooks/1121813178045706380/aIN1Va7l3Low-pVFvWDT9yf1_R2theXFecb1hTZUo6pBc1-3Vsz4POzIl-nf8oWcH3Nz',
     getItem = 'https://discord.com/api/webhooks/1121813674215080127/BOllrtEeWeBcWVdVEaUTuLhF8UV3GEvhaUjus0srGBGBDTfcF03XN-TGaE2IdiztWp2D',
     delBag = 'https://discord.com/api/webhooks/1121818889026797608/n-VZ0_cxfdgmQ5y9euXq2aZxHbi1yq8sHy6QEdljJaVWKNyGKegSbRt61rl6HIIcj17Z',
+    stealItem = 'https://discord.com/api/webhooks/1122024021203099658/tr7qRkiyOEDiaTePS_8wzKkx8542GWKPG4BWrKfanHaTq3SKvfHLmOPKgn6KnkeGlkHZ',
 }

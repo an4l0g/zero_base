@@ -21,5 +21,5 @@ configs.products = {
 }
 
 configs.productions = {
-    ['fac1'] = { coords = vec3(-75.17, -819.11, 326.17), products = configs.products.guns, label = 'Armas', webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' },
+    ['fac1'] = { coords = vec3(-68.56, -823.24, 326.23), products = configs.products.guns, label = 'Armas', webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' },
 }

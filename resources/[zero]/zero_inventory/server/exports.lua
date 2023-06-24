@@ -31,7 +31,11 @@ sInventory.giveBagItem = function(bagType, item, amount)
             end
         else
             updatedSlots[0] = { index = item, amount = amount }
-            zero.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = bagType, weight = 0 })
+            local currentWeight = 0
+            if split(bagType, ':')[1] == 'bag' then
+                currentWeight = config.bag_max_weight
+            end
+            zero.execute('zero_inventory:insertBag', { slots = json.encode(updatedSlots), bag_type = bagType, weight = currentWeight })
             return true
         end
     else
@@ -114,7 +118,7 @@ sInventory.tryGetInventoryItem = function(user_id, index, amount)
     end
 
     if not isRemovedItem then
-        for k,v in sPairs(hotbarSlots) do
+        for k,v in pairs(hotbarSlots) do
             if v.index == index and tonumber(v.amount) >= tonumber(amount) then
                 local currentAmount = tonumber(v.amount) - tonumber(amount)
                 if currentAmount > 0 then
@@ -138,7 +142,7 @@ sInventory.getInventoryItemAmount = function(user_id, index)
     local bag = sInventory.getBag('bag:'..user_id)
     local amount = 0
 
-    for k,v in sPairs(bag) do
+    for k,v in pairs(bag) do
         if v.index == index then
             amount = amount + v.amount
         end
@@ -153,11 +157,11 @@ sInventory.getInventory = function(user_id)
     local hotbar = sInventory.getBag('hotbar:'..user_id)
     local playerBag = {}
 
-    for k,v in sPairs(bag) do
+    for k,v in pairs(bag) do
         table.insert(playerBag, v)
     end 
 
-    for k,v in sPairs(hotbar) do
+    for k,v in pairs(hotbar) do
         table.insert(playerBag, v)
     end 
 
@@ -171,12 +175,12 @@ sInventory.getInventoryWeight = function(user_id)
 
     local totalWeight = 0
     
-    for k,v in sPairs(json.decode(bag.slots)) do
+    for k,v in pairs(json.decode(bag.slots)) do
         local cItem = config.items[v.index]
         totalWeight = totalWeight + (cItem.weight * v.amount)
     end 
 
-    for k,v in sPairs(json.decode(hotbar.slots)) do
+    for k,v in pairs(json.decode(hotbar.slots)) do
         local cItem = config.items[v.index]
         totalWeight = totalWeight + (cItem.weight * v.amount)
     end 
@@ -209,12 +213,18 @@ exports('clearInventory', sInventory.clearInventory)
 
 sInventory.tryAddInventoryItem = function(user_id, index, amount)
     local slots = nil
+    local slotsTotalWeight = nil
     local items = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
-    if #items > 0 then slots = json.decode(items[1].slots) end
-
+    if #items > 0 then 
+        slots = json.decode(items[1].slots)
+        slotsTotalWeight = items[1].weight
+    else 
+        slots = {} 
+        slotsTotalWeight = config.bag_max_weight
+    end
+    print(json.encode(slots))
     local totalWeight = 0
-
-    for k,v in sPairs(slots) do
+    for k,v in pairs(slots) do
         local cItem = config.items[v.index]
         totalWeight = totalWeight + (cItem.weight * v.amount)
     end 
@@ -222,7 +232,7 @@ sInventory.tryAddInventoryItem = function(user_id, index, amount)
     local currentItem = config.items[index]
     totalWeight = totalWeight + (currentItem.weight * amount)
 
-    if items[1].weight >= totalWeight then
+    if slotsTotalWeight >= totalWeight then
         sInventory.giveBagItem('bag:'..user_id, index, amount)
         return true
     else 
@@ -236,11 +246,11 @@ sInventory.getFullInventory = function(user_id)
     local hotbar = sInventory.getSlotsByBag('hotbar:'..user_id)
     local playerBag = {}
 
-    for k,v in sPairs(bag) do
+    for k,v in pairs(bag) do
         table.insert(playerBag, v)
     end 
 
-    for k,v in sPairs(hotbar) do
+    for k,v in pairs(hotbar) do
         table.insert(playerBag, v)
     end 
 

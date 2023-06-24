@@ -71,6 +71,7 @@ srv.getVehicleData = function(vehnet)
 	end
 	return {}
 end
+exports('getVehicleData', srv.getVehicleData)
 
 srv.processState = function(state)
     if (state and state.data and state.data.engineHealth) then return state; end;

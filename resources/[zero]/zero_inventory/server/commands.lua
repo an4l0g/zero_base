@@ -3,7 +3,7 @@ RegisterCommand('item', function(source, args)
     local _source = source
     local user_id = zero.getUserId(_source)
     local item = args[1]
-    local amount = (args[2] or 1)
+    local amount = (tonumber(args[2]) or 1)
     
     if zero.hasPermission(user_id, 'admin.permissao') then
         if config.items[item] then
