@@ -5,4 +5,19 @@ Citizen.CreateThread(function()
 	SetAudioFlag('PoliceScannerDisabled', true)
 	SetPlayerCanUseCover(PlayerId(), false)
 	DistantCopCarSirens(false)
+
+	-- [ Cayo Perico ] --
+	SetAudioFlag('PlayerOnDLCHeist4Island', true)
+	SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Zones', true, true)
+	SetAmbientZoneListStatePersistent('AZL_DLC_Hei4_Island_Disabled_Zones', false, true)
+	SetDeepOceanScaler(0.0)
+	while (true) do
+		local ped = PlayerPedId()
+		local pCoord = GetEntityCoords(ped)
+
+		-- [ Cayo Perico ] --
+		SetRadarAsExteriorThisFrame()
+		SetRadarAsInteriorThisFrame('h4_fake_islandx', vec(4700.0, -5145.0), 0, 0)
+		Citizen.Wait(1)
+	end
 end)
