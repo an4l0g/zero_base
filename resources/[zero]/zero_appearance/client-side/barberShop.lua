@@ -245,7 +245,7 @@ openBarberShop = function(config, coords, heading)
     barberData['oldCharacter'] = LocalPlayer.state['oldPedCustom']
 
     SendNUIMessage({
-        method = 'openBarberShop',
+        action = 'openBarberShop',
         data = {
             type = config['shopType'],
             config = config['shopConfig'],
