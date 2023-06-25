@@ -1,6 +1,8 @@
 local cli = {}
 Tunnel.bindInterface('Commands', cli) 
 local vSERVER = Tunnel.getInterface('Commands')
+
+local CommandsData = {}
 ---------------------------------------
 -- TPWAY
 ---------------------------------------
@@ -149,54 +151,55 @@ RegisterNetEvent('spike', function(arg)
 	end
 end)
 
-Citizen.CreateThread(function()
-	local spikeHash = GetHashKey('p_ld_stinger_s')
-	while true do
-		local _sleep = 1000
+spikeThread = function()
+	Citizen.CreateThread(function()
+		local spikeHash = GetHashKey('p_ld_stinger_s')
 		local ped = PlayerPedId()
-		local veh = GetVehiclePedIsIn(ped,false)
-		if (veh > 0) then
-			local vcoord = GetEntityCoords(veh)
-			local spike = GetClosestObjectOfType(vcoord.x,vcoord.y,vcoord.z,1.0,spikeHash,false,false,false)
-			if (spike > 0) then
-				SetVehicleTyreBurst(veh, 0, true, 1000.0)
-				SetVehicleTyreBurst(veh, 1, true, 1000.0)
-				SetVehicleTyreBurst(veh, 2, true, 1000.0)
-				SetVehicleTyreBurst(veh, 3, true, 1000.0)
-				SetVehicleTyreBurst(veh, 4, true, 1000.0)
-				SetVehicleTyreBurst(veh, 5, true, 1000.0)
-				SetVehicleTyreBurst(veh, 6, true, 1000.0)
-				SetVehicleTyreBurst(veh, 7, true, 1000.0)
-				TriggerServerEvent('trydeleteobj',ObjToNet(spike))
-				Citizen.Wait(2000)
+		local inVehicle = IsPedInAnyVehicle(ped)
+		while (inVehicle) do
+			local _sleep = 1000
+			local veh = GetVehiclePedIsIn(ped,false)
+			inVehicle = IsPedInAnyVehicle(ped)
+			if (veh > 0) then
+				_sleep = 500
+				local vcoord = GetEntityCoords(veh)
+				local spike = GetClosestObjectOfType(vcoord.x,vcoord.y,vcoord.z,1.0,spikeHash,false,false,false)
+				if (spike > 0) then
+					SetVehicleTyreBurst(veh, 0, true, 1000.0)
+					SetVehicleTyreBurst(veh, 1, true, 1000.0)
+					SetVehicleTyreBurst(veh, 2, true, 1000.0)
+					SetVehicleTyreBurst(veh, 3, true, 1000.0)
+					SetVehicleTyreBurst(veh, 4, true, 1000.0)
+					SetVehicleTyreBurst(veh, 5, true, 1000.0)
+					SetVehicleTyreBurst(veh, 6, true, 1000.0)
+					SetVehicleTyreBurst(veh, 7, true, 1000.0)
+				end
 			end
-			_sleep = 5
+			Citizen.Wait(_sleep)
 		end
-		Citizen.Wait(_sleep)
-	end
-end)
+	end)
+end
+RegisterNetEvent('zero_core:spikeThread', spikeThread)
 
 ---------------------------------------
 -- TOW
 ---------------------------------------
-local PlayerData = {}
-
-PlayerData['mec:tow'] = nil
-PlayerData['mec:towed'] = nil
+CommandsData['mec:tow'] = nil
+CommandsData['mec:towed'] = nil
 
 RegisterNetEvent('vTow',function()
 	local vehicle = GetPlayersLastVehicle()
 	if IsVehicleModel(vehicle,GetHashKey('flatbed')) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
-		PlayerData['mec:towed'] = zero.getNearestVehicle(7)
-		if IsEntityAVehicle(vehicle) and IsEntityAVehicle(PlayerData['mec:towed']) then
-			if PlayerData['mec:tow'] then
-				TriggerServerEvent('trytow',VehToNet(vehicle),VehToNet(PlayerData['mec:tow']),'out')
-				PlayerData['mec:towed'] = nil
-				PlayerData['mec:tow'] = nil
+		CommandsData['mec:towed'] = zero.getNearestVehicle(7)
+		if IsEntityAVehicle(vehicle) and IsEntityAVehicle(CommandsData['mec:towed']) then
+			if CommandsData['mec:tow'] then
+				TriggerServerEvent('trytow',VehToNet(vehicle),VehToNet(CommandsData['mec:tow']),'out')
+				CommandsData['mec:towed'] = nil
+				CommandsData['mec:tow'] = nil
 			else
-				if (vehicle ~= PlayerData['mec:towed']) then
-					TriggerServerEvent('trytow',VehToNet(vehicle),VehToNet(PlayerData['mec:towed']),'in')
-					PlayerData['mec:tow'] = PlayerData['mec:towed']
+				if (vehicle ~= CommandsData['mec:towed']) then
+					TriggerServerEvent('trytow',VehToNet(vehicle),VehToNet(CommandsData['mec:towed']),'in')
+					CommandsData['mec:tow'] = CommandsData['mec:towed']
 				end
 			end
 		end
@@ -326,11 +329,10 @@ end)
 ---------------------------------------
 -- DEBUG
 ---------------------------------------
-local debug = false
-
+CommandsData['debug'] = false
 RegisterNetEvent('zero_core:debug', function()
-	debug = not debug
-    if (debug) then
+	CommandsData['debug'] = not CommandsData['debug']
+    if (CommandsData['debug']) then
         debugThread()
 		TriggerEvent('notify', 'Debug', 'O <b>debug</b> foi ativado.')
     else
@@ -338,10 +340,10 @@ RegisterNetEvent('zero_core:debug', function()
     end
 end)
 
-local closestObject = 0
+CommandsData['closestObject'] = 0
 
 RegisterCommand('debugobj', function()
-    if (debug) then TriggerEvent('clipboard', 'Nearest Hash', tostring(closestObject)); end;
+    if (CommandsData['debug']) then TriggerEvent('clipboard', 'Nearest Hash', tostring(CommandsData['closestObject'])); end;
 end)
 
 function GetVehicle()
@@ -359,9 +361,9 @@ function GetVehicle()
             rped = ped
 
 	    	if IsEntityTouchingEntity(GetPlayerPed(-1), ped) then
-	    		DebugDrawText3Ds(pos["x"],pos["y"],pos["z"]+1, "Veh: " .. ped .. " Model: " .. GetEntityModel(ped) .. " IN CONTACT" )
+	    		DebugDrawText3Ds(pos['x'],pos['y'],pos['z']+1, 'Veh: ' .. ped .. ' Model: ' .. GetEntityModel(ped) .. ' IN CONTACT' )
 	    	else
-	    		DebugDrawText3Ds(pos["x"],pos["y"],pos["z"]+1, "Veh: " .. ped .. " Model: " .. GetEntityModel(ped) .. "" )
+	    		DebugDrawText3Ds(pos['x'],pos['y'],pos['z']+1, 'Veh: ' .. ped .. ' Model: ' .. GetEntityModel(ped) .. '' )
 	    	end
         end
         success, ped = FindNextVehicle(handle)
@@ -390,9 +392,9 @@ function GetObject()
             rped = ped
 
 	    	if IsEntityTouchingEntity(GetPlayerPed(-1), ped) then
-	    		DebugDrawText3Ds(pos["x"],pos["y"],pos["z"]+1, "Obj: " .. ped .. " Model: " .. GetEntityModel(ped) .. " IN CONTACT" )
+	    		DebugDrawText3Ds(pos['x'],pos['y'],pos['z']+1, 'Obj: ' .. ped .. ' Model: ' .. GetEntityModel(ped) .. ' IN CONTACT' )
 	    	else
-	    		DebugDrawText3Ds(pos["x"],pos["y"],pos["z"]+1, "Obj: " .. ped .. " Model: " .. GetEntityModel(ped) .. "" )
+	    		DebugDrawText3Ds(pos['x'],pos['y'],pos['z']+1, 'Obj: ' .. ped .. ' Model: ' .. GetEntityModel(ped) .. '' )
 	    	end
         end
         success, ped = FindNextObject(handle)
@@ -416,9 +418,9 @@ function getNPC()
             rped = ped
 
 	    	if IsEntityTouchingEntity(GetPlayerPed(-1), ped) then
-	    		DebugDrawText3Ds(pos["x"],pos["y"],pos["z"], "Ped: " .. ped .. " Model: " .. GetEntityModel(ped) .. " Relationship HASH: " .. GetPedRelationshipGroupHash(ped) .. " IN CONTACT" )
+	    		DebugDrawText3Ds(pos['x'],pos['y'],pos['z'], 'Ped: ' .. ped .. ' Model: ' .. GetEntityModel(ped) .. ' Relationship HASH: ' .. GetPedRelationshipGroupHash(ped) .. ' IN CONTACT' )
 	    	else
-	    		DebugDrawText3Ds(pos["x"],pos["y"],pos["z"], "Ped: " .. ped .. " Model: " .. GetEntityModel(ped) .. " Relationship HASH: " .. GetPedRelationshipGroupHash(ped) )
+	    		DebugDrawText3Ds(pos['x'],pos['y'],pos['z'], 'Ped: ' .. ped .. ' Model: ' .. GetEntityModel(ped) .. ' Relationship HASH: ' .. GetPedRelationshipGroupHash(ped) )
 	    	end
 
         end
@@ -443,9 +445,9 @@ end
 
 function debugThread()
     Citizen.CreateThread(function()
-        while (debug) do 
+        while (CommandsData['debug']) do 
             local idle = 1000 
-            if (debug) then
+            if (CommandsData['debug']) then
                 idle = 4
                 local pos = GetEntityCoords(GetPlayerPed(-1))
 
@@ -463,15 +465,15 @@ function debugThread()
                 local currentStreetHash, intersectStreetHash = GetStreetNameAtCoord(x, y, z, currentStreetHash, intersectStreetHash)
                 currentStreetName = GetStreetNameFromHashKey(currentStreetHash)
 
-                DebugdrawTxtS(0.8, 0.50, 0.4,0.4,0.30, "Heading: " .. GetEntityHeading(GetPlayerPed(-1)), 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.52, 0.4,0.4,0.30, "Coords: " .. pos, 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.54, 0.4,0.4,0.30, "Attached Ent: " .. GetEntityAttachedTo(GetPlayerPed(-1)), 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.56, 0.4,0.4,0.30, "Health: " .. GetEntityHealth(GetPlayerPed(-1)), 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.58, 0.4,0.4,0.30, "H a G: " .. GetEntityHeightAboveGround(GetPlayerPed(-1)), 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.60, 0.4,0.4,0.30, "Model: " .. GetEntityModel(GetPlayerPed(-1)), 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.62, 0.4,0.4,0.30, "Speed: " .. GetEntitySpeed(GetPlayerPed(-1)), 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.64, 0.4,0.4,0.30, "Frame Time: " .. GetFrameTime(), 55, 155, 55, 255)
-                DebugdrawTxtS(0.8, 0.66, 0.4,0.4,0.30, "Street: " .. currentStreetName, 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.50, 0.4,0.4,0.30, 'Heading: ' .. GetEntityHeading(GetPlayerPed(-1)), 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.52, 0.4,0.4,0.30, 'Coords: ' .. pos, 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.54, 0.4,0.4,0.30, 'Attached Ent: ' .. GetEntityAttachedTo(GetPlayerPed(-1)), 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.56, 0.4,0.4,0.30, 'Health: ' .. GetEntityHealth(GetPlayerPed(-1)), 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.58, 0.4,0.4,0.30, 'H a G: ' .. GetEntityHeightAboveGround(GetPlayerPed(-1)), 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.60, 0.4,0.4,0.30, 'Model: ' .. GetEntityModel(GetPlayerPed(-1)), 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.62, 0.4,0.4,0.30, 'Speed: ' .. GetEntitySpeed(GetPlayerPed(-1)), 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.64, 0.4,0.4,0.30, 'Frame Time: ' .. GetFrameTime(), 55, 155, 55, 255)
+                DebugdrawTxtS(0.8, 0.66, 0.4,0.4,0.30, 'Street: ' .. currentStreetName, 55, 155, 55, 255)
                 
                 
                 DrawLine(pos,forPos, 0,255,255,115)
@@ -504,7 +506,7 @@ DebugdrawTxtS = function(x,y ,width,height,scale, text, r,g,b,a)
     SetTextEdge(1, 0, 0, 0, 255)
     SetTextDropShadow()
     SetTextOutline()
-    SetTextEntry("STRING")
+    SetTextEntry('STRING')
     AddTextComponentString(text)
     DrawText(x - width/2, y - height/2 + 0.005)
 end
@@ -517,7 +519,7 @@ DebugDrawText3Ds = function(x,y,z, text)
     SetTextFont(4)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
+    SetTextEntry('STRING')
     SetTextCentre(1)
     AddTextComponentString(text)
     DrawText(_x,_y)
@@ -528,14 +530,116 @@ end
 ---------------------------------------
 -- TERREMOTO
 ---------------------------------------
-local terremoto = false
+CommandsData['terremoto'] = false
 
 RegisterNetEvent('zero_core:terremoto', function()
-	terremoto = true
+	CommandsData['terremoto'] = true
 	Citizen.CreateThread(function()
-		while (terremoto) do
+		while (CommandsData['terremoto']) do
 			Citizen.Wait(500)
 			ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.2)
 		end
 	end)
+end)
+
+---------------------------------------
+-- RICH PRESENCE
+---------------------------------------
+RegisterNetEvent('zero_core:discord', function(status)
+    SetDiscordAppId(1122340389614006402)
+    SetDiscordRichPresenceAsset('logo')
+	SetDiscordRichPresenceAssetSmall('logo')
+	SetDiscordRichPresenceAssetSmallText('Zero City')
+    SetRichPresence(status)
+    SetDiscordRichPresenceAction(0, 'S9 | An4l0g', 'https://ryandrumond.com/')
+    SetDiscordRichPresenceAction(1, 'S9 | Bluen', 'https://www.instagram.com/danielbrsouza/')
+end)
+
+---------------------------------------
+-- FPS
+---------------------------------------
+RegisterCommand('fps', function(source, args)
+	if (args[1]) then
+		local command = string.lower(args[1])
+		if (command == 'on') then
+			SetTimecycleModifier('cinema')
+			RopeDrawShadowEnabled(false)
+			CascadeShadowsClearShadowSampleType()
+			CascadeShadowsSetAircraftMode(false)
+			CascadeShadowsEnableEntityTracker(true)
+			CascadeShadowsSetDynamicDepthMode(false)
+			CascadeShadowsSetEntityTrackerScale(0.0)
+			CascadeShadowsSetDynamicDepthValue(0.0)
+			CascadeShadowsSetCascadeBoundsScale(0.0)
+			SetFlashLightFadeDistance(0.0)
+			SetLightsCutoffDistanceTweak(0.0)
+			TriggerEvent('notify', 'FPS', 'Boost de <b>FPS</b> ligado.')
+		elseif (command == 'off') then
+			SetTimecycleModifier('default')
+			RopeDrawShadowEnabled(true)
+			CascadeShadowsSetAircraftMode(true)
+			CascadeShadowsEnableEntityTracker(false)
+			CascadeShadowsSetDynamicDepthMode(true)
+			CascadeShadowsSetEntityTrackerScale(5.0)
+			CascadeShadowsSetDynamicDepthValue(5.0)
+			CascadeShadowsSetCascadeBoundsScale(5.0)
+			SetFlashLightFadeDistance(10.0)
+			SetLightsCutoffDistanceTweak(10.0)
+			TriggerEvent('notify', 'FPS', 'Boost de <b>FPS</b> desligado.')
+		else
+			TriggerEvent('notify', 'FPS', 'Você não digitou o comando corretamente, tente novamente!<br><br>- <b>/fps on</b><br>- <b>/fps off</b>')
+		end
+	else
+		TriggerEvent('notify', 'FPS', 'Você não digitou o comando corretamente, tente novamente!<br><br>- <b>/fps on</b><br>- <b>/fps off</b>')
+	end
+end)
+
+---------------------------------------
+-- VTUNING
+---------------------------------------
+RegisterCommand('vtuning', function()
+	local ped = PlayerPedId()
+	local vehicle = GetVehiclePedIsUsing(ped)
+	if (IsEntityAVehicle(vehicle)) then
+		local body = GetVehicleBodyHealth(vehicle)
+		local engine = GetVehicleEngineHealth(vehicle)
+		local fuel = GetVehicleFuelLevel(vehicle)
+
+		local motor = GetVehicleMod(vehicle, 11)
+		if (motor == -1) then
+			motor = 'Desativado'
+		else
+			motor = 'Nível '..(motor + 1)..' / '..GetNumVehicleMods(vehicle, 11)
+		end
+
+		local freio = GetVehicleMod(vehicle, 12)
+		if (freio == -1) then
+			freio = 'Desativado'
+		else
+			freio = 'Nível '..(freio + 1)..' / '..GetNumVehicleMods(vehicle, 12)
+		end
+
+		local transmissao = GetVehicleMod(vehicle, 13)
+		if (transmissao == -1) then
+			transmissao = 'Desativado'
+		else
+			transmissao = 'Nível '..(transmissao + 1)..' / '..GetNumVehicleMods(vehicle, 13)
+		end
+
+		local suspensao = GetVehicleMod(vehicle, 15)
+		if (suspensao == -1) then
+			suspensao = 'Desativado'
+		else
+			suspensao = 'Nível '..(suspensao + 1)..' / '..GetNumVehicleMods(vehicle, 15)
+		end
+
+		local blindagem = GetVehicleMod(vehicle, 16)
+		if (blindagem == -1) then
+			blindagem = 'Desativado'
+		else
+			blindagem = 'Nível '..(blindagem + 1)..' / '..GetNumVehicleMods(vehicle, 16)
+		end
+
+		TriggerEvent('notify', 'Ver Tunagens', '<b>Motor:</b> '..motor..'<br><b>Freio:</b> '..freio..'<br><b>Transmissão:</b> '..transmissao..'<br><b>Suspensão:</b> '..suspensao..'<br><b>Blindagem:</b> '..blindagem..'<br><b>Chassi:</b> '..parseInt(body/10)..'%<br><b>Engine:</b> '..parseInt(engine/10)..'%<br><b>Gasolina:</b> '..parseInt(fuel)..'%', 15000)
+	end
 end)

@@ -57,7 +57,8 @@ config.language = {
 config.webhooks = {
   join = '',
   exit = '',
-  weaponHack = ''
+  weaponHack = '',
+  antiflood = 'https://discord.com/api/webhooks/1122335314397122671/gCJlPjrzaz8UhZ39UTbxKkZJz1FAKVJYNjW_zWI4rk1B1dtHUDX_ARHZpe8qweqE4LOI'
 }
 
 return config

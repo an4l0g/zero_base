@@ -220,3 +220,8 @@ RegisterNetEvent('zero_interactions:enviar', function()
         end
     end
 end)
+
+RegisterNetEvent('zero_interactions:nitro', function()
+    local source = source
+    exports['zero_tunings']:startInstallNitro(source)
+end)

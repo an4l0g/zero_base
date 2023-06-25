@@ -451,6 +451,7 @@ config.vehicles = {
     ['zombiea'] = { name = 'Zombiea', maker = 'Western motorcycle company', price = 290000, trunk = 20, glove = 15, type = 'motorcycles', class = 'motorcycles', banned = false, hash = -1009268949 },
     ['zombieb'] = { name = 'Zombieb', maker = 'Steel horse', price = 300000, trunk = 20, glove = 15, type = 'motorcycles', class = 'motorcycles', banned = false, hash = -570033273 },
     ['ztype'] = { name = 'Ztype', maker = 'Truffade', price = 400000, trunk = 20, glove = 15, type = 'cars', class = 'sportsclassics', banned = false, hash = 758895617 },
+    ['euros'] = { name = 'Euros', maker = 'Nissan', price = 500000, trunk = 40, glove = 15, type = 'cars', class = 'sport', banned = false, hash = GetHashKey('euros') },
     --==============================================================================================================================
 	-- MOD
 	--==============================================================================================================================
@@ -499,7 +500,6 @@ config.vehicles = {
     ['h2carb'] = { name = 'Ninja H2 Carb.', maker = 'Kawasaki', price = 1000000, trunk = 20, glove = 15, type = 'exclusive', class = 'motorcycles', banned = false },
     ['rmodchiron300'] = { name = 'Chiron', maker = 'Bugatti', price = 1000000, trunk = 40, glove = 15, type = 'exclusive', class = 'super', banned = false, hash = 1191498149 },
     ['rmodf40'] = { name = 'F40', maker = 'Ferrari', price = 1000000, trunk = 40, glove = 15, type = 'exclusive', class = 'super', banned = false, hash = -1637862878 },
-
 }
 
 config.garages = {

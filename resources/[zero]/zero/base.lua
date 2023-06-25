@@ -463,36 +463,36 @@ end
 --     end
 -- end
 
--- local delayflood = {}
--- local webhook_antiflood = "https://discord.com/api/webhooks/1060962124261765120/5HtM3xBxmXjnRs1huE3NVa3XEjGY-H-SAhJw8Lqo1ix3gJxdSLwzNba5hpOzVGvVXgTa"
--- local flood = {}
--- function exports['vrp']:antiflood(source,key,limite)
--- 	if(flood[key]==nil or delayflood[key] == nil)then 
--- 		flood[key]={}
--- 		delayflood[key]={}
--- 	end
---     if(flood[key][source]==nil)then
---         flood[key][source] = 1
---         delayflood[key][source] = os.time()
---     else
---         if(os.time()-delayflood[key][source]<1)then
---             flood[key][source]= flood[key][source] + 1
---             if(flood[key][source]==limite)then
---                 local user_id = zero.getUserId(source)
+local delayflood = {}
+local flood = {}
 
---                 zero.setBanned(user_id,true)
---                 exports["gb_core"]:insertBanRecord(user_id,true,-1,"[ANTI-FLOOD] "..tostring(key))
+zero.antiflood = function(source, key, limite)
+	if(flood[key]==nil or delayflood[key] == nil)then 
+		flood[key]={}
+		delayflood[key]={}
+	end
+    if(flood[key][source]==nil)then
+        flood[key][source] = 1
+        delayflood[key][source] = os.time()
+    else
+        if(os.time()-delayflood[key][source]<1)then
+            flood[key][source]= flood[key][source] + 1
+            if(flood[key][source]==limite)then
+                local user_id = zero.getUserId(source)
+				exports['zero_core']:setBanned(user_id, true)
+                -- zero.setBanned(user_id,true)
+                -- exports["gb_core"]:insertBanRecord(user_id,true,-1,"[ANTI-FLOOD] "..tostring(key))
 
---                 DropPlayer(source, "Hoje não! Hoje não! Hoje sim!")
--- 				zero.webhook(webhook_antiflood, "```prolog\n[ID]: "..user_id.." \n[ANTI-FLOOD]: "..key.."\n"..os.date("\n\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
---             end
---         else
---             flood[key][source]=nil
---             delayflood[key][source] = nil
---         end
---         delayflood[key][source] = os.time()
---     end
--- end
+                DropPlayer(source, "Hoje não! Hoje não! Hoje sim!")
+				zero.webhook(config.webhooks.antiflood, "```prolog\n[ID]: "..user_id.." \n[ANTI-FLOOD]: "..key.."\n"..os.date("\n\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
+            end
+        else
+            flood[key][source]=nil
+            delayflood[key][source] = nil
+        end
+        delayflood[key][source] = os.time()
+    end
+end
 
 -- local webhookCrash = 'https://discord.com/api/webhooks/1073755441592533002/73gJnK61b7W6sPht4uKDjNnDs--BtZw_5dIfVeYwxeR1Hga1SbsBkZRMr6jj0-Hj2Er5'
 -- AddEventHandler('playerDropped', function(reason)

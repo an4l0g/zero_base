@@ -33,6 +33,13 @@ export default [
     category: "car",
   },
   {
+    title: "Instalar nitro",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "nitro",
+    category: "car",
+  },
+  {
     title: "Abrir janelas",
     icon: <RiPlayFill />,
     type: "action",
