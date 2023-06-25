@@ -1,27 +1,15 @@
 var playlist = [
-  // {
-  //     "song": "Brazuca Halloween",
-  //     "album": "Brazuca",
-  //     "artist": "MC Paulinho o LOKO",
-  //     "mp3": "http://189.127.164.170/songs/halloween.mp3"
-  // },
+  {
+    song: "Love Love",
+    album: "Fucking Shit, é o Naldo!",
+    artist: "MC Melody & Naldo",
+    mp3: "https://cdn.discordapp.com/attachments/1059878373737893918/1121877817483853904/zero_music.mp3",
+  },
   // {
   //   song: "Brazuca City",
   //   album: "Brazuca",
   //   artist: "MC Paulinho o LOKO",
   //   mp3: "http://189.127.164.170/songs/brazuca.mp3",
-  // },
-  // {
-  //   song: "Rodinha da Bike",
-  //   album: "Brazuca",
-  //   artist: "MC Paulinho o LOKO",
-  //   mp3: "http://189.127.164.170/songs/brazuca2.mp3",
-  // },
-  // {
-  //   song: "Tchais",
-  //   album: "Brazuca",
-  //   artist: "MC Paulinho o LOKO",
-  //   mp3: "http://189.127.164.170/songs/tchais.mp3",
   // },
 ];
 

@@ -1,3 +1,5 @@
+nearbyVehicle = nil
+
 cInventory.getChestInfo = function(chestType, lootId)
     local chest = {}
     local chestInfo = split(chestType, ':')
@@ -46,6 +48,7 @@ cInventory.getChestInfo = function(chestType, lootId)
     return chest
 end
 
+
 RegisterKeyMapping("openCarChest", "Abrir Porta Malas/Luvas", 'KEYBOARD', "pageup")
 RegisterCommand("openCarChest", function()
     if zero.getNearestPlayer(config.marker_dropped_item_distance + 1) ~= nil then
@@ -59,6 +62,7 @@ RegisterCommand("openCarChest", function()
         if veh.isLocked == 1 then
             if veh.ownerId then
                 SetNuiFocus(true, true)
+                nearbyVehicle = vehicle
                 if IsPedInAnyVehicle(ped) then
                     cInventory.openInventory('open', 'glove:'..veh.carName..':'..veh.ownerId)
                 else
@@ -72,4 +76,3 @@ RegisterCommand("openCarChest", function()
         end
     end
 end)
-

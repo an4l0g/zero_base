@@ -1,5 +1,3 @@
-shared_script "@zero/lib/lib.lua" 
-lua54 'yes'
 fx_version "bodacious"
 game "gta5"
 

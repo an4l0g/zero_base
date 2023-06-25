@@ -17,6 +17,15 @@ zero.webhook = function(link, message)
 	end
 end
 
+zero.formatWebhook = function(url, title, body)
+    local currentBody = '```prolog\n['..string.upper(title)..']\n'
+    for k,v in ipairs(body) do
+        currentBody = currentBody..'\n['..string.upper(v[1])..']: '..string.upper(v[2])
+    end
+    currentBody = currentBody..os.date('\n\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'
+    zero.webhook(url, currentBody)
+end
+
 cacheUsers = {}
 cacheUsers.users = {}
 cacheUsers.rusers = {}

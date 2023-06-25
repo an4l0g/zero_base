@@ -18,7 +18,7 @@ sInventory.getTrunkSize = function(vname)
 end
 
 sInventory.getVehOwnerId = function(vnetid)
-    local data = exports["zGarages"]:getVehicleData(vnetid)
+    local data = exports["zero_garage"]:getVehicleData(vnetid)
     if data then return data.user_id; end;
 end
 
@@ -27,4 +27,12 @@ sInventory.hasPermission = function(permission)
     local user_id = zero.getUserId(_source)
 
     return zero.hasPermission(user_id, permission)
+end
+
+sInventory.extract = function(string, method)
+    if method == 'pre' then 
+        return string:match("(.*):")
+    else 
+        return string:match(":(.*)")
+    end
 end

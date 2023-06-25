@@ -442,6 +442,8 @@ AddEventHandler('zero_garage:enterTrunk', function()
 						end
 					end
 				end
+			else
+				TriggerEvent('notify', 'Garagem', 'O <b>veículo</b> se encontra trancado.')
 			end
 		end
 	else
