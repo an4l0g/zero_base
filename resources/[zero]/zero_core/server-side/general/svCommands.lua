@@ -2,6 +2,24 @@ local srv = {}
 Tunnel.bindInterface('Commands', srv)
 local vCLIENT = Tunnel.getInterface('Commands')
 ---------------------------------------
+-- DELETE ALL OBJECTS
+---------------------------------------
+RegisterCommand('dobjall', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'mod.permissao') then
+        local count = 0
+        for _, v in pairs(GetAllObjects()) do
+            if (DoesEntityExist(v)) then
+                DeleteEntity(v)
+                count = count + 1
+            end
+        end
+        TriggerClientEvent('announcement', -1, 'Alerta', 'Foi deletado <b>'..count..' objetos</b> da nossa cidade.', 'Governo', true, 30000)
+    end
+end)
+
+---------------------------------------
 -- GOD
 ---------------------------------------
 RegisterCommand('god', function(source, args)
@@ -1091,7 +1109,7 @@ RegisterCommand('screensrc', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         local nSource = parseInt(args[1])
         if (nSource > 0) then
-            local ids = zero.getIdentifiers(source)
+            local ids = zero.getIdentifiers(nSource)
             exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(nSource, webhooks.srcscreen, { encoding = 'jpg', quality = 0.7 },
                 {
                     username = '[SCREENSHOT] Source',
@@ -1297,6 +1315,32 @@ RegisterCommand('rg2', function(source, args)
             end
 
             TriggerClientEvent('notify', source, 'Registro', 'Passaporte: <b>#'..nUser..'</b><br>Registro: <b>'..identity.registration..'</b><br>Nome: <b>'..identity.firstname..' '..identity.lastname..'</b><br>Idade: <b>'..identity.age..'</b><br>Telefone: <b>'..identity.phone..'</b><br>Carteira: <b>'..zero.format(parseInt(walletMoney))..'</b><br>Banco: <b>'..zero.format(parseInt(bankMoney))..'</b><br>Sets: <b>'..groups..'</b>', 25000)
+        end
+    end
+end)
+
+---------------------------------------
+-- ID
+---------------------------------------
+RegisterCommand('id', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+    if (nPlayer) then
+        local nUser = zero.getUserId(nPlayer)
+        TriggerClientEvent('notify', nPlayer, 'Passaporte', 'O cidadão <b>'..user_id..'</b> está verificando o seu passaporte.')
+        TriggerClientEvent('notify', source, 'Passaporte', 'Passaporte: <b>('..nUser..')</b>', 10000)
+    end
+end)
+
+---------------------------------------
+-- RICH PRESENCE
+---------------------------------------
+AddEventHandler('vRP:playerSpawn', function(user_id, source)
+    if (user_id) then
+        local identity = zero.getUserIdentity(user_id)
+        if (identity) then
+            TriggerClientEvent('zero_core:discord', source, '#'..user_id..' '..identity.firstname..' '..identity.lastname)
         end
     end
 end)
