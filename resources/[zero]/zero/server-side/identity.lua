@@ -88,7 +88,7 @@ zero.resetIdentity = function(user_id)
 	local idt = (identidades[user_id] or zero.getUserIdentity(user_id))
 	if (idt) then
 		if (registros[idt.registration]) then registros[idt.registration] = nil end
-		if (telefones[idt.phone]) then telefones[dt.phone] = nil end
+		if (telefones[idt.phone]) then telefones[idt.phone] = nil end
 	end
 	identidades[user_id] = nil 
 end
