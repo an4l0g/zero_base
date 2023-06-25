@@ -9,6 +9,11 @@ sInventory.dropItem = function(item, pos, amount)
     local user_id = zero.getUserId(_source)    
         
     if sInventory.tryGetInventoryItem(user_id, item.index, amount) then
+        zero.formatWebhook(config.webhooks.dropItem, 'Dropar item', {
+            { 'item', item.index },
+            { 'id', user_id },
+            { 'qtd', amount }
+        })
         local playerCoords = GetEntityCoords(GetPlayerPed(_source))
         local dropId = createDropId(playerCoords, user_id)
         
@@ -62,6 +67,11 @@ sInventory.getDroppedItem = function(id, amount)
 
     if currentItem ~= nil then
         sInventory.giveInventoryItem(user_id, currentItem, amount)
+        zero.formatWebhook(config.webhooks.getItem, 'Pegar item', {
+            { 'item', currentItem },
+            { 'id', user_id },
+            { 'qtd', amount },
+        })
     else
         config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
     end
@@ -71,7 +81,7 @@ end
 
 AddEventHandler("vRP:playerSpawn", function(_,source,first_spawn)
     if first_spawn then
-        for k,v in sPairs(droppedItems) do
+        for k,v in pairs(droppedItems) do
             TriggerClientEvent('setDrop', source, v)
         end
     end

@@ -58,6 +58,8 @@ end
 RegisterCommand('cds3', function()
     local playerPed = PlayerPedId() -- obtém o ped (personagem/npc) do jogador
     local coords = GetEntityCoords(playerPed)
+    local formattedCoords = string.format("vec3(%.2f, %.2f, %.2f)", coords.x, coords.y, coords.z)
+    TriggerEvent('clipboard', 'Coordenada atual', formattedCoords)
 end)
 
 Citizen.CreateThread(function()
@@ -67,9 +69,11 @@ Citizen.CreateThread(function()
         local pedCoords = GetEntityCoords(ped)
         for k, v in pairs(configs.productions) do
             local distance = #(pedCoords - v.coords)
-            if (distance <= 5.0) then
+            if (distance <= 5) then
                 nearbyProduction = v
                 nearbyProduction.index = k
+            else
+                nearbyProduction = nil
             end
         end
         if (nearbyProduction) and nearbyProduction['coords'] then
