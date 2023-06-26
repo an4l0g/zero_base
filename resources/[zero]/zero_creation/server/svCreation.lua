@@ -44,10 +44,7 @@ end
 
 local userLogin = {}
 
-AddEventHandler('vRP:playerSpawn', function(user_id, source)
-    local getCharacter = zero.query('zero_character/getCharacter', { user_id = user_id })[1]
-    if (getCharacter) then Player(source).state.pedCustom = json.decode(getCharacter.user_character); end;
-    
+AddEventHandler('vRP:playerSpawn', function(user_id, source)    
     local bloodGroup = generalConfig.bloodGroup
     zero.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}', rh = bloodGroup[math.random(#bloodGroup)] })
 
