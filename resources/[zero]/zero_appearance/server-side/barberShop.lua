@@ -1,7 +1,7 @@
 local srv = {}
 Tunnel.bindInterface('barberShop', srv)
 
-vRP._prepare('zero_character/getCharacter', 'SELECT user_character FROM zero_creation WHERE user_id = @user_id')
+zero._prepare('zero_character/getCharacter', 'select user_character from zero_creation where user_id = @user_id')
 
 srv.getCharacter = function()
     local _source = source
@@ -9,8 +9,8 @@ srv.getCharacter = function()
     if (_userId) then
         local value = vRP.query('zero_character/getCharacter', { user_id = _userId })[1]
         if (value['user_character']) then
-            local custom = json.decode(value['user_character']) or {}
-            return custom, true
+            local custom = (json.decode(value['user_character']) or {})
+            return custom
         end
     end
 end

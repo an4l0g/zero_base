@@ -1,17 +1,3 @@
-
-
-RegisterCommand('ped',function()
-while not HasModelLoaded('mp_f_freemode_01') do
-        RequestModel('mp_f_freemode_01')
-        Citizen.Wait(10)
-    end
-    if HasModelLoaded('mp_f_freemode_01') then
-        SetPlayerModel(PlayerId(),'mp_f_freemode_01')     
-        SetPedDefaultComponentVariation(PlayerPedId())
-    end
-    SetModelAsNoLongerNeeded('mp_f_freemode_01')
-end)
-
 local vSERVER = Tunnel.getInterface('barberShop')
 
 local locsConfig = configBarberShop.locs
@@ -238,12 +224,10 @@ openBarberShop = function(config, coords, heading)
     ClearPedTasks(ped)
 
     local drawables = getDrawables()
-
+    LocalPlayer.state['pedCustom'] = vSERVER.getCharacter()
     LocalPlayer.state['oldPedCustom'] = LocalPlayer.state['pedCustom']
 
     if (config['hidePlayers']) then setPlayersVisible(true); end;
-
-    barberData['oldCharacter'] = LocalPlayer.state['oldPedCustom']
 
     SendNUIMessage({
         method = 'openBarberShop',

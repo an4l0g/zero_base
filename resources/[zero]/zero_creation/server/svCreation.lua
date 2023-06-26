@@ -7,7 +7,6 @@ vCLIENT = Tunnel.getInterface('Creation')
 zero._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character, rh) VALUES (@user_id, @controller, @user_character, @rh)')
 zero._prepare('zero_character/verifyUser', 'SELECT controller FROM zero_creation WHERE user_id = @user_id')
 zero._prepare('zero_character/saveUser', 'UPDATE zero_creation SET user_character = @user_character WHERE user_id = @user_id')
-zero._prepare('zero_character/getCharacter', 'select user_character from zero_creation where user_id = @user_id')
 
 srv.changeSession = function(bucket)
     local _source = source
