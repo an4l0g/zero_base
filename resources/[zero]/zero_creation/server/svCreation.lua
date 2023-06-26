@@ -7,7 +7,6 @@ vCLIENT = Tunnel.getInterface('Creation')
 zero._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character, rh) VALUES (@user_id, @controller, @user_character, @rh)')
 zero._prepare('zero_character/verifyUser', 'SELECT controller FROM zero_creation WHERE user_id = @user_id')
 zero._prepare('zero_character/saveUser', 'UPDATE zero_creation SET user_character = @user_character WHERE user_id = @user_id')
-zero._prepare('zero_character/getCharacter', 'select user_character from zero_creation where user_id = @user_id')
 
 srv.changeSession = function(bucket)
     local _source = source
@@ -45,10 +44,7 @@ end
 
 local userLogin = {}
 
-AddEventHandler('vRP:playerSpawn', function(user_id, source)
-    local getCharacter = zero.query('zero_character/getCharacter', { user_id = user_id })[1]
-    if (getCharacter) then Player(source).state.pedCustom = json.decode(getCharacter.user_character); end;
-    
+AddEventHandler('vRP:playerSpawn', function(user_id, source)    
     local bloodGroup = generalConfig.bloodGroup
     zero.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}', rh = bloodGroup[math.random(#bloodGroup)] })
 
