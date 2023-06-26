@@ -14,7 +14,7 @@ end
 exports('isWhitelisted', zero.isWhitelisted)
 
 zero.setWhitelisted = function(user_id, whitelisted)
-	zero.execute('zero_framework/setWhitelist', { user_id = user_id, whitelisted = whitelisted })
+	zero.execute('zero_framework/setWhitelist', { user_id = user_id, whitelist = whitelisted })
 end
 exports('setWhitelisted', zero.setWhitelisted)
 

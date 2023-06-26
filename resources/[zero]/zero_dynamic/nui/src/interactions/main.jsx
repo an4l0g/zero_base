@@ -1,4 +1,4 @@
-import { GiMedicalPack } from "react-icons/gi";
+import { GiMedicalPack, GiMechanicGarage } from "react-icons/gi";
 import { HiOutlineUsers } from "react-icons/hi";
 import { MdOutlineLocalPolice } from "react-icons/md";
 import { IoIosBody } from "react-icons/io";
@@ -11,13 +11,6 @@ const interactions = [
     type: "category",
     category: "main",
     value: "interactions",
-  },
-  {
-    title: "Polícia",
-    icon: <MdOutlineLocalPolice />,
-    type: "category",
-    category: "main",
-    value: "police",
   },
   {
     title: "Animações",
@@ -34,11 +27,25 @@ const interactions = [
     value: "car",
   },
   {
+    title: "Polícia",
+    icon: <MdOutlineLocalPolice />,
+    type: "category",
+    category: "main",
+    value: "police",
+  },
+  {
     title: "Medicina",
     icon: <GiMedicalPack />,
     type: "category",
     category: "main",
     value: "medic",
+  },
+  {
+    title: "Mecânico",
+    icon: <GiMechanicGarage />,
+    type: "category",
+    category: "main",
+    value: "mechanic",
   },
 ];
 

@@ -6,7 +6,7 @@ Citizen.CreateThread(function()
 	while not HasStreamedTextureDictLoaded('circlemap') do Citizen.Wait(1); end;
 	AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'circlemap', 'radarmasksm')
 	SetMinimapClipType(1)
-	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.01, 0.007, 0.18, 0.25)
+	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.015, 0.007, 0.21, 0.25)
 	Citizen.Wait(0)
     SetBigmapActive(true, false)
 	SetBigmapActive(false, false)
@@ -41,6 +41,7 @@ AddEventHandler('gameEventTriggered', function(event, args)
         local vehicle = args[2]
         if (id == PlayerId()) then
             if (inVehicle) then return; end;
+            TriggerEvent('zero_core:spikeThread')
 
             inVehicle = true
 
@@ -99,10 +100,16 @@ drivingVehicle = function(model)
                 local vehicle = GetVehiclePedIsIn(ped)
                 if (weaponLock[model]) then SetPlayerCanDoDriveBy(PlayerId(), false); end;
 
-                -- RETIRAR O CHUTE DA MOTO
-                if (GetPedInVehicleSeat(vehicle, -1) == ped or GetPedInVehicleSeat(vehicle, 0) == ped) and GetVehicleClass(vehicle) == 8 then
-					idle = 5
-					DisableControlAction(0, 345, true)
+                if (GetPedInVehicleSeat(vehicle, -1) == ped or GetPedInVehicleSeat(vehicle, 0) == ped) then
+                    idle = 5
+                    -- RETIRAR O CHUTE DA MOTO
+                    if (GetVehicleClass(vehicle) == 8) then
+                        DisableControlAction(0, 345, true)
+                    end
+                    -- SEAT SHUFFLE
+                    if (not GetIsTaskActive(ped, 164) and GetIsTaskActive(ped, 165)) then
+                        SetPedIntoVehicle(ped, vehicle, 0)
+                    end
 				end    
             end
             Citizen.Wait(idle)

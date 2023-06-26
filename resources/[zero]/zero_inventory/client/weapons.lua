@@ -2,13 +2,15 @@ cInventory.getWeaponsBag = function()
     local weapons = zero.getWeapons()
     local formattedWeapons = {}
 
-    for k,v in sPairs(weapons) do
+    for k,v in pairs(weapons) do
         local currentItem = config.items[string.lower(k)]
-        table.insert(formattedWeapons, {
-            index = k,
-            name = currentItem.name,
-            ammo = v.ammo
-        })
+        if currentItem then 
+            table.insert(formattedWeapons, {
+                index = k,
+                name = currentItem.name,
+                ammo = v.ammo
+            })
+        end
     end
 
     return formattedWeapons
