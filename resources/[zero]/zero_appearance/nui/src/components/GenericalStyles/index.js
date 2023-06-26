@@ -8,7 +8,7 @@ export const Container = styled.div`
       ${theme.colors.dark(0.5)}
     );
     background-color: ${theme.colors.dark(0.8)};
-    width: 525px;
+    width: 550px;
     border-radius: 10px;
     height: 70%;
     display: flex;
@@ -130,13 +130,15 @@ export const TypeList = styled.ul`
 export const TypeItem = styled.li`
   ${({ theme }) => css`
     background-color: ${theme.colors.dark(0.5)};
-    width: 50px;
-    min-height: 50px;
+    width: 75px;
+    min-height: 75px;
     height: 50px;
     border-radius: 5px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0.5rem;
     cursor: pointer;
     transition: background-color 0.5s;
 
@@ -147,7 +149,15 @@ export const TypeItem = styled.li`
 `;
 
 export const TypeImage = styled.img`
-  width: 60%;
+  width: 32px;
+  height: 32px;
+`;
+
+export const TypeTitle = styled.span`
+  ${({ theme }) => css`
+    color: ${theme.colors.shape()};
+    font-size: 0.6rem;
+  `}
 `;
 
 export const RightWrap = styled.div`

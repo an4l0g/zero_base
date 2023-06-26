@@ -13,6 +13,7 @@ function App() {
     (event) => {
       const { action, data } = event.data;
       if (action === "openBarberShop") {
+        console.log(data);
         setAppearance({ barbershop: data });
       }
     },

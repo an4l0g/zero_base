@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import * as S from "../GenericalStyles";
 import Slider from "../Slider";
 import ColorPicker from "../ColorPicker";
+import Titles from "./titles.json";
 
 import { BsScissors, BsCheckCircle } from "react-icons/bs";
 import { MdFace } from "react-icons/md";
@@ -47,10 +48,10 @@ function BarberShop() {
                   {Object.keys(appearance.barbershop.drawables).map(
                     (item, index) => (
                       <S.TypeItem key={item}>
-                        {/* {item} */}
                         <S.TypeImage
                           src={`http://localhost/zero_appearance/barbershop/${item}.png`}
                         />
+                        <S.TypeTitle>{Titles[item]}</S.TypeTitle>
                       </S.TypeItem>
                     )
                   )}
