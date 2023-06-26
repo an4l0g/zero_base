@@ -1,3 +1,6 @@
+local locsConfig = configTattooShop.locs
+local generalConfig =  configTattooShop.general
+
 local inTattooShop = false
 local nearestBlip = {}
 
@@ -37,7 +40,7 @@ local mainThread = function()
         if (not inTattooShop and not inMenu) then
             if (nearestBlip) and nearestBlip['coord'] then
                 idle = 4
-                DrawText3D(nearestBlip['coord'].x, nearestBlip['coord'].y, nearestBlip['coord'].z+0.5, '~b~[E]~w~ - Loja de Tatuagem')
+                DrawMarker(27, nearestBlip.coord.x, nearestBlip.coord.y, nearestBlip.coord.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
                     openTattooShop(generalConfig[nearestBlip['config']], nearestBlip['coord'].xyz, nearestBlip['coord'].w)
                 end
@@ -50,9 +53,12 @@ end
 CreateThread(mainThread)
 
 local tattoos
+local oldCustom = {}
 
 openTattooShop = function(config, coords, headin)
     local ped = PlayerPedId()
+    inTattooShop = true
+
     SetNuiFocus(true, true)
 
     local sex = ''
@@ -63,6 +69,16 @@ openTattooShop = function(config, coords, headin)
     elseif (pedModel == GetHashKey('mp_f_freemode_01')) then
         sex = 'female'; tattoos = config.shopConfig.partsF
     end
+    
+    oldCustom = getCustomization()
+
+    if (config['hidePlayers']) then setPlayersVisible(true); end;
+
+    SetEntityCoords(ped, coords)
+    SetEntityHeading(ped, heading)
+    ClearPedTasks(ped)
+    FreezeEntityPosition(ped, true)
+    IsEntityStatic(ped)
 
     SendNUIMessage({ 
         method = 'openSkinShop', 

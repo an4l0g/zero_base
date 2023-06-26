@@ -1,34 +1,26 @@
 inMenu = false
 
-parsePart = function(key)
-    if (type(key) == 'string' and string.sub(key, 1, 1) == 'p') then
-        return true, tonumber(string.sub(key, 2))
-    else
-        return false, tonumber(key)
-    end
-end
-
 setCustomization = function(custom, update)
-    local ped = PlayerPedId()
-    for index, value in pairs(custom) do
-        if (index ~= 'model' and index ~= 'modelhash') then
-            local isProp, index = parsePart(index)
-            if (isProp) then
-                if (value[1] < 0) then
-                    ClearPedProp(ped, index)
-                else
-                    SetPedPropIndex(ped, index, value[1], value[2], (value[3] or 1))
-                end
-            else
-                SetPedComponentVariation(ped, index, value[1], value[2], (value[3] or 1))
-            end
-            if (update) then TriggerEvent('zero:barberUpdate'); TriggerEvent('zero:tattooUpdate'); end;
-        end
-    end
+    -- local ped = PlayerPedId()
+    -- for index, value in pairs(custom) do
+    --     if (index ~= 'model' and index ~= 'modelhash') then
+    --         local isProp, index = parsePart(index)
+    --         if (isProp) then
+    --             if (value[1] < 0) then
+    --                 ClearPedProp(ped, index)
+    --             else
+    --                 SetPedPropIndex(ped, index, value[1], value[2], (value[3] or 1))
+    --             end
+    --         else
+    --             SetPedComponentVariation(ped, index, value[1], value[2], (value[3] or 1))
+    --         end
+    --         if (update) then TriggerEvent('zero:barberUpdate'); TriggerEvent('zero:tattooUpdate'); end;
+    --     end
+    -- end
 end 
     
 getCustomization = function()
-    local ped = plyPed
+    local ped = PlayerPedId()
     local custom = {}
     custom.modelhash = GetEntityModel(ped)
 
@@ -82,7 +74,7 @@ end
 
 setPlayersVisible = function(bool)
     local ped = PlayerPedId()
-    FreezeEntityPosition(ped, not bool)
+    -- FreezeEntityPosition(ped, not bool)
     if (bool) then
         for _, player in ipairs(GetActivePlayers()) do
             local otherPlayer = GetPlayerPed(player)
