@@ -211,6 +211,9 @@ local setBarberRoupa = function(roupaPelado)
 end
 
 openBarberShop = function(config, coords, heading)
+    LocalPlayer.state['pedCustom'] = vSERVER.getCharacter()
+    LocalPlayer.state['oldPedCustom'] = LocalPlayer.state['pedCustom']
+    
     local ped = PlayerPedId()
     local model = GetEntityModel(ped)
 
@@ -224,8 +227,6 @@ openBarberShop = function(config, coords, heading)
     ClearPedTasks(ped)
 
     local drawables = getDrawables()
-    LocalPlayer.state['pedCustom'] = vSERVER.getCharacter()
-    LocalPlayer.state['oldPedCustom'] = LocalPlayer.state['pedCustom']
 
     if (config['hidePlayers']) then setPlayersVisible(true); end;
 
