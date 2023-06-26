@@ -181,32 +181,33 @@ end
 local getDrawables = function()
     local ped = PlayerPedId()
     local playerModel = GetEntityModel(ped)
+    local custom = LocalPlayer.state['pedCustom']
     local pedDrawables = {
         [GetHashKey('mp_m_freemode_01')] = {
-            { blemishes = GetNumHeadOverlayValues(0) },
-            { beard = GetNumHeadOverlayValues(1) },
-            { eyebrows = GetNumHeadOverlayValues(2) },
+            { blemishes = GetNumHeadOverlayValues(0), blemishesModel = custom.blemishesModel, blemishesOpacity = custom.blemishesModel },
+            { beard = GetNumHeadOverlayValues(1), beardModel = custom.beardModel, beardColor = custom.beardColor, beardOpacity = custom.beardOpacity },
+            { eyebrows = GetNumHeadOverlayValues(2), eyebrowsModel = custom.eyebrowsModel, eyebrowsColor = custom.eyebrowsColor, eyebrowsOpacity = custom.eyebrowsOpacity },
             { hair = GetNumberOfPedDrawableVariations(ped, 2) },
-            { ageing = GetNumHeadOverlayValues(3) },
-            { makeup = GetNumHeadOverlayValues(4) },
-            { blush = GetNumHeadOverlayValues(5) },
-            { complexion = GetNumHeadOverlayValues(6) },
-            { sundamage = GetNumHeadOverlayValues(7) },
-            { lipstick = GetNumHeadOverlayValues(8) },
-            { freckles = GetNumHeadOverlayValues(9) },
-            { chestModel = GetNumHeadOverlayValues(10) },
+            { ageing = GetNumHeadOverlayValues(3), ageingModel = custom.ageingModel, ageingOpacity = custom.ageingOpacity },
+            { makeup = GetNumHeadOverlayValues(4), makeupModel = custom.makeupModel, makeupOpacity = custom.makeupOpacity },
+            { blush = GetNumHeadOverlayValues(5), blushModel = custom.blushModel, blushColor = custom.blushColor, blushOpacity = custom.blushOpacity },
+            { complexion = GetNumHeadOverlayValues(6), complexionModel = custom.complexionModel, complexionOpacity = custom.complexionOpacity },
+            { sundamage = GetNumHeadOverlayValues(7), sundamageModel = custom.sundamageModel, sundamageOpacity = custom.sundamageOpacity },
+            { lipstick = GetNumHeadOverlayValues(8), lipstickModel = custom.lipstickModel, lipstickColor = custom.lipstickColor, lipstickOpacity = custom.lipstickOpacity },
+            { freckles = GetNumHeadOverlayValues(9), frecklesModel = custom.frecklesModel, frecklesOpacity = custom.frecklesOpacity },
+            { chestModel = GetNumHeadOverlayValues(10), chestModel = custom.chestModel, chestColor = custom.chestColor, chestOpacity = custom.chestOpacity },
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            { blemishes = GetNumHeadOverlayValues(0) },
-            { eyebrows = GetNumHeadOverlayValues(2) },
+            { blemishes = GetNumHeadOverlayValues(0), blemishesModel = custom.blemishesModel, blemishesOpacity = custom.blemishesModel },
+            { eyebrows = GetNumHeadOverlayValues(2), eyebrowsModel = custom.eyebrowsModel, eyebrowsColor = custom.eyebrowsColor, eyebrowsOpacity = custom.eyebrowsOpacity },
             { hair = GetNumberOfPedDrawableVariations(ped, 2) },
-            { ageing = GetNumHeadOverlayValues(3) },
-            { makeup = GetNumHeadOverlayValues(4) },
-            { blush = GetNumHeadOverlayValues(5) },
-            { complexion = GetNumHeadOverlayValues(6) },
-            { sundamage = GetNumHeadOverlayValues(7) },
-            { lipstick = GetNumHeadOverlayValues(8) },
-            { freckles = GetNumHeadOverlayValues(9) },
+            { ageing = GetNumHeadOverlayValues(3), ageingModel = custom.ageingModel, ageingOpacity = custom.ageingOpacity },
+            { makeup = GetNumHeadOverlayValues(4), makeupModel = custom.makeupModel, makeupOpacity = custom.makeupOpacity },
+            { blush = GetNumHeadOverlayValues(5), blushModel = custom.blushModel, blushColor = custom.blushColor, blushOpacity = custom.blushOpacity },
+            { complexion = GetNumHeadOverlayValues(6), complexionModel = custom.complexionModel, complexionOpacity = custom.complexionOpacity },
+            { sundamage = GetNumHeadOverlayValues(7), sundamageModel = custom.sundamageModel, sundamageOpacity = custom.sundamageOpacity },
+            { lipstick = GetNumHeadOverlayValues(8), lipstickModel = custom.lipstickModel, lipstickColor = custom.lipstickColor, lipstickOpacity = custom.lipstickOpacity },
+            { freckles = GetNumHeadOverlayValues(9), frecklesModel = custom.frecklesModel, frecklesOpacity = custom.frecklesOpacity },
         },
     }
     return pedDrawables[playerModel]
