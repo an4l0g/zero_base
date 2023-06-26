@@ -92,6 +92,38 @@ export const WrapIcon = styled.div`
   `}
 `;
 
+export const WrapBrokenImage = styled.div`
+  ${({ theme }) => css`
+    color: ${theme.colors.shape()};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > svg {
+      font-size: 2.5rem;
+      width: 100%;
+      margin: 0;
+    }
+  `}
+`;
+
+export const ItemWrapIcon = styled.div`
+  ${({ theme }) => css`
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid ${theme.colors.primary(0.5)};
+    color: ${theme.colors.shape()};
+    display: flex;
+    justify-content: center;
+    background-color: ${theme.colors.dark(0.5)};
+    align-items: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  `}
+`;
+
 export const PovButton = styled.button`
   ${({ theme }) => css`
     background-color: ${theme.colors.primary(0)};
@@ -191,7 +223,24 @@ export const OptionItem = styled.li`
     width: 130px;
     height: 130px;
     border-radius: 5px;
+    overflow: hidden;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &:hover {
+      background-color: ${theme.colors.primary(0.1)};
+    }
   `}
+`;
+
+export const OptionImage = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
 `;
 
 export const Actions = styled.div`

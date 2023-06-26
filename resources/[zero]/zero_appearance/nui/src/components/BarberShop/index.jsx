@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import * as S from "../GenericalStyles";
 import Slider from "../Slider";
 import ColorPicker from "../ColorPicker";
@@ -8,6 +8,7 @@ import { BsScissors, BsCheckCircle } from "react-icons/bs";
 import { MdFace } from "react-icons/md";
 import { IoMdColorPalette } from "react-icons/io";
 import AppearanceContext from "../../contexts/AppearanceContext";
+import Item from "../Item";
 
 function BarberShop() {
   const headerListRef = useRef();
@@ -17,6 +18,18 @@ function BarberShop() {
   const [color1, setColor1] = useState("");
   const [color2, setColor2] = useState("");
   const [opacity, setOpacity] = useState(0);
+
+  const [customizationType, setCustomizationType] = useState("");
+  const [limit, setLimit] = useState(0);
+
+  const renderItems = useMemo(() => {
+    return new Array(limit).fill(null);
+  }, [limit]);
+
+  const handleChangeType = (customType, customLimit) => {
+    setCustomizationType(customType);
+    setLimit(customLimit);
+  };
 
   return (
     <>
@@ -45,37 +58,36 @@ function BarberShop() {
               </S.Header>
               <S.Shop>
                 <S.TypeList ref={headerListRef}>
-                  {Object.keys(appearance.barbershop.drawables).map(
-                    (item, index) => (
-                      <S.TypeItem key={item}>
-                        <S.TypeImage
-                          src={`http://localhost/zero_appearance/barbershop/${item}.png`}
-                        />
-                        <S.TypeTitle>{Titles[item]}</S.TypeTitle>
-                      </S.TypeItem>
-                    )
-                  )}
+                  {appearance.barbershop.drawables.map((item) => (
+                    <S.TypeItem
+                      key={Object.keys(item)[0]}
+                      onClick={() =>
+                        handleChangeType(
+                          Object.keys(item)[0],
+                          item[Object.keys(item)[0]]
+                        )
+                      }
+                    >
+                      <S.TypeImage
+                        src={`http://189.0.88.222/zero_appearance/barbershop/${
+                          Object.keys(item)[0]
+                        }.png`}
+                      />
+                      <S.TypeTitle>{Titles[Object.keys(item)[0]]}</S.TypeTitle>
+                    </S.TypeItem>
+                  ))}
                 </S.TypeList>
                 <S.RightWrap>
                   <S.OptionsListWrap>
                     <S.OptionsList>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
-                      <S.OptionItem></S.OptionItem>
+                      {renderItems.map((_, index) => (
+                        <Item
+                          key={index}
+                          index={index}
+                          customizationType={customizationType}
+                          handleClick={() => {}}
+                        />
+                      ))}
                     </S.OptionsList>
                   </S.OptionsListWrap>
                 </S.RightWrap>
