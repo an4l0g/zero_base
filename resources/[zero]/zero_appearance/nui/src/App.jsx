@@ -4,20 +4,23 @@ import BarberShop from "./components/BarberShop";
 import { useCallback, useContext, useEffect } from "react";
 import useRequest from "./hooks/useRequest";
 import AppearanceContext from "./contexts/AppearanceContext";
+import useBarbershop from "./hooks/useBarbershop";
 
 function App() {
   const { request } = useRequest();
   const { appearance, setAppearance } = useContext(AppearanceContext);
+  const { createResult } = useBarbershop();
 
   const nuiMessage = useCallback(
     (event) => {
       const { action, data } = event.data;
       if (action === "openBarberShop") {
-        console.log(data);
+        console.log("teste", data);
         setAppearance({ barbershop: data });
+        createResult(data.drawables);
       }
     },
-    [setAppearance]
+    [setAppearance, createResult]
   );
 
   useEffect(() => {
@@ -36,10 +39,8 @@ function App() {
   return (
     <ThemeProvider theme={S.theme}>
       <S.GlobalStyle />
-      {appearance !== {} && (
-        <S.Wrap>
-          <BarberShop />
-        </S.Wrap>
+      {appearance != {} && (
+        <S.Wrap>{appearance.barbershop && <BarberShop />}</S.Wrap>
       )}
     </ThemeProvider>
   );

@@ -124,6 +124,23 @@ export const ItemWrapIcon = styled.div`
   `}
 `;
 
+export const ItemWrapMoney = styled.div`
+  ${({ theme }) => css`
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid ${theme.colors.primary(0.5)};
+    color: ${theme.colors.shape()};
+    display: flex;
+    justify-content: center;
+    background-color: ${theme.colors.dark(0.5)};
+    align-items: center;
+    position: absolute;
+    font-size: 0.7rem;
+    padding: 0 0.2rem;
+    bottom: 7px;
+  `}
+`;
+
 export const PovButton = styled.button`
   ${({ theme }) => css`
     background-color: ${theme.colors.primary(0)};
@@ -231,8 +248,12 @@ export const OptionItem = styled.li`
     align-items: center;
     position: relative;
 
-    &:hover {
+    &.active {
       background-color: ${theme.colors.primary(0.1)};
+    }
+
+    &:hover {
+      background-color: ${theme.colors.primary(0.3)};
     }
   `}
 `;

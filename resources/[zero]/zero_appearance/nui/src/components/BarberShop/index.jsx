@@ -4,22 +4,27 @@ import Slider from "../Slider";
 import ColorPicker from "../ColorPicker";
 import Types from "./types.json";
 
-import { BsScissors, BsCheckCircle } from "react-icons/bs";
-import { MdFace } from "react-icons/md";
+import { BsScissors } from "react-icons/bs";
+import { MdFace, MdAttachMoney } from "react-icons/md";
 import { IoMdColorPalette } from "react-icons/io";
 import AppearanceContext from "../../contexts/AppearanceContext";
+import ResultContext from "../../contexts/ResultContext";
 import Item from "../Item";
+import useBarbershop from "../../hooks/useBarbershop";
 
 function BarberShop() {
   const headerListRef = useRef();
+  const firstRender = useRef(true);
   const { appearance } = useContext(AppearanceContext);
+  const { result } = useContext(ResultContext);
+  const { handleSetResult, calculateTotal } = useBarbershop();
   const [rotation, setRotation] = useState(0);
   const [customization, setCustomization] = useState(false);
-  const [color1, setColor1] = useState("");
-  const [color2, setColor2] = useState("");
+  const [currentModel, setCurrentModel] = useState(0);
+  const [mainColor, setMainColor] = useState("");
+  const [secondaryColor, setSecondaryColor] = useState("");
   const [opacity, setOpacity] = useState(0);
-
-  const [customizationType, setCustomizationType] = useState(0);
+  const [customizationType, setCustomizationType] = useState("");
   const [indexType, setIndexType] = useState(0);
   const [limit, setLimit] = useState(0);
 
@@ -33,7 +38,28 @@ function BarberShop() {
     setLimit(customLimit);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (customizationType !== "" && firstRender.current) {
+      firstRender.current = false;
+      setCurrentModel(result.current[customizationType].model);
+    }
+  }, [setCurrentModel, customizationType, result]);
+
+  useEffect(() => {
+    handleSetResult(indexType, {
+      model: currentModel,
+      opacity,
+      main_color: mainColor,
+      secondary_color: secondaryColor,
+    });
+  }, [
+    indexType,
+    currentModel,
+    opacity,
+    mainColor,
+    secondaryColor,
+    handleSetResult,
+  ]);
 
   return (
     <>
@@ -64,7 +90,7 @@ function BarberShop() {
                 <S.TypeList ref={headerListRef}>
                   {appearance.barbershop.drawables.map((item, index) => (
                     <S.TypeItem
-                      key={Object.keys(item)[0]}
+                      // key={Object.keys(item)[0]}
                       onClick={() =>
                         handleChangeType(index, item[Types[index].path])
                       }
@@ -83,8 +109,16 @@ function BarberShop() {
                         <Item
                           key={index}
                           index={index}
+                          className={
+                            result.current[Types[indexType].path].model ===
+                            index
+                              ? "active"
+                              : ""
+                          }
                           customizationType={customizationType}
-                          handleClick={() => {}}
+                          handleClick={() => {
+                            setCurrentModel(index);
+                          }}
                         />
                       ))}
                     </S.OptionsList>
@@ -111,7 +145,7 @@ function BarberShop() {
                     <IoMdColorPalette />
                   </S.CustomButton>
                   <S.BtnAction>
-                    <BsCheckCircle /> Finalizar
+                    <MdAttachMoney /> {calculateTotal}
                   </S.BtnAction>
                 </S.WrapAction>
               </S.Actions>
@@ -122,15 +156,15 @@ function BarberShop() {
               {Types[indexType].main_color && (
                 <ColorPicker
                   label="Cor 1"
-                  value={color1}
-                  setValue={(val) => setColor1(val)}
+                  value={mainColor}
+                  setValue={(val) => setMainColor(val)}
                 />
               )}
               {Types[indexType].secondary_color && (
                 <ColorPicker
                   label="Cor 2"
-                  value={color2}
-                  setValue={(val) => setColor2(val)}
+                  value={secondaryColor}
+                  setValue={(val) => setSecondaryColor(val)}
                 />
               )}
               {Types[indexType].opacity && (
