@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import * as S from "../GenericalStyles";
 import { CiImageOff } from "react-icons/ci";

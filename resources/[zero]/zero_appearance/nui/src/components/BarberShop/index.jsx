@@ -1,8 +1,8 @@
-import { useContext, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as S from "../GenericalStyles";
 import Slider from "../Slider";
 import ColorPicker from "../ColorPicker";
-import Titles from "./titles.json";
+import Types from "./types.json";
 
 import { BsScissors, BsCheckCircle } from "react-icons/bs";
 import { MdFace } from "react-icons/md";
@@ -19,17 +19,21 @@ function BarberShop() {
   const [color2, setColor2] = useState("");
   const [opacity, setOpacity] = useState(0);
 
-  const [customizationType, setCustomizationType] = useState("");
+  const [customizationType, setCustomizationType] = useState(0);
+  const [indexType, setIndexType] = useState(0);
   const [limit, setLimit] = useState(0);
 
   const renderItems = useMemo(() => {
     return new Array(limit).fill(null);
   }, [limit]);
 
-  const handleChangeType = (customType, customLimit) => {
-    setCustomizationType(customType);
+  const handleChangeType = (index, customLimit) => {
+    setCustomizationType(Types[index].path);
+    setIndexType(index);
     setLimit(customLimit);
   };
+
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -58,22 +62,17 @@ function BarberShop() {
               </S.Header>
               <S.Shop>
                 <S.TypeList ref={headerListRef}>
-                  {appearance.barbershop.drawables.map((item) => (
+                  {appearance.barbershop.drawables.map((item, index) => (
                     <S.TypeItem
                       key={Object.keys(item)[0]}
                       onClick={() =>
-                        handleChangeType(
-                          Object.keys(item)[0],
-                          item[Object.keys(item)[0]]
-                        )
+                        handleChangeType(index, item[Types[index].path])
                       }
                     >
                       <S.TypeImage
-                        src={`http://189.0.88.222/zero_appearance/barbershop/${
-                          Object.keys(item)[0]
-                        }.png`}
+                        src={`http://189.0.88.222/zero_appearance/barbershop/${index}.png`}
                       />
-                      <S.TypeTitle>{Titles[Object.keys(item)[0]]}</S.TypeTitle>
+                      <S.TypeTitle>{Types[index].title}</S.TypeTitle>
                     </S.TypeItem>
                   ))}
                 </S.TypeList>
@@ -120,25 +119,31 @@ function BarberShop() {
           </S.Container>
           {customization && (
             <S.Customization>
-              <ColorPicker
-                label="Cor 1"
-                value={color1}
-                setValue={(val) => setColor1(val)}
-              />
-              <ColorPicker
-                label="Cor 2"
-                value={color2}
-                setValue={(val) => setColor2(val)}
-              />
-              <Slider
-                label="Opacidade"
-                value={opacity}
-                setValue={(val) => setOpacity(val)}
-                min={0}
-                max={0.99}
-                step={0.01}
-                ruler={true}
-              />
+              {Types[indexType].main_color && (
+                <ColorPicker
+                  label="Cor 1"
+                  value={color1}
+                  setValue={(val) => setColor1(val)}
+                />
+              )}
+              {Types[indexType].secondary_color && (
+                <ColorPicker
+                  label="Cor 2"
+                  value={color2}
+                  setValue={(val) => setColor2(val)}
+                />
+              )}
+              {Types[indexType].opacity && (
+                <Slider
+                  label="Opacidade"
+                  value={opacity}
+                  setValue={(val) => setOpacity(val)}
+                  min={0}
+                  max={0.99}
+                  step={0.01}
+                  ruler={true}
+                />
+              )}
             </S.Customization>
           )}
         </>
