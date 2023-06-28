@@ -15,7 +15,6 @@ function App() {
     (event) => {
       const { action, data } = event.data;
       if (action === "openBarberShop") {
-        console.log("teste", data);
         setAppearance({ barbershop: data });
         createResult(data.drawables);
       }
@@ -27,6 +26,7 @@ function App() {
     window.addEventListener("message", nuiMessage);
     window.onkeydown = async (data) => {
       if (data.keyCode == 27) {
+        setAppearance({});
         request("close");
       }
     };
@@ -34,7 +34,7 @@ function App() {
     return () => {
       window.removeEventListener("message", nuiMessage);
     };
-  }, [nuiMessage, request]);
+  }, [nuiMessage, request, setAppearance]);
 
   return (
     <ThemeProvider theme={S.theme}>

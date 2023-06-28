@@ -271,3 +271,12 @@ RegisterNetEvent('barbershop:init', function()
     LocalPlayer.state['pedCustom'] = custom
     setPedCustom()    
 end)
+
+RegisterNuiCallback('changeBarbershopDemo', function(data)
+    print("Alterou alguma coisa e precisa ser alterado no boneco", json.encode(data))
+end)
+
+RegisterNuiCallback('buyBarbershopCustomizations', function(data)
+    print("Comprou customizações", json.encode(data))
+    SetNuiFocus(false, false)
+end)

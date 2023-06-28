@@ -7,7 +7,7 @@ export const Container = styled.div`
       ${theme.colors.primary(0.5)},
       ${theme.colors.dark(0.5)}
     );
-    background-color: ${theme.colors.dark(0.8)};
+    background-color: ${theme.colors.dark(0.7)};
     width: 550px;
     border-radius: 10px;
     height: 70%;
@@ -143,16 +143,16 @@ export const ItemWrapMoney = styled.div`
 
 export const PovButton = styled.button`
   ${({ theme }) => css`
-    background-color: ${theme.colors.primary(0)};
-    border: 0;
-    width: 40px;
-    height: 40px;
-    color: ${theme.colors.shape()};
+    background-color: ${theme.colors.dark(0.3)};
     border: 1px solid ${theme.colors.primary(0.5)};
     border-radius: 5px;
-    font-size: 1.6rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    color: ${theme.colors.shape()};
+    cursor: pointer;
     display: flex;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
   `}
 `;
@@ -190,6 +190,10 @@ export const TypeItem = styled.li`
     gap: 0.5rem;
     cursor: pointer;
     transition: background-color 0.5s;
+
+    &.active {
+      background-color: ${theme.colors.shape(0.1)};
+    }
 
     &:hover {
       background-color: ${theme.colors.shape(0.1)};
@@ -249,11 +253,11 @@ export const OptionItem = styled.li`
     position: relative;
 
     &.active {
-      background-color: ${theme.colors.primary(0.1)};
+      background-color: ${theme.colors.primary(0.3)};
     }
 
     &:hover {
-      background-color: ${theme.colors.primary(0.3)};
+      background-color: ${theme.colors.primary(0.1)};
     }
   `}
 `;
