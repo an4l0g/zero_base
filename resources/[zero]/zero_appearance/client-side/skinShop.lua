@@ -182,13 +182,11 @@ local openNuiShop = function(config, _oldCustom)
     end
     
     SendNUIMessage({ 
-        method = 'openSkinShop', 
-        data = {
-            type = config['shopType'], 
-            config = config['shopConfig'], 
-            sex = sex, 
-            drawVariations = getDrawables()
-        }
+        action = 'openSkinShop', 
+        type = config['shopType'], 
+        config = config['shopConfig'], 
+        sex = sex, 
+        drawVariations = getDrawables()
     })
 
     SetCameraCoords('all', true)

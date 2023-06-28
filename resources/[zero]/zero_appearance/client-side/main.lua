@@ -151,3 +151,11 @@ addBlips = function(config)
         end
     end
 end
+
+RegisterNuiCallback('close', function()
+    SetNuiFocus(false, false)
+end)
+
+RegisterNuiCallback('changeCam', function(data)
+    print(data.rotation, data.type)
+end)
