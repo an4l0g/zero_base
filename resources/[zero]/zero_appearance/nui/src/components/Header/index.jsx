@@ -37,7 +37,7 @@ function Header({ title }) {
       </S.HeaderDivider>
       <S.HeaderDivider position="flex-end">
         <S.PovButton onClick={handleChangeCam}>
-          {cam.type === "body" ? <MdFace /> : <IoMdBody />}
+          {cam.type === "head" ? <MdFace /> : <IoMdBody />}
         </S.PovButton>
       </S.HeaderDivider>
     </S.Header>
