@@ -71,6 +71,7 @@ srv.getVehicleData = function(vehnet)
 	end
 	return {}
 end
+exports('getVehicleData', srv.getVehicleData)
 
 srv.processState = function(state)
     if (state and state.data and state.data.engineHealth) then return state; end;
@@ -348,6 +349,80 @@ srv.vehicleLock = function()
     end
 end
 
+RegisterNetEvent('zero_interactions:carVehs', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local prompt = zero.prompt(source, { 'Veículo que você deseja vender', 'Valor do veículo', 'Passaporte do jogador que irá receber o veículo' })
+        if (prompt) then
+            if (prompt[1] and prompt[2] and prompt[3]) then
+                prompt[2] = parseInt(prompt[2])
+                prompt[3] = parseInt(prompt[3])
+
+                local model = prompt[1]
+                local vname = vehicleName(model)
+                local myVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = model })[1]
+                if (myVehicle) then
+                    if ((vehicleType(model) == 'exclusive') or (vehicleType(model) == 'vip') or (myVehicle.rented ~= '')) then
+                        TriggerClientEvent('notify', source, 'Garagem', 'Este <b>veículo</b> não pode ser vendido.')
+                    else
+                        local nUser = prompt[3]
+                        local price = prompt[2]
+                        local nSource = zero.getUserSource(nUser)
+                        local identity = zero.getUserIdentity(user_id)
+                        local nIdentity = zero.getUserIdentity(nUser)
+                        if (price > 0) then
+                            if (zero.request(source, 'Deseja vender um '..vname..' para '..nIdentity.firstname..' '..nIdentity.lastname..' por R$'..zero.format(price)..' ?', 60000)) then
+                                if (zero.request(nSource, 'Aceita comprar um '..vname..' de '..identity.firstname..' '..identity.lastname..' por R$'..zero.format(price)..'?', 60000)) then
+                                    local userVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = nUser, vehicle = model })[1]
+                                    if (userVehicle) then
+                                        TriggerClientEvent('notify', source, 'Garagem', 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já possui este modelo de veículo')
+                                    else
+                                        local vqtd = 0
+                                        local vehicles = zero.query('zero_garage/getVehicleOwn', { user_id = nUser })
+                                        for _, v in ipairs(vehicles) do
+                                            local vtype = vehicleType(v.vehicle)
+                                            if (vtype ~= 'exclusive' and vtype ~= 'vip') then vqtd = vqtd + 1; end;
+
+                                            local maxGarages = zero.query('zero_garage/getGarages', { id = nUser })[1]
+                                            maxGarages = maxGarages.garages
+                                            if (vqtd < maxGarages) then
+                                                if (zero.tryFullPayment(nUser, price)) then
+                                                    addVehicle(nUser, model, 0)
+                                                    delVehicle(user_id, model)
+
+                                                    TriggerClientEvent('notify', source, 'Garagem', 'Você vendeu <b>'..vname..'</b> e recebeu <b>R$'..zero.format(price)..'</b>.')
+                                                    TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu as chaves do veículo <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> e pagou <b>R$'..zero.format(price)..'</b>.')
+                                                    
+                                                    zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                                                    zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                                                    
+                                                    zero.giveBankMoney(user_id, nUser)
+                                                    zero.webhook(webhooks.vehs, '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                                    local vehEntity = findVehicle(user_id, model)
+                                                    if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
+                                                else
+                                                    TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>dinheiro</b> o suficiente.')
+                                                    TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não possui <b>dinheiro</b> o suficiente.')
+                                                end
+                                            else
+                                                TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>vagas</b> em sua garagem.')
+                                                TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não <b>vagas</b> em sua garagem.')
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end 
+                    end
+                else
+                    TriggerClientEvent('notify', source, 'Garagem', 'Você não possui esse <b>veículo</b> em sua garagem.')
+                end
+            end
+        end
+    end
+end)
+
 RegisterCommand('vehs', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
@@ -458,6 +533,44 @@ local keys = {
     end
 }
 
+RegisterNetEvent('zero_interactions:addKey', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    local vehicle, vnetid, placa, vname, lock, banned = zeroClient.vehList(source, 3.0)
+    local nSource = zeroClient.getNearestPlayer(source, 2.0)
+    local vehState = srv.getVehicleData(vnetid)
+    if (nSource) then
+        local nuserId = zero.getUserId(nSource)
+        local nIdentity = zero.getUserIdentity(nuserId)
+        if (vehState.user_id == user_id) then
+            keys['add'](source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
+        end
+    else
+        TriggerClientEvent('notify', source, 'Garagem', 'Você não se encontra <b>próximo</b> de uma pessoa.')
+    end
+end)
+
+RegisterNetEvent('zero_interactions:delKey', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+    local vehicle, vnetid, placa, vname, lock, banned = zeroClient.vehList(source, 3.0)
+    local nSource = zeroClient.getNearestPlayer(source, 2.0)
+    local vehState = srv.getVehicleData(vnetid)
+    if (nSource) then
+        local nuserId = zero.getUserId(nSource)
+        local nIdentity = zero.getUserIdentity(nuserId)
+        if (vehState.user_id == user_id) then
+            if (nuserId == carKeys[vnetid]) then
+                keys['rem'](source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
+            end
+        end
+    else
+        TriggerClientEvent('notify', source, 'Garagem', 'Você não se encontra <b>próximo</b> de uma pessoa.')
+    end
+end)
+
 RegisterCommand('chaves', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
@@ -482,6 +595,8 @@ RegisterCommand('chaves', function(source, args)
                     TriggerClientEvent('notify', source, 'Garagem', 'Tente novamente digitando: <br><b>- /chaves add</b><br><b>- /chaves rem</b>')
                 end
             end
+        else
+            TriggerClientEvent('notify', source, 'Garagem', 'Você não se encontra <b>próximo</b> de uma pessoa.')
         end
     else
         TriggerClientEvent('notify', source, 'Garagem', 'Tente novamente digitando: <br/><b>- /chaves add</b><br/><b>- /chaves rem</b>')
@@ -670,6 +785,25 @@ RegisterCommand('travar',function(source)
 	end
 end)
 
+RegisterNetEvent('zero_interactions:carTrancar', function()
+    local source = source
+	local user_id = zero.getUserId(source)
+	if (user_id) and zero.hasPermission(user_id, 'policia.permissao') then
+        if (zeroClient.isInVehicle(source)) then
+            local vehicle, vnetid = zeroClient.vehList(source, -1)
+            if (vnetid) then
+                local _, notify = vCLIENT.getVehicleAnchor(source)
+                TriggerClientEvent('progressBar', source, notify, 5000)
+                SetTimeout(5000, function() vCLIENT.vehicleAnchor(source, vnetid) end)
+            end
+        else
+            TriggerClientEvent('notify', source, 'Garagem', 'Você tem que estar dentro de um <b>veículo</b> para utilizar este comando.')
+        end
+    else
+        TriggerClientEvent('notify', source, 'Garagem', 'Somente <b>policial</b> pode utilizar essa interação.')
+	end
+end)
+
 RegisterCommand('ancorar', function(source)
     local source = source
 	local user_id = zero.getUserId(source)
@@ -681,6 +815,39 @@ RegisterCommand('ancorar', function(source)
             TriggerClientEvent('notify', source, 'Garagem', 'Você tem que estar dentro de um <b>barco</b> para utilizar este comando.')
         end
 	end
+end)
+
+RegisterNetEvent('zero_interactions:carAncorar', function()
+    local source = source
+    if (zeroClient.isInVehicle(source)) then
+        local vehicle = zeroClient.vehList(source, -1)
+        if (vehicle) then vCLIENT.boatAnchor(source, vehicle); end;
+    else
+        TriggerClientEvent('notify', source, 'Garagem', 'Você tem que estar dentro de um <b>barco</b> para utilizar este comando.')
+    end
+end)
+
+RegisterNetEvent('zero_interactions:carPlate', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+	if (user_id and zero.hasPermission(user_id, 'staff.permissao') or zero.hasPermission(user_id, 'policia.permissao') or zero.hasPermission(user_id, 'desmanche.permissao')) then
+        local vehicle, vnetid, placa, vname, lock, banned = zeroClient.vehList(source, 7.0)
+        if (vnetid) then
+            local vehState = srv.getVehicleData(vnetid)
+            if (vehState.user_id) then
+                local identity = zero.getUserIdentity(vehState.user_id)
+                if (identity) then
+                    local vehicleName = vehicleMaker(vehState.model)..' '..vehicleName(vehState.model)
+                    zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
+                    TriggerClientEvent('notify', source, 'Garagem', '<b>Placa:</b> '..placa..'</center><br><b>Proprietário: </b>'..identity.firstname..' '..identity.lastname..'<br><b>Telefone: </b>'..identity.phone..'<br><br><b>Chassis</b>: '..(vehState.chassis or 'Não encontrado')..'<br><b>Modelo: </b>'..vehicleName, 20000)
+                end
+            else
+                TriggerClientEvent('notify', source, 'Garagem','A <b>placa</b> é inválida ou veículo de um americano.')
+            end
+        end
+    else
+        TriggerClientEvent('notify', source, 'Garagem', 'Você não tem <b>permissão</b>.')
+    end
 end)
 
 RegisterCommand('fix', function(source)
@@ -801,6 +968,13 @@ srv.removeTrunk = function(vehNet)
 	end
 end
 
+RegisterNetEvent('zero_interactions:carTrunkin', function()
+    local source = source
+    if (GetEntityHealth(GetPlayerPed(source)) > 101 and not zeroClient.isHandcuffed(source)) then
+        TriggerClientEvent('zero_garage:enterTrunk', source)
+    end
+end)
+
 RegisterCommand('trunkin', function(source)
     local source = source
     if (GetEntityHealth(GetPlayerPed(source)) > 101 and not zeroClient.isHandcuffed(source)) then
@@ -816,6 +990,14 @@ RegisterCommand('checktrunk', function(source)
             TriggerClientEvent('zero_garage:checkTrunk', nplayer)
         end
     end
+end)
+
+RegisterNetEvent('trywins', function(nveh, open)
+	TriggerClientEvent('syncwins', -1, nveh, open)
+end)
+
+RegisterNetEvent('trydoors', function(nveh, door)
+	TriggerClientEvent('syncdoors', -1, nveh, door)
 end)
 
 AddEventHandler('onResourceStart', function(resourceName)

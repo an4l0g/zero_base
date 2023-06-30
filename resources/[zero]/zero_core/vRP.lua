@@ -26,6 +26,7 @@ else
         DrawText(x,y)
     end
 
+    
     Text3D = function(x,y,z,text,size)
         local onScreen,_x,_y = World3dToScreen2d(x,y,z)
         SetTextFont(4)

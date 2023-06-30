@@ -1,0 +1,80 @@
+[
+  {
+    "path": "blemishes",
+    "title": "Manchas",
+    "opacity": true,
+    "main_color": false,
+    "secondary_color": false
+  },
+  { "path": "beard", "title": "Barba", "opacity": true, "main_color": true },
+  {
+    "path": "eyebrows",
+    "title": "Sobrancelhas",
+    "opacity": true,
+    "main_color": true,
+    "secondary_color": false
+  },
+  {
+    "path": "hair",
+    "title": "Cabelo",
+    "opacity": false,
+    "main_color": true,
+    "secondary_color": true
+  },
+  {
+    "path": "ageing",
+    "title": "Rugas",
+    "opacity": true,
+    "main_color": false,
+    "secondary_color": false
+  },
+  {
+    "path": "makeup",
+    "title": "Maquiagem",
+    "opacity": true,
+    "main_color": false,
+    "secondary_color": false
+  },
+  {
+    "path": "blush",
+    "title": "Blush",
+    "opacity": true,
+    "main_color": true,
+    "secondary_color": false
+  },
+  {
+    "path": "complexion",
+    "title": "Aspecto",
+    "opacity": true,
+    "main_color": false,
+    "secondary_color": false
+  },
+  {
+    "path": "sundamage",
+    "title": "Danos do Sol",
+    "opacity": true,
+    "main_color": false,
+    "secondary_color": false
+  },
+  {
+    "path": "lipstick",
+    "title": "Batom",
+    "opacity": true,
+    "main_color": true,
+    "secondary_color": false
+  },
+  {
+    "path": "freckles",
+    "title": "Sardas",
+    "opacity": true,
+    "main_color": false,
+    "secondary_color": false
+  },
+  {
+    "path": "chestModel",
+    "title": "Pelos do Peito",
+    "opacity": true,
+    "main_color": true,
+    "secondary_color": false
+  }
+]

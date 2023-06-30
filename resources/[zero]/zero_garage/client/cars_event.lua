@@ -6,7 +6,7 @@ Citizen.CreateThread(function()
 	while not HasStreamedTextureDictLoaded('circlemap') do Citizen.Wait(1); end;
 	AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'circlemap', 'radarmasksm')
 	SetMinimapClipType(1)
-	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.01, 0.007, 0.18, 0.25)
+	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.015, 0.007, 0.21, 0.25)
 	Citizen.Wait(0)
     SetBigmapActive(true, false)
 	SetBigmapActive(false, false)
@@ -41,6 +41,7 @@ AddEventHandler('gameEventTriggered', function(event, args)
         local vehicle = args[2]
         if (id == PlayerId()) then
             if (inVehicle) then return; end;
+            TriggerEvent('zero_core:spikeThread')
 
             inVehicle = true
 
@@ -55,7 +56,9 @@ AddEventHandler('gameEventTriggered', function(event, args)
             local class = GetVehicleClass(vehicle)
             if (class ~= 14 and class ~= 13) then damageCar(class); end;
 
-            if (class == 18) then radarPolice() end
+            if (class == 18) then radarPolice(); end;
+
+            if (class == 15) then heliCam(); end;
         end
     end
 end)
@@ -90,19 +93,26 @@ local weaponLock = {
 drivingVehicle = function(model)
     Citizen.CreateThread(function()
         while (inVehicle) do
-            inVehicle = IsPedInAnyVehicle(PlayerPedId())
-            local idle = 5000
             local ped = PlayerPedId()
-            if (IsPedInAnyVehicle(PlayerPedId())) then
+            local idle = 5000
+            inVehicle = IsPedInAnyVehicle(ped)
+            if (inVehicle) then
                 idle = 5000
                 
                 local vehicle = GetVehiclePedIsIn(ped)
                 if (weaponLock[model]) then SetPlayerCanDoDriveBy(PlayerId(), false); end;
 
-                -- RETIRAR O CHUTE DA MOTO
-                if (GetPedInVehicleSeat(vehicle, -1) == ped or GetPedInVehicleSeat(vehicle, 0) == ped) and GetVehicleClass(vehicle) == 8 then
-					idle = 5
-					DisableControlAction(0, 345, true)
+                if (GetPedInVehicleSeat(vehicle, -1) == ped or GetPedInVehicleSeat(vehicle, 0) == ped) then
+                    idle = 5
+                    -- RETIRAR O CHUTE DA MOTO
+                    if (GetVehicleClass(vehicle) == 8) then
+                        SetPedConfigFlag(ped, 35, false) 
+                        DisableControlAction(0, 345, true)
+                    end
+                    -- SEAT SHUFFLE
+                    if (not GetIsTaskActive(ped, 164) and GetIsTaskActive(ped, 165)) then
+                        SetPedIntoVehicle(ped, vehicle, 0)
+                    end
 				end    
             end
             Citizen.Wait(idle)
@@ -297,6 +307,66 @@ radarPolice = function()
 
                     drawTxt(radar.info, 7, 0.5, 0.905, 0.4, 255, 255, 255, 255)
                     drawTxt(radar.info, 7, 0.5, 0.93, 0.4, 255, 255, 255, 255)
+                end
+            end
+            Citizen.Wait(idle)
+        end
+    end)
+end
+
+DecorRegister('SpotvectorX', 3)
+DecorRegister('SpotvectorY', 3)
+DecorRegister('SpotvectorZ', 3)
+DecorRegister('Target', 3)
+
+local allowHeli = {
+	[GetHashKey('polmav')] = true,
+}
+
+local getHeliWithCam = function()
+	local model = GetEntityModel(GetVehiclePedIsIn(PlayerPedId()))
+	return (allowHeli[model] or false)
+end
+
+local helicam = false
+local target_vehicle = nil
+local manual_spotlight = false
+local tracking spotlight = false
+local vehicle_display = 0 
+local fov = (fov_max+fov_min)*0.5
+local vision_state = 0
+
+heliCam = function()
+    Citizen.CreateThread(function()
+        while (inVehicle) do
+            local idle = 5000
+            local ped = PlayerPedId()
+            inVehicle = IsPedInAnyVehicle(ped)
+            if (getHeliWithCam()) then
+                local vehicle = GetVehiclePedIsIn(ped)
+                idle = 5
+
+                if (IsControlJustPressed(0, 38)) then 
+                    helicam = true 
+                    PlaySoundFrontend(-1, 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false) 
+                end
+                
+                if (IsControlJustPressed(0, 154)) then
+                    if (GetPedInVehicleSeat(vehicle, 1) == ped or GetPedInVehicleSeat(vehicle, 2) == ped) then
+                        PlaySoundFrontend(-1, 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false)
+						TaskRappelFromHeli(ped,  1)
+                    else
+                        PlaySoundFrontend(-1, '5_Second_Timer', 'DLC_HEISTS_GENERAL_FRONTEND_SOUNDS', false) 
+                        TriggerEvent('notify', 'Rapel', 'Você não pode usar o <b>Rapel</b> neste acento.')
+                    end
+                end
+
+                if (IsControlJustPressed(0, 183) and GetPedInVehicleSeat(vehicle, -1) == ped and not helicam) then
+                    if (target_vehicle) then
+
+                    else
+                        
+                    end
                 end
             end
             Citizen.Wait(idle)

@@ -66,7 +66,6 @@ zero.clearInventory = function(user_id)
 		exports.zero_inventory:clearInventory(user_id)
 		if not zero.hasPermission(user_id,'mochila.permissao') then
 			zero.setInventoryMaxWeight(user_id, 6)
-			SetPedComponentVariation(GetPlayerPed(source), 5, 0);
 		end		
 	end
 end

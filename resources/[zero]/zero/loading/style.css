@@ -132,7 +132,7 @@ h2 {
 #slider #elapsed {
   width: 0px;
   height: 4px;
-  background: #8dc900;
+  background: rgb(0, 153, 255);
   border-radius: 2px;
 }
 
@@ -184,12 +184,12 @@ h2 {
 }
 
 #play:hover g {
-  stroke: #8dc900;
+  stroke: rgb(0, 153, 255);
   /* cursor: none; */
 }
 
 #play:hover g path {
-  fill: #8dc900;
+  fill: rgb(0, 153, 255);
   /* cursor: none; */
 }
 
@@ -248,7 +248,7 @@ h2 {
 }
 
 #pause:hover rect {
-  fill: #8dc900;
+  fill: rgb(0, 153, 255);
 }
 
 .expend {
@@ -257,7 +257,7 @@ h2 {
 }
 
 .expend svg:hover g polygon {
-  fill: #8dc900;
+  fill: rgb(0, 153, 255);
   /* cursor: none; */
 }
 
@@ -271,7 +271,7 @@ h2 {
 .slider .volume {
   width: 69px;
   height: 4px;
-  background: #8dc900;
+  background: rgba(0, 153, 255);
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   margin-top: 13px;
@@ -375,17 +375,5 @@ input[type="range"]::-ms-thumb {
 input[type="range"]::-webkit-slider-thumb:hover,
 input[type="range"]::-webkit-slider-thumb:focus,
 input[type="range"]::-webkit-slider-thumb:active {
-  background-color: #8dc900;
-}
-
-input[type="range"]::-moz-range-thumb:hover,
-input[type="range"]::-moz-range-thumb:focus,
-input[type="range"]::-moz-range-thumb:active {
-  background-color: #8dc900;
-}
-
-input[type="range"]::-ms-thumb:hover,
-input[type="range"]::-ms-thumb:focus,
-input[type="range"]::-ms-thumb:active {
-  background-color: #8dc900;
+  background-color: rgba(0, 153, 255);
 }

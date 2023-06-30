@@ -18,7 +18,7 @@ config.functions = {
         )
     end,
     getVehOwnerId = function(vnetid)
-        local data = exports["zGarages"]:getVehicleData(vnetid)
+        local data = exports["zero_garage"]:getVehicleData(vnetid)
         if data then return data.user_id; end;
     end,
     isHandcuffed = function()
