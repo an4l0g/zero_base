@@ -1,6 +1,8 @@
 inMenu = false
 oldCustom = {}
 
+oldCustom = {}
+
 parsePart = function(key)
     if (type(key) == 'string' and string.sub(key, 1, 1) == 'p') then
         return true, tonumber(string.sub(key, 2))
