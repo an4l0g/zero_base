@@ -268,7 +268,7 @@ zero.setCustomization = function(custom)
 					end
 				end
 			end
-			TriggerEvent("nyoModule:barberUpdate")
+			TriggerEvent('zero:barberUpdate')
 			TriggerEvent("nyoModule:tattooUpdate")
 			TriggerServerEvent('zero_whitelist:server')
 		end

@@ -21,7 +21,7 @@ srv.tryPayment = function(price, data)
     if (_userId) then
         local _sucess = vRP.tryFullPayment(_userId, price)
         if (_sucess) then
-            vRP.execute('zero_character/saveUser', { user_id = _userId, user_character = data } )
+            vRP.execute('zero_character/saveUser', { user_id = _userId, user_character = json.encode(data) } )
             TriggerClientEvent('notify', _source, 'Barbearia', 'Pagamento <b>efetuado</b> com sucesso!')
         else
             TriggerClientEvent('notify', _source, 'Barbearia', 'Pagamento <b>negado</b>!<br>Saldo <b>insuficiente</b>.')
@@ -33,7 +33,7 @@ end
 RegisterNetEvent('zero_appearance_barbershop:init', function(user_id)
     local _source = vRP.getUserSource(user_id)
     if (_source) then
-        local value = vRP.query('zero_character/getCharacter', { user_id = _userId })[1]
+        local value = vRP.query('zero_character/getCharacter', { user_id = user_id })[1]
         if (value['user_character']) then
             local custom = json.decode(value['user_character']) or {}
             TriggerClientEvent('barbershop:init', _source, custom)
