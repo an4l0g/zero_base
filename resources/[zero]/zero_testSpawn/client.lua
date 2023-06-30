@@ -25,16 +25,3 @@ Citizen.CreateThread(function()
 		print("Ready spawned? Report to Developers.")
 	end
 end)
-
-Citizen.CreateThread(function()
-	Citizen.Wait(8000)
-	while not HasModelLoaded(model) do
-        RequestModel(model)
-        Citizen.Wait(10)
-    end
-    if HasModelLoaded(model) then
-        SetPlayerModel(PlayerId(),model)     
-        SetPedDefaultComponentVariation(PlayerPedId())
-    end
-    SetModelAsNoLongerNeeded(model)
-end)

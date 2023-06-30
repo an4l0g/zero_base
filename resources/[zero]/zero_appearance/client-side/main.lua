@@ -1,22 +1,32 @@
 inMenu = false
 
+oldCustom = {}
+
+parsePart = function(key)
+    if (type(key) == 'string' and string.sub(key, 1, 1) == 'p') then
+        return true, tonumber(string.sub(key, 2))
+    else
+        return false, tonumber(key)
+    end
+end
+
 setCustomization = function(custom, update)
-    -- local ped = PlayerPedId()
-    -- for index, value in pairs(custom) do
-    --     if (index ~= 'model' and index ~= 'modelhash') then
-    --         local isProp, index = parsePart(index)
-    --         if (isProp) then
-    --             if (value[1] < 0) then
-    --                 ClearPedProp(ped, index)
-    --             else
-    --                 SetPedPropIndex(ped, index, value[1], value[2], (value[3] or 1))
-    --             end
-    --         else
-    --             SetPedComponentVariation(ped, index, value[1], value[2], (value[3] or 1))
-    --         end
-    --         if (update) then TriggerEvent('zero:barberUpdate'); TriggerEvent('zero:tattooUpdate'); end;
-    --     end
-    -- end
+    local ped = PlayerPedId()
+    for index, value in pairs(custom) do
+        if (index ~= 'model' and index ~= 'modelhash') then
+            local isProp, index = parsePart(index)
+            if (isProp) then
+                if (value[1] < 0) then
+                    ClearPedProp(ped, index)
+                else
+                    SetPedPropIndex(ped, index, value[1], value[2], (value[3] or 1))
+                end
+            else
+                SetPedComponentVariation(ped, index, value[1], value[2], (value[3] or 1))
+            end
+            -- if (update) then TriggerEvent('zero:barberUpdate'); end;
+        end
+    end
 end 
     
 getCustomization = function()
@@ -34,42 +44,69 @@ getCustomization = function()
     return custom
 end
 
-SetCameraCoords = function(type, start)
+setClothes = function(clothes)
     local ped = PlayerPedId()
-
-    if (start) then RenderScriptCams(false, false, 0, 1, 0); DestroyCam(cam, false); end
-    
-    if (not DoesCamExist(cam)) then
-        cam = CreateCam('DEFAULT_SCRIPTED_CAMERA', true)
-        SetCamActive(cam, true)
-        RenderScriptCams(true, true, 500, true, true)   
-        pos = GetEntityCoords(ped)
-        camPos = GetOffsetFromEntityInWorldCoords(ped, 0.0, 2.0, 0.0)
-        camPos2 = GetOffsetFromEntityInWorldCoords(ped, 0.0, 0.8, 0.0)       
+    local model = GetEntityModel(ped)
+    local idleCopy = {}
+    for l, w in pairs(clothes[model]) do
+        idleCopy[l] = w
     end
-
-    if (type == 'all') then                                        
-        SetCamCoord(cam, camPos.x, camPos.y, camPos.z+0.75)
-        PointCamAtCoord(cam, pos.x, pos.y, pos.z+0.15)
-    elseif (type == 'head') then 
-        SetCamCoord(cam, camPos2.x, camPos2.y, camPos2.z+0.7)
-        PointCamAtCoord(cam, pos.x, pos.y, pos.z+0.7)
-    elseif (type == 'torso') then 
-        SetCamCoord(cam, camPos2.x, camPos2.y, camPos2.z+0.40)
-        PointCamAtCoord(cam, pos.x, pos.y, pos.z+0.20)
-    elseif (type == 'shoes') then 
-        SetCamCoord(cam, camPos2.x, camPos2.y, camPos2.z-0.30)
-        PointCamAtCoord(cam, pos.x, pos.y, pos.z-0.30)
-    elseif (type == 'foot') then 
-        SetCamCoord(cam, camPos2.x, camPos2.y, camPos2.z-0.70)
-        PointCamAtCoord(cam, pos.x, pos.y, pos.z-0.70)
-    end        
+    setCustomization(idleCopy)
 end
 
-DeleteCam = function()
-    SetCamActive(cam, false)
-    RenderScriptCams(false, true, 0, true, true)
-    cam = nil
+atualCam = ''
+tempCam = nil
+
+local cameras = {
+    ['body'] = {
+        ['coords'] = function()
+            local ped = PlayerPedId()
+            local pCoord = GetEntityCoords(ped)
+            return vector3(pCoord.x-0.7, pCoord.y+0.8, pCoord.z+0.5)
+        end,
+        ['heading'] = function()
+            local ped = PlayerPedId()
+            SetEntityHeading(ped, (GetEntityHeading(ped) - 10.0))
+        end,
+        ['anim'] = function()
+            freezeAnim('mp_sleep', 'bind_pose_180', 1, true)
+        end
+    },
+    ['head'] = {
+        ['coords'] = function()
+            local ped = PlayerPedId()
+            local pCoord = GetEntityCoords(ped)
+            return vector3(pCoord.x-0.5, pCoord.y+0.75, pCoord.z+0.7)
+        end,
+        ['heading'] = function()
+            local ped = PlayerPedId()
+            SetEntityHeading(ped, (GetEntityHeading(ped) - 10.0))
+        end,
+        ['anim'] = function()
+            freezeAnim('mp_sleep', 'bind_pose_180', 1, true)
+        end
+    },
+}
+
+createCam = function(cameraName)
+    atualCam = cameraName
+    ClearFocus()
+
+    local ped = PlayerPedId()
+    local cam = cameras[cameraName]
+    local x, y, z = cameras[cameraName].coords().x, cameras[cameraName].coords().y, cameras[cameraName].coords().z
+    tempCam = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA', vector3(x, y, z), vector3(0, 0, 230), GetGameplayCamFov())
+    SetCamActive(tempCam, true)
+    RenderScriptCams(true, true, 1000, true, false)
+
+    if (cam['anim']) then cam['anim']() end
+    if (cam['heading']) then cam['heading']() end
+end
+
+deleteCam = function(render)
+    SetCamActive(tempCam, false)
+    if (render) then RenderScriptCams(false, true, 0, true, true); end;
+	tempCam = nil
 end
 
 setPlayersVisible = function(bool)
@@ -98,42 +135,6 @@ setPlayersVisible = function(bool)
     end
 end
 
-DrawText3D = function(x, y, z, text)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-    local p = GetGameplayCamCoords()
-    local distance = GetDistanceBetweenCoords(p.x, p.y, p.z, x, y, z, 1)
-    local scale = (1 / distance) * 2
-    local fov = (1 / GetGameplayCamFov()) * 100
-    local scale = scale * fov
-    if onScreen then
-        SetTextScale(0.0 * scale, 0.35 * scale)
-        SetTextFont(0)
-        SetTextProportional(1)
-        SetTextColour(255, 255, 255, 255)
-        SetTextDropshadow(0, 0, 0, 0, 255)
-        SetTextEdge(2, 0, 0, 0, 150)
-        SetTextDropShadow()
-        SetTextOutline()
-        SetTextEntry('STRING')
-        SetTextCentre(1)
-        AddTextComponentString(text)
-        DrawText(_x, _y)
-    end
-end
-
-RegisterNUICallback('shopCam', function(data)
-    SetCameraCoords(data['type'], false)
-end)
-
-RegisterNuiCallback('changeHeading', function(data)
-    local ped = PlayerPedId()
-    if (data['left']) then
-        SetEntityHeading(ped, (GetEntityHeading(ped) - 10.0))
-    elseif (data['right']) then
-        SetEntityHeading(ped, (GetEntityHeading(ped) + 10.0))
-    end
-end)
-
 addBlips = function(config)
     for _, v in pairs(config) do
         if (v.blip) then
@@ -153,9 +154,41 @@ addBlips = function(config)
 end
 
 RegisterNuiCallback('close', function()
-    SetNuiFocus(false, false)
+    closeNui()
+    setPedCustom()
 end)
 
 RegisterNuiCallback('changeCam', function(data)
-    print(data.rotation, data.type)
+    if (inMenu) then
+        local newPov = data.type
+        local newHeading = (data.rotation + 0.00)
+        SetEntityHeading(PlayerPedId(), newHeading)
+        if (atualCam ~= newPov) then deleteCam(); createCam(newPov); end;
+    end
 end)
+
+closeNui = function()
+    setPlayersVisible(false)
+    SetNuiFocus(false, false)
+    deleteCam(true)
+    inMenu = false
+    local ped = PlayerPedId()
+    FreezeEntityPosition(ped, false)
+    ClearPedTasks(ped)
+    if (oldCustom) then setCustomization(oldCustom); end;
+end
+
+LoadAnim = function(dict)
+    while (not HasAnimDictLoaded(dict)) do
+        RequestAnimDict(dict)
+        Citizen.Wait(10)
+    end
+end
+
+freezeAnim = function(dict, anim, flag, keep)
+    local ped = PlayerPedId()
+    if (not keep) then ClearPedTasks(ped) end
+    LoadAnim(dict)
+    TaskPlayAnim(ped, dict, anim, 2.0, 2.0, -1, flag or 1, 0, false, false, false)
+    RemoveAnimDict(dict)
+end
