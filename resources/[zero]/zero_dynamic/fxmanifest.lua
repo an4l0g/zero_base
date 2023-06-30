@@ -5,7 +5,7 @@ author 'bluenzzz & an4log'
 description 'Zero Dynamic'
 version '0.1'
 
-ui_page "http://localhost:5173"
+ui_page 'http://localhost:5173/'
 
 client_script { 'client/*.lua' }
 server_scripts { 'server/*.lua' }

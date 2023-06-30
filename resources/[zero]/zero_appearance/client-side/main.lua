@@ -23,7 +23,7 @@ setCustomization = function(custom, update)
             else
                 SetPedComponentVariation(ped, index, value[1], value[2], (value[3] or 1))
             end
-            if (update) then TriggerEvent('zero:barberUpdate'); end;
+            -- if (update) then TriggerEvent('zero:barberUpdate'); end;
         end
     end
 end 
