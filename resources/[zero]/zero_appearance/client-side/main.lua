@@ -1,5 +1,4 @@
 inMenu = false
-
 oldCustom = {}
 
 parsePart = function(key)
@@ -25,6 +24,7 @@ setCustomization = function(custom, update)
                 SetPedComponentVariation(ped, index, value[1], value[2], (value[3] or 1))
             end
             -- if (update) then TriggerEvent('zero:barberUpdate'); end;
+            if (update) then TriggerEvent('zero:barberUpdate'); TriggerEvent('zero:tattooUpdate'); end;
         end
     end
 end 

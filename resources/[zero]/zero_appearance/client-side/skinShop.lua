@@ -188,7 +188,6 @@ local openNuiShop = function(config, _oldCustom)
         sex = sex, 
         drawVariations = getDrawables()
     })
-
     SetCameraCoords('all', true)
 end
 
