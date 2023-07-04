@@ -2,6 +2,10 @@ inMenu = false
 
 oldCustom = {}
 
+createMarkers = function(coords)
+    DrawMarker(27, coords.x, coords.y, coords.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
+end
+
 parsePart = function(key)
     if (type(key) == 'string' and string.sub(key, 1, 1) == 'p') then
         return true, tonumber(string.sub(key, 2))
@@ -135,18 +139,19 @@ setPlayersVisible = function(bool)
     end
 end
 
-addBlips = function(config)
-    for _, v in pairs(config) do
+addBlips = function(locs, general)
+    for _, v in pairs(locs) do
         if (v.blip) then
             local coords = v.coord
+            local blipConfig = general[v.config].blip
             if (coords) then
                 local blip = AddBlipForCoord(coords.xyz)
-                SetBlipSprite(blip, v.blip.id)
-                SetBlipColour(blip, v.blip.color)
-                SetBlipScale(blip, v.blip.scale)
+                SetBlipSprite(blip, blipConfig.id)
+                SetBlipColour(blip, blipConfig.color)
+                SetBlipScale(blip, blipConfig.scale)
                 SetBlipAsShortRange(blip, true)
                 BeginTextCommandSetBlipName('STRING')
-                AddTextComponentString(v.blip.name)
+                AddTextComponentString(blipConfig.name)
                 EndTextCommandSetBlipName(blip)
             end
         end

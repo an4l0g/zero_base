@@ -1,5 +1,4 @@
 Citizen.CreateThread(function()
-    ReplaceHudColourWithRgba(0, 0, 153, 255, 255)
     AddTextEntry('FE_THDR_GTAO', 'ZERO')
 	StartAudioScene('CHARACTER_CHANGE_IN_SKY_SCENE')
 	SetAudioFlag('PoliceScannerDisabled', true)
