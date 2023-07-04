@@ -19,7 +19,7 @@ function Hair() {
         value={character.hairModel}
         setValue={(val) => setCharacter((old) => ({ ...old, hairModel: val }))}
         min={0}
-        max={75}
+        max={147}
         step={1}
         ruler={true}
       />

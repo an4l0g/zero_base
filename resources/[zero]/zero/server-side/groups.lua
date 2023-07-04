@@ -248,6 +248,7 @@ end)
 
 RegisterCommand('reloadgroups', function(source)
     if (source == 0) then
+		local config = module('cfg/groups', true)
 		groups = config.groups
 		users = config.users
 		TriggerEvent('vRP:groupsRefresh')

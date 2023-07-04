@@ -1,5 +1,4 @@
 inMenu = false
-
 oldCustom = {}
 
 createMarkers = function(coords)
