@@ -5,7 +5,7 @@ author 'bluenzzz#0001 & an4log#0001'
 description 'Zero Character'
 version '0.1'
 
-ui_page "http://189.0.88.222:8503"
+ui_page "http://localhost:8503"
 
 client_scripts { 'client/*.lua' }
 server_scripts { 'server/*.lua' }

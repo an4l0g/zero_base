@@ -1,5 +1,4 @@
 inMenu = false
-
 oldCustom = {}
 
 parsePart = function(key)

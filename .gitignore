@@ -4,3 +4,4 @@ node_modules
 /pm2.bat
 .vite
 nui/dist
+zero_streaming
