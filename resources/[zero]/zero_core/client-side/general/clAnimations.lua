@@ -1,4 +1,5 @@
-local configAnimations = configs.animations
+local config = module('zero_core', 'cfg/cfgAnimations')
+local configAnimations = config.animations
 
 for index, value in pairs(configAnimations.keyMapping) do
     RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)

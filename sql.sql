@@ -89,7 +89,7 @@ create table zero_inventory(
     primary key(bag_type)    
 );
 
-create table zero_hwid (
+create table zero_hwid(
     token varchar(100) not null,
     user_id int not null,
     primary key(token, user_id)
@@ -107,4 +107,11 @@ create table zero_user_vehicles (
     state json not null,
     custom json not null,
     primary key(user_id, vehicle, plate, chassis)
+)
+
+create table zero_spray(
+	id int unsigned auto_increment not null,
+    config json not null,
+    created_at timestamp not null default current_timestamp(),
+    primary key(id)
 )

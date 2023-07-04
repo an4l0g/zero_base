@@ -3,7 +3,7 @@ local inVehicle = false
 Citizen.CreateThread(function()
     SetBlipAlpha(GetNorthRadarBlip(), 0)
     RequestStreamedTextureDict('circlemap', false)
-	while not HasStreamedTextureDictLoaded('circlemap') do Citizen.Wait(1); end;
+	while (not HasStreamedTextureDictLoaded('circlemap')) do Citizen.Wait(1); end;
 	AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'circlemap', 'radarmasksm')
 	SetMinimapClipType(1)
 	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.015, 0.007, 0.21, 0.25)

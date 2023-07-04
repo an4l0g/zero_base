@@ -1,8 +1,8 @@
-configs = {}
+local config = {}
 
 local cancelKeyMapping = false
 
-configs.animations = {
+config.animations = {
     ['keyMapping'] = {
         ['cruzarBraco'] = {
             key = 'f1',
@@ -867,3 +867,5 @@ configs.animations = {
         },
     } 
 }
+
+return config
