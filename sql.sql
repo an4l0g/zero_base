@@ -115,3 +115,20 @@ create table zero_spray(
     created_at timestamp not null default current_timestamp(),
     primary key(id)
 )
+
+create table zero_spray(
+    id int unsigned auto_increment not null,
+    interior tinyint not null,
+    x float(8, 4) not null,
+    y float(8, 4) not null,
+    z float(8, 4) not null,
+    rx float(8, 4) not null,
+    ry float(8, 4) not null,
+    rz float(8, 4) not null,
+    scale float(8, 4) not null,
+    spray_text varchar(10) not null,
+    font varchar(32) not null,
+    color int not null,
+    created_at timestamp not null default current_timestamp(),
+    primary key(id)
+)
