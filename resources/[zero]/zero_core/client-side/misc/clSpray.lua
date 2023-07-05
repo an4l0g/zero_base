@@ -68,7 +68,6 @@ local SPRAYS = {}
 
 RegisterNetEvent('zero_spray:setSprays', function(s)
     SPRAYS = s
-    print(json.encode(SPRAYS))
 end)
 
 local fonts = {}
@@ -150,8 +149,8 @@ startSpray = function()
             else
                 IsSpraying = false
                 spray.text = ''
+                TriggerEvent('disableAllActions', false)
             end
-            
             Citizen.Wait(4)
         end
     end)
@@ -165,7 +164,7 @@ startSpray = function()
                     local sprayCoords = rayEndCoords + fwdVector * SPRAY_FORWARD_OFFSET
 
                     local isInterior = GetInteriorFromEntity(PlayerPedId()) > 0
-                    if (not isInterior) then cIndex = GetTimeColorName(); end;
+                    if (not isInterior) then cIndex = cli.GetTimeColorName(); end;
 
                     DrawSpray(PLAYER_NAME_HEAP[SCALEFORM_ID_MAX], {
                         location = sprayCoords,
@@ -331,7 +330,7 @@ PersistSpray = function()
             end
         end)
 
-        CancellableProgress(20000, 'anim@amb@business@weed@weed_inspecting_lo_med_hi@', 'weed_spraybottle_stand_spraying_01_inspector', 16, function()
+        CancellableProgress(20000, 'anim@amb@business@weed@weed_inspecting_lo_med_hi@', 'weed_spraybottle_stand_spraying_01_inspector', 16, 'Criando o spray...', 'spray', function()
             vSERVER.addSpray({
                 location = sprayLocation,
                 realRotation = currentComputedRotation, 
@@ -354,9 +353,8 @@ PersistSpray = function()
 
         for _, sprays in pairs(SPRAYS) do
             local cIndex = 'color'
-            print(sprays.originalColor)
             if (not sprays.interior) then
-                cIndex = GetTimeColorName()
+                cIndex = cli.GetTimeColorName()
             end
             sprays.color = configSpray.colors[parseInt(sprays.originalColor)][cIndex].hex
         end
@@ -394,7 +392,6 @@ FindRaycastedSprayCoords = function()
         if (result) then
             if LastSubtitleText then
                 LastSubtitleText = nil
-                ClearPrints()
             end
 
             LastComputedRayEndCoords = rayEndCoords
@@ -450,7 +447,7 @@ end
 
 local Hour = 12
 
-GetTimeColorName = function()
+cli.GetTimeColorName = function()
     if (Hour <= 5 or Hour >= 21) then return 'colorDarkest'; end;
     if (Hour <= 7 or Hour >= 19) then return 'colorDarker'; end;
     return 'color'
@@ -573,7 +570,6 @@ end
  
 function _MTX:dump()
     for _,r in ipairs(self) do
-        print(unpack(r))
     end
 end
  
@@ -609,7 +605,7 @@ IsOnPlane = function(a,b,c,d,e,f)
     return math.abs(det1:det()) < 0.1 and math.abs(det2:det()) < 0.1
 end
 
-CancellableProgress = function(time, animDict, animName, flag, finish, cancel, opts)
+CancellableProgress = function(time, animDict, animName, flag, text, item, finish, cancel, opts)
     IsCancelled = false
     local ped = PlayerPedId()
     if (not opts) then opts = {} end
@@ -618,8 +614,8 @@ CancellableProgress = function(time, animDict, animName, flag, finish, cancel, o
         LoadAnimDict(animDict)
         TaskPlayAnim(ped, animDict, animName, opts.speedIn or 1.0, opts.speedOut or 1.0, -1, flag, 0, 0, 0, 0 )
     end
-
-    TriggerEvent('progressBar', 'Spray...', 20000)
+    
+    TriggerEvent('progressBar', text, time)
     LastHp = GetEntityHealth(ped)
 
     local timeLeft = time
@@ -635,12 +631,13 @@ CancellableProgress = function(time, animDict, animName, flag, finish, cancel, o
         LastHp = newHp
         DisableControlAction(0, 23, true)
         DisplayHelpTextThisFrame('RC_CANCEL', true)
-        if (IsControlPressed(0, 23) or IsDisabledControlPressed(0, 23) )then IsCancelled = true; end;
+        if (IsControlPressed(0, 23) or IsDisabledControlPressed(0, 23)) then TriggerEvent('disableAllActions', false) IsCancelled = true; end;
 
         if (IsCancelled) then
             if (animDict) then ClearPedTasks(ped) end
 
             if (cancel) then
+                TriggerEvent('progressBar', 'Cancelando...', 1)
                 StopCancellableProgressBar()
                 cancel()
                 return
@@ -653,6 +650,8 @@ CancellableProgress = function(time, animDict, animName, flag, finish, cancel, o
     end
 
     if finish then
+        vSERVER.getItem(item)
+        TriggerEvent('disableAllActions', false)
         finish()
     end
 end
@@ -771,4 +770,52 @@ scale = function(v, s)
         v.y * s,
         v.z * s
     )
+end
+
+RegisterNetEvent('zero_spray:removeClosestSpray', function()
+    local ped = PlayerPedId()
+    local coords = GetEntityCoords(ped)
+
+    local closestSprayLoc = nil
+    local closestSprayDist = nil
+
+    for _, spray in pairs(SPRAYS) do
+        local sprayPos = spray.location
+        local dist = #(sprayPos - coords)
+        if (dist < 3.0 and (not closestSprayDist or closestSprayDist > dist)) then
+            closestSprayLoc = sprayPos
+            closestSprayDist = dist
+        end
+    end
+    
+    if (closestSprayLoc) then
+        local ragProp = CreateSprayRemoveProp(ped)
+        CancellableProgress(30000, 'timetable@maid@cleaning_window@idle_a', 'idle_a', 1, 'Removendo o spray...', 'removedor-spray',
+        function()
+            ClearPedTasks(ped)
+            RemoveSprayRemoveProp(ragProp)
+            TriggerServerEvent('zero_spray:remove', closestSprayLoc)
+        end, 
+        function()
+            RemoveSprayRemoveProp(ragProp)
+        end)
+    else
+        TriggerEvent('notify', 'Spray', 'Não há <b>sprays</b> para remover')
+    end
+end)
+
+CreateSprayRemoveProp = function(ped)
+    local ragProp = CreateObject(
+        `p_loose_rag_01_s`,
+        0.0, 0.0, 0.0,
+        true, false, false
+    )
+
+    AttachEntityToEntity(ragProp, ped, GetPedBoneIndex(ped, 28422), x, y, z, ax, ay, az, true, true, false, true, 1, true)
+    return ragProp
+end
+
+RemoveSprayRemoveProp = function(ent)
+    if (NetworkGetEntityOwner(ent) ~= PlayerId()) then end
+    DeleteEntity(ent)
 end

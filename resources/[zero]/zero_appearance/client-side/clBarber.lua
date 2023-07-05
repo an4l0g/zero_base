@@ -44,8 +44,6 @@ local barberValue;
 local barberMarkers = {}
 
 local mainThread = function()
-    SetNuiFocus(false, false)
-    FreezeEntityPosition(PlayerPedId(), false)
     getNearestBarber = function()
         local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)

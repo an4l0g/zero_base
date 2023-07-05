@@ -1,11 +1,4 @@
-checkActions = function()
-    return disableActions
-end
-
-exports('checkActions', checkActions)
-
 cInventory.openInventory = function(action, chestType, lootId)
-    disableActions = true
     local ped = PlayerPedId() 
 
     local playerBagType = 'bag:'..sInventory.getUserId()
@@ -38,7 +31,7 @@ cInventory.closeInventory = function(data)
     if data and data.message then
         config.functions.clientNotify(config.texts.notify_title, data.message, 5000)
     end
-    disableActions = false
+
     SetNuiFocus(false, false)
     SendNUIMessage({
         action = 'close'

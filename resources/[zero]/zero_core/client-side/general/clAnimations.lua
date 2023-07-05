@@ -1,12 +1,15 @@
 local config = module('zero_core', 'cfg/cfgAnimations')
 local configAnimations = config.animations
 
+local cancelAnims = false
+
 for index, value in pairs(configAnimations.keyMapping) do
     RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)
-    RegisterCommand('+'..index, function() value.action() end)
+    RegisterCommand('+'..index, function() if (not cancelAnims) then value.action() end; end)
 end
 
 RegisterNetEvent('zero_animations:setAnim', function(anim)
+    if (cancelAnims) then return; end;
     local ped = PlayerPedId()
     local emote = configAnimations.animations[anim]
     zero.DeletarObjeto()
@@ -54,6 +57,7 @@ RegisterNetEvent('zero_animation:sharedClearAnimation', function()
 end)
 
 RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
+    if (cancelAnims) then return; end;
     sharedAnimation = target
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]
@@ -84,6 +88,7 @@ RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
 end)
 
 RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)   
+    if (cancelAnims) then return; end;
     sharedAnimation = target
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]
@@ -193,5 +198,14 @@ getAllAnimations = function()
     return animations
 end
 exports('getAllAnimations', getAllAnimations)
+
+RegisterNetEvent('disableAllActions', function(boolean)
+    cancelAnims = boolean
+    if (cancelAnims) then
+        TriggerEvent('zero_inventory:disableActions')
+    else
+        TriggerEvent('zero_inventory:enableActions')
+    end
+end)
 
 CreateThread(generateAnimations)
