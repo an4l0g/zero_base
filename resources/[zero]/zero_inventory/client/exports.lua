@@ -6,8 +6,6 @@ cInventory.openInventory = function(action, chestType, lootId)
 
     local player = sInventory.getBag(playerBagType)
     local hotbar = sInventory.getBag(playerHotbarType)
-
-    currentChestType = chestType
     local chest = cInventory.getChestInfo(chestType, lootId)
 
     if action == 'open' then

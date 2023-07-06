@@ -56,8 +56,8 @@ config.general = {
 config.locs = {
     -- [ BARBERSHOP 1 ] --
     { blip = true, coord = vector4(138.5275, -1707.363, 29.27991, 45.35433), config = 'all' },
-    { blip = true, coord = vector4(137.4857, -1708.497, 29.27991, 42.51968), config = 'all' },
-    { blip = true, coord = vector4(136.6154, -1709.71, 29.27991, 42.51968), config = 'all' }
+    { coord = vector4(137.4857, -1708.497, 29.27991, 42.51968), config = 'all' },
+    { coord = vector4(136.6154, -1709.71, 29.27991, 42.51968), config = 'all' }
 }
 
 return config

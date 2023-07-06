@@ -1,49 +1,47 @@
+cli = {}
+Tunnel.bindInterface(GetCurrentResourceName(), cli)
 vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 local configHomes = config.homes
+local configInterior = config.interior 
 
 local inHome = false
-local nearestBlip = {}
 
-mainThread = function()
-    local getNearestHomes = function()
-        while true do
-            if (not inHome) then 
-                local pedCoords = GetEntityCoords(PlayerPedId())
-                if (nearestBlip) and nearestBlip[1] then
-                    local distance = #(pedCoords - nearestBlip[1].xyz)
-                    if (distance >= 0.4) then
-                        nearestBlip = false
-                    elseif (distance <= 0.3) then
-                        nearestBlip.close = true
+local mainThread = function()
+    getNearestHome = function()
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        local homeCoords = {}
+        for k, v in pairs(configHomes) do
+            local distance = #(pCoord - v.coord)
+            if (distance <= 5) then
+                table.insert(homeCoords, k)
+            end
+        end
+        return homeCoords
+    end
+    
+    while (true) do
+        local idle = 1000
+        if (not inHome) then   
+            local nearestHome = getNearestHome() 
+            if (nearestHome) then
+                local ped = PlayerPedId()
+                local pCoord = GetEntityCoords(ped)
+                for k, v in pairs(nearestHome) do
+                    local homeConfig = configHomes[v]
+                    local coord = homeConfig.coord
+                    local distance = #(pCoord - coord)
+                    if (distance > 5 or GetEntityHealth(ped) <= 101) then
+                        nearestHome = nil
+                        break
                     else
-                        nearestBlip.close = false
-                    end
-                else
-                    for k, v in pairs(configHomes) do
-                        local distance = #(pedCoords - v[1].xyz)
-                        if (distance <= 0.3) then
-                            nearestBlip = configHomes[k]
-                            nearestBlip.name = k
+                        idle = 5
+                        DrawMarker(1, coord.x, coord.y, coord.z - 0.97, 0, 0, 0, 0, 0, 0, 0.8, 0.8, 0.5, 0, 153, 255, 155, 0, 0, 0, 1)
+                        if (distance <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                            vSERVER.tryEnterHome(v)   
                         end
                     end
-                end
-            end
-            Citizen.Wait(500)
-        end
-    end
-
-    CreateThread(getNearestHomes)
-
-    while true do
-        local idle = 500
-        local ped = PlayerPedId()
-        if (not inHome) then
-            if (nearestBlip) and nearestBlip[1] then
-                idle = 4
-                DrawMarker(1, nearestBlip[1].x, nearestBlip[1].y, (nearestBlip[1].z-0.97), 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0, 153, 255, 255, 0, 0, 0, 1)
-                if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
-                    vSERVER.tryEnterHome(nearestBlip.name)
                 end
             end
         end
@@ -53,16 +51,83 @@ end
 
 CreateThread(mainThread)
 
+local internLocates = {}
+local homeName = ''
+
+cli.enterHome = function(interior, name)
+    threadInHome()
+
+    homeName = name
+    interior = configInterior[interior]
+    local ped = PlayerPedId()
+
+    DoScreenFadeOut(100)
+    TriggerEvent('zero_sound:source', 'enterexithouse', 0.7)
+    Citizen.Wait(500)
+
+    FreezeEntityPosition(ped, true)
+    SetEntityCoords(ped, interior.door)
+    
+    table.insert(internLocates, { interior.door.x, interior.door.y, interior.door.z, 'exit' })
+    table.insert(internLocates, { interior.vault.x, interior.vault.y, interior.vault.z, 'vault' })
+
+    Citizen.Wait(1000)
+	FreezeEntityPosition(ped, false)
+	DoScreenFadeIn(1000)
+end
+
+threadInHome = function()
+    inHome = true
+    Citizen.CreateThread(function()
+        while (inHome) do
+            local idle = 1000
+            local ped = PlayerPedId()
+            local pCoord = GetEntityCoords(ped)
+            if (inHome) then
+                for k, v in pairs(internLocates) do
+                    local coord = vector3(v[1], v[2], v[3])
+                    local distance = #(pCoord - coord)
+                    if (distance <= 5.0) then
+                        idle = 4
+                        DrawMarker(0, coord.x, coord.y, coord.z, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 153, 255, 155, 1, 0, 0, 1)
+                        if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101) then
+                            if (v[4] == 'exit') then
+                                exitHome()
+                            elseif (v[4] == 'vault') then
+                                exports['zero_inventory']:openInventory('open', 'homes:'..homeName)
+                            end
+                        end
+                    end
+                end
+            end
+            Citizen.Wait(idle)
+        end
+    end)
+end
+
+exitHome = function()
+    inHome = false
+    
+    local ped = PlayerPedId()
+    DoScreenFadeOut(100)
+	Citizen.Wait(500)
+
+    TriggerEvent('zero_sound:source', 'enterexithouse', 0.5)
+    internLocates = {}
+
+    FreezeEntityPosition(ped, true)
+    vSERVER.cacheHomes()
+	Citizen.Wait(2000)
+	FreezeEntityPosition(ped, false)
+	DoScreenFadeIn(1000)
+end
+
 local homeList = false
 local homesBlips = {}
 local buyedHomes = {}
 local blipsColor = { basic = 8, modern = 3, high = 46 }
 
-RegisterCommand('homes', function(source, args)
-    if (args[1] == 'list') then TriggerEvent('zero_homes:blips'); end;
-end)
-
-RegisterNetEvent('zero_homes:blips', function()
+RegisterNetEvent('zero_interactions:blips', function()
     if (homeList) then
         homeList = false
         TriggerEvent('notify', 'Residências', '<b>Marcações</b> desativadas.', 3000)
@@ -73,7 +138,7 @@ RegisterNetEvent('zero_homes:blips', function()
         homeList = true
         TriggerEvent('notify', 'Residências', '<b>Marcações</b> ativadas.', 3000)
         for index, value in pairs(configHomes) do
-            homesBlips[index] = AddBlipForCoord(value[1])
+            homesBlips[index] = AddBlipForCoord(value.coord)
             SetBlipSprite(homesBlips[index], 350)
 			SetBlipAsShortRange(homesBlips[index], true)
 			SetBlipColour(homesBlips[index], blipsColor[value.type])			
@@ -92,18 +157,3 @@ RegisterNetEvent('zero_homes:blips', function()
         end
     end
 end)
-
-Text3D = function(coords, text)
-    SetDrawOrigin(coords.x, coords.y, coords.z, 0); 
-    SetTextFont(4)     
-    SetTextProportional(0)     
-    SetTextScale(0.35,0.35)    
-    SetTextColour(255,255,255,150)   
-    SetTextDropshadow(0, 0, 0, 0, 255)     
-    SetTextEdge(2, 0, 0, 0, 150)     
-    SetTextDropShadow()     SetTextOutline()     
-    SetTextEntry('STRING')     SetTextCentre(1)     
-    AddTextComponentString(text) 
-    DrawText(0.0, 0.0)     
-    ClearDrawOrigin() 
-end

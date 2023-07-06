@@ -436,17 +436,16 @@ zero.request = function(source, title, time)
 end
 ------------------------------------------------------------------
 
--- function exports['vrp']:getDayHours(seconds)
---     local days = math.floor(seconds/86400)
---     seconds = seconds - days * 86400
---     local hours = math.floor(seconds/3600)
-
---     if days > 0 then
---         return string.format("<b>%d Dias</b> e <b>%d Horas</b>",days,hours)
---     else
---         return string.format("<b>%d Horas</b>",hours)
---     end
--- end
+zero.getDayHours = function(seconds)
+    local days = math.floor(seconds/86400)
+    seconds = seconds - days * 86400
+    local hours = math.floor(seconds/3600)
+    if (days > 0) then
+        return string.format('<b>%d Dias</b> e <b>%d Horas</b>', days, hours)
+    else
+        return string.format('<b>%d Horas</b>', hours)
+    end
+end
 
 -- function exports['vrp']:getMinSecs(seconds)
 --     local days = math.floor(seconds/86400)

@@ -39,10 +39,6 @@ local getDrawables = function()
     return pedDrawables[playerModel]
 end
 
-local barberIndex;
-local barberValue;
-local barberMarkers = {}
-
 local mainThread = function()
     getNearestBarber = function()
         local ped = PlayerPedId()
@@ -56,11 +52,9 @@ local mainThread = function()
         end
         return barberCoords
     end
-
-    createMarkers = function(coords)
-        DrawMarker(27, coords.x, coords.y, coords.z-0.97, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
-    end
-
+    
+    addBlips(locsConfig, generalConfig)
+    
     while (true) do
         local idle = 1000
         if (not inMenu) then   

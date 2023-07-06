@@ -17,6 +17,16 @@ sInventory.getTrunkSize = function(vname)
     return zero.vehicleChest(vname)
 end
 
+zero._prepare('zero_homes/getVault', 'select configs from zero_homes where home = @home')
+
+sInventory.getVaultSize = function(hname)
+    local query = zero.query('zero_homes/getVault', { home = hname })[1].configs
+    if (query) then
+        query = json.decode(query)
+        return query.chest
+    end
+end
+
 sInventory.getVehOwnerId = function(vnetid)
     local data = exports["zero_garage"]:getVehicleData(vnetid)
     if data then return data.user_id; end;
