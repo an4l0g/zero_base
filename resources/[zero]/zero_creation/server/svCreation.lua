@@ -6,7 +6,7 @@ vCLIENT = Tunnel.getInterface('Creation')
 
 zero._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character, rh) VALUES (@user_id, @controller, @user_character, @rh)')
 zero._prepare('zero_character/verifyUser', 'SELECT controller FROM zero_creation WHERE user_id = @user_id')
-zero._prepare('zero_character/saveUser', 'UPDATE zero_creation SET user_character = @user_character WHERE user_id = @user_id')
+zero._prepare('zero_character/saveUser', 'UPDATE zero_creation SET user_character = @user_character, controller = 1 WHERE user_id = @user_id')
 
 srv.changeSession = function(bucket)
     local _source = source
@@ -44,7 +44,7 @@ end
 
 local userLogin = {}
 
-AddEventHandler('vRP:playerSpawn', function(user_id, source)
+AddEventHandler('vRP:playerSpawn', function(user_id, source)    
     local bloodGroup = generalConfig.bloodGroup
     zero.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}', rh = bloodGroup[math.random(#bloodGroup)] })
 
@@ -55,8 +55,9 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
         if (query['controller'] == 1) then
             if (not userLogin[user_id]) then
                 userLogin[user_id] = true
+                playerSpawn(source, user_id, true)
             else
-
+                playerSpawn(source, user_id, false)
             end
         elseif (query['controller'] == 0) then
             userLogin[user_id] = true
@@ -66,12 +67,13 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
 end)
 
 playerSpawn = function(source, user_id, firstSpawn)
+    vCLIENT.loadingPlayer(source, true) 
     if (firstSpawn) then
         Citizen.Wait(8000)
-        TriggerClientEvent('zero:SpawnSelector', source, false)
+        -- TriggerClientEvent('gb_spawn:SpawnSelector', source, false)
     else
         Citizen.Wait(5000)
-        TriggerClientEvent('zero:SpawnSelector', source, true)
+        -- TriggerClientEvent('gb_spawn:SpawnSelector', source, true)
     end
-    TriggerEvent('vrp_barbershop:init', user_id)
+    TriggerEvent('zero_appearance_barbershop:init', user_id)
 end

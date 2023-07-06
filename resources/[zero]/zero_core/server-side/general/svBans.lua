@@ -18,7 +18,7 @@ exports('isBanned', userIsBanned)
 local setUserBanned = function(user_id, banned)
     zero.execute('zero_hwid/setUserBanned', { user_id = user_id, banned = banned } )
 end
-exports('setBanned', userIsBanned)
+exports('setBanned', setUserBanned)
 
 AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
     local userTokens = GetNumPlayerTokens(source)

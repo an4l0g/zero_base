@@ -11,10 +11,10 @@ configs.animations = {
                 local ped = PlayerPedId()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@heists@heist_corona@single_team', 'single_team_loop_boss', 3)) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{ 'anim@heists@heist_corona@single_team', 'single_team_loop_boss' }}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{ 'anim@heists@heist_corona@single_team', 'single_team_loop_boss' }}, true)
                     end
                 end
             end
@@ -24,13 +24,13 @@ configs.animations = {
             text = 'Animação - Aguardar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'mini@strip_club@idles@bouncer@base', 'base', 3)) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{ 'mini@strip_club@idles@bouncer@base', 'base' }}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{ 'mini@strip_club@idles@bouncer@base', 'base' }}, true)
                     end
                 end
             end
@@ -40,13 +40,13 @@ configs.animations = {
             text = 'Animação - Dedo do meio',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@mp_player_intselfiethe_bird', 'idle_a', 3)) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{ 'anim@mp_player_intselfiethe_bird', 'idle_a' }}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{ 'anim@mp_player_intselfiethe_bird', 'idle_a' }}, true)
                     end
                 end
             end
@@ -56,14 +56,14 @@ configs.animations = {
             text = 'Animação - Se render',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.CarregarAnim('random@arrests')
-                        vRP.CarregarAnim('random@arrests@busted')
+                        zero.DeletarObjeto()
+                        zero.CarregarAnim('random@arrests')
+                        zero.CarregarAnim('random@arrests@busted')
                         TaskPlayAnim(ped, 'random@arrests', 'idle_2_hands_up', 8.0, 1.0, -1, 2, 0, 0, 0, 0)
                         Wait(4000)
                         TaskPlayAnim(ped, 'random@arrests', 'kneeling_arrest_idle', 8.0, 1.0, -1, 2, 0, 0, 0, 0)
@@ -81,13 +81,13 @@ configs.animations = {
             text = 'Animação - Cancelar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
-                TriggerEvent('vRP:CancelAnimations')
+                local menuCelular = zero.getMenuCelular()
+                TriggerEvent('zero:CancelAnimations')
                 TriggerEvent('zero_animations:cancelSharedAnimation')
                 cancelKeyMapping = false
                 if (GetEntityHealth(ped) > 101 and not menuCelular) then
                     disableActions(false)
-                    vRP.DeletarObjeto()
+                    zero.DeletarObjeto()
                     ClearPedTasks(ped)
                 end
             end
@@ -97,13 +97,13 @@ configs.animations = {
             text = 'Animação - Mãos na cabeça',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{'random@arrests@busted', 'idle_a'}}, true)    
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{'random@arrests@busted', 'idle_a'}}, true)    
                     end            
                 end
             end
@@ -113,13 +113,13 @@ configs.animations = {
             text = 'Animação - Levantar as mãos',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@mugging3', 'handsup_standing_base', 3) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                     else
-                        vRP.DeletarObjeto()
-                        vRP.playAnim(true, {{'random@mugging3', 'handsup_standing_base'}}, true)
+                        zero.DeletarObjeto()
+                        zero.playAnim(true, {{'random@mugging3', 'handsup_standing_base'}}, true)
                     end
                 end
             end
@@ -129,9 +129,9 @@ configs.animations = {
             text = 'Animação - Joia duplo',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intincarthumbs_upbodhi@ps@', 'enter' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intincarthumbs_upbodhi@ps@', 'enter' }}, false)
                 end
             end
         },
@@ -140,9 +140,9 @@ configs.animations = {
             text = 'Animação - Assobiar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'rcmnigel1c', 'hailing_whistle_waive_a' }}, false)
+                    zero.playAnim(true, {{ 'rcmnigel1c', 'hailing_whistle_waive_a' }}, false)
                 end
             end
         },
@@ -151,9 +151,9 @@ configs.animations = {
             text = 'Animação - Saudação',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intcelebrationmale@salute', 'salute' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intcelebrationmale@salute', 'salute' }}, false)
                 end
             end
         },
@@ -162,9 +162,9 @@ configs.animations = {
             text = 'Animação - Joia',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intselfiethumbs_up', 'idle_a' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intselfiethumbs_up', 'idle_a' }}, false)
                 end
             end
         },
@@ -173,9 +173,9 @@ configs.animations = {
             text = 'Animação - Facepalm',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.playAnim(true, {{ 'anim@mp_player_intupperface_palm', 'idle_a' }}, false)
+                    zero.playAnim(true, {{ 'anim@mp_player_intupperface_palm', 'idle_a' }}, false)
                 end
             end
         },
@@ -184,9 +184,9 @@ configs.animations = {
             text = 'Animação - Apontar',
             action = function()
                 local ped = PlayerPedId()
-                local menuCelular = vRP.getMenuCelular()
+                local menuCelular = zero.getMenuCelular()
                 if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
-                    vRP.CarregarAnim('anim@mp_point')
+                    zero.CarregarAnim('anim@mp_point')
                     if (not LocalPlayer.state.animApontar) then
                         SetPedCurrentWeaponVisible(ped, 0, 1, 1, 1)
                         SetPedConfigFlag(ped, 36, 1)
@@ -213,7 +213,7 @@ configs.animations = {
                 if (IsPedInAnyVehicle(ped)) then
                     local vehicle = GetVehiclePedIsIn(ped,false)
                     if (GetPedInVehicleSeat(vehicle,-1) == ped) then
-                        vRP.DeletarObjeto()
+                        zero.DeletarObjeto()
                         local running = Citizen.InvokeNative(0xAE31E7DF9B5B132E,vehicle)
                         SetVehicleEngineOn(vehicle,not running,true,true)
                         if (running) then
@@ -228,6 +228,7 @@ configs.animations = {
     },
     ['shared'] = {
         ['otoscopio'] = {
+            category = 'medic',
             title = '[Médico] - Otoscopia',
             dict = 'gndostopiomedic@animations',
             anim = 'gndostopiomedic_clip',
@@ -253,19 +254,19 @@ configs.animations = {
                 zRot = 280.0
             },
             otherAnim = 'otoscopio2',
-            type = 'hospital',
             perm = 'hospital.permissao'
         },
         ['otoscopio2'] = {
+            category = 'medic',
             title = '[Paciente] - Otoscopia',
             dict = 'gndostopiopacient@animations',
             anim = 'gndostopiopacient_clip',
             andar = false,
             loop = true,
             otherAnim = 'otoscopio',
-            type = 'hospital'
         },
         ['otoscopio3'] = {
+            category = 'medic',
             title = '[Médico] - Otoscopia criança',
             dict = 'gndkidotoscopiomedic@animations',
             anim = 'gndkidotoscopiomedic_clip',
@@ -291,19 +292,19 @@ configs.animations = {
                 zRot = 280.0
             },
             otherAnim = 'otoscopio4',
-            type = 'hospital',
             perm = 'hospital.permissao'
         },
         ['otoscopio4'] = {
+            category = 'medic',
             title = '[Paciente] - Otoscopia criança',
             dict = 'gndkidotoscopiopacient@animations',
             anim = 'gndkidotoscopiopacient_clip',
             andar = false,
             loop = true,
             otherAnim = 'otoscopio3',
-            type = 'hospital'
         },
         ['cadeiraderodas'] = {
+            category = 'medic',
             title = '[Médico] - Cadeira de rodas',
             dict = 'gndempurrandochairwhell@animations',
             anim = 'gndempurrandochairwhell_clip',
@@ -331,10 +332,10 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'cadeiraderodas2',
-            type = 'hospital',
             perm = 'hospital.permissao'  
         },
         ['cadeiraderodas2'] = {
+            category = 'medic',
             title = '[Paciente] - Cadeira de rodas',
             dict = 'gndcadeirantepernaquebrada@animations',
             anim = 'gndcadeirantepernaquebrada_clip',
@@ -351,9 +352,9 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'cadeiraderodas',
-            type = 'hospital'
         },
         ['casal'] = {
+            category = 'couple',
             title = '[Mulher] - Holdface',
             dict = 'genesismods@bmv_holdfacef',
             anim = 'holdfacef',
@@ -373,9 +374,9 @@ configs.animations = {
                 zRot = 180.0
             },
             otherAnim = 'casal2',
-            type = 'casal'
         },
         ['casal2'] = {
+            category = 'couple',
             title = '[Homem] - Holdface',
             dict = 'genesismods@bmv_holdfacem',
             anim = 'holdfacem',
@@ -385,9 +386,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal',
-            type = 'casal'
         },
         ['casal3'] = {
+            category = 'couple',
             title = '[Mulher] - Holdhands',
             dict = 'genesismods@bmv_holdhandsf',
             anim = 'holdhandsf',
@@ -407,9 +408,9 @@ configs.animations = {
                 zRot = 180.0
             },
             otherAnim = 'casal4',
-            type = 'casal'
         },
         ['casal4'] = {
+            category = 'couple',
             title = '[Homem] - Holdhands',
             dict = 'genesismods@bmv_holdhandsm',
             anim = 'holdhandsm',
@@ -419,9 +420,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal3',
-            type = 'casal'
         },
         ['casal5'] = {
+            category = 'couple',
             title = '[Mulher] - Hug',
             dict = 'genesismods@bmv_hugf',
             anim = 'hugf',
@@ -441,9 +442,9 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'casal6',
-            type = 'casal'
         },
         ['casal6'] = {
+            category = 'couple',
             title = '[Homem] - Hug',
             dict = 'genesismods@bmv_hugm',
             anim = 'hugm',
@@ -453,9 +454,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal5',
-            type = 'casal'
         },
         ['casal7'] = {
+            category = 'couple',
             title = '[Mulher] - Hug 2',
             dict = 'genesismods@bmv_hug2f',
             anim = 'hug2f',
@@ -475,9 +476,9 @@ configs.animations = {
                 zRot = 180.0
             },
             otherAnim = 'casal8',
-            type = 'casal'
         },
         ['casal8'] = {
+            category = 'couple',
             title = '[Homem] - Hug 2',
             dict = 'genesismods@bmv_hug2m',
             anim = 'hug2m',
@@ -487,9 +488,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal7',
-            type = 'casal'
         },
         ['casal9'] = {
+            category = 'couple',
             title = '[Mulher] - Kissing hand',
             dict = 'genesismods@bmv_kissinghandf',
             anim = 'kissinghandf',
@@ -509,9 +510,9 @@ configs.animations = {
                 zRot = 180.0
             },
             otherAnim = 'casal10',
-            type = 'casal'
         },
         ['casal10'] = {
+            category = 'couple',
             title = '[Homem] - Kissing hand',
             dict = 'genesismods@bmv_kissinghandm',
             anim = 'kissinghandm',
@@ -521,9 +522,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal9',
-            type = 'casal'
         },
         ['casal11'] = {
+            category = 'couple',
             title = '[Mulher] - Laying',
             dict = 'genesismods@bmv_layingf',
             anim = 'layingf',
@@ -543,9 +544,9 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'casal12',
-            type = 'casal'
         },
         ['casal12'] = {
+            category = 'couple',
             title = '[Homem] - Laying',
             dict = 'genesismods@bmv_layingm',
             anim = 'layingm',
@@ -555,9 +556,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal11',
-            type = 'casal'
         },
         ['casal13'] = {
+            category = 'couple',
             title = '[Mulher] - Stare',
             dict = 'genesismods@bmv_staref',
             anim = 'staref',
@@ -577,9 +578,9 @@ configs.animations = {
                 zRot = 180.0
             },
             otherAnim = 'casal14',
-            type = 'casal'
         },
         ['casal14'] = {
+            category = 'couple',
             title = '[Homem] - Stare',
             dict = 'genesismods@bmv_starem',
             anim = 'starem',
@@ -589,9 +590,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal13',
-            type = 'casal'
         },
         ['casal15'] = {
+            category = 'couple',
             title = '[Mulher] - Pedido',
             dict = 'genesismods@bmv_proposalf',
             anim = 'proposalf',
@@ -611,9 +612,9 @@ configs.animations = {
                 zRot = 180.0
             },
             otherAnim = 'casal16',
-            type = 'casal'
         },
         ['casal16'] = {
+            category = 'couple',
             title = '[Homem] - Pedido',
             dict = 'genesismods@bmv_proposalm',
             anim = 'proposalm',
@@ -627,9 +628,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'casal15',
-            type = 'casal'
         },
         ['sexo'] = {
+            category = 'sex',
             title = '[Mulher] - 69',
             dict = 'genesismods@oralfixation_69f',
             anim = '69f',
@@ -649,9 +650,9 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'sexo2',
-            type = 'nsfw'
         },
         ['sexo2'] = {
+            category = 'sex',
             title = '[Homem] - 69',
             dict = 'genesismods@oralfixation_69m',
             anim = '69m',
@@ -661,9 +662,9 @@ configs.animations = {
                 cancelKeyMapping = true
             end,
             otherAnim = 'sexo',
-            type = 'casal'
         },
         ['sexo3'] = {
+            category = 'sex',
             title = '[Mulher] - Blowjob',
             dict = 'genesismods@oralfixation_blowjobf',
             anim = 'blowjobf',
@@ -683,18 +684,18 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'sexo4',
-            type = 'nsfw'
         },
         ['sexo4'] = {
+            category = 'sex',
             title = '[Homem] - Blowjob',
             dict = 'genesismods@oralfixation_blowjobm',
             anim = 'blowjobm',
             andar = false,
             loop = true,
             otherAnim = 'sexo3',
-            type = 'nsfw'
         },
         ['sexo5'] = {
+            category = 'sex',
             title = '[Mulher] - Deepthroat',
             dict = 'genesismods@oralfixation_deepthroatf',
             anim = 'deepthroatf',
@@ -714,18 +715,18 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'sexo6',
-            type = 'nsfw'
         },
         ['sexo6'] = {
+            category = 'sex',
             title = '[Homem] - Deepthroat',
             dict = 'genesismods@oralfixation_deepthroatm',
             anim = 'deepthroatm',
             andar = false,
             loop = true,
             otherAnim = 'sexo5',
-            type = 'nsfw'
         },
         ['sexo7'] = {
+            category = 'sex',
             title = '[Mulher] - Licking',
             dict = 'genesismods@oralfixation_lickingf',
             anim = 'lickingf',
@@ -745,36 +746,36 @@ configs.animations = {
                 zRot = 0.0
             },
             otherAnim = 'sexo8',
-            type = 'nsfw'
         },
         ['sexo8'] = {
+            category = 'sex',
             title = '[Homem] - Licking',
             dict = 'genesismods@oralfixation_lickingm',
             anim = 'lickingm',
             andar = false,
             loop = true,
             otherAnim = 'sexo7',
-            type = 'nsfw'
         },
     },
     ['animations'] = {
         ['continencia'] = {
+            category = 'animations',
             title = 'Continência vibrante',
             dict = 'genesismodssalute',
             anim = 'salute',
             andar = false,
             loop = false,
-            type = 'cumprimentos'
         },
         ['continencia2'] = {
+            category = 'animations',
             title = 'Continência',
             dict = 'mp_player_int_uppersalute',
             anim = 'mp_player_int_salute',
             andar = true,
             loop = true,
-            type = 'cumprimentos'
         },
         ['raiox'] = {
+            category = 'medic',
             title = 'Raio X',
             dict = 'gndraioxavaliando@animations',
             anim = 'gndraioxavaliando_clip',
@@ -789,9 +790,9 @@ configs.animations = {
             end,
             andar = false,
             loop = true,
-            type = 'hospital'
         },
         ['testededo'] = {
+            category = 'medic',
             title = 'Teste de dedo',
             prop = 'gnd_test_dedo_prop',
             flag = 50,
@@ -799,9 +800,9 @@ configs.animations = {
             pos = { 0.14, 0.03, -0.03, -34.12, 11.51, -108.09 },
             andar = false,
             loop = true,
-            type = 'hospital'
         },
         ['soro'] = {
+            category = 'medic',
             title = 'Soro',
             dict = 'gndpacientecarregandosoro@animations',
             anim = 'gndpacientecarregandosoro_clip',
@@ -817,9 +818,9 @@ configs.animations = {
             end,
             andar = true,
             loop = true,
-            type = 'hospital'
         },
         ['inalacao'] = {
+            category = 'medic',
             title = 'Inalação',
             dict = 'gndinalacaopacientepackhospital@animations',
             anim = 'gndinalacaopacientepackhospital_clip',
@@ -834,9 +835,9 @@ configs.animations = {
             end,
             andar = true,
             loop = true,
-            type = 'hospital'
         },
         ['medico'] = {
+            category = 'medic',
             title = 'Maleta de utensílios',
             prop = 'gnd_bag_paramedic',
             flag = 50,
@@ -848,10 +849,10 @@ configs.animations = {
             end,
             andar = true,
             loop = true,
-            type = 'hospital',
             perm = 'hospital.permissao'
         },
         ['medico2'] = {
+            category = 'medic',
             title = 'Maleta do desfribilador',
             prop = 'gnd_desfribilador_maleta',
             flag = 50,
@@ -863,7 +864,6 @@ configs.animations = {
             end,
             andar = true,
             loop = true,
-            type = 'hospital'
         },
     } 
 }

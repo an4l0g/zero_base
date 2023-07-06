@@ -1,11 +1,5 @@
 local inAction = {}
 
-local function loseSanity(source, user_id)
-    zero.setStress(user_id, 45)
-    exports['zSkills']:removeExperience(source, 50)
-    TriggerClientEvent('Notify', source, 'negado', 'Ordem', 'Você foi punido por ter realizado uma ação não liberada pelo governo!')
-end
-
 RegisterCommand('saquear', function(source)
     if (GetEntityHealth(GetPlayerPed(source)) > 101) then
         local user_id = zero.getUserId(source)
@@ -21,7 +15,6 @@ RegisterCommand('saquear', function(source)
                             TriggerClientEvent('emotes', source, 'verificar')
                             TriggerClientEvent('zero_inventory:disableActions', nearestPlayerSource)
                             cInventory.openInventory(source, 'open', 'bag:'..nearestPlayerId)
-                            if not (zero.request(nearestPlayerSource, 'Você permite que o mesmo pegue os seus itens?', 60)) then loseSanity(source, user_id) end
                         else
                             TriggerClientEvent('Notify', source, 'negado', 'Saquear', 'Você não pode saquear um sobrevivente vivo!')
                         end
@@ -44,12 +37,11 @@ RegisterCommand('roubar', function(source)
                 local nearestPlayerSource = zeroClient.getNearestPlayer(source, 2.0)
                 if (nearestPlayerSource) then
                     local nearestPlayerId = zero.getUserId(nearestPlayerSource)
-                    if not (inAction[nearestPlayerId]) then
-                        if zero.request(nearestPlayerSource, 'Você está sendo roubado, deseja aceitar?', 60) then
-                            inAction[user_id] = nearestPlayerSource
-                            inAction[nearestPlayerId] = true
-                            if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) >= 101 then
-                                loseSanity(source, user_id)
+                    if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) >= 101 then
+                        if not (inAction[nearestPlayerId]) then
+                            if zero.request(nearestPlayerSource, 'Você está sendo roubado, deseja aceitar?', 10000) then
+                                inAction[user_id] = nearestPlayerSource
+                                inAction[nearestPlayerId] = true
                                 FreezeEntityPosition(GetPlayerPed(source), true)
                                 TriggerClientEvent('emotes', source, 'mexer')
                                 zeroClient.playAnim(nearestPlayerSource, true,{{'random@arrests@busted','idle_a'}},true)
@@ -57,13 +49,13 @@ RegisterCommand('roubar', function(source)
                                 cInventory.openInventory(source, 'open', 'bag:'..nearestPlayerId)
                                 cInventory.checkNui(nearestPlayerSource, { nearestPlayerSource, source }, GetEntityCoords(GetPlayerPed(source)), 1.8)
                             else
-                                TriggerClientEvent('Notify', source, 'negado', 'Roubar', 'Você não pode roubar um sobrevivente morto!')
+                                TriggerClientEvent('notify', source, 'Roubar', 'O mesmo se encontra resistindo ao roubo!')
                             end
                         else
-                            TriggerClientEvent('Notify', source, 'negado', 'Roubar', 'O mesmo se encontra resistindo ao roubo!')
+                            TriggerClientEvent('notify', source, 'Roubar', 'Esse jogador já se encontra sendo roubado por um outro sobrevivente!')
                         end
                     else
-                        TriggerClientEvent('Notify', source, 'negado', 'Roubar', 'Esse jogador já se encontra sendo roubado por um outro sobrevivente!')
+                        TriggerClientEvent('notify', source, 'Roubar', 'Você não pode roubar um sobrevivente morto!')
                     end
                 end
             else

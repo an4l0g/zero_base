@@ -1,0 +1,11 @@
+{
+  "webhookUrl": "https://discord.com/api/webhooks/1121850354359877733/wJtlUF5rJOq8zKI_6dBUBRFB0Y23TvYmJzuA7eD3PrtVK-5H6VXjFKvKbOqS82mSHIoe",
+  "framework": "vrp",
+  "commandName": "screenshot",
+  "commandPermission": "staff.permissao",
+  "hiddenIdentifiers": [],
+  "screenshotOptions": {
+    "encoding": "jpg",
+    "quality": 0.7
+  }
+}

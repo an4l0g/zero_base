@@ -80,14 +80,14 @@ create table zero_dynamic(
     user_id int unsigned not null,
     action varchar(50) not null,
     primary key(user_id, action)
-)
+);
 
 create table zero_inventory(
     bag_type varchar(25) not null,
     slots json not null,
     weight int not null,
     primary key(bag_type)    
-)
+);
 
 create table zero_hwid (
     token varchar(100) not null,
@@ -105,3 +105,16 @@ total_price double not null,
 service_date datetime not null,
 primary key (doctor_id,patient_id,service_type,service_date)
 );
+create table zero_user_vehicles (
+    user_id int unsigned not null,
+    vehicle varchar(50) not null, 
+    plate varchar(8) not null, 
+    chassis varchar(50) not null, 
+    detained int unsigned not null, 
+    service tinyint not null,
+    ipva varchar(50) not null,
+    rented varchar(50) not null,
+    state json not null,
+    custom json not null,
+    primary key(user_id, vehicle, plate, chassis)
+)

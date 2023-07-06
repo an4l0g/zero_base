@@ -14,7 +14,7 @@ local tempCam = nil
 
 local cameras = {
     ['body'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']-1, generalConfig['spawnCreator']['y']+0.9, generalConfig['spawnCreator']['z']),
+        ['coords'] = vector3(generalConfig['spawnCreator']['x']-1.10, generalConfig['spawnCreator']['y']+0.9, generalConfig['spawnCreator']['z']),
         ['heading'] = function()
             local ped = PlayerPedId()
             SetEntityHeading(ped, (generalConfig['spawnCreator'].w - 20))
@@ -24,7 +24,7 @@ local cameras = {
         end
     },
     ['head'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']-0.7, generalConfig['spawnCreator']['y']+0.7, generalConfig['spawnCreator']['z']),
+        ['coords'] = vector3(generalConfig['spawnCreator']['x']-0.85, generalConfig['spawnCreator']['y']+0.7, generalConfig['spawnCreator']['z']),
         ['heading'] = function()
             local ped = PlayerPedId()
             SetEntityHeading(ped, (generalConfig['spawnCreator'].w - 20.0))
@@ -70,14 +70,10 @@ local getCharacterDrawable = function(part)
 	end
 end
 
-Citizen.CreateThread(function()
-    cli.createCharacter()
-end)
-
 cli.createCharacter = function()
     initCreator()
     cli.loadingPlayer(true)
-    if (not DoesCamExist(cam)) then
+    if (not DoesCamExist(tempCam)) then
         createCam('body')
     end
     FreezeEntityPosition(PlayerPedId(), true)
@@ -122,7 +118,7 @@ resetClothes = function()
             ['ear'] = { -1, 0 }, -- p2
             ['watch'] = { -1, 0 }, --p6
             ['bracelet'] = { -1, 0 } --p7
-        },
+        }
     }
     local model = GetEntityModel(PlayerPedId())
     setClothing(clothes[model] or {})
@@ -469,7 +465,7 @@ RegisterNuiCallback('changeCharacter', function(data)
     SetPedComponentVariation(ped, 2, data.hairModel, 0, 0)
     SetPedHairColor(ped, data.firstHairColor, data.secondHairColor)
     
-    -- BARBAR
+    -- BARBA
     currentCharacter.beardModel = data.beardModel
     currentCharacter.beardColor = data.beardColor
     currentCharacter.beardOpacity = data.beardOpacity
