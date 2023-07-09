@@ -1,21 +1,24 @@
 cHospital = {} --lista vazia (table lua)
+service = {}
 Tunnel.bindInterface('zero_hospital',cHospital)
 sHospital = Tunnel.getInterface('zero_hospital')
 
 cHospital.updateNui = function()
-  SetNuiFocus(true, true)
-  SendNuiMessage({
-    action='open',
+  SendNUIMessage({
+    action = 'open',
     pendingServicesAmount = sHospital.getServicesPendingsAmount(),
+    currentService = service,
+    prices = config.prices,
     dayServices = sHospital.listDayServices()
   })
 end
 
 RegisterNUICallback('close', function() 
-  SetNuiFocus(false,false)
+  SetNuiFocus(false, false)
 end)
 
 RegisterCommand('openDoctorPainel', function()
+  SetNuiFocus(true, true)
   cHospital.updateNui()
 end)
 

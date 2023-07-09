@@ -56,6 +56,7 @@ export const Row = styled.div`
 export const Td = styled.div`
   ${({ theme }) => css`
     flex: 1;
+    width: 100px;
     height: 100%;
     color: ${theme.colors.shape()};
     padding: 0 1rem;

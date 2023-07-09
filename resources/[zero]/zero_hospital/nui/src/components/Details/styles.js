@@ -81,6 +81,10 @@ export const Price = styled.input`
     font-size: 0.8rem;
     margin-bottom: 1rem;
     outline: none;
+
+    &[disabled] {
+      background-color: ${theme.colors.shape(0.05)};
+    }
   `}
 `;
 

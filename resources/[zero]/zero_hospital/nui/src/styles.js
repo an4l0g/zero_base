@@ -29,7 +29,6 @@ export const GlobalStyle = createGlobalStyle`
       }
 
       body {
-        background: url("https://media.discordapp.net/attachments/1059878373737893918/1115279835053424700/image.png?width=1920&height=1080");
         width: 100%;
         height: 100vh;
         margin: 0;

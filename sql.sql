@@ -96,15 +96,16 @@ create table zero_hwid (
 );
 
 create table zero_hospital(
-doctor_id int unsigned not null,
-service_type char(1) not null,
-patient_id int unsigned not null,
-product varchar(30),
-amount int, 
-total_price double not null,
-service_date datetime not null,
-primary key (doctor_id,patient_id,service_type,service_date)
+    doctor_id int unsigned not null,
+    service_type char(1) not null,
+    patient_id int unsigned not null,
+    product varchar(30),
+    amount int, 
+    total_price double not null,
+    service_date datetime not null,
+    primary key (doctor_id,patient_id,service_type,service_date)
 );
+
 create table zero_user_vehicles (
     user_id int unsigned not null,
     vehicle varchar(50) not null, 

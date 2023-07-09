@@ -89,24 +89,24 @@ export const Actions = styled.div`
 
 export const ResponseButton = styled.button`
   ${({ theme }) => css`
-    width: 2.1rem;
     height: 2.1rem;
     border: 0;
     color: ${theme.colors.shape()};
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     box-shadow: 3px 3px 3px ${theme.colors.dark(0.5)};
     cursor: pointer;
+    padding: 0 1rem;
+
+    & > svg {
+      font-size: 1.2rem;
+    }
 
     &.accept {
       background-color: ${theme.colors.accept()};
-    }
-
-    &.reject {
-      background-color: ${theme.colors.reject()};
     }
   `}
 `;

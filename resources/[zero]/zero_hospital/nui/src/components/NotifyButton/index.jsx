@@ -1,9 +1,11 @@
 import { useCallback, useState } from "react";
 import * as S from "./styles";
 import { FaBell } from "react-icons/fa";
-import { FiCheck, FiX } from "react-icons/fi";
+import { FiCheck } from "react-icons/fi";
+import useRequest from "../../hooks/useRequest";
 
 function NotifyButton({ notifies }) {
+  const { request } = useRequest();
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = useCallback(() => {
@@ -14,10 +16,15 @@ function NotifyButton({ notifies }) {
     }
   }, [showModal, setShowModal]);
 
+  const handleAcceptService = () => {
+    request("acceptService");
+    setShowModal(false);
+  };
+
   return (
     <S.WrapButton>
       <S.Button onClick={handleOpenModal}>
-        <S.WrapNotifies>{notifies}</S.WrapNotifies>
+        {notifies > 0 && <S.WrapNotifies>{notifies}</S.WrapNotifies>}
         <FaBell />
       </S.Button>
       {showModal && notifies > 0 && (
@@ -26,11 +33,11 @@ function NotifyButton({ notifies }) {
           <S.ConfirmModal>
             <S.Description>Quer assumir um chamado?</S.Description>
             <S.Actions>
-              <S.ResponseButton className="accept">
-                <FiCheck />
-              </S.ResponseButton>
-              <S.ResponseButton className="reject">
-                <FiX />
+              <S.ResponseButton
+                className="accept"
+                onClick={handleAcceptService}
+              >
+                <FiCheck /> Aceitar solicitação
               </S.ResponseButton>
             </S.Actions>
           </S.ConfirmModal>
