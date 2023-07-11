@@ -700,9 +700,8 @@ local LastSubtitleText = nil
 DrawSubtitleText = function(text)
     if (text ~= LastSubtitleText) then
         LastSubtitleText = text
-        BeginTextCommandPrint('STRING')  
-        AddTextComponentSubstringPlayerName(text)
-        EndTextCommandPrint(5000, 1)
+        TriggerEvent('notify', 'Spray', text)
+        Citizen.Wait(1000)
     end
 end
 

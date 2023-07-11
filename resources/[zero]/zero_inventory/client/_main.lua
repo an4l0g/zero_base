@@ -1,9 +1,8 @@
 zero = Proxy.getInterface('zero')
 
-sInventory = Tunnel.getInterface('zero_inventory')
-
 cInventory = {}
 Tunnel.bindInterface('zero_inventory', cInventory)
+sInventory = Tunnel.getInterface('zero_inventory')
 
 local disableActions = false
 currentChestType = nil

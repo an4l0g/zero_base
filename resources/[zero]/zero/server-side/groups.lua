@@ -235,6 +235,25 @@ zero.getUsersByPermission = function(perm)
 end
 ------------------------------------------------------------------
 
+------------------------------------------------------------------
+-- CHECKPERMISSIONS
+------------------------------------------------------------------
+zero.checkPermissions = function(user_id, permission)
+    if (permission) then
+        if (type(permission) == 'table') then
+            for _, perm in pairs (permission) do
+                if (zero.hasPermission(user_id, perm)) then
+                    return true
+                end
+            end
+            return false
+        end
+        return zero.hasPermission(user_id, permission)
+    end
+    return true
+end
+------------------------------------------------------------------
+
 AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 	if (first_spawn) then
 		local _user = users[user_id]

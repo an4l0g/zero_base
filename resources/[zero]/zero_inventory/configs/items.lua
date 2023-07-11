@@ -531,7 +531,7 @@ function pescar(source, user_id, item)
         local inWater, distance = cInventory.getWaterHeight(source)
         if inWater then
             if zero.tryGetInventoryItem(user_id, 'isca', 1) then
-                TriggerClientEvent(disableAllActions, source, true)
+                TriggerClientEvent('disableAllActions', source, true)
                 TriggerClientEvent('zero_inventory:disableActions', source, true)
                 TriggerClientEvent('emotes', source, 'pescar')
                 cInventory.closeInventory(source)
@@ -561,7 +561,7 @@ function pescar(source, user_id, item)
                     end
                 end
                 TriggerClientEvent('zero_inventory:enableActions', source, true)
-                TriggerClientEvent(disableAllActions, source, false)
+                TriggerClientEvent('disableAllActions', source, false)
                 zeroClient._stopAnim(source, false)
                 zeroClient._DeletarObjeto(source)
             end

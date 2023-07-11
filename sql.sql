@@ -67,13 +67,22 @@ create table zero_creation(
 );
 
 create table zero_homes(
+    id int unsigned auto_increment not null,
     user_id int unsigned not null,
     home varchar(50) not null,
     home_owner tinyint not null,
     garages tinyint not null,
     tax varchar(20) not null,
     configs json not null,
-    primary key(user_id)
+    vip tinyint not null,
+    primary key(id)
+);
+
+create table zero_homes_garages(
+    home varchar(50) not null,
+    blip json not null,
+    spawn json not null,
+    primary key(home)
 );
 
 create table zero_dynamic(
