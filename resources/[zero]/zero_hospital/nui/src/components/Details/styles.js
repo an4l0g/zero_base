@@ -38,6 +38,7 @@ export const Form = styled.div`
   padding: 2rem 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
   gap: 0.5rem;
   overflow-x: hidden;
@@ -100,6 +101,10 @@ export const Select = styled.select`
     font-size: 0.8rem;
     outline: none;
     margin-bottom: 1rem;
+
+    &[disabled] {
+      background-color: ${theme.colors.shape(0.05)};
+    }
   `}
 `;
 

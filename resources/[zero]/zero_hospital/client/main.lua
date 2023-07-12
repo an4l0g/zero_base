@@ -1,23 +1,33 @@
 cHospital = {} --lista vazia (table lua)
 service = {}
+page = 1
+search = ''
+typeSearch = 'patient_id'
+
 Tunnel.bindInterface('zero_hospital',cHospital)
 sHospital = Tunnel.getInterface('zero_hospital')
 
 cHospital.updateNui = function()
+  print('TESTE ===>', page, search, typeSearch)
   SendNUIMessage({
     action = 'open',
     pendingServicesAmount = sHospital.getServicesPendingsAmount(),
     currentService = service,
     prices = config.prices,
-    dayServices = sHospital.listDayServices()
+    servicesAmount = sHospital.servicesAmount(page, search, typeSearch),
+    services = sHospital.listServices(page, search, typeSearch),
+    filter = { page = page, search = search, typeSearch = typeSearch }
   })
 end
 
 RegisterNUICallback('close', function() 
   SetNuiFocus(false, false)
+  page = 1
+  search = ''
+  typeSearch = 'patient_id'
 end)
 
-RegisterCommand('openDoctorPainel', function()
+RegisterCommand('ph', function()
   SetNuiFocus(true, true)
   cHospital.updateNui()
 end)
