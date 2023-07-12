@@ -22,7 +22,23 @@ zero._prepare('zero_garage/getGarages', 'select garages from zero_users where id
 zero._prepare('zero_garage/getVehByPlate', 'select * from zero_user_vehicles where plate = @plate')
 zero._prepare('zero_garage/getVehByChassis', 'select * from zero_user_vehicles where chassis = @chassis')
 zero._prepare('zero_garage/getRented', 'select user_id, vehicle, rented from zero_user_vehicles where rented != ""')
-zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (user_id, vehicle, plate, chassis, service, ipva) values (@user_id, @vehicle, @plate, @chassis, @service, @ipva)')
+zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (user_id, vehicle, plate, chassis, service, ipva, state, custom) values (@user_id, @vehicle, @plate, @chassis, @service, @ipva, @state, @custom)')
+
+Citizen.CreateThread(function()
+    Citizen.Wait(1000)
+	for user_id, source in pairs(zero.getUsers()) do
+		local myHomes = zero.query('zero_homes/userList', { user_id = user_id })
+		for k,v in ipairs(myHomes) do
+			local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
+			if (gar) then
+				local blip = json.decode(gar.blip)
+				local spawn = json.decode(gar.spawn)
+				addGarage(source, v.home, blip, spawn )
+			end
+		end
+		Citizen.Wait(1)
+	end
+end)
 
 srv.checkPermissions = function(perm)
     local source = source
@@ -704,10 +720,13 @@ RegisterCommand('car', function(source, args)
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+        print('aqui')
         if (args[1]) then
             local spawn = string.lower(args[1])
+            print(spawn)
             local loadModel = vCLIENT.loadModel(source, spawn, 30000, 60000)
             if (loadModel) then
+                print('aqui')
                 local ped = GetPlayerPed(source)
                 local pCoord = GetEntityCoords(ped)
                 local heading = GetEntityHeading(ped)
@@ -937,7 +956,7 @@ RegisterCommand('vec4', function(source)
     local user_id = zero.getUserId(source)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         local ped = GetPlayerPed(source)
-        TriggerClientEvent('clipboard', source, 'Vector4', tostring(vector4(GetEntityCoords(ped),GetEntityHeading(ped))))
+        TriggerClientEvent('clipboard', source, 'Vector4', tostring(vector4(GetEntityCoords(ped), GetEntityHeading(ped))))
     end
 end)
 
@@ -999,6 +1018,38 @@ end)
 RegisterNetEvent('trydoors', function(nveh, door)
 	TriggerClientEvent('syncdoors', -1, nveh, door)
 end)
+
+AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
+	if (first_spawn) then
+		local myHomes = zero.query('zero_homes/userList', { user_id = user_id })
+		for k,v in ipairs(myHomes) do
+			local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
+			if (gar) then
+				local blip = json.decode(gar.blip)
+				local spawn = json.decode(gar.spawn)
+				addGarage(source, v.home, blip, spawn )
+			end
+		end
+	end
+end)
+
+RegisterNetEvent('zero_homes:addGarage')
+AddEventHandler('zero_homes:addGarage', function(homeName, blip, spawn)
+    local homes = zero.query('zero_homes/permissions', { home = homeName })
+    for _, v in ipairs(homes) do
+        local source = zero.getUserSource(v.user_id)
+        if (source) then addGarage(source, homeName, blip, spawn); end;
+    end
+end)
+
+addGarage = function(src, name, blip, spawn)
+    garagesConfig[name] = {
+        coords = vector3(blip.x, blip.y, blip.z),
+        rule = 'carOnly',
+        points = { vector4(spawn.x, spawn.y, spawn.z, spawn.w) }
+    }
+    vCLIENT._addGarage(src, name, garagesConfig[name])
+end
 
 AddEventHandler('onResourceStart', function(resourceName)
   	if (GetCurrentResourceName() == resourceName) then 

@@ -225,3 +225,65 @@ RegisterNetEvent('zero_interactions:nitro', function()
     local source = source
     exports['zero_tunings']:startInstallNitro(source)
 end)
+
+RegisterNetEvent('zero_interactions:homesAdd', function()
+    local source = source    
+    exports['zero_homes']:homesAdd(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesRem', function()
+    local source = source    
+    exports['zero_homes']:homesRem(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesTrans', function()
+    local source = source    
+    exports['zero_homes']:homesTrans(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesVender', function()
+    local source = source    
+    exports['zero_homes']:homesVender(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesChecar', function()
+    local source = source    
+    exports['zero_homes']:homesChecar(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesTax', function()
+    local source = source    
+    exports['zero_homes']:homesTax(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesOther', function()
+    local source = source    
+    exports['zero_homes']:homesOther(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesTrancar', function()
+    local source = source    
+    exports['zero_homes']:homesTrancar(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesInterior', function(value)
+    local source = source    
+    if (value ~= '') then exports['zero_homes']:updateInterior(source, value);
+    else exports['zero_homes']:homesInterior(source); end;
+end)
+
+RegisterNetEvent('zero_interactions:homesDecoration', function(value)
+    local source = source    
+    if (value ~= '') then exports['zero_homes']:updateDecoration(source, value);
+    else exports['zero_homes']:homesDecoration(source); end;
+end)
+
+RegisterNetEvent('zero_interactions:homesBau', function(value)
+    local source = source    
+    exports['zero_homes']:homesBau(source)
+end)
+
+RegisterNetEvent('zero_interactions:homesGaragem', function(value)
+    local source = source    
+    exports['zero_homes']:homesGaragem(source)
+end)

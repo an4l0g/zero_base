@@ -1,4 +1,5 @@
-local configAnimations = configs.animations
+local config = module('zero_core', 'cfg/cfgAnimations')
+local configAnimations = config.animations
 
 local checkAnimPermissions = function(_source, _userId, permission)
     if (_userId) then

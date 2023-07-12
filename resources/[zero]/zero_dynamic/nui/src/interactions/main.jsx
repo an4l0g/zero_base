@@ -3,6 +3,7 @@ import { HiOutlineUsers } from "react-icons/hi";
 import { MdOutlineLocalPolice } from "react-icons/md";
 import { IoIosBody } from "react-icons/io";
 import { LuCar } from "react-icons/lu";
+import { BsFillHouseFill } from "react-icons/bs";
 
 const interactions = [
   {
@@ -18,6 +19,13 @@ const interactions = [
     type: "category",
     category: "main",
     value: "animations",
+  },
+  {
+    title: "Casa",
+    icon: <BsFillHouseFill />,
+    type: "category",
+    category: "main",
+    value: "homes",
   },
   {
     title: "Carro",

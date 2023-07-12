@@ -1,6 +1,12 @@
 inMenu = false
 oldCustom = {}
 
+countTable = function(tab)
+    local c = 0
+    for _,_ in pairs(tab) do c = c + 1 end
+    return c
+end
+
 createMarkers = function(coords)
     DrawMarker(27, coords.x, coords.y, coords.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
 end

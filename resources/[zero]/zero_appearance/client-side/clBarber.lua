@@ -39,57 +39,47 @@ local getDrawables = function()
     return pedDrawables[playerModel]
 end
 
-local barberIndex;
-local barberValue;
-local barberMarkers = {}
+local nearestBlips = {}
 
-local mainThread = function()
-    SetNuiFocus(false, false)
-    FreezeEntityPosition(PlayerPedId(), false)
-    getNearestBarber = function()
-        local ped = PlayerPedId()
-        local pCoord = GetEntityCoords(ped)
-        local barberCoords = {}
-        for k, v in ipairs(locsConfig) do
-            local distance = #(pCoord - v.coord.xyz)
-            if (distance <= 10) then
-                table.insert(barberCoords, v)
-            end
-        end
-        return barberCoords
-    end
-    
-    addBlips(locsConfig, generalConfig)
-    
-    while (true) do
-        local idle = 1000
-        if (not inMenu) then   
-            local nearestBarber = getNearestBarber() 
-            if (nearestBarber) then
-                local ped = PlayerPedId()
-                local pCoord = GetEntityCoords(ped)
-                for k, v in pairs(nearestBarber) do
-                    local coord = vector3(v.coord.xyz)
-                    local distance = #(pCoord - coord)
-                    if (distance > 10 or GetEntityHealth(ped) <= 101) then
-                        nearestBarber = nil
-                        closeNui()
-                        break
-                    else
-                        idle = 5
-                        createMarkers(coord)
-                        if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101) then
-                            openBarberShop(k)
-                        end
+local _markerThread = false
+local markerThread = function()
+    if (_markerThread) then return; end;
+    _markerThread = true
+    Citizen.CreateThread(function()
+        while (countTable(nearestBlips) > 0) do
+            local ped = PlayerPedId()
+            local _cache = nearestBlips
+            for index, dist in pairs(_cache) do
+                if (dist <= 5) then
+                    local coord = locsConfig[index].coord
+                    createMarkers(coord)
+                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                        openBarberShop(index)  
                     end
                 end
             end
+            Citizen.Wait(5)
         end
-        Citizen.Wait(idle)
-    end
+        _markerThread = false
+    end)
 end
 
-CreateThread(mainThread)
+Citizen.CreateThread(function()
+    addBlips(locsConfig, generalConfig)
+    while (true) do
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        nearestBlips = {}
+        for k, v in ipairs(locsConfig) do
+            local distance = #(pCoord - v.coord.xyz)
+            if (distance <= 5) then
+                nearestBlips[k] = distance
+            end
+        end
+        if (countTable(nearestBlips) > 0) then markerThread(); end;
+        Citizen.Wait(500)
+    end
+end)
 
 openBarberShop = function(locs)
     local location = locsConfig[locs]

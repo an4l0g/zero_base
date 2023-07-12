@@ -1,8 +1,8 @@
-configs = {}
+local config = {}
 
 local cancelKeyMapping = false
 
-configs.animations = {
+config.animations = {
     ['keyMapping'] = {
         ['cruzarBraco'] = {
             key = 'f1',
@@ -82,7 +82,6 @@ configs.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                TriggerEvent('zero:CancelAnimations')
                 TriggerEvent('zero_animations:cancelSharedAnimation')
                 cancelKeyMapping = false
                 if (GetEntityHealth(ped) > 101 and not menuCelular) then
@@ -867,3 +866,5 @@ configs.animations = {
         },
     } 
 }
+
+return config

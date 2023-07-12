@@ -30,6 +30,10 @@ cInventory.getChestInfo = function(chestType, lootId)
         chest.title = config.texts.trunkTitle
         chest.max_weight = sInventory.getTrunkSize(currentVehInfo[2])
         chest.drop_type = 'chest'
+    elseif prefix == 'homes' then
+        chest.title = prefixVip
+        chest.max_weight = sInventory.getVaultSize(prefixVip)
+        chest.drop_type = 'chest'
     else
         chest.title = config.texts.chest_title
         chest.slots = sInventory.getBag(chestType)
@@ -47,7 +51,7 @@ cInventory.getChestInfo = function(chestType, lootId)
 
     return chest
 end
-
+exports('getChestInfo', cInventory.getChestInfo)
 
 RegisterKeyMapping("openCarChest", "Abrir Porta Malas/Luvas", 'KEYBOARD', "pageup")
 RegisterCommand("openCarChest", function()

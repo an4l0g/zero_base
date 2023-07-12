@@ -8,12 +8,19 @@ cli.createPrompt = function(questions)
     })
 end
 
+local response = false
+
 RegisterNuiCallback('promptResult', function(data)
+    response = true
     srv.resultPrompt(data.responses)
     SetNuiFocus(false, false)
 end)
 
 RegisterNuiCallback('closePrompt', function()
-    srv.resultPrompt(false)
-    SetNuiFocus(false, false)
+    if (not response) then
+        srv.resultPrompt(false)
+        SetNuiFocus(false, false)
+    else
+        response = false
+    end
 end)
