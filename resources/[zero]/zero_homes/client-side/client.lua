@@ -55,7 +55,7 @@ loadInteriors = function(interior, decorations)
     tmpHomes.interiorId = (interior.interiorId or 0)
     if (tmpHomes.interiorId > 0) then SetInteriorActive(tmpHomes.interiorId, true); end;
 
-    if (decorations) and decorations > 0 then
+    if (decorations) then
         local decorations = interior.decorations[decorations]
         tmpHomes.decorationsId = (decorations.interiorId or 0)
         if (tmpHomes.decorationsId > 0) then SetInteriorActive(tmpHomes.decorationsId, true); end;

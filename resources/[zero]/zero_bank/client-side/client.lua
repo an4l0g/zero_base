@@ -26,7 +26,7 @@ local markerThread = function()
             local ped = PlayerPedId()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
-                if (dist <= 2) then
+                if (dist <= 1.5) then
                     local config = configBank[index]
                     DrawMarker(0, config.coord.x, config.coord.y, config.coord.z, 0, 0, 0, 0, 0, 0, 0.2, 0.2, 0.2, 0, 153, 255, 155, 1, 0, 0, 1)
                     if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
@@ -41,6 +41,7 @@ local markerThread = function()
 end
 
 Citizen.CreateThread(function()
+    addBlips()
     StopScreenEffect('MenuMGSelectionIn')
     while (true) do
         local ped = PlayerPedId()
@@ -48,7 +49,7 @@ Citizen.CreateThread(function()
         nearestBlips = {}
         for k, v in pairs(configBank) do
             local distance = #(pCoord - v.coord)
-            if (distance <= 2) then
+            if (distance <= 1.5) then
                 nearestBlips[k] = distance
             end
         end
@@ -159,3 +160,18 @@ Citizen.CreateThread(function()
         vSERVER.giveRendimento()
     end
 end)
+
+addBlips = function()
+    for _, v in pairs(configBank) do
+        if (v.blip) then
+            local blip = AddBlipForCoord(v.coord.x,v.coord.y,v.coord.z)
+            SetBlipSprite(blip, 207)
+            SetBlipAsShortRange(blip, true)
+            SetBlipColour(blip, 0)
+            SetBlipScale(blip, 0.7)
+            BeginTextCommandSetBlipName('STRING')
+            AddTextComponentString('Banco')
+            EndTextCommandSetBlipName(blip)
+        end
+    end
+end

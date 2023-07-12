@@ -2,8 +2,6 @@ srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
-
--- Não poder comprar casa tendo multa
 -- Habilitar opção de comprar a casa com Credits
 -- Fazer máximo de residências / Quem comprar + de 1 casa vai receber um alerta antes de comprar outra avisando que o iptu será mais caro em tal %
 -- ADICIONAR ESSA PARADA DE CIMA NO HOME TRANS TBM
@@ -12,16 +10,15 @@ vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 local tempHome = {}
 homeOpened = {}
--- CRIAR UM TYPE APARTAMENTO OTIMIZADO IGUAL OS COMANDOS
 
-local enterHome = {
-    ['home'] = function(source, user_id, index)
+local _home = {
+    ['enter-home'] = function(source, user_id, index)
         local ownerConsult = zero.query('zero_homes/getHomeOwner', { home = index })[1]
         if (ownerConsult) then
             local taxTime = (ownerConsult.tax == -1 and ownerConsult.tax or parseInt(ownerConsult.tax))
             if (taxTime >= 0) then
                 if (os.time() >= parseInt((taxTime + generalConfig.lateFee) * 24 * 60 * 60)) then
-                    TriggerClientEvent('notify', source, 'Residências', 'O <b>IPTU</b> da residência se encontra atrasado.')
+                    serverNotify(source, 'O <b>IPTU</b> da residência se encontra atrasado.')
                     return false
                 end
             end
@@ -29,7 +26,7 @@ local enterHome = {
             local homeName = ownerConsult.home
             local homeConsult = zero.query('zero_homes/homePermissions', { home = homeName, user_id = user_id })[1]
             if (homeConsult) then
-                if (taxTime >= 0) then TriggerClientEvent('notify', source, 'Residências', 'O <b>IPTU</b> vence em: '..zero.getDayHours(generalConfig.lateFee * 24 * 60 * 60 - (os.time() - taxTime)), 10000); end;
+                if (taxTime >= 0) then serverNotify(source, 'O <b>IPTU</b> vence em: '..zero.getDayHours(generalConfig.lateFee * 24 * 60 * 60 - (os.time() - taxTime)), 10000); end;
                 local homeConfig = json.decode(homeConsult.configs)
                 
                 tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
@@ -38,21 +35,21 @@ local enterHome = {
                 if (homeOpened[homeName]) then
                     vCLIENT.enterHome(source, homeConfig.interior, false, homeName)
                 else
-                    TriggerClientEvent('notify', source, 'Residências', 'Esta <b>residência</b> se encontra trancada.')
+                    serverNotify(source, 'Esta <b>residência</b> se encontra trancada.')
                 end
             end
             return false
         end
         return true
     end,
-    ['apartament'] = function(source, user_id, index)
+    ['enter-apartament'] = function(source, user_id, index)
         index = index..'%'
         local ownerConsult = zero.query('zero_homes/getApartamentOwner', { user_id = user_id, home = index })[1]
         if (ownerConsult) then
             local taxTime = (ownerConsult.tax == -1 and ownerConsult.tax or parseInt(ownerConsult.tax))
             if (taxTime >= 0) then
                 if (os.time() >= parseInt((taxTime + generalConfig.lateFee) * 24 * 60 * 60)) then
-                    TriggerClientEvent('notify', source, 'Residências', 'O <b>IPTU</b> da residência se encontra atrasado.')
+                    serverNotify(source, 'O <b>IPTU</b> da residência se encontra atrasado.')
                     return false
                 end
             end
@@ -60,7 +57,7 @@ local enterHome = {
             local homeName = ownerConsult.home
             local homeConsult = zero.query('zero_homes/homePermissions', { home = homeName, user_id = user_id })[1]
             if (homeConsult) then
-                if (taxTime >= 0) then TriggerClientEvent('notify', source, 'Residências', 'O <b>IPTU</b> vence em: '..zero.getDayHours(generalConfig.lateFee * 24 * 60 * 60 - (os.time() - taxTime)), 10000); end;
+                if (taxTime >= 0) then serverNotify(source, 'O <b>IPTU</b> vence em: '..zero.getDayHours(generalConfig.lateFee * 24 * 60 * 60 - (os.time() - taxTime)), 10000); end;
                 local homeConfig = json.decode(homeConsult.configs)
                 
                 tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
@@ -69,20 +66,17 @@ local enterHome = {
                 if (homeOpened[homeName]) then
                     vCLIENT.enterHome(source, homeConfig.interior, homeConfig.decorations, homeName)
                 else
-                    TriggerClientEvent('notify', source, 'Residências', 'Esta <b>residência</b> se encontra trancada.')
+                    serverNotify(source, 'Esta <b>residência</b> se encontra trancada.')
                 end
             end
             return false
         end
         return true
     end,
-}
-
-local buyHome = {
-    ['home'] = function(user_id, index, tax, table)
+    ['buy-home'] = function(user_id, index, tax, table)
         zero.execute('zero_homes/buyHome', { user_id = user_id, home = index, home_owner = 1, garages = 0, tax = tax, configs = json.encode(table), vip = 0 })
     end,
-    ['apartament'] = function(user_id, index, tax, table)
+    ['buy-apartament'] = function(user_id, index, tax, table)
         local name = generateApartamentName(index)
         if (name) then zero.execute('zero_homes/buyHome', { user_id = user_id, home = name, home_owner = 1, garages = 0, tax = tax, configs = json.encode(table), vip = 0 }); end;
     end
@@ -94,15 +88,20 @@ srv.tryEnterHome = function(index)
     if (user_id and index) then
         local homes = configHomes[index]
         local homesType = configType[homes.type]
+        
+        if (exports['zero_bank']:verifyMultas(user_id) > 0) then
+            serverNotify(source, 'Você não pode comprar uma <b>residência</b> tendo multas pendentes.')
+            return
+        end
 
         if (tempHome[source]) then 
-            TriggerClientEvent('notify', source, 'Residências', 'Você está <b>bugado</b> o seu cache foi resetado.')
+            serverNotify(source, 'Você está <b>bugado</b> o seu cache foi resetado.')
             tempHome[source] = nil
             return
         end
         
         local isApartament = (homes.type == 'apartament' and 'apartament' or 'home')
-        if (not enterHome[isApartament](source, user_id, index)) then return; end;
+        if (not _home['enter-'..isApartament](source, user_id, index)) then return; end;
         
         if (zero.checkPermissions(user_id, homes.perm)) then
             local price = homesType.price 
@@ -127,17 +126,17 @@ srv.tryEnterHome = function(index)
                         local decoration = configInterior[homesType.interior._default]
                         if (decoration) then table.decorations = (decoration.decorations and decoration.decorations._default or 0); end;
 
-                        buyHome[isApartament](user_id, index, tax, table)
-                        TriggerClientEvent('notify', source, 'Residências', 'A residência <b>'..index..'</b> foi adquirida por R$'..zero.format(price[2])..'.')
+                        _home['buy-'..isApartament](user_id, index, tax, table)
+                        serverNotify(source, 'A residência <b>'..index..'</b> foi adquirida por R$'..zero.format(price[2])..'.')
                     else
-                        TriggerClientEvent('notify', source, 'Residências', 'Você não possui <b>dinheiro</b> o suficiente para adquirir esta residência.')
+                        serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para adquirir esta residência.')
                     end
                 end
             else
-                TriggerClientEvent('notify', source, 'Residências', 'Esta residência <b>'..index..'</b> não está disponível para venda.')
+                serverNotify(source, 'Esta residência <b>'..index..'</b> não está disponível para venda.')
             end
         else
-            TriggerClientEvent('notify', source, 'Residências', 'Você não possui <b>permissão</b> para comprar esta residência.')
+            serverNotify(source, 'Você não possui <b>permissão</b> para comprar esta residência.')
         end
     end
 end
@@ -202,7 +201,7 @@ RegisterCommand('criar',function(source)
         contador = contador + 1
         zeroClient.addBlip(source, GetEntityCoords(GetPlayerPed(source)).x, GetEntityCoords(GetPlayerPed(source)).y, GetEntityCoords(GetPlayerPed(source)).z, 1, 1, 'Marcou Aqui', 0.5, false)
     end
-    TriggerClientEvent('notify', source, 'Residências', 'Você criou a residência <b>'..oldName..'</b>.')
+    serverNotify(source, 'Você criou a residência <b>'..oldName..'</b>.')
 end)
 
 RegisterCommand('pegar', function(source)
