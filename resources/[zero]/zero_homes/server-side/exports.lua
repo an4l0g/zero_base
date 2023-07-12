@@ -291,6 +291,7 @@ homesTax = function(source)
                     if (zero.tryFullPayment(user_id, taxPrice)) then
                         zero.execute('zero_homes/updateTax', { home = homeName, tax = os.time() })
                         serverNotify(source, 'O <b>IPTU</b> da sua residência foi pago com sucesso.')
+                        zero.webhook(configWebhooks.buyTax, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY TAX)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..taxPrice..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     else
                         serverNotify(source, 'Você não possui dinheiro suficiente para pagar o <b>IPTU</b> de sua residência.')
                     end
@@ -427,10 +428,14 @@ updateDecoration = function(source, decoration)
                         if (decoration ~= homeConfig.decorations) then
                             local request = zero.request(source, 'Você deseja alterar o interior da sua residência '..homeName..' para '..homeDecoration[decoration].name..' por R$'..zero.format(homeDecoration[decoration].value)..'?', 30000)
                             if (request) then
-                                zero.webhook(configWebhooks.buyInterior, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-                                homeConfig.decorations = decoration
-                                zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
-                                serverNotify(source, 'A decoração de sua residência <b>'..homeName..'</b> foi alterada com sucesso.')
+                                if (zero.tryFullPayment(user_id, homeDecoration[decoration].value)) then
+                                    zero.webhook(configWebhooks.buyDecoration, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY DECORATION)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..homeDecoration[decoration].value..'\n[OLD DECORATION]: '..homeConfig.decorations..'\n[NEW DECORATION]: '..decoration..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                    homeConfig.decorations = decoration
+                                    zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
+                                    serverNotify(source, 'A decoração de sua residência <b>'..homeName..'</b> foi alterada com sucesso.')
+                                else
+                                    serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para atualizar a decoração de sua residência.')
+                                end
                             end
                         else
                             serverNotify(source, 'Esta é a <b>decoração</b> atual de sua residência. Por gentileza, escolha outro.')

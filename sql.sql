@@ -144,14 +144,6 @@ create table zero_user_vehicles (
     custom json not null,
     primary key(user_id, vehicle, plate, chassis)
 )
-<<<<<<< HEAD
-
-create table zero_spray(
-	id int unsigned auto_increment not null,
-    config json not null,
-    created_at timestamp not null default current_timestamp(),
-    primary key(id)
-)
 
 create table zero_spray(
     id int unsigned auto_increment not null,
@@ -169,5 +161,3 @@ create table zero_spray(
     created_at timestamp not null default current_timestamp(),
     primary key(id)
 )
-=======
->>>>>>> 720f5b1dab97cb5baaaf16179c9e1f831ab84dad

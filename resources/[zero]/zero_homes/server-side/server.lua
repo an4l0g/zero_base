@@ -139,6 +139,26 @@ srv.tryEnterHome = function(index)
     end
 end
 
+local homeBucket = {}
+
+srv.setBucket = function(homeName, status)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local bucket = homeBucket[homeName]
+        if (not bucket) then
+            bucket = (user_id + 1500)
+            homeBucket[homeName] = bucket
+        end 
+
+        if (status) then
+            SetPlayerRoutingBucket(source, bucket)
+        else
+            SetPlayerRoutingBucket(source, 0)
+        end
+    end
+end
+
 local cacheExecute = function(source)
     local coord = tempHome[source].oldCoords
     if (coord ~= nil) then
@@ -164,6 +184,10 @@ AddEventHandler('onResourceStop', function(resourceName)
 			cacheExecute(k)
         end
 	end
+end)
+
+AddEventHandler('vRP:playerSpawn', function(resourceName)
+  	
 end)
 
 gerarNome = function(nomeBase, contador)

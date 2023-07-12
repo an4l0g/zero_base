@@ -56,15 +56,17 @@ loadInteriors = function(interior, decorations)
     if (tmpHomes.interiorId > 0) then SetInteriorActive(tmpHomes.interiorId, true); end;
 
     if (decorations) then
-        local decorations = interior.decorations[decorations]
-        tmpHomes.decorationsId = (decorations.interiorId or 0)
-        if (tmpHomes.decorationsId > 0) then SetInteriorActive(tmpHomes.decorationsId, true); end;
-        if (decorations.ipls) then
-            for _, ipl in ipairs(decorations.ipls) do
-                if ipl:sub(1, 1) == '-' then
-                    RemoveIpl(ipl:sub(2))
-                else    
-                    RequestIpl(ipl)
+        if (decorations > 0) then
+            local decorations = interior.decorations[decorations]
+            tmpHomes.decorationsId = (decorations.interiorId or 0)
+            if (tmpHomes.decorationsId > 0) then SetInteriorActive(tmpHomes.decorationsId, true); end;
+            if (decorations.ipls) then
+                for _, ipl in ipairs(decorations.ipls) do
+                    if ipl:sub(1, 1) == '-' then
+                        RemoveIpl(ipl:sub(2))
+                    else    
+                        RequestIpl(ipl)
+                    end
                 end
             end
         end
@@ -101,7 +103,8 @@ cli.enterHome = function(interior, decorations, name)
     interior = configInterior[interior]
 
     _homes[isMLO](interior, decorations, tmpHomes.homeName)
-    
+    vSERVER.setBucket(tmpHomes.homeName, true)
+
     DoScreenFadeOut(100)
     TriggerEvent('zero_sound:source', 'enterexithouse', 0.7)
     Citizen.Wait(500)
@@ -121,6 +124,7 @@ exitHome = function()
 	Citizen.Wait(500)
     TriggerEvent('zero_sound:source', 'enterexithouse', 0.5)
     unloadInteriors(tmpHomes.interiorId, tmpHomes.decorationsId)
+    vSERVER.setBucket(tmpHomes.homeName, false)
 
     tmpHomes = {
         homeName = '',
