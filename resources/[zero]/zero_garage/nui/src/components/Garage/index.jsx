@@ -73,7 +73,7 @@ function Garage() {
             <>
               {!imageError ? (
                 <S.CarImage
-                  src={`http://localhost/zero_garage/${car.spawn}.png`}
+                  src={`http://189.0.88.222/zero_garage/${car.spawn}.png`}
                   onError={() => setImageError(true)}
                 />
               ) : (
