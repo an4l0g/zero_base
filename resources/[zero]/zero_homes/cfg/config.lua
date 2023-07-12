@@ -11,8 +11,9 @@ config.webhooks = {
     buyGarage = 'https://discord.com/api/webhooks/1128054369900838934/QN9AVCdqU7s9y5G05LywJOYaZ97W3DB9YJ-_d4jYyUvqesbABnRDbDf04nQERht97duZ',
     buyChest = 'https://discord.com/api/webhooks/1128054537849163808/WvSFtMzUGhupcgFtWA43P4tSfPiHjm1Vqg6qLf2bWJsMZxuQWmbXczoVylsL15F92JDs',
     buyInterior = 'https://discord.com/api/webhooks/1128054697534689340/MwGk9-NBLi-UyreD_rS0woGC39hTPNXGtlHDtXo-N0JC3mOsjRbYIJ0X9YsI_OBivtnN',
-    buyDecoration = 'https://discord.com/api/webhooks/1128054697534689340/MwGk9-NBLi-UyreD_rS0woGC39hTPNXGtlHDtXo-N0JC3mOsjRbYIJ0X9YsI_OBivtnN',
-
+    buyDecoration = 'https://discord.com/api/webhooks/1128054846482812959/AtG802sb6zT1P-5cBszbSLGH8iT0jJLBcH_byMeGoc0jR-cDMDzYYiLOs6q-eKAf114m',
+    buyTax = 'https://discord.com/api/webhooks/1128055071423332464/u2oCkscVF_2BY6LeGdfNG0eDXaLi-BIp9cMZxmKzRxNvQ4w0XDEdHi3HUFt4Cpdihzj7',
+    loseHouse = 'https://discord.com/api/webhooks/1128070992976171039/XSlDHbE9yMoxat45i5ADAVkdc41kmZ-siXvkZLPBkJxD7A57NqRHVsh0xCqMf_OqJE4M'
 }
 
 config.general = {
@@ -1683,6 +1684,28 @@ config.typeHomes = {
         ['interior'] = {
             _default = 'single',
             ['single'] = { value = 10000, perm = 'dono.permissao' },
+            ['high_01'] = { value = 10000, perm = 'dono.permissao' },
+            ['high_02'] = { value = 10000, perm = 'dono.permissao' }
+        },
+    },
+    ['high'] = {
+        ['garage'] = { true, 50000 },
+        ['price'] = { true, 300000 },
+        ['tax'] = { true, 10 },
+        ['residents'] = { true, 2 },
+        ['chest'] = {
+            min = 100,
+            max = 1000,
+            value = 100,
+        },
+        ['security'] = {
+            min = 0,
+            max = 2,
+            value = 10000,
+            perm = nil
+        },
+        ['interior'] = {
+            _default = 'high_01',
             ['high_01'] = { value = 10000, perm = 'dono.permissao' },
             ['high_02'] = { value = 10000, perm = 'dono.permissao' }
         },

@@ -886,11 +886,6 @@ section {
   border: 1px solid rgb(0, 153, 255);
 }
 
-.pix-acess .pix-key:hover {
-  transition: all 0.3s;
-  background-color: rgba(0, 153, 255, 0.1);
-}
-
 .pix-acess .pix-key strong {
   font-weight: 300;
 }
