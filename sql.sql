@@ -12,6 +12,22 @@ create table zero_users(
     primary key(id)
 );
 
+create table zero_fine(
+	id int unsigned auto_increment not null,
+    user_id int not null,
+    fine_reason varchar(50) not null,
+    fine_value int not null,
+    fine_time varchar(50) not null,
+    fine_description text not null,
+    primary key(id)
+);
+
+create table zero_pix(
+	user_id int unsigned not null,
+    chave varchar(10) not null,
+    primary key(user_id)
+);
+
 create table zero_user_ids (
     identifier varchar(100) not null,
     user_id int unsigned not null,
@@ -55,7 +71,7 @@ create table zero_user_data (
     user_id int unsigned not null,
     dkey varchar(100) not null,
     dvalue json not null,
-    primary key(user_id)
+    primary key(user_id, dkey)
 );
 
 create table zero_creation(

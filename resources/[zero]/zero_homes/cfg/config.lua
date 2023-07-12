@@ -1827,6 +1827,7 @@ config.interior = {
 
 Tunnel = module('zero', 'lib/Tunnel')
 Proxy = module('zero', 'lib/Proxy')
+zero = Proxy.getInterface('zero')
 
 generalConfig = config.general
 configHomes = config.homes
@@ -1834,14 +1835,12 @@ configType = config.typeHomes
 configInterior = config.interior
 
 if (SERVER) then
-    zero = Proxy.getInterface('zero')
     zeroClient = Tunnel.getInterface('zero')
 
     serverNotify = function(source, msg)
         TriggerClientEvent('notify', source, 'Residências', msg)
     end
 else
-    zero = Proxy.getInterface('zero')
     zeroServer = Tunnel.getInterface('zero')
 
     drawTxt = function(text, font, x, y, scale, r, g, b, a)
