@@ -2,6 +2,19 @@ local SERVER = IsDuplicityVersion()
 
 config = {}
 
+config.webhooks = {
+    buyHouse = 'https://discord.com/api/webhooks/1128051775258235080/6ax3R90T0poZ1DIiwJ3SrVO17-276IraTw8D82uRmX4rOjeH9s_iYOm1_0Klwhh6sdi8',
+    sellHouse = 'https://discord.com/api/webhooks/1128052384883548261/gsWO7TZzij1C4FDFOmtCwB-KThYzOHFl-VvoX_cpdHJYaUe2ad65K7bWQhJ0X_V8_F00',
+    addHouse = 'https://discord.com/api/webhooks/1128053564682551417/Uxl6NOU9kw4_g6TfkTx4Ai1pcI2Zg46jYC3QpPNjK0OYJEhJFsmG3ZVgm6DBqHaZboKg',
+    remHouse = 'https://discord.com/api/webhooks/1128053885991387296/GnUUDwTBQk8kwuGz-17B4sS7C3d9sfEWl7GTzxbJI-6exVp7wOfXDT7zWE1Kk9yGKSCn',
+    transferHouse = 'https://discord.com/api/webhooks/1128054088207183912/2wrUMa6K0pRl8lGYcsUz3e8s476OsJR2gmsAYLvXXECi-7SGkKVhgPYGQaWY8xODDRqJ',
+    buyGarage = 'https://discord.com/api/webhooks/1128054369900838934/QN9AVCdqU7s9y5G05LywJOYaZ97W3DB9YJ-_d4jYyUvqesbABnRDbDf04nQERht97duZ',
+    buyChest = 'https://discord.com/api/webhooks/1128054537849163808/WvSFtMzUGhupcgFtWA43P4tSfPiHjm1Vqg6qLf2bWJsMZxuQWmbXczoVylsL15F92JDs',
+    buyInterior = 'https://discord.com/api/webhooks/1128054697534689340/MwGk9-NBLi-UyreD_rS0woGC39hTPNXGtlHDtXo-N0JC3mOsjRbYIJ0X9YsI_OBivtnN',
+    buyDecoration = 'https://discord.com/api/webhooks/1128054697534689340/MwGk9-NBLi-UyreD_rS0woGC39hTPNXGtlHDtXo-N0JC3mOsjRbYIJ0X9YsI_OBivtnN',
+
+}
+
 config.general = {
     lateFee = 15, -- TAXA ATRASADA (PADRÃO 15 DIAS)
     percentageSell = 0.8, -- PORCENTAGEM DE VENDA
@@ -1637,7 +1650,7 @@ config.typeHomes = {
         ['chest'] = {
             min = 100,
             max = 1000,
-            value = 10000,
+            value = 100,
         },
         ['security'] = {
             min = 0,
@@ -1659,7 +1672,7 @@ config.typeHomes = {
         ['chest'] = {
             min = 100,
             max = 1000,
-            value = 10000,
+            value = 100,
         },
         ['security'] = {
             min = 0,
@@ -1835,6 +1848,8 @@ configType = config.typeHomes
 configInterior = config.interior
 
 if (SERVER) then
+    configWebhooks = config.webhooks
+
     zeroClient = Tunnel.getInterface('zero')
 
     serverNotify = function(source, msg)

@@ -120,6 +120,17 @@ create table zero_hwid(
     primary key(token, user_id)
 );
 
+create table zero_hospital(
+    doctor_id int unsigned not null,
+    service_type char(1) not null,
+    patient_id int unsigned not null,
+    product varchar(30),
+    amount int, 
+    total_price double not null,
+    service_date datetime not null,
+    primary key (doctor_id,patient_id,service_type,service_date)
+);
+
 create table zero_user_vehicles (
     user_id int unsigned not null,
     vehicle varchar(50) not null, 
@@ -133,6 +144,7 @@ create table zero_user_vehicles (
     custom json not null,
     primary key(user_id, vehicle, plate, chassis)
 )
+<<<<<<< HEAD
 
 create table zero_spray(
 	id int unsigned auto_increment not null,
@@ -157,3 +169,5 @@ create table zero_spray(
     created_at timestamp not null default current_timestamp(),
     primary key(id)
 )
+=======
+>>>>>>> 720f5b1dab97cb5baaaf16179c9e1f831ab84dad

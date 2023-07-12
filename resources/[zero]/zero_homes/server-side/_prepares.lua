@@ -16,3 +16,4 @@ zero._prepare('zero_homes/updateGarages', 'update zero_homes set garages = @gara
 zero._prepare('zero_homes/addGarage', 'insert zero_homes_garages (home, blip, spawn) values (@home, @blip, @spawn)')
 zero._prepare('zero_homes/permissions', 'select * from zero_homes where home = @home')
 zero._prepare('zero_homes/getGarage', 'select * from zero_homes_garages where home = @home')
+zero._prepare('zero_homes/delGarage', 'delete from zero_homes_garages where home = @home')

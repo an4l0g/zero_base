@@ -85,6 +85,7 @@ homesAdd = function(source)
                     if (decoration) then table.decorations = (decoration.decorations and decoration.decorations._default or 0); end;
                     
                     zero.execute('zero_homes/newPermissions', { user_id = nUser, home = homeName, home_owner = 0, tax = 0, garages = 0, configs = json.encode(table), vip = 0 })
+                    zero.webhook(configWebhooks.addHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (ADD RESIDENT)\n[USER]: '..user_id..'\n[ADD]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> foi adicionado em sua residência <b>'..homeName..'.')
                 end
             end
@@ -113,6 +114,7 @@ homesRem = function(source)
                 if (userConsult) then
                     zero.execute('zero_homes/removePermissions', { home = homeName, user_id = nUser })
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> foi removido de sua residência.')
+                    zero.webhook(configWebhooks.remHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (REM RESIDENT)\n[USER]: '..user_id..'\n[REM]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 else
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> não é morador desta residência.')
                 end
@@ -198,6 +200,7 @@ homesTrans = function(source)
                     zero.execute('zero_homes/removeResidents', { home = homeName })
                     zero.execute('zero_homes/updateOwner', { home = homeName, user_id = user_id, nuser_id = nUser })
                     serverNotify(source, 'Você transferiu a sua <b>residência</b> para o '..nIdentity.firstname..' '..nIdentity.lastname..'.')
+                    zero.webhook(configWebhooks.transferHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (TRANSFER RESIDENT)\n[OLD OWNER]: '..user_id..'\n[NEW OWNER]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 end
             end
         else
@@ -209,14 +212,12 @@ homesTrans = function(source)
 end
 exports('homesTrans', homesTrans)
 
--- adicionar para remover garagem ao vender
-
 homesVender = function(source)
     local user_id = zero.getUserId(source)
     if (user_id) and not homesActions[user_id] then
         homesActions[user_id] = true
 
-        local prompt = zero.prompt(source, { 'Nome da Residência', 'Passaporte' })
+        local prompt = zero.prompt(source, { 'Nome da Residência' })
         if (not prompt) then homesActions[user_id] = nil; return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
@@ -232,7 +233,10 @@ homesVender = function(source)
             local request = zero.request(source, 'Você deseja vender a residência '..homeName..' para a prefeitura por R$'..zero.format(homePrice)..'?', 30000)
             if (request) then
                 zero.execute('zero_homes/sellHome', { home = homeName })
+                zero.execute('zero_homes/delGarage', { home = homeName })
                 zero.giveBankMoney(user_id, homePrice)
+                TriggerClientEvent('zero_garage:removeGarage', source, homeName)
+                zero.webhook(configWebhooks.sellHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SELL HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[VALUE RECEIVED]: '..homePrice..'\n[REMOVED HOUSE]: garages and upgrades\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 serverNotify(source, 'Você vendeu a residência <b>'..homeName..'</b> para a prefeitura por R$'..zero.format(homePrice)..'.')                    
             end
         end
@@ -355,9 +359,14 @@ updateInterior = function(source, interior)
                     if (interior ~= homeConfig.interior) then
                         local request = zero.request(source, 'Você deseja alterar o interior da sua residência '..homeName..' para '..configInterior[interior].name..' por R$'..zero.format(interiorType.value)..'?', 30000)
                         if (request) then
-                            homeConfig.interior = interior
-                            zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
-                            serverNotify(source, 'O interior de sua residência <b>'..homeName..'</b> foi alterado com sucesso.')
+                            if (zero.tryFullPayment(user_id, interiorType.value)) then
+                                zero.webhook(configWebhooks.buyInterior, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                homeConfig.interior = interior
+                                zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
+                                serverNotify(source, 'O interior de sua residência <b>'..homeName..'</b> foi alterado com sucesso.')
+                            else
+                                serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para atualizar o interior de sua residência.')
+                            end
                         end
                     else
                         serverNotify(source, 'Este é o <b>interior</b> atual de sua residência. Por gentileza, escolha outro.')
@@ -418,6 +427,7 @@ updateDecoration = function(source, decoration)
                         if (decoration ~= homeConfig.decorations) then
                             local request = zero.request(source, 'Você deseja alterar o interior da sua residência '..homeName..' para '..homeDecoration[decoration].name..' por R$'..zero.format(homeDecoration[decoration].value)..'?', 30000)
                             if (request) then
+                                zero.webhook(configWebhooks.buyInterior, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 homeConfig.decorations = decoration
                                 zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                 serverNotify(source, 'A decoração de sua residência <b>'..homeName..'</b> foi alterada com sucesso.')
@@ -462,6 +472,7 @@ homesBau = function(source)
                             local request = zero.request(source, 'Você deseja pagar R$'..zero.format(price)..', para aumentar o baú de sua residência '..homeName..'?', 30000)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, price)) then
+                                    zero.webhook(configWebhooks.buyChest, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY CHEST)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[OLD CHEST]: '..homeConfig.chest..'kg\n[NEW CHEST]: '.._upgrade..'kg\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                     homeConfig.chest = _upgrade
                                     zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                     serverNotify(source, 'Você aumentou o baú da sua residência <b>'..homeName..'</b> com sucesso.')
@@ -511,6 +522,7 @@ homesGaragem = function(source)
                                     zero.execute('zero_homes/addGarage', { home = homeName, blip = json.encode(coords.blip), spawn = json.encode(coords.spawn) })
                                     serverNotify(source, 'Você comprou uma garagem para a sua residência <b>'..homeName..'</b>.')
                                     TriggerEvent('zero_homes:addGarage', homeName, coords.blip, coords.spawn)
+                                    zero.webhook(configWebhooks.buyGarage, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY GARAGE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[COORDS]: '..json.encode({ blip = coords.blip, spawn = coords.spawn }, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 else
                                     serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para comprar uma garagem.')
                                 end

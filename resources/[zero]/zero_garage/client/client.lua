@@ -80,6 +80,11 @@ cli.addGarage = function(name, data)
 	if (nearestBlips[name] ~= nil) then nearestBlips[name] = nil; end;
 end
 
+RegisterNetEvent('zero_garage:removeGarage', function(name)
+	garagesConfig[name] = nil
+	if (nearestBlips[name] ~= nil) then nearestBlips[name] = nil; end;
+end)
+
 cli.clientSpawn = function(model, coords, heading, plate)
     local vehicle = CreateVehicle(model, coords.x, coords.y, coords.z, heading, true, true)
 

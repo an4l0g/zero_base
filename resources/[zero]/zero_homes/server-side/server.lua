@@ -3,10 +3,7 @@ Tunnel.bindInterface(GetCurrentResourceName(), srv)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 -- Habilitar opção de comprar a casa com Credits
--- Fazer máximo de residências / Quem comprar + de 1 casa vai receber um alerta antes de comprar outra avisando que o iptu será mais caro em tal %
--- ADICIONAR ESSA PARADA DE CIMA NO HOME TRANS TBM
 -- adicionar segurança. Alarme na porta e no bau
--- REVISAR CODIGO E OTIMIZAR ELE (OTIMIZAR OS IFS)
 
 local tempHome = {}
 homeOpened = {}
@@ -127,6 +124,7 @@ srv.tryEnterHome = function(index)
                         if (decoration) then table.decorations = (decoration.decorations and decoration.decorations._default or 0); end;
 
                         _home['buy-'..isApartament](user_id, index, tax, table)
+                        zero.webhook(configWebhooks.buyHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..index:upper()..'\n[TYPE]: '..homes.type..'\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                         serverNotify(source, 'A residência <b>'..index..'</b> foi adquirida por R$'..zero.format(price[2])..'.')
                     else
                         serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para adquirir esta residência.')
