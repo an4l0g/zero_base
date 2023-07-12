@@ -1,8 +1,8 @@
 fx_version "bodacious"
 game "gta5"
 
-ui_page "http://localhost:8502"
--- ui_page "http://189.0.88.222:8502"
+-- ui_page "http://localhost:8502"
+ui_page "http://189.0.88.222:8502"
 
 client_script {
     "crosscript/client.lua",
