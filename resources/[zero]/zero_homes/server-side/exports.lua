@@ -75,7 +75,7 @@ homesAdd = function(source)
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já é morador desta residência.')
                 else
                     local table = {
-                        price = price[2],
+                        price = homesType.price,
                         residents = (homesType.residents[1] and homesType.residents[2] or 0),
                         chest = homesType.chest.min,
                         interior = homesType.interior._default,

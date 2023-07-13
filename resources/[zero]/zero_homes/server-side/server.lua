@@ -12,6 +12,8 @@ local _home = {
     ['enter-home'] = function(source, user_id, index)
         local ownerConsult = zero.query('zero_homes/getHomeOwner', { home = index })[1]
         if (ownerConsult) then
+            local homeConfig = json.decode(ownerConsult.configs)
+            
             local taxTime = (ownerConsult.tax == -1 and ownerConsult.tax or parseInt(ownerConsult.tax))
             if (taxTime >= 0) then
                 if (os.time() >= parseInt((taxTime + generalConfig.lateFee) * 24 * 60 * 60)) then
@@ -24,12 +26,11 @@ local _home = {
             local homeConsult = zero.query('zero_homes/homePermissions', { home = homeName, user_id = user_id })[1]
             if (homeConsult) then
                 if (taxTime >= 0) then serverNotify(source, 'O <b>IPTU</b> vence em: '..zero.getDayHours(generalConfig.lateFee * 24 * 60 * 60 - (os.time() - taxTime)), 10000); end;
-                local homeConfig = json.decode(homeConsult.configs)
-                
                 tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
                 vCLIENT.enterHome(source, homeConfig.interior, false, homeName)
             else
                 if (homeOpened[homeName]) then
+                    tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
                     vCLIENT.enterHome(source, homeConfig.interior, false, homeName)
                 else
                     serverNotify(source, 'Esta <b>residência</b> se encontra trancada.')
@@ -61,6 +62,7 @@ local _home = {
                 vCLIENT.enterHome(source, homeConfig.interior, homeConfig.decorations, homeName)
             else
                 if (homeOpened[homeName]) then
+                    tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
                     vCLIENT.enterHome(source, homeConfig.interior, homeConfig.decorations, homeName)
                 else
                     serverNotify(source, 'Esta <b>residência</b> se encontra trancada.')
@@ -82,23 +84,27 @@ local _home = {
 srv.tryEnterHome = function(index)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id and index) then
+    if (user_id and index) and not homesActions[index] then
+        homesActions[index] = true
         local homes = configHomes[index]
         local homesType = configType[homes.type]
         
+        
         if (exports['zero_bank']:verifyMultas(user_id) > 0) then
             serverNotify(source, 'Você não pode comprar uma <b>residência</b> tendo multas pendentes.')
+            homesActions[index] = nil
             return
         end
 
         if (tempHome[source]) then 
             serverNotify(source, 'Você está <b>bugado</b> o seu cache foi resetado.')
             tempHome[source] = nil
+            homesActions[index] = nil
             return
         end
         
         local isApartament = (homes.type == 'apartament' and 'apartament' or 'home')
-        if (not _home['enter-'..isApartament](source, user_id, index)) then return; end;
+        if (not _home['enter-'..isApartament](source, user_id, index)) then homesActions[index] = nil return; end;
         
         if (zero.checkPermissions(user_id, homes.perm)) then
             local price = homesType.price 
@@ -136,6 +142,7 @@ srv.tryEnterHome = function(index)
         else
             serverNotify(source, 'Você não possui <b>permissão</b> para comprar esta residência.')
         end
+        homesActions[index] = nil
     end
 end
 
@@ -160,6 +167,7 @@ srv.setBucket = function(homeName, status)
 end
 
 local cacheExecute = function(source)
+    SetPlayerRoutingBucket(source, 0)
     local coord = tempHome[source].oldCoords
     if (coord ~= nil) then
         zeroClient.teleport(source, coord.x, coord.y, coord.z)

@@ -24,7 +24,6 @@ function Painel() {
       service_date: formatDate(new Date(item.service_date)),
     }));
 
-    console.log("an4log teste", newServices);
     return newServices;
   }, [painel]);
 

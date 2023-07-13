@@ -1,6 +1,3 @@
-services = {}
-servicePosition = 0
-
 tableName = 'zero_hospital'
 zero.prepare('zero_hospital:registerService','insert into '..tableName..' (doctor_id, service_type, patient_id, total_price, service_date, request, description) values (@doctor_id, @service_type, @patient_id, @total_price, @service_date, @request, @description)');
 zero.prepare('zero_hospital:listServicesByPatient','select * from ' ..tableName.. ' where patient_id like @search order by service_date desc limit 7 offset @offset');
@@ -59,6 +56,18 @@ sHospital.requestCancelService = function()
     return zero.request(_source,'Deseja realmente cancelar este atendimento?', 20000)
 end
 
+sHospital.alert = function()
+    local users = zero.getUsersByPermission('hospital.permissao') 
+    for k,v in pairs(users) do
+        local userSource = zero.getUserSource(v)
+        if userSource then
+            async(function()
+                TriggerClientEvent('notify', userSource, 'Centro Médico', 'Uma nova solicitação de atendimento foi aberta!')
+            end)
+        end
+    end
+end
+
 sHospital.requestService = function()
     local _source = source
     local user_id = zero.getUserId(_source)
@@ -66,15 +75,17 @@ sHospital.requestService = function()
     local request = zero.prompt(_source,{'O que você está sentindo?'})
 
     if request then
-        if services[user_id] == nil then
-            services[user_id] = {
+        if services['id:'..user_id] == nil then
+            services['id:'..user_id] = {
                 patient_name = user_identity.firstname .. ' ' .. user_identity.lastname,
                 patient_id = user_id,
                 request = request[1],
                 pos = servicePosition
             }
             servicePosition = servicePosition + 1 
-            TriggerClientEvent('notify', _source, 'Centro Médico','Uma nova solicitação de atendimento foi aberta.')
+            servicesCount = servicesCount + 1
+            TriggerClientEvent('notify', _source, 'Centro Médico', 'Uma nova solicitação de atendimento foi aberta.')
+            sHospital.alert()
         else
             TriggerClientEvent('notify', _source, 'Centro Médico','Você já possui uma solicitação de atendimento aberta.')
         end   
@@ -84,18 +95,19 @@ end
 sHospital.acceptService = function() 
     local firtService = nil
     local firstPos = nil
-        for key,value in pairs(services) do 
-            if firtService == nil or value.pos < firstPos then
-                firtService = value
-                firstPos = value.pos
-            end
+    for key,value in pairs(services) do 
+        if firtService == nil or value.pos < firstPos then
+            firtService = value
+            firstPos = value.pos
         end
+    end
 
-    table.remove(services,firtService.user_id)
+    services['id:'..firtService.patient_id] = nil
+    servicesCount = servicesCount - 1
     return firtService
 end
 
 
 sHospital.getServicesPendingsAmount = function() 
-    return #services -- services.Length
+    return servicesCount
 end

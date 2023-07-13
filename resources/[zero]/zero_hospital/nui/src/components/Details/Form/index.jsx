@@ -4,6 +4,7 @@ import useRequest from "../../../hooks/useRequest";
 import PainelContext from "../../../contexts/PainelContext";
 import { formatDate } from "../../../utils";
 import Services from "../../../enums/services.json";
+import ConvertServices from "../../../enums/convertServices.json";
 
 function Form({ data, isDetails }) {
   const { request } = useRequest();
@@ -13,10 +14,11 @@ function Form({ data, isDetails }) {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
+    console.log(data);
     if (data.total_price) {
       setPrice(data.total_price);
     }
-    setService(data?.service_type ?? "t");
+    setService(ConvertServices[data?.service_type] ?? "t");
     setDescription(data?.description ?? "");
   }, [setPrice, painel, data]);
 

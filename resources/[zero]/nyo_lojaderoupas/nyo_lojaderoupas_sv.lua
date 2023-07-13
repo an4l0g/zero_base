@@ -23,7 +23,7 @@ AddEventHandler("LojaDeRoupas:Comprar", function(preco, dataParts)
     local user_id = vRP.getUserId(source)
     local parts = json.decode(dataParts)
     if preco then
-        if vRP.tryFullPayment(user_id,parseInt(preco)) then
+        -- if vRP.tryFullPayment(user_id,parseInt(preco)) then
             local dataParts = vRP.query("nyoLojaRoupas/getGuardaRoupa", {user_id = user_id})
             local playerParts = {}
                 if #dataParts > 0 then 
@@ -127,18 +127,15 @@ AddEventHandler("LojaDeRoupas:Comprar", function(preco, dataParts)
             end
             
           --  print(json.encode(playerParts['p1']))
-            local setGuardaRoupa = vRP.execute("nyoLojaRoupas/setGuardaRoupa", { user_id = user_id, value = json.encode(playerParts)})
-            
-            if setGuardaRoupa == 1 or setGuardaRoupa == 2 then 
-                local userSource = vRP.getUserSource(user_id)
-                vRPloja.finalizarCompra(userSource, true)
-            end
-            
-        else
+            -- local setGuardaR:
             local userSource = vRP.getUserSource(user_id)
-            TriggerClientEvent('Notify',source,'negado',"Negado","Você não tem dinheiro suficiente",10000)
-            vRPloja.finalizarCompra(userSource, false)
-        end 
+            vRPloja.finalizarCompra(userSource, true)
+            
+        -- else
+        --     local userSource = vRP.getUserSource(user_id)
+        --     TriggerClientEvent('Notify',source,'negado',"Negado","Você não tem dinheiro suficiente",10000)
+        --     vRPloja.finalizarCompra(userSource, false)
+        -- end 
     end
 end)
 
@@ -159,8 +156,8 @@ end
 --------------------------------------------------
 -- Check Procurado
 --------------------------------------------------
-function nyoLojaRoupaS.checkProcurado()
-	local user_id = vRP.getUserId(source)
-	return vRP.searchReturn(source,user_id)
-end
+-- function nyoLojaRoupaS.checkProcurado()
+-- 	local user_id = vRP.getUserId(source)
+-- 	return vRP.searchReturn(source,user_id)
+-- end
 --------------------------------------------------

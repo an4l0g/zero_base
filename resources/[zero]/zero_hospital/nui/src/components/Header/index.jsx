@@ -15,11 +15,6 @@ function Header() {
   const { filter } = useContext(FilterContext);
 
   const handleChangeFilter = useCallback(() => {
-    console.log("handleChangeFilter", {
-      page: filter.page,
-      search,
-      typeSearch,
-    });
     request("changeFilter", {
       page: filter.page,
       search,
