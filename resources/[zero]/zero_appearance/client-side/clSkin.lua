@@ -22,57 +22,47 @@ local getDrawables = function()
     return pedDrawables
 end
 
-local skinIndex;
-local skinValue;
-local skinMarkers = {}
+local nearestBlips = {}
 
-local mainThread = function()
-    SetNuiFocus(false, false)
-    FreezeEntityPosition(PlayerPedId(), false)
-    getNearestSkin = function()
-        local ped = PlayerPedId()
-        local pCoord = GetEntityCoords(ped)
-        local skinCoords = {}
-        for k, v in ipairs(locsConfig) do
-            local distance = #(pCoord - v.coord.xyz)
-            if (distance <= 10) then
-                table.insert(skinCoords, v)
-            end
-        end
-        return skinCoords
-    end
-
-    addBlips(locsConfig, generalConfig)
-
-    while (true) do
-        local idle = 1000
-        if (not inMenu) then   
-            local nearestSkin = getNearestSkin() 
-            if (nearestSkin) then
-                local ped = PlayerPedId()
-                local pCoord = GetEntityCoords(ped)
-                for k, v in pairs(nearestSkin) do
-                    local coord = vector3(v.coord.xyz)
-                    local distance = #(pCoord - coord)
-                    if (distance > 10 or GetEntityHealth(ped) <= 101) then
-                        nearestSkin = nil
-                        closeNui()
-                        break
-                    else
-                        idle = 5
-                        createMarkers(coord)
-                        if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101) then
-                            openSkinShop(k)
-                        end
+local _markerThread = false
+local markerThread = function()
+    if (_markerThread) then return; end;
+    _markerThread = true
+    Citizen.CreateThread(function()
+        while (countTable(nearestBlips) > 0) do
+            local ped = PlayerPedId()
+            local _cache = nearestBlips
+            for index, dist in pairs(_cache) do
+                if (dist <= 5) then
+                    local coord = locsConfig[index].coord
+                    createMarkers(coord)
+                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                        openSkinShop(index)  
                     end
                 end
             end
+            Citizen.Wait(5)
         end
-        Citizen.Wait(idle)
-    end
+        _markerThread = false
+    end)
 end
 
-CreateThread(mainThread)
+Citizen.CreateThread(function()
+    addBlips(locsConfig, generalConfig)
+    while (true) do
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        nearestBlips = {}
+        for k, v in ipairs(locsConfig) do
+            local distance = #(pCoord - v.coord.xyz)
+            if (distance <= 5) then
+                nearestBlips[k] = distance
+            end
+        end
+        if (countTable(nearestBlips) > 0) then markerThread(); end;
+        Citizen.Wait(500)
+    end
+end)
 
 openSkinShop = function(locs)
     local location = locsConfig[locs]

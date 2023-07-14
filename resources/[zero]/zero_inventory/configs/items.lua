@@ -13,7 +13,20 @@ config.items = {
     ['chave-algema'] = { name = 'Chave da Algema', type = 'common', weight = 0.5 },
     ['nitro'] = { name = 'Nitro', type = 'common', weight = 1.0, usable = true,
         interaction = function(source, user_id)
+            cInventory.closeInventory(source)
             exports['zero_tunings']:startInstallNitro(source)
+        end
+    },
+    ['spray'] = { name = 'Lata de Spray', type = 'common', weight = 0.5, usable = true, 
+        interaction = function(source, user_id)
+            cInventory.closeInventory(source)
+            exports['zero_core']:startSpray(source)
+        end
+    },
+    ['removedor-spray'] = { name = 'Kit de remoção de spray', type = 'common', weight = 0.5, usable = true, 
+        interaction = function(source, user_id)
+            cInventory.closeInventory(source)
+            exports['zero_core']:removeSpray(source)
         end
     },
     ----------------------------------------------------------------------------
@@ -518,7 +531,7 @@ function pescar(source, user_id, item)
         local inWater, distance = cInventory.getWaterHeight(source)
         if inWater then
             if zero.tryGetInventoryItem(user_id, 'isca', 1) then
-                TriggerClientEvent('cancelando', source, true)
+                TriggerClientEvent('disableAllActions', source, true)
                 TriggerClientEvent('zero_inventory:disableActions', source, true)
                 TriggerClientEvent('emotes', source, 'pescar')
                 cInventory.closeInventory(source)
@@ -548,7 +561,7 @@ function pescar(source, user_id, item)
                     end
                 end
                 TriggerClientEvent('zero_inventory:enableActions', source, true)
-                TriggerClientEvent('cancelando', source, false)
+                TriggerClientEvent('disableAllActions', source, false)
                 zeroClient._stopAnim(source, false)
                 zeroClient._DeletarObjeto(source)
             end

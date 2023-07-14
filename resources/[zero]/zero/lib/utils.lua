@@ -170,3 +170,14 @@ function exportTable(tbl,fpermited)
 		end
 	end)
 end
+
+function capitalizeString(string)
+	string = string.lower(string):gsub('^%l', string.upper)
+	return string
+end
+
+function countTable(tab)
+    local c = 0
+    for _,_ in pairs(tab) do c = c + 1 end
+    return c
+end

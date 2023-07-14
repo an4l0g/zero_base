@@ -3,7 +3,7 @@ local inVehicle = false
 Citizen.CreateThread(function()
     SetBlipAlpha(GetNorthRadarBlip(), 0)
     RequestStreamedTextureDict('circlemap', false)
-	while not HasStreamedTextureDictLoaded('circlemap') do Citizen.Wait(1); end;
+	while (not HasStreamedTextureDictLoaded('circlemap')) do Citizen.Wait(1); end;
 	AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'circlemap', 'radarmasksm')
 	SetMinimapClipType(1)
 	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.015, 0.007, 0.21, 0.25)
@@ -328,48 +328,48 @@ local getHeliWithCam = function()
 	return (allowHeli[model] or false)
 end
 
-local helicam = false
-local target_vehicle = nil
-local manual_spotlight = false
-local tracking spotlight = false
-local vehicle_display = 0 
-local fov = (fov_max+fov_min)*0.5
-local vision_state = 0
+-- local helicam = false
+-- local target_vehicle = nil
+-- local manual_spotlight = false
+-- local tracking spotlight = false
+-- local vehicle_display = 0 
+-- local fov = (fov_max+fov_min)*0.5
+-- local vision_state = 0
 
-heliCam = function()
-    Citizen.CreateThread(function()
-        while (inVehicle) do
-            local idle = 5000
-            local ped = PlayerPedId()
-            inVehicle = IsPedInAnyVehicle(ped)
-            if (getHeliWithCam()) then
-                local vehicle = GetVehiclePedIsIn(ped)
-                idle = 5
+-- heliCam = function()
+--     Citizen.CreateThread(function()
+--         while (inVehicle) do
+--             local idle = 5000
+--             local ped = PlayerPedId()
+--             inVehicle = IsPedInAnyVehicle(ped)
+--             if (getHeliWithCam()) then
+--                 local vehicle = GetVehiclePedIsIn(ped)
+--                 idle = 5
 
-                if (IsControlJustPressed(0, 38)) then 
-                    helicam = true 
-                    PlaySoundFrontend(-1, 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false) 
-                end
+--                 if (IsControlJustPressed(0, 38)) then 
+--                     helicam = true 
+--                     PlaySoundFrontend(-1, 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false) 
+--                 end
                 
-                if (IsControlJustPressed(0, 154)) then
-                    if (GetPedInVehicleSeat(vehicle, 1) == ped or GetPedInVehicleSeat(vehicle, 2) == ped) then
-                        PlaySoundFrontend(-1, 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false)
-						TaskRappelFromHeli(ped,  1)
-                    else
-                        PlaySoundFrontend(-1, '5_Second_Timer', 'DLC_HEISTS_GENERAL_FRONTEND_SOUNDS', false) 
-                        TriggerEvent('notify', 'Rapel', 'Você não pode usar o <b>Rapel</b> neste acento.')
-                    end
-                end
+--                 if (IsControlJustPressed(0, 154)) then
+--                     if (GetPedInVehicleSeat(vehicle, 1) == ped or GetPedInVehicleSeat(vehicle, 2) == ped) then
+--                         PlaySoundFrontend(-1, 'SELECT', 'HUD_FRONTEND_DEFAULT_SOUNDSET', false)
+-- 						TaskRappelFromHeli(ped,  1)
+--                     else
+--                         PlaySoundFrontend(-1, '5_Second_Timer', 'DLC_HEISTS_GENERAL_FRONTEND_SOUNDS', false) 
+--                         TriggerEvent('notify', 'Rapel', 'Você não pode usar o <b>Rapel</b> neste acento.')
+--                     end
+--                 end
 
-                if (IsControlJustPressed(0, 183) and GetPedInVehicleSeat(vehicle, -1) == ped and not helicam) then
-                    if (target_vehicle) then
+--                 if (IsControlJustPressed(0, 183) and GetPedInVehicleSeat(vehicle, -1) == ped and not helicam) then
+--                     if (target_vehicle) then
 
-                    else
+--                     else
                         
-                    end
-                end
-            end
-            Citizen.Wait(idle)
-        end
-    end)
-end
+--                     end
+--                 end
+--             end
+--             Citizen.Wait(idle)
+--         end
+--     end)
+-- end

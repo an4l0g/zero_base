@@ -8,10 +8,10 @@ function Form({ data, isDetails }) {
   const { request } = useRequest();
   const { painel } = useContext(PainelContext);
   const [price, setPrice] = useState("");
-  const [service, setService] = useState("t");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
+    console.log(data);
     if (data.total_price) {
       setPrice(data.total_price);
     }
@@ -25,7 +25,7 @@ function Form({ data, isDetails }) {
       request: data.request,
       description,
     });
-  }, [price, request, service, description, data]);
+  }, [price, request, description, data]);
 
   return (
     <S.Form>

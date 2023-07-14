@@ -124,7 +124,7 @@ end
 exports('generateChassis', generateChassis)
 
 addVehicle = function(user_id, vehicle, service)
-	zero.execute('zero_garage/addVehicle', { user_id = user_id, vehicle = vehicle, plate = generatePlate(), chassis = generateChassis(), ipva = os.time(), service = service })
+	zero.execute('zero_garage/addVehicle', { user_id = user_id, vehicle = vehicle, plate = generatePlate(), chassis = generateChassis(), ipva = os.time(), service = service, state = json.encode({}), custom = json.encode({}) })
 end
 exports('addVehicle', addVehicle)
 
