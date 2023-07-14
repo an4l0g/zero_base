@@ -2,7 +2,7 @@ services = {}
 servicePosition = 0
 
 tableName = 'zero_hospital'
-zero.prepare('zero_hospital:registerService','insert into '..tableName..' (doctor_id, service_type, patient_id, total_price, service_date, request, description) values (@doctor_id, @service_type, @patient_id, @total_price, @service_date, @request, @description)');
+zero.prepare('zero_hospital:registerService','insert into '..tableName..' (doctor_id, patient_id, total_price, service_date, request, description) values (@doctor_id, @patient_id, @total_price, @service_date, @request, @description)');
 zero.prepare('zero_hospital:listServicesByPatient','select * from ' ..tableName.. ' where patient_id like @search order by service_date desc limit 7 offset @offset');
 zero.prepare('zero_hospital:listServicesByDoctor','select * from ' ..tableName.. ' where doctor_id like @search order by service_date desc limit 7 offset @offset');
 zero.prepare('zero_hospital:countServicesByPatient','select COUNT(*) from ' .. tableName ..' where patient_id like @search');
@@ -24,7 +24,6 @@ sHospital.registerService = function(data)
 
     zero.execute('zero_hospital:registerService', { 
         doctor_id = doctor_id,
-        service_type = data.service_type,
         patient_id = data.patient_id,
         patient_name = patient.firstname ..' '..patient.lastname,
         total_price = data.total_price,
@@ -63,7 +62,7 @@ sHospital.requestService = function()
     local _source = source
     local user_id = zero.getUserId(_source)
     local user_identity = zero.getUserIdentity(user_id)
-    local request = zero.prompt(_source,{'O que você está sentindo?'})
+    local request = zero.prompt(_source,{'Bem vindo(a) ao Centro Médico ZERO, em que podemos te ajudar?'})
 
     if request then
         if services[user_id] == nil then
