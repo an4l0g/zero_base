@@ -8,7 +8,6 @@ Tunnel.bindInterface('zero_hospital',cHospital)
 sHospital = Tunnel.getInterface('zero_hospital')
 
 cHospital.updateNui = function()
-  print('TESTE ===>', page, search, typeSearch)
   SendNUIMessage({
     action = 'open',
     pendingServicesAmount = sHospital.getServicesPendingsAmount(),
@@ -25,12 +24,14 @@ RegisterNUICallback('close', function()
   page = 1
   search = ''
   typeSearch = 'patient_id'
+  TriggerEvent('zero_core:stopTabletAnim')
 end)
 
-RegisterCommand('ph', function()
+cHospital.open = function()
   SetNuiFocus(true, true)
+  TriggerEvent('zero_core:tabletAnim')
   cHospital.updateNui()
-end)
+end
 
 Citizen.CreateThread(function() 
   local _sleep = 1000

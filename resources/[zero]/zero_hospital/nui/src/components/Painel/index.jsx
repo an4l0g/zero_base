@@ -9,7 +9,7 @@ import { BiDollar } from "react-icons/bi";
 import { useContext, useMemo } from "react";
 import Details from "../Details";
 import PainelContext from "../../contexts/PainelContext";
-import { formatDate, intToReal, servicesFormat } from "../../utils";
+import { formatDate, intToReal } from "../../utils";
 import DetailsContext from "../../contexts/DetailsContext";
 
 function Painel() {
@@ -20,11 +20,9 @@ function Painel() {
     let newServices = painel.services.map((item) => ({
       ...item,
       total_price: intToReal(item.total_price) ?? item.total_price,
-      service_type: servicesFormat(item.service_type),
       service_date: formatDate(new Date(item.service_date)),
     }));
 
-    console.log("an4log teste", newServices);
     return newServices;
   }, [painel]);
 
@@ -37,7 +35,6 @@ function Painel() {
         <S.Body>
           <Table
             headRow={[
-              { icon: <MdMan2 />, title: "Serviço" },
               { icon: <MdMan2 />, title: "Paciente" },
               { icon: <CiMedicalCross />, title: "Médico" },
               { icon: <BiDollar />, title: "Valor" },
@@ -45,7 +42,6 @@ function Painel() {
             ]}
             detail={true}
             rowIndexes={[
-              "service_type",
               "patient_name",
               "doctor_name",
               "total_price",

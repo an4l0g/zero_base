@@ -1,5 +1,3 @@
-import Services from "../enums/services.json";
-
 export const intToReal = (int) => {
   return int.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 };
@@ -13,8 +11,4 @@ export const formatDate = (date) => {
     minute: "2-digit",
   };
   return date.toLocaleString("pt-BR", options).replace(/\//g, "/");
-};
-
-export const servicesFormat = (service) => {
-  return Services[service];
 };

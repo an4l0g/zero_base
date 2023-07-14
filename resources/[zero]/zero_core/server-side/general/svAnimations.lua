@@ -38,7 +38,7 @@ RegisterCommand('ec', function(source, args)
         local animation = configAnimations.shared[args[1]]
         if (animation) then
             if checkAnimPermissions(_source, _userId, animation.perm) then
-                local nSource = zeroclient.getNearestPlayer(source, 2)
+                local nSource = zeroClient.getNearestPlayer(source, 2)
                 if (GetEntityHealth(GetPlayerPed(nSource)) > 101) then 
                     TriggerClientEvent('zero_animations:setAnimShared', _source, args[1], nSource)
                     TriggerClientEvent('zero_animations:setAnimShared2', nSource, animation.otherAnim, _source)

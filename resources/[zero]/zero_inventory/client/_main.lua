@@ -4,7 +4,7 @@ cInventory = {}
 Tunnel.bindInterface('zero_inventory', cInventory)
 sInventory = Tunnel.getInterface('zero_inventory')
 
-local disableActions = false
+disableActions = false
 currentChestType = nil
 currentLootId = nil
 

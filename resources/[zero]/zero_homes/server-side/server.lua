@@ -266,6 +266,7 @@ srv.tryEnterHome = function(index)
     end
 end
 
+
 srv.tryEnterApartament = function(value, index)
     local source = source
     local user_id = zero.getUserId(source)
@@ -292,6 +293,7 @@ srv.invadeHome = function(index)
         else
             serverNotify(source, 'Você não possui um <b>mandado de busca e apreensão</b> para invadir esta residência.')
         end
+        homesActions[index] = nil
     end
 end
 

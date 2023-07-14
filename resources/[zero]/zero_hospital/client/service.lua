@@ -10,6 +10,7 @@ RegisterNUICallback('cancelService', function()
     SetNuiFocus(false, false)
     local response = sHospital.requestCancelService()
     if response then
+        sHospital.cancelLog(service)
         service = {}
         TriggerEvent('notify', 'Centro Médico', 'Você cancelou o atendimento atual!')
     end

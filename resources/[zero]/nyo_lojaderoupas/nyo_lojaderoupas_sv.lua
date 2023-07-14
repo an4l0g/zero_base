@@ -24,11 +24,19 @@ AddEventHandler("LojaDeRoupas:Comprar", function(preco, dataParts)
     local parts = json.decode(dataParts)
     if preco then
         -- if vRP.tryFullPayment(user_id,parseInt(preco)) then
+<<<<<<< HEAD
             -- local dataParts = vRP.query("nyoLojaRoupas/getGuardaRoupa", {user_id = user_id})
             -- local playerParts = {}
                 -- if #dataParts > 0 then 
                     -- playerParts = json.decode(dataParts[1]['dvalue'])
                 -- end
+=======
+            local dataParts = vRP.query("nyoLojaRoupas/getGuardaRoupa", {user_id = user_id})
+            local playerParts = {}
+                if #dataParts > 0 then 
+                    playerParts = json.decode(dataParts[1]['dvalue'])
+                end
+>>>>>>> 5a93aeb9b20b1063f9ae36669f98831b7a47c640
             --local playerParts = vRP.getUData(user_id, "nyo:GuardaRoupa")
             -- srv.register_trans(user_id,"Compra na Loja de Roupas.",preco)
             TriggerClientEvent('Notify',source,'sucesso',"Sucesso","Você pagou <b>$"..preco.." dólares</b> em roupas e acessórios.",10000)
@@ -138,7 +146,6 @@ AddEventHandler("LojaDeRoupas:Comprar", function(preco, dataParts)
             -- local userSource = vRP.getUserSource(user_id)
             -- TriggerClientEvent('Notify',source,'negado',"Negado","Você não tem dinheiro suficiente",10000)
             -- vRPloja.finalizarCompra(userSource, false)
-        -- end 
     end
 end)
 
@@ -163,4 +170,3 @@ function nyoLojaRoupaS.checkProcurado()
 	local user_id = vRP.getUserId(source)
 	return false
 end
---------------------------------------------------
