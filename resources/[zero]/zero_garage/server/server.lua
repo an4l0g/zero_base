@@ -158,6 +158,7 @@ srv.getMyVehicles = function(id)
                                 suspension = 90, 
                                 fuel = vehicleInfos.fuel
                             })
+                            print(json.encode(myVehicles))
                         end
                     end
                 end
@@ -720,13 +721,10 @@ RegisterCommand('car', function(source, args)
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
-        print('aqui')
         if (args[1]) then
             local spawn = string.lower(args[1])
-            print(spawn)
             local loadModel = vCLIENT.loadModel(source, spawn, 30000, 60000)
             if (loadModel) then
-                print('aqui')
                 local ped = GetPlayerPed(source)
                 local pCoord = GetEntityCoords(ped)
                 local heading = GetEntityHeading(ped)

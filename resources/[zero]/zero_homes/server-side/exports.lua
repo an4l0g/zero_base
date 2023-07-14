@@ -1,14 +1,11 @@
 homesActions = {}
 
--- bloquear comandos para casas MLO
-
 local checkHomeOwner = function(user_id, prompt)
     local homeName = capitalizeString(prompt)
     local homeConsult = zero.query('zero_homes/homePermissions', { home = homeName, user_id = user_id })[1]
     if (homeConsult) and homeConsult.home_owner == 1 then
-        local homes = configHomes[homeName]
-        local isApartament = (homes and homes.type or 'apartament')
-        return true, homeName, json.decode(homeConsult.configs), configType[isApartament], isApartament, homeConsult
+        local homeConfig = json.decode(homeConsult.configs)
+        return true, homeName, homeConfig, configType[homeConfig.type], homeConfig.type, homeConsult
     end
     serverNotify(zero.getUserSource(user_id), 'Você não é o <b>proprietário</b> desta residência.')
     return false
@@ -75,10 +72,11 @@ homesAdd = function(source)
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já é morador desta residência.')
                 else
                     local table = {
-                        price = price[2],
+                        price = homesType.price,
                         residents = (homesType.residents[1] and homesType.residents[2] or 0),
                         chest = homesType.chest.min,
                         interior = homesType.interior._default,
+                        type = homeType
                     }
                     
                     local decoration = configInterior[homesType.interior._default]
@@ -195,12 +193,19 @@ homesTrans = function(source)
         if (nUser ~= user_id and nIdentity) then  
             local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
             if (response) then
+                if (homeType == 'mlo' or homeConsult.vip > 0) then 
+                    homesActions[user_id] = nil
+                    serverNotify(source, 'Você não pode realizar esta interação numa residência <b>VIP</b>.') 
+                    return
+                end
+
                 local request = zero.request(source, 'Você deseja transferir a residência '..homeName..' para o '..nIdentity.firstname..' '..nIdentity.lastname..'?', 30000)
                 if (request) then
+                    local items = exports['zero_inventory']:getBag('homes:'..homeName)
                     zero.execute('zero_homes/removeResidents', { home = homeName })
                     zero.execute('zero_homes/updateOwner', { home = homeName, user_id = user_id, nuser_id = nUser })
                     serverNotify(source, 'Você transferiu a sua <b>residência</b> para o '..nIdentity.firstname..' '..nIdentity.lastname..'.')
-                    zero.webhook(configWebhooks.transferHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (TRANSFER RESIDENT)\n[OLD OWNER]: '..user_id..'\n[NEW OWNER]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook(configWebhooks.transferHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (TRANSFER RESIDENT)\n[OLD OWNER]: '..user_id..'\n[NEW OWNER]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TAX IN]: '..homeConsult.tax..' ('..os.date('%d/%m/%Y - %H:%M', homeConsult.tax)..')\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 end
             end
         else
@@ -224,19 +229,21 @@ homesVender = function(source)
         if (response) then
             local homePrice = parseInt(homeConfig.price * generalConfig.percentageSell)
 
-            if (homeConsult.vip > 0) then
+            if (homeType == 'mlo' or homeConsult.vip > 0) then 
                 homesActions[user_id] = nil
-                serverNotify(source, 'Você não pode vender a sua <b>residência</b> pois ela é VIP.')
-                return false
+                serverNotify(source, 'Você não pode realizar esta interação numa residência <b>VIP</b>.') 
+                return
             end
 
             local request = zero.request(source, 'Você deseja vender a residência '..homeName..' para a prefeitura por R$'..zero.format(homePrice)..'?', 30000)
             if (request) then
+                local items = exports['zero_inventory']:getBag('homes:'..homeName)
                 zero.execute('zero_homes/sellHome', { home = homeName })
                 zero.execute('zero_homes/delGarage', { home = homeName })
+                zero.execute('zero_inventory:deleteBag', { bag_type = 'homes:'..homeName })
                 zero.giveBankMoney(user_id, homePrice)
                 TriggerClientEvent('zero_garage:removeGarage', source, homeName)
-                zero.webhook(configWebhooks.sellHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SELL HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[VALUE RECEIVED]: '..homePrice..'\n[REMOVED HOUSE]: garages and upgrades\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook(configWebhooks.sellHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SELL HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[VALUE RECEIVED]: '..homePrice..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[REMOVED HOUSE]: items and garages and upgrades\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 serverNotify(source, 'Você vendeu a residência <b>'..homeName..'</b> para a prefeitura por R$'..zero.format(homePrice)..'.')                    
             end
         end
@@ -291,7 +298,7 @@ homesTax = function(source)
                     if (zero.tryFullPayment(user_id, taxPrice)) then
                         zero.execute('zero_homes/updateTax', { home = homeName, tax = os.time() })
                         serverNotify(source, 'O <b>IPTU</b> da sua residência foi pago com sucesso.')
-                        zero.webhook(configWebhooks.buyTax, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY TAX)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..taxPrice..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                        zero.webhook(configWebhooks.buyTax, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY TAX)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..taxPrice..'\n[TAX RENEWED]: '..homesTax..' ('..os.date('%d/%m/%Y - %H:%M', homesTax)..')\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     else
                         serverNotify(source, 'Você não possui dinheiro suficiente para pagar o <b>IPTU</b> de sua residência.')
                     end
@@ -338,7 +345,7 @@ homesInterior = function(source)
                     text = text..'<br><br>Interior: <b>'..interiorName..'</b> '..interiorValue
                 end
             end
-            serverNotify(source, 'Interiores disponíveis em sua <b>residência</b>:'..text, 10000)
+            serverNotify(source, 'Interiores disponíveis em sua <b>residência</b>:'..text, 30000)
         end
     end
 end
@@ -361,7 +368,10 @@ updateInterior = function(source, interior)
                         local request = zero.request(source, 'Você deseja alterar o interior da sua residência '..homeName..' para '..configInterior[interior].name..' por R$'..zero.format(interiorType.value)..'?', 30000)
                         if (request) then
                             if (zero.tryFullPayment(user_id, interiorType.value)) then
-                                zero.webhook(configWebhooks.buyInterior, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                local items = exports['zero_inventory']:getBag('homes:'..homeName)
+                                zero.webhook(configWebhooks.buyInterior, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                if (homeConfig.decorations ~= 0) then homeConfig.decorations = 0 end;
+                                if (interior == 'eclip_penthouse') then homeConfig.decorations = 'white' end;
                                 homeConfig.interior = interior
                                 zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                 serverNotify(source, 'O interior de sua residência <b>'..homeName..'</b> foi alterado com sucesso.')
@@ -402,7 +412,7 @@ homesDecoration = function(source)
                         text = text..'<br><br>Interior: <b>'..v.name..'</b> '..interiorValue
                     end
                 end
-                serverNotify(source, 'Decorações disponíveis em sua residência <b>'..homeName..'</b>:'..text, 10000)
+                serverNotify(source, 'Decorações disponíveis em sua residência <b>'..homeName..'</b>:'..text, 30000)
             else
                 serverNotify(source, 'O interior atual de sua residência <b>'..homeName..'</b> não possui <b>decoração</b>. Saiba qual interior de sua residência possui decoração na lista de interiores.')
             end
@@ -429,7 +439,8 @@ updateDecoration = function(source, decoration)
                             local request = zero.request(source, 'Você deseja alterar o interior da sua residência '..homeName..' para '..homeDecoration[decoration].name..' por R$'..zero.format(homeDecoration[decoration].value)..'?', 30000)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, homeDecoration[decoration].value)) then
-                                    zero.webhook(configWebhooks.buyDecoration, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY DECORATION)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..homeDecoration[decoration].value..'\n[OLD DECORATION]: '..homeConfig.decorations..'\n[NEW DECORATION]: '..decoration..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                    local items = exports['zero_inventory']:getBag('homes:'..homeName)
+                                    zero.webhook(configWebhooks.buyDecoration, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY DECORATION)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..homeDecoration[decoration].value..'\n[OLD DECORATION]: '..homeConfig.decorations..'\n[NEW DECORATION]: '..decoration..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                     homeConfig.decorations = decoration
                                     zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                     serverNotify(source, 'A decoração de sua residência <b>'..homeName..'</b> foi alterada com sucesso.')
@@ -477,7 +488,8 @@ homesBau = function(source)
                             local request = zero.request(source, 'Você deseja pagar R$'..zero.format(price)..', para aumentar o baú de sua residência '..homeName..'?', 30000)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, price)) then
-                                    zero.webhook(configWebhooks.buyChest, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY CHEST)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[OLD CHEST]: '..homeConfig.chest..'kg\n[NEW CHEST]: '.._upgrade..'kg\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                    local items = exports['zero_inventory']:getBag('homes:'..homeName)
+                                    zero.webhook(configWebhooks.buyChest, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY CHEST)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[OLD CHEST]: '..homeConfig.chest..'kg\n[NEW CHEST]: '.._upgrade..'kg\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                     homeConfig.chest = _upgrade
                                     zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                     serverNotify(source, 'Você aumentou o baú da sua residência <b>'..homeName..'</b> com sucesso.')
@@ -547,3 +559,54 @@ homesGaragem = function(source)
     end
 end
 exports('homesGaragem', homesGaragem)
+
+local _homesLacrar = {
+    ['near'] = function(source, nearHomes, inside, homeName)
+        if (nearHomes) then
+            homeOpened[nearHomes] = nil
+            serverNotify(source, 'A residência <b>'..nearHomes..'</b> foi lacrada.')
+
+            local items = exports['zero_inventory']:getBag('homes:'..nearHomes)
+            zero.webhook(configWebhooks.sealHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SEAL HOUSE)\n[OFFICER]: '..zero.getUserId(source)..'\n[HOME]: '..nearHomes:upper()..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        end
+    end,
+    ['inside'] = function(source, nearHomes, inside, homeName)
+        if (inside) then
+            homeOpened[homeName] = nil
+            serverNotify(source, 'A residência <b>'..homeName..'</b> foi lacrada.')
+
+            local items = exports['zero_inventory']:getBag('homes:'..homeName)
+            zero.webhook(configWebhooks.sealHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SEAL HOUSE)\n[OFFICER]: '..zero.getUserId(source)..'\n[HOME]: '..homeName:upper()..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        else
+            serverNotify(source, 'Você não se encontra na porta ou dentro da <b>residência</b>.')
+        end
+    end,
+}
+
+homesLacrar = function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local nearHomes = nearestHomes(source)
+        local homes = configHomes[nearHomes]
+        local nearHomesType = (homes and homes.type or false)
+        if (nearHomesType ~= 'apartament') then
+            local homeConsult = zero.query('zero_homes/getHomeOwner', { home = nearHomes })[1]
+            if (homeConsult) then
+                local inside, homeName = insideHome(source)
+                _homesLacrar[nearHomes and 'near' or 'inside'](source, nearHomes, inside, homeName)
+            else
+                serverNotify(source, 'Você não pode lacrar uma residência que não possui <b>dono</b>.')
+            end
+        else
+            nearHomes = nearHomes..'%'
+            local ownerConsult = zero.query('zero_homes/getApartamentOwnerWithoutUser', { home = nearHomes })[1]
+            if (ownerConsult) then
+                local inside, homeName = insideHome(source)
+                _homesLacrar[nearHomes and 'near' or 'inside'](source, ownerConsult.home, inside, ownerConsult.home)
+            else
+                serverNotify(source, 'Você não pode lacrar uma residência que não possui <b>dono</b>.')
+            end
+        end
+    end
+end
+exports('homesLacrar', homesLacrar)

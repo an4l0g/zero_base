@@ -45,7 +45,7 @@ function useBags() {
       cb();
     } else {
       request("closeInventory", {
-        message: "Verifique o peso dos suprimentos!",
+        message: "Verifique o peso dos itens!",
       });
     }
   };

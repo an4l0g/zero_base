@@ -23,14 +23,14 @@ AddEventHandler("LojaDeRoupas:Comprar", function(preco, dataParts)
     local user_id = vRP.getUserId(source)
     local parts = json.decode(dataParts)
     if preco then
-        if vRP.tryFullPayment(user_id,parseInt(preco)) then
-            local dataParts = vRP.query("nyoLojaRoupas/getGuardaRoupa", {user_id = user_id})
-            local playerParts = {}
-                if #dataParts > 0 then 
-                    playerParts = json.decode(dataParts[1]['dvalue'])
-                end
+        -- if vRP.tryFullPayment(user_id,parseInt(preco)) then
+            -- local dataParts = vRP.query("nyoLojaRoupas/getGuardaRoupa", {user_id = user_id})
+            -- local playerParts = {}
+                -- if #dataParts > 0 then 
+                    -- playerParts = json.decode(dataParts[1]['dvalue'])
+                -- end
             --local playerParts = vRP.getUData(user_id, "nyo:GuardaRoupa")
-            srv.register_trans(user_id,"Compra na Loja de Roupas.",preco)
+            -- srv.register_trans(user_id,"Compra na Loja de Roupas.",preco)
             TriggerClientEvent('Notify',source,'sucesso',"Sucesso","Você pagou <b>$"..preco.." dólares</b> em roupas e acessórios.",10000)
            -- local playerParts = json.decode(vRP.getUData(user_id, "nyo:GuardaRoupa"))
 
@@ -127,18 +127,18 @@ AddEventHandler("LojaDeRoupas:Comprar", function(preco, dataParts)
             end
             
           --  print(json.encode(playerParts['p1']))
-            local setGuardaRoupa = vRP.execute("nyoLojaRoupas/setGuardaRoupa", { user_id = user_id, value = json.encode(playerParts)})
+            -- local setGuardaRoupa = vRP.execute("nyoLojaRoupas/setGuardaRoupa", { user_id = user_id, value = json.encode(playerParts)})
             
-            if setGuardaRoupa == 1 or setGuardaRoupa == 2 then 
+            -- if setGuardaRoupa == 1 or setGuardaRoupa == 2 then 
                 local userSource = vRP.getUserSource(user_id)
                 vRPloja.finalizarCompra(userSource, true)
-            end
+            -- end
             
-        else
-            local userSource = vRP.getUserSource(user_id)
-            TriggerClientEvent('Notify',source,'negado',"Negado","Você não tem dinheiro suficiente",10000)
-            vRPloja.finalizarCompra(userSource, false)
-        end 
+        -- else
+            -- local userSource = vRP.getUserSource(user_id)
+            -- TriggerClientEvent('Notify',source,'negado',"Negado","Você não tem dinheiro suficiente",10000)
+            -- vRPloja.finalizarCompra(userSource, false)
+        -- end 
     end
 end)
 
@@ -161,6 +161,6 @@ end
 --------------------------------------------------
 function nyoLojaRoupaS.checkProcurado()
 	local user_id = vRP.getUserId(source)
-	return vRP.searchReturn(source,user_id)
+	return false
 end
 --------------------------------------------------

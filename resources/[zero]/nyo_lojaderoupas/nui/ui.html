@@ -1,70 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="ui.css">
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="ui.css" />
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"
+    ></script>
+  </head>
+  <body>
     <div id="container" style="display: none">
-        <div id="topo">
-            <img src="https://i.imgur.com/gGNDbPW.png" alt="">
+      <div id="topo">
+        <img
+          src="https://cdn.discordapp.com/attachments/922885255386517535/1128411705173627060/k1ZAtQdPi240HwV0A5CZgx4aftxdZUfgl8NaNraL.png"
+          alt=""
+        />
+      </div>
+      <div id="menu">
+        <div
+          class="menuType ativada"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364804695064576/african-mask.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="mascara"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364788434141224/hi.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="mao"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364807036272670/hand-watch.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="relogio"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364798466261012/bracelet.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="bracelete"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364794532266064/baseball-cap.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="bone"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/746851286422519928/787482712537300992/kisspng-glasses-clip-art-portable-network-graphics-compute-sunglasses-svg-png-icon-free-download-571.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="oculos"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364917047885896/earrings.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="brinco"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364789851815946/tie.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="gravata"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364792141512765/tshirt.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="camisa"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364802769879080/jacket.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="jaqueta"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364796230959134/pants.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="calca"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/746851286422519928/787482734054080512/61c35ad6003358ee53d8baf7df203125-iacute-cone-de-mochila-de-viagem-by-vexels.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="mochila"
+        ></div>
+        <div
+          class="menuType"
+          style="
+            background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364800656605246/high-heels.png);
+          "
+          onclick="selectPart(this)"
+          data-idpart="sapato"
+        ></div>
+      </div>
+      <div id="listagem"></div>
+      <div id="menuEssencial">
+        <div id="color">
+          <img
+            src="https://cdn.discordapp.com/attachments/712813091674390560/778433255430160414/colour.png"
+            alt=""
+            id="colorChange"
+          />
+          <div id="esquerda"><</div>
+          <div id="levantar">
+            <img
+              src="https://cdn.discordapp.com/attachments/712813090952970346/802647468961300496/protest.png"
+              alt=""
+              id="maos"
+            />
+          </div>
+          <div id="direita">></div>
         </div>
-        <div id="menu">
-            <div class="menuType ativada" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364804695064576/african-mask.png);" onclick="selectPart(this)" data-idpart="mascara"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364788434141224/hi.png);" onclick="selectPart(this)" data-idpart="mao"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364807036272670/hand-watch.png);" onclick="selectPart(this)" data-idpart="relogio"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364798466261012/bracelet.png);" onclick="selectPart(this)" data-idpart="bracelete"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364794532266064/baseball-cap.png);" onclick="selectPart(this)" data-idpart="bone"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/746851286422519928/787482712537300992/kisspng-glasses-clip-art-portable-network-graphics-compute-sunglasses-svg-png-icon-free-download-571.png);" onclick="selectPart(this)" data-idpart="oculos"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364917047885896/earrings.png);" onclick="selectPart(this)" data-idpart="brinco"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364789851815946/tie.png);" onclick="selectPart(this)" data-idpart="gravata"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364792141512765/tshirt.png);" onclick="selectPart(this)" data-idpart="camisa"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364802769879080/jacket.png);" onclick="selectPart(this)" data-idpart="jaqueta"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364796230959134/pants.png);" onclick="selectPart(this)" data-idpart="calca"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/746851286422519928/787482734054080512/61c35ad6003358ee53d8baf7df203125-iacute-cone-de-mochila-de-viagem-by-vexels.png);" onclick="selectPart(this)" data-idpart="mochila"></div>
-            <div class="menuType" style="background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/778364800656605246/high-heels.png);" onclick="selectPart(this)" data-idpart="sapato"></div>
-            
-            
+        <div id="total">
+          <div id="totalEsquerda">TOTAL:</div>
+          <div id="totalDireita">0</div>
         </div>
-        <div id="listagem">
+        <div id="cart"></div>
+      </div>
 
-        </div>
-        <div id="menuEssencial">
-            <div id="color">
-                <img src="https://cdn.discordapp.com/attachments/712813091674390560/778433255430160414/colour.png" alt="" id="colorChange">
-                <div id="esquerda"><</div>
-                <div id="levantar"><img src="https://cdn.discordapp.com/attachments/712813090952970346/802647468961300496/protest.png" alt="" id="maos"></div>
-                <div id="direita">></div>
-            </div>
-            <div id="total">
-                <div id="totalEsquerda">TOTAL:</div>
-                <div id="totalDireita">0</div>
-            </div>
-            <div id="cart">
-
-            </div>
-        </div>
-
-        
-        <div id="showtresD">
-            <model-viewer src="https://assets.plebmasters.de/clothes/models/MzM5Nzc5NDIxOQ.glb" alt="A 3D model of an astronaut" auto-rotate camera-controls></model-viewer>
-        </div>
+      <div id="showtresD">
+        <model-viewer
+          src="https://assets.plebmasters.de/clothes/models/MzM5Nzc5NDIxOQ.glb"
+          alt="A 3D model of an astronaut"
+          auto-rotate
+          camera-controls
+        ></model-viewer>
+      </div>
     </div>
-    
-       <div id="cores">
-            <h1>CORES</h1>
-            <div id="listaCores">
-  
-            </div>
-        </div>
 
+    <div id="cores">
+      <h1>CORES</h1>
+      <div id="listaCores"></div>
+    </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="ui.js"></script>
-</body>
+  </body>
 </html>

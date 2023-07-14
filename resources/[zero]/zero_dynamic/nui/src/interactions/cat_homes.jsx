@@ -1,14 +1,23 @@
 import { RiPlayFill } from "react-icons/ri";
 import { RxUpdate } from "react-icons/rx";
 import { BsFillHouseGearFill } from "react-icons/bs";
+import { FaHouseUser } from "react-icons/fa";
 
 export default [
   {
-    title: "Updates",
+    title: "Upgrades",
     icon: <RxUpdate />,
     type: "category",
     action: "updates",
     value: "update",
+    category: "homes",
+  },
+  {
+    title: "Minha residência",
+    icon: <FaHouseUser />,
+    type: "category",
+    action: "myHomes",
+    value: "house",
     category: "homes",
   },
   {
@@ -48,7 +57,7 @@ export default [
     icon: <RiPlayFill />,
     type: "action",
     action: "homesTax",
-    category: "homes",
+    category: "house",
   },
   {
     title: "Lista de casas",
@@ -59,53 +68,60 @@ export default [
     side: "client",
   },
   {
+    title: "Lacrar residência",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "homesLacrar",
+    category: "homes",
+  },
+  {
     title: "Checar moradores",
     icon: <RiPlayFill />,
     type: "action",
     action: "homesChecar",
-    category: "homes",
+    category: "house",
   },
   {
     title: "Adicionar morador",
     icon: <RiPlayFill />,
     type: "action",
     action: "homesAdd",
-    category: "homes",
+    category: "house",
   },
   {
     title: "Remover morador",
     icon: <RiPlayFill />,
     type: "action",
     action: "homesRem",
-    category: "homes",
+    category: "house",
   },
   {
     title: "Trancar/Destrancar casa",
     icon: <RiPlayFill />,
     type: "action",
     action: "homesTrancar",
-    category: "homes",
+    category: "house",
   },
   {
     title: "Transferir a residência",
     icon: <RiPlayFill />,
     type: "action",
     action: "homesTrans",
-    category: "homes",
+    category: "house",
   },
   {
     title: "Vender a residência",
     icon: <RiPlayFill />,
     type: "action",
     action: "homesVender",
-    category: "homes",
+    category: "house",
   },
   {
-    title: "Suas residências",
+    title: "Minhas residências",
     icon: <RiPlayFill />,
     type: "action",
     action: "homesOther",
-    category: "homes",
+    category: "house",
   },
   {
     title: "Interiores disponíveis",
