@@ -287,3 +287,8 @@ RegisterNetEvent('zero_interactions:homesGaragem', function(value)
     local source = source    
     exports['zero_homes']:homesGaragem(source)
 end)
+
+RegisterNetEvent('zero_interactions:homesLacrar', function(value)
+    local source = source    
+    exports['zero_homes']:homesLacrar(source)
+end)

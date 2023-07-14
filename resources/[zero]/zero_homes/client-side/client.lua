@@ -14,11 +14,13 @@ local markerThread = function()
             local ped = PlayerPedId()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
-                if (dist <= 5) then
+                if (dist <= 2) then
                     local coord = configHomes[index].coord
-                    DrawMarker(1, coord.x, coord.y, coord.z-0.97, 0, 0, 0, 0, 0, 0, 0.8, 0.8, 0.5, 0, 153, 255, 155, 0, 0, 0, 1)
-                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
-                        vSERVER.tryEnterHome(index)   
+                    DrawMarker3D(coord, '~b~['..capitalizeString(index)..']~w~\n~b~[E]~w~ - Entrar\n~b~[G]~w~ - Invadir')
+                    if (dist <= 0.5  and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                        if (IsControlJustPressed(0, 38)) then vSERVER.tryEnterHome(index)
+                        elseif (IsControlJustPressed(0, 58)) then vSERVER.invadeHome(index)
+                        end
                     end
                 end
             end
@@ -35,7 +37,7 @@ Citizen.CreateThread(function()
         nearestBlips = {}
         for k, v in pairs(configHomes) do
             local distance = #(pCoord - v.coord)
-            if (distance <= 5) then
+            if (distance <= 2) then
                 nearestBlips[k] = distance
             end
         end
@@ -161,7 +163,7 @@ threadInHome = function(interior)
                             if (v[4] == 'exit') then
                                 exitHome()
                             elseif (v[4] == 'vault') then
-                                exports['zero_inventory']:openInventory('open', 'homes:'..tmpHomes.homeName)
+                                vSERVER.openVault(tmpHomes.homeName)
                             end
                         end
                     end
@@ -273,3 +275,64 @@ cli.createGarage = function(homeCoords)
     end
     return finish, cacheCreation
 end
+
+cli.setBlipsOwner = function(homeName, x, y, z)
+	local blip = AddBlipForCoord(x, y, z)
+    SetBlipSprite(blip, 411)
+    SetBlipAsShortRange(blip, true)
+    SetBlipColour(blip, 4)
+    SetBlipScale(blip, 0.3)
+    BeginTextCommandSetBlipName('STRING')
+    AddTextComponentString('Residência: ~b~'..homeName)
+    EndTextCommandSetBlipName(blip)
+end
+
+cli.openNui = function(ownerConsult, name)
+    if (not ownerConsult) then ownerConsult = { false, false }
+    else ownerConsult = { true, ownerConsult.home }
+    end
+
+    SetNuiFocus(true, true)
+    SendNUIMessage({
+        action = 'open',
+        data = {
+            haveApartament = ownerConsult,
+            apartament = name
+        }
+    })
+end
+
+DrawMarker3D = function(coords, text)
+	SetDrawOrigin(coords.x, coords.y, coords.z, 0); 
+	SetTextFont(4)     
+	SetTextProportional(0)     
+	SetTextScale(0.35,0.35)    
+	SetTextColour(255,255,255,255)   
+	SetTextDropshadow(0, 0, 0, 0, 255)     
+	SetTextEdge(2, 0, 0, 0, 150)     
+	SetTextDropShadow()     SetTextOutline()     
+	SetTextEntry("STRING")     SetTextCentre(1)     
+	AddTextComponentString(text) 
+	DrawText(0.0, 0.0)     
+	ClearDrawOrigin() 
+end
+
+RegisterNUICallback('myApartament', function(data, cb)
+    SetNuiFocus(false, false)
+    vSERVER.tryEnterApartament('my-apartament', data)
+end)
+
+RegisterNUICallback('buyApartament', function(data, cb)
+    SetNuiFocus(false, false)
+    vSERVER.tryEnterApartament('buy-apartament', data)
+end)
+
+RegisterNUICallback('otherApartament', function(data, cb)
+    SetNuiFocus(false, false)
+    vSERVER.tryEnterApartament('other-apartament')
+end)
+
+RegisterNUICallback('close', function(data, cb)
+    SetNuiFocus(false, false)
+    print(json.encode(data))
+end)

@@ -13,14 +13,19 @@ config.webhooks = {
     buyInterior = 'https://discord.com/api/webhooks/1128054697534689340/MwGk9-NBLi-UyreD_rS0woGC39hTPNXGtlHDtXo-N0JC3mOsjRbYIJ0X9YsI_OBivtnN',
     buyDecoration = 'https://discord.com/api/webhooks/1128054846482812959/AtG802sb6zT1P-5cBszbSLGH8iT0jJLBcH_byMeGoc0jR-cDMDzYYiLOs6q-eKAf114m',
     buyTax = 'https://discord.com/api/webhooks/1128055071423332464/u2oCkscVF_2BY6LeGdfNG0eDXaLi-BIp9cMZxmKzRxNvQ4w0XDEdHi3HUFt4Cpdihzj7',
-    loseHouse = 'https://discord.com/api/webhooks/1128070992976171039/XSlDHbE9yMoxat45i5ADAVkdc41kmZ-siXvkZLPBkJxD7A57NqRHVsh0xCqMf_OqJE4M'
+    loseHouse = 'https://discord.com/api/webhooks/1128070992976171039/XSlDHbE9yMoxat45i5ADAVkdc41kmZ-siXvkZLPBkJxD7A57NqRHVsh0xCqMf_OqJE4M',
+    invadeHouse = 'https://discord.com/api/webhooks/1129537966033883166/Hucyr76MR0galkp3-F5ZD7qX6gKsz4Uj87ooawRSoKpWvxEVc7Y1ShHOcqMjdreSuymn',
+    sealHouse = 'https://discord.com/api/webhooks/1129541038453825546/3tJYbwVlWziXhTVR8-zgY2vEAZvTk5BSACVOFwwqdivGaTlep0EHEqsWqB_GSEOQxhrQ'
 }
 
 config.general = {
     lateFee = 15, -- TAXA ATRASADA (PADRÃO 15 DIAS)
+    wonFee = 20, -- VENCEU TAXA (PADRÃO 20 DIAS)
     percentageSell = 0.8, -- PORCENTAGEM DE VENDA
     taxPrice = 0.05, -- VALOR DA TAXA
     percentageUpgrade = 0.8, -- PORCENTAGEM DE VENDA DOS UPGRADE (INTERIOR NÃO CONTA)
+    openVaultPermission = '+DEIC.Soldado', -- PERMISSÃO DA POLÍCIA PARA ABRIR O BAÚ DA CASA
+    invadePermission = 'dono.permissao'
 }
 
 config.homes = {
@@ -1266,6 +1271,7 @@ config.homes = {
     ['Perfect0210'] = { coord = vector3(-1974.554, 631.1209, 122.5267), type = 'high' },
     ['Perfect0211'] = { coord = vector3(-1928.993, 595.3714, 122.274), type = 'high' },
     ['Perfect0212'] = { coord = vector3(-1896.382, 642.4879, 130.1934), type = 'high' },
+    ['Perfect0213'] = { coord = vector3(-1056.422, 761.5253, 167.3136), type = 'high' },
 -------------------------------------------------------------------------------------------
 --  CRIPS  
 -------------------------------------------------------------------------------------------
