@@ -56,7 +56,7 @@ local tmpHomes = {
 loadInteriors = function(interior, decorations)
     tmpHomes.interiorId = (interior.interiorId or 0)
     if (tmpHomes.interiorId > 0) then SetInteriorActive(tmpHomes.interiorId, true); end;
-
+    
     if (decorations) then
         if (decorations ~= 0) then
             local decorations = interior.decorations[decorations]
@@ -163,7 +163,7 @@ threadInHome = function(interior)
                             if (v[4] == 'exit') then
                                 exitHome()
                             elseif (v[4] == 'vault') then
-                                vSERVER.openVault(tmpHomes.homeName)
+                                if (vSERVER.vaultPermissions(tmpHomes.homeName)) then  exports['zero_inventory']:openInventory('open', 'homes:'..tmpHomes.homeName); end;
                             end
                         end
                     end
@@ -334,5 +334,4 @@ end)
 
 RegisterNUICallback('close', function(data, cb)
     SetNuiFocus(false, false)
-    print(json.encode(data))
 end)

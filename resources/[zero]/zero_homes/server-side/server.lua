@@ -69,7 +69,7 @@ local _home = {
                                 chest = homesType.chest.min,
                                 interior = homesType.interior._default,
                                 type = homes.type,
-                                decoration = 0
+                                decorations = 0
                             }
                             
                             zero.execute('zero_homes/buyHome', { user_id = user_id, home = index, home_owner = 1, garages = 0, tax = tax, configs = json.encode(table), vip = 0 })
@@ -110,7 +110,7 @@ local _home = {
             if (taxTime >= 0) then serverNotify(source, 'O <b>IPTU</b> vence em: '..zero.getDayHours(generalConfig.lateFee * 24 * 60 * 60 - (os.time() - taxTime)), 10000); end;
             tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
             
-            vCLIENT.enterHome(source, homeConfig.interior, false, index)
+            vCLIENT.enterHome(source, homeConfig.interior, homeConfig.decorations, index)
         end
     end,
     ['buy-apartament'] = function(source, user_id, index, homes)
@@ -197,7 +197,7 @@ local _home = {
             else
                 if (homeOpened[home]) then
                     tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
-                    vCLIENT.enterHome(source, homeConfig.interior, false, home)
+                    vCLIENT.enterHome(source, homeConfig.interior, homeConfig.decorations, home)
                 else
                     serverNotify(source, 'Esta <b>residência</b> se encontra trancada.')
                 end
@@ -297,13 +297,13 @@ srv.invadeHome = function(index)
     end
 end
 
-srv.openVault = function(homeName)
+srv.vaultPermissions = function(homeName)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
         local consult = zero.query('zero_homes/homePermissions', { home = homeName, user_id = user_id })[1]
         if (consult or zero.hasPermission(user_id, generalConfig.openVaultPermission)) then
-            exports['zero_inventory']:openInventory('open', 'homes:'..homeName)
+            return true
         end
         return false
     end
@@ -384,6 +384,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
                         end
                     end
                 end
+
                 if (homeConfig.type == 'apartament') then homeName = string.sub(homeName, 1, -5); end;
                 local coord = configHomes[homeName].coord
                 TriggerEvent('zero_homes:registerOwnerBlips', source, false, { homeName, coord })
