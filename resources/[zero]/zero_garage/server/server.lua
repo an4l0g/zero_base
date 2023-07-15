@@ -27,7 +27,7 @@ zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (
 Citizen.CreateThread(function()
     Citizen.Wait(1000)
 	for user_id, source in pairs(zero.getUsers()) do
-		local myHomes = zero.query('zero_homes/userList', { user_id = user_id })
+		local myHomes = zero.query('zero_homes/userHomesList', { user_id = user_id })
 		for k,v in ipairs(myHomes) do
 			local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
 			if (gar) then
@@ -158,7 +158,6 @@ srv.getMyVehicles = function(id)
                                 suspension = 90, 
                                 fuel = vehicleInfos.fuel
                             })
-                            print(json.encode(myVehicles))
                         end
                     end
                 end
@@ -1019,20 +1018,19 @@ end)
 
 AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 	if (first_spawn) then
-		local myHomes = zero.query('zero_homes/userList', { user_id = user_id })
+		local myHomes = zero.query('zero_homes/userHomesList', { user_id = user_id })
 		for k,v in ipairs(myHomes) do
 			local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
 			if (gar) then
 				local blip = json.decode(gar.blip)
 				local spawn = json.decode(gar.spawn)
-				addGarage(source, v.home, blip, spawn )
+				addGarage(source, v.home, blip, spawn)
 			end
 		end
 	end
 end)
 
-RegisterNetEvent('zero_homes:addGarage')
-AddEventHandler('zero_homes:addGarage', function(homeName, blip, spawn)
+RegisterNetEvent('zero_homes:addGarage', function(source, homeName, blip, spawn)
     local homes = zero.query('zero_homes/permissions', { home = homeName })
     for _, v in ipairs(homes) do
         local source = zero.getUserSource(v.user_id)

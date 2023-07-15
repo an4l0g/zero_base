@@ -85,6 +85,16 @@ homesAdd = function(source)
                     zero.execute('zero_homes/newPermissions', { user_id = nUser, home = homeName, home_owner = 0, tax = 0, garages = 0, configs = json.encode(table), vip = 0 })
                     zero.webhook(configWebhooks.addHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (ADD RESIDENT)\n[USER]: '..user_id..'\n[ADD]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> foi adicionado em sua residência <b>'..homeName..'.')
+
+                    local nSource = zero.getUserSource(nUser)
+                    if (homeConsult.garages == 1) then
+                        local gar = zero.query('zero_homes/getGarage', { home = homeName })[1]
+			            if (gar) then
+                            local blip = json.decode(gar.blip)
+				            local spawn = json.decode(gar.spawn)
+                            TriggerEvent('zero_homes:addGarage', nSource, homeName, blip, spawn)
+                        end
+                    end
                 end
             end
         else
@@ -113,6 +123,11 @@ homesRem = function(source)
                     zero.execute('zero_homes/removePermissions', { home = homeName, user_id = nUser })
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> foi removido de sua residência.')
                     zero.webhook(configWebhooks.remHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (REM RESIDENT)\n[USER]: '..user_id..'\n[REM]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    
+                    local nSource = zero.getUserSource(nUser)
+                    if (homeConsult.garages == 1) then
+                        TriggerClientEvent('zero_garage:removeGarage', nSource, homeName)
+                    end
                 else
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> não é morador desta residência.')
                 end
@@ -538,7 +553,7 @@ homesGaragem = function(source)
                                     zero.execute('zero_homes/updateGarages', { home = homeName, garages = 1 })
                                     zero.execute('zero_homes/addGarage', { home = homeName, blip = json.encode(coords.blip), spawn = json.encode(coords.spawn) })
                                     serverNotify(source, 'Você comprou uma garagem para a sua residência <b>'..homeName..'</b>.')
-                                    TriggerEvent('zero_homes:addGarage', homeName, coords.blip, coords.spawn)
+                                    TriggerEvent('zero_homes:addGarage', source, homeName, coords.blip, coords.spawn)
                                     zero.webhook(configWebhooks.buyGarage, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY GARAGE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[COORDS]: '..json.encode({ blip = coords.blip, spawn = coords.spawn }, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 else
                                     serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para comprar uma garagem.')
