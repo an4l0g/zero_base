@@ -90,7 +90,7 @@ sInventory.useItem = function(index, amount)
         { 'Qtd', amount or '1' },
     })
 
-    webhook(config.webhooks.useItems, '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
+    zero.webhook(config.webhooks.useItems, '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
 
     if item.consumable then
         consumableItem(index)

@@ -11,6 +11,7 @@ zero._prepare('zero_homes/updateOwner', 'update zero_homes set user_id = @nuser_
 zero._prepare('zero_homes/sellHome', 'delete from zero_homes where home = @home')
 zero._prepare('zero_homes/selectHomes', 'select * from zero_homes where home = @home')
 zero._prepare('zero_homes/updateTax', 'update zero_homes set tax = @tax where home = @home')
+zero._prepare('zero_homes/userList', 'select * from zero_homes where user_id = @user_id and home_owner = 1')
 zero._prepare('zero_homes/userHomesList', 'select * from zero_homes where user_id = @user_id')
 zero._prepare('zero_homes/updateConfig', 'update zero_homes set configs = @configs where home = @home')
 zero._prepare('zero_homes/updateGarages', 'update zero_homes set garages = @garages where home = @home and home_owner = 1')

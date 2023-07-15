@@ -1798,14 +1798,8 @@ config.interior = {
         vault = vector3(-794.9802, 326.3736, 217.0374),
         interiorId = 146945,
         decorations = {
-            _default = 'white',
+            _default = 'executive',
             _perm = 'dono.permissao', 
-            white = {
-                name = 'Branco',
-                interiorId = 146945,
-                ipls = {'apa_v_mp_h_01_a','-apa_v_mp_h_02_a','-apa_v_mp_h_03_a','-apa_v_mp_h_04_a','-apa_v_mp_h_05_a','-apa_v_mp_h_06_a','-apa_v_mp_h_07_a','-apa_v_mp_h_08_a'},
-                value = 30000,
-            },
             executive = {
                 name = 'Executivo',
                 interiorId = 228097,

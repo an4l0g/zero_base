@@ -50,7 +50,9 @@ local tmpHomes = {
     homeName = '',
     internLocates = {},
     interiorId = 0,
-    decorationsId = 0
+    decorationsId = 0,
+    interior = {},
+    decorations = ''
 }
 
 loadInteriors = function(interior, decorations)
@@ -75,9 +77,26 @@ loadInteriors = function(interior, decorations)
     end
 end
 
-unloadInteriors = function(interiorId, decorationsId)
+unloadInteriors = function(interiorId, decorationsId, decorations, interior)
     if (interiorId > 0) then SetInteriorActive(interiorId, false); interiorId = 0; end;
     if (decorationsId > 0) then SetInteriorActive(decorationsId, false); decorationsId = 0; end;
+    if (decorations) then
+        if (decorations ~= 0) then
+            local decorations = interior.decorations[decorations]
+            tmpHomes.decorationsId = (decorations.interiorId or 0)
+            if (tmpHomes.decorationsId > 0) then SetInteriorActive(tmpHomes.decorationsId, true); end;
+            if (decorations.ipls) then
+                for _, ipl in ipairs(decorations.ipls) do
+                    if ipl:sub(1, 1) == '-' then
+                        RemoveIpl(ipl:sub(2))
+                    else    
+                        RemoveIpl(ipl)
+                    end
+                end
+                RequestIpl('apa_v_mp_h_01_a')
+            end
+        end
+    end
 end
 
 local _homes = {
@@ -104,7 +123,9 @@ cli.enterHome = function(interior, decorations, name)
     isMLO = (interior == 'mlo' and 'enter-mlo' or 'enter-other')
     interior = configInterior[interior]
 
-    _homes[isMLO](interior, decorations, tmpHomes.homeName)
+    tmpHomes.interior = interior
+    tmpHomes.decorations = decorations
+    _homes[isMLO](tmpHomes.interior, tmpHomes.decorations, tmpHomes.homeName)
     vSERVER.setBucket(tmpHomes.homeName, true)
 
     DoScreenFadeOut(100)
@@ -125,14 +146,16 @@ exitHome = function()
     DoScreenFadeOut(100)
 	Citizen.Wait(500)
     TriggerEvent('zero_sound:source', 'enterexithouse', 0.5)
-    unloadInteriors(tmpHomes.interiorId, tmpHomes.decorationsId)
+    unloadInteriors(tmpHomes.interiorId, tmpHomes.decorationsId, tmpHomes.decorations, tmpHomes.interior)
     vSERVER.setBucket(tmpHomes.homeName, false)
 
     tmpHomes = {
         homeName = '',
         internLocates = {},
         interiorId = 0,
-        decorationsId = 0
+        decorationsId = 0,
+        interior = {},
+        decorations = ''
     }
 
     FreezeEntityPosition(ped, true)
@@ -334,4 +357,14 @@ end)
 
 RegisterNUICallback('close', function(data, cb)
     SetNuiFocus(false, false)
+end)
+
+RegisterCommand('teste',function()
+  local interiorID = GetInteriorAtCoords(GetEntityCoords(PlayerPedId()))
+if interiorID ~= 0 then
+    local ipl = GetInteriorIplName(interiorID)
+    print("IPL do interior:", ipl)
+else
+    print("Não há interior detectado.")
+end
 end)
