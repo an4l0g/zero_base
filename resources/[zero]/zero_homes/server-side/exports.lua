@@ -530,10 +530,13 @@ end
 exports('homesBau', homesBau)
 
 homesGaragem = function(source)
+    local inside, homeName = insideHome(source)
+    if (inside) then serverNotify(source, 'Você não pode adicionar garagem dentro da sua <b>residência</b>.') return; end;
+
     local user_id = zero.getUserId(source)
     if (user_id) and not homesActions[user_id] then
         homesActions[user_id] = true
-
+        
         local prompt = zero.prompt(source, { 'Nome da Residência' })
         if (not prompt) then homesActions[user_id] = nil; return; end;
 

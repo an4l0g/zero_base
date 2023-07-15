@@ -19,12 +19,18 @@ config.items = {
     },
     ['spray'] = { name = 'Lata de Spray', type = 'common', weight = 0.5, usable = true, 
         interaction = function(source, user_id)
+            local inside, homeName = exports['zero_homes']:insideHome(source)
+            if (inside) then TriggerClientEvent('notify', source, 'Spray', 'Você não pode utilizar spray de dentro da sua <b>residência</b>.') return; end;
+            
             cInventory.closeInventory(source)
             exports['zero_core']:startSpray(source)
         end
     },
     ['removedor-spray'] = { name = 'Kit de remoção de spray', type = 'common', weight = 0.5, usable = true, 
         interaction = function(source, user_id)
+            local inside, homeName = exports['zero_homes']:insideHome(source)
+            if (inside) then TriggerClientEvent('notify', source, 'Spray', 'Você não pode utilizar spray de dentro da sua <b>residência</b>.') return; end;
+
             cInventory.closeInventory(source)
             exports['zero_core']:removeSpray(source)
         end
