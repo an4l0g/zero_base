@@ -1,5 +1,5 @@
 tableName = 'zero_hospital'
-zero.prepare('zero_hospital:registerService','insert into '..tableName..' (doctor_id, service_type, patient_id, total_price, service_date, request, description) values (@doctor_id, @service_type, @patient_id, @total_price, @service_date, @request, @description)');
+zero.prepare('zero_hospital:registerService','insert into '..tableName..' (doctor_id, patient_id, total_price, service_date, request, description) values (@doctor_id, @patient_id, @total_price, @service_date, @request, @description)');
 zero.prepare('zero_hospital:listServicesByPatient','select * from ' ..tableName.. ' where patient_id like @search order by service_date desc limit 7 offset @offset');
 zero.prepare('zero_hospital:listServicesByDoctor','select * from ' ..tableName.. ' where doctor_id like @search order by service_date desc limit 7 offset @offset');
 zero.prepare('zero_hospital:countServicesByPatient','select COUNT(*) from ' .. tableName ..' where patient_id like @search');
@@ -21,13 +21,20 @@ sHospital.registerService = function(data)
 
     zero.execute('zero_hospital:registerService', { 
         doctor_id = doctor_id,
-        service_type = data.service_type,
         patient_id = data.patient_id,
         patient_name = patient.firstname ..' '..patient.lastname,
         total_price = data.total_price,
         service_date = os.date("%Y-%m-%d %H:%M:%S"),
         request = data.request, 
         description = data.description
+    })
+
+    zero.formatWebhook(config.webhooks.registerService, 'Registrar serviço', {
+        { 'id Medico', doctor_id },
+        { 'id Paciente', data.patient_id },
+        { 'Valor total', data.total_price },
+        { 'Descricao', data.description },
+        { 'Solicitacao', data.request },
     })
 end
 
@@ -62,7 +69,7 @@ sHospital.alert = function()
         local userSource = zero.getUserSource(v)
         if userSource then
             async(function()
-                TriggerClientEvent('notify', userSource, 'Centro Médico', 'Uma nova solicitação de atendimento foi aberta!')
+                TriggerClientEvent('announcement', userSource, 'Centro Médico', 'Uma nova solicitação de atendimento foi aberta!', 'Centro Médico Zero', true)
             end)
         end
     end
@@ -72,7 +79,7 @@ sHospital.requestService = function()
     local _source = source
     local user_id = zero.getUserId(_source)
     local user_identity = zero.getUserIdentity(user_id)
-    local request = zero.prompt(_source,{'O que você está sentindo?'})
+    local request = zero.prompt(_source,{'Bem vindo(a) ao Centro Médico ZERO, em que podemos te ajudar?'})
 
     if request then
         if services['id:'..user_id] == nil then
@@ -86,6 +93,10 @@ sHospital.requestService = function()
             servicesCount = servicesCount + 1
             TriggerClientEvent('notify', _source, 'Centro Médico', 'Uma nova solicitação de atendimento foi aberta.')
             sHospital.alert()
+            zero.formatWebhook(config.webhooks.requestService, 'solicitacao de atendimento', {
+                { 'id', user_id },
+                { 'Solicitacao', request[1] },
+            })
         else
             TriggerClientEvent('notify', _source, 'Centro Médico','Você já possui uma solicitação de atendimento aberta.')
         end   
@@ -93,21 +104,49 @@ sHospital.requestService = function()
 end
 
 sHospital.acceptService = function() 
-    local firtService = nil
+    local _source = source
+    local user_id = zero.getUserId(_source)
+    local firstService = nil
     local firstPos = nil
     for key,value in pairs(services) do 
-        if firtService == nil or value.pos < firstPos then
-            firtService = value
+        if firstService == nil or value.pos < firstPos then
+            firstService = value
             firstPos = value.pos
         end
     end
 
-    services['id:'..firtService.patient_id] = nil
+    zero.formatWebhook(config.webhooks.acceptService, 'Aceitar solicitacao', {
+        { 'id Medico', user_id },
+        { 'id Paciente', firstService.patient_id },
+        { 'Solicitacao', firstService.request },
+    })
+
+    local patient_source = zero.getUserSource(user_id)
+    local doctor = zero.getUserIdentity(user_id)
+    if patient_source then
+        TriggerClientEvent('announcement', patient_source, 'Centro Médico', 'Você será atendido por: <b>'..doctor.firstname ..' '..doctor.lastname..'</b>. Dirija-se à sala de emergência!', 'Centro Médico Zero', true)
+    end
+
+    services['id:'..firstService.patient_id] = nil
     servicesCount = servicesCount - 1
-    return firtService
+    return firstService
 end
 
 
 sHospital.getServicesPendingsAmount = function() 
     return servicesCount
+end
+
+sHospital.cancelLog = function(service)
+    local _source = source
+    local user_id = zero.getUserId(_source)
+    local patient_source = zero.getUserSource(service.patient_id)
+    if patient_source then
+        TriggerClientEvent('announcement', patient_source, 'Centro Médico', 'A sua solicitação de serviço atual foi cancelada!', 'Centro Médico Zero', true)
+    end
+    zero.formatWebhook(config.webhooks.cancelService, 'Cancelar servico', {
+        { 'id Medico', user_id },
+        { 'id Paciente', service.patient_id },
+        { 'Solicitacao', service.request },
+    })
 end

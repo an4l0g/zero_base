@@ -1,9 +1,3 @@
-webhook = function(link, message)
-	if link and message and link ~= "" then
-		PerformHttpRequest(link, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
-	end
-end
-
 sInventory.getUserId = function()
     local _source = source
     return zero.getUserId(_source)

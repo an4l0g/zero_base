@@ -64,6 +64,7 @@ export const Title = styled.h2`
     color: ${theme.colors.shape()};
     margin-bottom: 2rem;
     font-weight: 400;
+    font-size: 1.2rem;
 
     & > span {
       color: ${theme.colors.primary()};
@@ -71,7 +72,7 @@ export const Title = styled.h2`
   `}
 `;
 
-export const Price = styled.input`
+export const InputField = styled.input`
   ${({ theme }) => css`
     height: 2.5rem;
     border-radius: 5px;
@@ -136,7 +137,7 @@ export const Textarea = styled.textarea`
 export const Button = styled.button`
   ${({ theme }) => css`
     width: auto;
-    height: 3rem;
+    height: 2.2rem;
     background-color: ${theme.colors.dark(0.5)};
     border-radius: 5px;
     border: 1px solid ${theme.colors.primary()};

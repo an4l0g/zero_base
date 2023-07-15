@@ -1,7 +1,7 @@
-
 fx_version 'adamant'
 game 'gta5'
 
+dependencies 'zero'
 
 ui_page 'nui/ui.html'
 files {

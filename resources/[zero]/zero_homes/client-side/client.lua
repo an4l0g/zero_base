@@ -14,11 +14,13 @@ local markerThread = function()
             local ped = PlayerPedId()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
-                if (dist <= 5) then
+                if (dist <= 2) then
                     local coord = configHomes[index].coord
-                    DrawMarker(1, coord.x, coord.y, coord.z-0.97, 0, 0, 0, 0, 0, 0, 0.8, 0.8, 0.5, 0, 153, 255, 155, 0, 0, 0, 1)
-                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
-                        vSERVER.tryEnterHome(index)   
+                    DrawMarker3D(coord, '~b~['..capitalizeString(index)..']~w~\n~b~[E]~w~ - Entrar\n~b~[G]~w~ - Invadir')
+                    if (dist <= 0.5  and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                        if (IsControlJustPressed(0, 38)) then vSERVER.tryEnterHome(index)
+                        elseif (IsControlJustPressed(0, 58)) then vSERVER.invadeHome(index)
+                        end
                     end
                 end
             end
@@ -35,7 +37,7 @@ Citizen.CreateThread(function()
         nearestBlips = {}
         for k, v in pairs(configHomes) do
             local distance = #(pCoord - v.coord)
-            if (distance <= 5) then
+            if (distance <= 2) then
                 nearestBlips[k] = distance
             end
         end
@@ -48,13 +50,15 @@ local tmpHomes = {
     homeName = '',
     internLocates = {},
     interiorId = 0,
-    decorationsId = 0
+    decorationsId = 0,
+    interior = {},
+    decorations = ''
 }
 
 loadInteriors = function(interior, decorations)
     tmpHomes.interiorId = (interior.interiorId or 0)
     if (tmpHomes.interiorId > 0) then SetInteriorActive(tmpHomes.interiorId, true); end;
-
+    
     if (decorations) then
         if (decorations ~= 0) then
             local decorations = interior.decorations[decorations]
@@ -73,9 +77,26 @@ loadInteriors = function(interior, decorations)
     end
 end
 
-unloadInteriors = function(interiorId, decorationsId)
+unloadInteriors = function(interiorId, decorationsId, decorations, interior)
     if (interiorId > 0) then SetInteriorActive(interiorId, false); interiorId = 0; end;
     if (decorationsId > 0) then SetInteriorActive(decorationsId, false); decorationsId = 0; end;
+    if (decorations) then
+        if (decorations ~= 0) then
+            local decorations = interior.decorations[decorations]
+            tmpHomes.decorationsId = (decorations.interiorId or 0)
+            if (tmpHomes.decorationsId > 0) then SetInteriorActive(tmpHomes.decorationsId, true); end;
+            if (decorations.ipls) then
+                for _, ipl in ipairs(decorations.ipls) do
+                    if ipl:sub(1, 1) == '-' then
+                        RemoveIpl(ipl:sub(2))
+                    else    
+                        RemoveIpl(ipl)
+                    end
+                end
+                RequestIpl('apa_v_mp_h_01_a')
+            end
+        end
+    end
 end
 
 local _homes = {
@@ -102,7 +123,9 @@ cli.enterHome = function(interior, decorations, name)
     isMLO = (interior == 'mlo' and 'enter-mlo' or 'enter-other')
     interior = configInterior[interior]
 
-    _homes[isMLO](interior, decorations, tmpHomes.homeName)
+    tmpHomes.interior = interior
+    tmpHomes.decorations = decorations
+    _homes[isMLO](tmpHomes.interior, tmpHomes.decorations, tmpHomes.homeName)
     vSERVER.setBucket(tmpHomes.homeName, true)
 
     DoScreenFadeOut(100)
@@ -123,14 +146,16 @@ exitHome = function()
     DoScreenFadeOut(100)
 	Citizen.Wait(500)
     TriggerEvent('zero_sound:source', 'enterexithouse', 0.5)
-    unloadInteriors(tmpHomes.interiorId, tmpHomes.decorationsId)
+    unloadInteriors(tmpHomes.interiorId, tmpHomes.decorationsId, tmpHomes.decorations, tmpHomes.interior)
     vSERVER.setBucket(tmpHomes.homeName, false)
 
     tmpHomes = {
         homeName = '',
         internLocates = {},
         interiorId = 0,
-        decorationsId = 0
+        decorationsId = 0,
+        interior = {},
+        decorations = ''
     }
 
     FreezeEntityPosition(ped, true)
@@ -161,7 +186,7 @@ threadInHome = function(interior)
                             if (v[4] == 'exit') then
                                 exitHome()
                             elseif (v[4] == 'vault') then
-                                exports['zero_inventory']:openInventory('open', 'homes:'..tmpHomes.homeName)
+                                if (vSERVER.vaultPermissions(tmpHomes.homeName)) then  exports['zero_inventory']:openInventory('open', 'homes:'..tmpHomes.homeName); end;
                             end
                         end
                     end
@@ -273,3 +298,73 @@ cli.createGarage = function(homeCoords)
     end
     return finish, cacheCreation
 end
+
+cli.setBlipsOwner = function(homeName, x, y, z)
+	local blip = AddBlipForCoord(x, y, z)
+    SetBlipSprite(blip, 411)
+    SetBlipAsShortRange(blip, true)
+    SetBlipColour(blip, 4)
+    SetBlipScale(blip, 0.3)
+    BeginTextCommandSetBlipName('STRING')
+    AddTextComponentString('Residência: ~b~'..homeName)
+    EndTextCommandSetBlipName(blip)
+end
+
+cli.openNui = function(ownerConsult, name)
+    if (not ownerConsult) then ownerConsult = { false, false }
+    else ownerConsult = { true, ownerConsult.home }
+    end
+
+    SetNuiFocus(true, true)
+    SendNUIMessage({
+        action = 'open',
+        data = {
+            haveApartament = ownerConsult,
+            apartament = name
+        }
+    })
+end
+
+DrawMarker3D = function(coords, text)
+	SetDrawOrigin(coords.x, coords.y, coords.z, 0); 
+	SetTextFont(4)     
+	SetTextProportional(0)     
+	SetTextScale(0.35,0.35)    
+	SetTextColour(255,255,255,255)   
+	SetTextDropshadow(0, 0, 0, 0, 255)     
+	SetTextEdge(2, 0, 0, 0, 150)     
+	SetTextDropShadow()     SetTextOutline()     
+	SetTextEntry("STRING")     SetTextCentre(1)     
+	AddTextComponentString(text) 
+	DrawText(0.0, 0.0)     
+	ClearDrawOrigin() 
+end
+
+RegisterNUICallback('myApartament', function(data, cb)
+    SetNuiFocus(false, false)
+    vSERVER.tryEnterApartament('my-apartament', data)
+end)
+
+RegisterNUICallback('buyApartament', function(data, cb)
+    SetNuiFocus(false, false)
+    vSERVER.tryEnterApartament('buy-apartament', data)
+end)
+
+RegisterNUICallback('otherApartament', function(data, cb)
+    SetNuiFocus(false, false)
+    vSERVER.tryEnterApartament('other-apartament')
+end)
+
+RegisterNUICallback('close', function(data, cb)
+    SetNuiFocus(false, false)
+end)
+
+RegisterCommand('teste',function()
+  local interiorID = GetInteriorAtCoords(GetEntityCoords(PlayerPedId()))
+if interiorID ~= 0 then
+    local ipl = GetInteriorIplName(interiorID)
+    print("IPL do interior:", ipl)
+else
+    print("Não há interior detectado.")
+end
+end)

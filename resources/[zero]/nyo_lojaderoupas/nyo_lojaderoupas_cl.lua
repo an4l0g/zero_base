@@ -368,7 +368,7 @@ RegisterNUICallback("payament", function(data, cb)
 end)
 
 RegisterNUICallback("reset", function(data, cb)
-    vRP.setCustomization(old_custom)
+    -- vRP.setCustomization(old_custom)
     closeGuiLojaRoupa()
     ClearPedTasks(PlayerPedId())
 end)

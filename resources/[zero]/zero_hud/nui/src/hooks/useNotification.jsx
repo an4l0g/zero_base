@@ -67,7 +67,7 @@ function useNotification() {
   const launchOrgNotify = (title, message, author, playAudio, time = 5000) => {
     if (playAudio) {
       const audio = new Audio(AudioAdmMessage);
-      audio.volume = 0.2;
+      audio.volume = 0.1;
       audio.play();
     }
     toast(
