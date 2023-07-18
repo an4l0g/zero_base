@@ -1,45 +1,39 @@
-cIdentity = {}
+vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 RegisterKeyMapping('openIdentity', 'Abrir identidade', 'keyboard', 'F11')
 RegisterCommand('openIdentity', function()
     SetNuiFocus(true, true)
-    cIdentity.updateNui()
+    animIdentity()
+    updateNui()
 end)
 
-cIdentity.updateNui = function()
+updateNui = function()
     local infos = vSERVER.getUserIdentity()
     SendNUIMessage({
         action = 'open',
-        userInfo = {
-            id = 1,
-            fullname = 'An4log Fodase',
-            image = 'https://cdn.discordapp.com/attachments/922885255386517535/1128411705173627060/k1ZAtQdPi240HwV0A5CZgx4aftxdZUfgl8NaNraL.png', -- Ou nulo
-            job = '[Hospital] Diretor', -- Ou nulo
-            rg = 'ME0851PZ',
-            wallet = 1233213,
-            bank = 1231231233323,
-            coins = 321,
-            staff = 'Owner', -- Ou nulo
-            age = 25,
-            phone = '123-123',
-            vip = 'ZERO', -- Ou nulo
-            relationship = 'Casado',  -- Ou nulo
-            driveLicense = 'A/B',  -- Ou nulo
-            flightLicense = true, -- Ou nulo
-            gunLicense = true, -- Ou nulo
-            fines = 12332123, 
-            rh = 'A+' -- Ou nulo
-        }
+        userInfo = infos
     })
 end
 
+local tablet
+animIdentity = function()
+    tablet = 'p_ld_id_card_01'
+    RequestAnimDict('')
+    TaskPlayAnim(PlayerPedId(), '', 'enter', 8.0, 1.0, -1, 50, 0, 0, 0, 0)
+    zero._CarregarObjeto('amb@world_human_clipboard@male@base', 'base', tablet, 49, 60309)
+end
+
 RegisterNuiCallback('close', function()
-    print('teste')
-    SetNuiFocus(false, false)
+    closeNui()
 end)
 
+closeNui = function()
+    SetNuiFocus(false, false)
+    zero._DeletarObjeto(tablet)
+    TaskClearLookAt(PlayerPedId())
+end
+
 RegisterNuiCallback('changeImage', function(data)
-    -- Trocar imagem do cara pelo banco de dados
-    print('Image', data.image)
-    cIdentity.updateNui()
+    vSERVER.updatePhoto(data.image)
+    updateNui()
 end)

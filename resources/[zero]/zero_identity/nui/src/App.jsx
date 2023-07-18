@@ -14,6 +14,7 @@ function App() {
 
   const nuiMessage = useCallback((event) => {
     const { action, userInfo } = event.data;
+    console.log(JSON.stringify(userInfo));
     if (action === "open" || action === "update") {
       setUser(userInfo);
       setUserImage(userInfo.image);
@@ -94,12 +95,10 @@ function App() {
                   <S.IdNumber>#{user.id}</S.IdNumber>
                   <S.WrapName>
                     <S.Name>{user.fullname}</S.Name>
-                    <S.Job>
-                      {user.job !== null ? user.job : "Desempregado"}
-                    </S.Job>
+                    <S.Job>{user.job ? user.job : "Desempregado"}</S.Job>
                   </S.WrapName>
                 </S.LeftHeader>
-                {user.rg !== null && <S.IdNumber>{user.rg}</S.IdNumber>}
+                {user.rg && <S.IdNumber>{user.rg}</S.IdNumber>}
               </S.Header>
               <S.InfoList>
                 <S.Info className="highlight">
@@ -114,7 +113,7 @@ function App() {
                     {currencyFormat(user.bank ?? 0)}
                   </S.InfoContent>
                 </S.Info>
-                {user.staff !== null && (
+                {user.staff && (
                   <S.Info>
                     <S.InfoLabel>Staff</S.InfoLabel>
                     <S.InfoContent>{user.staff}</S.InfoContent>
@@ -127,20 +126,20 @@ function App() {
                 <S.Info>
                   <S.InfoLabel>Fator Sanguíneo</S.InfoLabel>
                   <S.InfoContent>
-                    {user.rh !== null ? user.rh : "Desconhecido"}
+                    {user.rh ? user.rh : "Desconhecido"}
                   </S.InfoContent>
                 </S.Info>
                 <S.Info>
                   <S.InfoLabel>Telefone</S.InfoLabel>
                   <S.InfoContent>{user.phone}</S.InfoContent>
                 </S.Info>
-                {user.relationship !== null && (
+                {user.relationship && (
                   <S.Info>
                     <S.InfoLabel>Estado Civil</S.InfoLabel>
                     <S.InfoContent>{user.relationship}</S.InfoContent>
                   </S.Info>
                 )}
-                {user.vip !== null && (
+                {user.vip && (
                   <S.Info>
                     <S.InfoLabel>VIP</S.InfoLabel>
                     <S.InfoContent>{user.vip}</S.InfoContent>
@@ -162,12 +161,10 @@ function App() {
                 <S.Info>
                   <S.InfoLabel>Habilitação</S.InfoLabel>
                   <S.InfoContent>
-                    {user.driveLicense !== null
-                      ? user.driveLicense
-                      : "Não possui"}
+                    {user.driveLicense ? user.driveLicense : "Não possui"}
                   </S.InfoContent>
                 </S.Info>
-                {user.flightLicense !== null && (
+                {user.flightLicense && (
                   <S.Info>
                     <S.InfoLabel>Licença de vôo</S.InfoLabel>
                     <S.InfoContent>
