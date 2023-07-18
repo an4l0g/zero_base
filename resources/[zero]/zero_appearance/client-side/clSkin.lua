@@ -7,17 +7,21 @@ local generalConfig =  config.general
 local getDrawables = function()
     local ped = PlayerPedId()
     local pedDrawables = {
+        { amount = GetNumberOfPedDrawableVariations(ped, 1), type = '1' },
         { amount = GetNumberOfPedDrawableVariations(ped, 3), type = '3' },
         { amount = GetNumberOfPedDrawableVariations(ped, 4), type = '4' },
         { amount = GetNumberOfPedDrawableVariations(ped, 5), type = '5' },
         { amount = GetNumberOfPedDrawableVariations(ped, 6), type = '6' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 7), type = '7' },
         { amount = GetNumberOfPedDrawableVariations(ped, 8), type = '8' },
         { amount = GetNumberOfPedDrawableVariations(ped, 9), type = '9' },
         { amount = GetNumberOfPedDrawableVariations(ped, 10), type = '10' },
         { amount = GetNumberOfPedDrawableVariations(ped, 11), type = '11' },
         { amount = GetNumberOfPedPropDrawableVariations(ped, 0), type = 'p0' },
         { amount = GetNumberOfPedPropDrawableVariations(ped, 1), type = 'p1' },
-        { amount = GetNumberOfPedPropDrawableVariations(ped, 2), type = 'p2' }
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 2), type = 'p2' },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 6), type = 'p6' },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 7), type = 'p7' }
     }
     return pedDrawables
 end
