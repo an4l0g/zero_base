@@ -249,7 +249,8 @@ cli.settingVehicle = function(vnet, state, plate, custom)
         
         Entity(nveh).state:set('veh:spawning', nil, true)
         SetVehicleNumberPlateText(nveh, plate)
-        -- EVENTO TUNING
+        
+		TriggerEvent('zero_bennys:applymods', vnet, custom)
         return true
     end
 end

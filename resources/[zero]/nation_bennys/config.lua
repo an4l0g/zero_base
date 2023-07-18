@@ -309,7 +309,7 @@ config.prices = {
 
 
 config.mechanics = {
-	{ coord = vector3(-1559.09, -295.5956, 48.21899), perm = nil }
+	{ coord = vector3(105.9429, -1413.758, 29.22925), perm = nil }
 }
 
 config.use_vehlist = true

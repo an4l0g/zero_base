@@ -129,3 +129,63 @@ getVehicleMods = function(veh)
 	return mods
 end
 exports('getVehicleMods', getVehicleMods)
+
+setVehicleMods = function(veh, myVeh, tunnerChip)
+	SetVehicleModKit(veh,0)
+	if (not myVeh or not myVeh.customPcolor) then return; end;
+	local bug = false
+	local primary = myVeh.color[1]
+	local secondary = myVeh.color[2]
+	local cprimary = myVeh.customPcolor
+	if (cprimary['1']) then bug = true; end;
+	local csecondary = myVeh.customScolor
+	local perolado = myVeh.extracolor[1]
+	local wheelcolor = myVeh.extracolor[2]
+	local neoncolor = myVeh.neoncolor
+	local smokecolor = myVeh.smokecolor
+	ClearVehicleCustomPrimaryColour(veh)
+	ClearVehicleCustomSecondaryColour(veh)
+	SetVehicleWheelType(veh,myVeh.wheeltype)
+	SetVehicleColours(veh,primary,secondary)
+	if (bug) then
+		SetVehicleCustomPrimaryColour(veh,cprimary['1'],cprimary['2'],cprimary['3'])
+		SetVehicleCustomSecondaryColour(veh,csecondary['1'],csecondary['2'],csecondary['3'])
+	else
+		SetVehicleCustomPrimaryColour(veh,cprimary[1],cprimary[2],cprimary[3])
+		SetVehicleCustomSecondaryColour(veh,csecondary[1],csecondary[2],csecondary[3])
+	end
+	SetVehicleExtraColours(veh,perolado,wheelcolor)
+	SetVehicleNeonLightsColour(veh,neoncolor[1],neoncolor[2],neoncolor[3])
+	SetVehicleXenonLightsColour(veh,myVeh.xenoncolor)
+	SetVehicleNumberPlateTextIndex(veh,myVeh.plateindex)
+	SetVehicleWindowTint(veh,myVeh.windowtint)
+	for i,t in pairs(myVeh.mods) do 
+		if tonumber(i) == 22 or tonumber(i) == 18 then
+			if t.mod > 0 then
+				ToggleVehicleMod(veh,tonumber(i),true)
+			else
+				ToggleVehicleMod(veh,tonumber(i),false)
+			end
+		elseif tonumber(i) == 20 then
+			smokeColor(veh,smokecolor)
+		elseif tonumber(i) == 23 or tonumber(i) == 24 then
+			SetVehicleMod(veh,tonumber(i),tonumber(t.mod),tonumber(t.variation))
+		else
+			SetVehicleMod(veh,tonumber(i),tonumber(t.mod))
+		end
+	end
+	SetVehicleTyresCanBurst(veh,myVeh.bulletProofTyres)
+	if myVeh.neon then
+		for i = 0, 3 do
+			SetVehicleNeonLightEnabled(veh,i,true)
+		end
+	else
+		for i = 0, 3 do
+			SetVehicleNeonLightEnabled(veh,i,false)
+		end
+	end
+	if myVeh.damage > 0 then
+		SetVehicleBodyHealth(veh,myVeh.damage)
+	end
+end
+exports('setVehicleMods', setVehicleMods)
