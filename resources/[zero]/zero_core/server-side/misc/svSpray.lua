@@ -9,7 +9,7 @@ zero.prepare('zero_spray/createSprays', 'insert zero_spray (interior, x, y, z, r
 zero.prepare('zero_spray/selectSprays', 'select interior, x, y, z, rx, ry, rz, scale, spray_text, font, color from zero_spray')
 zero.prepare('zero_spray/deleteSprays', 'delete from zero_spray where x = @x and y = @y and z = @z limit 1')
 
--- FAZER FUNÇÃO PRA REMOVER DEPOIS DE 1 DIA
+-- FAZER FUNÇÃO PRA REMOVER NO RR
 
 local sprays = {}
 
@@ -56,15 +56,19 @@ startSpray = function(source)
         if (sprayText) then
             sprayText = sprayText[1]
             if (configSpray.blacklist[sprayText]) then
+                TriggerClientEvent('disableAllActions', source, false)
                 TriggerClientEvent('notify', source, 'Spray', 'Este <b>texto</b> não é permitido.')
             else
                 if (sprayText:len() <= 9) then
                     TriggerClientEvent('disableAllActions', source, true)
                     vCLIENT.createSpray(source, sprayText)
                 else
+                    TriggerClientEvent('disableAllActions', source, false)
                     TriggerClientEvent('notify', source, 'Spray', 'O <b>texto</b> pode ter até 9 caracteres')
                 end
             end
+        else
+            TriggerClientEvent('disableAllActions', source, false)
         end
     end
 end

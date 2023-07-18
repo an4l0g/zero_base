@@ -79,8 +79,8 @@ getUserRG = function(source, nUser, args)
             table.gunLicense = getUserGunlicense(nUser)
             table.fines = exports['zero_bank']:verifyMultas(nUser)
             table.rh = getUserRH(nUser)
+            zero.webhook(configWebhooks.verifyRG, '```prolog\n[ZERO IDENTITY]\n[ACTION]: (VERIFY RG)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..nUser..'\n[TABLE]: '..json.encode(table, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..table.image)
             vCLIENT.openNui(source, table)
-            zero.webhook(configWebhooks.verifyRG, '```prolog\n[ZERO IDENTITY]\n[ACTION]: (VERIFY RG)\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..image)
         end
     end
 end
@@ -94,16 +94,16 @@ RegisterCommand('rg', function(source, args)
             local nearestPlayer = zeroClient.getNearestPlayer(source, 2.0)
 
             local request
-            if (zero.isHandcuffed(nearestPlayer) or zero.hasPermission(user_id, configGeneral.staffPermission)) then
+            if (zeroClient.isHandcuffed(nearestPlayer) or zero.hasPermission(user_id, configGeneral.staffPermission)) then
                 request = true
             else
-                request = zero.request(nearestPlayer, 'Você deseja passar o seu <b>RG</b> para o policial?', 60000) 
+                request = zero.request(nearestPlayer, 'Você deseja passar o seu RG para o policial?', 60000) 
             end
 
             if (request) then
                 local nUser = zero.getUserId(nearestPlayer)
-                getUserRG(source, nUser)
-                TriggerClientEvent('notify', source, 'Registro', 'Verificnado o <b>RG</b> do passaporte <b>'..nUser..'<b>.')
+                TriggerClientEvent('notify', source, 'Registro', 'Verificando o <b>RG</b> do passaporte <b>'..nUser..'<b>.', 5000)
+                getUserRG(source, nUser)  
             else
                 TriggerClientEvent('notify', nearestPlayer, 'Registro', 'Você negou passar o seu <b>RG</b>')
                 TriggerClientEvent('notify', source, 'Registro', 'O mesmo negou passar o seu <b>RG</b>.')
