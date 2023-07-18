@@ -7,12 +7,13 @@ RegisterCommand('openIdentity', function()
 end)
 
 cIdentity.updateNui = function()
+    local infos = vSERVER.getUserIdentity()
     SendNUIMessage({
         action = 'open',
         userInfo = {
             id = 1,
             fullname = 'An4log Fodase',
-            image = 'https://media.discordapp.net/attachments/1059878373737893918/1129469593002446958/image.png?width=408&height=492', -- Ou nulo
+            image = 'https://cdn.discordapp.com/attachments/922885255386517535/1128411705173627060/k1ZAtQdPi240HwV0A5CZgx4aftxdZUfgl8NaNraL.png', -- Ou nulo
             job = '[Hospital] Diretor', -- Ou nulo
             rg = 'ME0851PZ',
             wallet = 1233213,
