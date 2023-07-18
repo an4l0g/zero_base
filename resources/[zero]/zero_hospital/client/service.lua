@@ -8,6 +8,7 @@ end)
 
 RegisterNUICallback('cancelService', function()
     SetNuiFocus(false, false)
+    TriggerEvent('zero_core:stopTabletAnim')
     local response = sHospital.requestCancelService()
     if response then
         sHospital.cancelLog(service)

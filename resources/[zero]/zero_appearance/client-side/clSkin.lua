@@ -7,17 +7,21 @@ local generalConfig =  config.general
 local getDrawables = function()
     local ped = PlayerPedId()
     local pedDrawables = {
-        { torso = GetNumberOfPedDrawableVariations(ped, 3), '3' },
-        { legs = GetNumberOfPedDrawableVariations(ped, 4), '4' },
-        { hands = GetNumberOfPedDrawableVariations(ped, 5), '5' },
-        { fool = GetNumberOfPedDrawableVariations(ped, 6), '6' },
-        { accessories = GetNumberOfPedDrawableVariations(ped, 8), '8' },
-        { acessories2 = GetNumberOfPedDrawableVariations(ped, 9), '9' },
-        { decals = GetNumberOfPedDrawableVariations(ped, 10), '10' },
-        { torso2 = GetNumberOfPedDrawableVariations(ped, 11), '11' },
-        { helmet = GetNumberOfPedPropDrawableVariations(ped, 0), 'p0' },
-        { glasses = GetNumberOfPedPropDrawableVariations(ped, 1), 'p1' },
-        { ear = GetNumberOfPedPropDrawableVariations(ped, 2), 'p2' }
+        { amount = GetNumberOfPedDrawableVariations(ped, 1), type = '1' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 3), type = '3' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 4), type = '4' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 5), type = '5' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 6), type = '6' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 7), type = '7' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 8), type = '8' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 9), type = '9' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 10), type = '10' },
+        { amount = GetNumberOfPedDrawableVariations(ped, 11), type = '11' },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 0), type = 'p0' },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 1), type = 'p1' },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 2), type = 'p2' },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 6), type = 'p6' },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 7), type = 'p7' }
     }
     return pedDrawables
 end
@@ -36,7 +40,7 @@ local markerThread = function()
                 if (dist <= 5) then
                     local coord = locsConfig[index].coord
                     createMarkers(coord)
-                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
                         openSkinShop(index)  
                     end
                 end

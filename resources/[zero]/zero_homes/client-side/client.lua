@@ -358,13 +358,3 @@ end)
 RegisterNUICallback('close', function(data, cb)
     SetNuiFocus(false, false)
 end)
-
-RegisterCommand('teste',function()
-  local interiorID = GetInteriorAtCoords(GetEntityCoords(PlayerPedId()))
-if interiorID ~= 0 then
-    local ipl = GetInteriorIplName(interiorID)
-    print("IPL do interior:", ipl)
-else
-    print("Não há interior detectado.")
-end
-end)
