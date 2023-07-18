@@ -14,7 +14,6 @@ function App() {
 
   const nuiMessage = useCallback((event) => {
     const { action, userInfo } = event.data;
-    console.log(JSON.stringify(userInfo));
     if (action === "open" || action === "update") {
       setUser(userInfo);
       setUserImage(userInfo.image);

@@ -1,7 +1,9 @@
 srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
+vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 local configGeneral = config.general
+local configWebhooks = config.webhooks
 
 zero._prepare('zero_identity/getUserPhoto', 'select url from zero_identity where user_id = @user_id')
 zero._prepare('zero_identity/insertPhoto', 'insert into zero_identity (user_id, url) values (@user_id, @url)')
@@ -34,74 +36,78 @@ srv.getUserIdentity = function()
     end
 end
 
-srv.getUserRegistration = function(args)
-    local source = source
-
-    local nearestPlayer = zero.getNearestPlayer(source, 2.0)
-    local nUser
-    if (nearestPlayer) then
-        nUser = zero.getUserId(nearestPlayer)
-    else
-        
-    end
-
-    if (nearestPlayer) then
-         
-        if (nUser) then
-            if (args) then
-                local table = {}
-                table.id = nUser
-                table.fullname = getUserFullname(nUser)
-                table.image = getUserPhoto(nUser)
-                table.job = getUserJob(nUser)
-                table.rg = getUserRegistration(nUser)
-                table.wallet = zero.getMoney(nUser)
-                table.bank = zero.getBankMoney(nUser)
-                table.coins = getUserCoins(nUser)
-                table.staff = getUserStaff(nUser)
-                table.age = getUserAge(nUser)
-                table.phone = getUserPhone(nUser)
-                table.vip = getUserVip(nUser)
-                table.relationship = getUserRelationship(nUser)
-                table.driveLicense = getUserDrivelicense(nUser)
-                table.flightLicense = nil
-                table.gunLicense = getUserGunlicense(nUser)
-                table.fines = exports['zero_bank']:verifyMultas(nUser)
-                table.rh = getUserRH(nUser)
-                return table
-            else
-                local table = {}
-                table.id = nUser
-                table.fullname = getUserFullname(nUser)
-                table.image = getUserPhoto(nUser)
-                table.job = getUserJob(nUser)
-                table.rg = getUserRegistration(nUser)
-                table.wallet = zero.getMoney(nUser)
-                table.bank = zero.getBankMoney(nUser)
-                table.coins = getUserCoins(nUser)
-                table.staff = getUserStaff(nUser)
-                table.age = getUserAge(nUser)
-                table.phone = getUserPhone(nUser)
-                table.vip = getUserVip(nUser)
-                table.relationship = getUserRelationship(nUser)
-                table.driveLicense = getUserDrivelicense(nUser)
-                table.flightLicense = nil
-                table.gunLicense = getUserGunlicense(nUser)
-                table.fines = exports['zero_bank']:verifyMultas(nUser)
-                table.rh = getUserRH(nUser)
-                return table
-            end
+getUserRG = function(source, nUser, args)
+    if (nUser) then
+        if (args) then
+            local table = {}
+            table.id = nUser
+            table.fullname = getUserFullname(nUser)
+            table.image = getUserPhoto(nUser)
+            table.job = getUserJob(nUser)
+            table.rg = getUserRegistration(nUser)
+            table.wallet = zero.getMoney(nUser)
+            table.bank = zero.getBankMoney(nUser)
+            table.coins = getUserCoins(nUser)
+            table.staff = getUserStaff(nUser)
+            table.age = getUserAge(nUser)
+            table.phone = getUserPhone(nUser)
+            table.vip = getUserVip(nUser)
+            table.relationship = getUserRelationship(nUser)
+            table.driveLicense = getUserDrivelicense(nUser)
+            table.flightLicense = nil
+            table.gunLicense = getUserGunlicense(nUser)
+            table.fines = exports['zero_bank']:verifyMultas(nUser)
+            table.rh = getUserRH(nUser)
+            vCLIENT.openNui(source, table)
+        else
+            local table = {}
+            table.id = nUser
+            table.fullname = getUserFullname(nUser)
+            table.image = getUserPhoto(nUser)
+            table.job = nil
+            table.rg = getUserRegistration(nUser)
+            table.wallet = zero.getMoney(nUser)
+            table.bank = nil
+            table.coins = nil
+            table.staff = nil
+            table.age = getUserAge(nUser)
+            table.phone = nil
+            table.vip = nil
+            table.relationship = getUserRelationship(nUser)
+            table.driveLicense = getUserDrivelicense(nUser)
+            table.flightLicense = nil
+            table.gunLicense = getUserGunlicense(nUser)
+            table.fines = exports['zero_bank']:verifyMultas(nUser)
+            table.rh = getUserRH(nUser)
+            vCLIENT.openNui(source, table)
+            zero.webhook(configWebhooks.verifyRG, '```prolog\n[ZERO IDENTITY]\n[ACTION]: (VERIFY RG)\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..image)
         end
     end
 end
 
 RegisterCommand('rg', function(source, args)
     local user_id = zero.getUserId(source)
-    if (user_id and zero.checkPermissions(configGeneral.perms)) then
-        if (args[1] and zero.hasPermission(configGeneral.staffPermission)) then
-            
+    if (user_id and zero.checkPermissions(user_id, configGeneral.perms)) then
+        if (args[1] and zero.hasPermission(user_id, configGeneral.staffPermission)) then
+            getUserRG(source, parseInt(args[1]), true)
         else
-            
+            local nearestPlayer = zeroClient.getNearestPlayer(source, 2.0)
+
+            local request
+            if (zero.isHandcuffed(nearestPlayer) or zero.hasPermission(user_id, configGeneral.staffPermission)) then
+                request = true
+            else
+                request = zero.request(nearestPlayer, 'Você deseja passar o seu <b>RG</b> para o policial?', 60000) 
+            end
+
+            if (request) then
+                local nUser = zero.getUserId(nearestPlayer)
+                getUserRG(source, nUser)
+                TriggerClientEvent('notify', source, 'Registro', 'Verificnado o <b>RG</b> do passaporte <b>'..nUser..'<b>.')
+            else
+                TriggerClientEvent('notify', nearestPlayer, 'Registro', 'Você negou passar o seu <b>RG</b>')
+                TriggerClientEvent('notify', source, 'Registro', 'O mesmo negou passar o seu <b>RG</b>.')
+            end
         end
     end
 end)
@@ -111,6 +117,7 @@ srv.updatePhoto = function(image)
     local user_id = zero.getUserId(source)
     if (user_id) then
         zero.execute('zero_identity/updatePhoto', { user_id = user_id, url = image })
+        zero.webhook(configWebhooks.updatePhoto, '```prolog\n[ZERO IDENTITY]\n[ACTION]: (UPDATE PHOTO)\n[USER]: '..user_id..'\n[PHOTO]: '..image..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..image)
         return
     end
     return TriggerClientEvent('notify', source, 'Identidade', 'Não foi possível atualizar a sua <b>identidade</b>.')

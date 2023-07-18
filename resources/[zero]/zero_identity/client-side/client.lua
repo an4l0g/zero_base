@@ -1,3 +1,5 @@
+cli = {}
+Tunnel.bindInterface(GetCurrentResourceName(), cli)
 vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 RegisterKeyMapping('openIdentity', 'Abrir identidade', 'keyboard', 'F11')
@@ -9,6 +11,15 @@ end)
 
 updateNui = function()
     local infos = vSERVER.getUserIdentity()
+    SendNUIMessage({
+        action = 'open',
+        userInfo = infos
+    })
+end
+
+cli.openNui = function(infos)
+    SetNuiFocus(true, true)
+    animIdentity()
     SendNUIMessage({
         action = 'open',
         userInfo = infos
