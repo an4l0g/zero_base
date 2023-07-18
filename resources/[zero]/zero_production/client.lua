@@ -55,13 +55,6 @@ DrawText3D = function(x, y, z, text)
     end
 end
 
-RegisterCommand('cds3', function()
-    local playerPed = PlayerPedId() -- obtém o ped (personagem/npc) do jogador
-    local coords = GetEntityCoords(playerPed)
-    local formattedCoords = string.format("vec3(%.2f, %.2f, %.2f)", coords.x, coords.y, coords.z)
-    TriggerEvent('clipboard', 'Coordenada atual', formattedCoords)
-end)
-
 Citizen.CreateThread(function()
     while true do
         local idle = 500

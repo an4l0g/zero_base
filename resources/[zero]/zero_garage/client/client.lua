@@ -15,8 +15,8 @@ local markers = {
 }
 
 createMarker = function(config)
-    DrawMarker(markers[(config.marker or 'car')], config.coords.x, config.coords.y, config.coords.z+0.1, 0, 0, 0, 0, 0, 0, 0.7, 0.7, 0.7, 0, 153, 255, 155, 1, 0, 0, 1)
-    DrawMarker(27, config.coords.x, config.coords.y, config.coords.z-0.97, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
+    DrawMarker(markers[(config.marker or 'car')], config.coords.x, config.coords.y, config.coords.z+0.1, 0, 0, 0, 0, 0, 0, 0.8, 0.8, 0.8, 0, 153, 255, 155, 1, 0, 0, 1)
+    DrawMarker(27, config.coords.x, config.coords.y, config.coords.z-0.97, 0, 0, 0, 0, 0, 0, 1.2, 1.2, 1.2, 0, 153, 255, 155, 0, 0, 0, 1)
 end
 
 local nearestBlips = {}
@@ -249,7 +249,8 @@ cli.settingVehicle = function(vnet, state, plate, custom)
         
         Entity(nveh).state:set('veh:spawning', nil, true)
         SetVehicleNumberPlateText(nveh, plate)
-        -- EVENTO TUNING
+        
+		TriggerEvent('zero_bennys:applymods', vnet, custom)
         return true
     end
 end
