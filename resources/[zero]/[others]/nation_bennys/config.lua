@@ -44,9 +44,9 @@ config.prices = {
 		startprice = 1000,
 	},
 ----------Pneu a prova de balas--------
-	--['bulletproof'] = {
-	--	startprice = 240000,
-	--},
+	['bulletproof'] = {
+		startprice = 240000,
+	},
 ----------Placa--------
 	['placa'] = {
 		startprice = 1000,
@@ -307,21 +307,10 @@ config.prices = {
 	},
 }
 
-
 config.mechanics = {
 	{ coord = vector3(105.9429, -1413.758, 29.22925), perm = nil }
 }
 
-config.use_vehlist = true
-
-config.use_modelname = false
-
 Tunnel = module('zero', 'lib/Tunnel')
 Proxy = module('zero', 'lib/Proxy')
 zero = Proxy.getInterface('zero')
-
-if IsDuplicityVersion() then
-
-else
-
-end
