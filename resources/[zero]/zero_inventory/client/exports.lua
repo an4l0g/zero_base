@@ -1,11 +1,4 @@
-checkActions = function()
-    return disableActions
-end
-
-exports('checkActions', checkActions)
-
 cInventory.openInventory = function(action, chestType, lootId)
-    disableActions = true
     local ped = PlayerPedId() 
 
     local playerBagType = 'bag:'..sInventory.getUserId()
@@ -13,8 +6,6 @@ cInventory.openInventory = function(action, chestType, lootId)
 
     local player = sInventory.getBag(playerBagType)
     local hotbar = sInventory.getBag(playerHotbarType)
-
-    currentChestType = chestType
     local chest = cInventory.getChestInfo(chestType, lootId)
 
     if action == 'open' then
@@ -34,10 +25,11 @@ exports('openInventory', cInventory.openInventory)
 
 cInventory.closeInventory = function(data)
     verifyNearest = false
+    nearbyVehicle = nil
     if data and data.message then
         config.functions.clientNotify(config.texts.notify_title, data.message, 5000)
     end
-    disableActions = false
+
     SetNuiFocus(false, false)
     SendNUIMessage({
         action = 'close'

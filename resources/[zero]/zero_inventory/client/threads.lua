@@ -30,7 +30,7 @@ renderChests = function()
     for k,v in pairs(config.chests) do
         local nextToChest = false 
         local cdsChest = nil
-        for icds, vcds in sPairs(v.cds) do
+        for icds, vcds in pairs(v.cds) do
             if #(playerCoords - vcds) <= 2 then
                 nextToChest = true
                 nextToAnyChest = true
@@ -74,6 +74,7 @@ end
 hotbarListener = function()
     if GetEntityHealth(PlayerPedId()) <= 101 then
             verifyNearest = false
+            disableActions = false
             exports.zero_inventory:closeInventory()
         end
 
@@ -93,13 +94,23 @@ hotbarListener = function()
         EnableControlAction(0, 37, true)
 end
 
+trunkDistanceControl = function()
+    if nearbyVehicle ~= nil then 
+        local vehicle = zero.vehList(5)
+        
+        if nearbyVehicle ~= vehicle then
+            cInventory.closeInventory()
+        end
+    end
+end
 
 Citizen.CreateThread(function()
     while true do
         renderDroppedItems()
         renderChests()
         hotbarListener()
-        if nextToAnyChest or #nearbyItemsGroups > 0 then
+        trunkDistanceControl()
+        if nextToAnyChest or #nearbyItemsGroups > 0 or nearbyVehicle ~= nil then
             _sleep = 5
         else 
             _sleep = 100

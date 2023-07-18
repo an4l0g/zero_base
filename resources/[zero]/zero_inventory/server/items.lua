@@ -55,12 +55,18 @@ sInventory.sendItem = function(user_source, index, amount)
     local _source = source
     local id = zero.getUserId(_source)
     local user_id = zero.getUserId(user_source)
-
     
     if sInventory.tryGetInventoryItem(id, index, amount) then
         if sInventory.tryAddInventoryItem(user_id, index, amount) then
             cInventory.animation(_source, 'mp_common', 'givetake1_a', false)
             cInventory.animation(user_source, 'mp_common', 'givetake1_a', false)
+            TriggerClientEvent('updateInventory', _source)
+            zero.formatWebhook(config.webhooks.sendItem, 'Enviar item', {
+                { 'De', id },
+                { 'Para', user_id },
+                { 'Item', index },
+                { 'Qtd', amount or '1' },
+            })
             config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_send_item(amount, config.items[index].name))
             config.functions.serverNotify(user_source, config.texts.notify_title, config.texts.notify_receive_item(amount, config.items[index].name))
         else
@@ -78,7 +84,13 @@ sInventory.useItem = function(index, amount)
     local user_id = zero.getUserId(_source)
     local item = config.items[index]
 
-    webhook(config.webhooks.useItems, '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
+    zero.formatWebhook(url, 'Utilizar Item', {
+        { 'Id', user_id },
+        { 'item', index },
+        { 'Qtd', amount or '1' },
+    })
+
+    zero.webhook(config.webhooks.useItems, '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
 
     if item.consumable then
         consumableItem(index)
@@ -125,8 +137,7 @@ sInventory.useItem = function(index, amount)
                 else
                     currentAmmo = freeAmmo
                 end
-
-                if zero.tryGetInventoryItem(user_id, newIndex, currentAmmo) then
+                if zero.tryGetInventoryItem(user_id, index, currentAmmo) then
                     cInventory.addAmmo(_source, newIndex, currentAmmo)
                     config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_equip_weapon(zero.itemNameList(index)), 5000)
                 else
@@ -172,11 +183,13 @@ sInventory.changeItemPosition = function(cItem, cPos, nItem, nPos, amount)
     if not sInventory.validateItem(cSlots, cItem, cPos) then 
         config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
         cInventory.closeInventory(_source)
+        return
     end
     if cItem.bagType == nItem.bagType then
         if not sInventory.validateItem(cSlots, nItem, nPos) then 
             config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
             cInventory.closeInventory(_source)
+            return
         end
         
         if cItem.index == nItem.index then
@@ -241,12 +254,30 @@ sInventory.changeItemPosition = function(cItem, cPos, nItem, nPos, amount)
 end
 
 itemsMoveLog = function(cItem, nItem, amount)
+    if cItem.bagType == nItem.bagType then return end
+
+    local url = nil
+    local title = 'Movimentar Itens'
     if config.chests[cItem.bagType] ~= nil then
-        webhook(config.chests[cItem.bagType].log, '```prolog\n[Movimentar Itens]\n[De]: '..(cItem.bagType or 'ND')..'\n[Item]: '..(cItem.index or 'ND')..'\n[Qtd]: '..(cItem.amount or 'ND')..'\n\n[Para]: '..nItem.bagType..'\n[Item]: '..(nItem.index or 'ND')..'\n[Qtd]: '..(nItem.amount or 'ND')..'```')
+        url = config.chests[cItem.bagType].log
+        title = 'Retirar Item'
     elseif config.chests[nItem.bagType] ~= nil then 
-        webhook(config.chests[nItem.bagType].log, '```prolog\n[Movimentar Itens]\n[De]: '..(cItem.bagType or 'ND')..'\n[Item]: '..(cItem.index or 'ND')..'\n[Qtd]: '..(cItem.amount or 'ND')..'\n\n[Para]: '..nItem.bagType..'\n[Item]: '..(nItem.index or 'ND')..'\n[Qtd]: '..(nItem.amount or 'ND')..'```')
+        url = config.chests[nItem.bagType].log
+        title = 'Colocar Item'
     else
-        webhook(config.webhooks.moveItem, '```prolog\n[Movimentar Itens]\n[De]: '..(cItem.bagType or 'ND')..'\n[Item]: '..(cItem.index or 'ND')..'\n[Qtd]: '..(cItem.amount or 'ND')..'\n\n[Para]: '..nItem.bagType..'\n[Item]: '..(nItem.index or 'ND')..'\n[Qtd]: '..(nItem.amount or 'ND')..'```')
+        if sInventory.extract(nItem.bagType, 'pre') == 'bag' and sInventory.extract(cItem.bagType, 'pre') == 'bag' then 
+            url = config.webhooks.stealItem
+            title = 'Saquear/Roubar'
+        else 
+            url = config.webhooks.moveItem
+            title = 'Movimentar Item'
+        end
     end
+    zero.formatWebhook(url, title, {
+        { 'De', (sInventory.extract(cItem.bagType) or 'ND') },
+        { 'Para', (sInventory.extract(nItem.bagType) or 'ND') },
+        { 'Item', (cItem.index or 'ND') },
+        { 'Qtd', (amount or 'ND') },
+    })
 end
 

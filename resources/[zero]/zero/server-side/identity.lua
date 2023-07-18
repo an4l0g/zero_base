@@ -54,12 +54,29 @@ local registros = {}
 zero.getUserByRegistration = function(registration)
 	if (registration) then
 		if (not registros[registration]) then
-			local rows = zero.query('vRP/get_userbyreg', { registration = registration or '' })
+			local rows = zero.query('vRP/get_userbyreg', { registration = (registration or '') })
 			if rows[1] then
 				registros[registration] = rows[1].user_id
 			end
 		end
 		return registros[registration]
+	end
+end
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+-- GET USER BY PLATE
+------------------------------------------------------------------
+local placa = {}
+zero.getUserByPlate = function(plate)
+	if (plate) then
+		if (not placa[plate]) then
+			local rows = zero.query('vRP/get_userbyplate', { plate = (plate or '') })
+			if rows[1] then
+				placa[plate] = rows[1].user_id
+			end
+		end
+		return placa[plate]
 	end
 end
 ------------------------------------------------------------------
@@ -71,7 +88,7 @@ local telefones = {}
 zero.getUserByPhone = function(phone)
 	if (phone) then
     	if (not telefones[phone]) then
-			local rows = zero.query("vRP/get_userbyphone",{ phone = phone or "" })
+			local rows = zero.query("vRP/get_userbyphone",{ phone = (phone or '') })
 			if rows[1] then
 				telefones[phone] = rows[1].user_id
 			end
@@ -88,7 +105,7 @@ zero.resetIdentity = function(user_id)
 	local idt = (identidades[user_id] or zero.getUserIdentity(user_id))
 	if (idt) then
 		if (registros[idt.registration]) then registros[idt.registration] = nil end
-		if (telefones[idt.phone]) then telefones[dt.phone] = nil end
+		if (telefones[idt.phone]) then telefones[idt.phone] = nil end
 	end
 	identidades[user_id] = nil 
 end

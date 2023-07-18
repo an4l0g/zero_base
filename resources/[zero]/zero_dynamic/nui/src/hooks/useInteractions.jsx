@@ -18,6 +18,7 @@ const useInteractions = () => {
       request("handleAction", {
         action: interaction.action,
         value: interaction.value || "",
+        side: interaction.side || "",
       });
 
       if (interaction.closeLater) {

@@ -4,7 +4,6 @@ local vSERVER = Tunnel.getInterface('zeroGarage')
 
 local garagesConfig = config.garages
 
-
 local markers = {
     ['plane'] = 33,
     ['heli'] = 34,
@@ -16,69 +15,75 @@ local markers = {
 }
 
 createMarker = function(config)
-    DrawMarker(markers[(config.marker or 'car')], config.coords.x, config.coords.y, config.coords.z+0.1, 0, 0, 0, 0, 0, 0, 0.7, 0.7, 0.7, 0, 153, 255, 155, 1, 0, 0, 1)
-    DrawMarker(27, config.coords.x, config.coords.y, config.coords.z-0.97, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
+    DrawMarker(markers[(config.marker or 'car')], config.coords.x, config.coords.y, config.coords.z+0.1, 0, 0, 0, 0, 0, 0, 0.8, 0.8, 0.8, 0, 153, 255, 155, 1, 0, 0, 1)
+    DrawMarker(27, config.coords.x, config.coords.y, config.coords.z-0.97, 0, 0, 0, 0, 0, 0, 1.2, 1.2, 1.2, 0, 153, 255, 155, 0, 0, 0, 1)
 end
 
-local nearestGarages = {}
-local inGarage = false
+local nearestBlips = {}
 
-mainThread = function()
-    SetNuiFocus(false, false)
-    local getNearestGarages = function()
-        while true do
-            if (not inGarage) then
-                local playerCoords = GetEntityCoords(PlayerPedId())
-                if (nearestGarages and nearestGarages.coords) then
-                    local distance = #(playerCoords - nearestGarages.coords)
-                    if (distance > 10) then
-                        nearestGarages = false
-                    elseif (distance <= 1.2) then
-                        nearestGarages.close = true
-                    else
-                        nearestGarages.close = false
-                    end
-                else
-                    for k, v in ipairs(garagesConfig) do
-                        local distance = #(playerCoords - v.coords)
-                        if distance <= 10 then
-                            nearestGarages = garagesConfig[k]
-                            nearestGarages.id = k
-                        end
+local _markerThread = false
+local markerThread = function()
+    if (_markerThread) then return; end;
+    _markerThread = true
+    Citizen.CreateThread(function()
+        while (countTable(nearestBlips) > 0) do
+            local ped = PlayerPedId()
+            local _cache = nearestBlips
+            for index, dist in pairs(_cache) do
+                if (dist <= 10) then
+					local config = garagesConfig[index]
+                    createMarker(config)
+                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                        openGarage(index) 
                     end
                 end
             end
-            Citizen.Wait(800)
+            Citizen.Wait(5)
         end
-    end
-
-    CreateThread(getNearestGarages)
-
-    while true do
-        local idle = 1000
-        local ped = PlayerPedId()
-        if (nearestGarages and nearestGarages.coords and not inGarage) then
-            idle = 4
-            createMarker(nearestGarages)
-            if (nearestGarages.close and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
-                openGarage(nearestGarages)
-            end
-        end
-        Citizen.Wait(idle)
-    end
+        _markerThread = false
+    end)
 end
 
-CreateThread(mainThread)
+Citizen.CreateThread(function()
+    while (true) do
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        nearestBlips = {}
+        for k, v in pairs(garagesConfig) do
+            local distance = #(pCoord - v.coords)
+            if (distance <= 10) then
+                nearestBlips[k] = distance
+            end
+        end
+        if (countTable(nearestBlips) > 0) then markerThread(); end;
+        Citizen.Wait(500)
+    end
+end)
 
-openGarage = function(config)
+local nearestGarageId = 0
+
+openGarage = function(index)
+	nearestGarageId = index
+	local config = garagesConfig[index]
     if (vSERVER.checkPermissions(config.permission)) then
+		inGarage = true
         SetNuiFocus(true, true)
         SendNUIMessage({
             action = 'open',
-            cars = vSERVER.getMyVehicles(config.id)
+            cars = vSERVER.getMyVehicles(index)
         })
     end
 end
+
+cli.addGarage = function(name, data)
+	garagesConfig[name] = data
+	if (nearestBlips[name] ~= nil) then nearestBlips[name] = nil; end;
+end
+
+RegisterNetEvent('zero_garage:removeGarage', function(name)
+	garagesConfig[name] = nil
+	if (nearestBlips[name] ~= nil) then nearestBlips[name] = nil; end;
+end)
 
 cli.clientSpawn = function(model, coords, heading, plate)
     local vehicle = CreateVehicle(model, coords.x, coords.y, coords.z, heading, true, true)
@@ -244,7 +249,8 @@ cli.settingVehicle = function(vnet, state, plate, custom)
         
         Entity(nveh).state:set('veh:spawning', nil, true)
         SetVehicleNumberPlateText(nveh, plate)
-        -- EVENTO TUNING
+        
+		TriggerEvent('zero_bennys:applymods', vnet, custom)
         return true
     end
 end
@@ -382,7 +388,7 @@ RegisterNuiCallback('saveVeh', function(data)
 end)
 
 RegisterNuiCallback('useVeh', function(data)
-    vSERVER.spawnVehicle(data.spawn, nearestGarages.id)
+    vSERVER.spawnVehicle(data.spawn, nearestGarageId)
 end)
 
 RegisterNuiCallback('close', function()
@@ -442,6 +448,8 @@ AddEventHandler('zero_garage:enterTrunk', function()
 						end
 					end
 				end
+			else
+				TriggerEvent('notify', 'Garagem', 'O <b>veículo</b> se encontra trancado.')
 			end
 		end
 	else

@@ -1,0 +1,352 @@
+*{margin: 0; padding: 0;}
+body{
+    perspective: 1000px;
+    /* background: url(https://cdn.discordapp.com/attachments/708215158606135306/762737575945175040/bakcg.png); */
+    font-family: 'Montserrat', sans-serif;
+    background-size: 100%;
+    zoom: 0.85;
+}
+#container{
+    width: 430px;
+    height: 650px;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 50px;
+    top: 100px;
+    border-radius: 10px;
+    border-top: 3px solid #00BFFF;
+    border-bottom: 3px solid #00BFFF;
+}
+
+#topo{
+    width: 400px;
+    height: 120px;
+    float: left;
+    text-align: center;
+}
+
+#topo img{
+    width: 140px;
+}
+
+#menu{
+    width: 55px;
+    height: 75%;
+    border-right: 1px solid #1a1a1a;
+    float: left;
+}
+
+.menuType{
+    width: 40px;
+    height: 40px;
+    margin-left: 4px;
+    border-radius: 5px;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position:  center;
+}
+.menuType:hover{
+    transform: scale(1.05);
+}
+
+.ativada{
+    zoom: 1.1;
+    /*border: 1px solid #1c73ea;*/
+    box-shadow: 1px 1px 2px #1c73ea;
+}
+
+#listagem{
+    width: 350px;
+    height: 500px;
+    margin-left: 20px;
+    float: left;
+    overflow: auto;
+}
+
+.lista{
+    width: 100px;
+    height: 100px;
+    background: rgb(133, 133, 133);
+    margin: 5px;
+    float: left;
+    flex-wrap: wrap;
+    display: flex;
+    border-radius: 3px;
+}
+.lista:hover{
+    transform: scale(1.05);
+}
+.lista:hover .idItem{
+    background: #1c72ea6e;
+}
+
+.lista:hover .valorItem{
+    color: rgb(20, 191, 20);
+    background: #1c72ea6e;
+}
+
+.listaCor{
+    width: 100px;
+    height: 100px;
+    background: rgb(133, 133, 133);
+    margin: 5px;
+    float: left;
+    flex-wrap: wrap;
+    display: flex;
+    border-radius: 3px;
+}
+.listaCor:hover{
+    border: 1px solid #1c73ea;
+    margin-bottom: 3px;
+}
+.listaCor:hover .idItem{
+    background: #1c72ea6e;
+}
+
+.listaCor:hover .valorItem{
+    color: rgb(20, 191, 20);
+    background: #1c72ea6e;
+}
+
+
+.activeLista .idItem {
+    background: #1c72ea6e;
+}
+
+.activeLista .valorItem {
+    color: rgb(20, 191, 20);
+    background: #1c72ea6e;
+}
+
+.activeItem{
+    /*border: 1px solid #1c73ea;*/
+    margin: 3px;
+}
+.activeItem .idItem{
+    background: #1c72eab1;
+}
+.activeItem .valorItem{
+    color: rgb(20, 191, 20);
+    background: #1c72eab1;
+}
+.idItem{
+    min-width: 100px;
+    height: 20px;
+    background: #00000080;
+    text-align: center;
+    color: #fff;
+    border-radius: 3px;
+    justify-content: center;
+    position: relative;
+    top: 25px;
+    border-bottom: 3px solid #00BFFF;
+}
+
+.valorItem{
+    position: relative;
+    left: 50px;
+    width: 50px;
+    height: 20px;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 900;
+    border-radius: 0 0 0 5px;
+    text-align: center;
+    margin-top: 15px;
+    background: #00b7ff80;
+}
+
+#menuEssencial{
+    width: 100%;
+    height: 50px;
+    background: #00000080;
+    position: relative;
+    top: 40px;
+    float: left;
+    border-bottom: 3px solid #00BFFF;
+}
+
+#menuEssencial img{
+    width: 30px;
+    float: left;
+    margin: 10px;
+}
+#esquerda,#direita, #levantar{
+    width: 30px;
+    height: 30px;
+    float: left;
+    color: #fff;
+    text-align: center;
+    font-weight: 900;
+    line-height: 30px;
+    background: #1c73ea;
+    border-radius: 50%;
+    margin: 10px;
+    margin-left: 0px;
+}
+#direita:hover, #esquerda:hover, #levantar:hover{
+    background: #fff;
+    color: #1c73ea;
+}
+
+#total{
+    width: 150px;
+    height: 35px;
+    background: #fff;
+    float: left;
+    line-height: 35px;
+    font-weight: 900;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    margin-top: 7.5px;
+}
+#totalEsquerda, #totalDireita{
+    float: left;
+}
+#totalDireita{
+    float: right;
+    color: green;
+}
+
+#cart{
+    width: 35px;
+    float: left;
+    height: 35px;
+    margin: 10px;
+    margin-left: 25px;
+    background-image: url(https://cdn.discordapp.com/attachments/712813091674390560/779406090554048572/carts.png);
+    background-size: 100% 100%;
+    background-position: center;
+}
+#cart:hover{
+    zoom: 1.05;
+}
+
+#cores{
+    display: none;
+    width: 110px;
+    height: 660px;
+    position: absolute;
+    border-radius: 10px;
+    left: 510px;
+    top: 100px;
+    background: #00000080;
+    border-top: 3px solid #00BFFF;
+    border-bottom: 3px solid #00BFFF;
+}
+#listaCores{
+    width: 105px;
+    height: 630px;
+    overflow: auto;
+
+}
+#cores h1{
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+}
+#listaCores::-webkit-scrollbar{
+    display: none;
+}
+::-webkit-scrollbar-track {
+    background-color: #F4F4F4;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    background: #F4F4F4;
+}
+::-webkit-scrollbar-thumb {
+    background: #1c73ea;
+}
+
+
+
+
+
+
+.tresD{
+    margin: 5px;
+    position: relative;
+    right: 50px;
+    width: 21px;
+    height: 21px;
+    font-size: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 900;
+    background-image: linear-gradient(70deg, #1c73ea, #6ea7f7b1);
+
+}
+
+.tresD:hover{
+    background-image: linear-gradient(70deg, #295491, #4690f8b1);
+    
+}
+
+
+
+
+#levantar img{
+    width: 20px;
+    position: relative;
+    right: 5px;
+    bottom: 5px;
+}
+
+
+
+
+@media only screen and (max-width: 1600px) {
+    body {
+        zoom: 0.9;
+    }
+}
+
+@media only screen and (max-width: 1420px) {
+    body {
+        zoom: 0.7;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    body {
+        zoom: 0.6;
+    }
+}
+@media only screen and (max-width: 1280px) {
+    body {
+        zoom: 0.5;
+    }
+}
+
+
+#showtresD{
+    width: 500px;
+    display: none;
+    height: 300px;
+    background: #00000080;
+    float: right;
+    margin: 20px;
+    box-shadow: 0 0 3px #000;
+    border-radius: 10px;
+    margin-top: 150px;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 580px;
+    right: 0;
+    margin: auto;
+    transform: matrix(1, -0.07, 0.02, 1, 0, 0);
+
+}
+
+#showtresD model-viewer{
+    width: 100%;
+    height: 100%;
+    outline: none;
+}

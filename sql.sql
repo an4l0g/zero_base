@@ -12,6 +12,22 @@ create table zero_users(
     primary key(id)
 );
 
+create table zero_fine(
+	id int unsigned auto_increment not null,
+    user_id int not null,
+    fine_reason varchar(50) not null,
+    fine_value int not null,
+    fine_time varchar(50) not null,
+    fine_description text not null,
+    primary key(id)
+);
+
+create table zero_pix(
+	user_id int unsigned not null,
+    chave varchar(10) not null,
+    primary key(user_id)
+);
+
 create table zero_user_ids (
     identifier varchar(100) not null,
     user_id int unsigned not null,
@@ -55,7 +71,7 @@ create table zero_user_data (
     user_id int unsigned not null,
     dkey varchar(100) not null,
     dvalue json not null,
-    primary key(user_id)
+    primary key(user_id, dkey)
 );
 
 create table zero_creation(
@@ -67,13 +83,22 @@ create table zero_creation(
 );
 
 create table zero_homes(
+    id int unsigned auto_increment not null,
     user_id int unsigned not null,
     home varchar(50) not null,
     home_owner tinyint not null,
     garages tinyint not null,
     tax varchar(20) not null,
     configs json not null,
-    primary key(user_id)
+    vip tinyint not null,
+    primary key(id)
+);
+
+create table zero_homes_garages(
+    home varchar(50) not null,
+    blip json not null,
+    spawn json not null,
+    primary key(home)
 );
 
 create table zero_dynamic(
@@ -89,10 +114,21 @@ create table zero_inventory(
     primary key(bag_type)    
 );
 
-create table zero_hwid (
+create table zero_hwid(
     token varchar(100) not null,
     user_id int not null,
     primary key(token, user_id)
+);
+
+create table zero_hospital(
+    doctor_id int unsigned not null,
+    service_type char(1) not null,
+    patient_id int unsigned not null,
+    total_price double not null,
+    service_date datetime not null,
+    request text,
+    description text,
+    primary key (doctor_id,patient_id,service_type,service_date)
 );
 
 create table zero_user_vehicles (
@@ -107,4 +143,21 @@ create table zero_user_vehicles (
     state json not null,
     custom json not null,
     primary key(user_id, vehicle, plate, chassis)
+)
+
+create table zero_spray(
+    id int unsigned auto_increment not null,
+    interior tinyint not null,
+    x float(8, 4) not null,
+    y float(8, 4) not null,
+    z float(8, 4) not null,
+    rx float(8, 4) not null,
+    ry float(8, 4) not null,
+    rz float(8, 4) not null,
+    scale float(8, 4) not null,
+    spray_text varchar(10) not null,
+    font varchar(32) not null,
+    color int not null,
+    created_at timestamp not null default current_timestamp(),
+    primary key(id)
 )

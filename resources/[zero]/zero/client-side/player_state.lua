@@ -268,7 +268,7 @@ zero.setCustomization = function(custom)
 					end
 				end
 			end
-			TriggerEvent("nyoModule:barberUpdate")
+			TriggerEvent('zero:barberUpdate')
 			TriggerEvent("nyoModule:tattooUpdate")
 			TriggerServerEvent('zero_whitelist:server')
 		end
@@ -276,3 +276,23 @@ zero.setCustomization = function(custom)
 	end)
 	return r:wait()
 end
+
+local tab = nil
+RegisterNetEvent('zero_core:tabletAnim')
+AddEventHandler('zero_core:tabletAnim', function()
+    Citizen.CreateThread(function()
+      RequestAnimDict('amb@world_human_clipboard@male@base')
+      while not HasAnimDictLoaded('amb@world_human_clipboard@male@base') do
+        Citizen.Wait(0)
+      end
+        tab = CreateObject(GetHashKey('prop_cs_tablet'), 0, 0, 0, true, true, true)
+        AttachEntityToEntity(tab, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1),60309), 0, 0, 0, 0, 0.0, 0.0, true, true, false, true, 1, true)
+        TaskPlayAnim(PlayerPedId(),'amb@world_human_clipboard@male@base','base', 8.0, 8.0, 1.0, 1, 1, 0, 0, 0 )
+    end)
+end)
+
+RegisterNetEvent('zero_core:stopTabletAnim')
+AddEventHandler('zero_core:stopTabletAnim', function()
+    ClearPedTasks(PlayerPedId())
+    DeleteEntity(tab)
+end)

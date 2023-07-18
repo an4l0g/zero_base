@@ -9,7 +9,7 @@ function ItemGarage({ item, setCar }) {
     <S.CarItem key={item.name} onClick={() => setCar(item)}>
       {!imageError ? (
         <S.CarItemImage
-          src={`http://localhost/zero_garage/${item.spawn}.png`}
+          src={`http://189.0.88.222/zero_garage/${item.spawn}.png`}
           onError={() => setImageError(true)}
         />
       ) : (

@@ -49,6 +49,7 @@ zero.prepare("vRP/get_user_identity","SELECT * FROM zero_user_identities WHERE u
 zero.prepare("vRP/init_user_identity","INSERT IGNORE INTO zero_user_identities(user_id,registration,phone,lastname,firstname,age) VALUES(@user_id,@registration,@phone,@lastname,@firstname,@age)")
 zero.prepare("vRP/update_user_identity","UPDATE zero_user_identities SET lastname = @lastname, firstname = @firstname, age = @age, registration = @registration, phone = @phone WHERE user_id = @user_id")
 zero.prepare("vRP/get_userbyreg","SELECT user_id FROM zero_user_identities WHERE registration = @registration")
+zero.prepare("vRP/get_userbyplate","SELECT user_id FROM zero_user_vehicles WHERE plate = @plate")
 zero.prepare("vRP/get_userbyphone","SELECT user_id FROM zero_user_identities WHERE phone = @phone")
 zero.prepare("vRP/update_user_first_spawn","UPDATE zero_user_identities SET lastname = @lastname, firstname = @firstname, age = @age WHERE user_id = @user_id")
 ---------------------------------------------------------------------------------------------------------------------------------

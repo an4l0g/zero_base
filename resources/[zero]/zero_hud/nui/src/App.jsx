@@ -106,9 +106,14 @@ function App() {
 
   return (
     <ThemeProvider theme={S.theme}>
+      <ToastContainer
+        theme="dark"
+        position="bottom-center"
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+      />
       {hud && (
         <>
-          <ToastContainer theme="dark" position="bottom-center" />
           <S.GlobalStyle />
           <Prompt questions={questions} setQuestions={setQuestions} />
           <Clipboard clipboard={clipboard} setClipboard={setClipboard} />

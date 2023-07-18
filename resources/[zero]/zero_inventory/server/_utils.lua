@@ -1,9 +1,3 @@
-webhook = function(link, message)
-	if link and message and link ~= "" then
-		PerformHttpRequest(link, function(err, text, headers) end, 'POST', json.encode({content = message}), { ['Content-Type'] = 'application/json' })
-	end
-end
-
 sInventory.getUserId = function()
     local _source = source
     return zero.getUserId(_source)
@@ -17,8 +11,18 @@ sInventory.getTrunkSize = function(vname)
     return zero.vehicleChest(vname)
 end
 
+zero._prepare('zero_homes/getVault', 'select configs from zero_homes where home = @home')
+
+sInventory.getVaultSize = function(hname)
+    local query = zero.query('zero_homes/getVault', { home = hname })[1].configs
+    if (query) then
+        query = json.decode(query)
+        return query.chest
+    end
+end
+
 sInventory.getVehOwnerId = function(vnetid)
-    local data = exports["zGarages"]:getVehicleData(vnetid)
+    local data = exports["zero_garage"]:getVehicleData(vnetid)
     if data then return data.user_id; end;
 end
 
@@ -27,4 +31,12 @@ sInventory.hasPermission = function(permission)
     local user_id = zero.getUserId(_source)
 
     return zero.hasPermission(user_id, permission)
+end
+
+sInventory.extract = function(string, method)
+    if method == 'pre' then 
+        return string:match("(.*):")
+    else 
+        return string:match(":(.*)")
+    end
 end
