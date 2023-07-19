@@ -46,7 +46,7 @@ local userLogin = {}
 
 AddEventHandler('vRP:playerSpawn', function(user_id, source)    
     local bloodGroup = generalConfig.bloodGroup
-    zero.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}', rh = bloodGroup[math.random(#bloodGroup)] })
+    zero.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}', user_tattoo = '{}', rh = bloodGroup[math.random(#bloodGroup)] })
 
     vCLIENT.loadingPlayer(source, false) 
     local query = zero.query('zero_character/verifyUser', { user_id = user_id })[1]
