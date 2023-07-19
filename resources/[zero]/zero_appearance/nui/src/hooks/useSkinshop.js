@@ -10,7 +10,7 @@ const useSkinshop = () => {
   const { request } = useRequest();
 
   useEffect(() => {
-    request("changeBarbershopDemo", {
+    request("changeSkinshopDemo", {
       drawables: result.current,
     });
   }, [result, request]);
@@ -73,7 +73,7 @@ const useSkinshop = () => {
   }, [result]);
 
   const buyCustomizations = useCallback(() => {
-    request("buyBarbershopCustomizations", {
+    request("buySkinshopCustomizations", {
       drawables: result.current,
       total: calculateTotal,
     });

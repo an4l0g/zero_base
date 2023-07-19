@@ -18,11 +18,11 @@ function ItemList({ limit, types, indexType, labelType }) {
         <Item
           key={index}
           index={index}
-          className={
-            result.current[types[indexType].path].model === index
-              ? "active"
-              : ""
-          }
+          // className={
+          //   result.current[types[indexType].path].model === index
+          //     ? "active"
+          //     : ""
+          // }
           labelType={labelType}
           handleClick={() => {
             handleSetResult(labelType, "model", index);

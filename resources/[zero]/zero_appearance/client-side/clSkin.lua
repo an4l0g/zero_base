@@ -15,7 +15,6 @@ local getDrawables = function()
         { amount = GetNumberOfPedDrawableVariations(ped, 7), type = '7' },
         { amount = GetNumberOfPedDrawableVariations(ped, 8), type = '8' },
         { amount = GetNumberOfPedDrawableVariations(ped, 9), type = '9' },
-        { amount = GetNumberOfPedDrawableVariations(ped, 10), type = '10' },
         { amount = GetNumberOfPedDrawableVariations(ped, 11), type = '11' },
         { amount = GetNumberOfPedPropDrawableVariations(ped, 0), type = 'p0' },
         { amount = GetNumberOfPedPropDrawableVariations(ped, 1), type = 'p1' },
@@ -116,3 +115,10 @@ openSkinShop = function(locs)
     if (not DoesCamExist(tempCam)) then createCam('body'); end;
     FreezeEntityPosition(ped, true)
 end
+
+RegisterNUICallback('getSkinVariations', function(data)
+    SendNuiMessage({
+        action = 'setSkinVariation',
+        data = funcaoQuePegaQuantasVariacoesUmModeloDeUmTipoTem(data.type, data.model)
+    })
+end)

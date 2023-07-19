@@ -1,0 +1,58 @@
+[
+  {
+    "path": "1",
+    "title": "Máscara"
+  },
+  {
+    "path": "3",
+    "title": "Mãos"
+  },
+  {
+    "path": "4",
+    "title": "Calça"
+  },
+  {
+    "path": "5",
+    "title": "Mochila"
+  },
+  {
+    "path": "6",
+    "title": "Sapato"
+  },
+  {
+    "path": "7",
+    "title": "Colar"
+  },
+  {
+    "path": "8",
+    "title": "Camisa"
+  },
+  {
+    "path": "9",
+    "title": "Colete"
+  },
+  {
+    "path": "11",
+    "title": "Jaqueta"
+  },
+  {
+    "path": "p0",
+    "title": "Chapéu"
+  },
+  {
+    "path": "p1",
+    "title": "Óculos"
+  },
+  {
+    "path": "p2",
+    "title": "Brinco"
+  },
+  {
+    "path": "p6",
+    "title": "Relógio"
+  },
+  {
+    "path": "p7",
+    "title": "Bracelete"
+  }
+]

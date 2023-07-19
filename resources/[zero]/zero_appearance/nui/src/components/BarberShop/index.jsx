@@ -8,6 +8,7 @@ import TypeList from "../TypeList";
 import Footer from "../Footer";
 import Customization from "../Customization";
 import ItemList from "../ItemList";
+import { BsScissors } from "react-icons/bs";
 
 function BarberShop() {
   const firstRender = useRef(true);
@@ -38,12 +39,13 @@ function BarberShop() {
         <>
           <S.Container>
             <S.Content>
-              <Header title="Barbearia" />
+              <Header title="Barbearia" icon={<BsScissors />} />
               <S.Shop>
                 <TypeList
                   indexType={indexType}
                   handleChangeType={handleChangeType}
                   types={Types}
+                  context={"barbershop"}
                 />
                 <S.RightWrap>
                   <S.OptionsListWrap>

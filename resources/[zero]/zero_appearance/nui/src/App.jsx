@@ -5,6 +5,7 @@ import { useCallback, useContext, useEffect } from "react";
 import useRequest from "./hooks/useRequest";
 import AppearanceContext from "./contexts/AppearanceContext";
 import useBarbershop from "./hooks/useBarbershop";
+import SkinShop from "./components/SkinShop";
 
 function App() {
   const { request } = useRequest();
@@ -14,11 +15,11 @@ function App() {
   const nuiMessage = useCallback(
     (event) => {
       const { action, data } = event.data;
+      console.log(data);
       if (action === "openBarberShop") {
         setAppearance({ barbershop: data });
         createResult(data.drawables);
       } else if (action === "openSkinShop") {
-        console.log(data);
         setAppearance({ skinshop: data });
       }
     },
@@ -44,8 +45,12 @@ function App() {
       <S.GlobalStyle />
       {appearance != {} && (
         <S.Wrap>
+          {appearance.skinshop && (
+            <>
+              <SkinShop />
+            </>
+          )}
           {appearance.barbershop && <BarberShop />}
-          {appearance.skinShop && <BarberShop />}
         </S.Wrap>
       )}
     </ThemeProvider>
