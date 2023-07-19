@@ -270,7 +270,7 @@ RegisterCommand('reloadgroups', function(source)
 		local config = module('cfg/groups', true)
 		groups = config.groups
 		users = config.users
-		TriggerEvent('vRP:groupsRefresh')
-        print('^2[vRP]^7 Groups Reloaded')		
+		TriggerEvent('zero:groupsRefresh')
+        print('^5[Zero Groups]^7 Groups Reloaded')		
     end
 end)
