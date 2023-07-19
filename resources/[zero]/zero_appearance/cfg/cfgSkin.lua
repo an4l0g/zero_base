@@ -13,7 +13,6 @@ config.general = {
             [7] = { item = { Male = {}, Female = {} } }, -- gravata
             [8] = { item = { Male = {}, Female = {} } }, -- camisa
             [9] = { item = { Male = {}, Female = {} } }, -- colete
-            [10] = { item = { Male = {}, Female = {} } }, -- decals (adesivos)
             [11] = { item = { Male = {}, Female = {} } }, -- jaqueta
             ['p0'] = { item = { Male = {}, Female = {} } }, -- bone/chapeu
             ['p1'] = { item = { Male = {}, Female = {} } }, -- oculos
