@@ -13,7 +13,7 @@ end)
 RegisterCommand('clearmultas', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') and args[1] then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') and args[1] then
         local nUser = parseInt(args[1])
         local totalMultas = 0
         local query = zero.query('zero_bank/getMultas', { user_id = user_id })

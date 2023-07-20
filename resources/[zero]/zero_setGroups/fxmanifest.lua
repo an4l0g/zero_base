@@ -1,22 +1,10 @@
 fx_version 'bodacious'
 game 'gta5'
 
-dependency 'zero'
-
-client_scripts {
-	'@zero/lib/utils.lua',
-	'client/client.lua'
-}
-
-server_scripts {
-	'@zero/lib/utils.lua',
-	'server/server.lua'
-}
-
 ui_page'html/index.html'
 
-files {
-    'html/index.html',
-    'html/scripts.js',
-    'html/styles.css',
-}                            
+client_script 'client/*'
+server_script 'server/*'
+shared_scripts { '@zero/lib/utils.lua', 'main.lua' }
+
+files { 'html/*' }                            

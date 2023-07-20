@@ -6,7 +6,7 @@ const methods = {
     groups = sysgroups;
     user_id = user_identity.user_id;
     $("#userid").text(user_identity.user_id);
-    $("#username").text(user_identity.name + " " + user_identity.firstname);
+    $("#username").text(user_identity.firstname + " " + user_identity.lastname);
 
     $("#select-group").append(
       `<option value="">Grupo</option><option disabled></option>`
@@ -64,7 +64,7 @@ $("#btn-add").on("click", () => {
   }
 
   $.post(
-    "http://zSetGroup/addGroup",
+    "http://zero_setGroups/addGroup",
     JSON.stringify({
       user_id,
       group,
@@ -78,7 +78,7 @@ $(document).on("click", "#user-groups li", function () {
   const grade = $(this).data("grade");
 
   $.post(
-    "http://zSetGroup/delGroup",
+    "http://zero_setGroups/delGroup",
     JSON.stringify({
       user_id,
       group,
@@ -106,7 +106,7 @@ const closeNUI = () => {
   $("#select-grade").html("");
   $("#user-groups").html("");
   $("#gbSetGroup").fadeOut();
-  $.post("http://zSetGroup/close", "[]");
+  $.post("http://zero_setGroups/close", "[]");
 };
 
 $("#btn-close").on("click", closeNUI);

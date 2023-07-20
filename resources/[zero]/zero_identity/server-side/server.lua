@@ -136,7 +136,7 @@ getUserJob = function(user_id)
     local job, jobinfo = zero.getUserGroupByType(user_id, 'fac')
     if (not job) then job, jobinfo = zero.getUserGroupByType(user_id, 'job'); end;
     if (job) then
-        return zero.getGroupTitle(zero, jobinfo.grade)..((jobinfo.active and ' (ativo)') or '')
+        return zero.getGroupTitle(job, jobinfo.grade)..((jobinfo.active and ' (ativo)') or '')
     end
     return 'Desempregado'
 end
@@ -148,7 +148,7 @@ end
 getUserStaff = function(user_id)
     local staff, staffinfo = zero.getUserGroupByType(user_id, 'staff')
     if (staff) then
-        return zero.getGroupTitle(zero, staffinfo.grade)..((staffinfo.active and ' (ativo)') or '')
+        return zero.getGroupTitle(staff, staffinfo.grade)..((staffinfo.active and ' (ativo)') or '')
     end
     return nil
 end

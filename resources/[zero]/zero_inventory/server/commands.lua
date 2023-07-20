@@ -5,7 +5,7 @@ RegisterCommand('item', function(source, args)
     local item = args[1]
     local amount = (tonumber(args[2]) or 1)
     
-    if zero.hasPermission(user_id, 'admin.permissao') then
+    if zero.hasPermission(user_id, '+Staff.Administrador') then
         if config.items[item] then
             sInventory.giveInventoryItem(user_id, item, amount)    
             zero.formatWebhook(config.webhooks.spawnItem, 'Spawnou', {
@@ -25,7 +25,7 @@ end)
 -- Limpa hotbar e bag do player
 RegisterCommand('cinv', function(source, args)
     local user_id = (args[1] or zero.getUserId(source))
-    if zero.hasPermission(user_id, 'dono.permissao') then
+    if zero.hasPermission(user_id, '+Staff.COO') then
         sInventory.clearInventory(source, user_id)
 
         zero.formatWebhook(config.webhooks.delBag, 'Limpar Inventario', {

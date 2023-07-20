@@ -1,20 +1,32 @@
-RegisterNetEvent('vrp_setgroup:openPanel',function(useridentity, usergroups, sysgroups)
-  	SetNuiFocus(true, true)
-  	SendNUIMessage({ type = 'openNUI', user_identity = useridentity, usergroups = usergroups, sysgroups = sysgroups  })
-end)
+cli = {}
+Tunnel.bindInterface(GetCurrentResourceName(), cli)
+vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
-RegisterNetEvent('vrp_setgroup:update',function(usergroups)
-  	SendNUIMessage({ type = 'attUserGroups', usergroups = usergroups  })
-end)
-
-RegisterNUICallback('close', function(data, cb)
-  	SetNuiFocus(false)
-end)
+cli.openNui = function(identity, groups, system)
+	SetNuiFocus(true, true)
+	SendNUIMessage({ 
+		type = 'openNUI', 
+		user_identity = identity, 
+		usergroups = groups, 
+		sysgroups = system  
+	})
+end
 
 RegisterNUICallback('addGroup', function(data, cb)
-    TriggerServerEvent("vrp_setgroup:add", data.user_id, data.group, data.grade)
+	vSERVER.addGroup(data.user_id, data.group, data.grade)
 end)
 
 RegisterNUICallback('delGroup', function(data, cb)
-    TriggerServerEvent("vrp_setgroup:del", data.user_id, data.group, data.grade)
+    vSERVER.delGroup(data.user_id, data.group, data.grade)
+end)
+
+cli.updateNui = function(usergroups)
+  	SendNUIMessage({ 
+		type = 'attUserGroups', 
+		usergroups = usergroups  
+	})
+end
+
+RegisterNUICallback('close', function(data, cb)
+  	SetNuiFocus(false)
 end)

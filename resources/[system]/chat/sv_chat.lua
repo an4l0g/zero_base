@@ -34,7 +34,7 @@ end)
 RegisterCommand('clearchat', function(source)
     local user_id = zero.getUserId(source);
     if user_id ~= nil then
-        if zero.hasPermission(user_id, 'admin.permissao') then
+        if zero.hasPermission(user_id, '+Staff.Administrador') then
             TriggerClientEvent('chat:clear', -1);
         else
             TriggerClientEvent('chat:clear', source);
