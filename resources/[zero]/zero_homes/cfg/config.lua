@@ -25,7 +25,7 @@ config.general = {
     taxPrice = 0.05, -- VALOR DA TAXA
     percentageUpgrade = 0.8, -- PORCENTAGEM DE VENDA DOS UPGRADE (INTERIOR NÃO CONTA)
     openVaultPermission = '+DEIC.Soldado', -- PERMISSÃO DA POLÍCIA PARA ABRIR O BAÚ DA CASA
-    invadePermission = 'dono.permissao'
+    invadePermission = '+Staff.COO'
 }
 
 config.homes = {
@@ -1667,8 +1667,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'simple',
-            ['simple'] = { value = 10000, perm = 'dono.permissao' },
-            ['motel'] = { value = 10000, perm = 'dono.permissao' }
+            ['simple'] = { value = 10000, perm = '+Staff.COO' },
+            ['motel'] = { value = 10000, perm = '+Staff.COO' }
         },
     },
     ['modern'] = {
@@ -1689,9 +1689,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'single',
-            ['single'] = { value = 10000, perm = 'dono.permissao' },
-            ['high_01'] = { value = 10000, perm = 'dono.permissao' },
-            ['high_02'] = { value = 10000, perm = 'dono.permissao' }
+            ['single'] = { value = 10000, perm = '+Staff.COO' },
+            ['high_01'] = { value = 10000, perm = '+Staff.COO' },
+            ['high_02'] = { value = 10000, perm = '+Staff.COO' }
         },
     },
     ['high'] = {
@@ -1712,8 +1712,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'high_01',
-            ['high_01'] = { value = 10000, perm = 'dono.permissao' },
-            ['high_02'] = { value = 10000, perm = 'dono.permissao' }
+            ['high_01'] = { value = 10000, perm = '+Staff.COO' },
+            ['high_02'] = { value = 10000, perm = '+Staff.COO' }
         },
     },
     ['apartament'] = {
@@ -1725,7 +1725,7 @@ config.typeHomes = {
             min = 100,
             max = 1000,
             value = 100,
-            perm = 'dono.permissao'
+            perm = '+Staff.COO'
         },
         ['security'] = {
             min = 0,
@@ -1735,9 +1735,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'apartment_01',
-            ['apartment_01'] = { value = 10000, perm = 'dono.permissao' },
-            ['apartment_02'] = { value = 10000, perm = 'dono.permissao' },
-            ['eclip_penthouse'] = { decoration = true, value = 10000, perm = 'dono.permissao' },
+            ['apartment_01'] = { value = 10000, perm = '+Staff.COO' },
+            ['apartment_02'] = { value = 10000, perm = '+Staff.COO' },
+            ['eclip_penthouse'] = { decoration = true, value = 10000, perm = '+Staff.COO' },
         },
     },
 }
@@ -1799,7 +1799,7 @@ config.interior = {
         interiorId = 146945,
         decorations = {
             _default = 'executive',
-            _perm = 'dono.permissao', 
+            _perm = '+Staff.COO', 
             executive = {
                 name = 'Executivo',
                 interiorId = 228097,

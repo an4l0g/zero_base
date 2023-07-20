@@ -7,7 +7,7 @@ local vCLIENT = Tunnel.getInterface('Commands')
 RegisterCommand('dobjall', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'mod.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         local count = 0
         for _, v in pairs(GetAllObjects()) do
             if (DoesEntityExist(v)) then
@@ -51,7 +51,7 @@ RegisterCommand('godall', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         local users = zero.getUsers()
         for k, v in pairs(users) do
             local id = zero.getUserSource(parseInt(k))
@@ -71,7 +71,7 @@ RegisterCommand('godarea', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         local radius = zero.prompt(source, { 'Distancia' })
         radius[1] = parseInt(radius[1])
         if (radius[1]) and radius[1] > 0 then
@@ -92,7 +92,7 @@ RegisterCommand('kill', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'mod.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         if (args[1]) then
             local nPlayer = zero.getUserSource(parseInt(args[1]))
             if (nPlayer) then
@@ -138,7 +138,7 @@ RegisterCommand('kickall', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         TriggerClientEvent('announcement', -1, 'Alerta', 'Foi detectado um terremoto de <b>magnitude 8</b> na <b>Escala Richter</b> chegando em nossa cidade. Mantenha a calma e procure um abrigo.', 'Governo', true, 30000)
         Citizen.Wait(5000)
         TriggerClientEvent('zero_core:terremoto', -1)
@@ -161,7 +161,7 @@ RegisterCommand('wl', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'mod.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         local nUser = parseInt(args[1])
         if (nUser) then
             exports['zero']:setWhitelisted(nUser, true)
@@ -212,7 +212,7 @@ RegisterCommand('unban', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'manager.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Manager') then
         local nUser = parseInt(args[1])
         if (nUser > 0) then
             local prompt = zero.prompt(source, { 'Motivo' })
@@ -233,7 +233,7 @@ RegisterCommand('money', function(source, args)
 	local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
         if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
         local amount = parseInt(args[1])
 		if (amount) then
@@ -260,7 +260,7 @@ RegisterCommand('money2', function(source, args)
         else
             local user_id = zero.getUserId(source)
             local identity = zero.getUserIdentity(user_id)
-            if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+            if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
                 if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
                 if (nUser and money) then
                     zero.giveBankMoney(nUser, money)
@@ -277,7 +277,7 @@ RegisterCommand('moneyall', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
         if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
         local amount = parseInt(args[1])
 		if (amount) then
@@ -311,7 +311,7 @@ RegisterCommand('delmoney', function(source, args)
         else
             local user_id = zero.getUserId(source)
             local identity = zero.getUserIdentity(user_id)
-            if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+            if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
                 if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
                 if (nUser and money) then
                     zero.tryFullPayment(nUser, money)
@@ -843,7 +843,7 @@ RegisterCommand('carcolor', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         local vehicle = zeroClient.getNearestVehicle(source, 7.0)
         if (vehicle) then
             local prompt = zero.prompt(source, { 'RGB Color(255, 255, 255)' })
@@ -865,7 +865,7 @@ RegisterCommand('uncuff', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         if (zero.isHandcuffed(source)) then
             TriggerClientEvent('zero_core:uncuff', source)
             zero.webhook(webhooks.unCuff, '```prolog\n[/UNCUFF]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SE DESALGEMOU] \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -896,7 +896,7 @@ RegisterCommand('skin', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
         local text = ''
         local nPlayer = zero.getUserSource(parseInt(args[1]))
         if (args[2]) and nPlayer then  
@@ -929,7 +929,7 @@ RegisterCommand('delnpcs',function(source)
     local source = source
 	local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-	if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+	if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
 		TriggerClientEvent('zero_core:delnpcs', source)
         zero.webhook(webhooks.delNpcs, '```prolog\n[/DELNPCS]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 	end
@@ -946,7 +946,7 @@ RegisterCommand('tuning', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
         TriggerClientEvent('zero_core:tuning', source)
         zero.webhook(webhooks.tuning, '```prolog\n[/TUNING]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
@@ -970,7 +970,7 @@ RegisterCommand('clearweapons', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         local text = ''
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
@@ -1213,7 +1213,7 @@ RegisterCommand('resetplayer', function(source, args)
     local user_id
 	if (source ~= 0) then user_id = zero.getUserId(source) end
 	if (source == 0 or user_id) then
-        if (source == 0 or zero.hasPermission(user_id, 'dono.permissao')) then
+        if (source == 0 or zero.hasPermission(user_id, '+Staff.COO')) then
             local nUser = tonumber(args[1])
             if (nUser <= 0) then return; end;
 
@@ -1260,7 +1260,7 @@ end)
 RegisterCommand('gbucket', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         if (args[1]) then
             local nUser = parseInt(args[1])
             local nSource = zero.getUserSource(nUser)
@@ -1279,7 +1279,7 @@ RegisterCommand('sbucket', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         if (args[1] and args[2]) then
             local nUser = parseInt(args[1])
             local nSource = zero.getUserSource(nUser)

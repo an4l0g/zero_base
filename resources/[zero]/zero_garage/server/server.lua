@@ -683,7 +683,7 @@ RegisterCommand('addcar', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(source)
-    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
         local prompt = zero.prompt(source, { 'Passaporte', 'Veículo' })
         if (prompt) then
             if (prompt[1] and prompt[2]) then
@@ -701,7 +701,7 @@ RegisterCommand('remcar', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(source)
-    if (user_id) and zero.hasPermission(user_id, 'dono.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
         local prompt = zero.prompt(source, { 'Passaporte', 'Veículo' })
         if (prompt) then
             if (prompt[1] and prompt[2]) then
@@ -719,7 +719,7 @@ RegisterCommand('car', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'admin.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         if (args[1]) then
             local spawn = string.lower(args[1])
             local loadModel = vCLIENT.loadModel(source, spawn, 30000, 60000)

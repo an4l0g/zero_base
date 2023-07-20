@@ -86,11 +86,9 @@ zero.getUserGroupByType = function(user_id, gtype)
 	local user_groups = zero.getUserGroups(user_id)
 	for index, value in pairs(user_groups) do
 		local _groups = groups[index]
-		if (_groups[index]) then
-			if (_groups[index]['information']) and _groups[index]['information']['groupType'] then
-				if (_groups[index]['information']['groupType'] == gtype) then
-					return index, value
-				end
+		if (_groups) then
+			if (_groups.information and _groups.information.groupType and _groups.information.groupType == gtype) then
+				return index, value
 			end
 		end
 	end
@@ -258,8 +256,8 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 	if (first_spawn) then
 		local _user = users[user_id]
 		if _user then
-			for _, value in pairs(_user) do
-				zero.addUserGroup(user_id, value)
+			for group, grade in pairs(_user) do
+				zero.addUserGroup(user_id, group, grade)
 			end
 		end
 	end
