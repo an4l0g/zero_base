@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geologica:wght@100;300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body style="display: block">
+    <departamento>
+      <div class="content">
+        <div class="wrap">
+          <header>
+            <h1 id="title-shop"><span>[ZERO]</span> Loja de departamento</h1>
+            <ul class="shop-tabs">
+              <li
+                class="cta-shop buy-tab"
+                id="cta-buy"
+                onclick="changeMode('buy')"
+              >
+                Comprar
+              </li>
+              <li
+                class="cta-shop sell-tab"
+                id="cta-sell"
+                onclick="changeMode('sell')"
+              >
+                Vender
+              </li>
+            </ul>
+          </header>
+          <ul class="item-content"></ul>
+          <div class="cart-content">
+            <span>R$0</span>
+            <div class="payment" onclick="payment()">Finalizar</div>
+          </div>
+        </div>
+      </div>
+    </departamento>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="ui.js"></script>
+  </body>
+</html>
