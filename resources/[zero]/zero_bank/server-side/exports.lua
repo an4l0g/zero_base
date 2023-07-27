@@ -20,7 +20,6 @@ end
 exports('verifyMultas', verifyMultas)
 
 registerTrans = function(user_id, type, value)
-    print(user_id, type, value)
     local data = (json.decode(zero.getUData(user_id, 'zero_bank:historico')) or {})
     if (data) then
         if (value < 0) then
