@@ -1,7 +1,7 @@
 fx_version 'bodacious'
 game 'gta5'
 
-author 'bluenzzz#0001'
+author 'bluenzzz#0001 & an4log'
 description 'Zero Weather'
 version '0.1'
 
