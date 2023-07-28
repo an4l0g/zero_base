@@ -78,7 +78,7 @@ end
 
 async(stask_update)
 
-AddEventHandler('vRP:playerJoin', function(user_id, source, name, last_login)
+AddEventHandler('zero:playerJoin', function(source, user_id)
 	local data = zero.getUserDataTable(user_id)
 	if (not data.hunger) then data.hunger = 0; end;
 	if (not data.thirst) then data.thirst = 0; end;

@@ -111,7 +111,7 @@ zero.resetIdentity = function(user_id)
 end
 ------------------------------------------------------------------
 
-AddEventHandler('vRP:playerJoin', function(user_id, source, name)
+AddEventHandler('zero:playerJoin', function(source, user_id)
 	if (not zero.getUserIdentity(user_id)) then
 		zero.execute('vRP/init_user_identity', {
 			user_id = user_id,

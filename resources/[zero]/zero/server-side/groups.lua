@@ -136,7 +136,7 @@ zero.addUserGroup = function(user_id, group, grade)
 						end
 					end
 				end
-				TriggerEvent('vRP:playerJoinGroup', user_id, group, (ngroup['information']['groupType'] or ''))
+				TriggerEvent('zero:playerJoinGroup', user_id, group, (ngroup['information']['groupType'] or ''))
 				return true
 			end
 		end	

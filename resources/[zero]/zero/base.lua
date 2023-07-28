@@ -29,9 +29,7 @@ end
 cacheUsers = {}
 cacheUsers.users = {}
 cacheUsers.rusers = {}
-cacheUsers.user_tables = {}
-cacheUsers.user_tmp_tables = {}
-cacheUsers.user_sources = {}
+cacheUsers.user_source = {}
 
 local db_drivers = {}
 local db_driver
@@ -117,29 +115,6 @@ zero.getIdentifiers = function(source)
     return identifiers
 end
 
-zero.getUserIdByIdentifiers = function(ids)
-	if (ids) then
-		for i = 1, #ids do
-			if (string.find(ids[i], 'ip:') == nil) then
-				local rows = zero.query('zero_framework/getIdentifier', { identifier = ids[i] })
-				if (#rows > 0) then
-					return rows[1].user_id
-				end
-			end
-		end
-		local generateNewUser = zero.insert('zero_framework/createUser')
-		if (generateNewUser > 0) then
-			local user_id = generateNewUser
-			for l, w in pairs(ids) do
-				if (string.find(w, 'ip:') == nil) then
-					zero.execute('zero_framework/addIdentifier', { user_id = user_id, identifier = w })
-				end
-			end
-			return user_id
-		end
-	end
-end
-
 zero.getUData = function(user_id, key)
 	local rows = zero.query("vRP/get_userdata", { user_id = user_id, key = key })
 	if #rows > 0 then
@@ -167,66 +142,39 @@ end
 zero.remSData = function(dkey)
 	zero.execute("vRP/rem_srv_data",{ dkey = dkey })
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- Get Users
-------------------------------------------------------------------
 zero.getUsers = function()
 	local users = {}
-	for k, v in pairs(cacheUsers['user_sources']) do
+	for k, v in pairs(cacheUsers.user_source) do
 		users[k] = v
 	end
 	return users
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- TABELAS TEMPORÁRIAS
-------------------------------------------------------------------
 zero.getUserDataTable = function(user_id)
-	return cacheUsers['user_tables'][user_id]
-end
-
-zero.setKeyDataTable = function(user_id,key,value)
-	if cacheUsers['user_tables'][user_id] then
-		cacheUsers['user_tables'][user_id][key] = value
+	local uData = zero.getUData(user_id, 'vRP:datatable')
+	if (uData) then
+		local data = json.decode(uData)
+		return data
 	end
+	return {}
 end
 
-zero.getUserTmpTable = function(user_id)
-	return cacheUsers['user_tmp_tables'][user_id]
-end
-
-zero.setKeyTempTable = function(user_id,key,value)
-	if cacheUsers['user_tmp_tables'][user_id] then
-		cacheUsers['user_tmp_tables'][user_id][key] = value
-	end
-end
-------------------------------------------------------------------
-
-------------------------------------------------------------------
--- PEGAR ID E SOURCE DO JOGADOR
-------------------------------------------------------------------
 zero.getUserId = function(source)
-	if source ~= nil then
+	if (source ~= nil) then
 		local ids = GetPlayerIdentifiers(source)
 		if ids ~= nil and #ids > 0 then
-			return cacheUsers['users'][ids[1]]
+			return cacheUsers.users[ids[1]]
 		end
 	end
-	print('^2[CONSOLE]:^7 foi enviado uma source nula na função (getUserId)')
+	print('^2[WARNING]^7 Não foi possivel encontrar o user_id do source ^2'..source..'^7.')
 	return nil
 end
 
 zero.getUserSource = function(user_id)
-	return cacheUsers['user_sources'][user_id]
+	return cacheUsers.user_source[user_id]
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- INFORMAÇÕES DO PLAYER
-------------------------------------------------------------------
 concatInv = function(TableInv)
 	local txt = ''
 	if TableInv and type(TableInv) == 'table' then
@@ -258,11 +206,7 @@ concatArmas = function(TableInv)
 	end
 	return 'ERRO AO ENCONTRAR ARMAS'
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- KICK
-------------------------------------------------------------------
 zero.kick = function(source, reason)
 	DropPlayer(source, reason)
 end
@@ -298,51 +242,68 @@ zero.dropPlayer = function(source, reason)
 		end
 	end
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- SAVE DATA TABLE
-------------------------------------------------------------------
-task_save_datatables = function()
-	SetTimeout(30000, task_save_datatables); 
-	for k, v in pairs(cacheUsers['user_tables']) do
-		zero.setUData(k, 'vRP:datatable', json.encode(v))
-	end
-	-- print('^2[DataTable]:^7 o banco de dados foi salvo com sucesso.')
-end
+-- task_save_datatables = function()
+-- 	SetTimeout(30000, task_save_datatables); 
+-- 	for k, v in pairs(cacheUsers['user_tables']) do
+-- 		zero.setUData(k, 'vRP:datatable', json.encode(v))
+-- 	end
+-- 	-- print('^2[DataTable]:^7 o banco de dados foi salvo com sucesso.')
+-- end
 
-async(function()
-	task_save_datatables()
-end)
-------------------------------------------------------------------
+-- async(function()
+-- 	task_save_datatables()
+-- end)
 
-------------------------------------------------------------------
--- CONNECT
-------------------------------------------------------------------
 local createIdentifiers = function(ids)
-	local newUser = zero.insert('zero_framework/createUser')
-	if (newUser > 0) then
-		
+	local newUserId = zero.insert('zero_framework/createUser')
+	if (newUserId > 0) then
+		for i = 1, #ids do
+			local _ids = ids[i]
+			if (string.find(_ids, 'ip:') == nil) then
+				zero.execute('zero_framework/addIdentifier', { user_id = newUserId, identifier = _ids })
+			end
+		end
+		return newUserId
 	end
+	return false
 end
 
-getUserIdByIdentifier = function(ids)
-	local rows = zero.query('zero_framework/getIdentifier', { identifier = ids})
-	if (#rows > 0) then
-		return rows[1].user_id
+zero.getUserIdByIdentifiers = function(ids)
+	if (#ids) then
+		for i = 1, #ids do
+			local _ids = ids[i]
+			if (string.find(_ids, 'ip:') == nil) then
+				local rows = zero.query('zero_framework/getIdentifier', { identifier = _ids })
+				if (#rows > 0) then return rows[1].user_id; end;
+			end
+		end
 	end
-	print('[IDENTIFIER]: Não possui identifiers.')
 	return false
+end
+
+formatIdentifiers = function(source)
+	local _identifiers = zero.getIdentifiers(source)
+	
+	local steamURL, steamID = '', ''
+	steamID = '\n**[STEAM HEX]** - '..(_identifiers.steam or 'OFFLINE')
+	if (_identifiers.steam) then
+		steamURL = '\n**[STEAM URL]** - https://steamcommunity.com/profiles/'..tonumber(_identifiers.steam:gsub('steam:', ''), 16)
+	end
+
+	local discord;
+	discord = '\n**[DISCORD]** - NÃO ENCONTRADO'
+	if (_identifiers.discord) then
+		discord = '\n**[DISCORD]** - <@'.._identifiers.discord:gsub('discord:', '')..'>'
+	end
+	return steamURL, steamID, discord
 end
 
 AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferrals)
 	local source = source
-	if not (name) then name = 'user' end;
+	if not (name) then name = 'user'; end;
 
 	deferrals.defer()
-
-	print('[IDS]: '..json.encode(ids))
-
 	deferrals.update('Olá '..name..', estamos carregando as identidades do servidor...')
 
 	if (not ids) then
@@ -350,109 +311,72 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
 		return 
 	end
-
-	local user_id = zero.getUserIdByIdentifier(ids)
-	if (not user_id) then
 		
+	local user_id = zero.getUserIdByIdentifiers(ids)
+	if (not user_id) then
+		local create = createIdentifiers(ids)
+		if (not create) then
+			deferrals.done('Olá '..name..', ocorreu um problema de identificação, tente logar novamente.')
+			TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+			return
+		end
+	end
+
+	if (cacheUsers.user_source[user_id] ~= nil) then
+		if (GetPlayerName(cacheUsers.user_source[user_id]) ~= nil) then
+			deferrals.done('Olá '..name..', verificamos que o seu passaporte se encontra com problemas, tente logar novamente.')
+			TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+			DropPlayer(cacheUsers.user_source[user_id], '[ZERO]: Você foi kikado, tente logar novamente!')
+			return
+		end
 	end
 		
-		
+	deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
+	if (zero.isBanned(user_id)) then
+		deferrals.done("Você foi banido da cidade. Seu ID é "..user_id)
+		TriggerEvent("queue:playerConnectingRemoveQueues",ids)
+		return
+	end
 
+	if (cacheUsers.rusers[user_id] == nil) then
+		cacheUsers.users[ids[1]] = user_id
+		cacheUsers.rusers[user_id] = ids[1]
+		cacheUsers.user_source[user_id] = source
 
-			--- DUPLICATE LOGIN
-			-- if (cacheUsers['user_sources'][user_id] ~= nil) then
-			-- 	if (GetPlayerName(cacheUsers['user_sources'][user_id]) ~= nil) then
-			-- 		deferrals.done('Olá '..name..', verificamos que o seu passaporte se encontra com problemas, tente logar novamente.')
-			-- 		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-			-- 		DropPlayer(cacheUsers['user_sources'][user_id], '[ZERO]: Você foi kikado, tente logar novamente!')
-			-- 		return
-			-- 	end
-			-- end
+		TriggerEvent('zero:playerJoin', source, user_id)
 
-			--- BANS
-			-- deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
-			-- if (zero.isBanned(user_id)) then
-			-- 	deferrals.done("Você foi banido da cidade. Seu ID é "..user_id)
-			-- 	TriggerEvent("queue:playerConnectingRemoveQueues",ids)
-			-- 	return
-			-- end
-
-			-- local temp_banned = exports["gb_core"]:isTempBanned(user_id)
-			-- if temp_banned then
-			-- 	deferrals.done("Você foi banido temporariamente da cidade. Seu ID é "..user_id.."\nUnban automatico em: "..temp_banned.display)
-			-- 	TriggerEvent("queue:playerConnectingRemoveQueues",ids)
-			-- 	return
-			-- end
-
-			--- WHITELIST
-			-- deferrals.update('Olá '..name..', estamos carregando as whitelists do servidor...')
-			-- if (cacheUsers['rusers'][user_id] == nil) then
-			-- 	deferrals.update('Olá '..name..', estamos carregando o banco de dados do servidor...')
-
-			-- 	cacheUsers['users'][ids[1]] = user_id
-			-- 	cacheUsers['rusers'][user_id] = ids[1]
-			-- 	cacheUsers['user_tables'][user_id] = {}
-			-- 	cacheUsers['user_tmp_tables'][user_id] = {}
-			-- 	cacheUsers['user_sources'][user_id] = source
-
-			-- 	local data = json.decode(zero.getUData(user_id, 'vRP:datatable'))
-			-- 	if type(data) == 'table' then cacheUsers['user_tables'][user_id] = data end
-				
-			-- 	zero.setKeyTempTable(user_id, 'spawns', 0)
-
-			-- 	TriggerEvent('vRP:playerJoin', user_id, source, name)
-				
-			-- 	local userTable = zero.getUserDataTable(user_id)
-			-- 	local health, items, weapons = GetEntityHealth(sPed), concatInv(userTable['inventory']), concatArmas(userTable['weapons'])	
-			-- 	local identifiers = zero.getIdentifiers(source)
-			-- 	local steamId, steamUrl, discordId = '\n**STEAM HEX:** '..(identifiers['steam'] or 'Offline'), '', ''
-
-			-- 	if (identifiers['steam']) then steamUrl = '\n**STEAM URL:** https://steamcommunity.com/profiles/'..tonumber(identifiers['steam']:gsub('steam:', ''), 16) end
-			-- 	if (identifiers['discord']) then discordId = '\n**DISCORD:** <@'..identifiers['discord']:gsub('discord:', '')..'>' end
-			-- 	zero.webhook(config['webhooks']['join'], '```prolog\n[LOG]: ENTROU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
-
-			-- 	deferrals.done()	
-			-- 	zero.execute('vRP/set_login', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
-			-- else
-			-- 	zero.setKeyTempTable(user_id, 'spawns', 0)
-
-			-- 	TriggerEvent('vRP:playerRejoin', user_id, source, name)
-			-- 	deferrals.done()
-			-- end
-		-- else
-		-- 	deferrals.done('Olá '..name..', ocorreu um problema de identificação, tente logar novamente.')
-		-- 	TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-		-- end
+		local steamURL, steamID, discord = formatIdentifiers(source)
+		zero.webhook(config.webhooks.join, '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (JOIN)\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+		zero.execute('zero_framework/setLogin', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
+	else
+		TriggerEvent('zero:playerRejoin', source, user_id)
+	end
+	deferrals.done()	
 end)
-------------------------------------------------------------------
-
 
 RegisterNetEvent('vRPcli:playerSpawned', function()
 	local source = source
 	local user_id = zero.getUserId(source)
 	if user_id then
-		cacheUsers['user_sources'][user_id] = source
+		-- cacheUsers['user_sources'][user_id] = source
 		
-		local tmp = zero.getUserTmpTable(user_id)
-		if tmp then
-			tmp.spawns = tmp.spawns+1
-			first_spawn = (tmp.spawns == 1)
-		end
+		-- local tmp = zero.getUserTmpTable(user_id)
+		-- if tmp then
+		-- 	tmp.spawns = tmp.spawns+1
+		-- 	first_spawn = (tmp.spawns == 1)
+		-- end
 		
-		if first_spawn then
-			Tunnel.setDestDelay(source, 0)
-		end
+		-- if first_spawn then
+		-- 	Tunnel.setDestDelay(source, 0)
+		-- end
 
-		TriggerEvent("vRP:playerSpawn",user_id,source,first_spawn)
-		Player(source).state["vRP:user_id"] = user_id
+		-- TriggerEvent("vRP:playerSpawn",user_id,source,first_spawn)
+		-- Player(source).state["vRP:user_id"] = user_id
 	else
 		zero.webhook(webhookdisc,"```prolog\n[BUG]: Invalid Source\n[SOURCE]: "..tostring(source).."\n[IDS]: "..json.encode(GetPlayerIdentifiers(source)).."```")	
 	end
 end)
 
-------------------------------------------------------------------
--- PROMPT & REQUEST
-------------------------------------------------------------------
 zero.prompt = function(source, questions)
 	return exports['zero_hud']:prompt(source, questions)
 end
@@ -460,7 +384,6 @@ end
 zero.request = function(source, title, time)
 	return exports['zero_hud']:request(source, title, time)
 end
-------------------------------------------------------------------
 
 zero.getDayHours = function(seconds)
     local days = math.floor(seconds/86400)
@@ -473,20 +396,20 @@ zero.getDayHours = function(seconds)
     end
 end
 
--- function exports['vrp']:getMinSecs(seconds)
---     local days = math.floor(seconds/86400)
---     seconds = seconds - days * 86400
---     local hours = math.floor(seconds/3600)
---     seconds = seconds - hours * 3600
---     local minutes = math.floor(seconds/60)
---     seconds = seconds - minutes * 60
+zero.getMinSecs = function(seconds)
+    local days = math.floor(seconds/86400)
+    seconds = seconds - days * 86400
+    local hours = math.floor(seconds/3600)
+    seconds = seconds - hours * 3600
+    local minutes = math.floor(seconds/60)
+    seconds = seconds - minutes * 60
 
---     if minutes > 0 then
---         return string.format("<b>%d Minutos</b> e <b>%d Segundos</b>",minutes,seconds)
---     else
---         return string.format("<b>%d Segundos</b>",seconds)
---     end
--- end
+    if (minutes > 0) then
+        return string.format('<b>%d Minutos</b> e <b>%d Segundos</b>', minutes, seconds)
+    else
+        return string.format('<b>%d Segundos</b>', seconds)
+    end
+end
 
 local delayflood = {}
 local flood = {}

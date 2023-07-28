@@ -55,8 +55,8 @@ config.language = {
 }
 
 config.webhooks = {
-  join = '',
-  exit = '',
+  join = 'https://discord.com/api/webhooks/1134350140300329090/5o-86yZHgDcpx2URSaDuDBJDMoXThNYz-ajQCxMq1N_1jLGJUVIvCKstWcVfaGMcqmJu',
+  exit = 'https://discord.com/api/webhooks/1134350166678323272/AqsznuKDjohWNvnLTOR_PIWJ13nMhqM6CMD8MaSfhAi0ilS6M61rnBoxBMZkuNXICnYd',
   weaponHack = '',
   antiflood = 'https://discord.com/api/webhooks/1122335314397122671/gCJlPjrzaz8UhZ39UTbxKkZJz1FAKVJYNjW_zWI4rk1B1dtHUDX_ARHZpe8qweqE4LOI'
 }

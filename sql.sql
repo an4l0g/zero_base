@@ -29,7 +29,7 @@ create table zero_pix(
 create table zero_user_ids (
     identifier varchar(100) not null,
     user_id int unsigned not null,
-    primary key(user_id)
+    primary key(identifier)
 );
 
 create table zero_user_groups (
