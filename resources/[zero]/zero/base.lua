@@ -319,33 +319,63 @@ end)
 ------------------------------------------------------------------
 -- CONNECT
 ------------------------------------------------------------------
+local createIdentifiers = function(ids)
+	local newUser = zero.insert('zero_framework/createUser')
+	if (newUser > 0) then
+		
+	end
+end
+
+getUserIdByIdentifier = function(ids)
+	local rows = zero.query('zero_framework/getIdentifier', { identifier = ids})
+	if (#rows > 0) then
+		return rows[1].user_id
+	end
+	print('[IDENTIFIER]: Não possui identifiers.')
+	return false
+end
+
 AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferrals)
+	local source = source
 	if not (name) then name = 'user' end;
 
 	deferrals.defer()
-	local source = source
-	if (ids ~= nil and #ids > 0) then
-		deferrals.update('Olá '..name..', estamos carregando as identidades do servidor...')
-		local user_id = zero.getUserIdByIdentifiers(ids)
-		if user_id then
+
+	print('[IDS]: '..json.encode(ids))
+
+	deferrals.update('Olá '..name..', estamos carregando as identidades do servidor...')
+
+	if (not ids) then
+		deferrals.done('Olá '..name..', ocorreu um problema de identidade, tente logar novamente.')
+		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+		return 
+	end
+
+	local user_id = zero.getUserIdByIdentifier(ids)
+	if (not user_id) then
+		
+	end
+		
+		
+
 
 			--- DUPLICATE LOGIN
-			if (cacheUsers['user_sources'][user_id] ~= nil) then
-				if (GetPlayerName(cacheUsers['user_sources'][user_id]) ~= nil) then
-					deferrals.done('Olá '..name..', verificamos que o seu passaporte se encontra com problemas, tente logar novamente.')
-					TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-					DropPlayer(cacheUsers['user_sources'][user_id], '[ZERO]: Você foi kikado, tente logar novamente!')
-					return
-				end
-			end
+			-- if (cacheUsers['user_sources'][user_id] ~= nil) then
+			-- 	if (GetPlayerName(cacheUsers['user_sources'][user_id]) ~= nil) then
+			-- 		deferrals.done('Olá '..name..', verificamos que o seu passaporte se encontra com problemas, tente logar novamente.')
+			-- 		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+			-- 		DropPlayer(cacheUsers['user_sources'][user_id], '[ZERO]: Você foi kikado, tente logar novamente!')
+			-- 		return
+			-- 	end
+			-- end
 
 			--- BANS
-			deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
-			if (zero.isBanned(user_id)) then
-				deferrals.done("Você foi banido da cidade. Seu ID é "..user_id)
-				TriggerEvent("queue:playerConnectingRemoveQueues",ids)
-				return
-			end
+			-- deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
+			-- if (zero.isBanned(user_id)) then
+			-- 	deferrals.done("Você foi banido da cidade. Seu ID é "..user_id)
+			-- 	TriggerEvent("queue:playerConnectingRemoveQueues",ids)
+			-- 	return
+			-- end
 
 			-- local temp_banned = exports["gb_core"]:isTempBanned(user_id)
 			-- if temp_banned then
@@ -355,48 +385,44 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 			-- end
 
 			--- WHITELIST
-			deferrals.update('Olá '..name..', estamos carregando as whitelists do servidor...')
-			if (cacheUsers['rusers'][user_id] == nil) then
-				deferrals.update('Olá '..name..', estamos carregando o banco de dados do servidor...')
+			-- deferrals.update('Olá '..name..', estamos carregando as whitelists do servidor...')
+			-- if (cacheUsers['rusers'][user_id] == nil) then
+			-- 	deferrals.update('Olá '..name..', estamos carregando o banco de dados do servidor...')
 
-				cacheUsers['users'][ids[1]] = user_id
-				cacheUsers['rusers'][user_id] = ids[1]
-				cacheUsers['user_tables'][user_id] = {}
-				cacheUsers['user_tmp_tables'][user_id] = {}
-				cacheUsers['user_sources'][user_id] = source
+			-- 	cacheUsers['users'][ids[1]] = user_id
+			-- 	cacheUsers['rusers'][user_id] = ids[1]
+			-- 	cacheUsers['user_tables'][user_id] = {}
+			-- 	cacheUsers['user_tmp_tables'][user_id] = {}
+			-- 	cacheUsers['user_sources'][user_id] = source
 
-				local data = json.decode(zero.getUData(user_id, 'vRP:datatable'))
-				if type(data) == 'table' then cacheUsers['user_tables'][user_id] = data end
+			-- 	local data = json.decode(zero.getUData(user_id, 'vRP:datatable'))
+			-- 	if type(data) == 'table' then cacheUsers['user_tables'][user_id] = data end
 				
-				zero.setKeyTempTable(user_id, 'spawns', 0)
+			-- 	zero.setKeyTempTable(user_id, 'spawns', 0)
 
-				TriggerEvent('vRP:playerJoin', user_id, source, name)
+			-- 	TriggerEvent('vRP:playerJoin', user_id, source, name)
 				
-				local userTable = zero.getUserDataTable(user_id)
-				local health, items, weapons = GetEntityHealth(sPed), concatInv(userTable['inventory']), concatArmas(userTable['weapons'])	
-				local identifiers = zero.getIdentifiers(source)
-				local steamId, steamUrl, discordId = '\n**STEAM HEX:** '..(identifiers['steam'] or 'Offline'), '', ''
+			-- 	local userTable = zero.getUserDataTable(user_id)
+			-- 	local health, items, weapons = GetEntityHealth(sPed), concatInv(userTable['inventory']), concatArmas(userTable['weapons'])	
+			-- 	local identifiers = zero.getIdentifiers(source)
+			-- 	local steamId, steamUrl, discordId = '\n**STEAM HEX:** '..(identifiers['steam'] or 'Offline'), '', ''
 
-				if (identifiers['steam']) then steamUrl = '\n**STEAM URL:** https://steamcommunity.com/profiles/'..tonumber(identifiers['steam']:gsub('steam:', ''), 16) end
-				if (identifiers['discord']) then discordId = '\n**DISCORD:** <@'..identifiers['discord']:gsub('discord:', '')..'>' end
-				zero.webhook(config['webhooks']['join'], '```prolog\n[LOG]: ENTROU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
+			-- 	if (identifiers['steam']) then steamUrl = '\n**STEAM URL:** https://steamcommunity.com/profiles/'..tonumber(identifiers['steam']:gsub('steam:', ''), 16) end
+			-- 	if (identifiers['discord']) then discordId = '\n**DISCORD:** <@'..identifiers['discord']:gsub('discord:', '')..'>' end
+			-- 	zero.webhook(config['webhooks']['join'], '```prolog\n[LOG]: ENTROU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
 
-				deferrals.done()	
-				zero.execute('vRP/set_login', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
-			else
-				zero.setKeyTempTable(user_id, 'spawns', 0)
+			-- 	deferrals.done()	
+			-- 	zero.execute('vRP/set_login', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
+			-- else
+			-- 	zero.setKeyTempTable(user_id, 'spawns', 0)
 
-				TriggerEvent('vRP:playerRejoin', user_id, source, name)
-				deferrals.done()
-			end
-		else
-			deferrals.done('Olá '..name..', ocorreu um problema de identificação, tente logar novamente.')
-			TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-		end
-	else
-		deferrals.done('Olá '..name..', ocorreu um problema de identidade, tente logar novamente.')
-		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-	end
+			-- 	TriggerEvent('vRP:playerRejoin', user_id, source, name)
+			-- 	deferrals.done()
+			-- end
+		-- else
+		-- 	deferrals.done('Olá '..name..', ocorreu um problema de identificação, tente logar novamente.')
+		-- 	TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+		-- end
 end)
 ------------------------------------------------------------------
 

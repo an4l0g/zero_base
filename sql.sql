@@ -5,8 +5,6 @@ create table zero_users(
     id int unsigned auto_increment not null,
     whitelist tinyint not null,
     banned tinyint not null,
-    garages int not null,
-    houses int not null,
     last_login datetime not null,
     ip varchar(15) not null,
     primary key(id)
