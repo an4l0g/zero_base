@@ -432,8 +432,7 @@ zero.antiflood = function(source, key, limite)
 end
 
 task_save_datatables = function()
-	SetTimeout(10000, task_save_datatables); 
-	TriggerEvent('vRP:save')
+	SetTimeout(5000, task_save_datatables); 
 	for k, v in pairs(cacheUsers.user_tables) do
 		zero.setUData(k, 'zero:userTable', json.encode(v))
 	end
