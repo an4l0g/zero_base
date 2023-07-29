@@ -142,7 +142,7 @@ create table zero_user_vehicles (
     state json not null,
     custom json not null,
     primary key(user_id, vehicle, plate, chassis)
-)
+);
 
 create table zero_spray(
     id int unsigned auto_increment not null,
