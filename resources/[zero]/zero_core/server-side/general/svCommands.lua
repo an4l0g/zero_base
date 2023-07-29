@@ -1190,6 +1190,12 @@ local queries = {
     { query = 'DELETE FROM vrp_mdt WHERE user_id = :user_id'},
 }
 
+RegisterCommand('health',function(source)
+    print(GetPlayerPed(source))
+    print(GetEntityHealth(GetPlayerPed(source)))
+    print(GetPedMaxHealth(GetPlayerPed(source)))
+end)
+
 local reset_player = function(user_id)
 	local _queries = queries
 	for _id,_ in pairs(_queries) do
@@ -1200,9 +1206,9 @@ local reset_player = function(user_id)
 	end)
 end
 
-AddEventHandler('vRP:playerLeave', function(user_id, source)
+AddEventHandler('zero:playerLeave', function(user_id, source)
 	local source = source
-	if _reset_list[source] then
+	if (resetList[source]) then
 		print('RESETOU ('..user_id..')')
 		reset_player(user_id)
 	end

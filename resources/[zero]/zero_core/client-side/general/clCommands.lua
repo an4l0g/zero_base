@@ -3,6 +3,11 @@ Tunnel.bindInterface('Commands', cli)
 local vSERVER = Tunnel.getInterface('Commands')
 
 local CommandsData = {}
+
+RegisterCommand('heal',function()
+	print(GetEntityHealth(PlayerPedId()))
+	print(GetPedMaxHealth(PlayerPedId()))
+end)
 ---------------------------------------
 -- TPWAY
 ---------------------------------------

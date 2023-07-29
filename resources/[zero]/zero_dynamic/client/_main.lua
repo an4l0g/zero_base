@@ -7,7 +7,7 @@ zero = Proxy.getInterface('zero')
 RegisterKeyMapping("openDynamic", "Abrir ações possíveis", 'KEYBOARD', "F9")
 RegisterCommand("openDynamic", function()
     local ped = PlayerPedId()
-    if (GetEntityHealth(ped) > 101 and not zero.isHandcuffed()) then
+    if (GetEntityHealth(ped) > 100 and not zero.isHandcuffed()) then
         cDynamic.openOrUpdateNui()
     end
 end)

@@ -2,7 +2,7 @@
 -- BASE.LUA
 ---------------------------------------------------------------------------------------------------------------------------------
 zero.prepare('zero_framework/createUser', 'insert into zero_users (whitelist, banned) values (false, false)')
-zero.prepare('zero_framework/addIdentifier', 'insert into zero_user_ids (identifier, user_id) values (@identifier, @user_id) on duplicate key update user_id = @user_id')
+zero.prepare('zero_framework/addIdentifier', 'insert into zero_user_ids (identifier, user_id) values (@identifier, @user_id)')
 zero.prepare('zero_framework/getIdentifier', 'select user_id from zero_user_ids where identifier = @identifier')
 zero.prepare("vRP/set_userdata", "REPLACE INTO zero_user_data(user_id,dkey,dvalue) VALUES(@user_id,@key,@value)")
 zero.prepare("vRP/get_userdata", "SELECT dvalue FROM zero_user_data WHERE user_id = @user_id AND dkey = @key")
@@ -14,7 +14,7 @@ zero.prepare("vRP/get_identifiers_by_userid", "SELECT identifier FROM zero_user_
 zero.prepare("vRP/set_banned", "UPDATE zero_users SET banned = @banned WHERE id = @user_id")
 zero.prepare('zero_framework/getWhitelist', 'SELECT whitelist FROM zero_users WHERE id = @user_id')
 zero.prepare('zero_framework/setWhitelist', 'UPDATE zero_users SET whitelist = @whitelist WHERE id = @user_id')
-zero.prepare("vRP/set_login", "UPDATE zero_users SET last_login = current_timestamp(), ip = @ip WHERE id = @user_id")
+zero.prepare('zero_framework/setLogin', 'UPDATE zero_users SET last_login = current_timestamp(), ip = @ip WHERE id = @user_id')
 ---------------------------------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------

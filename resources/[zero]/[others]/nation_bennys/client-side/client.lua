@@ -26,7 +26,7 @@ local markerThread = function()
                     local config = configMechanics[index]
 					DrawMarker(36, config.coord.x, config.coord.y, config.coord.z+0.1, 0, 0, 0, 0, 0, 0, 0.8, 0.8, 0.8, 0, 153, 255, 155, 1, 0, 0, 1)
 					DrawMarker(27, config.coord.x, config.coord.y, config.coord.z-0.97, 0, 0, 0, 0, 0, 0, 3.0, 3.0, 3.0, 0, 153, 255, 155, 0, 0, 0, 1)
-                    if (dist <= 3 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101) then
+                    if (dist <= 3 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100) then
 						openBennys(config)			
                     end
 				else

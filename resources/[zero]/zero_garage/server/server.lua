@@ -986,20 +986,20 @@ end
 
 RegisterNetEvent('zero_interactions:carTrunkin', function()
     local source = source
-    if (GetEntityHealth(GetPlayerPed(source)) > 101 and not zeroClient.isHandcuffed(source)) then
+    if (GetEntityHealth(GetPlayerPed(source)) > 100 and not zeroClient.isHandcuffed(source)) then
         TriggerClientEvent('zero_garage:enterTrunk', source)
     end
 end)
 
 RegisterCommand('trunkin', function(source)
     local source = source
-    if (GetEntityHealth(GetPlayerPed(source)) > 101 and not zeroClient.isHandcuffed(source)) then
+    if (GetEntityHealth(GetPlayerPed(source)) > 100 and not zeroClient.isHandcuffed(source)) then
         TriggerClientEvent('zero_garage:enterTrunk', source)
     end
 end)
 
 RegisterCommand('checktrunk', function(source)
-    if (GetEntityHealth(GetPlayerPed(source)) > 101 and not zeroClient.getNoCarro(source) and not zeroClient.isHandcuffed(source)) then
+    if (GetEntityHealth(GetPlayerPed(source)) > 100 and not zeroClient.getNoCarro(source) and not zeroClient.isHandcuffed(source)) then
         local nplayer = zeroClient.getNearestPlayer(source, 2.0)
         if (nplayer) then 
             TriggerClientEvent('notify', source, 'Garagem', 'Retirando cidadão do <b>porta-malas</b>.')

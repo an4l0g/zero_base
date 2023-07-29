@@ -1,108 +1,113 @@
 local config = module('zero', 'cfg/player_state')
 
-AddEventHandler('vRP:playerSpawn', function(user_id, source, _firstSpawn)
+AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	local data = zero.getUserDataTable(user_id)
-	if (_firstSpawn) then
-		if (data.customization == nil) then data.customization = config.default_customization end
+	if (firstSpawn) then
+		-- [ Customization ] --
+		if (data.customization == nil) then
+			data.customization = config.default_customization
+		end
 		zeroClient.setCustomization(source, data.customization) 
+		----------------------------------
 
-		if (data.position) then zeroClient.teleport(source, data.position.x, data.position.y, data.position.z) end
+		-- [ Teleport ] --
+		if (data.position) then zeroClient.teleport(source, data.position.x, data.position.y, data.position.z); end;
+		----------------------------------
 
-		if (data.health) then
-			zeroClient.setHealth(source, data.health)
-			Citizen.SetTimeout(10000, function()
-				if (zeroClient.isInComa(source)) then
-					zeroClient.killComa(source)
-				end
-			end)
+		-- [ Health ] --
+		if (data.health == nil) then
+			data.health = 400
+		end
+		zeroClient.setHealth(source, data.health)
+		Citizen.SetTimeout(5000, function()
+			if (zeroClient.isInComa(source)) then
+				zeroClient.killComa(source)
+			end
+		end)
+		----------------------------------
+
+		-- [ Armour ] --
+		if (data.armour == nil) then
+			data.armour = 0
+		end
+		Citizen.SetTimeout(10000, function()
+			zeroClient.setArmour(source, data.armour)
+		end)
+		----------------------------------
+
+		-- [ Weapons ] --
+		if (data.weapons == nil) then
+			data.weapons = {}
+		end
+		zeroClient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken)
+		----------------------------------
+
+		-- [ Fome ] --
+		if (data.hunger == nil) then
+			data.hunger = 0
 		end
 
-		if (data.weapons) then zeroClient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken) end		
-
-		if (data.armour) then
-			Citizen.SetTimeout(10000, function()
-				zeroClient.setArmour(source, data.armour)
-			end)
+		if (data.thirst == nil) then
+			data.thirst = 0
 		end
+		----------------------------------
 	else
-		if (zeroClient.isHandcuffed(source)) then
-			zeroClient._setHandcuffed(source, true)
-		else
-			zeroClient._setHandcuffed(source, false)
-		end
-	
-		-- VERIFICAR ESSE CODIGO DA MOCHILA
-		-- if (not zero.hasPermission(user_id, 'mochila.permissao')) then zero.setInventoryMaxWeight(user_id,6) end
-
-		if (data.customization) then zeroClient.setCustomization(source, data.customization) end
+		zeroClient.setCustomization(source, data.customization) 
 	end
 
 	zeroClient._setFriendlyFire(source, true)
 	zeroClient._playerStateReady(source, true)
 end)
 
-------------------------------------------------------------------
--- UPDATE POS
-------------------------------------------------------------------
 zero.updatePos = function(x, y, z)
 	local user_id = zero.getUserId(source)
 	if user_id then
 		local data = zero.getUserDataTable(user_id)
-		local tmp = zero.getUserTmpTable(user_id)
-		if data and (not tmp or not tmp.home_stype) then
-			data.position = { x = tonumber(x), y = tonumber(y), z = tonumber(z) }
+		if (data) then 
+			data.position = { x = tonumber(x), y = tonumber(y), z = tonumber(z) } 
 		end
 	end
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- UPDATE POS
-------------------------------------------------------------------
 zero.updateArmor = function(armor)
 	local user_id = zero.getUserId(source)
 	if user_id then
 		local data = zero.getUserDataTable(user_id)
-		if (data) then data.armour = armor end
+		if (data) then 
+			data.armour = armor 
+		end
 	end
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- UPDATE WEAPONS
-------------------------------------------------------------------
 zero.updateWeapons = function(weapons)
 	local user_id = zero.getUserId(source)
 	if user_id then
 		local data = zero.getUserDataTable(user_id)
-		if (data) then data.weapons = weapons end
+		if (data) then 
+			data.weapons = weapons 
+		end
 	end
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- UPDATE CUSTOMIZATION
-------------------------------------------------------------------
 zero.updateCustomization = function(customization)
 	local user_id = zero.getUserId(source)
 	if user_id then
 		local data = zero.getUserDataTable(user_id)
-		if (data) then data.customization = customization end
+		if (data) then 
+			data.customization = customization
+		end
 	end
 end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- UPDATE CUSTOMIZATION
-------------------------------------------------------------------
 zero.updateHealth = function(health)
 	local user_id = zero.getUserId(source)
 	if user_id then
 		local data = zero.getUserDataTable(user_id)
-		if (data) then data.health = health end
+		if (data) then 
+			data.health = health 
+		end
 	end
 end
-------------------------------------------------------------------
 
 ------------------------------------------------------------------
 -- CLEAR AFTER DIE
@@ -144,11 +149,7 @@ end
 --     end
 -- 	return false
 -- end
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- TIMER
-------------------------------------------------------------------
 local timersCooldown = {}
 
 zero.getUserTimer = function(user_id, timerType)
@@ -198,11 +199,7 @@ RegisterCommand('procurado', function(source)
 		end
 	end
 end)
-------------------------------------------------------------------
 
-------------------------------------------------------------------
--- WEAPON PROTECT
-------------------------------------------------------------------
 GlobalState.weaponToken = 404
 Citizen.SetTimeout(2000,function()
 	math.randomseed(GetGameTimer())
@@ -228,7 +225,6 @@ RegisterCommand('reloadtoken',function(source,args)
 		print("^2[vRP] ^8[WARNING!] ^2Weapons Token Regenerated! <"..GlobalState.weaponToken..">^7")
 	end
 end)
-------------------------------------------------------------------
 
 RegisterNetEvent('trymala', function(nveh)
 	TriggerClientEvent('syncmala', -1, nveh)

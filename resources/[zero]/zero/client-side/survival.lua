@@ -45,7 +45,7 @@ function zero.killGod()
 	nocauteado = false
 	deathtimer = timer_default
 	local ped = PlayerPedId()
-	if GetEntityHealth(ped) <= 101 then
+	if GetEntityHealth(ped) <= 100 then
 		local pCDS = GetEntityCoords(ped)
 		NetworkResurrectLocalPlayer(pCDS.x,pCDS.y,pCDS.z,true,true,false)
 	end
@@ -62,7 +62,7 @@ function zero.PrisionGod()
 	nocauteado = false
 	deathtimer = timer_default
 	local ped = PlayerPedId()
-	if GetEntityHealth(ped) <= 101 then
+	if GetEntityHealth(ped) <= 100 then
 		local pCDS = GetEntityCoords(ped)
 		NetworkResurrectLocalPlayer(pCDS.x,pCDS.y,pCDS.z,true,true,false)
 		TransitionFromBlurred(1000)
@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
 	while true do		
 		if (not nocauteado) then
 			local ped = PlayerPedId()
-			if (GetEntityHealth(ped) <= 101) then
+			if (GetEntityHealth(ped) <= 100) then
 				deathtimer = timer_default
 				nocauteado = true
 				
@@ -91,7 +91,7 @@ Citizen.CreateThread(function()
 				NetworkResurrectLocalPlayer(pCDS.x,pCDS.y,pCDS.z,true,true,false)		
 				
 				zeroServer._updateHealth(101)
-				SetEntityHealth(ped,101)
+				SetEntityHealth(ped, 100)
 				SetEntityInvincible(ped,true)
 				if IsPedInAnyVehicle(ped) then
 					TaskLeaveVehicle(ped,GetVehiclePedIsIn(ped),4160)
@@ -153,7 +153,7 @@ function threadNocauted()
 				end
 				SetPedToRagdoll(ped,1000,1000,0,0,0,0)
 			end
-			SetEntityHealth(ped,101)
+			SetEntityHealth(ped, 100)
 			DisablePlayerFiring(PlayerId(),true)
 			DisableControlAction(0,21,true)
 			DisableControlAction(0,22,true)

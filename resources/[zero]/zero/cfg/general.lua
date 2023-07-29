@@ -55,8 +55,9 @@ config.language = {
 }
 
 config.webhooks = {
-  join = '',
-  exit = '',
+  join = 'https://discord.com/api/webhooks/1134350140300329090/5o-86yZHgDcpx2URSaDuDBJDMoXThNYz-ajQCxMq1N_1jLGJUVIvCKstWcVfaGMcqmJu',
+  exit = 'https://discord.com/api/webhooks/1134350166678323272/AqsznuKDjohWNvnLTOR_PIWJ13nMhqM6CMD8MaSfhAi0ilS6M61rnBoxBMZkuNXICnYd',
+  bugSource = 'https://discord.com/api/webhooks/1134546955457003520/f8lfFRci2fr2IwgDc9QmlPE2ASA_MBo6OW0a_EJ8nedWoxwGk9v4AFYiCaIky9uUuwrh',
   weaponHack = '',
   antiflood = 'https://discord.com/api/webhooks/1122335314397122671/gCJlPjrzaz8UhZ39UTbxKkZJz1FAKVJYNjW_zWI4rk1B1dtHUDX_ARHZpe8qweqE4LOI'
 }

@@ -9,7 +9,7 @@ config.animations = {
             text = 'Animação - Cruzar o Braço',
             action = function()
                 local ped = PlayerPedId()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@heists@heist_corona@single_team', 'single_team_loop_boss', 3)) then
                         zero.DeletarObjeto()
                     else
@@ -25,7 +25,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'mini@strip_club@idles@bouncer@base', 'base', 3)) then
                         zero.DeletarObjeto()
                     else
@@ -41,7 +41,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     if (IsEntityPlayingAnim(ped, 'anim@mp_player_intselfiethe_bird', 'idle_a', 3)) then
                         zero.DeletarObjeto()
                     else
@@ -57,7 +57,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
                         zero.DeletarObjeto()
                     else
@@ -84,7 +84,7 @@ config.animations = {
                 local menuCelular = zero.getMenuCelular()
                 TriggerEvent('zero_animations:cancelSharedAnimation')
                 cancelKeyMapping = false
-                if (GetEntityHealth(ped) > 101 and not menuCelular) then
+                if (GetEntityHealth(ped) > 100 and not menuCelular) then
                     disableActions(false)
                     zero.DeletarObjeto()
                     ClearPedTasks(ped)
@@ -97,7 +97,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
                         zero.DeletarObjeto()
                     else
@@ -113,7 +113,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@mugging3', 'handsup_standing_base', 3) then
                         zero.DeletarObjeto()
                     else
@@ -129,7 +129,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.playAnim(true, {{ 'anim@mp_player_intincarthumbs_upbodhi@ps@', 'enter' }}, false)
                 end
             end
@@ -140,7 +140,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.playAnim(true, {{ 'rcmnigel1c', 'hailing_whistle_waive_a' }}, false)
                 end
             end
@@ -151,7 +151,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.playAnim(true, {{ 'anim@mp_player_intcelebrationmale@salute', 'salute' }}, false)
                 end
             end
@@ -162,7 +162,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.playAnim(true, {{ 'anim@mp_player_intselfiethumbs_up', 'idle_a' }}, false)
                 end
             end
@@ -173,7 +173,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.playAnim(true, {{ 'anim@mp_player_intupperface_palm', 'idle_a' }}, false)
                 end
             end
@@ -184,7 +184,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (GetEntityHealth(ped) > 101 and not menuCelular and not cancelKeyMapping) then
+                if (GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.CarregarAnim('anim@mp_point')
                     if (not LocalPlayer.state.animApontar) then
                         SetPedCurrentWeaponVisible(ped, 0, 1, 1, 1)
