@@ -168,6 +168,5 @@ Citizen.CreateThread(function()
 end)
 
 AddEventHandler('playerSpawned', function()
-	TriggerServerEvent('vRPcli:playerSpawned')
+	TriggerServerEvent('zeroClient:playerSpawned')
 end)
-

@@ -17,7 +17,7 @@ local markerThread = function()
                 if (dist <= 2) then
                     local coord = configShops[index].coord
                     DrawMarker(29, coord.x, coord.y, coord.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 1, 0, 0, 1)
-                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         openShop(index)
                     end
                 end

@@ -32,7 +32,7 @@ Citizen.CreateThread(function()
             if (distance <= 5.0) then
                 _idle = 5
                 DrawMarker(1, _coord.x, _coord.y, _coord.z-0.97, 0, 0, 0, 0, 0, 0, 0.6, 0.6, 0.4, 0, 153, 255, 155, 0, 0, 0, 1)
-                if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                     local list = createJobs()
                     TriggerEvent('zero_hud:toggleHud', false)
                     SetNuiFocus(true, false)
@@ -128,7 +128,7 @@ startJob = function(work)
                     if (dist <= 2.0) then
                         local _coord = vector3(configProductions.coord.x, configProductions.coord.y, configProductions.coord.z)
                         TextFloating('Pressione E para '..product[configProductions.config].blipText, _coord)
-                        if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped) and not task) then
+                        if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped) and not task) then
                             _functionProduction(configProductions)
                         end
                     end
@@ -181,7 +181,7 @@ startJob = function(work)
                 if (distance <= 3.0) then
                     _idle = 5
                     DrawMarker(1, _config.coords.route.x, _config.coords.route.y, _config.coords.route.z-0.97, 0, 0, 0, 0, 0, 0, 0.6, 0.6, 0.4, 0, 153, 255, 155, 0, 0, 0, 1)
-                    if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         _startWork()
                     end
                 end
@@ -204,7 +204,7 @@ startJob = function(work)
             if (distance <= 5.0) then
                 _idle = 5
                 TextFloating('Pressione E para '.._config.text, _config.routes[selection])
-                if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and checkVehicleFunctions(ped, config) and not task) then
+                if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and checkVehicleFunctions(ped, config) and not task) then
                     RemoveBlip(blips)
                     task = true
                     if (lastVehicleModel(GetPlayersLastVehicle(), _config.vehicle)) then

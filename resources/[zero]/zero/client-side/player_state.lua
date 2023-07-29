@@ -20,7 +20,7 @@ local state_cache = {
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(1000)
-		if IsPlayerPlaying(PlayerId()) and state_ready and (not LocalPlayer.state['inArena']) then
+		if (state_ready) then
 			
 			-- COORDINATES SAVE
 			if state_cache.coords_tick >= 5 then
@@ -85,36 +85,6 @@ Citizen.CreateThread(function()
 			end
 			
 		end
-	end
-end)
-
-RegisterNetEvent('save:database',function()
-	if IsPlayerPlaying(PlayerId()) and state_ready and (not LocalPlayer.state['inArena']) then
-		local coords = GetEntityCoords(PlayerPedId(),true)
-		local health = zero.getHealth()
-		local armor = zero.getArmour()
-		local customs = zero.getCustomization()
-		
-		if ( #(coords - state_cache.coords) >= 2 ) then
-			state_cache.coords = coords
-			zeroServer._updatePos(coords.x,coords.y,coords.z)				
-		end
-
-		if (health ~= state_cache.health) then
-			state_cache.health = health
-			zeroServer._updateHealth(health)		
-		end
-
-		if (armor ~= state_cache.armor) then
-			state_cache.armor = armor
-			zeroServer._updateArmor(armor)		
-		end
-
-		if (json.encode(customs) ~= json.encode(state_cache.customs)) then
-			state_cache.customs = customs
-			zeroServer._updateCustomization(customs)
-		end	
-		
 	end
 end)
 
@@ -252,7 +222,7 @@ zero.setCustomization = function(custom)
             end
 
 			ped = PlayerPedId()
-			SetPedMaxHealth(ped,400)
+			SetPedMaxHealth(ped, 200)
 
 			for k,v in pairs(custom) do
 				if k ~= "model" and k ~= "modelhash" then

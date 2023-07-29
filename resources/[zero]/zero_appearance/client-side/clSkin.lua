@@ -39,7 +39,7 @@ local markerThread = function()
                 if (dist <= 5) then
                     local coord = locsConfig[index].coord
                     createMarkers(coord)
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         openSkinShop(index)  
                     end
                 end

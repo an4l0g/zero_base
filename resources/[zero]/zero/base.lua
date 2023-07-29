@@ -1,4 +1,5 @@
 local config = module('zero', 'cfg/general')
+local state = module('zero', 'cfg/player_state')
 
 Tunnel = module('zero', 'lib/Tunnel')
 Proxy = module('zero', 'lib/Proxy')
@@ -30,6 +31,8 @@ cacheUsers = {}
 cacheUsers.users = {}
 cacheUsers.rusers = {}
 cacheUsers.user_source = {}
+cacheUsers.user_tables = {}
+cacheUsers.firstSpawn = {}
 
 local db_drivers = {}
 local db_driver
@@ -152,12 +155,7 @@ zero.getUsers = function()
 end
 
 zero.getUserDataTable = function(user_id)
-	local uData = zero.getUData(user_id, 'vRP:datatable')
-	if (uData) then
-		local data = json.decode(uData)
-		return data
-	end
-	return {}
+	return cacheUsers.user_tables[user_id]
 end
 
 zero.getUserId = function(source)
@@ -210,50 +208,6 @@ end
 zero.kick = function(source, reason)
 	DropPlayer(source, reason)
 end
-
-zero.dropPlayer = function(source, reason)
-	if (source) then
-		local user_id = zero.getUserId(source)
-		local userTable = zero.getUserDataTable(user_id)
-
-		local sPed = GetPlayerPed(source)
-		if (not DoesEntityExist(sPed)) then return; end;
-
-		if (user_id) then
-			local health, items, weapons = GetEntityHealth(sPed), concatInv(userTable['inventory']), concatArmas(userTable['weapons'])	
-			local identifiers = zero.getIdentifiers(source)
-			local steamId, steamUrl, discordId = '\n**STEAM HEX:** '..(identifiers['steam'] or 'Offline'), '', ''
-
-			TriggerEvent('vRP:playerLeave', user_id, source)
-			TriggerClientEvent('vRP:playerExit', -1, user_id, reason, playerCoords)
-			
-			if (identifiers['steam']) then steamUrl = '\n**STEAM URL:** https://steamcommunity.com/profiles/'..tonumber(identifiers['steam']:gsub('steam:', ''), 16) end
-			if (identifiers['discord']) then discordId = '\n**DISCORD:** <@'..identifiers['discord']:gsub('discord:', '')..'>' end
-			zero.webhook(config['webhooks']['exit'], '```prolog\n[LOG]: SAIU\n[SOURCE]: '..source..' [USER_ID]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or 'NÃO IDENTIFICADO')..'\n[LICENSA UTILIZADA]: '..(GetPlayerIdentifier(source) or 'NÃO IDENTIFICADO')..'\n\n[INFORMAÇÕES DETALHADAS]\n[MOTIVO DA SAÍDA]: '..(reason or 'NÃO IDENTIFICADO')..'\n[INVENTÁRIO]: '..items..'\n[ARMAS EQUIPADAS]: '..weapons..'\n[VIDA]: '..tostring(health)..'\n[COORDS]: '..tostring(GetEntityCoords(sPed))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'..steamId..steamUrl..discordId)		
-				
-			local save = json.encode(userTable)
-			if (save ~= 'null') then zero.setUData(user_id, 'vRP:datatable', save) end
-
-			cacheUsers['users'][cacheUsers['rusers'][user_id]] = nil
-			cacheUsers['rusers'][user_id] = nil
-			cacheUsers['user_tables'][user_id] = nil
-			cacheUsers['user_tmp_tables'][user_id] = nil
-			cacheUsers['user_sources'][user_id] = nil
-		end
-	end
-end
-
--- task_save_datatables = function()
--- 	SetTimeout(30000, task_save_datatables); 
--- 	for k, v in pairs(cacheUsers['user_tables']) do
--- 		zero.setUData(k, 'vRP:datatable', json.encode(v))
--- 	end
--- 	-- print('^2[DataTable]:^7 o banco de dados foi salvo com sucesso.')
--- end
-
--- async(function()
--- 	task_save_datatables()
--- end)
 
 local createIdentifiers = function(ids)
 	local newUserId = zero.insert('zero_framework/createUser')
@@ -339,9 +293,14 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 	end
 
 	if (cacheUsers.rusers[user_id] == nil) then
+		local userTable = zero.getUData(user_id, 'zero:userTable')
 		cacheUsers.users[ids[1]] = user_id
 		cacheUsers.rusers[user_id] = ids[1]
 		cacheUsers.user_source[user_id] = source
+		cacheUsers.user_tables[user_id] = {}
+
+		local data = (json.decode(userTable) or {})
+		if (type(data) == 'table') then cacheUsers.user_tables[user_id] = data end
 
 		TriggerEvent('zero:playerJoin', source, user_id)
 
@@ -354,26 +313,56 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 	deferrals.done()	
 end)
 
-RegisterNetEvent('vRPcli:playerSpawned', function()
+AddEventHandler('playerDropped', function(reason)
+	local source = source
+	zero.dropPlayer(source, reason)
+end)
+
+zero.dropPlayer = function(source, reason)
+	if (source) then
+		local user_id = zero.getUserId(source)
+		if (user_id) then
+			TriggerEvent('zero:playerLeave', user_id, source)
+			TriggerClientEvent('zero:playerExit', -1, user_id, reason, playerCoords)
+
+			local userTable = zero.getUserDataTable(user_id)
+			
+			local ped = GetPlayerPed(source)
+			local pCoord = GetEntityCoords(ped)
+			
+			userTable.health = GetEntityHealth(ped)
+			userTable.armour = GetPedArmour(ped)
+			userTable.position = { x = pCoord.x, y = pCoord.y, z = pCoord.z }
+
+			local health, weapons = userTable.health, concatArmas(userTable.weapons)
+			local steamURL, steamID, discord = formatIdentifiers(source)
+			zero.webhook(config.webhooks.exit, '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..health..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+			
+			zero.setUData(user_id, 'zero:userTable', json.encode(userTable))
+		end
+
+		cacheUsers.users[cacheUsers.rusers[user_id]] = nil
+		cacheUsers.rusers[user_id] = nil
+		cacheUsers.user_source[user_id] = nil
+		cacheUsers.user_tables[user_id] = nil
+	end
+end
+
+RegisterNetEvent('zeroClient:playerSpawned', function()
 	local source = source
 	local user_id = zero.getUserId(source)
-	if user_id then
-		-- cacheUsers['user_sources'][user_id] = source
-		
-		-- local tmp = zero.getUserTmpTable(user_id)
-		-- if tmp then
-		-- 	tmp.spawns = tmp.spawns+1
-		-- 	first_spawn = (tmp.spawns == 1)
-		-- end
-		
-		-- if first_spawn then
-		-- 	Tunnel.setDestDelay(source, 0)
-		-- end
-
-		-- TriggerEvent("vRP:playerSpawn",user_id,source,first_spawn)
-		-- Player(source).state["vRP:user_id"] = user_id
+	if (user_id) then
+		local firstSpawn = cacheUsers.firstSpawn[user_id]
+		if (firstSpawn == nil) then
+			firstSpawn = 1
+			Tunnel.setDestDelay(source, 0)
+		else
+			firstSpawn = 0
+		end
+		cacheUsers.user_source[user_id] = source
+		TriggerEvent('vRP:playerSpawn', user_id, source, firstSpawn)
 	else
-		zero.webhook(webhookdisc,"```prolog\n[BUG]: Invalid Source\n[SOURCE]: "..tostring(source).."\n[IDS]: "..json.encode(GetPlayerIdentifiers(source)).."```")	
+		zero.webhook(config.webhooks.bugSource, '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (Invalid Source)\n[SOURCE]: '..tostring(source)..'\n[IDS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'```')	
 	end
 end)
 
@@ -441,6 +430,16 @@ zero.antiflood = function(source, key, limite)
         delayflood[key][source] = os.time()
     end
 end
+
+task_save_datatables = function()
+	SetTimeout(10000, task_save_datatables); 
+	TriggerEvent('vRP:save')
+	for k, v in pairs(cacheUsers.user_tables) do
+		zero.setUData(k, 'zero:userTable', json.encode(v))
+	end
+end
+
+async(task_save_datatables)
 
 -- local webhookCrash = 'https://discord.com/api/webhooks/1073755441592533002/73gJnK61b7W6sPht4uKDjNnDs--BtZw_5dIfVeYwxeR1Hga1SbsBkZRMr6jj0-Hj2Er5'
 -- AddEventHandler('playerDropped', function(reason)

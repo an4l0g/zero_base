@@ -7,7 +7,7 @@ getTime = function()
 end
 
 getHealth = function(ped)
-    return (100 * (GetEntityHealth(ped) - 100) / (400 - 100))
+    return (100 * (GetEntityHealth(ped) - 100) / (200 - 100))
 end
 
 getArmour = function(ped)

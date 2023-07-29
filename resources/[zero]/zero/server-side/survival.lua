@@ -28,7 +28,6 @@ end
 zero.varyHunger = function(user_id, variation)
 	local data = zero.getUserDataTable(user_id)
 	if (data) then
-		if (not data.hunger) then data.hunger = 0 end
 		data.hunger = data.hunger + variation
 		local overflow = (data.hunger - 100)
 		if (overflow > 0) then
@@ -77,9 +76,3 @@ stask_update = function()
 end
 
 async(stask_update)
-
-AddEventHandler('zero:playerJoin', function(source, user_id)
-	local data = zero.getUserDataTable(user_id)
-	if (not data.hunger) then data.hunger = 0; end;
-	if (not data.thirst) then data.thirst = 0; end;
-end)
