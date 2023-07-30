@@ -148,3 +148,13 @@ zero.tryFullPayment = function(user_id, value)
 	return false
 end
 exports('tryFullPayment', zero.tryFullPayment)
+
+AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
+	if (firstSpawn) then
+		zero.execute('zero_framework/money_init_user', {
+			user_id = user_id,
+			wallet = 5000,
+			bank = 25000
+		})
+	end
+end)

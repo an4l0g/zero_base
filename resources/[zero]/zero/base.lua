@@ -336,7 +336,7 @@ zero.dropPlayer = function(source, reason)
 
 			local health, weapons = userTable.health, concatArmas(userTable.weapons)
 			local steamURL, steamID, discord = formatIdentifiers(source)
-			zero.webhook(config.webhooks.exit, '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..health..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+			zero.webhook(config.webhooks.exit, '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
 			
 			zero.setUData(user_id, 'zero:userTable', json.encode(userTable))
 		end
