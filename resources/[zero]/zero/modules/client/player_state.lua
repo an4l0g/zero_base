@@ -88,12 +88,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
-RegisterNetEvent('save:weapons',function()
-	if state_ready and (not LocalPlayer.state['inArena']) then
-		zeroServer._updateWeapons(zero.getWeapons())
-	end
-end)
-
 local config = module('zero', 'cfg/weapons')
 local weapon_types = config.weapons
 
@@ -144,32 +138,6 @@ end
 
 zero.getArmour = function()
 	return GetPedArmour(PlayerPedId())
-end
-
-local parse_part = function(key)
-	if type(key) == "string" and string.sub(key,1,1) == "p" then
-		return true,tonumber(string.sub(key,2))
-	else
-		return false,tonumber(key)
-	end
-end
-
-zero.getDrawables = function(part)
-	local isprop, index = parse_part(part)
-	if isprop then
-		return GetNumberOfPedPropDrawableVariations(PlayerPedId(),index)
-	else
-		return GetNumberOfPedDrawableVariations(PlayerPedId(),index)
-	end
-end
-
-zero.getDrawableTextures = function(part,drawable)
-	local isprop, index = parse_part(part)
-	if isprop then
-		return GetNumberOfPedPropTextureVariations(PlayerPedId(),index,drawable)
-	else
-		return GetNumberOfPedTextureVariations(PlayerPedId(),index,drawable)
-	end
 end
 
 zero.getCustomization = function()
@@ -226,7 +194,7 @@ zero.setCustomization = function(custom)
 
 			for k,v in pairs(custom) do
 				if k ~= "model" and k ~= "modelhash" then
-					local isprop, index = parse_part(k)
+					local isprop, index = parsePart(k)
 					if isprop then
 						if v[1] < 0 then
 							ClearPedProp(ped,index)
@@ -266,3 +234,11 @@ AddEventHandler('zero_core:stopTabletAnim', function()
     ClearPedTasks(PlayerPedId())
     DeleteEntity(tab)
 end)
+
+parsePart = function(key)
+    if (type(key) == 'string' and string.sub(key, 1, 1) == 'p') then
+        return true, tonumber(string.sub(key, 2))
+    else
+        return false, tonumber(key)
+    end
+end

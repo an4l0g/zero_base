@@ -1,14 +1,3 @@
-Tunnel = module('zero', 'lib/Tunnel')
-Proxy = module('zero', 'lib/Proxy')
-Tools = module('zero', 'lib/Tools')
-
-zero = {}
-Tunnel.bindInterface('zero', zero)
-Proxy.addInterface('zero', zero)
-exportTable(zero)
-
-zeroServer = Tunnel.getInterface('zero')
-
 zero.teleport = function(x, y, z)
 	if string.find(type(x), 'vec') then x, y, z = table.unpack(x) end
 	SetEntityCoords(PlayerPedId(), x+0.0001, y+0.0001, z+0.0001, 1, 0, 0, 1)

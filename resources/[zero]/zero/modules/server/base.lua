@@ -1,32 +1,3 @@
-local config = module('zero', 'cfg/general')
-local state = module('zero', 'cfg/player_state')
-
-Tunnel = module('zero', 'lib/Tunnel')
-Proxy = module('zero', 'lib/Proxy')
-Tools = module('zero', 'lib/Tools')
-
-zero = {}
-Proxy.addInterface('zero', zero)
-Tunnel.bindInterface('zero', zero)
-exportTable(zero)
-
-zeroClient = Tunnel.getInterface("zero")
-
-zero.webhook = function(link, message)
-	if (link and message and link ~= '') then
-		PerformHttpRequest(link, function(err, text, headers) end, 'POST', json.encode({ content = message }), { ['Content-Type'] = 'application/json' })
-	end
-end
-
-zero.formatWebhook = function(url, title, body)
-    local currentBody = '```prolog\n['..string.upper(title)..']\n'
-    for k,v in ipairs(body) do
-        currentBody = currentBody..'\n['..string.upper(v[1])..']: '..string.upper(v[2])
-    end
-    currentBody = currentBody..os.date('\n\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'
-    zero.webhook(url, currentBody)
-end
-
 cacheUsers = {}
 cacheUsers.users = {}
 cacheUsers.rusers = {}
@@ -305,7 +276,7 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 		TriggerEvent('zero:playerJoin', source, user_id)
 
 		local steamURL, steamID, discord = formatIdentifiers(source)
-		zero.webhook(config.webhooks.join, '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (JOIN)\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+		zero.webhook('Join', '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (JOIN)\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
 		zero.execute('zero_framework/setLogin', { user_id = user_id, ip = (GetPlayerEndpoint(source) or '0.0.0.0') })
 	else
 		TriggerEvent('zero:playerRejoin', source, user_id)
@@ -336,7 +307,7 @@ zero.dropPlayer = function(source, reason)
 
 			local health, weapons = userTable.health, concatArmas(userTable.weapons)
 			local steamURL, steamID, discord = formatIdentifiers(source)
-			zero.webhook(config.webhooks.exit, '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+			zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
 			
 			zero.setUData(user_id, 'zero:userTable', json.encode(userTable))
 		end
@@ -362,7 +333,7 @@ RegisterNetEvent('zeroClient:playerSpawned', function()
 		cacheUsers.user_source[user_id] = source
 		TriggerEvent('vRP:playerSpawn', user_id, source, firstSpawn)
 	else
-		zero.webhook(config.webhooks.bugSource, '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (Invalid Source)\n[SOURCE]: '..tostring(source)..'\n[IDS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'```')	
+		zero.webhook('BugSource', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (Invalid Source)\n[SOURCE]: '..tostring(source)..'\n[IDS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'```')	
 	end
 end)
 
@@ -421,7 +392,7 @@ zero.antiflood = function(source, key, limite)
                 -- exports["gb_core"]:insertBanRecord(user_id,true,-1,"[ANTI-FLOOD] "..tostring(key))
 
                 DropPlayer(source, "Hoje não! Hoje não! Hoje sim!")
-				zero.webhook(config.webhooks.antiflood, "```prolog\n[ID]: "..user_id.." \n[ANTI-FLOOD]: "..key.."\n"..os.date("\n\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
+				zero.webhook('AntiFlood', "```prolog\n[ID]: "..user_id.." \n[ANTI-FLOOD]: "..key.."\n"..os.date("\n\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S").."```" )
             end
         else
             flood[key][source]=nil

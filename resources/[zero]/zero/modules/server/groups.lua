@@ -1,5 +1,3 @@
-local config = module('zero', 'cfg/groups')
-
 local groups = config.groups
 local users = config.users
 ------------------------------------------------------------------

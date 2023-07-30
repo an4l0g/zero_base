@@ -1,5 +1,3 @@
-local config = module('zero', 'cfg/player_state')
-
 AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	local data = zero.getUserDataTable(user_id)
 	if (firstSpawn) then
@@ -109,46 +107,22 @@ zero.updateHealth = function(health)
 	end
 end
 
-------------------------------------------------------------------
--- CLEAR AFTER DIE
-------------------------------------------------------------------
--- tzero.clearAfterDie = function()
---     local source = source
---     local user_id = zero.getUserId(source)
---     if user_id then
-		
--- 		zero.setMoney(user_id,0)
--- 		zeroClient._clearWeapons(source)
--- 		zeroClient._setHandcuffed(source,false)
+zero.clearAfterDie = function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+		zero.setMoney(user_id, 0)
+		zero.varyThirst(user_id, -100)
+		zero.varyHunger(user_id, -100)
 
--- 		zero.varyThirst(user_id,-100)
--- 		zero.varyHunger(user_id,-100)
+		zeroClient._clearWeapons(source)
+		zeroClient._setHandcuffed(source, false)
 
--- 		local alicaPrata = (zero.getInventoryItemAmount(user_id,'aliancaprata') > 0)
--- 		local alicaOuro = (zero.getInventoryItemAmount(user_id,'aliancaouro') > 0)
-
--- 		zero.clearInventory(user_id)
-
--- 		if alicaPrata then
--- 			zero.giveInventoryItem(user_id,'aliancaprata',1)
--- 		end
--- 		if aliancaOuro then
--- 			zero.giveInventoryItem(user_id,'aliancaouro',1)
--- 		end
-
--- 		if zero.hasPermission(user_id, 'vip.permissao') then
--- 			zero.giveInventoryItem(user_id,'radio',1)
--- 			zero.giveInventoryItem(user_id,'celular',1)
--- 		end
-
--- 		if (not zero.hasPermission(user_id,"mochila.permissao")) then
--- 			zero.setInventoryMaxWeight(user_id,6)
--- 		end
-
--- 		return true
---     end
--- 	return false
--- end
+		zero.clearInventory(user_id)
+		return true
+    end
+	return false
+end
 
 local timersCooldown = {}
 
@@ -215,7 +189,7 @@ zero.checkToken = function(tokenSend, weapons)
 		DropPlayer(source, '[ZERO] - ANTI CHEAT')
 		-- zero.setBanned(user_id, true)
 		exports['zero_core']:setBanned(user_id, true)
-		zero.webhook(config['webhooks'], '```prolog\n[PLAYER]: '..tostring(user_id)..'\n[TOKEN-ENVIADO]: '..tostring(tokenSend)..'\n[TOKEN-SISTEMA]: '..tostring(GlobalState.weaponToken)..'\n[ARMAS]:\n'..json.encode(weapons,{ indent = true })..'\n[IDENTIFIERS]:\n'..json.encode(ids,{ indent = true })..'```')	
+		zero.webhook('WeaponToken', '```prolog\n[PLAYER]: '..tostring(user_id)..'\n[TOKEN-ENVIADO]: '..tostring(tokenSend)..'\n[TOKEN-SISTEMA]: '..tostring(GlobalState.weaponToken)..'\n[ARMAS]:\n'..json.encode(weapons,{ indent = true })..'\n[IDENTIFIERS]:\n'..json.encode(ids,{ indent = true })..'```')	
 	end
 end
 

@@ -70,8 +70,6 @@ zero.clearInventory = function(user_id)
 	end
 end
 
-
-local webhookdied = ""
 zero.itemBodyList = function(item)
 	return exports.zero_inventory:getItemInfo(item) or {}
 end

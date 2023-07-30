@@ -25,20 +25,22 @@ end)
 -- Limpa hotbar e bag do player
 RegisterCommand('cinv', function(source, args)
     local user_id = (args[1] or zero.getUserId(source))
-    if zero.hasPermission(user_id, '+Staff.COO') then
-        sInventory.clearInventory(source, user_id)
-
-        zero.formatWebhook(config.webhooks.delBag, 'Limpar Inventario', {
-            { 'staff', zero.getUserId(source) },
-            { 'id', user_id }
-        })
+    if (zero.hasPermission(user_id, '+Staff.COO')) then
+        if (exports.zero_hud:request(source, 'Deseja realmente limpar o inventário do id '..user_id..'?')) then
+            sInventory.clearInventory(source, user_id)
+            zero.formatWebhook(config.webhooks.delBag, 'Limpar Inventario', {
+                { 'staff', zero.getUserId(source) },
+                { 'id', user_id }
+            })
+            config.functions.serverNotify(source, config.texts.notify_title, config.texts.notify_success_delete_bag('do jogador de id '..user_id))
+        end
     end
 end)
 
 -- Limpa todos os grops do chão
 RegisterCommand('clearground', function(source, args)
     local user_id = zero.getUserId(source)
-    if zero.hasPermission(user_id, "admin.permissao") then
+    if (zero.hasPermission(user_id, '+Staff.COO')) then
         droppedItems = {}
         TriggerClientEvent('updateDroppedItems', -1, droppedItems)
     else
