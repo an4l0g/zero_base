@@ -88,7 +88,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
-local config = module('zero', 'cfg/weapons')
 local weapon_types = config.weapons
 
 zero.clearWeapons = function()
