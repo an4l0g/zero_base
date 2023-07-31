@@ -6,10 +6,6 @@ local configGeneral = config.general
 
 local _active = {}
 
-RegisterCommand('multar', function(source)
-    multarPlayer(1, 'Titulo', 1000, 'Testando 12345')
-end)
-
 RegisterCommand('clearmultas', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
@@ -296,15 +292,15 @@ srv.removePix = function()
     end
 end
 
--- AddEventHandler('vRP:playerSpawn',function(user_id,source,first_spawn)
---     if user_id then
---         local bank = getBankMoney(user_id)
---         local money = getMoney(user_id)
---         if bank and money  then
---             vRP.webhook(webhook.dinheiroAoConectar,'```prolog\n[WISE BANK]\n[PLAYER JOIN]\n[USER_ID]'..user_id..'\n[CARTEIRA]:'..Format(money)..'\n[BANCO]:'..Format(bank)..os.date('\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S')..'\n```')
---         end
---     end
--- end)
+AddEventHandler('vRP:playerSpawn',function(user_id, source, first_spawn)
+    if (user_id) then
+        local bank = zero.getBankMoney(user_id)
+        local money = zero.getMoney(user_id)
+        if (bank and money) then
+            zero.webhook(webhook.dinheiroAoConectar,'```prolog\n[WISE BANK]\n[PLAYER JOIN]\n[USER_ID]'..user_id..'\n[CARTEIRA]:'..Format(money)..'\n[BANCO]:'..Format(bank)..os.date('\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S')..'\n```')
+        end
+    end
+end)
 
 
 -- AddEventHandler('playerDropped', function ()
