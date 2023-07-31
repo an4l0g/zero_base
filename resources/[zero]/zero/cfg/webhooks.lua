@@ -85,5 +85,17 @@ config.webhooks = {
     ['UnGroup'] = 'https://discord.com/api/webhooks/1131416011313262652/cJBhcy7KOHMDjwOL4PBNYgM0oczvP-G7vpNzqYcV4A3YEmF2thnK3fDrkTX3ymGw4Rn-',
 
     ['ShopBuy'] = 'https://discord.com/api/webhooks/1133186498297090098/6UC-zreKV2T44OIIWQaKu7OvIKZ_OHpk1jLruu0Zny55JdsHveEOX78-aQ-YgH9XV21P',
-    ['ShopSell'] = 'https://discord.com/api/webhooks/1133186664039202817/q28zAV0v895XCYWBXjQdylGm7UfUKAce6eTiKsb2ZcM96z2QHSVrwt8Q4HMy6R6cjnf1'
+    ['ShopSell'] = 'https://discord.com/api/webhooks/1133186664039202817/q28zAV0v895XCYWBXjQdylGm7UfUKAce6eTiKsb2ZcM96z2QHSVrwt8Q4HMy6R6cjnf1',
+
+    ['ClearFines'] = 'https://discord.com/api/webhooks/1128493354951393302/4YkTNs72yMhOb7yHjinhvjYYfR3MHIEYsXOIBcUh9q9Bs-TSlXvyFJeLs4mcO1Vj4NVD',
+    ['Transfer'] = 'https://discord.com/api/webhooks/1128491517309374505/qLgu5hHdNPHHQJNM5xVfZEI3GtCWNEsQozdaQtT-pUgo9wLhboZidpgic8NkIBA58G2J',
+    ['Withdraw'] = 'https://discord.com/api/webhooks/1128491135032119441/P8SWz4PngeT8i-dyMRiyK_Wm3RzJmukgylY15L13T_fStvavgbUL-_OpeQHU-b_LpLf8',
+    ['Deposit'] = 'https://discord.com/api/webhooks/1128491233145257996/20ssX8uaz9o3DhbOKEnhGLm8Ds0cOFu7YItpHxQ01gDAFqarDAhF_PP5VjwSLIACPd1v',
+    ['Income'] = 'https://discord.com/api/webhooks/1128491690634793040/I_j6jgYOEDYhJ86BlYQ1m4XustbyDqgi2IDGnYeSb5MSvLQshXIqN7HY0WmWRc-oz3Os',
+    ['PayFine'] = 'https://discord.com/api/webhooks/1135460154750550037/BBmB4nqWWWsynZQJJ9RRvdgEd-IvmhXwWBJeYFWXacy2CbztNPVzyKRK117YsVnj25Ms',
+    ['CriarPix'] = 'https://discord.com/api/webhooks/1128491840719556608/ya7xlgwqU26gcI9EcUB5erHTqcvc8s6JdMhdrn-7w4SqEdF9X6zFQhPk4byfolEY6UcS',
+    ['EditPix'] = 'https://discord.com/api/webhooks/1128492563192610927/IVpc9T2re0EzL0u8JzeQn6K5ryOw0s2tz0Q8Dio072XO0Hd7E8pxlYi6CTYsyLlaJ7aR',
+    ['DelPix'] = 'https://discord.com/api/webhooks/1128493068627226804/CvfFTqomDKqKCvPKi0NtdES7YLKQN4Mq1Vi59VuAbBySp86aQG8ydxCxdUvVRmAT32TX',
+    ['MoneyJoin'] = 'https://discord.com/api/webhooks/1128494210799108177/7DmO6fE75yDePDVrNaQCAC4W-cm_fKVc7Yx4fXV_O792ECcmZU1bJc82NnihUGmda-AL',
+    ['MoneyExit'] = 'https://discord.com/api/webhooks/1128494403573522562/ZZM_O74r_rApzHdNfFzBCTTxVS2rLXty0SHPK-ImeH23Px42f0qRxvspdyAwLX8TWJBC'
 }
