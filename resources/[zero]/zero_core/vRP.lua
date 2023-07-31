@@ -3,9 +3,6 @@ Tunnel = module('zero','lib/Tunnel')
 Proxy = module('zero','lib/Proxy')
 Tools = module('zero','lib/Tools')
 
---Globals
-webhooks = {}
-
 -- Proxies
 if IsDuplicityVersion() then
     zero = Proxy.getInterface('zero')

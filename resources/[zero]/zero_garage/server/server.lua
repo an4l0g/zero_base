@@ -331,17 +331,6 @@ deleteVehicle = function(vehnet)
     end
 end
 
-local webhooks = {}
-webhooks.dv = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF'
-webhooks.dvArea = 'https://discord.com/api/webhooks/1119313191684550746/HUVLo3Qrt9XvOoyr04DNXWcHGUgzZzWUVPRJw_G1zqSCrD9NzApykPRFDBqT6bV8LKfk'
-webhooks.dvAll = 'https://discord.com/api/webhooks/1119322941763633202/PYQLW7s3YB5nDWwGSOofbWaKl7EgDvQZak_DxK1k_QBfOez2UsfcbGNcOdoliVZmOLxs'
-webhooks.addCar = 'https://discord.com/api/webhooks/1119153735852109846/tBEaSaLLmPrVPB2uFiEtFYfePV8H8RGvixMAosVf8eM5q68JfVAFwA4PHPFA6SQFsRVs'
-webhooks.remCar = 'https://discord.com/api/webhooks/1119153781138014281/v_-1xJPxmjTuCXhWo3L9hSihrk7IjZIQzvTDSwRRkj0k-LZX63dSM2mCCUpF7J8g_tol'
-webhooks.car = 'https://discord.com/api/webhooks/1119303684229173278/k21NIsYyJotaqQ9DOTzi8udIchv-r4ESiLgFcqeNLh9-TQF_ASwrTmsjfjxhJYFWMStd'
-webhooks.chave = 'https://discord.com/api/webhooks/1119327519745785927/qwfadofORxl2q5RLltSivL5WpaRjcKZEWVhz_309xQJy2R83YAQlczWyzCKO1xL_KPo-'
-webhooks.fix = 'https://discord.com/api/webhooks/1119461044285345802/cMk-_vciddjT3zuq4tUkUkxjmR-uC7iHi-FsE2sMp7utV-hAkw3Ii8pZ4dgEq_DEL7UB'
-webhooks.vehs = 'https://discord.com/api/webhooks/1119663382426030132/sz2GS6Vv3QETnNDUNQsH5CpeLMvY02LS1IX6RGmKu7JiNQrBW4geth-WzRriifYy3U-2'
-
 local carKeys = {}
 
 srv.vehicleLock = function()
@@ -414,7 +403,7 @@ RegisterNetEvent('zero_interactions:carVehs', function()
                                                     zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
                                                     
                                                     zero.giveBankMoney(user_id, nUser)
-                                                    zero.webhook(webhooks.vehs, '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                                    zero.webhook('Vehs', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                                     local vehEntity = findVehicle(user_id, model)
                                                     if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
                                                 else
@@ -489,7 +478,7 @@ RegisterCommand('vehs', function(source, args)
                                                         zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
                                                         
                                                         zero.giveBankMoney(user_id, nUser)
-                                                        zero.webhook(webhooks.vehs, '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                                        zero.webhook('Vehs', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                                         local vehEntity = findVehicle(user_id, model)
                                                         if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
                                                     else
@@ -536,7 +525,7 @@ local keys = {
             zeroClient._playAnim(nSource, true, {{ 'mp_common', 'givetake1_a' }}, false)
             TriggerClientEvent('notify', source, 'Garagem', 'Você deu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.', 8000)
             TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b>.', 8000)
-            zero.webhook(webhooks.chave, '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[EMPRESTOU CHAVE RESERVA]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            zero.webhook('Chave', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[EMPRESTOU CHAVE RESERVA]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
     end,
     ['rem'] = function(source, nSource, vnetid, vname, nIdentity, identity, nuserId, user_id)
@@ -545,7 +534,7 @@ local keys = {
         zeroClient._playAnim(source, true, {{ 'mp_common', 'givetake1_a' }}, false)
         TriggerClientEvent('notify', source, 'Garagem', 'Você removeu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> para <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.', 8000)
         TriggerClientEvent('notify', nSource, 'Garagem', 'Você perdeu a chave reserva do veiculo <b>'..vehicleName(vname)..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b>.', 8000)
-        zero.webhook(webhooks.chave, '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[RECOLHEU CHAVE RESERVA]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        zero.webhook('Chave', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[RECOLHEU CHAVE RESERVA]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
 }
 
@@ -627,7 +616,7 @@ RegisterCommand('dv', function(source)
         if (vnetid) then
             local vehState = srv.getVehicleData(vnetid)
             vCLIENT.tryDeleteVehicle(source, vnetid)
-            zero.webhook(webhooks.dv, '```prolog\n[PASSAPORTE]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[USOU]: /dv\n[EM]: '..vehState.model..' \n[DONO]: '..vehState.user_id..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            zero.webhook('DeleteVehicle', '```prolog\n[PASSAPORTE]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[USOU]: /dv\n[EM]: '..vehState.model..' \n[DONO]: '..vehState.user_id..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
     end
 end)
@@ -652,7 +641,7 @@ RegisterCommand('dvarea', function(source)
                 end
             end
             TriggerClientEvent('notify', source, 'Garagem', 'Foram deletados <b>'..deleteCount..'</b> veículos.')
-            zero.webhook(webhooks.dvArea, '```prolog\n[/DVAREA]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU]: '..deleteCount..' veículos\n[RADIUS]: '..prompt[1]..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            zero.webhook('DVArea', '```prolog\n[/DVAREA]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU]: '..deleteCount..' veículos\n[RADIUS]: '..prompt[1]..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
     end
 end)
@@ -675,7 +664,7 @@ RegisterCommand('dvall', function(source)
             end
         end
         TriggerClientEvent('announcement', -1, 'Garagem', 'Foram deletados <b>'..deleteCount..'</b> veículos.')
-        zero.webhook(webhooks.dvAll, '```prolog\n[/DVALL]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU]: '..deleteCount..' veículos\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        zero.webhook('DVAll', '```prolog\n[/DVALL]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU]: '..deleteCount..' veículos\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
 end)
 
@@ -691,7 +680,7 @@ RegisterCommand('addcar', function(source)
                 addVehicle(prompt[1], prompt[2])
                 TriggerClientEvent('notify', source, 'Garagem', 'Você adicionou o veículo <b>'..prompt[2]..'</b> para o id <b>'..prompt[1]..'</b>.')
                 local nIdentity = zero.getUserIdentity(prompt[1])
-                zero.webhook(webhooks.addCar, '```prolog\n[/ADDCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[ADICIONOU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('AddCar', '```prolog\n[/ADDCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[ADICIONOU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
         end
     end
@@ -709,7 +698,7 @@ RegisterCommand('remcar', function(source)
                 delVehicle(prompt[1], prompt[2])
                 TriggerClientEvent('notify', source, 'Garagem', 'Você removeu o veículo <b>'..prompt[2]..'</b> do id <b>'..prompt[1]..'</b>.')
                 local nIdentity = zero.getUserIdentity(prompt[1])
-                zero.webhook(webhooks.remCar, '```prolog\n[/REMCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[REMOVEU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('RemCar', '```prolog\n[/REMCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[REMOVEU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
         end
     end
@@ -769,7 +758,7 @@ RegisterCommand('car', function(source, args)
                     vCLIENT.settingVehicle(source, netHandle, srv.processState({}), plate, json.decode(userVehicle.custom))
                     SetPedIntoVehicle(ped, vehHandle, -1)
                     
-                    zero.webhook(webhooks.car, '```prolog\n[/CAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SPAWNOU]: '..spawn..'\n[COORDS]: '..pCoord..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('Car', '```prolog\n[/CAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SPAWNOU]: '..spawn..'\n[COORDS]: '..pCoord..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 end
             end
         end
@@ -877,7 +866,7 @@ RegisterCommand('fix', function(source)
             if (vnetid) then
                 local vehState = srv.getVehicleData(vnetid)
                 TriggerClientEvent('syncreparar', -1, vnetid)
-                zero.webhook(webhooks.fix, '```prolog\n[/FIX]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[FIX]: '..vehState.model..'\n[DONO]: '..vehState.user_id..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('Fix', '```prolog\n[/FIX]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[FIX]: '..vehState.model..'\n[DONO]: '..vehState.user_id..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
         end
     end

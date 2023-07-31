@@ -29,7 +29,7 @@ sHospital.registerService = function(data)
         description = data.description
     })
 
-    zero.formatWebhook(config.webhooks.registerService, 'Registrar serviço', {
+    zero.formatWebhook('registerService', 'Registrar serviço', {
         { 'id Medico', doctor_id },
         { 'id Paciente', data.patient_id },
         { 'Valor total', data.total_price },
@@ -93,7 +93,7 @@ sHospital.requestService = function()
             servicesCount = servicesCount + 1
             TriggerClientEvent('notify', _source, 'Centro Médico', 'Uma nova solicitação de atendimento foi aberta.')
             sHospital.alert()
-            zero.formatWebhook(config.webhooks.requestService, 'solicitacao de atendimento', {
+            zero.formatWebhook('requestService', 'solicitacao de atendimento', {
                 { 'id', user_id },
                 { 'Solicitacao', request[1] },
             })
@@ -115,7 +115,7 @@ sHospital.acceptService = function()
         end
     end
 
-    zero.formatWebhook(config.webhooks.acceptService, 'Aceitar solicitacao', {
+    zero.formatWebhook('acceptService', 'Aceitar solicitacao', {
         { 'id Medico', user_id },
         { 'id Paciente', firstService.patient_id },
         { 'Solicitacao', firstService.request },
@@ -144,7 +144,7 @@ sHospital.cancelLog = function(service)
     if patient_source then
         TriggerClientEvent('announcement', patient_source, 'Centro Médico', 'A sua solicitação de serviço atual foi cancelada!', 'Centro Médico Zero', true)
     end
-    zero.formatWebhook(config.webhooks.cancelService, 'Cancelar servico', {
+    zero.formatWebhook('cancelService', 'Cancelar servico', {
         { 'id Medico', user_id },
         { 'id Paciente', service.patient_id },
         { 'Solicitacao', service.request },
