@@ -119,6 +119,12 @@ create table zero_hwid(
     primary key(token, user_id)
 );
 
+create table zero_dealership(
+    car varchar(50) not null,
+    stock int not null,
+    primary key(car)
+);
+
 create table zero_hospital(
     doctor_id int unsigned not null,
     service_type char(1) not null,

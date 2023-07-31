@@ -1,6 +1,6 @@
 local srv = {}
-Tunnel.bindInterface('zeroGarage', srv)
-local vCLIENT = Tunnel.getInterface('zeroGarage')
+Tunnel.bindInterface('Garage', srv)
+local vCLIENT = Tunnel.getInterface('Garage')
 
 local garagesConfig = config.garages
 local rulesConfig = config.rules
