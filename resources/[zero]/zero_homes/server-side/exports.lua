@@ -83,7 +83,7 @@ homesAdd = function(source)
                     if (decoration) then table.decorations = (decoration.decorations and decoration.decorations._default or 0); end;
                     
                     zero.execute('zero_homes/newPermissions', { user_id = nUser, home = homeName, home_owner = 0, tax = 0, garages = 0, configs = json.encode(table), vip = 0 })
-                    zero.webhook(configWebhooks.addHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (ADD RESIDENT)\n[USER]: '..user_id..'\n[ADD]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('addHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (ADD RESIDENT)\n[USER]: '..user_id..'\n[ADD]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> foi adicionado em sua residência <b>'..homeName..'.')
 
                     local nSource = zero.getUserSource(nUser)
@@ -122,7 +122,7 @@ homesRem = function(source)
                 if (userConsult) then
                     zero.execute('zero_homes/removePermissions', { home = homeName, user_id = nUser })
                     serverNotify(source, 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> foi removido de sua residência.')
-                    zero.webhook(configWebhooks.remHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (REM RESIDENT)\n[USER]: '..user_id..'\n[REM]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('remHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (REM RESIDENT)\n[USER]: '..user_id..'\n[REM]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     
                     local nSource = zero.getUserSource(nUser)
                     if (homeConsult.garages == 1) then
@@ -220,7 +220,7 @@ homesTrans = function(source)
                     zero.execute('zero_homes/removeResidents', { home = homeName })
                     zero.execute('zero_homes/updateOwner', { home = homeName, user_id = user_id, nuser_id = nUser })
                     serverNotify(source, 'Você transferiu a sua <b>residência</b> para o '..nIdentity.firstname..' '..nIdentity.lastname..'.')
-                    zero.webhook(configWebhooks.transferHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (TRANSFER RESIDENT)\n[OLD OWNER]: '..user_id..'\n[NEW OWNER]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TAX IN]: '..homeConsult.tax..' ('..os.date('%d/%m/%Y - %H:%M', homeConsult.tax)..')\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('transferHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (TRANSFER RESIDENT)\n[OLD OWNER]: '..user_id..'\n[NEW OWNER]: '..nUser..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[TAX IN]: '..homeConsult.tax..' ('..os.date('%d/%m/%Y - %H:%M', homeConsult.tax)..')\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 end
             end
         else
@@ -258,7 +258,7 @@ homesVender = function(source)
                 zero.execute('zero_inventory:deleteBag', { bag_type = 'homes:'..homeName })
                 zero.giveBankMoney(user_id, homePrice)
                 TriggerClientEvent('zero_garage:removeGarage', source, homeName)
-                zero.webhook(configWebhooks.sellHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SELL HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[VALUE RECEIVED]: '..homePrice..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[REMOVED HOUSE]: items and garages and upgrades\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('sellHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (SELL HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[VALUE RECEIVED]: '..homePrice..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[REMOVED HOUSE]: items and garages and upgrades\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 serverNotify(source, 'Você vendeu a residência <b>'..homeName..'</b> para a prefeitura por R$'..zero.format(homePrice)..'.')                    
             end
         end
@@ -313,7 +313,7 @@ homesTax = function(source)
                     if (zero.tryFullPayment(user_id, taxPrice)) then
                         zero.execute('zero_homes/updateTax', { home = homeName, tax = os.time() })
                         serverNotify(source, 'O <b>IPTU</b> da sua residência foi pago com sucesso.')
-                        zero.webhook(configWebhooks.buyTax, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY TAX)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..taxPrice..'\n[TAX RENEWED]: '..homesTax..' ('..os.date('%d/%m/%Y - %H:%M', homesTax)..')\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                        zero.webhook('buyTax', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY TAX)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..taxPrice..'\n[TAX RENEWED]: '..homesTax..' ('..os.date('%d/%m/%Y - %H:%M', homesTax)..')\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     else
                         serverNotify(source, 'Você não possui dinheiro suficiente para pagar o <b>IPTU</b> de sua residência.')
                     end
@@ -384,7 +384,7 @@ updateInterior = function(source, interior)
                         if (request) then
                             if (zero.tryFullPayment(user_id, interiorType.value)) then
                                 local items = exports['zero_inventory']:getBag('homes:'..homeName)
-                                zero.webhook(configWebhooks.buyInterior, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                zero.webhook('buyInterior', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 if (homeConfig.decorations ~= 0) then homeConfig.decorations = 0 end;
                                 if (interior == 'eclip_penthouse') then homeConfig.decorations = 'white' end;
                                 homeConfig.interior = interior
@@ -455,7 +455,7 @@ updateDecoration = function(source, decoration)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, homeDecoration[decoration].value)) then
                                     local items = exports['zero_inventory']:getBag('homes:'..homeName)
-                                    zero.webhook(configWebhooks.buyDecoration, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY DECORATION)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..homeDecoration[decoration].value..'\n[OLD DECORATION]: '..homeConfig.decorations..'\n[NEW DECORATION]: '..decoration..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                    zero.webhook('buyDecoration', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY DECORATION)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..homeDecoration[decoration].value..'\n[OLD DECORATION]: '..homeConfig.decorations..'\n[NEW DECORATION]: '..decoration..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                     homeConfig.decorations = decoration
                                     zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                     serverNotify(source, 'A decoração de sua residência <b>'..homeName..'</b> foi alterada com sucesso.')
@@ -504,7 +504,7 @@ homesBau = function(source)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, price)) then
                                     local items = exports['zero_inventory']:getBag('homes:'..homeName)
-                                    zero.webhook(configWebhooks.buyChest, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY CHEST)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[OLD CHEST]: '..homeConfig.chest..'kg\n[NEW CHEST]: '.._upgrade..'kg\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                    zero.webhook('buyChest', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY CHEST)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[OLD CHEST]: '..homeConfig.chest..'kg\n[NEW CHEST]: '.._upgrade..'kg\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                     homeConfig.chest = _upgrade
                                     zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                     serverNotify(source, 'Você aumentou o baú da sua residência <b>'..homeName..'</b> com sucesso.')
@@ -557,7 +557,7 @@ homesGaragem = function(source)
                                     zero.execute('zero_homes/addGarage', { home = homeName, blip = json.encode(coords.blip), spawn = json.encode(coords.spawn) })
                                     serverNotify(source, 'Você comprou uma garagem para a sua residência <b>'..homeName..'</b>.')
                                     TriggerEvent('zero_homes:addGarage', source, homeName, coords.blip, coords.spawn)
-                                    zero.webhook(configWebhooks.buyGarage, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY GARAGE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[COORDS]: '..json.encode({ blip = coords.blip, spawn = coords.spawn }, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                    zero.webhook('buyGarage', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY GARAGE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[COORDS]: '..json.encode({ blip = coords.blip, spawn = coords.spawn }, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 else
                                     serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para comprar uma garagem.')
                                 end
@@ -585,7 +585,7 @@ local _homesLacrar = {
             serverNotify(source, 'A residência <b>'..nearHomes..'</b> foi lacrada.')
 
             local items = exports['zero_inventory']:getBag('homes:'..nearHomes)
-            zero.webhook(configWebhooks.sealHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SEAL HOUSE)\n[OFFICER]: '..zero.getUserId(source)..'\n[HOME]: '..nearHomes:upper()..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            zero.webhook('sealHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (SEAL HOUSE)\n[OFFICER]: '..zero.getUserId(source)..'\n[HOME]: '..nearHomes:upper()..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
     end,
     ['inside'] = function(source, nearHomes, inside, homeName)
@@ -594,7 +594,7 @@ local _homesLacrar = {
             serverNotify(source, 'A residência <b>'..homeName..'</b> foi lacrada.')
 
             local items = exports['zero_inventory']:getBag('homes:'..homeName)
-            zero.webhook(configWebhooks.sealHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (SEAL HOUSE)\n[OFFICER]: '..zero.getUserId(source)..'\n[HOME]: '..homeName:upper()..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            zero.webhook('sealHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (SEAL HOUSE)\n[OFFICER]: '..zero.getUserId(source)..'\n[HOME]: '..homeName:upper()..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         else
             serverNotify(source, 'Você não se encontra na porta ou dentro da <b>residência</b>.')
         end

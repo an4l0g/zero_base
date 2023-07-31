@@ -4,11 +4,6 @@ Tunnel.bindInterface(GetCurrentResourceName(), srv)
 local configGeneral = config.general
 local configShops = config.shops
 
-local webhooks = {
-    buy = 'https://discord.com/api/webhooks/1133186498297090098/6UC-zreKV2T44OIIWQaKu7OvIKZ_OHpk1jLruu0Zny55JdsHveEOX78-aQ-YgH9XV21P',
-    sell = 'https://discord.com/api/webhooks/1133186664039202817/q28zAV0v895XCYWBXjQdylGm7UfUKAce6eTiKsb2ZcM96z2QHSVrwt8Q4HMy6R6cjnf1'
-}
-
 local checkInventory = function(user_id, item, amount)
     if ((zero.getInventoryWeight(user_id) + (zero.getItemWeight(item) * amount)) < zero.getInventoryMaxWeight(user_id)) then
         return true
@@ -108,7 +103,7 @@ local _finish = {
             local text = table.concat(paidOut, ', <br>')
             TriggerClientEvent('notify', source, 'Loja', 'A sua compra foi um <b>sucesso</b>.<br><br><b>(Nota Fiscal)</b><br><br>'..text..'<br><br><b>Total: R$'..zero.format(amountSpent)..'</b>')
             exports['zero_bank']:extrato(user_id, name, -amountSpent)
-            zero.webhook(webhooks.buy, '```prolog\n[ZERO SHOP]\n[ACTION] (BUY)\n[USER]: '..user_id..' \n[TABLE]: '..json.encode(paidOut, { indent = true })..'\n[TOTAL]: R$'..zero.format(amountSpent)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+            zero.webhook('ShopBuy', '```prolog\n[ZERO SHOP]\n[ACTION] (BUY)\n[USER]: '..user_id..' \n[TABLE]: '..json.encode(paidOut, { indent = true })..'\n[TOTAL]: R$'..zero.format(amountSpent)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
         end
         amountSpent = 0
     end,
@@ -118,7 +113,7 @@ local _finish = {
             local text = table.concat(paidOut, ', <br>')
             TriggerClientEvent('notify', source, 'Loja', 'A sua venda foi um <b>sucesso</b>.<br><br><b>(Nota Fiscal)</b><br><br>'..text..'<br><br><b>Total: R$'..zero.format(earnedValue)..'</b>')
             exports['zero_bank']:extrato(user_id, name, earnedValue)
-            zero.webhook(webhooks.sell, '```prolog\n[ZERO SHOP]\n[ACTION] (SELL)\n[USER]: '..user_id..' \n[TABLE]: '..json.encode(paidOut, { indent = true })..'\n[TOTAL]: R$'..zero.format(earnedValue)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+            zero.webhook('ShopSell', '```prolog\n[ZERO SHOP]\n[ACTION] (SELL)\n[USER]: '..user_id..' \n[TABLE]: '..json.encode(paidOut, { indent = true })..'\n[TOTAL]: R$'..zero.format(earnedValue)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
         end
         earnedValue = 0
     end

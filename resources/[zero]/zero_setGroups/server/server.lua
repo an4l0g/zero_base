@@ -2,11 +2,6 @@ srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
-local webhooks = {
-    add = 'https://discord.com/api/webhooks/1131415846984626186/p6XR2dPsedHViS5ajHul1SbvmBE8GRpDfTKA9y5pTwg0W3QHF-ow4M9ydrrBatMjJXk7',
-    del = 'https://discord.com/api/webhooks/1131416011313262652/cJBhcy7KOHMDjwOL4PBNYgM0oczvP-G7vpNzqYcV4A3YEmF2thnK3fDrkTX3ymGw4Rn-'
-}
-
 local baseGroups = {}
 
 painelSysGroups = function()
@@ -48,12 +43,12 @@ srv.addGroup = function(id, group, grade)
     local source = source
     zero.addUserGroup(id, group, grade)
     vCLIENT.updateNui(source, painelUserGroups(id))
-    zero.webhook(webhooks.add, '```prolog\n[ZERO GROUPS]\n[ACTION]: (ADD GROUP)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..id..'\n[GROUP]: '..group..'\n[GRADE]: '..grade..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+    zero.webhook('Group', '```prolog\n[ZERO GROUPS]\n[ACTION]: (ADD GROUP)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..id..'\n[GROUP]: '..group..'\n[GRADE]: '..grade..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 end
 
 srv.delGroup = function(id, group, grade)
     local source = source
     zero.removeUserGroup(id, group)
     vCLIENT.updateNui(source, painelUserGroups(id))
-    zero.webhook(webhooks.del, '```prolog\n[ZERO GROUPS]\n[ACTION]: (UNGROUP)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..id..'\n[GROUP]: '..group..'\n[GRADE]: '..grade..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+    zero.webhook('UnGroup', '```prolog\n[ZERO GROUPS]\n[ACTION]: (UNGROUP)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..id..'\n[GROUP]: '..group..'\n[GRADE]: '..grade..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 end

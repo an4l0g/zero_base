@@ -61,7 +61,7 @@ sInventory.sendItem = function(user_source, index, amount)
             cInventory.animation(_source, 'mp_common', 'givetake1_a', false)
             cInventory.animation(user_source, 'mp_common', 'givetake1_a', false)
             TriggerClientEvent('updateInventory', _source)
-            zero.formatWebhook(config.webhooks.sendItem, 'Enviar item', {
+            zero.formatWebhook('sendItem', 'Enviar item', {
                 { 'De', id },
                 { 'Para', user_id },
                 { 'Item', index },
@@ -90,7 +90,7 @@ sInventory.useItem = function(index, amount)
         { 'Qtd', amount or '1' },
     })
 
-    zero.webhook(config.webhooks.useItems, '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
+    zero.webhook('useItems', '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
 
     if item.consumable then
         consumableItem(index)
@@ -266,10 +266,10 @@ itemsMoveLog = function(cItem, nItem, amount)
         title = 'Colocar Item'
     else
         if sInventory.extract(nItem.bagType, 'pre') == 'bag' and sInventory.extract(cItem.bagType, 'pre') == 'bag' then 
-            url = config.webhooks.stealItem
+            url = 'stealItem'
             title = 'Saquear/Roubar'
         else 
-            url = config.webhooks.moveItem
+            url = 'moveItem'
             title = 'Movimentar Item'
         end
     end

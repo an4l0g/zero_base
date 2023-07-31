@@ -4,8 +4,6 @@ zero = Proxy.getInterface('zero')
 
 configs = {}
 
-configs.webhook = "https://discord.com/api/webhooks/1121327499863928842/Q0qKwIWLK9sWz53yjb41Zse1xfAjEBLFfiG6qCaC_s_mCQPmqEdLOfNQXe0zRenphc_b"
-
 configs.products = {
     ['guns'] = {
         ['weapon_assaultrifle'] = { 

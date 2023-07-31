@@ -8,7 +8,7 @@ RegisterCommand('item', function(source, args)
     if zero.hasPermission(user_id, '+Staff.Administrador') then
         if config.items[item] then
             sInventory.giveInventoryItem(user_id, item, amount)    
-            zero.formatWebhook(config.webhooks.spawnItem, 'Spawnou', {
+            zero.formatWebhook('spawnItem', 'Spawnou', {
                 { 'id', user_id },
                 { 'Item', item },
                 { 'Qtd', amount },
@@ -28,7 +28,7 @@ RegisterCommand('cinv', function(source, args)
     if (zero.hasPermission(user_id, '+Staff.COO')) then
         if (exports.zero_hud:request(source, 'Deseja realmente limpar o inventário do id '..user_id..'?')) then
             sInventory.clearInventory(source, user_id)
-            zero.formatWebhook(config.webhooks.delBag, 'Limpar Inventario', {
+            zero.formatWebhook('delBag', 'Limpar Inventario', {
                 { 'staff', zero.getUserId(source) },
                 { 'id', user_id }
             })
