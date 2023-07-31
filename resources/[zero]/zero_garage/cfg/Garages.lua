@@ -1,5 +1,3 @@
-config = {}
-
 config.clientSpawn = false
 config.clientSpawnForced = {
     ['paredao'] = true

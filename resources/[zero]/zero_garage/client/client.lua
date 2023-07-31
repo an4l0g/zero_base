@@ -1,6 +1,6 @@
 local cli = {}
-Tunnel.bindInterface('zeroGarage', cli)
-local vSERVER = Tunnel.getInterface('zeroGarage')
+Tunnel.bindInterface('Garage', cli)
+local vSERVER = Tunnel.getInterface('Garage')
 
 local garagesConfig = config.garages
 
