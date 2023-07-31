@@ -386,7 +386,7 @@ updateInterior = function(source, interior)
                                 local items = exports['zero_inventory']:getBag('homes:'..homeName)
                                 zero.webhook('buyInterior', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 if (homeConfig.decorations ~= 0) then homeConfig.decorations = 0 end;
-                                if (interior == 'eclip_penthouse') then homeConfig.decorations = 'white' end;
+                                if (interior == 'eclip_penthouse') then homeConfig.decorations = 'executive' end;
                                 homeConfig.interior = interior
                                 zero.execute('zero_homes/updateConfig', { configs = json.encode(homeConfig), home = homeName })
                                 serverNotify(source, 'O interior de sua residência <b>'..homeName..'</b> foi alterado com sucesso.')
