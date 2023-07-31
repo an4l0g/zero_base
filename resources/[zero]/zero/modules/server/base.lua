@@ -180,20 +180,6 @@ zero.kick = function(source, reason)
 	DropPlayer(source, reason)
 end
 
-local createIdentifiers = function(ids)
-	local newUserId = zero.insert('zero_framework/createUser')
-	if (newUserId > 0) then
-		for i = 1, #ids do
-			local _ids = ids[i]
-			if (string.find(_ids, 'ip:') == nil) then
-				zero.execute('zero_framework/addIdentifier', { user_id = newUserId, identifier = _ids })
-			end
-		end
-		return newUserId
-	end
-	return false
-end
-
 zero.getUserIdByIdentifiers = function(ids)
 	if (#ids) then
 		for i = 1, #ids do
@@ -202,6 +188,17 @@ zero.getUserIdByIdentifiers = function(ids)
 				local rows = zero.query('zero_framework/getIdentifier', { identifier = _ids })
 				if (#rows > 0) then return rows[1].user_id; end;
 			end
+		end
+
+		local newUserId = zero.insert('zero_framework/createUser')
+		if (newUserId > 0) then
+			for i = 1, #ids do
+				local _ids = ids[i]
+				if (string.find(_ids, 'ip:') == nil) then
+					zero.execute('zero_framework/addIdentifier', { user_id = newUserId, identifier = _ids })
+				end
+			end
+			return newUserId
 		end
 	end
 	return false
@@ -239,12 +236,9 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 		
 	local user_id = zero.getUserIdByIdentifiers(ids)
 	if (not user_id) then
-		local create = createIdentifiers(ids)
-		if (not create) then
-			deferrals.done('Olá '..name..', ocorreu um problema de identificação, tente logar novamente.')
-			TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-			return
-		end
+		deferrals.done('Olá '..name..', ocorreu um problema de identificação, tente logar novamente.')
+		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+		return
 	end
 
 	if (cacheUsers.user_source[user_id] ~= nil) then

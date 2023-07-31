@@ -10,7 +10,7 @@ webhooks.ipbanned = 'https://discord.com/api/webhooks/1116585370478456882/gM6V3H
 
 local userIsBanned = function(user_id)
     local getBanned = zero.query('zero_hwid/userIsBanned', { user_id = user_id })[1]
-    if (getBanned.banned == 1) then 
+    if (getBanned) and getBanned.banned == 1 then 
         return true
     end
     return false
