@@ -148,3 +148,11 @@ zero.tryFullPayment = function(user_id, value)
 	return false
 end
 exports('tryFullPayment', zero.tryFullPayment)
+
+AddEventHandler('zero:playerJoin', function(source, user_id)
+	zero.execute('zero_framework/money_init_user', {
+		user_id = user_id,
+		wallet = 5000,
+		bank = 25000
+	})
+end)

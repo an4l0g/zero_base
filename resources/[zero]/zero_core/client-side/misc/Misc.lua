@@ -20,3 +20,10 @@ Citizen.CreateThread(function()
 		Citizen.Wait(1)
 	end
 end)
+
+Citizen.CreateThread(function()
+	while (true) do
+		SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
+		Citizen.Wait(1000)
+	end
+end)

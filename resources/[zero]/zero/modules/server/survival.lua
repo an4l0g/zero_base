@@ -31,7 +31,7 @@ zero.varyHunger = function(user_id, variation)
 		data.hunger = data.hunger + variation
 		local overflow = (data.hunger - 100)
 		if (overflow > 0) then
-			zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * survivalConfig.overflow_damage_factor))
+			zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * config.overflow_damage_factor))
 		end
 
 		if (data.hunger < 0) then 
@@ -54,7 +54,7 @@ zero.varyThirst = function(user_id, variation)
 		data.thirst = data.thirst + variation
 		local overflow = data.thirst-100
 		if (overflow > 0) then
-			zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * survivalConfig.overflow_damage_factor))
+			zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * config.overflow_damage_factor))
 		end
 
 		if (data.thirst < 0) then 
@@ -69,8 +69,8 @@ end
 
 stask_update = function()
 	for index, value in pairs(cacheUsers.users) do
-		zero.varyHunger(value, survivalConfig.hunger_per_minute)
-		zero.varyThirst(value, survivalConfig.thirst_per_minute)
+		zero.varyHunger(value, config.hunger_per_minute)
+		zero.varyThirst(value, config.thirst_per_minute)
 	end
   	SetTimeout(60000, stask_update)
 end

@@ -6,8 +6,8 @@ ui_page 'nui/index.html'
 loadscreen_manual_shutdown 'yes'
 loadscreen 'loading/index.html'
 
-client_scripts { 'client-side/*.lua' }
-server_scripts { 'base.lua', 'queue.lua', 'server-side/*.lua' }
-shared_scripts { 'lib/utils.lua', 'cfg/*.lua' }
+client_script 'modules/client/*'
+server_script 'modules/server/*'
+shared_scripts { 'lib/utils.lua', 'zero.lua', 'cfg/*.lua' }
 
 files { 'lib/*.lua', 'nui/*', 'loading/*' }              
