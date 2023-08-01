@@ -1,7 +1,34 @@
+local vSERVER = Tunnel.getInterface('tattooShop')
 local config = module('zero_appearance', 'cfg/cfgTattoo')
 
 local locsConfig = config.locs
 local generalConfig =  config.general
+
+local getTattoos = function(_tattoos, model)
+    local ped = PlayerPedId()
+    local custom = LocalPlayer.state.pedTattoo
+    local pedTattoos = {
+        [GetHashKey('mp_m_freemode_01')] = {
+            { torso = _tattoos.male.torso.tattoo, model = custom.torso },
+            { head = _tattoos.male.head.tattoo, model = custom.head },
+            { leftarm = _tattoos.male.leftarm.tattoo, model = custom.leftarm },
+            { rightarm = _tattoos.male.rightarm.tattoo, model = custom.rightarm },
+            { leftleg = _tattoos.male.leftleg.tattoo, model = custom.leftleg },
+            { rightleg = _tattoos.male.rightleg.tattoo, model = custom.rightleg },
+            { overlay = _tattoos.male.overlay.tattoo, model = custom.overlay },
+        },
+        [GetHashKey('mp_f_freemode_01')] = {
+            { torso = _tattoos.female.torso.tattoo, model = custom.torso },
+            { head = _tattoos.female.head.tattoo, model = custom.head },
+            { leftarm = _tattoos.female.leftarm.tattoo, model = custom.leftarm },
+            { rightarm = _tattoos.female.rightarm.tattoo, model = custom.rightarm },
+            { leftleg = _tattoos.female.leftleg.tattoo, model = custom.leftleg },
+            { rightleg = _tattoos.female.rightleg.tattoo, model = custom.rightleg },
+            { overlay = _tattoos.female.overlay.tattoo, model = custom.overlay },
+        }
+    }
+    return pedTattoos[model]
+end
 
 local nearestBlips = {}
 
@@ -63,10 +90,11 @@ openTattooShop = function(locs)
 
     if (general.hidePlayers) then setPlayersVisible(true); end;
 
+    local tattoos = getTattoos(general.shopConfig, model)
     SendNUIMessage({ 
         method = 'openTattooShop', 
         data = {
-            config = (model == GetHashKey('mp_m_freemode_01') and general.shopConfig.male or general.shopConfig.female), 
+            tattoos = tattoos, 
             sex = (model == GetHashKey('mp_m_freemode_01') and 'male' or 'female'), 
         }
     })
@@ -76,3 +104,12 @@ openTattooShop = function(locs)
     if (general.clothes) then setClothes(general.clothes); end;
     FreezeEntityPosition(ped, true)
 end
+
+RegisterNetEvent('zero:tattooUpdate', function()
+    if (LocalPlayer.state.pedTattoo == nil) then 
+        LocalPlayer.state.pedTattoo = vSERVER.getCharacter()             
+        -- setPedTattoo()
+    else 
+        -- setPedTattoo()
+    end
+end)

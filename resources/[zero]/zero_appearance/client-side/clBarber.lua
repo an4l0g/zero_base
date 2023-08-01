@@ -4,9 +4,8 @@ local config = module('zero_appearance', 'cfg/cfgBarber')
 local locsConfig = config.locs
 local generalConfig =  config.general
 
-local getDrawables = function()
+local getDrawables = function(playerModel)
     local ped = PlayerPedId()
-    local playerModel = GetEntityModel(ped)
     local custom = LocalPlayer.state.pedCustom
     local pedDrawables = {
         [GetHashKey('mp_m_freemode_01')] = {
@@ -100,7 +99,7 @@ openBarberShop = function(locs)
 
     if (general.hidePlayers) then setPlayersVisible(true); end;
 
-    local drawables = getDrawables()
+    local drawables = getDrawables(model)
     SendNUIMessage({
         action = 'openBarberShop',
         data = {

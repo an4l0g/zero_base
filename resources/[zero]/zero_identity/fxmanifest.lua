@@ -1,0 +1,12 @@
+fx_version 'bodacious'
+game 'gta5'
+
+author 'bluenzzz & an4log'
+description 'Zero Identity'
+version '0.1'
+
+ui_page "http://189.0.88.222:8508/"
+
+client_script 'client-side/*.lua'
+server_script 'server-side/*.lua'
+shared_scripts { '@zero/lib/utils.lua', 'config.lua' }              

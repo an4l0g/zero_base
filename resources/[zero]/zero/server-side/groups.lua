@@ -85,10 +85,10 @@ end
 zero.getUserGroupByType = function(user_id, gtype)
 	local user_groups = zero.getUserGroups(user_id)
 	for index, value in pairs(user_groups) do
-		local _groups = group[k]
-		if (_groups[k]) then
-			if (_groups[k]['information']) and _groups[k]['information']['groupType'] then
-				if (_groups[k]['information']['groupType'] == gtype) then
+		local _groups = groups[index]
+		if (_groups[index]) then
+			if (_groups[index]['information']) and _groups[index]['information']['groupType'] then
+				if (_groups[index]['information']['groupType'] == gtype) then
 					return index, value
 				end
 			end
@@ -270,7 +270,7 @@ RegisterCommand('reloadgroups', function(source)
 		local config = module('cfg/groups', true)
 		groups = config.groups
 		users = config.users
-		TriggerEvent('vRP:groupsRefresh')
-        print('^2[vRP]^7 Groups Reloaded')		
+		TriggerEvent('zero:groupsRefresh')
+        print('^5[Zero Groups]^7 Groups Reloaded')		
     end
 end)

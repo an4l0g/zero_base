@@ -78,6 +78,7 @@ create table zero_creation(
   user_id int unsigned not null,
   controller tinyint not null,
   user_character json not null,
+  user_tattoo json not null,
   rh varchar(3) not null,
   primary key(user_id)
 );
@@ -160,4 +161,10 @@ create table zero_spray(
     color int not null,
     created_at timestamp not null default current_timestamp(),
     primary key(id)
-)
+);
+
+create table zero_identity(
+	user_id int unsigned not null,
+    url text not null,
+    primary key(user_id)
+);

@@ -5,15 +5,15 @@ config.general = {
         shopType = 'all',
         hidePlayers = true,
         shopConfig = {
-            ['1'] = { item = { Male = {}, Female = {} } }, -- mascara
-            ['3'] = { item = { Male = {}, Female = {} } }, -- maos
-            ['4'] = { item = { Male = {}, Female = {} } }, -- calca
-            ['5'] = { item = { Male = {}, Female = {} } }, -- mochila
-            ['6'] = { item = { Male = {}, Female = {} } }, -- sapato
-            ['7'] = { item = { Male = {}, Female = {} } }, -- gravata
-            ['8'] = { item = { Male = {}, Female = {} } }, -- camisa
-            ['9'] = { item = { Male = {}, Female = {} } }, -- colete
-            ['11'] = { item = { Male = {}, Female = {} } }, -- jaqueta
+            [1] = { item = { Male = {}, Female = {} } }, -- mascara
+            [3] = { item = { Male = {}, Female = {} } }, -- maos
+            [4] = { item = { Male = {}, Female = {} } }, -- calca
+            [5] = { item = { Male = {}, Female = {} } }, -- mochila
+            [6] = { item = { Male = {}, Female = {} } }, -- sapato
+            [7] = { item = { Male = {}, Female = {} } }, -- gravata
+            [8] = { item = { Male = {}, Female = {} } }, -- camisa
+            [9] = { item = { Male = {}, Female = {} } }, -- colete
+            [11] = { item = { Male = {}, Female = {} } }, -- jaqueta
             ['p0'] = { item = { Male = {}, Female = {} } }, -- bone/chapeu
             ['p1'] = { item = { Male = {}, Female = {} } }, -- oculos
             ['p2'] = { item = { Male = {}, Female = {} } }, -- brinco
