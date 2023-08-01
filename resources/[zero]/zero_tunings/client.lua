@@ -185,7 +185,7 @@ nitroThread = function(ped)
         while (thread) do
             local idle = 1500
             local veh = GetVehiclePedIsIn(ped)
-            if (IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 101) then
+            if (IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100) then
                 if (veh and hasNitro(veh)) then
                     idle = 500
                     nosLevel, purgeLevel = getValuesNitro(veh)

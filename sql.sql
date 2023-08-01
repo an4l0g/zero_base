@@ -5,8 +5,6 @@ create table zero_users(
     id int unsigned auto_increment not null,
     whitelist tinyint not null,
     banned tinyint not null,
-    garages int not null,
-    houses int not null,
     last_login datetime not null,
     ip varchar(15) not null,
     primary key(id)
@@ -31,7 +29,7 @@ create table zero_pix(
 create table zero_user_ids (
     identifier varchar(100) not null,
     user_id int unsigned not null,
-    primary key(user_id)
+    primary key(identifier)
 );
 
 create table zero_user_groups (
@@ -121,6 +119,12 @@ create table zero_hwid(
     primary key(token, user_id)
 );
 
+create table zero_dealership(
+    car varchar(50) not null,
+    stock int not null,
+    primary key(car)
+);
+
 create table zero_hospital(
     doctor_id int unsigned not null,
     service_type char(1) not null,
@@ -144,7 +148,7 @@ create table zero_user_vehicles (
     state json not null,
     custom json not null,
     primary key(user_id, vehicle, plate, chassis)
-)
+);
 
 create table zero_spray(
     id int unsigned auto_increment not null,

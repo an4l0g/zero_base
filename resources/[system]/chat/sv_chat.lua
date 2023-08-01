@@ -1,7 +1,5 @@
 vCLIENT = Tunnel.getInterface('chat')
 
-local webhookChat = 'https://discord.com/api/webhooks/1121126378612473966/Gf93900hWsmaZs3cLVLmxSVU7eX_JbRJsgC07KqcrE0p9I4AXjgnloC4-Ts_I0zgb1BG'
-
 RegisterServerEvent('chat:messageEntered')
 AddEventHandler('chat:messageEntered', function(message)
 	local source = source
@@ -17,7 +15,7 @@ AddEventHandler('chat:messageEntered', function(message)
 				end)
 			end
 		end
-        zero.webhook(webhookChat, '```prolog\n[CHATS GERAL]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..message..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        zero.webhook('Chat', '```prolog\n[CHATS GERAL]\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..message..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 	end
 end)
 
@@ -34,7 +32,7 @@ end)
 RegisterCommand('clearchat', function(source)
     local user_id = zero.getUserId(source);
     if user_id ~= nil then
-        if zero.hasPermission(user_id, 'admin.permissao') then
+        if zero.hasPermission(user_id, '+Staff.Administrador') then
             TriggerClientEvent('chat:clear', -1);
         else
             TriggerClientEvent('chat:clear', source);

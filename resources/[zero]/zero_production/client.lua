@@ -72,7 +72,7 @@ Citizen.CreateThread(function()
         if (nearbyProduction) and nearbyProduction['coords'] then
             idle = 4
             DrawText3D(nearbyProduction.coords.x, nearbyProduction.coords.y, nearbyProduction.coords.z+0.07, '~b~[E]~w~ - ['..nearbyProduction.label..'] Produção')
-            if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+            if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                 openProduction(nearbyProduction.products, nearbyProduction.label, nearbyProduction.index)
             end
         end

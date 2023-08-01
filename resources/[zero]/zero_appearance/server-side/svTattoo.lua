@@ -1,13 +1,18 @@
 local srv = {}
 Tunnel.bindInterface('tattooShop', srv)
 
+zero._prepare('zero_character/getTattoos', 'select user_tattoo from zero_creation where user_id = @user_id')
 zero._prepare('zero_character/saveTattoo', 'update zero_creation set user_tattoo = @user_tattoo where user_id = @user_id')
 
-srv.getTattoo = function(data)
-    local source = source
-    local user_id = zero.getUserId(source)
-    if (user_id) then
-        zero.setUData(user_id, 'zero_appearance:Tattoos', json.encode(data))
+srv.getTattoo = function()
+    local _source = source
+    local _userId = zero.getUserId(_source)
+    if (_userId) then
+        local value = zero.query('zero_character/getTattoos', { user_id = _userId })[1]
+        if (value['user_tattoo']) then
+            local custom = (json.decode(value['user_tattoo']) or {})
+            return custom
+        end
     end
 end
 

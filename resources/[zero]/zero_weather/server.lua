@@ -9,7 +9,7 @@ local sourceVerification = function(source)
     if (source == 0) then 
         allow = true
     else
-        allow = zero.hasPermission(zero.getUserId(source), 'dono.permissao')
+        allow = zero.hasPermission(zero.getUserId(source), '+Staff.COO')
     end
     return allow 
 end

@@ -9,7 +9,7 @@ sInventory.dropItem = function(item, pos, amount)
     local user_id = zero.getUserId(_source)    
         
     if sInventory.tryGetInventoryItem(user_id, item.index, amount) then
-        zero.formatWebhook(config.webhooks.dropItem, 'Dropar item', {
+        zero.formatWebhook('dropItem', 'Dropar item', {
             { 'item', item.index },
             { 'id', user_id },
             { 'qtd', amount }
@@ -67,7 +67,7 @@ sInventory.getDroppedItem = function(id, amount)
 
     if currentItem ~= nil then
         sInventory.giveInventoryItem(user_id, currentItem, amount)
-        zero.formatWebhook(config.webhooks.getItem, 'Pegar item', {
+        zero.formatWebhook('getItem', 'Pegar item', {
             { 'item', currentItem },
             { 'id', user_id },
             { 'qtd', amount },

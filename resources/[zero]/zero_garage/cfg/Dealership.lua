@@ -1,0 +1,1 @@
+config.dealership = vector3(126.633, -1027.134, 29.34729)

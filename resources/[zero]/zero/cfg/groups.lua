@@ -1,50 +1,41 @@
--- PERMISSÃO DEFAULT DA STAFF SERÁ staff.permissao
-config = {}
-
 config.groups = {
-	['Dono'] = {
+	['Staff'] = {
 		information = {
-			title = 'Dono',
-			groupType = 'staff'
+			title = 'Zero Staff',
+			groupType = 'staff',
+			grades = {
+				['Suporte'] = { title = 'Suporte', level = 1 },
+				['Moderador'] = { title = 'Moderador', level = 2 },
+				['Administrador'] = { title = 'Administrador', level = 3 },
+				['Manager'] = { title = 'Manager', level = 4 },
+				['COO'] = { title = 'COO', level = 5 },
+				['CEO'] = { title = 'CEO', level = 6 }
+			}
 		},
-		'dono.permissao',
-		'manager.permissao',
-		'diretor.permissao',
-		'coordenador.permissao',
-		'admin.permissao',
-		'mod.permissao',
-		'suporte.permissao',
 		'staff.permissao',
 		'polpar.permissao',
 		'dv.permissao'
 	},
 
-	['Developer'] = {
-		information = { title = 'Desenvolvedor', groupType = 'staff' },
-		'staff.permissao' 
-	},
-
 	['Hospital'] = {
 		information = { 
 			title = 'Centro Médico', 
-			groupType = 'hospital', 
+			groupType = 'job', 
 			grades = {
-				['Diretor'] = { title = 'Médico', level = 2 },
-				['ViceDiretor'] = { title = 'Médico', level = 2 },
-				['Cirurgiao'] = { title = 'Cirurgião', level = 2 },
-				['Medico'] = { title = 'Médico', level = 2 },
-				['Enfermeiro'] = { title = 'Enfermeiro', level = 2 },
-				['Paramedico'] = { title = 'Paramédico', level = 1 },
+				['Paramedico'] = { title = '[Hospital] Paramédico', level = 1 },
+				['Enfermeiro'] = { title = '[Hospital] Enfermeiro', level = 2 },
+				['Medico'] = { title = '[Hospital] Médico', level = 3 },
+				['Cirurgiao'] = { title = '[Hospital] Cirurgião', level = 4 },
+				['ViceDiretor'] = { title = '[Hospital] Médico', level = 5 },
+				['Diretor'] = { title = '[Hospital] Diretor', level = 6 },
 			},
 			grades_default = 'Paramedico',
 		},
-	'hospital.permissao'
+		'hospital.permissao'
 	}
 }
 
 config.users = {
-	[1] = { 'Dono' },
-	[2] = { 'Dono' }
+	[1] = { ['Staff'] = 'CEO' },
+	[2] = { ['Staff'] = 'CEO' }
 }
-
-return config

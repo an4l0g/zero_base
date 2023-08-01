@@ -1,16 +1,16 @@
-local Tunnel = module("zero", "lib/Tunnel")
-local Proxy = module("zero", "lib/Proxy")
-zero = Proxy.getInterface("zero")
+srv = {}
+Tunnel.bindInterface(GetCurrentResourceName(), srv)
+vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 local baseGroups = {}
 
-function painelSysGroups()
+painelSysGroups = function()
     baseGroups = {}
     for group, groupData in pairs(zero.getGroups()) do
-        if groupData._config and groupData._config.grades then
+        if groupData.information and groupData.information.grades then
             local grades = {}
-            for k,_ in pairs(groupData._config.grades) do
-                table.insert(grades,k)
+            for k,_ in pairs(groupData.information.grades) do
+                table.insert(grades, k)
             end
             table.insert(baseGroups,{ group = group, grades = grades })
         else
@@ -19,43 +19,36 @@ function painelSysGroups()
     end
 end
 Citizen.CreateThread(painelSysGroups)
-AddEventHandler("vRP:groupsRefresh",painelSysGroups)
+AddEventHandler('zero:groupsRefresh',painelSysGroups)
 
-function painelUserGroups(user_id)
+painelUserGroups = function(user_id)
     local cb = {}
     for group, info in pairs(zero.getUserGroups(user_id)) do
-        table.insert(cb,{ group = group, grade = info.grade })
+        table.insert(cb, { group = group, grade = info.grade })
     end
     return cb
 end
 
-RegisterCommand("setgroup", function(source, args)
-    local source = source
+RegisterCommand('group', function(source, args)
     local user_id = zero.getUserId(source)
-    if args[1] and zero.hasPermission(user_id,"admin.permissao") then
-        local nuser_id = parseInt(args[1])
-        local usergroups = painelUserGroups(nuser_id)
-        local identity = zero.getUserIdentity(nuser_id) or { name = "[ Sem", firstname = "Identidade ]" }
-        TriggerClientEvent("vrp_setgroup:openPanel", source, identity, usergroups, baseGroups)
+    local prompt = zero.prompt(source, { 'Passaporte' })[1]
+    if (prompt) and zero.hasPermission(user_id, '+Staff.COO') then
+        local usergroups = painelUserGroups(prompt)
+        local identity = (zero.getUserIdentity(prompt) or 'Indivíduo Indigente')
+        vCLIENT.openNui(source, identity, usergroups, baseGroups)
     end
 end)
 
-RegisterNetEvent("vrp_setgroup:add",function(other_id,group,grade)
+srv.addGroup = function(id, group, grade)
     local source = source
-    local user_id = zero.getUserId(source)
-    if zero.hasPermission(user_id,"admin.permissao") and other_id then
-        zero.addUserGroup(other_id,group,grade)
-        local usergroups = painelUserGroups(other_id)
-        TriggerClientEvent("vrp_setgroup:update",source,usergroups)
-    end
-end)
+    zero.addUserGroup(id, group, grade)
+    vCLIENT.updateNui(source, painelUserGroups(id))
+    zero.webhook('Group', '```prolog\n[ZERO GROUPS]\n[ACTION]: (ADD GROUP)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..id..'\n[GROUP]: '..group..'\n[GRADE]: '..grade..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+end
 
-RegisterNetEvent("vrp_setgroup:del",function(other_id,group,grade)
+srv.delGroup = function(id, group, grade)
     local source = source
-    local user_id = zero.getUserId(source)
-    if zero.hasPermission(user_id,"admin.permissao") and other_id then
-        zero.removeUserGroup(other_id,group)
-        local usergroups = painelUserGroups(other_id)
-        TriggerClientEvent("vrp_setgroup:update",source,usergroups)
-    end
-end)
+    zero.removeUserGroup(id, group)
+    vCLIENT.updateNui(source, painelUserGroups(id))
+    zero.webhook('UnGroup', '```prolog\n[ZERO GROUPS]\n[ACTION]: (UNGROUP)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..id..'\n[GROUP]: '..group..'\n[GRADE]: '..grade..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+end

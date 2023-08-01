@@ -1,7 +1,7 @@
 local inAction = {}
 
 RegisterCommand('saquear', function(source)
-    if (GetEntityHealth(GetPlayerPed(source)) > 101) then
+    if (GetEntityHealth(GetPlayerPed(source)) > 100) then
         local user_id = zero.getUserId(source)
         if (user_id) then
             if not (inAction[user_id]) then
@@ -11,7 +11,7 @@ RegisterCommand('saquear', function(source)
                     if not (inAction[nearestPlayerId]) then
                         inAction[user_id] = nearestPlayerSource
                         inAction[nearestPlayerId] = true
-                        if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) <= 101 then
+                        if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) <= 100 then
                             TriggerClientEvent('emotes', source, 'verificar')
                             TriggerClientEvent('zero_inventory:disableActions', nearestPlayerSource)
                             cInventory.openInventory(source, 'open', 'bag:'..nearestPlayerId)
@@ -30,14 +30,14 @@ RegisterCommand('saquear', function(source)
 end)
 
 RegisterCommand('roubar', function(source)
-    if (GetEntityHealth(GetPlayerPed(source)) > 101) then
+    if (GetEntityHealth(GetPlayerPed(source)) > 100) then
         local user_id = zero.getUserId(source)
         if (user_id) then
             if not (inAction[user_id]) then
                 local nearestPlayerSource = zeroClient.getNearestPlayer(source, 2.0)
                 if (nearestPlayerSource) then
                     local nearestPlayerId = zero.getUserId(nearestPlayerSource)
-                    if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) >= 101 then
+                    if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) > 100 then
                         if not (inAction[nearestPlayerId]) then
                             if zero.request(nearestPlayerSource, 'Você está sendo roubado, deseja aceitar?', 10000) then
                                 inAction[user_id] = nearestPlayerSource
@@ -66,7 +66,7 @@ RegisterCommand('roubar', function(source)
 end)
 
 RegisterCommand('revistar', function(source)
-    if (GetEntityHealth(GetPlayerPed(source)) > 101) then
+    if (GetEntityHealth(GetPlayerPed(source)) > 100) then
         local user_id = zero.getUserId(source)
         if (user_id) then
             if not (inAction[user_id]) then
@@ -77,7 +77,7 @@ RegisterCommand('revistar', function(source)
                         if zero.request(nearestPlayerSource, 'Você está sendo revistado, deseja aceitar?', 60) then
                             inAction[user_id] = nearestPlayerSource
                             inAction[nearestPlayerId] = true
-                            if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) >= 101 then
+                            if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) > 100 then
                                 TriggerClientEvent('zero_inventory:disableActions', nearestPlayerSource)
                                 TriggerClientEvent('emotes', source, 'mexer')
                                 zeroClient.playAnim(nearestPlayerSource, true,{{'random@arrests@busted','idle_a'}},true)

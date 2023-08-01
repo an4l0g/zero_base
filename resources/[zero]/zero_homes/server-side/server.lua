@@ -73,7 +73,7 @@ local _home = {
                             }
                             
                             zero.execute('zero_homes/buyHome', { user_id = user_id, home = index, home_owner = 1, garages = 0, tax = tax, configs = json.encode(table), vip = 0 })
-                            zero.webhook(configWebhooks.buyHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..index:upper()..'\n[TYPE]: '..homes.type..'\n[TAX IN]: '..(tax ~= -1 and tax..'('..os.date('%d/%m/%Y - %H:%M', tax)..')' or 'null')..'\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                            zero.webhook('buyHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..index:upper()..'\n[TYPE]: '..homes.type..'\n[TAX IN]: '..(tax ~= -1 and tax..'('..os.date('%d/%m/%Y - %H:%M', tax)..')' or 'null')..'\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                             serverNotify(source, 'A residência <b>'..index..'</b> foi adquirida por R$'..zero.format(price[2])..'.')
                             local coord = configHomes[index].coord
                             TriggerEvent('zero_homes:registerOwnerBlips', source, false, { index, coord })
@@ -152,7 +152,7 @@ local _home = {
                             local name = generateApartamentName(index)
                             if (name) then 
                                 zero.execute('zero_homes/buyHome', { user_id = user_id, home = name, home_owner = 1, garages = 0, tax = tax, configs = json.encode(table), vip = 0 }) 
-                                zero.webhook(configWebhooks.buyHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..name:upper()..'\n[TYPE]: '..homes.type..'\n[TAX IN]: '..tax..' ('..os.date('%d/%m/%Y - %H:%M', tax)..')\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                zero.webhook('buyHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..name:upper()..'\n[TYPE]: '..homes.type..'\n[TAX IN]: '..tax..' ('..os.date('%d/%m/%Y - %H:%M', tax)..')\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 serverNotify(source, 'A residência <b>'..name..'</b> foi adquirida por R$'..zero.format(price[2])..'.')
                                 local coord = configHomes[index].coord
                                 TriggerEvent('zero_homes:registerOwnerBlips', source, false, { name, coord })
@@ -214,7 +214,7 @@ local _home = {
                 tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
                 vCLIENT.enterHome(source, homeConfig.interior, false, index)
                 homeOpened[index] = true
-                zero.webhook(configWebhooks.invadeHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (INVADE HOUSE)\n[OWNER]: '..ownerConsult.user_id..'\n[OFFICER]: '..user_id..'\n[HOME]: '..index:upper()..'\n[TYPE]: '..homeConfig.type..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('invadeHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (INVADE HOUSE)\n[OWNER]: '..ownerConsult.user_id..'\n[OFFICER]: '..user_id..'\n[HOME]: '..index:upper()..'\n[TYPE]: '..homeConfig.type..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             else
                 serverNotify(source, 'Você não possui um <b>mandado de busca e apreensão</b> para invadir esta residência.')
             end
@@ -236,7 +236,7 @@ local _home = {
                 tempHome[source] = { oldCoords = GetEntityCoords(GetPlayerPed(source)) }
                 vCLIENT.enterHome(source, homeConfig.interior, false, homeName)
                 homeOpened[homeName] = true
-                zero.webhook(configWebhooks.invadeHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (INVADE HOUSE)\n[OWNER]: '..ownerConsult.user_id..'\n[OFFICER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeConfig.type..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('invadeHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (INVADE HOUSE)\n[OWNER]: '..ownerConsult.user_id..'\n[OFFICER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeConfig.type..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             else
                 serverNotify(source, 'Você não possui um <b>mandado de busca e apreensão</b> para invadir esta residência.')
             end
@@ -380,7 +380,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
                             zero.execute('zero_homes/sellHome', { home = homeName })
                             zero.execute('zero_homes/delGarage', { home = homeName })
                             zero.execute('zero_inventory:deleteBag', { bag_type = 'homes:'..homeName })
-                            zero.webhook(configWebhooks.loseHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (CLEAN UP)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeConfig.type..'\n[TAX]: '..v.tax..' ('..os.date('%d/%m/%Y - %H:%M', v.tax)..')\n[ITEMS]:'..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                            zero.webhook('loseHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (CLEAN UP)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeConfig.type..'\n[TAX]: '..v.tax..' ('..os.date('%d/%m/%Y - %H:%M', v.tax)..')\n[ITEMS]:'..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                         end
                     end
                 end
@@ -411,7 +411,7 @@ Citizen.CreateThread(function()
                 zero.execute('zero_homes/delGarage', { home = homeName })
                 zero.execute('zero_inventory:deleteBag', { bag_type = 'homes:'..homeName })
                 
-                zero.webhook(configWebhooks.loseHouse, '```prolog\n[ZERO HOMES]\n[ACTION]: (CLEAN UP)\n[USER]: '..v.user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeConfig.type..'\n[TAX]: '..v.tax..' ('..os.date('%d/%m/%Y - %H:%M', v.tax)..')\n[ITEMS]:'..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('loseHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (CLEAN UP)\n[USER]: '..v.user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeConfig.type..'\n[TAX]: '..v.tax..' ('..os.date('%d/%m/%Y - %H:%M', v.tax)..')\n[ITEMS]:'..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 cleanupHouses = cleanupHouses + 1
             end
         end

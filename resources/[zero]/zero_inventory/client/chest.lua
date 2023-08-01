@@ -60,7 +60,7 @@ RegisterCommand("openCarChest", function()
         return
     end
     local ped = PlayerPedId() 
-    if GetEntityHealth(ped) > 101 and not config.functions.isHandcuffed() and not IsPedBeingStunned(ped) and not IsPlayerFreeAiming(ped) then
+    if GetEntityHealth(ped) > 100 and not config.functions.isHandcuffed() and not IsPedBeingStunned(ped) and not IsPlayerFreeAiming(ped) then
         local vehicle,vnetid,placa,vname,lock,banned,trunk  = zero.vehList(5)
         local veh = { isLocked = lock, carName = vname, ownerId = sInventory.getVehOwnerId(vnetid) } 
         if veh.isLocked == 1 then

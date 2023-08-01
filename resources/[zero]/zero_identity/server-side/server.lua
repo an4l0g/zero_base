@@ -3,7 +3,6 @@ Tunnel.bindInterface(GetCurrentResourceName(), srv)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 local configGeneral = config.general
-local configWebhooks = config.webhooks
 
 zero._prepare('zero_identity/getUserPhoto', 'select url from zero_identity where user_id = @user_id')
 zero._prepare('zero_identity/insertPhoto', 'insert into zero_identity (user_id, url) values (@user_id, @url)')
@@ -79,7 +78,7 @@ getUserRG = function(source, nUser, args)
             table.gunLicense = getUserGunlicense(nUser)
             table.fines = exports['zero_bank']:verifyMultas(nUser)
             table.rh = getUserRH(nUser)
-            zero.webhook(configWebhooks.verifyRG, '```prolog\n[ZERO IDENTITY]\n[ACTION]: (VERIFY RG)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..nUser..'\n[TABLE]: '..json.encode(table, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..table.image)
+            zero.webhook('verifyRG', '```prolog\n[ZERO IDENTITY]\n[ACTION]: (VERIFY RG)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..nUser..'\n[TABLE]: '..json.encode(table, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..table.image)
             vCLIENT.openNui(source, table)
         end
     end
@@ -117,7 +116,7 @@ srv.updatePhoto = function(image)
     local user_id = zero.getUserId(source)
     if (user_id) then
         zero.execute('zero_identity/updatePhoto', { user_id = user_id, url = image })
-        zero.webhook(configWebhooks.updatePhoto, '```prolog\n[ZERO IDENTITY]\n[ACTION]: (UPDATE PHOTO)\n[USER]: '..user_id..'\n[PHOTO]: '..image..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..image)
+        zero.webhook('updatePhoto', '```prolog\n[ZERO IDENTITY]\n[ACTION]: (UPDATE PHOTO)\n[USER]: '..user_id..'\n[PHOTO]: '..image..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..image)
         return
     end
     return TriggerClientEvent('notify', source, 'Identidade', 'Não foi possível atualizar a sua <b>identidade</b>.')
@@ -136,7 +135,7 @@ getUserJob = function(user_id)
     local job, jobinfo = zero.getUserGroupByType(user_id, 'fac')
     if (not job) then job, jobinfo = zero.getUserGroupByType(user_id, 'job'); end;
     if (job) then
-        return zero.getGroupTitle(zero, jobinfo.grade)..((jobinfo.active and ' (ativo)') or '')
+        return zero.getGroupTitle(job, jobinfo.grade)..((jobinfo.active and ' (ativo)') or '')
     end
     return 'Desempregado'
 end
@@ -148,7 +147,7 @@ end
 getUserStaff = function(user_id)
     local staff, staffinfo = zero.getUserGroupByType(user_id, 'staff')
     if (staff) then
-        return zero.getGroupTitle(zero, staffinfo.grade)..((staffinfo.active and ' (ativo)') or '')
+        return zero.getGroupTitle(staff, staffinfo.grade)..((staffinfo.active and ' (ativo)') or '')
     end
     return nil
 end

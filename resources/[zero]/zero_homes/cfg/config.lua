@@ -2,22 +2,6 @@ local SERVER = IsDuplicityVersion()
 
 config = {}
 
-config.webhooks = {
-    buyHouse = 'https://discord.com/api/webhooks/1128051775258235080/6ax3R90T0poZ1DIiwJ3SrVO17-276IraTw8D82uRmX4rOjeH9s_iYOm1_0Klwhh6sdi8',
-    sellHouse = 'https://discord.com/api/webhooks/1128052384883548261/gsWO7TZzij1C4FDFOmtCwB-KThYzOHFl-VvoX_cpdHJYaUe2ad65K7bWQhJ0X_V8_F00',
-    addHouse = 'https://discord.com/api/webhooks/1128053564682551417/Uxl6NOU9kw4_g6TfkTx4Ai1pcI2Zg46jYC3QpPNjK0OYJEhJFsmG3ZVgm6DBqHaZboKg',
-    remHouse = 'https://discord.com/api/webhooks/1128053885991387296/GnUUDwTBQk8kwuGz-17B4sS7C3d9sfEWl7GTzxbJI-6exVp7wOfXDT7zWE1Kk9yGKSCn',
-    transferHouse = 'https://discord.com/api/webhooks/1128054088207183912/2wrUMa6K0pRl8lGYcsUz3e8s476OsJR2gmsAYLvXXECi-7SGkKVhgPYGQaWY8xODDRqJ',
-    buyGarage = 'https://discord.com/api/webhooks/1128054369900838934/QN9AVCdqU7s9y5G05LywJOYaZ97W3DB9YJ-_d4jYyUvqesbABnRDbDf04nQERht97duZ',
-    buyChest = 'https://discord.com/api/webhooks/1128054537849163808/WvSFtMzUGhupcgFtWA43P4tSfPiHjm1Vqg6qLf2bWJsMZxuQWmbXczoVylsL15F92JDs',
-    buyInterior = 'https://discord.com/api/webhooks/1128054697534689340/MwGk9-NBLi-UyreD_rS0woGC39hTPNXGtlHDtXo-N0JC3mOsjRbYIJ0X9YsI_OBivtnN',
-    buyDecoration = 'https://discord.com/api/webhooks/1128054846482812959/AtG802sb6zT1P-5cBszbSLGH8iT0jJLBcH_byMeGoc0jR-cDMDzYYiLOs6q-eKAf114m',
-    buyTax = 'https://discord.com/api/webhooks/1128055071423332464/u2oCkscVF_2BY6LeGdfNG0eDXaLi-BIp9cMZxmKzRxNvQ4w0XDEdHi3HUFt4Cpdihzj7',
-    loseHouse = 'https://discord.com/api/webhooks/1128070992976171039/XSlDHbE9yMoxat45i5ADAVkdc41kmZ-siXvkZLPBkJxD7A57NqRHVsh0xCqMf_OqJE4M',
-    invadeHouse = 'https://discord.com/api/webhooks/1129537966033883166/Hucyr76MR0galkp3-F5ZD7qX6gKsz4Uj87ooawRSoKpWvxEVc7Y1ShHOcqMjdreSuymn',
-    sealHouse = 'https://discord.com/api/webhooks/1129541038453825546/3tJYbwVlWziXhTVR8-zgY2vEAZvTk5BSACVOFwwqdivGaTlep0EHEqsWqB_GSEOQxhrQ'
-}
-
 config.general = {
     lateFee = 15, -- TAXA ATRASADA (PADRÃO 15 DIAS)
     wonFee = 20, -- VENCEU TAXA (PADRÃO 20 DIAS)
@@ -25,7 +9,7 @@ config.general = {
     taxPrice = 0.05, -- VALOR DA TAXA
     percentageUpgrade = 0.8, -- PORCENTAGEM DE VENDA DOS UPGRADE (INTERIOR NÃO CONTA)
     openVaultPermission = '+DEIC.Soldado', -- PERMISSÃO DA POLÍCIA PARA ABRIR O BAÚ DA CASA
-    invadePermission = 'dono.permissao'
+    invadePermission = '+Staff.COO'
 }
 
 config.homes = {
@@ -1667,8 +1651,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'simple',
-            ['simple'] = { value = 10000, perm = 'dono.permissao' },
-            ['motel'] = { value = 10000, perm = 'dono.permissao' }
+            ['simple'] = { value = 10000, perm = '+Staff.COO' },
+            ['motel'] = { value = 10000, perm = '+Staff.COO' }
         },
     },
     ['modern'] = {
@@ -1689,9 +1673,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'single',
-            ['single'] = { value = 10000, perm = 'dono.permissao' },
-            ['high_01'] = { value = 10000, perm = 'dono.permissao' },
-            ['high_02'] = { value = 10000, perm = 'dono.permissao' }
+            ['single'] = { value = 10000, perm = '+Staff.COO' },
+            ['high_01'] = { value = 10000, perm = '+Staff.COO' },
+            ['high_02'] = { value = 10000, perm = '+Staff.COO' }
         },
     },
     ['high'] = {
@@ -1712,8 +1696,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'high_01',
-            ['high_01'] = { value = 10000, perm = 'dono.permissao' },
-            ['high_02'] = { value = 10000, perm = 'dono.permissao' }
+            ['high_01'] = { value = 10000, perm = '+Staff.COO' },
+            ['high_02'] = { value = 10000, perm = '+Staff.COO' }
         },
     },
     ['apartament'] = {
@@ -1725,7 +1709,7 @@ config.typeHomes = {
             min = 100,
             max = 1000,
             value = 100,
-            perm = 'dono.permissao'
+            perm = '+Staff.COO'
         },
         ['security'] = {
             min = 0,
@@ -1735,9 +1719,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'apartment_01',
-            ['apartment_01'] = { value = 10000, perm = 'dono.permissao' },
-            ['apartment_02'] = { value = 10000, perm = 'dono.permissao' },
-            ['eclip_penthouse'] = { decoration = true, value = 10000, perm = 'dono.permissao' },
+            ['apartment_01'] = { value = 10000, perm = '+Staff.COO' },
+            ['apartment_02'] = { value = 10000, perm = '+Staff.COO' },
+            ['eclip_penthouse'] = { decoration = true, value = 10000, perm = '+Staff.COO' },
         },
     },
 }
@@ -1799,7 +1783,7 @@ config.interior = {
         interiorId = 146945,
         decorations = {
             _default = 'executive',
-            _perm = 'dono.permissao', 
+            _perm = '+Staff.COO', 
             executive = {
                 name = 'Executivo',
                 interiorId = 228097,
@@ -1871,8 +1855,6 @@ configType = config.typeHomes
 configInterior = config.interior
 
 if (SERVER) then
-    configWebhooks = config.webhooks
-
     zeroClient = Tunnel.getInterface('zero')
 
     serverNotify = function(source, msg)
