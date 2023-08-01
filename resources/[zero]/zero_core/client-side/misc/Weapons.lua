@@ -134,7 +134,6 @@ end
 exports('WeaponsHash', WeaponsHash)
 
 local Holster = false
-local HolsterAnim = { 'amb@world_human_sunbathe@female@back@idle_a', 'idle_a' }
 local LastWeapon = nil
 
 local _disableActions = false
