@@ -9,22 +9,22 @@ local getTattoos = function(_tattoos, model)
     local custom = LocalPlayer.state.pedTattoo
     local pedTattoos = {
         [GetHashKey('mp_m_freemode_01')] = {
-            { torso = _tattoos.male.torso.tattoo, model = custom.torso },
-            { head = _tattoos.male.head.tattoo, model = custom.head },
-            { leftarm = _tattoos.male.leftarm.tattoo, model = custom.leftarm },
-            { rightarm = _tattoos.male.rightarm.tattoo, model = custom.rightarm },
-            { leftleg = _tattoos.male.leftleg.tattoo, model = custom.leftleg },
-            { rightleg = _tattoos.male.rightleg.tattoo, model = custom.rightleg },
-            { overlay = _tattoos.male.overlay.tattoo, model = custom.overlay },
+            { part = _tattoos.male.torso.tattoo, model = (custom.torso or nil), type = 'torso' },
+            { part = _tattoos.male.head.tattoo, model = (custom.head or nil), type = 'head' },
+            { part = _tattoos.male.leftarm.tattoo, model = (custom.leftarm or nil), type = 'leftarm' },
+            { part = _tattoos.male.rightarm.tattoo, model = (custom.rightarm or nil), type = 'rightarm' },
+            { part = _tattoos.male.leftleg.tattoo, model = (custom.leftleg or nil), type = 'leftleg' },
+            { part = _tattoos.male.rightleg.tattoo, model = (custom.rightleg or nil), type = 'rightleg' },
+            { part = _tattoos.male.overlay.tattoo, model = (custom.overlay or nil), type = 'overlay' },
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            { torso = _tattoos.female.torso.tattoo, model = custom.torso },
-            { head = _tattoos.female.head.tattoo, model = custom.head },
-            { leftarm = _tattoos.female.leftarm.tattoo, model = custom.leftarm },
-            { rightarm = _tattoos.female.rightarm.tattoo, model = custom.rightarm },
-            { leftleg = _tattoos.female.leftleg.tattoo, model = custom.leftleg },
-            { rightleg = _tattoos.female.rightleg.tattoo, model = custom.rightleg },
-            { overlay = _tattoos.female.overlay.tattoo, model = custom.overlay },
+            { part = _tattoos.male.torso.tattoo, model = (custom.torso or nil), type = 'torso' },
+            { part = _tattoos.male.head.tattoo, model = (custom.head or nil), type = 'head' },
+            { part = _tattoos.male.leftarm.tattoo, model = (custom.leftarm or nil), type = 'leftarm' },
+            { part = _tattoos.male.rightarm.tattoo, model = (custom.rightarm or nil), type = 'rightarm' },
+            { part = _tattoos.male.leftleg.tattoo, model = (custom.leftleg or nil), type = 'leftleg' },
+            { part = _tattoos.male.rightleg.tattoo, model = (custom.rightleg or nil), type = 'rightleg' },
+            { part = _tattoos.male.overlay.tattoo, model = (custom.overlay or nil), type = 'overlay' },
         }
     }
     return pedTattoos[model]
@@ -44,7 +44,7 @@ local markerThread = function()
                 if (dist <= 5) then
                     local coord = locsConfig[index].coord
                     createMarkers(coord)
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         openTattooShop(index)  
                     end
                 end
@@ -107,7 +107,7 @@ end
 
 RegisterNetEvent('zero:tattooUpdate', function()
     if (LocalPlayer.state.pedTattoo == nil) then 
-        LocalPlayer.state.pedTattoo = vSERVER.getCharacter()             
+        LocalPlayer.state.pedTattoo = vSERVER.getTattoo()      
         -- setPedTattoo()
     else 
         -- setPedTattoo()

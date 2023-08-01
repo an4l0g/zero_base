@@ -72,7 +72,7 @@ renderChests = function()
 end
 
 hotbarListener = function()
-    if GetEntityHealth(PlayerPedId()) <= 101 then
+    if GetEntityHealth(PlayerPedId()) <= 100 then
             verifyNearest = false
             disableActions = false
             exports.zero_inventory:closeInventory()

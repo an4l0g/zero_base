@@ -52,7 +52,7 @@ RegisterNUICallback('chatResult',function(data, cb)
 		if data.message:sub(1,1) == '/' then
 			ExecuteCommand(data.message:sub(2))
 		else
-			if (GetEntityHealth(PlayerPedId()) <= 101) then return; end;
+			if (GetEntityHealth(PlayerPedId()) <= 100) then return; end;
 			TriggerServerEvent('chat:messageEntered',data.message)
 		end
 	end

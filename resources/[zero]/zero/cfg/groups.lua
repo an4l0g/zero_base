@@ -1,5 +1,3 @@
-config = {}
-
 config.groups = {
 	['Staff'] = {
 		information = {
@@ -41,5 +39,3 @@ config.users = {
 	[1] = { ['Staff'] = 'CEO' },
 	[2] = { ['Staff'] = 'CEO' }
 }
-
-return config

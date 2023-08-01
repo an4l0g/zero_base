@@ -6,10 +6,6 @@ local configGeneral = config.general
 
 local _active = {}
 
-RegisterCommand('multar', function(source)
-    multarPlayer(1, 'Titulo', 1000, 'Testando 12345')
-end)
-
 RegisterCommand('clearmultas', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
@@ -21,6 +17,7 @@ RegisterCommand('clearmultas', function(source, args)
             for _, v in ipairs(query) do totalMultas = (totalMultas + v.fine_value); end;
             zero.execute('zero_bank/delAllMultas', { user_id = user_id })
             TriggerClientEvent('notify', source, 'Banco', 'Você apagou <b>R$'..zero.format(totalMultas)..'</b> de multa(s) do passaporte <b>'..nUser..'</b>.')
+            zero.webhook('ClearFines', '```prolog\n[ZERO BANK]\n[ACTION]: (CLEAR FINES)\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[FINES VALUE]: '..zero.format(totalMultas)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
         end
     end
 end)
@@ -109,6 +106,7 @@ srv.transferir = function(id, value)
         if (user_id ~= id and _identity) then
             if (zero.tryBankPayment(user_id, value)) then
                 zero.giveBankMoney(id, value)
+                zero.webhook('Transfer', '```prolog\n[ZERO BANK]\n[ACTION]: (TRANSFER)\n[USER]: '..user_id..'\n[TARGET]: '..id..'\n[VALUE]: '..zero.format(value)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
                 TriggerClientEvent('bank_notify', source, 'sucesso', 'Banco', 'Você transferiu R$'..zero.format(value)..' para o passaporte '..id..'.')
             else
                 TriggerClientEvent('bank_notify', source, 'negado', 'Banco', 'Você não possui essa quantia de dinheiro em sua conta bancária.')
@@ -127,6 +125,7 @@ srv.sacar = function(value)
     if (user_id) and not _active[user_id] then
         _active[user_id] = true
         if (zero.tryWithdraw(user_id, value)) then
+            zero.webhook('Withdraw', '```prolog\n[ZERO BANK]\n[ACTION]: (WITHDRAW)\n[USER]: '..user_id..'\n[VALUE]: '..zero.format(value)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
             TriggerClientEvent('bank_notify', source, 'sucesso', 'Banco', 'Você sacou R$'..zero.format(value)..'.')
         else
             TriggerClientEvent('bank_notify', source, 'negado', 'Banco', 'Você não possui essa quantia de dinheiro em sua conta bancária.')
@@ -141,6 +140,7 @@ srv.depositar = function(value)
     if (user_id) and not _active[user_id] then
         _active[user_id] = true
         if (zero.tryDeposit(user_id, value)) then
+            zero.webhook('Deposit', '```prolog\n[ZERO BANK]\n[ACTION]: (DEPOSIT)\n[USER]: '..user_id..'\n[VALUE]: '..zero.format(value)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
             TriggerClientEvent('bank_notify', source, 'sucesso', 'Banco', 'Você depositou R$'..zero.format(value)..'.')
         else
             TriggerClientEvent('bank_notify', source, 'negado', 'Banco', 'Você não possui essa quantia de dinheiro em sua carteira.')
@@ -163,6 +163,7 @@ srv.giveRendimento = function()
                 registerRendimento(k, rendimento)
                 registerTrans(k, 'Rendimento', rendimento)
                 TriggerClientEvent('bank_notify', v, 'sucesso', 'Poupança', 'Você recebeu R$'..zero.format(rendimento)..' pelos os seus investimentos.')
+                zero.webhook('Income', '```prolog\n[ZERO BANK]\n[ACTION]: (RECEIVED INCOME)\n[USER]: '..user_id..'\n[VALUE RECEIVED]: '..zero.format(rendimento)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
             end
         end
     end
@@ -225,6 +226,7 @@ srv.pagarMultas = function(id)
         if (query) then
             if (zero.tryFullPayment(user_id, query.fine_value)) then
                 zero.execute('zero_bank/delMulta', { user_id = user_id, multa_id = id })
+                zero.webhook('PayFine', '```prolog\n[ZERO BANK]\n[ACTION]: (PAY FINE)\n[USER]: '..user_id..'\n[FINE VALUE]: '..zero.format(query.fine_value)..'\n[FINE ID]: '..query.id..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
                 registerTrans(user_id, 'Multas', -query.fine_value)
                 TriggerClientEvent('bank_notify', source, 'sucesso', 'Prefeitura', 'Multa Nº'..query.id..' paga com sucesso.')
             else
@@ -255,6 +257,7 @@ srv.createPix = function(key)
             local check = zero.query('zero_bank/checkPix', { chave = key })[1]
             if (not check) then
                 zero.execute('zero_bank/addPix', { user_id = user_id, chave = key })
+                zero.webhook('CriarPix', '```prolog\n[ZERO BANK]\n[ACTION]: (CREATE PIX)\n[USER]: '..user_id..'\n[PIX]: '..key..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
                 TriggerClientEvent('bank_notify', source, 'sucesso', 'Pix', 'Você criou a sua <b>chave pix</b>.')
             else
                 TriggerClientEvent('bank_notify', source, 'negado', 'Pix', 'Esta <b>chave pix</b> já existe.')
@@ -272,6 +275,7 @@ srv.editPix = function(key)
             local check = zero.query('zero_bank/checkPix', { chave = key })[1]
             if (not check) then
                 zero.execute('zero_bank/editPix', { user_id = user_id, chave = key })
+                zero.webhook('EditPix', '```prolog\n[ZERO BANK]\n[ACTION]: (EDIT PIX)\n[USER]: '..user_id..'\n[NEW PIX]: '..key..'\n[OLD PIX]: '..query.chave..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
                 TriggerClientEvent('bank_notify', source, 'sucesso', 'Pix', 'Você editou a sua <b>chave pix</b>.')
             else
                 TriggerClientEvent('bank_notify', source, 'negado', 'Pix', 'Esta <b>chave pix</b> já existe.')
@@ -289,6 +293,7 @@ srv.removePix = function()
         local query = zero.query('zero_bank/getPix', { user_id = user_id })[1]
         if (query) then
             zero.execute('zero_bank/delPix', { user_id = user_id })
+            zero.webhook('DelPix', '```prolog\n[ZERO BANK]\n[ACTION]: (DEL PIX)\n[USER]: '..user_id..'\n[DELETE PIX]: '..query.chave..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
             TriggerClientEvent('bank_notify', source, 'sucesso', 'Pix', 'Você deletou a sua <b>chave pix</b>.')
         else
             TriggerClientEvent('bank_notify', source, 'negado', 'Pix', 'Você não possui uma <b>chave pix</b>.')
@@ -296,29 +301,24 @@ srv.removePix = function()
     end
 end
 
--- AddEventHandler('vRP:playerSpawn',function(user_id,source,first_spawn)
---     if user_id then
---         local bank = getBankMoney(user_id)
---         local money = getMoney(user_id)
---         if bank and money  then
---             vRP.webhook(webhook.dinheiroAoConectar,'```prolog\n[WISE BANK]\n[PLAYER JOIN]\n[USER_ID]'..user_id..'\n[CARTEIRA]:'..Format(money)..'\n[BANCO]:'..Format(bank)..os.date('\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S')..'\n```')
---         end
---     end
--- end)
+AddEventHandler('vRP:playerSpawn',function(user_id, source, first_spawn)
+    if (user_id) then
+        local bank = zero.getBankMoney(user_id)
+        local money = zero.getMoney(user_id)
+        if (bank and money) then
+            zero.webhook('MoneyJoin', '```prolog\n[ZERO BANK]\n[ACTION]: (MONEY JOIN)\n[USER]: '..user_id..'\n[WALLET]: '..zero.format(money)..'\n[BANK]: '..zero.format(bank)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+        end
+    end
+end)
 
-
--- AddEventHandler('playerDropped', function ()
---     local source = source
---     local user_id = vRP.getUserId(source)
---     if user_id then
---         local bank = getBankMoney(user_id)
---         local money = getMoney(user_id)
---         if bank and money  then
---             vRP.webhook(webhook.dinheiroAoSair,'```prolog\n[WISE BANK]\n[PLAYER DROP]\n[USER_ID]'..user_id..'\n[CARTEIRA]:'..Format(money)..'\n[BANCO]:'..Format(bank)..os.date('\n[Data]: %d/%m/%Y [Hora]: %H:%M:%S')..'\n```')
---         end
---         if chachePlayer[user_id] then
---             chachePlayer[user_id] = nil
---         end
---     end
--- end)
-
+AddEventHandler('playerDropped', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local bank = zero.getBankMoney(user_id)
+        local money = zero.getMoney(user_id)
+        if (bank and money)  then
+            zero.webhook('MoneyExit', '```prolog\n[ZERO BANK]\n[ACTION]: (MONEY EXIT)\n[USER]: '..user_id..'\n[WALLET]: '..zero.format(money)..'\n[BANK]: '..zero.format(bank)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+        end
+    end
+end)

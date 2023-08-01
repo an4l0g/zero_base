@@ -1,5 +1,3 @@
-local config = {}
-
 config.weapons = {
     -- MELEE
     'WEAPON_DAGGER',
@@ -19,6 +17,7 @@ config.weapons = {
     'WEAPON_BATTLEAXE',
     'WEAPON_POOLCUE',
     'WEAPON_STONE_HATCHET',
+    'WEAPON_CANDYCANE',
 
     -- HANDGUNS
     'WEAPON_PISTOL',
@@ -41,6 +40,7 @@ config.weapons = {
     'WEAPON_NAVYREVOLVER',
     'WEAPON_GADGETPISTOL',
     'WEAPON_STUNGUN_MP',
+    'WEAPON_PISTOLXM3',
 
     -- SUBMACHINE GUNS
     'WEAPON_MICROSMG',
@@ -51,6 +51,7 @@ config.weapons = {
     'WEAPON_MACHINEPISTOL',
     'WEAPON_MINISMG',
     'WEAPON_RAYCARBINE',
+    'WEAPON_TECPISTOL',
 
     -- SHOTGUNS
     'WEAPON_PUMPSHOTGUN',
@@ -104,6 +105,7 @@ config.weapons = {
     'WEAPON_COMPACTLAUNCHER',
     'WEAPON_RAYMINIGUN',
     'WEAPON_EMPLAUNCHER',
+    'WEAPON_RAILGUNXM3',
     
     -- THROWABLES
     'WEAPON_GRENADE',
@@ -116,6 +118,7 @@ config.weapons = {
     'WEAPON_BALL',
     'WEAPON_SMOKEGRENADE',
     'WEAPON_FLARE',
+    'WEAPON_ACIDPACKAGE',
 
     -- MISC
     'WEAPON_PETROLCAN',
@@ -124,5 +127,3 @@ config.weapons = {
     'WEAPON_HAZARDCAN',
     'WEAPON_FERTILIZERCAN'
 }
-
-return config

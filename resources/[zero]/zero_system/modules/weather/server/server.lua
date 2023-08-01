@@ -2,7 +2,13 @@ local weathersConfig = config.weathers
 
 local freezetime = false
 local newWeather = 0
-local weather, hours, minutes = 'EXTRASUNNY', 7, 0
+
+if (not GlobalState.weatherSystem) then
+    GlobalState.weatherSystem = true
+    GlobalState.weather = 'EXTRASUNNY'
+    GlobalState.hours = 7
+    GlobalState.minutes = 0
+end
 
 local sourceVerification = function(source)
     local allow = false
@@ -23,8 +29,8 @@ local generateWeather = function()
             goto generateWeatherAgain
         end  
     end
-    weather = weathersConfig[weatherRandom].name
-    print('Clima da cidade ^5Zero Roleplay^7 alterado para ^5'..weather..'^7.')
+    GlobalState.weather = weathersConfig[weatherRandom].name
+    print('Clima da cidade ^5Zero Roleplay^7 alterado para ^5'..GlobalState.weather..'^7.')
 end
 
 RegisterCommand('time', function(source, args)
@@ -32,9 +38,9 @@ RegisterCommand('time', function(source, args)
     if (allow) then
         if (args[1]) then
             if (not args[2]) then args[2] = 0; end;
-            hours, minutes = parseInt(args[1]), parseInt(args[2]);
+            GlobalState.hours, GlobalState.minutes = parseInt(args[1]), parseInt(args[2]);
             if (source ~= 0) then TriggerClientEvent('notify', source, 'Clima', 'O <b>horário da cidade</b> foi alterado com sucesso!'); end;
-            print('Tempo da cidade ^5Zero Roleplay^7 alterado para ^5'..hours..':'..minutes..'^7.')
+            print('Tempo da cidade ^5Zero Roleplay^7 alterado para ^5'..GlobalState.hours..':'..GlobalState.minutes..'^7.')
         end
     end
 end)
@@ -52,9 +58,9 @@ RegisterCommand('weather', function(source, args)
     local allow = sourceVerification(source)
     if (allow) then
         if (args[1]) then
-            weather = string.upper(args[1])
+            GlobalState.weather = string.upper(args[1])
             if (source ~= 0) then TriggerClientEvent('notify', source, 'Clima', 'O clima foi <b>alterado</b> com sucesso!'); end;
-            print('Clima da cidade ^5Zero Roleplay^7 alterado para ^5'..weather..'^7.')
+            print('Clima da cidade ^5Zero Roleplay^7 alterado para ^5'..GlobalState.weather..'^7.')
         end
     end
 end)
@@ -69,16 +75,13 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(2000)
+        Citizen.Wait(3000)
         if (not freezetime) then
-            minutes = (parseInt(minutes) + 1)
-            if (minutes >= 60) then 
-                minutes = 0; hours = (parseInt(hours) + 1);
-                if (hours >= 24) then hours = 0; end;
+            GlobalState.minutes = (parseInt(GlobalState.minutes) + 1)
+            if (GlobalState.minutes >= 60) then 
+                GlobalState.minutes = 0; GlobalState.hours = (parseInt(GlobalState.hours) + 1);
+                if (GlobalState.hours >= 24) then GlobalState.hours = 0; end;
             end
         end
-        TriggerClientEvent('zero_weather:syncTimers', -1, {
-            weather = weather, hours = hours, minutes = minutes
-        })
     end
 end)

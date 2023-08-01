@@ -17,7 +17,7 @@ local markerThread = function()
                 if (dist <= 2) then
                     local coord = configHomes[index].coord
                     DrawMarker3D(coord, '~b~['..capitalizeString(index)..']~w~\n~b~[E]~w~ - Entrar\n~b~[G]~w~ - Invadir')
-                    if (dist <= 0.5  and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (dist <= 0.5  and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         if (IsControlJustPressed(0, 38)) then vSERVER.tryEnterHome(index)
                         elseif (IsControlJustPressed(0, 58)) then vSERVER.invadeHome(index)
                         end
@@ -182,7 +182,7 @@ threadInHome = function(interior)
                     if (distance <= 5.0) then
                         idle = 4
                         DrawMarker(0, coord.x, coord.y, coord.z, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 153, 255, 155, 1, 0, 0, 1)
-                        if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101) then
+                        if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100) then
                             if (v[4] == 'exit') then
                                 exitHome()
                             elseif (v[4] == 'vault') then

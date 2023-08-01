@@ -217,9 +217,9 @@ damageCar = function(class)
 				healthBodyDelta = (healthBodyLast - healthBodyCurrent)
 				healthBodyDeltaScaled = (healthBodyDelta * 1.2 * classDamageMultiplier[vehicleClass])
 
-                if (healthEngineCurrent > 101.0) then SetVehicleUndriveable(vehicle, false); end;
+                if (healthEngineCurrent > 100.0) then SetVehicleUndriveable(vehicle, false); end;
 	
-				if (healthEngineCurrent <= 101.0) then SetVehicleUndriveable(vehicle, true); end;
+				if (healthEngineCurrent <= 100.0) then SetVehicleUndriveable(vehicle, true); end;
 	
 				if (vehicle ~= lastVehicle) then pedInSameVehicleLast = false; end;
 

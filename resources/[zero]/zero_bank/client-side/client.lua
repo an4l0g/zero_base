@@ -29,7 +29,7 @@ local markerThread = function()
                 if (dist <= 1.5) then
                     local config = configBank[index]
                     DrawMarker(0, config.coord.x, config.coord.y, config.coord.z, 0, 0, 0, 0, 0, 0, 0.2, 0.2, 0.2, 0, 153, 255, 155, 1, 0, 0, 1)
-                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (dist <= 0.5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         openBank(config) 
                     end
                 end

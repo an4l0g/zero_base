@@ -1,6 +1,6 @@
 local cli = {}
-Tunnel.bindInterface('zeroGarage', cli)
-local vSERVER = Tunnel.getInterface('zeroGarage')
+Tunnel.bindInterface('Garage', cli)
+local vSERVER = Tunnel.getInterface('Garage')
 
 local garagesConfig = config.garages
 
@@ -33,7 +33,7 @@ local markerThread = function()
                 if (dist <= 10) then
 					local config = garagesConfig[index]
                     createMarker(config)
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 101 and not IsPedInAnyVehicle(ped)) then
+                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         openGarage(index) 
                     end
                 end

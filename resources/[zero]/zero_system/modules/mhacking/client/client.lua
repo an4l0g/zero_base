@@ -45,7 +45,6 @@ exports('mhackingHide', mhackingHide)
 AddEventHandler('mhacking:hide', mhackingShow)
 
 mhackingStart = function(length, duration, cb)
-    print(length, duration, cb)
     mhackingCallback = cb
     SendNUIMessage({    
         s = length,
