@@ -141,18 +141,18 @@ reviveSurvival = function(ped)
         zero.killGod()
 
         Citizen.SetTimeout(5000, function()
+            SetEntityHealth(ped, 150)
             FreezeEntityPosition(ped, false)
             Citizen.Wait(1000)
             DoScreenFadeIn(1000)
-            TriggerEvent('notify', 'Prefeitura', 'Você acabou de acordar de um coma profundo...')
+            TriggerEvent('notify', 'Prefeitura', 'Você acabou de acordar de um <b>coma</b> profundo...')
         end)
     end
 end
 
 cooldownSurvival = function(time)
-    if (deathTimer > 0) then return; end;
-    deathTimer = time
     Citizen.CreateThread(function()
+        deathTimer = time
         while (deathTimer > 0) do
             deathTimer = (deathTimer - 1)
             Citizen.Wait(1000)
