@@ -22,8 +22,17 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
+	local _idle = 1000
 	while (true) do
+		_idle = 1000
+		local ped = PlayerPedId()
+
 		SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
-		Citizen.Wait(1000)
+		if (IsPauseMenuActive()) then
+			_idle = 5
+			SetRadarAsExteriorThisFrame()
+			SetRadarAsInteriorThisFrame('h4_fake_islandx', vec(4700.0, -5145.0), 0, 0)
+		end
+		Citizen.Wait(_idle)
 	end
 end)

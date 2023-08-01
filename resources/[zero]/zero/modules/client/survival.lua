@@ -56,7 +56,7 @@ zero.killGod = function()
 end
 
 local _disableActions = function()
-    DisablePlayerFiring(PlayerId(), true)
+    DisablePlayerFiring(PlayerPedId(), true)
     DisableControlAction(0, 21, true)
     DisableControlAction(0, 22, true)
     DisableControlAction(0, 23, true)
