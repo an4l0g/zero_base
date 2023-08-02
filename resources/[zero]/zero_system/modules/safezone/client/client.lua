@@ -1,3 +1,6 @@
+local cli = {}
+Tunnel.bindInterface('Safezone', cli)
+
 local safeZones = {
     ['Praca'] = PolyZone:Create({
         vector2(125.38, -995.45),
@@ -21,13 +24,17 @@ local safeZones = {
 local inSafe = false
 local _threadSafe = false
 
+cli.inSafe = function()
+    return inSafe
+end
+
 threadSafe = function()
     if (_threadSafe) then return; end;
     _threadSafe = true
     Citizen.CreateThread(function()
         local ped = PlayerPedId()
         NetworkSetFriendlyFireOption(false)
-        TriggerEvent('notify', 'Zona Segura', 'Você entrou numa <b>zona segura</b>.')
+        TriggerEvent('notify', 'Zona Segura', 'Você entrou em uma <b>Zona Segura</b>.')
         SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true) 
         while (inSafe) do
             ped = PlayerPedId()
@@ -39,7 +46,7 @@ threadSafe = function()
             Citizen.Wait(5)
         end
         NetworkSetFriendlyFireOption(true)
-        TriggerEvent('notify', 'Zona Segura', 'Você saiu da <b>zona segura</b>.')
+        TriggerEvent('notify', 'Zona Segura', 'Você saiu de uma <b>Zona Segura</b>.')
         _threadSafe = false
     end)
 end

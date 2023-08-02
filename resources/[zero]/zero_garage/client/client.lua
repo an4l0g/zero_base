@@ -298,7 +298,7 @@ cli.removeGPSVehicle = function(vname)
 end
 
 RegisterKeyMapping('+lockVehicle', 'Garagem - Trancar/Destrancar Veículo', 'keyboard', 'L')
-RegisterCommand('+lockVehicle',function() vSERVER.vehicleLock() end)
+RegisterCommand('+lockVehicle', function() vSERVER.vehicleLock() end)
 
 cli.vehicleClientLock = function(vehid, lock)
 	if (NetworkDoesNetworkIdExist(vehid)) then

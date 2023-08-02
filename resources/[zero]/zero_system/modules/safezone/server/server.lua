@@ -1,3 +1,5 @@
+local vCLIENT = Tunnel.getInterface('Safezone')
+
 RegisterCommand('vec2', function(source)
     local source = source
     local user_id = zero.getUserId(source)
@@ -6,3 +8,8 @@ RegisterCommand('vec2', function(source)
         TriggerClientEvent('clipboard', source, 'Vector2', tostring(vector2(pCoord.x, pCoord.y)))
     end
 end)
+
+inSafe = function(source)
+    return vCLIENT.inSafe(source)
+end
+exports('inSafe', inSafe)

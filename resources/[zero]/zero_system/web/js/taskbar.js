@@ -7,9 +7,9 @@ let H = canvas.height;
 let degrees = 0;
 let new_degrees = 0;
 let time = 0;
-let color = "#CCC";
-let bgcolor = "rgba(15,15,15,.75)";
-let bgcolor2 = "#4182e2";
+let color = "#0099ff";
+let bgcolor = "rgba(0,0,0,0.6)";
+let bgcolor2 = "#fff";
 let key_to_press;
 let g_start, g_end;
 let animation_loop;
@@ -73,7 +73,7 @@ function init() {
   );
   ctx.stroke();
 
-  ctx.fillStyle = color;
+  ctx.fillStyle = "#fff";
   ctx.font = "100px sans-serif";
   let text_width = ctx.measureText(key_to_press).width;
   ctx.fillText(key_to_press, W / 2 - text_width / 2, H / 2 + 35);

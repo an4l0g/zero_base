@@ -1,3 +1,6 @@
+local cli = {}
+Tunnel.bindInterface('CarsEvent', cli) 
+
 local inVehicle = false
 
 Citizen.CreateThread(function()
@@ -62,6 +65,32 @@ AddEventHandler('gameEventTriggered', function(event, args)
         end
     end
 end)
+
+cli.getCarDoorCoord = function(dist, door)
+    local ped = PlayerPedId()
+    local pCoord = GetEntityCoords(ped)
+    local pVehicle = GetClosestVehicle(pCoord, 2.5, 0, 71)
+    if (pVehicle and not IsPedInAnyVehicle(ped)) then
+        local engine = GetWorldPositionOfEntityBone(pVehicle, GetEntityBoneIndexByName(pVehicle, door))
+        local distance = #(pCoord - engine)
+        if (distance <= dist) then
+            return true
+        end
+    end
+    return false
+end
+exports('carDoor', getCarDoorCoord)
+
+cli.setVehicleAlarm = function()
+    local ped = PlayerPedId()
+    local pCoord = GetEntityCoords(ped)
+    local vehicle = GetClosestVehicle(pCoord, 2.5, 0, 71)
+    if (vehicle and not IsPedInAnyVehicle(ped)) then
+        SetVehicleAlarm(vehicle, true)
+        SetVehicleAlarmTimeLeft(vehicle, 10000)
+    end
+end
+exports('vehicleAlarm', setVehicleAlarm)
 
 local keyPressed = false
 

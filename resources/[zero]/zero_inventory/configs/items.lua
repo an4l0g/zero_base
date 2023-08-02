@@ -6,9 +6,12 @@ cInventory = Tunnel.getInterface('zero_inventory')
 bandagemCooldown = {}
 
 config.itemTypes = { 'common', 'weapon', 'wammo' }
-this = exports['zero_inventory']
+this = exports[GetCurrentResourceName()]
 
 config.items = {
+----------------------------------------------------------------------------
+-- LEGAL
+----------------------------------------------------------------------------
     ['algema'] = { name = 'Algema', type = 'common', weight = 0.5 },
     ['chave-algema'] = { name = 'Chave da Algema', type = 'common', weight = 0.5 },
     ['nitro'] = { name = 'Nitro', type = 'common', weight = 1.0, usable = true,
@@ -43,7 +46,82 @@ config.items = {
 -- ILEGAL
 ----------------------------------------------------------------------------
     ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0 },
+    ['lockpick'] = { name = 'Lockpick', type = 'common', weight = 1.0, usable = true, 
+        interaction = function(source, user_id)
+            local identity = zero.getUserIdentity(user_id)
 
+            cInventory.closeInventory(source)
+            
+            local Police = zero.getUsersByPermission('policia.permissao')
+            if (#Police < 2) then
+                TriggerClientEvent('notify', source, 'Prefeitura', 'O número de <b>políciais</b> no momento é insuficiente para efetuar o roubo.')
+                return
+            end
+
+            if (exports['zero_system']:inSafe(source)) then
+                TriggerClientEvent('notify', source, 'Zona Segura', 'Você não pode utilizar lockpick estando em uma <b>Zona Segura</b>.')
+                return
+            end
+            
+            local vehicle, vnetid, placa, vname, lock, banned, trunk, model, street = zeroClient.vehList(source, 2.5)
+            if (vehicle and placa) then
+                local vehState = exports['zero_garage']:getVehicleData(vnetid)
+                if (vehState and vehState.plate) then
+                    if (lock == 1) then
+                        TriggerClientEvent('notify', source, 'Drumond', 'O <b>veículo</b> já está aberto.')
+                        return
+                    end
+
+                    if (exports['zero_garage']:carDoor(source, 1.5, 'door_dside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_dside_r') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_r')) then
+                        local isPolice = zero.hasPermission(user_id, 'policia.permissao')
+                        
+                        local allow;
+                        if (isPolice) then
+                            allow = true
+                        else
+                            allow = zero.tryGetInventoryItem(user_id, 'lockpick', 1)
+                        end
+                        
+                        if (allow) then
+                            local Ped = GetPlayerPed(source)
+                            local PedCoords = GetEntityCoords(Ped)
+                            local text = ''
+
+                            zeroClient._playAnim(source, false, {
+                                { 'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female' }
+                            }, true)
+                            
+                            if (exports['zero_system']:Task(source, 3, 8000)) then
+                                text = 'SUCCESS'
+                                ClearPedTasks(Ped)
+                                exports['zero_garage']:vehicleLock(vnetid, lock)
+                                TriggerClientEvent('zero_inventory:LockpickAnim', source, vehicle)
+                                TriggerClientEvent('zero_sound:source', -1, 'lock', 0.1)
+                            else
+                                text = 'FAIL'
+                                ClearPedTasks(Ped)
+                                exports['zero_garage']:vehicleAlarm(source)
+                                TriggerClientEvent('notify', source, 'Drumond', 'Você falhou na <b>task</b>.')
+                            end
+
+                            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(source, 'https://discord.com/api/webhooks/1136116707883237526/iRQQrUdANFOk2HFDV_IqWA1LImcD4dfWIZyeejwG7I6fkisMXHz8MjteR4fiqJ4f5Pgz', {
+                                    encoding = 'jpg',
+                                    quality = 0.80
+                                },
+                                {
+                                    username = identity.name,
+                                    avatar_url = 'https://cdn.discordapp.com/attachments/1098816084917891092/1136128680440102962/logo.png',
+                                    content = '```prolog\n[ZERO INVENTORY]\n[ACTION]: (LOCKPICK)\n[USER]: '..user_id..'\n[RESULT]: '..text..'\n[STREET]: '..street..'\n[CAR OWNER]: '..vehState.user_id..'\n[CAR]: '..vehState.model..'\n[PLATE]: '..vehState.plate..'\n[COORD]: '..tostring(GetEntityCoords(Ped))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```',
+                                }
+                            )
+                        end
+                    else
+                        TriggerClientEvent('notify', source, 'Drumond', 'Você não está próxima da porta do <b>veículo</b>.')
+                    end
+                end
+            end
+        end
+    },
 ----------------------------------------------------------------------------
     -- Armas
     ----------------------------------------------------------------------------
@@ -356,7 +434,7 @@ function consumableItem(index)
 --     end
 
    if zero.tryGetInventoryItem(user_id, index, 1) then
-    TriggerClientEvent('progress', _source, customTimeout, "Consumindo "..zero.itemNameList(index).."...")
+    TriggerClientEvent('progress', _source, customTimeout, 'Consumindo '..zero.itemNameList(index)..'...')
     if cItem.animation then 
         if cItem.animation.prop then
             zeroClient._CarregarObjeto(_source, cItem.animation.anim[1], cItem.animation.anim[2], cItem.animation.prop, cItem.animation.anim[3], cItem.animation.anim[4])
@@ -482,11 +560,11 @@ function healing(item)
 end
 
 function setupCumpfire()
-	if exports["zBrazuca"]:isSafe() then
+	if exports['zBrazuca']:isSafe() then
         return false
     end
     
-    local modelhash = GetHashKey("prop_hobo_stove_01")
+    local modelhash = GetHashKey('prop_hobo_stove_01')
 	RequestModel(modelhash)
 	while not HasModelLoaded(modelhash) do
 		Wait(50)
@@ -521,7 +599,7 @@ function adoptPet(pet)
     local _source = source 
     local user_id = zero.getUserId(_source)
     if zero.tryGetInventoryItem(user_id, pet, 1) then
-        local pet_type = splitString(pet,"-")[2]
+        local pet_type = splitString(pet,'-')[2]
         if pet_type then
             TriggerClientEvent('createPet', _source, pet_type)
         end
@@ -556,7 +634,7 @@ function pescar(source, user_id, item)
                     for k, fish in pairs(fishes) do
                         local random = math.random(0, 100)
                         local chance = fish['chance']
-                        if zero.getInventoryItemAmount(user_id, "pe-coelho") then
+                        if zero.getInventoryItemAmount(user_id, 'pe-coelho') then
                             chance = chance + 5
                         end
 
@@ -569,10 +647,10 @@ function pescar(source, user_id, item)
                     if currentFish == '' then currentFish = 'tilapia' end
 
                     if (zero.getItemWeight(currentFish)+zero.getInventoryWeight(user_id)) <= zero.getInventoryMaxWeight(user_id) then
-                        TriggerClientEvent('Notify', source, "Inventário", 'Pesca', 'Você pescou um(a) <b>'..currentFish..'</b>!', 5000)
+                        TriggerClientEvent('Notify', source, 'Inventário', 'Pesca', 'Você pescou um(a) <b>'..currentFish..'</b>!', 5000)
                         zero.giveInventoryItem(user_id, currentFish, 1)
                     else 
-                        TriggerClientEvent('Notify', source, "Inventário", 'Inventário', 'Você não possui espaço na mochila!', 5000)
+                        TriggerClientEvent('Notify', source, 'Inventário', 'Inventário', 'Você não possui espaço na mochila!', 5000)
                     end
                 end
                 TriggerClientEvent('zero_inventory:enableActions', source, true)
@@ -582,7 +660,7 @@ function pescar(source, user_id, item)
             end
         end
     else
-        TriggerClientEvent('Notify', source, "Inventário", 'Proficiência', 'Você não possui conhecimento em pesca para fazer isso!!', 5000)
+        TriggerClientEvent('Notify', source, 'Inventário', 'Proficiência', 'Você não possui conhecimento em pesca para fazer isso!!', 5000)
     end
 end
 

@@ -354,6 +354,11 @@ srv.vehicleLock = function()
     end
 end
 
+lockVehicle = function(vnetid, lock)
+    vCLIENT.vehicleClientLock(-1, vnetid, lock)
+end
+exports('vehicleLock', lockVehicle)
+
 RegisterNetEvent('zero_interactions:carVehs', function()
     local source = source
     local user_id = zero.getUserId(source)

@@ -47,5 +47,14 @@ end
 exports('Task', cli.Task)
 
 RegisterCommand('teste',function()
-    cli.Task(3, 7000)
+	local playerPed     = GetPlayerPed(-1)
+    local coords        = GetEntityCoords(playerPed)
+	 local vehicle = nil
+     if IsPedInAnyVehicle(playerPed, false) then
+		vehicle = GetVehiclePedIsIn(playerPed, false)
+	else
+		vehicle = GetClosestVehicle(coords.x, coords.y, coords.z, 5.0, 0, 71)
+	end
+
+
 end)
