@@ -653,7 +653,7 @@ RegisterNUICallback('pagar',function(data)
 
 		local ped = PlayerPedId()
 		if (not IsPedInAnyVehicle(ped)) then 
-			TriggerEvent('disableAllActions', true)
+			LocalPlayer.state.BlockTasks = true
 			zero.playAnim(false, {
 				{ 'mini@repair', 'fixing_a_player' }
 			}, true) 
@@ -664,7 +664,7 @@ RegisterNUICallback('pagar',function(data)
 		Citizen.SetTimeout(_time, function() 
 			myVehicle = getAllVehicleMods(vehicle)
 			ClearPedTasks(ped)
-			TriggerEvent('disableAllActions', false)
+			LocalPlayer.state.BlockTasks = false
 
 			local vehname = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle)):lower()
 			local vehplate = GetVehicleNumberPlateText(vehicle)

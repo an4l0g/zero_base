@@ -1,6 +1,3 @@
-cGARAGE = Tunnel.getInterface('zGarages')
-cTASKBAR = Tunnel.getInterface('zTaskbar')
-
 cInventory = Tunnel.getInterface('zero_inventory')
 
 bandagemCooldown = {}
@@ -87,6 +84,8 @@ config.items = {
                             local PedCoords = GetEntityCoords(Ped)
                             local text = ''
 
+                            LocalPlayer.state.BlockTasks = true
+
                             zeroClient._playAnim(source, false, {
                                 { 'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female' }
                             }, true)
@@ -104,7 +103,8 @@ config.items = {
                                 TriggerClientEvent('notify', source, 'Drumond', 'Você falhou na <b>task</b>.')
                             end
 
-                            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(source, 'https://discord.com/api/webhooks/1136116707883237526/iRQQrUdANFOk2HFDV_IqWA1LImcD4dfWIZyeejwG7I6fkisMXHz8MjteR4fiqJ4f5Pgz', {
+                            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(source, 'https://discord.com/api/webhooks/1136116707883237526/iRQQrUdANFOk2HFDV_IqWA1LImcD4dfWIZyeejwG7I6fkisMXHz8MjteR4fiqJ4f5Pgz', 
+                                {
                                     encoding = 'jpg',
                                     quality = 0.80
                                 },
@@ -114,6 +114,8 @@ config.items = {
                                     content = '```prolog\n[ZERO INVENTORY]\n[ACTION]: (LOCKPICK)\n[USER]: '..user_id..'\n[RESULT]: '..text..'\n[STREET]: '..street..'\n[CAR OWNER]: '..vehState.user_id..'\n[CAR]: '..vehState.model..'\n[PLATE]: '..vehState.plate..'\n[COORD]: '..tostring(GetEntityCoords(Ped))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```',
                                 }
                             )
+
+                            LocalPlayer.state.BlockTasks = false
                         end
                     else
                         TriggerClientEvent('notify', source, 'Drumond', 'Você não está próxima da porta do <b>veículo</b>.')
@@ -624,7 +626,7 @@ function pescar(source, user_id, item)
         local inWater, distance = cInventory.getWaterHeight(source)
         if inWater then
             if zero.tryGetInventoryItem(user_id, 'isca', 1) then
-                TriggerClientEvent('disableAllActions', source, true)
+                LocalPlayer.state.BlockTasks = true
                 TriggerClientEvent('zero_inventory:disableActions', source, true)
                 TriggerClientEvent('emotes', source, 'pescar')
                 cInventory.closeInventory(source)
@@ -654,7 +656,7 @@ function pescar(source, user_id, item)
                     end
                 end
                 TriggerClientEvent('zero_inventory:enableActions', source, true)
-                TriggerClientEvent('disableAllActions', source, false)
+                LocalPlayer.state.BlockTasks = false
                 zeroClient._stopAnim(source, false)
                 zeroClient._DeletarObjeto(source)
             end

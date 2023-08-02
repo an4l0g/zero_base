@@ -682,10 +682,14 @@ RegisterCommand('addcar', function(source)
         if (prompt) then
             if (prompt[1] and prompt[2]) then
                 prompt[1] = parseInt(prompt[1])
-                addVehicle(prompt[1], prompt[2])
-                TriggerClientEvent('notify', source, 'Garagem', 'Você adicionou o veículo <b>'..prompt[2]..'</b> para o id <b>'..prompt[1]..'</b>.')
-                local nIdentity = zero.getUserIdentity(prompt[1])
-                zero.webhook('AddCar', '```prolog\n[/ADDCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[ADICIONOU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                if (vehiclesConfig[prompt[2]]) then
+                    addVehicle(prompt[1], prompt[2])
+                    TriggerClientEvent('notify', source, 'Garagem', 'Você adicionou o veículo <b>'..prompt[2]..'</b> para o id <b>'..prompt[1]..'</b>.')
+                    local nIdentity = zero.getUserIdentity(prompt[1])
+                    zero.webhook('AddCar', '```prolog\n[/ADDCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[ADICIONOU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                else
+                    TriggerClientEvent('notify', source, 'Garagem', 'Não foi possível encontrar o <b>'..capitalizeString(prompt[2])..'</b> em nossa cidade.')
+                end
             end
         end
     end
@@ -700,10 +704,14 @@ RegisterCommand('remcar', function(source)
         if (prompt) then
             if (prompt[1] and prompt[2]) then
                 prompt[1] = parseInt(prompt[1])
-                delVehicle(prompt[1], prompt[2])
-                TriggerClientEvent('notify', source, 'Garagem', 'Você removeu o veículo <b>'..prompt[2]..'</b> do id <b>'..prompt[1]..'</b>.')
-                local nIdentity = zero.getUserIdentity(prompt[1])
-                zero.webhook('RemCar', '```prolog\n[/REMCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[REMOVEU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                if (vehiclesConfig[prompt[2]]) then
+                    delVehicle(prompt[1], prompt[2])
+                    TriggerClientEvent('notify', source, 'Garagem', 'Você removeu o veículo <b>'..prompt[2]..'</b> do id <b>'..prompt[1]..'</b>.')
+                    local nIdentity = zero.getUserIdentity(prompt[1])
+                    zero.webhook('RemCar', '```prolog\n[/REMCAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[JOGADOR]: #'..prompt[1]..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[REMOVEU O VEÍCULO]: '..prompt[2]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                else
+                    TriggerClientEvent('notify', source, 'Garagem', 'Não foi possível encontrar o <b>'..capitalizeString(prompt[2])..'</b> em nossa cidade.')
+                end
             end
         end
     end
