@@ -1,5 +1,3 @@
-local generalConfig = configCreator.general
-
 srv = {}
 Tunnel.bindInterface('Creation', srv)
 vCLIENT = Tunnel.getInterface('Creation')
@@ -43,23 +41,29 @@ srv.saveCharacter = function(table)
 end
 
 local userLogin = {}
-
 AddEventHandler('vRP:playerSpawn', function(user_id, source)    
     local bloodGroup = generalConfig.bloodGroup
-    zero.execute('zero_character/createUser', { user_id = user_id, controller = 0, user_character = '{}', user_tattoo = '{}', rh = bloodGroup[math.random(#bloodGroup)] })
+    
+    zero.execute('zero_character/createUser', { 
+        user_id = user_id, 
+        controller = 0, 
+        user_character = json.encode({}), 
+        user_tattoo = json.encode({}), 
+        rh = bloodGroup[math.random(#bloodGroup)] 
+    })
 
     vCLIENT.loadingPlayer(source, false) 
     local query = zero.query('zero_character/verifyUser', { user_id = user_id })[1]
     if (query) then
         Citizen.Wait(1000)
-        if (query['controller'] == 1) then
+        if (query.controller == 0) then
             if (not userLogin[user_id]) then
                 userLogin[user_id] = true
                 playerSpawn(source, user_id, true)
             else
                 playerSpawn(source, user_id, false)
             end
-        elseif (query['controller'] == 0) then
+        else
             userLogin[user_id] = true
             vCLIENT.createCharacter(source)
         end
