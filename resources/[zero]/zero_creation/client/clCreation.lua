@@ -15,10 +15,6 @@ local getCharacterDrawable = function(part)
 	end
 end
 
-RegisterCommand('teste',function()
-    cli.createCharacter()
-end)
-
 local setGender = function(gender) 
     local ped = PlayerPedId()
 
@@ -125,6 +121,49 @@ resetClothes = function()
             ['kevlar'] = { 0, 0, 0 }, -- 9
             ['badge'] = { 0, 0, 0 }, -- 10
             ['torso2'] = { 15, 0, 1 }, -- 11
+            ['hat'] = { -1, 0 }, -- p0
+            ['glass'] = { -1, 0 }, --p1
+            ['ear'] = { -1, 0 }, -- p2
+            ['watch'] = { -1, 0 }, --p6
+            ['bracelet'] = { -1, 0 } --p7
+        }
+    }
+    local model = GetEntityModel(PlayerPedId())
+    setClothing(clothes[model] or {})
+end
+
+finishClothes = function()
+    local clothes = {
+        [GetHashKey('mp_m_freemode_01')] = {
+            ['mask'] = { 0, 0, 0 }, -- 1
+            ['hair'] = { 0, 0, 0 }, -- 2
+            ['torso'] = { 8, 0, 2 }, -- 3
+            ['leg'] = { 26, 0, 2 }, -- 4
+            ['bag'] = { 0, 0, 0 }, -- 5
+            ['shoes'] = { 1, 0, 2 }, -- 6
+            ['acessory'] = { 0, 0, 0 }, -- 7
+            ['undershirt'] = { 15, 0, 2 }, -- 8
+            ['kevlar'] = { 0, 0, 0 }, -- 9
+            ['badge'] = { 0, 0, 0 }, -- 10
+            ['torso2'] = { 38, 0, 2 }, -- 11
+            ['hat'] = { -1, 0 }, -- p0
+            ['glass'] = { -1, 0 }, --p1
+            ['ear'] = { -1, 0 }, -- p2
+            ['watch'] = { -1, 0 }, --p6
+            ['bracelet'] = { -1, 0 } --p7
+        },
+        [GetHashKey('mp_f_freemode_01')] = {
+            ['mask'] = { 0, 0, 0 }, -- 1
+            ['hair'] = { 0, 0, 0 }, -- 2
+            ['torso'] = { 9, 0, 1 }, -- 3
+            ['leg'] = { 73, 0, 1 }, -- 4
+            ['bag'] = { 0, 0, 0 }, -- 5
+            ['shoes'] = { 3, 0, 1 }, -- 6
+            ['acessory'] = { 0, 0, 0 }, -- 7
+            ['undershirt'] = { 2, 0, 1 }, -- 8
+            ['kevlar'] = { 0, 0, 0 }, -- 9
+            ['badge'] = { 0, 0, 0 }, -- 10
+            ['torso2'] = { 75, 0, 1 }, -- 11
             ['hat'] = { -1, 0 }, -- p0
             ['glass'] = { -1, 0 }, --p1
             ['ear'] = { -1, 0 }, -- p2
@@ -345,9 +384,9 @@ end)
 
 RegisterNuiCallback('finish', function(data)
     SetNuiFocus(false, false)
-    if (vSERVER.verifyName(identity.firstname, identity.lastname)) then
-        vSERVER.saveIdentity(identity)
+    if (vSERVER.verifyIdentity(identity)) then
         vSERVER.saveCharacter(currentCharacter)
+        SendNUIMessage({ action = 'close' })
         finishCreator()
     end
 end)
@@ -359,12 +398,11 @@ finishCreator = function()
     TriggerEvent('zero_weather:staticTime', false)
     Citizen.Wait(1000)
     DoScreenFadeOut(500)
-    teleport(ped, generalConfig.spawnAfterCreator.xyz)
-    SetEntityHeading(ped, generalConfig.spawnAfterCreator.w)
-    SetEntityHealth(ped, GetPedMaxHealth(ped))
+    SetEntityHealth(ped, 200)
     FreezeEntityPosition(ped, false)
     
     DeleteCam(true)
+    finishClothes()
     TriggerEvent('introCinematic:start')
     Citizen.Wait(1000)
     DoScreenFadeIn(500)

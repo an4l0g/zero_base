@@ -112,9 +112,9 @@ function App() {
         pauseOnHover={false}
         pauseOnFocusLoss={false}
       />
+      <S.GlobalStyle />
       {hud && (
         <>
-          <S.GlobalStyle />
           <Prompt questions={questions} setQuestions={setQuestions} />
           <Clipboard clipboard={clipboard} setClipboard={setClipboard} />
           <S.WrapHud>
