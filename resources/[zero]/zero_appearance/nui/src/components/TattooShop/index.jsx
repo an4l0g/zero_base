@@ -10,7 +10,7 @@ import ItemList from "../ItemList";
 import { BsScissors } from "react-icons/bs";
 import useResult from "../../hooks/useResult";
 
-function BarberShop() {
+function TattooShop() {
   const firstRender = useRef(true);
   const { appearance } = useContext(AppearanceContext);
   const { calculateTotal, buyCustomizations } = useResult();
@@ -23,19 +23,19 @@ function BarberShop() {
   useEffect(() => {
     setLabelType(Types[0].path);
     setIndexType(0);
-    setLimit(appearance.barbershop.drawables[0][Types[0].path]);
+    setLimit(appearance.tattooshop.drawables[0][Types[0].path]);
   }, [appearance]);
 
-  const handleChangeType = (index, customLimit) => {
+  const handleChangeType = (index) => {
     firstRender.current = true;
     setLabelType(Types[index].path);
     setIndexType(index);
-    setLimit(appearance.barbershop.drawables[index][Types[index].path]);
+    setLimit(appearance.tattooshop.drawables[index][Types[index].path]);
   };
 
   return (
     <>
-      {appearance.barbershop && (
+      {appearance.tattooshop && (
         <>
           <S.Container>
             <S.Content>
@@ -45,12 +45,12 @@ function BarberShop() {
                   indexType={indexType}
                   handleChangeType={handleChangeType}
                   types={Types}
-                  shop={"barbershop"}
+                  shop={"tattooshop"}
                 />
                 <S.RightWrap>
                   <S.OptionsListWrap>
                     <ItemList
-                      shop={"barbershop"}
+                      shop={"tattooshop"}
                       labelType={labelType}
                       limit={limit}
                       types={Types}
@@ -80,4 +80,4 @@ function BarberShop() {
   );
 }
 
-export default BarberShop;
+export default TattooShop;

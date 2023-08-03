@@ -4,7 +4,7 @@ import * as S from "../GenericalStyles";
 import { CiImageOff } from "react-icons/ci";
 import AppearanceContext from "../../contexts/AppearanceContext";
 
-function Item({ index, className, labelType, handleClick }) {
+function Item({ shop, index, className, labelType, handleClick }) {
   const { appearance } = useContext(AppearanceContext);
   const [imageError, setImageError] = useState(false);
 
@@ -16,7 +16,7 @@ function Item({ index, className, labelType, handleClick }) {
     <S.OptionItem onClick={handleClick} className={className}>
       {!imageError ? (
         <S.OptionImage
-          src={`http://localhost/zero_appearance/barbershop/${appearance.barbershop.sex}/${labelType}/${index}.png`}
+          src={`http://189.0.88.222/zero_appearance/${shop}/${appearance[shop].sex}/${labelType}/${index}.png`}
           onError={() => setImageError(true)}
         />
       ) : (

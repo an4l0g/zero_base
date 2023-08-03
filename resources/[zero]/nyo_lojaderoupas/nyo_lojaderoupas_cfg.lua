@@ -108,14 +108,14 @@ lojaderoupa = {
         perm = "",
         type = "all", -- all (todas as roupas), exclusive (exibe apenas as roupas setadas), exclude (exclui as roupas setadas)
         clouth = {
-            [1] = {price = 500, clouth = {}}, -- mascara
-            [3] = {price = 500, clouth ={}}, -- maos
-            [4] = {price = 500, clouth ={}}, -- calca
-            [5] = {price = 500, clouth ={}}, -- mochila
-            [6] = {price = 500, clouth ={}}, -- sapato
-            [7] = {price = 500, clouth ={}}, -- gravata
-            [8] = {price = 500, clouth ={}}, -- camisa
-            [11] = {price = 500, clouth ={}}, -- jaqueta
+            ['1'] = {price = 500, clouth = {}}, -- mascara
+            ['3'] = {price = 500, clouth ={}}, -- maos
+            ['4'] = {price = 500, clouth ={}}, -- calca
+            ['5'] = {price = 500, clouth ={}}, -- mochila
+            ['6'] = {price = 500, clouth ={}}, -- sapato
+            ['7'] = {price = 500, clouth ={}}, -- gravata
+            ['8'] = {price = 500, clouth ={}}, -- camisa
+            ['11'] = {price = 500, clouth ={}}, -- jaqueta
             ['p0'] = {price = 500, clouth ={}}, -- bone/chapeu
             ['p1'] = {price = 500, clouth ={}}, -- oculos
             ['p2'] = {price = 500, clouth ={}}, -- brinco
