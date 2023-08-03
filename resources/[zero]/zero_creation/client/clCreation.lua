@@ -2,19 +2,6 @@ cli = {}
 Tunnel.bindInterface('Creation', cli)
 vSERVER = Tunnel.getInterface('Creation')
 
-local getCharacterDrawable = function(part)
-    local ped = PlayerPedId()
-	if part == 12 then
-		return tonumber(GetNumberOfPedDrawableVariations(ped, 2))
-	elseif part == -1 then
-		return tonumber(GetNumberOfPedDrawableVariations(ped, 0))
-	elseif part == -2 then
-		return 64
-	else
-		return tonumber(GetNumHeadOverlayValues(part))
-	end
-end
-
 local setGender = function(gender) 
     local ped = PlayerPedId()
 
@@ -137,15 +124,15 @@ finishClothes = function()
         [GetHashKey('mp_m_freemode_01')] = {
             ['mask'] = { 0, 0, 0 }, -- 1
             ['hair'] = { 0, 0, 0 }, -- 2
-            ['torso'] = { 8, 0, 2 }, -- 3
-            ['leg'] = { 26, 0, 2 }, -- 4
-            ['bag'] = { 0, 0, 0 }, -- 5
-            ['shoes'] = { 1, 0, 2 }, -- 6
-            ['acessory'] = { 0, 0, 0 }, -- 7
-            ['undershirt'] = { 15, 0, 2 }, -- 8
-            ['kevlar'] = { 0, 0, 0 }, -- 9
-            ['badge'] = { 0, 0, 0 }, -- 10
-            ['torso2'] = { 38, 0, 2 }, -- 11
+            ['torso'] = { 8, 0, 0 }, -- 3
+            ['leg'] = { 26, 0, 0 }, -- 4
+            ['bag'] = { 0, 0, 2 }, -- 5
+            ['shoes'] = { 1, 0, 0 }, -- 6
+            ['acessory'] = { 0, 0, 2 }, -- 7
+            ['undershirt'] = { 15, 0, 0 }, -- 8
+            ['kevlar'] = { 0, 0, 2 }, -- 9
+            ['badge'] = { 0, 0, 2 }, -- 10
+            ['torso2'] = { 38, 0, 0 }, -- 11
             ['hat'] = { -1, 0 }, -- p0
             ['glass'] = { -1, 0 }, --p1
             ['ear'] = { -1, 0 }, -- p2
@@ -153,7 +140,7 @@ finishClothes = function()
             ['bracelet'] = { -1, 0 } --p7
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            ['mask'] = { 0, 0, 0 }, -- 1
+            ['mask'] = { -1, 0, 0 }, -- 1
             ['hair'] = { 0, 0, 0 }, -- 2
             ['torso'] = { 9, 0, 1 }, -- 3
             ['leg'] = { 73, 0, 1 }, -- 4
@@ -174,6 +161,11 @@ finishClothes = function()
     local model = GetEntityModel(PlayerPedId())
     setClothing(clothes[model] or {})
 end
+
+RegisterCommand('set2',function()
+     SetPedComponentVariation(PlayerPedId(), 11, -1, 0)
+    SetPedComponentVariation(PlayerPedId(), 3, 15, 0)
+end)
 
 setClothing = function(clothes)
     local ped = PlayerPedId()
@@ -198,8 +190,6 @@ setClothing = function(clothes)
         ['bracelet'] = 7
     }
     if (clothes) then
-        SetPedDefaultComponentVariation(ped)
-	    ClearAllPedProps(ped)
         for index, value in pairs(clothes) do
             if (components[index]) then
                 SetPedComponentVariation(ped, components[index], value[1], value[2], 2)
@@ -316,7 +306,7 @@ RegisterNuiCallback('changeCharacter', function(data)
     -- PELO CORPORAL
     currentCharacter.chestModel = data.chestModel
     currentCharacter.chestColor = data.chestColor
-    currentCharacter.chestColor = data.chestOpacity
+    currentCharacter.chestOpacity = data.chestOpacity
     SetPedHeadOverlay(ped, 10, data.chestModel, (data.chestOpacity or 0.99))
     SetPedHeadOverlayColor(ped, 10, 1, data.chestColor, data.chestColor)
 
@@ -383,8 +373,8 @@ RegisterNuiCallback('changePov', function(data)
 end)
 
 RegisterNuiCallback('finish', function(data)
-    SetNuiFocus(false, false)
     if (vSERVER.verifyIdentity(identity)) then
+        SetNuiFocus(false, false)
         vSERVER.saveCharacter(currentCharacter)
         SendNUIMessage({ action = 'close' })
         finishCreator()
