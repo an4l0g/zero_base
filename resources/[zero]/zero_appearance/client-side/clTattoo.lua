@@ -94,7 +94,7 @@ openTattooShop = function(locs)
     SendNUIMessage({ 
         method = 'openTattooShop', 
         data = {
-            tattoos = tattoos, 
+            drawables = tattoos, 
             sex = (model == GetHashKey('mp_m_freemode_01') and 'male' or 'female'), 
         }
     })

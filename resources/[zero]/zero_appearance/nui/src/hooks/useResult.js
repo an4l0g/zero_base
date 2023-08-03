@@ -4,6 +4,7 @@ import AppearanceContext from "../contexts/AppearanceContext";
 import useRequest from "./useRequest";
 import BarberTypes from "../components/BarberShop/types.json";
 import SkinTypes from "../components/SkinShop/types.json";
+import TattooTypes from "../components/TattooShop/types.json";
 import VariationsContext from "../contexts/VariationsContext";
 
 function useResult() {
@@ -136,7 +137,7 @@ function useResult() {
         tattoo: () => {
           request("buyTattooshopCustomizations", {
             drawables: result.current,
-            total: calculateTotal(BarberTypes),
+            total: calculateTotal(TattooTypesr),
           });
         },
       };

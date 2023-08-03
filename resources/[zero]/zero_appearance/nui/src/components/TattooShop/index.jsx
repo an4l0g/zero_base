@@ -26,7 +26,7 @@ function TattooShop() {
     setLimit(appearance.tattooshop.drawables[0][Types[0].path]);
   }, [appearance]);
 
-  const handleChangeType = (index, customLimit) => {
+  const handleChangeType = (index) => {
     firstRender.current = true;
     setLabelType(Types[index].path);
     setIndexType(index);
