@@ -44,6 +44,7 @@ srv.saveCharacter = function(table)
     local _source = source
     local _userId = zero.getUserId(_source)
     if (_userId) then
+        print(json.encode(table))
         zero.execute('zero_character/saveUser', { user_id = _userId, user_character = json.encode(table) })
     end
 end
