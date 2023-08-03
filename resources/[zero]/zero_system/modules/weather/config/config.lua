@@ -1,6 +1,3 @@
-Proxy = module('zero', 'lib/Proxy')
-zero = Proxy.getInterface('zero')
-
 config = {}
 
 config.weathers = {

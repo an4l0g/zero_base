@@ -1,4 +1,4 @@
-local vehiclesConfig = config.vehicles
+vehiclesConfig = config.vehicles
 
 vehicleName = function(vehicle)
 	if (vehiclesConfig[vehicle].name) then return vehiclesConfig[vehicle].name; end;

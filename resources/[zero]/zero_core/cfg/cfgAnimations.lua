@@ -864,6 +864,12 @@ config.animations = {
             andar = true,
             loop = true,
         },
+        ['mexer'] = {
+            dict = 'amb@prop_human_parking_meter@female@idle_a',
+            anim = 'idle_a_female',
+            andar = true,
+            loop = true
+        }
     } 
 }
 

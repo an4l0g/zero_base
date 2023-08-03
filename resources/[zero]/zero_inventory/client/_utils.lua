@@ -14,3 +14,8 @@ end
 cInventory.animation = function(dict, anim, loop)
     zero.playAnim(true,{{dict,anim}},loop)
 end
+
+RegisterNetEvent('zero_inventory:LockpickAnim', function(vehicle)
+	SetVehicleNeedsToBeHotwired(vehicle, true)
+	IsVehicleNeedsToBeHotwired(vehicle)
+end)

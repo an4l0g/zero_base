@@ -56,19 +56,19 @@ startSpray = function(source)
         if (sprayText) then
             sprayText = sprayText[1]
             if (configSpray.blacklist[sprayText]) then
-                TriggerClientEvent('disableAllActions', source, false)
+                LocalPlayer.state.BlockTasks = false
                 TriggerClientEvent('notify', source, 'Spray', 'Este <b>texto</b> não é permitido.')
             else
                 if (sprayText:len() <= 9) then
-                    TriggerClientEvent('disableAllActions', source, true)
+                    LocalPlayer.state.BlockTasks = true
                     vCLIENT.createSpray(source, sprayText)
                 else
-                    TriggerClientEvent('disableAllActions', source, false)
+                    LocalPlayer.state.BlockTasks = false
                     TriggerClientEvent('notify', source, 'Spray', 'O <b>texto</b> pode ter até 9 caracteres')
                 end
             end
         else
-            TriggerClientEvent('disableAllActions', source, false)
+            LocalPlayer.state.BlockTasks = false
         end
     end
 end
@@ -78,7 +78,7 @@ removeSpray = function(source)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
-        TriggerClientEvent('disableAllActions', source, true)
+        LocalPlayer.state.BlockTasks = true
         TriggerClientEvent('zero_spray:removeClosestSpray', source)        
     end
 end
