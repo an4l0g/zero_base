@@ -2,61 +2,6 @@ cli = {}
 Tunnel.bindInterface('Creation', cli)
 vSERVER = Tunnel.getInterface('Creation')
 
-generalConfig = configCreator.general
-
-local float = function(number)
-	number = (number + 0.00000)
-	return number
-end
-
-local atualCam = ''
-local tempCam = nil
-
-local cameras = {
-    ['body'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']-1.10, generalConfig['spawnCreator']['y']+0.9, generalConfig['spawnCreator']['z']),
-        ['heading'] = function()
-            local ped = PlayerPedId()
-            SetEntityHeading(ped, (generalConfig['spawnCreator'].w - 20))
-        end,
-        ['anim'] = function()
-            freezeAnim('move_f@multiplayer', 'idle')
-        end
-    },
-    ['head'] = {
-        ['coords'] = vector3(generalConfig['spawnCreator']['x']-0.85, generalConfig['spawnCreator']['y']+0.7, generalConfig['spawnCreator']['z']),
-        ['heading'] = function()
-            local ped = PlayerPedId()
-            SetEntityHeading(ped, (generalConfig['spawnCreator'].w - 20.0))
-        end,      
-        ['anim'] = function()
-            freezeAnim('mp_sleep', 'bind_pose_180', 1, true)
-        end
-    },
-}
-
-local createCam = function(cameraName)
-    atualCam = cameraName
-    ClearFocus()
-
-    local ped = PlayerPedId()
-    local cam = cameras[cameraName]
-    local x, y, z = (cameras[cameraName]['coords']['x']), (cameras[cameraName]['coords']['y']), (cameras[cameraName]['coords']['z']+0.52)
-
-    tempCam = CreateCamWithParams('DEFAULT_SCRIPTED_CAMERA', vector3(x, y, z), (vector3(0, -0, 70.86614) + vector3(0.0, 0.0, 180)), GetGameplayCamFov())
-    SetCamActive(tempCam, true)
-    RenderScriptCams(true, true, 1000, true, false)
-
-    if (cam['anim']) then cam['anim']() end
-    if (cam['heading']) then cam['heading']() end
-end
-
-deleteCam = function(render)
-    SetCamActive(tempCam, false)
-    if (render) then RenderScriptCams(false, true, 0, true, true); end;
-	tempCam = nil
-end
-
 local getCharacterDrawable = function(part)
     local ped = PlayerPedId()
 	if part == 12 then
@@ -70,13 +15,80 @@ local getCharacterDrawable = function(part)
 	end
 end
 
-cli.createCharacter = function()
-    initCreator()
-    cli.loadingPlayer(true)
-    if (not DoesCamExist(tempCam)) then
-        createCam('body')
+RegisterCommand('teste',function()
+    cli.createCharacter()
+end)
+
+local setGender = function(gender) 
+    local ped = PlayerPedId()
+
+    local model = 'mp_m_freemode_01'
+    if (gender == 'female') then model = 'mp_f_freemode_01' end
+
+    local modelHash = GetHashKey(model)
+    RequestModel(modelHash) 
+    while (not HasModelLoaded(modelHash)) do 
+        RequestModel(modelHash) 
+        Citizen.Wait(10) 
     end
-    FreezeEntityPosition(PlayerPedId(), true)
+    SetPlayerModel(PlayerId(), modelHash)
+    SetModelAsNoLongerNeeded(modelHash)
+
+    if (HasModelLoaded(modelHash)) then
+        ped = PlayerPedId()
+        
+        local currentHealth, currentMaxHealth, currentArmour = GetEntityHealth(ped), GetPedMaxHealth(ped), GetPedArmour(ped)
+        SetPedMaxHealth(ped, currentMaxHealth)
+        SetEntityHealth(ped, currentHealth)
+        SetPedArmour(ped, currentArmour)
+    end
+
+    local weapons = (zero.getWeapons() or {})
+    zero.giveWeapons(weapons, true, GlobalState.weaponToken)
+
+    resetClothes()
+
+    SetPedHeadBlendData(ped, 0, 21, 0, 0, 0, 0, 0.6, 0.0, 0.0, false)
+end
+
+local povCam = {
+    ['body'] = function()
+        Cam({ x = 0, y = 0.9, z = 0.65 }, { x = 1.0, y = 0.0, z = 0.0 })
+    end,
+    ['head'] = function()
+        Cam({ x = 0, y = 0.6, z = 0.65 }, { x = 1.0, y = 0.0, z = 0.0 })
+    end
+}
+
+local atualCam;
+local createCam = function(pov)
+    atualCam = pov
+    povCam[pov]()
+end
+
+cli.createCharacter = function()
+    cli.loadingPlayer(true)
+    vSERVER.changeSession(GetPlayerServerId(PlayerId()))
+    local ped = PlayerPedId()
+
+    TriggerEvent('zero_hud:toggleHud', false)
+    TriggerEvent('zero_weather:staticTime', { 
+        weather = 'EXTRASUNNY', 
+        hours = 14, 
+        minutes = 0 
+    })
+
+    Citizen.Wait(1000)
+    DoScreenFadeOut(500)
+    zero.teleport(generalConfig.creatorLocation.xyz)
+    SetEntityHeading(ped, generalConfig.creatorLocation.w)
+    setGender('male') 
+    SetEntityHealth(ped, 200)
+    Citizen.Wait(1000)
+    DoScreenFadeIn(500)
+    FreezeEntityPosition(ped, true)
+    createCam('body')
+
     SetNuiFocus(true, true)
     SendNUIMessage({ action = 'open' })
 end
@@ -162,220 +174,10 @@ setClothing = function(clothes)
     end
 end
 
-local identity = {
-    firstname = 'Individuo',
-    lastname = 'Indigente',
-    age = 18
-}
-
-local currentCharacter = { 
-    -- INICIO
-    gender = 'masculino',
-    fatherId = 0, 
-    motherId = 21,
-    colorMother = 0, 
-    colorFather = 0,  
-    shapeMix = 0, 
-    skinMix = 0,
-
-    -- OLHOS
-    eyesColor = 0,
-    eyesOpening = 0,
-    eyebrowsHeight = 0,
-    eyebrowsWidth = 0,
-    eyebrowsModel = 0,
-    eyebrowsColor = 0,
-    eyebrowsOpacity = 0.99,
-
-    -- NARIZ
-    noseWidth = 0, 
-    noseHeight = 0, 
-    noseLength = 0, 
-    noseBridge = 0, 
-    noseTip = 0, 
-    noseShift = 0, 
-
-    -- BOCHECHAS
-    cheekboneHeight = 0, 
-    cheekboneWidth = 0, 
-    cheeksWidth = 0, 
-
-    -- BOCA
-    lips = 0, 
-    jawWidth = 0, 
-    jawHeight = 0, 
-
-    -- Queixo
-    chinLength = 0, 
-    chinPosition = 0, 
-    chinWidth = 0, 
-    chinShape = 0, 
-
-    -- Pescoço
-    neckWidth = 0, 
-
-    -- Cabelo
-    hairModel = 4, 
-    firstHairColor = 0, 
-    secondHairColor = 0, 
-
-    -- Barba
-    beardModel = -1, 
-    beardColor = 0, 
-    beardOpacity = 0.99,
-
-    -- Pelo Corporal
-    chestModel = -1, 
-    chestColor = 0, 
-    chestOpacity = 0.99,
-
-    -- Blush
-    blushModel = -1, 
-    blushColor = 0, 
-    blushOpacity = 0.99,
-
-    -- Batom
-    lipstickModel = -1, 
-    lipstickColor = 0, 
-    lipstickOpacity = 0.99,
-
-    -- Manchas
-    blemishesModel = -1, 
-    blemishesOpacity = 0.99,
-
-    -- Envelhecimento
-    ageingModel = -1, 
-    ageingOpacity = 0.99,
-
-    -- Aspecto
-    complexionModel = -1, 
-    complexionOpacity = 0.99,
-
-    -- Pele
-    sundamageModel = -1, 
-    sundamageOpacity = 0.99,
-
-    -- Sardas
-    frecklesModel = -1, 
-    frecklesOpacity = 0.99,
-
-    -- Maquiage
-    makeupModel = -1,
-    makeupOpacity = 0.99,
-}
-
-local currentGender = 'masculino'
-
-local setGender = function(gender) 
-    local ped = PlayerPedId()
-
-    local model = 'mp_m_freemode_01'
-    if (gender == 'female') then model = 'mp_f_freemode_01' end
-
-    local modelHash = GetHashKey(model)
-    RequestModel(modelHash) 
-    while (not HasModelLoaded(modelHash)) do 
-        RequestModel(modelHash) 
-        Citizen.Wait(10) 
-    end
-    SetPlayerModel(PlayerId(), modelHash)
-    SetModelAsNoLongerNeeded(modelHash)
-
-    if (HasModelLoaded(modelHash)) then
-        ped = PlayerPedId()
-        
-        local currentHealth, currentMaxHealth, currentArmour = GetEntityHealth(ped), GetPedMaxHealth(ped), GetPedArmour(ped)
-        SetPedMaxHealth(ped, currentMaxHealth)
-        SetEntityHealth(ped, currentHealth)
-        SetPedArmour(ped, currentArmour)
-    end
-
-    local weapons = (zero.getWeapons() or {})
-    zero.giveWeapons(weapons, true, GlobalState.weaponToken)
-
-    resetClothes()
-
-    SetPedHeadBlendData(ped, 0, 21, 0, 0, 0, 0, 0.6, 0.0, 0.0, false)
-end
-
-StartFade = function()
-	DoScreenFadeOut(500)
-	while (IsScreenFadingOut()) do Citizen.Wait(1); end;
-end
-
-EndFade = function()
-	DoScreenFadeIn(500)
-	while (IsScreenFadingIn()) do Citizen.Wait(1); end;
-end
-
-initCreator = function()
-    local ped = PlayerPedId()
-    TriggerEvent('zero_weather:staticTime', { weather = 'EXTRASUNNY', hours = 14, minutes = 0 })
-    TriggerEvent('zero_hud:toggleHud', false)
-    vSERVER.changeSession(GetPlayerServerId(PlayerId()))
-    StartFade()
-    Citizen.Wait(1500)
-    teleport(ped, generalConfig['spawnCreator'].xyz)
-    SetEntityHeading(ped, generalConfig['spawnCreator'].w)
-    SetEntityHealth(ped, GetPedMaxHealth(ped))
-    setGender('male') 
-    SetEntityHealth(ped, GetPedMaxHealth(ped))  
-    SetFacialIdleAnimOverride(ped, 'pose_normal_1', 0)
-    Citizen.Wait(1000)
-    EndFade()
-end
-
-finishCreator = function()
-    local ped = PlayerPedId()
-    TriggerEvent('zero_weather:staticTime', false)
-    StartFade()
-    Citizen.Wait(1500)
-    teleport(ped, generalConfig.spawnAfterCreator.xyz)
-    SetEntityHeading(ped, generalConfig.spawnAfterCreator.w)
-    SetEntityHealth(ped, GetPedMaxHealth(ped))
-    FreezeEntityPosition(ped, false)
-    vSERVER.changeSession(0)
-    deleteCam(true)
-    TriggerEvent('introCinematic:start')
-    Citizen.Wait(1000)
-    EndFade()
-end
-
 cli.loadingPlayer = function(stats)
     local ped = PlayerPedId()
-    SetEntityInvincible(ped, false) -- MQCU
     SetEntityVisible(ped, stats)
     FreezeEntityPosition(ped, (not stats))
-end
-
-LoadAnim = function(dict)
-    while (not HasAnimDictLoaded(dict)) do
-        RequestAnimDict(dict)
-        Citizen.Wait(10)
-    end
-end
-
-freezeAnim = function(dict, anim, flag, keep)
-    local ped = PlayerPedId()
-    if (not keep) then ClearPedTasks(ped) end
-    LoadAnim(dict)
-    TaskPlayAnim(ped, dict, anim, 2.0, 2.0, -1, flag or 1, 0, false, false, false)
-    RemoveAnimDict(dict)
-end
-
-teleport = function(ped, x, y, z)
-    if (type(x) == 'vector3') then x, y, z = table.unpack(x) end
-    FreezeEntityPosition(ped, true)
-    SetEntityCoords(ped, x + 0.0001, y + 0.0001, z + 0.0001, 1, 0, 0, 1)
-    while (not HasCollisionLoadedAroundEntity(ped)) do
-        FreezeEntityPosition(ped, true)
-        SetEntityCoords(ped, x + 0.0001, y + 0.0001, z + 0.0001, 1, 0, 0, 1)
-        RequestCollisionAtCoord(x, y, z)
-        Citizen.Wait(500)
-    end
-    SetEntityCoords(ped, x + 0.0001, y + 0.0001, z + 0.0001, 1, 0, 0, 1)
-    FreezeEntityPosition(ped, false)
-    Citizen.Wait(1000)
 end
 
 RegisterNuiCallback('changeCharacter', function(data)
@@ -533,8 +335,12 @@ end)
 RegisterNuiCallback('changePov', function(data)
     local newPov = data.pov
     local newHeading = (data.rotate + 0.00)
+    
     SetEntityHeading(PlayerPedId(), newHeading)
-    if (atualCam ~= newPov) then deleteCam(); createCam(newPov); end;
+    if (atualCam ~= newPov) then 
+        DeleteCam()
+        createCam(newPov)
+    end
 end)
 
 RegisterNuiCallback('finish', function(data)
@@ -546,18 +352,20 @@ RegisterNuiCallback('finish', function(data)
     end
 end)
 
--- RegisterCommand('teste', function()
---     cam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
--- 	local coordsCam = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 0.5, 0.65)
--- 	local coordsPly = GetEntityCoords(PlayerPedId())
--- 	SetCamCoord(cam, coordsCam)
--- 	PointCamAtCoord(cam, coordsPly['x'], coordsPly['y'], coordsPly['z']+0.65)
+finishCreator = function()
+    vSERVER.changeSession(0)
+    local ped = PlayerPedId()
 
--- 	SetCamActive(cam, true)
--- 	RenderScriptCams(true, true, 500, true, true)
--- end)
-
--- RegisterCommand('teste2', function()
---     local playerPed = PlayerPedId()
---     SetEntityHeading(playerPed, GetEntityHeading(playerPed) + 10.0)
--- end)
+    TriggerEvent('zero_weather:staticTime', false)
+    Citizen.Wait(1000)
+    DoScreenFadeOut(500)
+    teleport(ped, generalConfig.spawnAfterCreator.xyz)
+    SetEntityHeading(ped, generalConfig.spawnAfterCreator.w)
+    SetEntityHealth(ped, GetPedMaxHealth(ped))
+    FreezeEntityPosition(ped, false)
+    
+    DeleteCam(true)
+    TriggerEvent('introCinematic:start')
+    Citizen.Wait(1000)
+    DoScreenFadeIn(500)
+end

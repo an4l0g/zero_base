@@ -9,4 +9,4 @@ ui_page "http://189.0.88.222:8503"
 
 client_scripts { 'client/*.lua' }
 server_scripts { 'server/*.lua' }
-shared_scripts { '@zero/lib/utils.lua', 'cfg/*.lua' }              
+shared_scripts { '@zero/lib/utils.lua', 'main.lua', 'cfg/*.lua' }              
