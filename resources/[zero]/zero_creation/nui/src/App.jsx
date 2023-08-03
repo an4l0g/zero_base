@@ -13,6 +13,7 @@ function App() {
       const { action } = event.data;
 
       if (action === "open") setCreation(true);
+      else if (action === "close") setCreation(false);
     },
     [setCreation]
   );
