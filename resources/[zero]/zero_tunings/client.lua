@@ -45,14 +45,14 @@ cli.installNitro = function()
                         SetVehicleDoorOpen(pVehicle, 4, 0, 0)
                         SetEntityHeading(ped, (GetEntityHeading(pVehicle) - 180))
                         
-                        TriggerEvent('disableAllActions', true)
+                        LocalPlayer.state.BlockTasks = true
                         FreezeEntityPosition(ped, true)
                         FreezeEntityPosition(pVehicle, true)
                         TriggerEvent('progressBar', 'Instalando o nitro...', 5000)
                         Citizen.SetTimeout(5000, function()
                             ClearPedTasks(ped)
                             PlaySoundFrontend(-1, 'Lowrider_Upgrade', 'Lowrider_Super_Mod_Garage_Sounds', 1)
-                            TriggerEvent('disableAllActions', false)
+                            LocalPlayer.state.BlockTasks = false
                             FreezeEntityPosition(ped, false)
                             FreezeEntityPosition(pVehicle, false)
                             SetVehicleDoorShut(pVehicle, 4, 0)

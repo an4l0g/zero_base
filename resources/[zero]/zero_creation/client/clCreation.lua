@@ -545,3 +545,19 @@ RegisterNuiCallback('finish', function(data)
         finishCreator()
     end
 end)
+
+-- RegisterCommand('teste', function()
+--     cam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
+-- 	local coordsCam = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 0.5, 0.65)
+-- 	local coordsPly = GetEntityCoords(PlayerPedId())
+-- 	SetCamCoord(cam, coordsCam)
+-- 	PointCamAtCoord(cam, coordsPly['x'], coordsPly['y'], coordsPly['z']+0.65)
+
+-- 	SetCamActive(cam, true)
+-- 	RenderScriptCams(true, true, 500, true, true)
+-- end)
+
+-- RegisterCommand('teste2', function()
+--     local playerPed = PlayerPedId()
+--     SetEntityHeading(playerPed, GetEntityHeading(playerPed) + 10.0)
+-- end)

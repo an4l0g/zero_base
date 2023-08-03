@@ -24,6 +24,7 @@ end
 exports('openInventory', cInventory.openInventory)
 
 cInventory.closeInventory = function(data)
+    disableActions = false
     verifyNearest = false
     nearbyVehicle = nil
     if data and data.message then
