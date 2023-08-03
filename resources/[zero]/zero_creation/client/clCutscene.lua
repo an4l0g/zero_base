@@ -124,15 +124,28 @@ AddEventHandler('introCinematic:start', function()
     local playerId = PlayerPedId()
 	PrepareMusicEvent('FM_INTRO_START')
 	TriggerMusicEvent('FM_INTRO_START') 
-	if IsPedMale(playerId) then 
+	if IsMale(playerId) then 
         RequestCutsceneWithPlaybackList('MP_INTRO_CONCAT', 31, 8)
     else 
+        print('aqui')
         RequestCutsceneWithPlaybackList('MP_INTRO_CONCAT', 103, 8)
     end
     
     while (not HasCutsceneLoaded()) do Citizen.Wait(10); end;
-	if IsPedMale(playerId) then GeneratePed('MP_Male_Character', 'MP_Female_Character', playerId);
-	else GeneratePed('MP_Female_Character', 'MP_Male_Character', playerId) end;
+	if IsMale(playerId) then 
+        RegisterEntityForCutscene(0, 'MP_Male_Character', 3, GetEntityModel(PlayerPedId()), 0)
+		RegisterEntityForCutscene(PlayerPedId(), 'MP_Male_Character', 0, 0, 0)
+		SetCutsceneEntityStreamingFlags('MP_Male_Character', 0, 1) 
+		local female = RegisterEntityForCutscene(0,'MP_Female_Character',3,0,64) 
+		NetworkSetEntityInvisibleToNetwork(female, true)
+	else 
+        print('aqui')
+        RegisterEntityForCutscene(0, 'MP_Female_Character', 3, GetEntityModel(PlayerPedId()), 0)
+		RegisterEntityForCutscene(PlayerPedId(), 'MP_Female_Character', 0, 0, 0)
+		SetCutsceneEntityStreamingFlags('MP_Female_Character', 0, 1) 
+		local male = RegisterEntityForCutscene(0,'MP_Male_Character',3,0,64) 
+		NetworkSetEntityInvisibleToNetwork(male, true)
+    end
 
 	local peds = {}
 	for pedIdx = 0, 6, 1 do
@@ -164,15 +177,6 @@ AddEventHandler('introCinematic:start', function()
     zero.teleport(generalConfig.spawnLocation.xyz)
     SetEntityHeading(ped, generalConfig.spawnLocation.w)
 end)
-
-GeneratePed = function(modelString, modelString2, playerId)
-	RegisterEntityForCutscene(0, modelString, 3, GetEntityModel(playerId), 0)
-	RegisterEntityForCutscene(playerId, modelString, 0, 0, 0)
-	SetCutsceneEntityStreamingFlags(modelString, 0, 1) 
-    
-	local ped = RegisterEntityForCutscene(0, modelString2, 3, 0, 64)
-	NetworkSetEntityInvisibleToNetwork(ped, true)
-end
 
 ClearPedProps = function(ped)
     for i = 0, 8, 1 do
