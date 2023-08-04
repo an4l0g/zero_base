@@ -50,6 +50,12 @@ zero.killGod = function()
     zeroServer._updateArmour(0)
 
     SetEntityInvincible(ped, false)
+    ClearPedDamageDecalByZone(ped, 0, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 1, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 2, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 3, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 4, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 5, 'ALL')
     ClearPedBloodDamage(ped)    
     ClearPedTasks(ped)
 	ClearPedSecondaryTask(ped)    
@@ -107,8 +113,8 @@ local mainSurvival = function()
 	_isDied = true
     cooldownSurvival(30)
 	Citizen.CreateThread(function()
-		zeroServer._updateHealth(100)
-        SetEntityHealth(PlayerPedId(), 100)
+        SetEntityHealth(PlayerPedId(), 0)
+		zeroServer._updateHealth(0)
         TransitionToBlurred(1000)
 		while (_isDied) do
 			local ped = PlayerPedId()
@@ -124,7 +130,6 @@ local mainSurvival = function()
             end
 			Citizen.Wait(5)
 		end
-        
 	end)
 end
 
@@ -165,7 +170,7 @@ AddEventHandler('gameEventTriggered', function (name, args)
 	if (name == 'CEventNetworkEntityDamage')  then
 		local ped = PlayerPedId()
 		if (args[1] == ped and args[6] == 1) then 
-			mainSurvival()
+            if (GetEntityHealth(ped) <= 100) then mainSurvival(); end;
 		end
 	end
 end) 

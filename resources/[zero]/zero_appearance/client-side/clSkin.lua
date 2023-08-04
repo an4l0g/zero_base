@@ -5,7 +5,7 @@ local locsConfig = config.locs
 local generalConfig =  config.general
 
 local checkVariation = function(value)
-    if value >= 0 then return value end
+    if (value >= 0) then return value; end;
     return 0
 end
 
@@ -83,7 +83,8 @@ openSkinShop = function(locs)
     local ped = PlayerPedId()
     local model = GetEntityModel(ped)
 
-    oldCustom = getCustomization()
+    oldCustom = zero.getCustomization()
+    print(json.encode(oldCustom))
     SetEntityCoords(ped, location.coord.xyz)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
@@ -117,7 +118,7 @@ openSkinShop = function(locs)
     })
 
     Citizen.Wait(500) 
-    if (not DoesCamExist(tempCam)) then createCam('body'); end;
+    createCam('body')
     FreezeEntityPosition(ped, true)
 end
 
@@ -187,10 +188,14 @@ RegisterNuiCallback('changeSkinshopDemo', function(data)
             data = variations
         })
     end
-
-    
 end)
 
 RegisterNuiCallback('buySkinshopCustomizations', function(data)
-    print(data.total, json.encode(data.drawables))
+    if (data.drawables and data.total > 0) then
+        data.drawables.pedModel = GetEntityModel(PlayerPedId())
+        if (vSERVER.tryPayment(data.total, data.drawables)) then
+            oldCustom = nil
+        end
+    end
+    closeNui()
 end)
