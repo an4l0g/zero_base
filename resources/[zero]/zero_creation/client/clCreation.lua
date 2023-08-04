@@ -43,7 +43,7 @@ local povCam = {
     end
 }
 
-local atualCam;
+atualCam = ''
 local createCam = function(pov)
     atualCam = pov
     povCam[pov]()
@@ -161,11 +161,6 @@ finishClothes = function()
     local model = GetEntityModel(PlayerPedId())
     setClothing(clothes[model] or {})
 end
-
-RegisterCommand('set2',function()
-     SetPedComponentVariation(PlayerPedId(), 11, -1, 0)
-    SetPedComponentVariation(PlayerPedId(), 3, 15, 0)
-end)
 
 setClothing = function(clothes)
     local ped = PlayerPedId()
@@ -396,4 +391,27 @@ finishCreator = function()
     TriggerEvent('introCinematic:start')
     Citizen.Wait(1000)
     DoScreenFadeIn(500)
+end
+
+tempCam = nil
+Cam = function(offset, bone)
+    if (not DoesCamExist(tempCam)) then
+        local ped = PlayerPedId()
+        local coordsCam = GetOffsetFromEntityInWorldCoords(ped, offset.x, offset.y, offset.z)
+        
+        tempCam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
+        SetCamCoord(tempCam, coordsCam)
+        PointCamAtPedBone(tempCam, ped, 31086, bone.x, bone.y, bone.z, false)
+
+        SetCamActive(tempCam, true)
+        RenderScriptCams(true, true, 500, true, true)
+    end
+end
+
+DeleteCam = function(render)
+    SetCamActive(tempCam, false)
+    if (render) then 
+        RenderScriptCams(false, true, 0, true, true)
+    end
+	tempCam = nil
 end

@@ -83,7 +83,7 @@ openTattooShop = function(locs)
     local ped = PlayerPedId()
     local model = GetEntityModel(ped)
     
-    oldCustom = getCustomization()
+    oldCustom = zero.getCustomization()
     SetEntityCoords(ped, location.coord.xyz)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)

@@ -2,7 +2,7 @@ srv = {}
 Tunnel.bindInterface('Creation', srv)
 vCLIENT = Tunnel.getInterface('Creation')
 
-zero._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character, user_tattoo, rh) VALUES (@user_id, @controller, @user_character, @user_tattoo, @rh)')
+zero._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character, user_tattoo, user_clothes, rh) VALUES (@user_id, @controller, @user_character, @user_tattoo, @user_clothes, @rh)')
 zero._prepare('zero_character/verifyUser', 'SELECT controller FROM zero_creation WHERE user_id = @user_id')
 zero._prepare('zero_character/saveUser', 'UPDATE zero_creation SET user_character = @user_character, controller = 1 WHERE user_id = @user_id')
 
@@ -44,7 +44,6 @@ srv.saveCharacter = function(table)
     local _source = source
     local _userId = zero.getUserId(_source)
     if (_userId) then
-        print(json.encode(table))
         zero.execute('zero_character/saveUser', { user_id = _userId, user_character = json.encode(table) })
     end
 end
@@ -58,6 +57,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
         controller = 0, 
         user_character = json.encode({}), 
         user_tattoo = json.encode({}), 
+        user_clothes = json.encode({}), 
         rh = bloodGroup[math.random(#bloodGroup)] 
     })
 
