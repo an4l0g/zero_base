@@ -1,5 +1,6 @@
 import { RiPlayFill } from "react-icons/ri";
 import { GiCarDoor, GiKey } from "react-icons/gi";
+import { AiFillCar } from "react-icons/ai";
 
 export default [
   {
@@ -27,18 +28,19 @@ export default [
     value: "rem",
   },
   {
+    title: "Chave",
+    icon: <GiKey />,
+    type: "category",
+    action: "carKeys",
+    value: "keys",
+    category: "car",
+  },
+  {
     title: "Portas",
     icon: <GiCarDoor />,
     type: "category",
     action: "carDoors",
     value: "doors",
-    category: "car",
-  },
-  {
-    title: "Instalar nitro",
-    icon: <RiPlayFill />,
-    type: "action",
-    action: "nitro",
     category: "car",
   },
   {
