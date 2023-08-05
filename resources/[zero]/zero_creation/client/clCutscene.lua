@@ -127,7 +127,6 @@ AddEventHandler('introCinematic:start', function()
 	if IsMale(playerId) then 
         RequestCutsceneWithPlaybackList('MP_INTRO_CONCAT', 31, 8)
     else 
-        print('aqui')
         RequestCutsceneWithPlaybackList('MP_INTRO_CONCAT', 103, 8)
     end
     
@@ -139,7 +138,6 @@ AddEventHandler('introCinematic:start', function()
 		local female = RegisterEntityForCutscene(0,'MP_Female_Character',3,0,64) 
 		NetworkSetEntityInvisibleToNetwork(female, true)
 	else 
-        print('aqui')
         RegisterEntityForCutscene(0, 'MP_Female_Character', 3, GetEntityModel(PlayerPedId()), 0)
 		RegisterEntityForCutscene(PlayerPedId(), 'MP_Female_Character', 0, 0, 0)
 		SetCutsceneEntityStreamingFlags('MP_Female_Character', 0, 1) 

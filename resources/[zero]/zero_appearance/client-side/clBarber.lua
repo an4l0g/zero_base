@@ -92,7 +92,7 @@ openBarberShop = function(locs)
     local ped = PlayerPedId()
     local model = GetEntityModel(ped)
 
-    oldCustom = getCustomization()
+    oldCustom = zero.getCustomization()
     SetEntityCoords(ped, location.coord.xyz)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
@@ -100,6 +100,7 @@ openBarberShop = function(locs)
     if (general.hidePlayers) then setPlayersVisible(true); end;
 
     local drawables = getDrawables(model)
+    print(json.encode(drawables))
     SendNUIMessage({
         action = 'openBarberShop',
         data = {
@@ -236,8 +237,10 @@ RegisterNuiCallback('changeBarbershopDemo', function(data)
         SetPedHeadOverlayColor(ped, 1, 1, data.drawables.beard.main_color, data.drawables.beard.main_color)
 
         -- PELO CORPORAL
-        SetPedHeadOverlay(ped, 10, data.drawables.chestModel.model, (data.drawables.chestModel.opacity or 0.99))
-        SetPedHeadOverlayColor(ped, 10, 1, data.drawables.chestModel.main_color, data.drawables.chestModel.main_color)
+        if (data.drawables.chestModel) then
+            SetPedHeadOverlay(ped, 10, data.drawables.chestModel.model, (data.drawables.chestModel.opacity or 0.99))
+            SetPedHeadOverlayColor(ped, 10, 1, data.drawables.chestModel.main_color, data.drawables.chestModel.main_color)
+        end
 
         -- BLUSH
         SetPedHeadOverlay(ped, 5, data.drawables.blush.model, (data.drawables.blush.opacity or 0.99))
@@ -276,7 +279,7 @@ end)
 RegisterNuiCallback('buyBarbershopCustomizations', function(data)
     local ped = PlayerPedId()
     local oldCustom = LocalPlayer.state.pedCustom
-    if (data.drawables) then
+    if (data.drawables and data.total > 0) then
         -- SOBRANCELHA
         oldCustom.eyebrowsModel = data.drawables.eyebrows.model
         oldCustom.eyebrowsColor = data.drawables.eyebrows.main_color

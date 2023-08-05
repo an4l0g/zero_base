@@ -20,6 +20,7 @@ exports('getBag', sInventory.getBag)
 sInventory.getSlotsByBag = function(bag_type)
     return zero.query('zero_inventory:getBag', { bag_type = bag_type })[1].slots or {}
 end
+exports('getSlotsByBag', sInventory.getSlotsByBag)
 
 sInventory.modifyBag = function(bagType, newBag)
     zero.execute('zero_inventory:updateBagWithoutId', { slots = json.encode(newBag), bag_type = bagType })
