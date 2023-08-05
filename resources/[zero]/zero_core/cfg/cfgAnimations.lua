@@ -184,6 +184,9 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
+
+                if (IsPedArmed(ped, 4)) then return; end;
+
                 if (GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.CarregarAnim('anim@mp_point')
                     if (not LocalPlayer.state.animApontar) then

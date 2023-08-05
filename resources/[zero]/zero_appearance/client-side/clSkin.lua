@@ -73,6 +73,7 @@ Citizen.CreateThread(function()
 end)
 
 openSkinShop = function(locs)
+    TriggerEvent('zero_hud:toggleHud', false)
     local location = locsConfig[locs]
     local general = generalConfig[location.config]
 
