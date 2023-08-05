@@ -448,9 +448,9 @@ RegisterCommand('tpto', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         if (args[1]) then
             local nPlayer = zero.getUserSource(parseInt(args[1]))
-            local nUser = zero.getUserId(nPlayer)
-            local nIdentity = zero.getUserIdentity(nUser)
             if (nPlayer) then
+                local nUser = zero.getUserId(nPlayer)
+                local nIdentity = zero.getUserIdentity(nUser)
                 local nCoords = GetEntityCoords(GetPlayerPed(nPlayer))
                 zero.webhook('TeleportTo', '```prolog\n[/TPTO]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[FOI ATÉ]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[COORDENADA]: '..tostring(nCoords)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')    
                 SetEntityCoords(source, nCoords)
