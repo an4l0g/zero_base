@@ -118,7 +118,7 @@ function Garage() {
                 <S.ItemStats>
                   <S.StatsLabel>Porta-malas</S.StatsLabel>
                   <S.ProgressBar>
-                    <S.Progress progress={car.suspension} />
+                    <S.Progress progress={car.trunk} />
                   </S.ProgressBar>
                 </S.ItemStats>
               </S.Stats>
