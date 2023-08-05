@@ -97,10 +97,9 @@ openBarberShop = function(locs)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
 
-    if (general.hidePlayers) then setPlayersVisible(true); end;
+    if (general.hidePlayers) then setPlayersVisible(false); end;
 
     local drawables = getDrawables(model)
-    print(json.encode(drawables))
     SendNUIMessage({
         action = 'openBarberShop',
         data = {

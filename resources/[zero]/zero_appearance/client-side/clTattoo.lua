@@ -88,7 +88,7 @@ openTattooShop = function(locs)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
 
-    if (general.hidePlayers) then setPlayersVisible(true); end;
+    if (general.hidePlayers) then setPlayersVisible(false); end;
 
     local tattoos = getTattoos(general.shopConfig, model)
     SendNUIMessage({ 

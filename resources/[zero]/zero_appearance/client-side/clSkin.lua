@@ -84,12 +84,11 @@ openSkinShop = function(locs)
     local model = GetEntityModel(ped)
 
     oldCustom = zero.getCustomization()
-    print(json.encode(oldCustom))
     SetEntityCoords(ped, location.coord.xyz)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
 
-    if (general.hidePlayers) then setPlayersVisible(true); end;
+    if (general.hidePlayers) then setPlayersVisible(false); end;
 
     local sex;
     if (model == GetHashKey('mp_m_freemode_01')) then sex = 'male';
