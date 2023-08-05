@@ -61,27 +61,18 @@ end
 
 setPlayersVisible = function(bool)
     local ped = PlayerPedId()
-    if (bool) then
-        for _, player in ipairs(GetActivePlayers()) do
-            local otherPlayer = GetPlayerPed(player)
-            if (ped ~= otherPlayer) then
-                SetEntityVisible(otherPlayer, bool)
-            end
-        end
-    else
-        CreateThread(function()
-            while (inMenu) do
-                for _, player in ipairs(GetActivePlayers()) do
-                    local otherPlayer = GetPlayerPed(player)
-                    if (ped ~= otherPlayer) then
-                        SetEntityVisible(otherPlayer, bool)
-                    end
+    CreateThread(function()
+        while (inMenu) do
+            for _, player in ipairs(GetActivePlayers()) do
+                local otherPlayer = GetPlayerPed(player)
+                if (ped ~= otherPlayer) then
+                    SetEntityVisible(otherPlayer, bool)
                 end
-                InvalidateIdleCam()
-                Citizen.Wait(1)
             end
-        end)
-    end
+            InvalidateIdleCam()
+            Citizen.Wait(1)
+        end
+    end)
 end
 
 addBlips = function(locs, general)
@@ -121,7 +112,7 @@ RegisterNuiCallback('changeCam', function(data)
 end)
 
 closeNui = function()
-    setPlayersVisible(false)
+    setPlayersVisible(true)
     SetNuiFocus(false, false)
     DeleteCam(true)
     inMenu = false
