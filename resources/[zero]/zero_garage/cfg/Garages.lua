@@ -9,9 +9,9 @@ config.taxIPVA = 0.05
 config.ipvaDays = 7
 
 config.vehicles = {
-    --==============================================================================================================================
-	-- GTA:V
-	--==============================================================================================================================
+--==============================================================================================================================
+-- GTA:V
+--==============================================================================================================================
     ['adder'] = { name = 'Adder', maker = 'Truffade', price = 620000, trunk = 20, glove = 15, type = 'cars', class = 'super', banned = false, hash = -1216765807 },
     ['akuma'] = { name = 'Akuma', maker = 'Dinka', price = 850000, trunk = 20, glove = 15, type = 'motorcycles', class = 'motorcycles', banned = false, hash = 1672195559 },
     ['alpha'] = { name = 'Alpha', maker = 'Albany', price = 230000, trunk = 40, glove = 15, type = 'cars', class = 'sports', banned = false, hash = 767087018 },
@@ -51,8 +51,8 @@ config.vehicles = {
     ['bobcatxl'] = { name = 'Bobcatxl', maker = 'Vapid', price = 260000, trunk = 100, glove = 15, type = 'cars', class = 'vans', banned = false, hash = 1069929536 },
     ['bodhi2'] = { name = 'Bodhi2', maker = 'Canis', price = 170000, trunk = 90, glove = 15, type = 'cars', class = 'offroad', banned = false, hash = -1435919434 },
     ['boxville4'] = { name = 'BoxVille4', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'vans', banned = true, hash = 444171386 },
-    ['boxville2'] = { name = 'BoxVille2', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'vans', banned = true, hash = GetHashKey('boxville2') },
-    ['boxville'] = { name = 'BoxVille', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'vans', banned = true, hash = GetHashKey('boxville') },
+    ['boxville2'] = { name = 'BoxVille2', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'vans', banned = true  },
+    ['boxville'] = { name = 'BoxVille', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'vans', banned = true },
     ['brawler'] = { name = 'Brawler', maker = 'Coil', price = 250000, trunk = 50, glove = 15, type = 'cars', class = 'offroad', banned = false, hash = -1479664699 },
     ['brioso'] = { name = 'Brioso', maker = 'Grotti', price = 25000, trunk = 30, glove = 15, type = 'cars', class = 'compacts', banned = false, hash = 1549126457 },
     ['brioso2'] = { name = 'Brioso2', maker = 'Grotti', price = 25000, trunk = 30, glove = 15, type = 'cars', class = 'compacts', banned = false },
@@ -105,8 +105,8 @@ config.vehicles = {
     ['coquette3'] = { name = 'Coquette3', maker = 'Invetero', price = 195000, trunk = 40, glove = 15, type = 'cars', class = 'muscle', banned = false, hash = 784565758 },
     ['cruiser'] = { name = 'Cruiser', maker = 'Bmx', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'cycles', banned = true, hash = 448402357 },
     ['cuban800'] = { name = 'Cuban800', maker = 'Western company', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'planes', banned = true, hash = -644710429 },
-    ['miljet'] = { name = 'Miljet', maker = 'Western company', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'planes', banned = true, hash = GetHashKey('miljet') },
-    ['luxor2'] = { name = 'Luxor Dourado', maker = 'Western company', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'planes', banned = true, hash = GetHashKey('luxor2') },
+    ['miljet'] = { name = 'Miljet', maker = 'Western company', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'planes', banned = true },
+    ['luxor2'] = { name = 'Luxor Dourado', maker = 'Western company', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'planes', banned = true },
     ['cyclone'] = { name = 'Cyclone', maker = 'Coil', price = 920000, trunk = 20, glove = 15, type = 'cars', class = 'super', banned = false, hash = 1392481335 },
     ['cypher'] = { name = 'Cypher', maker = 'Übermacht', price = 980000, trunk = 50, glove = 15, type = 'cars', class = 'sports', banned = false },
     ['daemon'] = { name = 'Daemon', maker = 'Western motorcycle company', price = 75000, trunk = 20, glove = 15, type = 'work', class = 'motorcycles', banned = false, hash = 2006142190 },
