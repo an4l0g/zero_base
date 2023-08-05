@@ -13,6 +13,12 @@ function useResult() {
   const { appearance, setAppearance } = useContext(AppearanceContext);
   const { setVariations } = useContext(VariationsContext);
 
+  const prices = {
+    barber: 500,
+    tattoo: 500,
+    skin: 5000
+  }
+
   const sendDemoPedVariations = useCallback(() => {
     if (appearance.skinshop) {
       request("changeSkinshopDemo", {
@@ -83,22 +89,69 @@ function useResult() {
         });
         setResult(newResult);
       }
+
+      if (shop === "tattoo") {
+        drawables.forEach((item, index) => {
+          newResult = {
+            default: {
+              ...newResult.default,
+              [TattooTypes[index].path]: item.model ?? null,
+            },
+            current: {
+              ...newResult.current,
+              [TattooTypes[index].path]: item.model ?? null,
+            },
+          };
+        });
+        setResult(newResult);
+      }
     },
     [appearance, setResult]
   );
 
-  const handleSetResult = (typeLabel, value) => {
-    setResult((old) => ({
-      ...old,
-      current: {
-        ...old.current,
-        [typeLabel]: {
-          ...old.current[typeLabel],
-          ...value,
-        },
-      },
-    }));
-  };
+  const handleSetResult = useCallback(
+    (typeLabel, value) => {
+      if (appearance.tattooshop) {
+        let hasModel = false;
+        const newPathResult = result.current[typeLabel].filter((item) => {
+          if (item === value) {
+            hasModel = true;
+            return false;
+          }
+        });
+
+        if (hasModel) {
+          setResult((old) => ({
+            ...old,
+            current: {
+              ...old.current,
+              [typeLabel]: newPathResult,
+            },
+          }));
+        } else {
+          setResult((old) => ({
+            ...old,
+            current: {
+              ...old.current,
+              [typeLabel]: [...old.current[typeLabel], value],
+            },
+          }));
+        }
+      } else {
+        setResult((old) => ({
+          ...old,
+          current: {
+            ...old.current,
+            [typeLabel]: {
+              ...old.current[typeLabel],
+              ...value,
+            },
+          },
+        }));
+      }
+    },
+    [appearance, result, setResult]
+  );
 
   const calculateTotal = useCallback(
     (types) => {
@@ -109,7 +162,7 @@ function useResult() {
             JSON.stringify(result.default[item.path]) !==
             JSON.stringify(result.current[item.path])
           ) {
-            total += 250;
+            total += prices;
           }
         });
       }
@@ -137,7 +190,7 @@ function useResult() {
         tattoo: () => {
           request("buyTattooshopCustomizations", {
             drawables: result.current,
-            total: calculateTotal(TattooTypesr),
+            total: calculateTotal(TattooTypes),
           });
         },
       };

@@ -23,14 +23,14 @@ function TattooShop() {
   useEffect(() => {
     setLabelType(Types[0].path);
     setIndexType(0);
-    setLimit(appearance.tattooshop.drawables[0][Types[0].path]);
+    setLimit(appearance.tattooshop.drawables[0].part.length);
   }, [appearance]);
 
   const handleChangeType = (index) => {
     firstRender.current = true;
     setLabelType(Types[index].path);
     setIndexType(index);
-    setLimit(appearance.tattooshop.drawables[index][Types[index].path]);
+    setLimit(appearance.tattooshop.drawables[index].part.length);
   };
 
   return (
@@ -39,7 +39,7 @@ function TattooShop() {
         <>
           <S.Container>
             <S.Content>
-              <Header title="Barbearia" icon={<BsScissors />} />
+              <Header title="Tattoo" icon={<BsScissors />} />
               <S.Shop>
                 <TypeList
                   indexType={indexType}
@@ -62,7 +62,7 @@ function TattooShop() {
               <Footer
                 customization={customization}
                 setCustomization={setCustomization}
-                buyCustomizations={() => buyCustomizations("barber")}
+                buyCustomizations={() => buyCustomizations("tattoo")}
                 total={calculateTotal(Types)}
               />
             </S.Content>

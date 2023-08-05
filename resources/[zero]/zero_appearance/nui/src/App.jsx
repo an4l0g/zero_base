@@ -1,9 +1,10 @@
 import { ThemeProvider } from "styled-components";
 import * as S from "./styles";
-import BarberShop from "./components/BarberShop";
 import { useCallback, useContext, useEffect } from "react";
 import useRequest from "./hooks/useRequest";
 import AppearanceContext from "./contexts/AppearanceContext";
+import BarberShop from "./components/BarberShop";
+import TattooShop from "./components/TattooShop";
 import SkinShop from "./components/SkinShop";
 import useResult from "./hooks/useResult";
 import VariationsContext from "./contexts/VariationsContext";
@@ -17,7 +18,7 @@ function App() {
   const nuiMessage = useCallback(
     (event) => {
       const { action, data } = event.data;
-      console.log(data);
+      console.log(action, data);
       if (action === "openBarberShop") {
         setAppearance({ barbershop: data });
         createResult("barber", data.drawables);
@@ -25,6 +26,7 @@ function App() {
         setAppearance({ skinshop: data });
         createResult("skin", data.drawables);
       } else if (action === "openTattooShop") {
+        console.log("Tattoo");
         setAppearance({ tattooshop: data });
         createResult("tattoo", data.drawables);
       } else if (action === "setVariations") {
@@ -59,6 +61,7 @@ function App() {
             </>
           )}
           {appearance.barbershop && <BarberShop />}
+          {appearance.tattooshop && <TattooShop />}
         </S.Wrap>
       )}
     </ThemeProvider>
