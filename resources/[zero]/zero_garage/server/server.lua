@@ -588,23 +588,6 @@ RegisterCommand('hash', function(source)
     end
 end)
 
-RegisterCommand('travar',function(source)
-	local source = source
-	local user_id = zero.getUserId(source)
-	if (user_id) and zero.hasPermission(user_id, 'policia.permissao') then
-        if (zeroClient.isInVehicle(source)) then
-            local vehicle, vnetid = zeroClient.vehList(source, -1)
-            if (vnetid) then
-                local _, notify = vCLIENT.getVehicleAnchor(source)
-                TriggerClientEvent('progressBar', source, notify, 5000)
-                SetTimeout(5000, function() vCLIENT.vehicleAnchor(source, vnetid) end)
-            end
-        else
-            TriggerClientEvent('notify', source, 'Garagem', 'Você tem que estar dentro de um <b>veículo</b> para utilizar este comando.')
-        end
-	end
-end)
-
 RegisterNetEvent('zero_interactions:carTrancar', function()
     local source = source
 	local user_id = zero.getUserId(source)
@@ -621,19 +604,6 @@ RegisterNetEvent('zero_interactions:carTrancar', function()
         end
     else
         TriggerClientEvent('notify', source, 'Garagem', 'Somente <b>policial</b> pode utilizar essa interação.')
-	end
-end)
-
-RegisterCommand('ancorar', function(source)
-    local source = source
-	local user_id = zero.getUserId(source)
-	if (user_id) then
-        if (zeroClient.isInVehicle(source)) then
-            local vehicle = zeroClient.vehList(source, -1)
-            if (vehicle) then vCLIENT.boatAnchor(source, vehicle); end;
-        else
-            TriggerClientEvent('notify', source, 'Garagem', 'Você tem que estar dentro de um <b>barco</b> para utilizar este comando.')
-        end
 	end
 end)
 
