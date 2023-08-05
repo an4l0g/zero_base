@@ -4,11 +4,11 @@ import { AiFillCar } from "react-icons/ai";
 
 export default [
   {
-    title: "Chave",
-    icon: <GiKey />,
+    title: "Meu veículo",
+    icon: <AiFillCar />,
     type: "category",
-    action: "carKeys",
-    value: "keys",
+    action: "Vehicle",
+    value: "vehicle",
     category: "car",
   },
   {
@@ -16,7 +16,7 @@ export default [
     icon: <RiPlayFill />,
     type: "action",
     action: "carKeys",
-    category: "keys",
+    category: "vehicle",
     value: "add",
   },
   {
@@ -24,16 +24,8 @@ export default [
     icon: <RiPlayFill />,
     type: "action",
     action: "carKeys",
-    category: "keys",
+    category: "vehicle",
     value: "rem",
-  },
-  {
-    title: "Chave",
-    icon: <GiKey />,
-    type: "category",
-    action: "carKeys",
-    value: "keys",
-    category: "car",
   },
   {
     title: "Portas",
@@ -70,21 +62,21 @@ export default [
     icon: <RiPlayFill />,
     type: "action",
     action: "carTrancar",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Ancorar barco",
     icon: <RiPlayFill />,
     type: "action",
     action: "carAncorar",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Vender veículo",
     icon: <RiPlayFill />,
     type: "action",
     action: "carVehs",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Abrir portas",
