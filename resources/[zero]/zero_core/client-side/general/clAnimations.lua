@@ -156,17 +156,6 @@ apontarThread = function(state)
     end)
 end
 
-local disableStart = false
-disableActions = function(state)
-    disableStart = state
-    Citizen.CreateThread(function()
-        while (disableStart) do
-            DisableControlAction(0, 21, true)
-            Citizen.Wait(1)
-        end
-    end)
-end
-
 local animations = {}
 generateAnimations = function()
     local sharedList = {}

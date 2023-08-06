@@ -123,6 +123,7 @@ zero.playAnim = function(upper, seq, looping)
 					end
 						Citizen.Wait(1)
 						while GetEntityAnimCurrentTime(PlayerPedId(),dict,name) <= 0.95 and IsEntityPlayingAnim(PlayerPedId(),dict,name,3) and anims[id] do
+							DisablePlayerFiring(PlayerPedId(), true)
 							Citizen.Wait(1)
 						end
 					end
