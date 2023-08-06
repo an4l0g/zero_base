@@ -154,6 +154,7 @@ Citizen.CreateThread(function()
         if (GetEntityHealth(ped) > 100) then
             if (not IsPedInAnyVehicle(ped)) then
                 if (Weapons[GetSelectedPedWeapon(ped)]) then
+                    zero.CarregarAnim('reaction@intimidation@1h')
                     LastWeapon = GetSelectedPedWeapon(ped)
                     if (not Holster) then
                         TriggerEvent('disableActionsWeapon', true)

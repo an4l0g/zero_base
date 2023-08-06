@@ -112,6 +112,7 @@ RegisterNuiCallback('changeCam', function(data)
 end)
 
 closeNui = function()
+    TriggerEvent('zero_hud:toggleHud', true)
     setPlayersVisible(true)
     SetNuiFocus(false, false)
     DeleteCam(true)

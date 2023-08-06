@@ -82,6 +82,7 @@ Citizen.CreateThread(function()
 end)
 
 openBarberShop = function(locs)
+    TriggerEvent('zero_hud:toggleHud', false)
     local location = locsConfig[locs]
     local general = generalConfig[location.config]
 

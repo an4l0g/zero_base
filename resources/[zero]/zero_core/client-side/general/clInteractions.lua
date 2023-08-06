@@ -86,6 +86,26 @@ RegisterNetEvent('syncwins', function(index, open)
 	end
 end)
 
+RegisterCommand('seat', function(source, args)
+	local ped = PlayerPedId()
+	local vehicle = GetVehiclePedIsUsing(ped)
+	if (IsEntityAVehicle(vehicle) and IsPedInAnyVehicle(ped)) then
+		local seat = 0
+		if (parseInt(args[1]) <= 1) then
+			seat = -1
+		else
+			seat = parseInt(args[1])-2
+		end
+		if (IsVehicleSeatFree(vehicle, seat)) then
+			SetPedIntoVehicle(ped, vehicle, seat)
+		else
+			TriggerEvent('notify', 'Seat', 'Este <b>assento</b> está ocupado.')
+		end
+	else
+		TriggerEvent('notify', 'Seat', 'Você não está dentro de um <b>veículo</b>.')
+	end
+end)
+
 RegisterCommand('doors', function(source, args)
 	local vehicle = zero.getNearestVehicle(7.0)
 	if (IsEntityAVehicle(vehicle)) then

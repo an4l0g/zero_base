@@ -60,7 +60,7 @@ currentCharacter = {
     -- Barba
     beardModel = -1, 
     beardColor = 0, 
-    beardOpacity = 0.99,
+    beardOpacity = 0,
 
     -- Pelo Corporal
     chestModel = -1, 

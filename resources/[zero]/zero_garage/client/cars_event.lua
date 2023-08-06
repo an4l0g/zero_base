@@ -135,7 +135,6 @@ drivingVehicle = function(model)
                     idle = 5
                     -- RETIRAR O CHUTE DA MOTO
                     if (GetVehicleClass(vehicle) == 8) then
-                        SetPedConfigFlag(ped, 35, false) 
                         DisableControlAction(0, 345, true)
                     end
                     -- SEAT SHUFFLE

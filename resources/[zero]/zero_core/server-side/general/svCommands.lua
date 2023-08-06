@@ -846,13 +846,26 @@ RegisterCommand('carcolor', function(source, args)
     if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         local vehicle = zeroClient.getNearestVehicle(source, 7.0)
         if (vehicle) then
-            local prompt = zero.prompt(source, { 'RGB Color(255, 255, 255)' })
-            if (prompt[1]) then
-                local rgb = sanitizeString(prompt[1], '0123456789,', true)
-                local r, g, b = table.unpack(splitString(rgb, ','))
-                TriggerClientEvent('zero_core:carcolor', source, vehicle, parseInt(r), parseInt(g), parseInt(b), (args[1] ~= '2') )   
-                TriggerClientEvent('notify', source, 'Car Color','A cor do <b>veículo</b> foi alterada.')
-                zero.webhook('CarColor', '```prolog\n[/CARCOLOR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RGB]: '..prompt[1]..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            local prompt = zero.prompt(source, { 'Primary Color RGB (255, 255, 255)', 'Secondary Color RGB (255, 255, 255)' })
+            if (prompt) then
+                local primary = prompt[1]
+                if (primary) then
+                    local rgb = sanitizeString(primary, '0123456789,', true)
+                    local r, g, b = table.unpack(splitString(rgb, ','))
+                    TriggerClientEvent('zero_core:carcolor', source, vehicle, parseInt(r), parseInt(g), parseInt(b), true)   
+                    TriggerClientEvent('notify', source, 'Car Color','A cor primária do <b>veículo</b> foi alterada.')
+                end
+
+                local secondary = prompt[2]
+                if (secondary) then
+                    local rgb = sanitizeString(secondary, '0123456789,', true)
+                    local r, g, b = table.unpack(splitString(rgb, ','))
+                    TriggerClientEvent('zero_core:carcolor', source, vehicle, parseInt(r), parseInt(g), parseInt(b), false)   
+                    TriggerClientEvent('notify', source, 'Car Color','A cor secundária do <b>veículo</b> foi alterada.')
+                end
+
+                local text, text2 = (primary and primary or '(NONE)'), (secondary and secondary or '(NONE)')
+                zero.webhook('CarColor', '```prolog\n[/CARCOLOR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RGB PRIMARY]: '..text..'\n[RGB SECONDARY]: '..text2..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
         end
     end
