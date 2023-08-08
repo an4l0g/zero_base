@@ -1,4 +1,4 @@
-local vCLIENT = Tunnel.getInterface('Fuel')
+local vSERVER = Tunnel.getInterface('Fuel')
 
 local pumpOffSet = {
     [-2007231801] = { 0.0, 0.0, 2.11 },
@@ -161,9 +161,9 @@ local markerThread = function(k, v)
                                         local vFuel = GetVehicleFuelLevel(dataVehicle)
                                         if (vFuel < 99) then
                                             if (pumpType == 'eletrical') then
-                                                DrawText3Ds(v[3].x, v[3].y, v[3].z + 1.2, 'PRESSIONE ~g~E ~w~PARA RECARREGAR')
+                                                DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'PRESSIONE ~g~E ~w~PARA RECARREGAR')
                                             else
-                                                DrawText3Ds(v[3].x, v[3].y, v[3].z + 1.2, 'PRESSIONE ~g~E ~w~PARA ABASTECER')
+                                                DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'PRESSIONE ~g~E ~w~PARA ABASTECER')
                                             end
                                             if (IsControlJustPressed(0, 38)) then
                                                 fuelConfig.pumpId = v[4]
@@ -178,6 +178,7 @@ local markerThread = function(k, v)
                                                 SetNuiFocus(true, true)
                                                 LocalPlayer.state.BlockTasks = true
                                                 SendNUIMessage({
+                                                    action = 'open',
                                                     brand = config.fuelBrand,
                                                     type = pumpType,
                                                     price = fuelConfig.pumpPrice,
@@ -212,11 +213,68 @@ Citizen.CreateThread(function()
 end)
 
 startFuel = function()
+    ped = PlayerPedId()
+    if (pumpOffSet[GetEntityModel(fuelConfig.pumpId)] ~= nil) then
+        startFuelRope()
+    end
+    TaskTurnPedToFaceEntity(ped, fuelConfig.vehicleId, 5000)
+    Citizen.CreateThread(function()
+        while (fuelConfig.isFueling) do
+            local fuelAdd = math.random(20, 20) / 100.0
+            fuelConfig.totalFuel = fuelConfig.totalFuel + fuelAdd
+            fuelConfig.currentFuel = (fuelConfig.vehicleFuel + fuelConfig.totalFuel) + 0.0000001
+            fuelConfig.totalPrice = fuelConfig.totalPrice + (fuelAdd * fuelConfig.pumpPrice)
+
+            if (fuelConfig.currentFuel >= 100) then
+                fuelConfig.currentFuel = 99.9999
+                SetVehicleFuelLevel(fuelConfig.vehicleId, fuelConfig.currentFuel)
+                stopFuel()
+            else
+                if fuelConfig.totalPrice < fuelConfig.userMoney then
+                    SetVehicleFuelLevel(fuelConfig.vehicleId, fuelConfig.currentFuel)
+                    SendNUIMessage({
+                        action = 'update',
+                        vfuel = fuelConfig.currentFuel,
+                        totalprice = fuelConfig.totalPrice,
+                        totalfuel = fuelConfig.totalFuel
+                    })
+                else
+                    stopFuel()
+                end
+            end
+            Citizen.Wait(100)
+        end
+    end)
+    CreateThread(function()
+        ped = PlayerPedId()
+        TaskTurnPedToFaceEntity(ped, vehicleId, 5000)
+        if (not HasAnimDictLoaded("timetable@gardener@filling_can")) then
+            RequestAnimDict("timetable@gardener@filling_can")
+            while (not HasAnimDictLoaded("timetable@gardener@filling_can")) do
+                Citizen.Wait(10)
+            end
+        end
+        TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
+        while (true) do
+            local idle = 300
+            if (fuelConfig.isFueling) then
+                idle = 1
+                for k, v in pairs(configFuelI.DisableKeys) do
+                    DisableControlAction(0, v)
+                end
+            else
+                ClearPedTasks(ped)
+                RemoveAnimDict("timetable@gardener@filling_can")
+                break
+            end
+            Citizen.Wait(idle)
+        end
+    end)
 end
 
 fuelUsage = function(vehicle)
     if (IsVehicleEngineOn(vehicle)) then
-        local atualFuel = vCLIENT.getVehicleSyncFuel(VehToNet(vehicle))
+        local atualFuel = vSERVER.getVehicleSyncFuel(VehToNet(vehicle))
         if (atualFuel == false) then
             atualFuel = GetVehicleFuelLevel(vehicle)
         end
@@ -227,12 +285,12 @@ fuelUsage = function(vehicle)
             newFuel = 99.99
         end
 
-        vCLIENT.syncCombustivel(VehToNet(vehicle), newFuel)
+        vSERVER.syncCombustivel(VehToNet(vehicle), newFuel)
 
         SetVehicleFuelLevel(vehicle, newFuel)
         DecorSetFloat(vehicle, configFuelI.FuelDecor, GetVehicleFuelLevel(vehicle))
     else
-        local atualFuel = vCLIENT.getVehicleSyncFuel(VehToNet(vehicle))
+        local atualFuel = vSERVER.getVehicleSyncFuel(VehToNet(vehicle))
         if (atualFuel == false) then
             atualFuel = GetVehicleFuelLevel(vehicle)
         end
@@ -240,6 +298,28 @@ fuelUsage = function(vehicle)
         SetVehicleFuelLevel(vehicle, atualFuel)
         DecorSetFloat(vehicle, configFuelI.FuelDecor, GetVehicleFuelLevel(vehicle))
     end
+end
+
+stopFuel = function()
+    if (pumpOffSet[GetEntityModel(fuelConfig.pumpId)] ~= nil) then
+        stopFuelRope()
+    end
+    ped = PlayerPedId()
+    fuelConfig.isFueling = false
+    fuelConfig.index = nil
+    fuelConfig.canFuel = nil
+    fuelConfig.pumpId = nil
+    SetNuiFocus(false, false)
+    SendNUIMessage({ action = 'close' })
+    LocalPlayer.state.BlockTasks = false
+    ClearPedTasks(ped)
+    RemoveAnimDict("timetable@gardener@filling_can")
+    local finishFuelVar = RPC.trigger('fuel-finishFuel', VehToNet(fuelConfig.vehicleId), fuelConfig.vehicleFuel,
+        fuelConfig.totalFuel, fuelConfig.totalPrice, fuelConfig.paymentType)
+    if (not finishFuelVar) then
+        SetVehicleFuelLevel(fuelConfig.vehicleId, fuelConfig.vehicleFuel)
+    end
+    fuelConfig.totalFuel = 0
 end
 
 local class = {

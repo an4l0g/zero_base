@@ -1,0 +1,203 @@
+#notifyFuel {
+  width: 300px;
+  height: 400px;
+  background-image: linear-gradient(90deg);
+  margin-right: 5px;
+  margin-top: 5px;
+  background: linear-gradient(
+    94.41deg,
+    #1a1a1a 13.81%,
+    rgba(35, 35, 35, 0.71) 90.41%
+  );
+  float: left;
+  color: #fff;
+  --aug-border-all: 2px;
+  --aug-border-bg: linear-gradient(
+    54.76deg,
+    #e9354f 5.23%,
+    #e9354f 5.24%,
+    rgba(233, 53, 79, 0) 127.36%
+  );
+  font-size: 20px;
+  padding: 10px;
+
+  display: none;
+  position: absolute;
+  left: 20px;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+}
+.logoFuel {
+  width: 90px;
+  height: 80px;
+  background-size: 100%;
+  margin: auto;
+}
+
+.titleAfterFuel {
+  display: block;
+  width: 90%;
+  margin: auto;
+  margin-top: 15px;
+  height: 1px;
+  background-image: linear-gradient(to right, #e9354f00, #e9354f, #e9354f00);
+}
+
+.textoFuel {
+  width: 100%;
+  min-height: 50px;
+  color: #fff;
+  font-size: 17px;
+  margin-top: 5px;
+  font-weight: 400;
+  text-align: center;
+}
+.valorFuel {
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.inputValorFuel {
+  width: 200px;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  --aug-border-all: 1px;
+  --aug-border-bg: linear-gradient(
+    54.76deg,
+    #e9354f 5.23%,
+    #e9354f 5.24%,
+    rgba(233, 53, 79, 0) 127.36%
+  );
+  background: #00000080;
+}
+.textoFuel b {
+  color: #e9354f;
+}
+.totalFuel {
+  width: 50%;
+  height: 60px;
+  float: left;
+  margin-top: 10px;
+}
+
+.inputTotalFuel {
+  width: 120px;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #35e97d;
+  font-size: 14px;
+  font-weight: 700;
+  --aug-border-all: 1px;
+  --aug-border-bg: linear-gradient(
+    54.76deg,
+    #e9354f 54.23%,
+    #e9354f 54.24%,
+    rgba(233, 53, 79, 0) 127.36%
+  );
+  background: #00000080;
+}
+
+.litrosFuel {
+  width: 50%;
+  height: 85px;
+  float: left;
+  margin-top: 10px;
+}
+
+.inputLitrosFuel {
+  width: 120px;
+  height: 40px;
+  margin: auto;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #35e97d;
+  font-weight: 700;
+  --aug-border-all: 1px;
+  --aug-border-bg: linear-gradient(
+    54.76deg,
+    #e9354f 5.23%,
+    #e9354f 5.24%,
+    rgba(233, 53, 79, 0) 127.36%
+  );
+  background: #00000080;
+  font-size: 14px;
+}
+
+.progressFuel {
+  width: 200px;
+  height: 40px;
+  margin: auto;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --aug-border-all: 1px;
+  --aug-border-bg: linear-gradient(
+    92.4deg,
+    #ff9900 30%,
+    rgba(255, 153, 0, 0) 34%
+  );
+  background: #00000080;
+  margin-top: 15px;
+  font-weight: 800;
+}
+#botoesFuel {
+  width: 100%;
+  height: 60px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.botaoFinalFuel {
+  width: 100px;
+  height: 35px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #00000080;
+  float: left;
+  margin: 10px;
+  font-weight: 700;
+}
+
+#iniciarFuel {
+  --aug-border-all: 1px;
+  --aug-border-bg: linear-gradient(
+    23.24deg,
+    #35e97d 6.53%,
+    rgba(0, 255, 56, 0) 92.21%
+  );
+}
+
+#pararFuel {
+  --aug-border-all: 1px;
+  --aug-border-bg: linear-gradient(
+    23.24deg,
+    #e93535 6.53%,
+    rgba(255, 0, 0, 0) 92.21%
+  );
+}
+
+.botaoFinalFuel:hover {
+  transform: scale(1.05);
+}

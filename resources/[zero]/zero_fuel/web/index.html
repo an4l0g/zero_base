@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/augmented-ui@2/augmented-ui.min.css"
+    />
+  </head>
+  <body>
+    <div id="actionmenuFuel">
+      <div id="containerFuel">
+        <div id="notifyFuel" data-augmented-ui="border bl-clip tr-clip">
+          <div
+            class="logoFuel"
+            style="
+              background-image: url(https://cdn.discordapp.com/attachments/712813090952970345/849376882054398014/5909316462573553160_1_1.png);
+              background-repeat: no-repeat;
+            "
+          ></div>
+          <div class="titleAfterFuel"></div>
+          <div class="textoFuel">
+            <div class="valorFuel">
+              <span class="litrosText2">Valor por litro</span>
+              <div
+                class="inputValorFuel"
+                data-augmented-ui="border bl-clip tr-clip"
+              >
+                R$1.00
+              </div>
+            </div>
+            <div class="totalFuel">
+              Total
+              <div
+                class="inputTotalFuel"
+                data-augmented-ui="border bl-clip tr-clip"
+              ></div>
+            </div>
+            <div class="litrosFuel">
+              <span class="litrosText">Litros</span>
+              <div
+                class="inputLitrosFuel"
+                data-augmented-ui="border bl-clip tr-clip"
+              ></div>
+            </div>
+            <div
+              class="progressFuel"
+              data-augmented-ui="border bl-clip tr-clip"
+            >
+              30%
+            </div>
+          </div>
+          <div id="botoesFuel">
+            <div
+              class="botaoFinalFuel"
+              id="iniciarFuel"
+              onClick="iniciarAbastecimento()"
+              data-augmented-ui="border bl-clip tr-clip"
+            >
+              INICIAR
+            </div>
+            <div
+              class="botaoFinalFuel"
+              id="pararFuel"
+              onClick="pararAbastecimento()"
+              data-augmented-ui="border bl-clip tr-clip"
+            >
+              PARAR
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
