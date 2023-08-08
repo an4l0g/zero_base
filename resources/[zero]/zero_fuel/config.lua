@@ -54,17 +54,6 @@ config = {
     },
     
     ['configFuelXeroC'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -72,8 +61,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'xero',
             fuelPumps = {
@@ -83,26 +70,13 @@ config = {
     },
 
     ['configFuelXeroC2'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 1, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C', 
+            blipId = 361, 
+            blipColor = 1,
+            blipScale = 0.5,
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'xero',
             fuelPumps = {
@@ -112,17 +86,6 @@ config = {
     },
 
     ['configFuelXeroCE'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C + E', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -130,8 +93,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'xero',
             fuelPumps = {
@@ -142,17 +103,6 @@ config = {
     },
 
     ['configFuelXeroCE2'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C + E', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -160,8 +110,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'xero',
             fuelPumps = {
@@ -172,17 +120,6 @@ config = {
     },
 
     ['configFuelXeroHeli'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -190,8 +127,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'xero',
             fuelPumps = {
@@ -201,17 +136,6 @@ config = {
     },
 
     ['configFuelOilC'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -219,8 +143,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'oil',
             fuelPumps = {
@@ -230,17 +152,6 @@ config = {
     },
 
     ['configFuelOilCE'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C + E', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -248,8 +159,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'oil',
             fuelPumps = {
@@ -260,17 +169,6 @@ config = {
     },
 
     ['configFuelLtdC'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -278,8 +176,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'ltd',
             fuelPumps = {
@@ -289,17 +185,6 @@ config = {
     },
 
     ['configFuelLtdC2'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -307,8 +192,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'ltd',
             fuelPumps = {
@@ -318,17 +201,6 @@ config = {
     },
 
     ['configFuelLtdCE'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C + E', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -336,8 +208,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'ltd',
             fuelPumps = {
@@ -348,17 +218,6 @@ config = {
     },
 
     ['configFuelGlobeOilC'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -366,8 +225,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'globeoil',
             fuelPumps = {
@@ -377,17 +234,6 @@ config = {
     },
 
     ['configFuelGlobeOilC2'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -395,8 +241,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'globeoil',
             fuelPumps = {
@@ -406,17 +250,6 @@ config = {
     },
 
     ['configFuelGlobeOilCE'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C + E', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -424,8 +257,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'globeoil',
             fuelPumps = {
@@ -436,17 +267,6 @@ config = {
     },
 
     ['configFuelGlobeOilCE2'] = {
-        type = 'fuel', -- não alterar
-        input = 'fuel', -- não alterar
-        -- Input configuration
-        marker = { -- set custom marker if the type is marker
-            id = 27, -- não mexer
-            color = {0,255,0,75}, -- não mexer
-            scale = {1.0, 1.0, 1.0}, -- não mexer
-            rotation = true, -- não mexer
-        },
-        actionKey = 38,
-        -- Map Configuration
         blip = {
             name = 'Posto de Combustivel C + E', -- Name to display on the map!
             blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
@@ -454,8 +274,6 @@ config = {
             blipScale = 0.5, -- scale for blip
         },  
 
-        -- General Settings
-        perm = "", -- permissao para acessar o blip   
         configFuel = {
             fuelBrand = 'globeoil',
             fuelPumps = {
