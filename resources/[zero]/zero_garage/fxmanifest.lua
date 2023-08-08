@@ -1,7 +1,7 @@
 fx_version 'bodacious'
 game 'gta5'
 
-ui_page 'http://localhost:5173/'
+ui_page 'http://localhost:5175/'
 
 client_scripts { 'client/*.lua' }
 server_scripts { 'server/*.lua' }
