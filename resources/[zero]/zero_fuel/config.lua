@@ -55,10 +55,10 @@ config = {
     
     ['configFuelXeroC'] = {
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 1, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C',
+            blipId = 361,
+            blipColor = 1,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -87,10 +87,10 @@ config = {
 
     ['configFuelXeroCE'] = {
         blip = {
-            name = 'Posto de Combustivel C + E', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 17, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C + E',
+            blipId = 361,
+            blipColor = 17,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -104,10 +104,10 @@ config = {
 
     ['configFuelXeroCE2'] = {
         blip = {
-            name = 'Posto de Combustivel C + E', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 17, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C + E',
+            blipId = 361,
+            blipColor = 17,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -121,10 +121,10 @@ config = {
 
     ['configFuelXeroHeli'] = {
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 38, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C',
+            blipId = 361,
+            blipColor = 38,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -137,10 +137,10 @@ config = {
 
     ['configFuelOilC'] = {
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 1, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C',
+            blipId = 361,
+            blipColor = 1,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -153,10 +153,10 @@ config = {
 
     ['configFuelOilCE'] = {
         blip = {
-            name = 'Posto de Combustivel C + E', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 17, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C + E',
+            blipId = 361,
+            blipColor = 17,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -170,10 +170,10 @@ config = {
 
     ['configFuelLtdC'] = {
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 1, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C',
+            blipId = 361,
+            blipColor = 1,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -186,10 +186,10 @@ config = {
 
     ['configFuelLtdC2'] = {
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 1, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C',
+            blipId = 361,
+            blipColor = 1,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -202,10 +202,10 @@ config = {
 
     ['configFuelLtdCE'] = {
         blip = {
-            name = 'Posto de Combustivel C + E', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 17, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C + E',
+            blipId = 361,
+            blipColor = 17,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -219,10 +219,10 @@ config = {
 
     ['configFuelGlobeOilC'] = {
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 1, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C',
+            blipId = 361,
+            blipColor = 1,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -235,10 +235,10 @@ config = {
 
     ['configFuelGlobeOilC2'] = {
         blip = {
-            name = 'Posto de Combustivel C', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 1, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C',
+            blipId = 361,
+            blipColor = 1,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -251,10 +251,10 @@ config = {
 
     ['configFuelGlobeOilCE'] = {
         blip = {
-            name = 'Posto de Combustivel C + E', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 17, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C + E',
+            blipId = 361,
+            blipColor = 17,
+            blipScale = 0.5,
         },  
 
         configFuel = {
@@ -268,10 +268,10 @@ config = {
 
     ['configFuelGlobeOilCE2'] = {
         blip = {
-            name = 'Posto de Combustivel C + E', -- Name to display on the map!
-            blipId = 361, -- blip id = https://docs.fivem.net/docs/game-references/blips/
-            blipColor = 17, -- color id
-            blipScale = 0.5, -- scale for blip
+            name = 'Posto de Combustivel C + E',
+            blipId = 361,
+            blipColor = 17,
+            blipScale = 0.5,
         },  
 
         configFuel = {
