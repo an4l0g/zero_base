@@ -1013,7 +1013,9 @@ RegisterCommand('vroupas',function(source)
         local custom = zeroClient.getCustomization(source)
         local content = {}
         for k, v in pairs(custom) do
-            table.insert(content, k..' => '..json.encode(v)) 
+            if (v ~= GetEntityModel(GetPlayerPed(source))) then
+                table.insert(content, '['..k..'] = { '..v.model..', '..v.var..', '..v.palette..' },') 
+            end
         end
         content = table.concat(content, '\n ')
         TriggerClientEvent('clipboard', source, 'Código da roupa', content)
