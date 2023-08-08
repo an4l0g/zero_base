@@ -193,6 +193,7 @@ local markerThread = function(k, v)
 end
 
 Citizen.CreateThread(function()
+    addBlips()
     while (true) do
         local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)
@@ -446,3 +447,23 @@ RegisterNUICallback('fuelSet', function(data, cb)
         fuelConfig.vehicleFuel = 0
     end
 end)
+
+addBlips = function()
+    for _, v in pairs(configLocs) do
+        local config = config[configLocs[_].config]
+        if (config.blip) then
+            local coords = v.coord
+            local blipConfig = config.blip
+            if (coords) then
+                local blip = AddBlipForCoord(coords.xyz)
+                SetBlipSprite(blip, blipConfig.blipId)
+                SetBlipColour(blip, blipConfig.blipColor)
+                SetBlipScale(blip, blipConfig.blipScale)
+                SetBlipAsShortRange(blip, true)
+                BeginTextCommandSetBlipName('STRING')
+                AddTextComponentString(blipConfig.name)
+                EndTextCommandSetBlipName(blip)
+            end
+        end
+    end
+end
