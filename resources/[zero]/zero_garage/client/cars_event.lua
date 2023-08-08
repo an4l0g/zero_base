@@ -43,6 +43,7 @@ AddEventHandler('gameEventTriggered', function(event, args)
         local id = args[1]
         local vehicle = args[2]
         if (id == PlayerId()) then
+            LocalPlayer.state.inVehicle = true
             if (inVehicle) then return; end;
             TriggerEvent('zero_core:spikeThread')
 
@@ -145,6 +146,7 @@ drivingVehicle = function(model)
             end
             Citizen.Wait(idle)
         end
+        LocalPlayer.state.inVehicle = false
         SetPlayerCanDoDriveBy(PlayerId(), true)
     end)
 end
