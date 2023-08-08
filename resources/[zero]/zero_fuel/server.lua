@@ -25,3 +25,21 @@ srv.GetUserMoney = function()
     end
     return 0
 end
+
+srv.finishFuel = function(veh, atualFuel, newFuel, price)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        if (zero.tryFullPayment(user_id, price)) then
+            TriggerClientEvent('notify', source, 'Posto de Gasolina', 'Você fez um pagamento de <b>R$'..zero.format(tonumber(price))..'</b>.')
+            local nFuel = (atualFuel + newFuel)
+            if (nFuel > 99.99) then
+                nFuel = 99.99
+            end
+            vehicleGlobal[veh] = nFuel
+            return true
+        end
+        TriggerClientEvent('notify', source, 'Posto de Gasolina', 'Dinheiro <b>insuficiente</b>.')
+        return false
+    end
+end

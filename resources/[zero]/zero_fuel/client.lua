@@ -1,4 +1,4 @@
-local vCLIENT = Tunnel.getInterface('Fuel')
+local vSERVER = Tunnel.getInterface('Fuel')
 
 local pumpOffSet = {
     [-2007231801] = { 0.0, 0.0, 2.11 },
@@ -39,24 +39,16 @@ AddStateBagChangeHandler('inVehicle', nil, function(bagName, key, value)
             while (LocalPlayer.state.inVehicle) do
                 local ped = PlayerPedId()
                 local vehicle = GetVehiclePedIsIn(ped)
+                local idle = 1000
                 if (GetPedInVehicleSeat(vehicle, -1) == ped) then
                     fuelUsage(vehicle)
-                end
-                Citizen.Wait(1000)
-            end
-        end)
-
-        Citizen.CreateThread(function()
-            while (LocalPlayer.state.inVehicle) do
-                local ped = PlayerPedId()
-                local vehicle = GetVehiclePedIsIn(ped)
-                if (GetPedInVehicleSeat(vehicle, -1) == ped) then
                     local fuel = GetVehicleFuelLevel(vehicle)
                     if (fuel <= 0.0) then
+                        idle = 5
                         SetVehicleUndriveable(vehicle, true)
                     end
                 end
-                Citizen.Wait(5)
+                Citizen.Wait(idle)
             end
         end)
     end
@@ -148,9 +140,9 @@ local markerThread = function(k, v)
                             if (abType == 1) then
                                 if (IsPedInAnyVehicle(ped) and GetPedInVehicleSeat(GetVehiclePedIsIn(ped), -1) == ped) then
                                     if pumpType == 'eletrical' then
-                                        DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'SAIA DO ~y~VEÍCULO ~w~PARA RECARREGAR')
+                                        DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'SAIA DO ~b~VEÍCULO ~w~PARA RECARREGAR')
                                     else
-                                        DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'SAIA DO ~y~VEÍCULO ~w~PARA ABASTECER')
+                                        DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'SAIA DO ~b~VEÍCULO ~w~PARA ABASTECER')
                                     end
                                 else
                                     distAnalise = 3.5
@@ -161,9 +153,9 @@ local markerThread = function(k, v)
                                         local vFuel = GetVehicleFuelLevel(dataVehicle)
                                         if (vFuel < 99) then
                                             if (pumpType == 'eletrical') then
-                                                DrawText3Ds(v[3].x, v[3].y, v[3].z + 1.2, 'PRESSIONE ~g~E ~w~PARA RECARREGAR')
+                                                DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'PRESSIONE ~b~E ~w~PARA RECARREGAR')
                                             else
-                                                DrawText3Ds(v[3].x, v[3].y, v[3].z + 1.2, 'PRESSIONE ~g~E ~w~PARA ABASTECER')
+                                                DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'PRESSIONE ~b~E ~w~PARA ABASTECER')
                                             end
                                             if (IsControlJustPressed(0, 38)) then
                                                 fuelConfig.pumpId = v[4]
@@ -178,12 +170,15 @@ local markerThread = function(k, v)
                                                 SetNuiFocus(true, true)
                                                 LocalPlayer.state.BlockTasks = true
                                                 SendNUIMessage({
+                                                    action = 'open',
                                                     brand = config.fuelBrand,
                                                     type = pumpType,
                                                     price = fuelConfig.pumpPrice,
                                                     vfuel = vFuel
                                                 })
                                             end
+                                        else
+                                            DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'TANQUE ~b~CHEIO~w~')
                                         end
                                     end
                                 end
@@ -203,7 +198,7 @@ Citizen.CreateThread(function()
         local pCoord = GetEntityCoords(ped)
         for k, v in pairs(configLocs) do
             local distance = #(pCoord - v.coord)
-            if (distance <= v.markerDistance) then
+            if (distance <= v.markerDistance) and IsPedInAnyVehicle(ped) then
                 markerThread(k, v)
             end
         end
@@ -212,11 +207,68 @@ Citizen.CreateThread(function()
 end)
 
 startFuel = function()
+    ped = PlayerPedId()
+    if (pumpOffSet[GetEntityModel(fuelConfig.pumpId)] ~= nil) then
+        startFuelRope()
+    end
+    TaskTurnPedToFaceEntity(ped, fuelConfig.vehicleId, 5000)
+    Citizen.CreateThread(function()
+        while (fuelConfig.isFueling) do
+            local fuelAdd = math.random(20, 20) / 100.0
+            fuelConfig.totalFuel = fuelConfig.totalFuel + fuelAdd
+            fuelConfig.currentFuel = (fuelConfig.vehicleFuel + fuelConfig.totalFuel) + 0.0000001
+            fuelConfig.totalPrice = fuelConfig.totalPrice + (fuelAdd * fuelConfig.pumpPrice)
+
+            if (fuelConfig.currentFuel >= 100) then
+                fuelConfig.currentFuel = 99.9999
+                SetVehicleFuelLevel(fuelConfig.vehicleId, fuelConfig.currentFuel)
+                stopFuel()
+            else
+                if fuelConfig.totalPrice < fuelConfig.userMoney then
+                    SetVehicleFuelLevel(fuelConfig.vehicleId, fuelConfig.currentFuel)
+                    SendNUIMessage({
+                        action = 'update',
+                        vfuel = fuelConfig.currentFuel,
+                        totalprice = fuelConfig.totalPrice,
+                        totalfuel = fuelConfig.totalFuel
+                    })
+                else
+                    stopFuel()
+                end
+            end
+            Citizen.Wait(100)
+        end
+    end)
+    CreateThread(function()
+        ped = PlayerPedId()
+        TaskTurnPedToFaceEntity(ped, vehicleId, 5000)
+        if (not HasAnimDictLoaded("timetable@gardener@filling_can")) then
+            RequestAnimDict("timetable@gardener@filling_can")
+            while (not HasAnimDictLoaded("timetable@gardener@filling_can")) do
+                Citizen.Wait(10)
+            end
+        end
+        TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
+        while (true) do
+            local idle = 300
+            if (fuelConfig.isFueling) then
+                idle = 1
+                for k, v in pairs(configFuelI.DisableKeys) do
+                    DisableControlAction(0, v)
+                end
+            else
+                ClearPedTasks(ped)
+                RemoveAnimDict("timetable@gardener@filling_can")
+                break
+            end
+            Citizen.Wait(idle)
+        end
+    end)
 end
 
 fuelUsage = function(vehicle)
     if (IsVehicleEngineOn(vehicle)) then
-        local atualFuel = vCLIENT.getVehicleSyncFuel(VehToNet(vehicle))
+        local atualFuel = vSERVER.getVehicleSyncFuel(VehToNet(vehicle))
         if (atualFuel == false) then
             atualFuel = GetVehicleFuelLevel(vehicle)
         end
@@ -227,12 +279,12 @@ fuelUsage = function(vehicle)
             newFuel = 99.99
         end
 
-        vCLIENT.syncCombustivel(VehToNet(vehicle), newFuel)
+        vSERVER.syncCombustivel(VehToNet(vehicle), newFuel)
 
         SetVehicleFuelLevel(vehicle, newFuel)
         DecorSetFloat(vehicle, configFuelI.FuelDecor, GetVehicleFuelLevel(vehicle))
     else
-        local atualFuel = vCLIENT.getVehicleSyncFuel(VehToNet(vehicle))
+        local atualFuel = vSERVER.getVehicleSyncFuel(VehToNet(vehicle))
         if (atualFuel == false) then
             atualFuel = GetVehicleFuelLevel(vehicle)
         end
@@ -240,6 +292,27 @@ fuelUsage = function(vehicle)
         SetVehicleFuelLevel(vehicle, atualFuel)
         DecorSetFloat(vehicle, configFuelI.FuelDecor, GetVehicleFuelLevel(vehicle))
     end
+end
+
+stopFuel = function()
+    if (pumpOffSet[GetEntityModel(fuelConfig.pumpId)] ~= nil) then
+        stopFuelRope()
+    end
+    ped = PlayerPedId()
+    fuelConfig.isFueling = false
+    fuelConfig.canFuel = nil
+    fuelConfig.pumpId = nil
+    SetNuiFocus(false, false)
+    SendNUIMessage({ action = 'close' })
+    LocalPlayer.state.BlockTasks = false
+    ClearPedTasks(ped)
+    RemoveAnimDict("timetable@gardener@filling_can")
+    local finishFuelVar = vSERVER.finishFuel(VehToNet(fuelConfig.vehicleId), fuelConfig.vehicleFuel,
+        fuelConfig.totalFuel, fuelConfig.totalPrice)
+    if (not finishFuelVar) then
+        SetVehicleFuelLevel(fuelConfig.vehicleId, fuelConfig.vehicleFuel)
+    end
+    fuelConfig.totalFuel = 0
 end
 
 local class = {
@@ -289,12 +362,50 @@ checkVehicleClass = function(vehicle, type)
     return class[type](vehicle, valid)
 end
 
+fuelRope = nil
+fuelProp = nil
+fuelModel = GetHashKey('prop_cs_fuel_nozle')
+
+startFuelRope = function()
+    local ped = PlayerPedId()
+    local plycds = GetEntityCoords(ped)
+    local obj = fuelConfig.pumpId
+    local objcds = GetEntityCoords(obj)
+    local offset = pumpOffSet[GetEntityModel(obj)]
+    RequestModel(fuelModel)
+    RopeLoadTextures()
+    while (not RopeAreTexturesLoaded()) do
+        Wait(10)
+    end
+    while (not HasModelLoaded(fuelModel)) do
+        Wait(10)
+    end
+    fuelProp = CreateObject(fuelModel, plycds, true, true)
+    AttachEntityToEntity(fuelProp, ped, GetPedBoneIndex(ped, 60309), 0.03, 0.05, 0.03, 95.0, 0.0, 170.0, false, false, false, false, 0, true)
+    local propcds = GetEntityCoords(fuelProp)
+    FreezeEntityPosition(fuelProp, true)
+    fuelRope = AddRope(objcds, 0.0, 0.0, 0.0, 0.0, 4, 0.0, 0.0, 0.0, 0, 0, 0, 0.0, false)
+    AttachEntitiesToRope(fuelRope, fuelProp, obj, GetOffsetFromEntityInWorldCoords(fuelProp, 0.0, 0.0, -0.2),
+    GetOffsetFromEntityInWorldCoords(obj, offset[1], offset[2], offset[3]), 0.0, 0, 0, nil, nil)
+    StartRopeWinding(fuelRope)
+    RopeForceLength(fuelRope, #(GetOffsetFromEntityInWorldCoords(fuelProp, 0.0, 0.0, -0.2) -
+    GetOffsetFromEntityInWorldCoords(obj, offset[1], offset[2], offset[3])))
+end
+
+stopFuelRope = function()
+    local ped = PlayerPedId()
+    DeleteEntity(fuelProp)
+    DeleteRope(fuelRope)
+    RopeUnloadTextures()
+    SetModelAsNoLongerNeeded(fuelModel)
+end
+
 DrawText3Ds = function(coords, text)
 	SetDrawOrigin(coords.x, coords.y, coords.z, 0); 
 	SetTextFont(4)     
 	SetTextProportional(0)     
 	SetTextScale(0.35,0.35)    
-	SetTextColour(255,255,255,255)   
+	SetTextColour(255,255,255,155)   
 	SetTextDropshadow(0, 0, 0, 0, 255)     
 	SetTextEdge(2, 0, 0, 0, 150)     
 	SetTextDropShadow()     SetTextOutline()     
@@ -303,3 +414,35 @@ DrawText3Ds = function(coords, text)
 	DrawText(0.0, 0.0)     
 	ClearDrawOrigin() 
 end
+
+RegisterNUICallback('close', function(data, cb)
+    local ped = PlayerPedId()
+    if fuelConfig.isFueling then
+        stopFuel()
+        fuelConfig.isFueling = false
+    end
+    fuelConfig.isFueling = false
+    fuelConfig.canFuel = nil
+    fuelConfig.pumpId = nil
+    fuelConfig.totalPrice = 0
+    TriggerEvent('cancelando', false)
+    SetNuiFocus(false, false)
+    ClearPedTasks(ped)
+end)
+
+RegisterNUICallback('fuelSet', function(data, cb)
+    if data[1] == 'start' then
+        fuelConfig.isFueling = true
+        startFuel()
+    elseif data[1] == 'stop' then
+        stopFuel()
+        if fuelConfig.isFueling then
+            fuelConfig.isFueling = false
+        end
+        fuelConfig.canFuel = false
+        fuelConfig.totalFuel = 0
+        fuelConfig.totalPrice = 0
+        fuelConfig.vehicleId = nil
+        fuelConfig.vehicleFuel = 0
+    end
+end)
