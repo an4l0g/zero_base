@@ -6,10 +6,6 @@ const actions = {
   open: ({ brand, type, price, vfuel }) => {
     fuelStatus = 0;
     $("#notifyFuel").show();
-    $(".logoFuel").css(
-      "background-image",
-      "url('" + fuel_img_url + brand + ".png')"
-    );
     if (type == "eletrical") {
       $(".litrosText").html("Amperes");
       $(".litrosText2").html("Valor por amper");
@@ -17,7 +13,12 @@ const actions = {
       $(".litrosText").html("Litros");
       $(".litrosText2").html("Valor por litro");
     }
-    $(".inputValorFuel").html("R$" + price);
+    $(".inputValorFuel").html(
+      price.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })
+    );
     $(".inputTotalFuel").html("");
     $(".inputLitrosFuel").html("");
     $(".progressFuel").html(parseFloat(vfuel.toFixed(2)) + "%");
@@ -31,8 +32,14 @@ const actions = {
     );
   },
   update: ({ vfuel, totalprice, totalfuel }) => {
-    $(".inputTotalFuel").html("R$" + parseFloat(totalprice.toFixed(0)));
-    $(".inputLitrosFuel").html(parseFloat(totalfuel.toFixed(0)));
+    $("#notifyFuel").show();
+    $(".inputTotalFuel").html(
+      totalprice.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })
+    );
+    $(".inputLitrosFuel").html(parseFloat(totalfuel.toFixed(0)) + "L");
     $(".progressFuel").html(parseFloat(vfuel.toFixed(2)) + "%");
     $(".progressFuel").css(
       "--aug-border-bg",
