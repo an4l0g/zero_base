@@ -1368,7 +1368,7 @@ local DeadCitizens = function(source)
                     if (GetEntityHealth(ply) <= 100 and (not blipUsers[id])) then
                         local plyCoords = GetEntityCoords(ply)
 
-                        blipUsers[id] = zeroClient.addBlip(source, plyCoords.x, plyCoords.y, plyCoords.z, 280, 27, 'Cidadão caido', 0.7, false)
+                        blipUsers[id] = zeroClient.addBlip(source, plyCoords.x, plyCoords.y, plyCoords.z, 280, 27, 'Cidadão caído', 0.7, false)
                         Citizen.SetTimeout(30000, function() zeroClient.removeBlip(source, blipUsers[id]) blipUsers[id] = nil end)
                     end
                 end

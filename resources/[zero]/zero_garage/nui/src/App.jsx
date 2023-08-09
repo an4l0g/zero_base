@@ -13,6 +13,9 @@ function App() {
       const { action, cars } = event.data;
       if (action === "open") {
         setGarage({ cars });
+      } else if (action === "close") {
+        setGarage({});
+        request("close");
       }
     },
     [setGarage]
