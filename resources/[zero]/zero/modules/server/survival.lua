@@ -40,7 +40,7 @@ zero.varyHunger = function(user_id, variation)
 		elseif (data.hunger > 100) then 
 			data.hunger = 100 
 		end
-		TriggerClientEvent('vrp_hud:updateBasics', zero.getUserSource(user_id), data.hunger, data.thirst, data.stress, data.toxic)
+		TriggerClientEvent('vrp_hud:updateBasics', zero.getUserSource(user_id), data.hunger, data.thirst)
 	end
 end
 ------------------------------------------------------------------
@@ -63,7 +63,7 @@ zero.varyThirst = function(user_id, variation)
 		elseif (data.thirst > 100) then 
 			data.thirst = 100 
 		end
-		TriggerClientEvent('vrp_hud:updateBasics', zero.getUserSource(user_id), data.hunger, data.thirst, data.stress, data.toxic)
+		TriggerClientEvent('vrp_hud:updateBasics', zero.getUserSource(user_id), data.hunger, data.thirst)
 	end
 end
 ------------------------------------------------------------------

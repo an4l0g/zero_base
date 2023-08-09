@@ -563,6 +563,7 @@ RegisterCommand('fps', function(source, args)
 	if (args[1]) then
 		local command = string.lower(args[1])
 		if (command == 'on') then
+			LocalPlayer.state.FPS = true
 			SetTimecycleModifier('cinema')
 			RopeDrawShadowEnabled(false)
 			CascadeShadowsClearShadowSampleType()
@@ -576,6 +577,7 @@ RegisterCommand('fps', function(source, args)
 			SetLightsCutoffDistanceTweak(0.0)
 			TriggerEvent('notify', 'FPS', 'Boost de <b>FPS</b> ligado.')
 		elseif (command == 'off') then
+			LocalPlayer.state.FPS = false
 			SetTimecycleModifier('default')
 			RopeDrawShadowEnabled(true)
 			CascadeShadowsSetAircraftMode(true)
