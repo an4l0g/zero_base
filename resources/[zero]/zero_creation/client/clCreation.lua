@@ -20,8 +20,8 @@ local setGender = function(gender)
     if (HasModelLoaded(modelHash)) then
         ped = PlayerPedId()
         
-        local currentHealth, currentMaxHealth, currentArmour = GetEntityHealth(ped), GetPedMaxHealth(ped), GetPedArmour(ped)
-        SetPedMaxHealth(ped, currentMaxHealth)
+        local currentHealth, currentArmour = GetEntityHealth(ped), GetPedArmour(ped)
+        SetPedMaxHealth(ped, 200)
         SetEntityHealth(ped, currentHealth)
         SetPedArmour(ped, currentArmour)
     end
