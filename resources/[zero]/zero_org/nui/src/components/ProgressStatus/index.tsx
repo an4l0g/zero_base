@@ -52,7 +52,6 @@ const ProgressStatus = ({ goals, userGoals }: ProgressStatusProps) => {
     });
 
     let total = 0;
-    console.log(JSON.stringify(currentGoalsCount));
 
     currentGoalsCount.map((prod) => {
       total += prod.qtd;

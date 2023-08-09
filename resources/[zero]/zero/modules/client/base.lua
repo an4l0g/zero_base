@@ -1,7 +1,19 @@
 zero.teleport = function(x, y, z)
+	local ply = PlayerPedId()
 	if string.find(type(x), 'vec') then x, y, z = table.unpack(x) end
 	SetEntityCoords(PlayerPedId(), x+0.0001, y+0.0001, z+0.0001, 1, 0, 0, 1)
 	zeroServer.updatePos(x, y, z)
+    FreezeEntityPosition(ply, true)
+    SetEntityCoords(ply, x + 0.0001, y + 0.0001, z + 0.0001, 1, 0, 0, 1)
+    while (not HasCollisionLoadedAroundEntity(ply)) do
+        FreezeEntityPosition(ply, true)
+        SetEntityCoords(ply, x + 0.0001, y + 0.0001, z + 0.0001, 1, 0, 0, 1)
+        RequestCollisionAtCoord(x, y, z)
+        Wait(500)
+    end
+    SetEntityCoords(ply, x + 0.0001, y + 0.0001, z + 0.0001, 1, 0, 0, 1)
+    FreezeEntityPosition(ply, false)
+    Wait(1000)
 end
 
 zero.isInside = function()

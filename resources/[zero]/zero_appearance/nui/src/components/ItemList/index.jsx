@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import * as S from "../GenericalStyles";
 import Item from "../Item";
 import ResultContext from "../../contexts/ResultContext";
@@ -19,11 +19,7 @@ function ItemList({ shop, limit, types, indexType, labelType }) {
           key={index}
           index={index}
           shop={shop}
-          className={
-            result.current[types[indexType].path].model === index
-              ? "active"
-              : ""
-          }
+          className={result.current[labelType].model === index ? "active" : ""}
           labelType={labelType}
           handleClick={() => {
             handleSetResult(labelType, {

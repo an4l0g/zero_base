@@ -2,23 +2,6 @@ cli = {}
 Tunnel.bindInterface('Creation', cli)
 vSERVER = Tunnel.getInterface('Creation')
 
-local getCharacterDrawable = function(part)
-    local ped = PlayerPedId()
-	if part == 12 then
-		return tonumber(GetNumberOfPedDrawableVariations(ped, 2))
-	elseif part == -1 then
-		return tonumber(GetNumberOfPedDrawableVariations(ped, 0))
-	elseif part == -2 then
-		return 64
-	else
-		return tonumber(GetNumHeadOverlayValues(part))
-	end
-end
-
-RegisterCommand('teste',function()
-    cli.createCharacter()
-end)
-
 local setGender = function(gender) 
     local ped = PlayerPedId()
 
@@ -60,7 +43,7 @@ local povCam = {
     end
 }
 
-local atualCam;
+atualCam = ''
 local createCam = function(pov)
     atualCam = pov
     povCam[pov]()
@@ -136,6 +119,49 @@ resetClothes = function()
     setClothing(clothes[model] or {})
 end
 
+finishClothes = function()
+    local clothes = {
+        [GetHashKey('mp_m_freemode_01')] = {
+            ['mask'] = { 0, 0, 0 }, -- 1
+            ['hair'] = { 0, 0, 0 }, -- 2
+            ['torso'] = { 8, 0, 0 }, -- 3
+            ['leg'] = { 26, 0, 0 }, -- 4
+            ['bag'] = { 0, 0, 2 }, -- 5
+            ['shoes'] = { 1, 0, 0 }, -- 6
+            ['acessory'] = { 0, 0, 2 }, -- 7
+            ['undershirt'] = { 15, 0, 0 }, -- 8
+            ['kevlar'] = { 0, 0, 2 }, -- 9
+            ['badge'] = { 0, 0, 2 }, -- 10
+            ['torso2'] = { 38, 0, 0 }, -- 11
+            ['hat'] = { -1, 0 }, -- p0
+            ['glass'] = { -1, 0 }, --p1
+            ['ear'] = { -1, 0 }, -- p2
+            ['watch'] = { -1, 0 }, --p6
+            ['bracelet'] = { -1, 0 } --p7
+        },
+        [GetHashKey('mp_f_freemode_01')] = {
+            ['mask'] = { -1, 0, 0 }, -- 1
+            ['hair'] = { 0, 0, 0 }, -- 2
+            ['torso'] = { 9, 0, 1 }, -- 3
+            ['leg'] = { 73, 0, 1 }, -- 4
+            ['bag'] = { 0, 0, 0 }, -- 5
+            ['shoes'] = { 3, 0, 1 }, -- 6
+            ['acessory'] = { 0, 0, 0 }, -- 7
+            ['undershirt'] = { 2, 0, 1 }, -- 8
+            ['kevlar'] = { 0, 0, 0 }, -- 9
+            ['badge'] = { 0, 0, 0 }, -- 10
+            ['torso2'] = { 75, 0, 1 }, -- 11
+            ['hat'] = { -1, 0 }, -- p0
+            ['glass'] = { -1, 0 }, --p1
+            ['ear'] = { -1, 0 }, -- p2
+            ['watch'] = { -1, 0 }, --p6
+            ['bracelet'] = { -1, 0 } --p7
+        }
+    }
+    local model = GetEntityModel(PlayerPedId())
+    setClothing(clothes[model] or {})
+end
+
 setClothing = function(clothes)
     local ped = PlayerPedId()
     local components = {
@@ -159,8 +185,6 @@ setClothing = function(clothes)
         ['bracelet'] = 7
     }
     if (clothes) then
-        SetPedDefaultComponentVariation(ped)
-	    ClearAllPedProps(ped)
         for index, value in pairs(clothes) do
             if (components[index]) then
                 SetPedComponentVariation(ped, components[index], value[1], value[2], 2)
@@ -277,7 +301,7 @@ RegisterNuiCallback('changeCharacter', function(data)
     -- PELO CORPORAL
     currentCharacter.chestModel = data.chestModel
     currentCharacter.chestColor = data.chestColor
-    currentCharacter.chestColor = data.chestOpacity
+    currentCharacter.chestOpacity = data.chestOpacity
     SetPedHeadOverlay(ped, 10, data.chestModel, (data.chestOpacity or 0.99))
     SetPedHeadOverlayColor(ped, 10, 1, data.chestColor, data.chestColor)
 
@@ -344,10 +368,10 @@ RegisterNuiCallback('changePov', function(data)
 end)
 
 RegisterNuiCallback('finish', function(data)
-    SetNuiFocus(false, false)
-    if (vSERVER.verifyName(identity.firstname, identity.lastname)) then
-        vSERVER.saveIdentity(identity)
+    if (vSERVER.verifyIdentity(identity)) then
+        SetNuiFocus(false, false)
         vSERVER.saveCharacter(currentCharacter)
+        SendNUIMessage({ action = 'close' })
         finishCreator()
     end
 end)
@@ -359,13 +383,35 @@ finishCreator = function()
     TriggerEvent('zero_weather:staticTime', false)
     Citizen.Wait(1000)
     DoScreenFadeOut(500)
-    teleport(ped, generalConfig.spawnAfterCreator.xyz)
-    SetEntityHeading(ped, generalConfig.spawnAfterCreator.w)
-    SetEntityHealth(ped, GetPedMaxHealth(ped))
+    SetEntityHealth(ped, 200)
     FreezeEntityPosition(ped, false)
     
     DeleteCam(true)
+    finishClothes()
     TriggerEvent('introCinematic:start')
     Citizen.Wait(1000)
     DoScreenFadeIn(500)
+end
+
+tempCam = nil
+Cam = function(offset, bone)
+    if (not DoesCamExist(tempCam)) then
+        local ped = PlayerPedId()
+        local coordsCam = GetOffsetFromEntityInWorldCoords(ped, offset.x, offset.y, offset.z)
+        
+        tempCam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
+        SetCamCoord(tempCam, coordsCam)
+        PointCamAtPedBone(tempCam, ped, 31086, bone.x, bone.y, bone.z, false)
+
+        SetCamActive(tempCam, true)
+        RenderScriptCams(true, true, 500, true, true)
+    end
+end
+
+DeleteCam = function(render)
+    SetCamActive(tempCam, false)
+    if (render) then 
+        RenderScriptCams(false, true, 0, true, true)
+    end
+	tempCam = nil
 end

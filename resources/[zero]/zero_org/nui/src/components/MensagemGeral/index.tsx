@@ -22,8 +22,6 @@ const MensagemGeral = () => {
       )
     ).data;
 
-    console.log(response);
-
     if (response.result === "success") {
       toast.success(response.message);
     }

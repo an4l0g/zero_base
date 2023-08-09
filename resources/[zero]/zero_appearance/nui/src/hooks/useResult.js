@@ -13,11 +13,15 @@ function useResult() {
   const { appearance, setAppearance } = useContext(AppearanceContext);
   const { setVariations } = useContext(VariationsContext);
 
+  useEffect(() => {
+    console.log("Change result", result);
+  }, [result]);
+
   const prices = {
     barber: 500,
     tattoo: 500,
-    skin: 5000
-  }
+    skin: 5000,
+  };
 
   const sendDemoPedVariations = useCallback(() => {
     if (appearance.skinshop) {
@@ -40,14 +44,14 @@ function useResult() {
   }, [appearance, result]);
 
   const createResult = useCallback(
-    (shop, drawables) => {
+    (shop, sex, drawables) => {
       var newResult = {};
       if (shop === "barber") {
         drawables.forEach((item, index) => {
           newResult = {
             default: {
               ...newResult.default,
-              [BarberTypes[index].path]: {
+              [BarberTypes[sex][index].path]: {
                 model: item.model ?? null,
                 opacity: item.opacity ?? null,
                 main_color: item.main_color ?? null,
@@ -56,7 +60,7 @@ function useResult() {
             },
             current: {
               ...newResult.current,
-              [BarberTypes[index].path]: {
+              [BarberTypes[sex][index].path]: {
                 model: item.model ?? null,
                 opacity: item.opacity ?? null,
                 main_color: item.main_color ?? null,
@@ -73,14 +77,14 @@ function useResult() {
           newResult = {
             default: {
               ...newResult.default,
-              [SkinTypes[index].path]: {
+              [SkinTypes[sex][index].path]: {
                 model: item.model ?? null,
                 var: item.var ?? null,
               },
             },
             current: {
               ...newResult.current,
-              [SkinTypes[index].path]: {
+              [SkinTypes[sex][index].path]: {
                 model: item.model ?? null,
                 var: item.var ?? null,
               },
@@ -95,11 +99,11 @@ function useResult() {
           newResult = {
             default: {
               ...newResult.default,
-              [TattooTypes[index].path]: item.model ?? null,
+              [TattooTypes[sex][index].path]: item.model ?? null,
             },
             current: {
               ...newResult.current,
-              [TattooTypes[index].path]: item.model ?? null,
+              [TattooTypes[sex][index].path]: item.model ?? null,
             },
           };
         });
@@ -169,7 +173,7 @@ function useResult() {
 
       return total;
     },
-    [result]
+    [result, appearance]
   );
 
   const buyCustomizations = useCallback(
@@ -178,19 +182,19 @@ function useResult() {
         barber: () => {
           request("buyBarbershopCustomizations", {
             drawables: result.current,
-            total: calculateTotal(BarberTypes),
+            total: calculateTotal(BarberTypes[appearance.barbershop.sex]),
           });
         },
         skin: () => {
           request("buySkinshopCustomizations", {
             drawables: result.current,
-            total: calculateTotal(SkinTypes),
+            total: calculateTotal(SkinTypes[appearance.barbershop.sex]),
           });
         },
         tattoo: () => {
           request("buyTattooshopCustomizations", {
             drawables: result.current,
-            total: calculateTotal(TattooTypes),
+            total: calculateTotal(TattooTypes[appearance.barbershop.sex]),
           });
         },
       };

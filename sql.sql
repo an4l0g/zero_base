@@ -77,6 +77,7 @@ create table zero_creation(
   controller tinyint not null,
   user_character json not null,
   user_tattoo json not null,
+  user_clothes json not null,
   rh varchar(3) not null,
   primary key(user_id)
 );

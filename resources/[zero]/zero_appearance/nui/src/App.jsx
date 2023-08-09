@@ -18,17 +18,15 @@ function App() {
   const nuiMessage = useCallback(
     (event) => {
       const { action, data } = event.data;
-      console.log(action, data);
       if (action === "openBarberShop") {
         setAppearance({ barbershop: data });
-        createResult("barber", data.drawables);
+        createResult("barber", data.sex, data.drawables);
       } else if (action === "openSkinShop") {
         setAppearance({ skinshop: data });
-        createResult("skin", data.drawables);
+        createResult("skin", data.sex, data.drawables);
       } else if (action === "openTattooShop") {
-        console.log("Tattoo");
         setAppearance({ tattooshop: data });
-        createResult("tattoo", data.drawables);
+        createResult("tattoo", data.sex, data.drawables);
       } else if (action === "setVariations") {
         setVariations(data);
       }

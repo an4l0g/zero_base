@@ -1,13 +1,6 @@
 AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	local data = zero.getUserDataTable(user_id)
 	if (firstSpawn) then
-		-- [ Customization ] --
-		if (data.customization == nil) then
-			data.customization = config.default_customization
-		end
-		zeroClient.setCustomization(source, data.customization) 
-		----------------------------------
-
 		-- [ Health ] --
 		if (data.health == nil) then
 			data.health = 400
@@ -45,11 +38,13 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 			data.thirst = 0
 		end
 		----------------------------------
-	else
-		zeroClient.setCustomization(source, data.customization) 
 	end
 
-	if (data.position) then zeroClient.teleport(source, data.position.x, data.position.y, data.position.z); end;
+	if (data.position) then 
+		zeroClient.teleport(source, data.position.x, data.position.y, data.position.z)
+	end
+
+	exports.zero_appearance:setCustomization(source, user_id)
 	zeroClient._setFriendlyFire(source, true)
 	zeroClient._playerStateReady(source, true)
 end)
@@ -87,10 +82,7 @@ end
 zero.updateCustomization = function(customization)
 	local user_id = zero.getUserId(source)
 	if user_id then
-		local data = zero.getUserDataTable(user_id)
-		if (data) then 
-			data.customization = customization
-		end
+		zero.execute('zero_appearance/saveClothes', { user_id = _userId, user_clothes = json.encode(customization) } )
 	end
 end
 

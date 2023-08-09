@@ -11,7 +11,6 @@ function Form({ data, isDetails }) {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    console.log(data);
     if (data.total_price) {
       setPrice(data.total_price);
     }
