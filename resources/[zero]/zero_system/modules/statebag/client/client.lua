@@ -1,6 +1,6 @@
 LocalPlayer.state:set('BlockTasks', false, true)
 LocalPlayer.state:set('inVehicle', false, true)
-LocalPlayer.state:set('patrolHospital', false, {})
+LocalPlayer.state:set('patrolHospital', false, true)
 
 AddStateBagChangeHandler('BlockTasks', nil, function(bagName, key, value) 
     local entity = GetPlayerFromStateBagName(bagName)
