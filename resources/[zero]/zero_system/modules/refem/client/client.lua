@@ -162,7 +162,6 @@ AddStateBagChangeHandler('holdingHostage', nil, function(bagName, key, value)
                 DisableControlAction(0,58,true) -- disable weapon
                 DisableControlAction(0, 37, true) -- Tecla Tab
                 DisableControlAction(0, 21, true)
-                
                 DisablePlayerFiring(ply,true)
 
                 local playerCoords = GetEntityCoords(ply)

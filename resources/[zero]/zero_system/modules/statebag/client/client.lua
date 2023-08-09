@@ -3,6 +3,7 @@ LocalPlayer.state:set('inVehicle', false, true)
 LocalPlayer.state:set('patrolHospital', false, true)
 LocalPlayer.state:set('holdingHostage', false, true)
 LocalPlayer.state:set('victimHostage', false, true)
+LocalPlayer.state:set('FPS', false, true)
 
 AddStateBagChangeHandler('BlockTasks', nil, function(bagName, key, value) 
     local entity = GetPlayerFromStateBagName(bagName)
