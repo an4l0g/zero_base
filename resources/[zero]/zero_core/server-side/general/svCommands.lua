@@ -395,13 +395,9 @@ RegisterCommand('pon', function(source)
         local quantidade = 0
         local users = zero.getUsers()
         for k, v in pairs(users) do
-            if (k ~= #users) then
-                players = players..', '
-            end
-            players = players..k
-            quantidade = quantidade + 1
+            players = players..k..', '
+            quantidade = (quantidade + 1)
         end
-        
         TriggerClientEvent('chatMessage', source, 'TOTAL ONLINE', { 0, 153, 255 }, quantidade)
         TriggerClientEvent('chatMessage', source, "ID's ONLINE", { 0, 153, 255 }, players)
     end
