@@ -1,14 +1,31 @@
 import { RiPlayFill } from "react-icons/ri";
 import { GiCarDoor, GiKey } from "react-icons/gi";
+import { AiFillCar } from "react-icons/ai";
 
 export default [
+  {
+    title: "Meu veículo",
+    icon: <AiFillCar />,
+    type: "category",
+    action: "Vehicle",
+    value: "vehicle",
+    category: "car",
+  },
+  {
+    title: "Portas",
+    icon: <GiCarDoor />,
+    type: "category",
+    action: "carDoors",
+    value: "doors",
+    category: "vehicle",
+  },
   {
     title: "Chave",
     icon: <GiKey />,
     type: "category",
-    action: "carKeys",
+    action: "keys",
     value: "keys",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Emprestar chave",
@@ -27,26 +44,11 @@ export default [
     value: "rem",
   },
   {
-    title: "Portas",
-    icon: <GiCarDoor />,
-    type: "category",
-    action: "carDoors",
-    value: "doors",
-    category: "car",
-  },
-  {
-    title: "Instalar nitro",
-    icon: <RiPlayFill />,
-    type: "action",
-    action: "nitro",
-    category: "car",
-  },
-  {
     title: "Abrir janelas",
     icon: <RiPlayFill />,
     type: "action",
     action: "carWins",
-    category: "car",
+    category: "vehicle",
     side: "client",
   },
   {
@@ -68,21 +70,21 @@ export default [
     icon: <RiPlayFill />,
     type: "action",
     action: "carTrancar",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Ancorar barco",
     icon: <RiPlayFill />,
     type: "action",
     action: "carAncorar",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Vender veículo",
     icon: <RiPlayFill />,
     type: "action",
     action: "carVehs",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Abrir portas",

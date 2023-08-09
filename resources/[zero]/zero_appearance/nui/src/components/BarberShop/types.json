@@ -149,6 +149,13 @@
       "opacity": true,
       "main_color": false,
       "secondary_color": false
+    },
+    {
+      "path": "chestModel",
+      "title": "Pelos do Peito",
+      "opacity": true,
+      "main_color": true,
+      "secondary_color": false
     }
   ]
 }

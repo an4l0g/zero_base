@@ -1,8 +1,7 @@
 local vSERVER = Tunnel.getInterface('tattooShop')
-local config = module('zero_appearance', 'cfg/cfgTattoo')
 
 local locsConfig = config.locs
-local generalConfig =  config.general
+local generalConfig =  config.general['tattooshop']
 
 local getTattoos = function(_tattoos, model)
     local ped = PlayerPedId()
@@ -30,49 +29,8 @@ local getTattoos = function(_tattoos, model)
     return pedTattoos[model]
 end
 
-local nearestBlips = {}
-
-local _markerThread = false
-local markerThread = function()
-    if (_markerThread) then return; end;
-    _markerThread = true
-    Citizen.CreateThread(function()
-        while (countTable(nearestBlips) > 0) do
-            local ped = PlayerPedId()
-            local _cache = nearestBlips
-            for index, dist in pairs(_cache) do
-                if (dist <= 5) then
-                    local coord = locsConfig[index].coord
-                    createMarkers(coord)
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                        openTattooShop(index)  
-                    end
-                end
-            end
-            Citizen.Wait(5)
-        end
-        _markerThread = false
-    end)
-end
-
-Citizen.CreateThread(function()
-    addBlips(locsConfig, generalConfig)
-    while (true) do
-        local ped = PlayerPedId()
-        local pCoord = GetEntityCoords(ped)
-        nearestBlips = {}
-        for k, v in ipairs(locsConfig) do
-            local distance = #(pCoord - v.coord.xyz)
-            if (distance <= 5) then
-                nearestBlips[k] = distance
-            end
-        end
-        if (countTable(nearestBlips) > 0) then markerThread(); end;
-        Citizen.Wait(500)
-    end
-end)
-
 openTattooShop = function(locs)
+    TriggerEvent('zero_hud:toggleHud', false)
     local location = locsConfig[locs]
     local general = generalConfig[location.config]
 
@@ -88,7 +46,7 @@ openTattooShop = function(locs)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
 
-    if (general.hidePlayers) then setPlayersVisible(true); end;
+    if (general.hidePlayers) then setPlayersVisible(false); end;
 
     local tattoos = getTattoos(general.shopConfig, model)
     SendNUIMessage({ 

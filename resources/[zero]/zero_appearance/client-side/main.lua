@@ -61,34 +61,25 @@ end
 
 setPlayersVisible = function(bool)
     local ped = PlayerPedId()
-    if (bool) then
-        for _, player in ipairs(GetActivePlayers()) do
-            local otherPlayer = GetPlayerPed(player)
-            if (ped ~= otherPlayer) then
-                SetEntityVisible(otherPlayer, bool)
-            end
-        end
-    else
-        CreateThread(function()
-            while (inMenu) do
-                for _, player in ipairs(GetActivePlayers()) do
-                    local otherPlayer = GetPlayerPed(player)
-                    if (ped ~= otherPlayer) then
-                        SetEntityVisible(otherPlayer, bool)
-                    end
+    CreateThread(function()
+        while (inMenu) do
+            for _, player in ipairs(GetActivePlayers()) do
+                local otherPlayer = GetPlayerPed(player)
+                if (ped ~= otherPlayer) then
+                    SetEntityVisible(otherPlayer, bool)
                 end
-                InvalidateIdleCam()
-                Citizen.Wait(1)
             end
-        end)
-    end
+            InvalidateIdleCam()
+            Citizen.Wait(1)
+        end
+    end)
 end
 
-addBlips = function(locs, general)
+addBlips = function(locs)
     for _, v in pairs(locs) do
         if (v.blip) then
             local coords = v.coord
-            local blipConfig = general[v.config].blip
+            local blipConfig = config.general[v.type][v.config].blip
             if (coords) then
                 local blip = AddBlipForCoord(coords.xyz)
                 SetBlipSprite(blip, blipConfig.id)
@@ -121,7 +112,8 @@ RegisterNuiCallback('changeCam', function(data)
 end)
 
 closeNui = function()
-    setPlayersVisible(false)
+    TriggerEvent('zero_hud:toggleHud', true)
+    setPlayersVisible(true)
     SetNuiFocus(false, false)
     DeleteCam(true)
     inMenu = false
@@ -130,3 +122,59 @@ closeNui = function()
     ClearPedTasks(ped)
     if (oldCustom) then zero.setCustomization(oldCustom); end;
 end
+
+local locsConfig = config.locs
+
+local openAppearance = {
+    ['barbershop'] = function(index)
+        openBarberShop(index) 
+    end,
+    ['skinshop'] = function(index)
+        openSkinShop(index)
+    end,
+    ['tattooshop'] = function(index)
+        openTattooShop(index)
+    end
+}
+
+local nearestBlips = {}
+
+local _markerThread = false
+local markerThread = function()
+    if (_markerThread) then return; end;
+    _markerThread = true
+    Citizen.CreateThread(function()
+        while (countTable(nearestBlips) > 0) do
+            local ped = PlayerPedId()
+            local _cache = nearestBlips
+            for index, dist in pairs(_cache) do
+                if (dist <= 5) then
+                    local config = locsConfig[index]
+                    createMarkers(config.coord)
+                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                        openAppearance[config.type](index)
+                    end
+                end
+            end
+            Citizen.Wait(5)
+        end
+        _markerThread = false
+    end)
+end
+
+Citizen.CreateThread(function()
+    addBlips(locsConfig)
+    while (true) do
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        nearestBlips = {}
+        for k, v in ipairs(locsConfig) do
+            local distance = #(pCoord - v.coord.xyz)
+            if (distance <= 5) then
+                nearestBlips[k] = distance
+            end
+        end
+        if (countTable(nearestBlips) > 0) then markerThread(); end;
+        Citizen.Wait(500)
+    end
+end)

@@ -3,7 +3,7 @@ local configAnimations = config.animations
 
 for index, value in pairs(configAnimations.keyMapping) do
     RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)
-    RegisterCommand('+'..index, function() if (not LocalPlayer.state.BlockTasks) then value.action() end; end)
+    RegisterCommand('+'..index, function() if (not LocalPlayer.state.BlockTasks and not IsPedReloading(PlayerPedId())) then value.action() end; end)
 end
 
 RegisterNetEvent('zero_animations:setAnim', function(anim)
@@ -151,17 +151,6 @@ apontarThread = function(state)
             Citizen.InvokeNative(0xD5BB4025AE449A4E,ped,'Heading',camHeading*-1.0+1.0)
             Citizen.InvokeNative(0xB0A6CFD2C69C1088,ped,'isBlocked',blocked)
             Citizen.InvokeNative(0xB0A6CFD2C69C1088,ped,'isFirstPerson',Citizen.InvokeNative(0xEE778F8C7E1142E2,Citizen.InvokeNative(0x19CAFA3C87F7C2FF))==4)
-            Citizen.Wait(1)
-        end
-    end)
-end
-
-local disableStart = false
-disableActions = function(state)
-    disableStart = state
-    Citizen.CreateThread(function()
-        while (disableStart) do
-            DisableControlAction(0, 21, true)
             Citizen.Wait(1)
         end
     end)

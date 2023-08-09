@@ -448,9 +448,9 @@ RegisterCommand('tpto', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         if (args[1]) then
             local nPlayer = zero.getUserSource(parseInt(args[1]))
-            local nUser = zero.getUserId(nPlayer)
-            local nIdentity = zero.getUserIdentity(nUser)
             if (nPlayer) then
+                local nUser = zero.getUserId(nPlayer)
+                local nIdentity = zero.getUserIdentity(nUser)
                 local nCoords = GetEntityCoords(GetPlayerPed(nPlayer))
                 zero.webhook('TeleportTo', '```prolog\n[/TPTO]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[FOI ATÉ]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[COORDENADA]: '..tostring(nCoords)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')    
                 SetEntityCoords(source, nCoords)
@@ -846,13 +846,26 @@ RegisterCommand('carcolor', function(source, args)
     if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         local vehicle = zeroClient.getNearestVehicle(source, 7.0)
         if (vehicle) then
-            local prompt = zero.prompt(source, { 'RGB Color(255, 255, 255)' })
-            if (prompt[1]) then
-                local rgb = sanitizeString(prompt[1], '0123456789,', true)
-                local r, g, b = table.unpack(splitString(rgb, ','))
-                TriggerClientEvent('zero_core:carcolor', source, vehicle, parseInt(r), parseInt(g), parseInt(b), (args[1] ~= '2') )   
-                TriggerClientEvent('notify', source, 'Car Color','A cor do <b>veículo</b> foi alterada.')
-                zero.webhook('CarColor', '```prolog\n[/CARCOLOR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RGB]: '..prompt[1]..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+            local prompt = zero.prompt(source, { 'Primary Color RGB (255, 255, 255)', 'Secondary Color RGB (255, 255, 255)' })
+            if (prompt) then
+                local primary = prompt[1]
+                if (primary) then
+                    local rgb = sanitizeString(primary, '0123456789,', true)
+                    local r, g, b = table.unpack(splitString(rgb, ','))
+                    TriggerClientEvent('zero_core:carcolor', source, vehicle, parseInt(r), parseInt(g), parseInt(b), true)   
+                    TriggerClientEvent('notify', source, 'Car Color','A cor primária do <b>veículo</b> foi alterada.')
+                end
+
+                local secondary = prompt[2]
+                if (secondary) then
+                    local rgb = sanitizeString(secondary, '0123456789,', true)
+                    local r, g, b = table.unpack(splitString(rgb, ','))
+                    TriggerClientEvent('zero_core:carcolor', source, vehicle, parseInt(r), parseInt(g), parseInt(b), false)   
+                    TriggerClientEvent('notify', source, 'Car Color','A cor secundária do <b>veículo</b> foi alterada.')
+                end
+
+                local text, text2 = (primary and primary or '(NONE)'), (secondary and secondary or '(NONE)')
+                zero.webhook('CarColor', '```prolog\n[/CARCOLOR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RGB PRIMARY]: '..text..'\n[RGB SECONDARY]: '..text2..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
         end
     end
@@ -1000,7 +1013,9 @@ RegisterCommand('vroupas',function(source)
         local custom = zeroClient.getCustomization(source)
         local content = {}
         for k, v in pairs(custom) do
-            table.insert(content, k..' => '..json.encode(v)) 
+            if (v ~= GetEntityModel(GetPlayerPed(source))) then
+                table.insert(content, '['..k..'] = { '..v.model..', '..v.var..', '..v.palette..' },') 
+            end
         end
         content = table.concat(content, '\n ')
         TriggerClientEvent('clipboard', source, 'Código da roupa', content)
@@ -1336,6 +1351,62 @@ RegisterCommand('id', function(source)
         local nUser = zero.getUserId(nPlayer)
         TriggerClientEvent('notify', nPlayer, 'Passaporte', 'O cidadão <b>'..user_id..'</b> está verificando o seu passaporte.')
         TriggerClientEvent('notify', source, 'Passaporte', 'Passaporte: <b>('..nUser..')</b>', 10000)
+    end
+end)
+
+---------------------------------------
+-- RONDA HOSPITAL
+---------------------------------------
+local DeadCitizens = function(source)
+    local blipUsers = {}
+    Citizen.CreateThread(function()
+        while (Player(source).state.patrolHospital) do
+            local users = zero.getUsers()
+            if (users) then
+                for id, src in pairs(users) do
+                    local ply = GetPlayerPed(src)
+                    if (GetEntityHealth(ply) <= 100 and (not blipUsers[id])) then
+                        local plyCoords = GetEntityCoords(ply)
+
+                        blipUsers[id] = zeroClient.addBlip(source, plyCoords.x, plyCoords.y, plyCoords.z, 280, 27, 'Cidadão caído', 0.7, false)
+                        Citizen.SetTimeout(30000, function() zeroClient.removeBlip(source, blipUsers[id]) blipUsers[id] = nil end)
+                    end
+                end
+            end
+            Citizen.Wait(15000)
+        end
+    end)
+end
+
+RegisterCommand('rondahp', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'hospital.permissao') then
+        local identity = zero.getUserIdentity(user_id)
+        if (Player(source).state.patrolHospital) then
+            Player(source).state.patrolHospital = false
+            TriggerClientEvent('notify', source, 'Prefeitura', 'Você saiu de <b>patrulha</b>.')
+        else
+            DeadCitizens(source)
+            Player(source).state.patrolHospital = { id = user_id, name = identity.firstname..' '..identity.lastname }
+            TriggerClientEvent('notify', source, 'Prefeitura', 'Você entrou em <b>patrulha</b>.')
+        end
+    end
+end)
+
+RegisterCommand('listrhp', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'hospital.permissao') or zero.hasPermission(user_id, 'staff.permissao') then
+        local inService = zero.getUsersByPermission('hospital.permissao')
+        local list, paramedics = '', 0
+        for src, id in ipairs(inService) do
+            local user = Player(src).state.patrolHospital
+            if (Player(src).state.patrolHospital) then
+                list = list..'<b>'..user.name..' ('..user.id..')</b> <br>'
+                paramedics = (paramedics + 1)
+            end
+        end
+        local text = (paramedics >= 1 and 'Paramédicos em patrulha: <br><br>'..list or 'Não possuem <b>paramédicos</b> em patrulha no momento.')
+        TriggerClientEvent('notify', source, 'Prefeitura', text)
     end
 end)
 
