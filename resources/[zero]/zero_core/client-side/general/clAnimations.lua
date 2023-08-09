@@ -190,10 +190,8 @@ CreateThread(generateAnimations)
 
 local disabled = false
 disableActions = function(bool)
-    disabled = bool
-    local Pid = PlayerId()
     Citizen.CreateThread(function()
-        SetRunSprintMultiplierForPlayer(Pid, 0.1)
+        disabled = bool
         while (disabled) do
             BlockWeaponWheelThisFrame()
             DisableControlAction(0, 21, true)
@@ -225,6 +223,5 @@ disableActions = function(bool)
             DisablePlayerFiring(PlayerPedId(), true)
             Citizen.Wait(5)
         end
-        SetRunSprintMultiplierForPlayer(Pid, 1.0)
     end)
 end
