@@ -68,6 +68,7 @@ end
 
 local anims = {}
 local anim_ids = Tools.newIDGenerator()
+local animActived = false
 
 zero.playAnim = function(upper, seq, looping)
 	if seq.task then
@@ -123,7 +124,7 @@ zero.playAnim = function(upper, seq, looping)
 					end
 						Citizen.Wait(1)
 						while GetEntityAnimCurrentTime(PlayerPedId(),dict,name) <= 0.95 and IsEntityPlayingAnim(PlayerPedId(),dict,name,3) and anims[id] do
-							DisablePlayerFiring(PlayerPedId(), true)
+							if (not animActived) then disableActionsAnim(); end;
 							Citizen.Wait(1)
 						end
 					end
@@ -131,8 +132,49 @@ zero.playAnim = function(upper, seq, looping)
 			end
 			anim_ids:free(id)
 			anims[id] = nil
+			animActived = false
 		end)
 	end
+end
+
+disableActionsAnim = function()
+	if (animActived) then return; end;
+	animActived = true
+	Citizen.CreateThread(function()
+		while (animActived) do
+			DisableControlAction(0,24,true) -- disable attack
+			DisableControlAction(0,25,true) -- disable aim
+			DisableControlAction(0,47,true) -- disable weapon
+			DisableControlAction(0,58,true) -- disable weapon
+			DisableControlAction(0, 37, true) -- Tecla Tab
+			DisableControlAction(0, 21, true)
+			BlockWeaponWheelThisFrame()
+			DisableControlAction(0, 29, true)
+			DisableControlAction(0, 47, true)
+			DisableControlAction(0, 56, true)
+			DisableControlAction(0, 57, true)
+			DisableControlAction(0, 73, true)
+			DisableControlAction(0, 137, true)
+			DisableControlAction(0, 166, true)
+			DisableControlAction(0, 167, true)
+			DisableControlAction(0, 169, true)
+			DisableControlAction(0, 170, true)
+			DisableControlAction(0, 182, true)
+			DisableControlAction(0, 187, true)
+			DisableControlAction(0, 188, true)
+			DisableControlAction(0, 189, true)
+			DisableControlAction(0, 190, true)
+			DisableControlAction(0, 243, true)
+			DisableControlAction(0, 245, true)
+			DisableControlAction(0, 257, true)
+			DisableControlAction(0, 288, true)
+			DisableControlAction(0, 289, true)
+			DisableControlAction(0, 311, true)
+			DisableControlAction(0, 344, true)		
+			DisablePlayerFiring(PlayerPedId(), true)
+			Citizen.Wait(5)
+		end
+	end)
 end
 
 zero.stopAnim = function(upper)
