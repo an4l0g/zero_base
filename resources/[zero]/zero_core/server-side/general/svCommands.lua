@@ -470,9 +470,9 @@ RegisterCommand('tptome', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         if (args[1]) then
             local nPlayer = zero.getUserSource(parseInt(args[1]))
-            local nUser = zero.getUserId(nPlayer)
             local nIdentity = zero.getUserIdentity(nUser)
             if (nPlayer) then
+                local nUser = zero.getUserId(nPlayer)
                 local pCoords = GetEntityCoords(GetPlayerPed(source))
                 zero.webhook('TeleportTo', '```prolog\n[/TPTOME]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[PUXOU]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[COORDENADA]: '..tostring(pCoords)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')    
                 SetEntityCoords(nPlayer, pCoords)
@@ -880,7 +880,7 @@ RegisterCommand('uncuff', function(source)
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
-        if (zero.isHandcuffed(source)) then
+        if (zeroClient.isHandcuffed(source)) then
             TriggerClientEvent('zero_core:uncuff', source)
             zero.webhook('Uncuff', '```prolog\n[/UNCUFF]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SE DESALGEMOU] \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         else

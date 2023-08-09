@@ -137,7 +137,7 @@ local Holster = false
 local LastWeapon = nil
 
 local _disableActions = false
-disableActions = function(bool)
+local disableActions = function(bool)
     _disableActions = bool
     while (_disableActions == true) do
         DisablePlayerFiring(PlayerPedId(), true) 

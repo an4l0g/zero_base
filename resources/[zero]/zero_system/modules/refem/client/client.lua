@@ -1,26 +1,6 @@
+local cli = {}
+Tunnel.bindInterface('Refem', cli)
 local vSERVER = Tunnel.getInterface('Refem')
-
-local Weapons = {
-    -- HANDGUNS
-    [GetHashKey('WEAPON_PISTOL')] = 'WEAPON_PISTOL',
-    [GetHashKey('WEAPON_PISTOL_MK2')] = 'WEAPON_PISTOL_MK2',
-    [GetHashKey('WEAPON_COMBATPISTOL')] = 'WEAPON_COMBATPISTOL',
-    [GetHashKey('WEAPON_APPISTOL')] = 'WEAPON_APPISTOL',
-    [GetHashKey('WEAPON_PISTOL50')] = 'WEAPON_PISTOL50',
-    [GetHashKey('WEAPON_SNSPISTOL')] = 'WEAPON_SNSPISTOL',
-    [GetHashKey('WEAPON_SNSPISTOL_MK2')] = 'WEAPON_SNSPISTOL_MK2',
-    [GetHashKey('WEAPON_HEAVYPISTOL')] = 'WEAPON_HEAVYPISTOL',
-    [GetHashKey('WEAPON_VINTAGEPISTOL')] = 'WEAPON_VINTAGEPISTOL',
-    [GetHashKey('WEAPON_MARKSMANPISTOL')] = 'WEAPON_MARKSMANPISTOL',
-    [GetHashKey('WEAPON_REVOLVER')] = 'WEAPON_REVOLVER',
-    [GetHashKey('WEAPON_REVOLVER_MK2')] = 'WEAPON_REVOLVER_MK2',
-    [GetHashKey('WEAPON_DOUBLEACTION')] = 'WEAPON_DOUBLEACTION',
-    [GetHashKey('WEAPON_RAYPISTOL')] = 'WEAPON_RAYPISTOL',
-    [GetHashKey('WEAPON_CERAMICPISTOL')] = 'WEAPON_CERAMICPISTOL',
-    [GetHashKey('WEAPON_NAVYREVOLVER')] = 'WEAPON_NAVYREVOLVER',
-    [GetHashKey('WEAPON_GADGETPISTOL')] = 'WEAPON_GADGETPISTOL',
-    [GetHashKey('WEAPON_PISTOLXM3')] = 'WEAPON_PISTOLXM3',
-}
 
 local foundWeapon = nil
 
@@ -57,56 +37,55 @@ local GetClosestPlayer = function(radius)
 	end
 end
 
-local takeHostage = function(ply)
+local Weapons = {
+    -- HANDGUNS
+    [GetHashKey('WEAPON_PISTOL')] = 'WEAPON_PISTOL',
+    [GetHashKey('WEAPON_PISTOL_MK2')] = 'WEAPON_PISTOL_MK2',
+    [GetHashKey('WEAPON_COMBATPISTOL')] = 'WEAPON_COMBATPISTOL',
+    [GetHashKey('WEAPON_APPISTOL')] = 'WEAPON_APPISTOL',
+    [GetHashKey('WEAPON_PISTOL50')] = 'WEAPON_PISTOL50',
+    [GetHashKey('WEAPON_SNSPISTOL')] = 'WEAPON_SNSPISTOL',
+    [GetHashKey('WEAPON_SNSPISTOL_MK2')] = 'WEAPON_SNSPISTOL_MK2',
+    [GetHashKey('WEAPON_HEAVYPISTOL')] = 'WEAPON_HEAVYPISTOL',
+    [GetHashKey('WEAPON_VINTAGEPISTOL')] = 'WEAPON_VINTAGEPISTOL',
+    [GetHashKey('WEAPON_MARKSMANPISTOL')] = 'WEAPON_MARKSMANPISTOL',
+    [GetHashKey('WEAPON_REVOLVER')] = 'WEAPON_REVOLVER',
+    [GetHashKey('WEAPON_REVOLVER_MK2')] = 'WEAPON_REVOLVER_MK2',
+    [GetHashKey('WEAPON_DOUBLEACTION')] = 'WEAPON_DOUBLEACTION',
+    [GetHashKey('WEAPON_RAYPISTOL')] = 'WEAPON_RAYPISTOL',
+    [GetHashKey('WEAPON_CERAMICPISTOL')] = 'WEAPON_CERAMICPISTOL',
+    [GetHashKey('WEAPON_NAVYREVOLVER')] = 'WEAPON_NAVYREVOLVER',
+    [GetHashKey('WEAPON_GADGETPISTOL')] = 'WEAPON_GADGETPISTOL',
+    [GetHashKey('WEAPON_PISTOLXM3')] = 'WEAPON_PISTOLXM3',
+}
+
+cli.takeHostage = function(targetSrc)
+    local ply = PlayerPedId()
+
     ClearPedTasks(ply)
     DetachEntity(ply, true, false)
 
     if (not Weapons[GetSelectedPedWeapon(ply)]) then
         TriggerEvent('notify', 'Drumond', 'Você não está segurando nenhuma <b>pistola</b>.')
-        return
+        return false
     end
 
     if (GetAmmoInPedWeapon(ply, GetHashKey(Weapons[GetSelectedPedWeapon(ply)])) <= 0) then
         TriggerEvent('notify', 'Drumond', 'Você não possui munição em seu <b>armamento</b>.')
-        return
+        return false
     end
 
     foundWeapon = GetHashKey(Weapons[GetSelectedPedWeapon(ply)])
 
-    local closetPlayer = GetClosestPlayer(2)
-    if (closetPlayer ~= nil) then
-        lib = 'anim@gangops@hostage@'
-		anim1 = 'perp_idle'
-		lib2 = 'anim@gangops@hostage@'
-		anim2 = 'victim_idle'
-		distans = 0.11 --Higher = closer to camera
-		distans2 = -0.24 --higher = left
-		height = 0.0
-		spin = 0.0		
-		length = 100000
-		controlFlagMe = 49
-		controlFlagTarget = 49
-		animFlagTarget = 50
-		attachFlag = true 
-        LocalPlayer.state.holdingHostage = true
-        SetCurrentPedWeapon(ply, foundWeapon, true)
-        TriggerServerEvent('zero_prefem:sync', closestPlayer, lib,lib2, anim1, anim2, distans, distans2, height,length,spin,controlFlagMe,controlFlagTarget,animFlagTarget,attachFlag)    
-    end
+    SetCurrentPedWeapon(ply, foundWeapon, true)
+    TriggerServerEvent('zero_prefem:sync', targetSrc, 'anim@gangops@hostage@', 'anim@gangops@hostage@', 'perp_idle', 'victim_idle', 0.11, -0.24, 0.0, 100000, 0.0, 49, 49, 50, true)    
+    return true
 end
-
--- RegisterCommand('prefem', function()
---     local ply = PlayerPedId()
---     -- if (not zero.isHandcuffed and not GetEntityHealth(ply) <= 100 and not IsPedInAnyVehicle(ply)) then
---         print('aqui')
---         takeHostage(ply)
---     -- end
--- end)
 
 RegisterNetEvent('zero_prefem:syncTarget')
 AddEventHandler('zero_prefem:syncTarget', function(target, animationLib, animation2, distans, distans2, height, length,spin,controlFlag,animFlagTarget,attach)
 	local playerPed = PlayerPedId()
 	local targetPed = GetPlayerPed(GetPlayerFromServerId(target))
-    LocalPlayer.state.victimHostage = true
 
 	RequestAnimDict(animationLib)
 	while (not HasAnimDictLoaded(animationLib)) do Citizen.Wait(10); end;
@@ -151,20 +130,14 @@ end)
 
 RegisterNetEvent('zero_prefem:cl_stop')
 AddEventHandler('zero_prefem:cl_stop', function()
+    local ply = PlayerPedId()
+
     LocalPlayer.state.BlockTasks = false
     LocalPlayer.state.holdingHostage = false
     LocalPlayer.state.victimHostage = false
-	ClearPedTasks(GetPlayerPed(-1))
-	DetachEntity(GetPlayerPed(-1), true, false)
+	ClearPedTasks(ply)
+	DetachEntity(ply, true, false)
 end)
-
-local DisableActionsHostage = function(ply)
-    DisableControlAction(0,24,true) -- disable attack
-    DisableControlAction(0,25,true) -- disable aim
-    DisableControlAction(0,47,true) -- disable weapon
-    DisableControlAction(0,58,true) -- disable weapon
-    DisablePlayerFiring(ply,true)
-end
 
 AddStateBagChangeHandler('holdingHostage', nil, function(bagName, key, value) 
     local entity = GetPlayerFromStateBagName(bagName)
@@ -183,7 +156,14 @@ AddStateBagChangeHandler('holdingHostage', nil, function(bagName, key, value)
                     LocalPlayer.state.holdingHostage = false
                 end
 
-                DisableActionsHostage(ply)
+                DisableControlAction(0,24,true) -- disable attack
+                DisableControlAction(0,25,true) -- disable aim
+                DisableControlAction(0,47,true) -- disable weapon
+                DisableControlAction(0,58,true) -- disable weapon
+                DisableControlAction(0, 37, true) -- Tecla Tab
+                DisableControlAction(0, 21, true)
+                
+                DisablePlayerFiring(ply,true)
 
                 local playerCoords = GetEntityCoords(ply)
 			    TextHostage(playerCoords, 'Pressione ~b~[M]~w~ para soltar, ~b~[E]~w~ para matar')
@@ -255,7 +235,7 @@ releaseHostage = function()
 	controlFlagTarget = 0
 	animFlagTarget = 1
 	attachFlag = false
-	local closestPlayer = GetClosestPlayer(2)
+	local closestPlayer = GetClosestPlayer(1.5)
 	if (closestPlayer ~= nil) then
 		TriggerServerEvent('zero_prefem:sync', closestPlayer, lib,lib2, anim1, anim2, distans, distans2, height,length,spin,controlFlagMe,controlFlagTarget,animFlagTarget,attachFlag)
 	end
@@ -276,7 +256,7 @@ killHostage = function()
 	controlFlagTarget = 0
 	animFlagTarget = 1
 	attachFlag = false
-	local closestPlayer = GetClosestPlayer(2)
+	local closestPlayer = GetClosestPlayer(1.5)
 	if (closestPlayer ~= nil) then
 		TriggerServerEvent('zero_prefem:sync', closestPlayer, lib,lib2, anim1, anim2, distans, distans2, height,length,spin,controlFlagMe,controlFlagTarget,animFlagTarget,attachFlag)
 	end	
