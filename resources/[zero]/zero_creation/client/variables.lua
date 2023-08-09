@@ -23,7 +23,7 @@ currentCharacter = {
     eyebrowsWidth = 0,
     eyebrowsModel = 0,
     eyebrowsColor = 0,
-    eyebrowsOpacity = 0.99,
+    eyebrowsOpacity = 0.00,
 
     -- NARIZ
     noseWidth = 0, 
@@ -65,39 +65,39 @@ currentCharacter = {
     -- Pelo Corporal
     chestModel = -1, 
     chestColor = 0, 
-    chestOpacity = 0.99,
+    chestOpacity = 0.00,
 
     -- Blush
     blushModel = -1, 
     blushColor = 0, 
-    blushOpacity = 0.99,
+    blushOpacity = 0.00,
 
     -- Batom
     lipstickModel = -1, 
     lipstickColor = 0, 
-    lipstickOpacity = 0.99,
+    lipstickOpacity = 0.00,
 
     -- Manchas
     blemishesModel = -1, 
-    blemishesOpacity = 0.99,
+    blemishesOpacity = 0.00,
 
     -- Envelhecimento
     ageingModel = -1, 
-    ageingOpacity = 0.99,
+    ageingOpacity = 0.00,
 
     -- Aspecto
     complexionModel = -1, 
-    complexionOpacity = 0.99,
+    complexionOpacity = 0.00,
 
     -- Pele
     sundamageModel = -1, 
-    sundamageOpacity = 0.99,
+    sundamageOpacity = 0.00,
 
     -- Sardas
     frecklesModel = -1, 
-    frecklesOpacity = 0.99,
+    frecklesOpacity = 0.00,
 
     -- Maquiage
     makeupModel = -1,
-    makeupOpacity = 0.99,
+    makeupOpacity = 0.00,
 }
