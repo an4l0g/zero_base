@@ -121,9 +121,9 @@ local mainSurvival = function()
             SetEntityInvincible(ped, true)
             _disableActions() 
             if (deathTimer > 0) then
-                exports['zero_works']:Text2D(0, 0.39, 0.9, 'NOCAUTEADO, AGUARDE ~b~'..deathTimer..' SEGUNDOS', 0.4)
+                Text2D(0, 0.39, 0.9, 'NOCAUTEADO, AGUARDE ~b~'..deathTimer..' SEGUNDOS', 0.4)
             else
-                exports['zero_works']:Text2D(0, 0.43, 0.9, 'PRESSIONE ~b~E~w~ PARA DESISTIR', 0.4)
+                Text2D(0, 0.43, 0.9, 'PRESSIONE ~b~E~w~ PARA DESISTIR', 0.4)
                 if (IsControlJustPressed(0, 38)) then
                     reviveSurvival(ped)
                 end
@@ -182,4 +182,16 @@ end
 zero.getSpeed = function()
 	local speed = GetEntityVelocity(PlayerPedId())
 	return math.sqrt(speed.x*speed.x+speed.y*speed.y+speed.z*speed.z)
+end
+
+Text2D = function(font, x, y, text, scale)
+    SetTextFont(font)
+    SetTextProportional(7)
+    SetTextScale(scale, scale)
+    SetTextColour(255, 255, 255, 255)
+    SetTextDropShadow(0, 0, 0, 0,255)
+    SetTextEdge(4, 0, 0, 0, 255)
+    SetTextEntry("STRING")
+    AddTextComponentString(text)
+    DrawText(x, y)
 end

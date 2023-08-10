@@ -297,7 +297,7 @@ zero.dropPlayer = function(source, reason)
 			
 			userTable.health = GetEntityHealth(ped)
 			userTable.armour = GetPedArmour(ped)
-			userTable.position = { x = pCoord.x, y = pCoord.y, z = pCoord.z }
+			-- userTable.position = { x = pCoord.x, y = pCoord.y, z = pCoord.z }
 
 			local health, weapons = userTable.health, concatArmas(userTable.weapons)
 			local steamURL, steamID, discord = formatIdentifiers(source)
