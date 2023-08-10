@@ -387,7 +387,7 @@ function GetObject()
 
             if distance < closestDist then
                 closestDist = distance
-                closestObject = GetEntityModel(ped)
+                CommandsData['closestObject'] = GetEntityModel(ped)
             end
 
             rped = ped
@@ -646,3 +646,28 @@ RegisterCommand('vtuning', function()
 		TriggerEvent('notify', 'Ver Tunagens', '<b>Motor:</b> '..motor..'<br><b>Freio:</b> '..freio..'<br><b>Transmissão:</b> '..transmissao..'<br><b>Suspensão:</b> '..suspensao..'<br><b>Blindagem:</b> '..blindagem..'<br><b>Chassi:</b> '..parseInt(body/10)..'%<br><b>Engine:</b> '..parseInt(engine/10)..'%<br><b>Gasolina:</b> '..parseInt(fuel)..'%', 15000)
 	end
 end)
+
+---------------------------------------
+-- ROCKSTAR EDITOR
+---------------------------------------
+cli.stopAndSave = function()
+	if (IsRecording()) then
+		StopRecordingAndSaveClip()
+	end
+end
+
+cli.openEditor = function()
+	NetworkSessionLeaveSinglePlayer()
+	ActivateRockstarEditor()
+end
+
+cli.Discard = function()
+	if (IsRecording()) then
+		StopRecordingAndDiscardClip()
+	end
+end
+
+cli.StartEditor = function()
+	print('oi')
+	StartRecording(1)
+end

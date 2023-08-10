@@ -1418,3 +1418,35 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
         end
     end
 end)
+
+---------------------------------------
+-- ROCKSTAR EDITOR
+---------------------------------------
+local rockstarCommands = {
+    ['start'] = function(source)
+        print('aqui')
+        vCLIENT.StartEditor(source)
+    end,
+    ['save'] = function(source)
+        vCLIENT.stopAndSave(source)
+    end,
+    ['discard'] = function(source)
+        vCLIENT.Discard(source)
+    end,
+    ['open'] = function(source)
+        vCLIENT.openEditor(source)
+    end
+}
+
+RegisterCommand('rockstar', function(source, args) 
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        print(args[1])
+        if (args[1]) and rockstarCommands[args[1]] then
+            print('oi')
+            rockstarCommands[args[1]](source)
+        else
+            TriggerClientEvent('notify', source, 'Prefeitura', 'Você não <b>especificou</b> o que gostaria de utilizar, tente novamente:<br><br><b>- /rockstar start<br>- /rockstar save<br>- /rockstar open<br>- /rockstar discard</b>')
+        end
+    end
+end)
