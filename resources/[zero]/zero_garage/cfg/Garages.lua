@@ -603,6 +603,14 @@ config.garages = {
             vector4(63.01978, -850.9583, 30.79639, 161.5748)
         }
     },
+    {
+        coords = vector3(-796.4572, 310.2462, 85.70984),
+        rule = 'carOnly',
+        points = {
+            vector4(-796.7209, 298.4967, 85.84473, 172.9134)
+        },
+        home = 'Eclipse'
+    }
 }
 
 config.rules = {

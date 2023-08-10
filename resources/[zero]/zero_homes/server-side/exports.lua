@@ -1,5 +1,32 @@
 homesActions = {}
 
+local permission = {
+    ['apartament'] = function(user_id, homeName)
+        homeName = homeName..'%'
+        local homeConsult = zero.query('zero_homes/apartamentPermissions', { home = homeName, user_id = user_id })[1]
+        if (homeConsult) then
+            return true
+        end
+        return false
+    end,
+    ['home'] = function(user_id, homeName)
+        local homeConsult = zero.query('zero_homes/homePermissions', { home = homeName, user_id = user_id })[1]
+        if (homeConsult) then
+            return true
+        end
+        return false
+    end
+}
+
+local checkHomePermission = function(user_id, homeName)
+    local _config = configHomes[homeName]
+    if (_config) then
+        local isApartament = (_config.type == 'apartament' and 'apartament' or 'home')
+        return permission[isApartament](user_id, homeName)
+    end
+end
+exports('checkHomePermission', checkHomePermission)
+
 local checkHomeOwner = function(user_id, prompt)
     local homeName = capitalizeString(prompt)
     local homeConsult = zero.query('zero_homes/homePermissions', { home = homeName, user_id = user_id })[1]

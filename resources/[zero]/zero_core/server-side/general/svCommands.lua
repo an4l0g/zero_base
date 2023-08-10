@@ -395,13 +395,9 @@ RegisterCommand('pon', function(source)
         local quantidade = 0
         local users = zero.getUsers()
         for k, v in pairs(users) do
-            if (k ~= #users) then
-                players = players..', '
-            end
-            players = players..k
-            quantidade = quantidade + 1
+            players = players..k..', '
+            quantidade = (quantidade + 1)
         end
-        
         TriggerClientEvent('chatMessage', source, 'TOTAL ONLINE', { 0, 153, 255 }, quantidade)
         TriggerClientEvent('chatMessage', source, "ID's ONLINE", { 0, 153, 255 }, players)
     end
@@ -470,9 +466,9 @@ RegisterCommand('tptome', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         if (args[1]) then
             local nPlayer = zero.getUserSource(parseInt(args[1]))
-            local nUser = zero.getUserId(nPlayer)
             local nIdentity = zero.getUserIdentity(nUser)
             if (nPlayer) then
+                local nUser = zero.getUserId(nPlayer)
                 local pCoords = GetEntityCoords(GetPlayerPed(source))
                 zero.webhook('TeleportTo', '```prolog\n[/TPTOME]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[PUXOU]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[COORDENADA]: '..tostring(pCoords)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')    
                 SetEntityCoords(nPlayer, pCoords)
@@ -880,7 +876,7 @@ RegisterCommand('uncuff', function(source)
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
-        if (zero.isHandcuffed(source)) then
+        if (zeroClient.isHandcuffed(source)) then
             TriggerClientEvent('zero_core:uncuff', source)
             zero.webhook('Uncuff', '```prolog\n[/UNCUFF]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SE DESALGEMOU] \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         else
@@ -1419,6 +1415,38 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
         local identity = zero.getUserIdentity(user_id)
         if (identity) then
             TriggerClientEvent('zero_core:discord', source, '#'..user_id..' '..identity.firstname..' '..identity.lastname)
+        end
+    end
+end)
+
+---------------------------------------
+-- ROCKSTAR EDITOR
+---------------------------------------
+local rockstarCommands = {
+    ['start'] = function(source)
+        print('aqui')
+        vCLIENT.StartEditor(source)
+    end,
+    ['save'] = function(source)
+        vCLIENT.stopAndSave(source)
+    end,
+    ['discard'] = function(source)
+        vCLIENT.Discard(source)
+    end,
+    ['open'] = function(source)
+        vCLIENT.openEditor(source)
+    end
+}
+
+RegisterCommand('rockstar', function(source, args) 
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        print(args[1])
+        if (args[1]) and rockstarCommands[args[1]] then
+            print('oi')
+            rockstarCommands[args[1]](source)
+        else
+            TriggerClientEvent('notify', source, 'Prefeitura', 'Você não <b>especificou</b> o que gostaria de utilizar, tente novamente:<br><br><b>- /rockstar start<br>- /rockstar save<br>- /rockstar open<br>- /rockstar discard</b>')
         end
     end
 end)

@@ -813,10 +813,10 @@ config.animations = {
             hand = 60309,
             pos = { 0.0, -0.28, 0.04, -97.4, -98.66, 10.89 },
             extra = function()
-                disableActions(true)
                 RequestAnimDict('gndpacientecarregandosoro@animations')
                 while not HasAnimDictLoaded('gndpacientecarregandosoro@animations') do Citizen.Wait(0); end;
 	            TaskPlayAnim(PlayerPedId(), 'gndpacientecarregandosoro@animations', 'gndpacientecarregandosoro_clip', 4.0, 4.0, -1, 49, 0.0)
+                disableActions(true)
             end,
             andar = true,
             loop = true,

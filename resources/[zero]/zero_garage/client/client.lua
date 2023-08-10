@@ -66,7 +66,7 @@ local nearestGarageId = 0
 openGarage = function(index)
 	nearestGarageId = index
 	local config = garagesConfig[index]
-    if (vSERVER.checkPermissions(config.permission)) then
+    if (vSERVER.checkPermissions(config.permission, config.home)) then
 		inGarage = true
         SetNuiFocus(true, true)
         SendNUIMessage({

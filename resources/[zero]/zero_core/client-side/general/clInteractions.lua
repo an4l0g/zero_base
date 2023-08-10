@@ -2,14 +2,10 @@ cacheInteractions = {}
 
 local setPed = {
     [GetHashKey('mp_m_freemode_01')] = {
-        _Handcuff = {
-            { 7, 41, 0, 2 }
-        }
+        _Handcuff = { 7, 41, 0, 2 }
     },
     [GetHashKey('mp_f_freemode_01')] = {
-        _Handcuff = {
-            { 7, 25, 0, 2 }
-        }
+        _Handcuff = {  7, 25, 0, 2 }
     }
 }
 

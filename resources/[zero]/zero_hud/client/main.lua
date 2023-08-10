@@ -38,20 +38,15 @@ checkRadar = function(bool)
 end
 
 local checkComponents = function()
-    local player = PlayerId()
-    local currentTalking = false
-    while true do
-		Wait(5)
-        local talking = NetworkIsPlayerTalking(player)
-        if currentTalking ~= talking then
-            currentTalking = talking
-            --TriggerEvent('nation_hud:updateTalking', currentTalking) EVENTO PARA MUDAR A COR DO MIC QUANDO O PLAYER ESTIVER FALANDO
-        end
+    while (true) do
+        local idle = 1000
         if inVehicle and hasSeatbelt then
             if seatbeltOn then
+                idle = 5
                 DisableControlAction(1,75,true)
             end
         end
+        Citizen.Wait(idle)
 	end
 end
 
@@ -106,7 +101,6 @@ local checkPlayerLevels = function()
     Wait(1000)
     local veh = GetVehiclePedIsIn(ped, false)
     local ped = PlayerPedId()
-    -- local x,y,z = table.unpack(GetEntityCoords(ped))
     local currentHealth = getHealth(ped)
     local currentArmour = getArmour(ped)
     local currentOxygen = getOxygen(ped) 
@@ -119,25 +113,21 @@ local checkPlayerLevels = function()
 
     updateHealth(currentHealth)
     updateArmour(currentArmour) 
-    -- updateStreet(currentStreet)
     updateTime(currentTime)
     if not (LocalPlayer.state['gps']) then checkRadar(false) end
 
     while true do
         ped = PlayerPedId()
         veh = GetVehiclePedIsIn(ped, false)
-        -- x,y,z = table.unpack(GetEntityCoords(ped))
         local health = getHealth(ped)
         local armour = getArmour(ped)
         local oxygen = getOxygen(ped) 
         local time = getTime()
-        -- local street = GetStreetNameFromHashKey(GetStreetNameAtCoord(x,y,z))
         local locked = GetVehicleDoorLockStatus(veh)
 
         if currentHealth ~= health then currentHealth = health; updateHealth(currentHealth); end
         if currentArmour ~= armour then currentArmour = armour; updateArmour(currentArmour); end
         if currentOxygen ~= oxygen then currentOxygen = oxygen; updateOxygen(currentOxygen); end
-        -- if currentStreet ~= street then currentStreet = street; updateStreet(currentStreet); end
         if currentTime ~= time then currentTime = time; updateTime(currentTime); end
         if currentLocked ~= locked then currentLocked = locked; updateLocked(currentLocked == 2); end
 
@@ -169,29 +159,39 @@ end
 
 local needs = { hunger = 0, thirst = 0 }
 
-local threadFomeSede = function()
-    while true do
-        -- FOME
+Citizen.CreateThread(function()
+    while (true) do
+        Citizen.Wait(10000)
         if needs.hunger >= 85 then
+            SetTimecycleModifier('spectator5')
 			ShakeGameplayCam('FAMILY5_DRUG_TRIP_SHAKE',1.0)
             TriggerEvent('Notify', 'importante', 'Você precisa <b>comer</b> urgentemente.')
         elseif needs.thirst >= 80 then
+            SetTimecycleModifier('spectator5')
 			ShakeGameplayCam('FAMILY5_DRUG_TRIP_SHAKE',1.0)
             TriggerEvent('Notify', 'importante', 'Você precisa <b>beber</b> urgentemente.')
         elseif needs.hunger < 85 then
+            if (LocalPlayer.state.FPS) then
+                SetTimecycleModifier('cinema')
+            else
+                SetTimecycleModifier('default')
+            end
             StopGameplayCamShaking()
         elseif needs.thirst < 80 then
+            if (LocalPlayer.state.FPS) then
+                SetTimecycleModifier('cinema')
+            else
+                SetTimecycleModifier('default')
+            end
             StopGameplayCamShaking()
         end
-        Citizen.Wait(10000)
     end
-end
+end)
 
-CreateThread(threadFomeSede)
 CreateThread(checkPlayerLevels)
 CreateThread(checkComponents)
 
-RegisterNetEvent('vrp_hud:updateBasics',function(hunger,thirst,stress, toxic)
+RegisterNetEvent('vrp_hud:updateBasics',function(hunger, thirst)
     if needs.hunger ~= hunger then needs.hunger = hunger; updateHunger(needs.hunger) end
     if needs.thirst ~= thirst then needs.thirst = thirst; updateThirst(needs.thirst) end  
 end)
