@@ -18,7 +18,6 @@ function App() {
   const nuiMessage = useCallback(
     (event) => {
       const { action, data } = event.data;
-      console.log("Barber", data);
       if (action === "openBarberShop") {
         setAppearance({ barbershop: data });
         createResult("barber", data.sex, data.drawables);

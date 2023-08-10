@@ -87,6 +87,7 @@
       "main_color": false,
       "secondary_color": false
     },
+    { "path": "beard", "title": "Barba", "opacity": true, "main_color": true },
     {
       "path": "eyebrows",
       "title": "Sobrancelhas",

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState, useCallback } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import * as S from "../GenericalStyles";
 import Types from "./types.json";
 import AppearanceContext from "../../contexts/AppearanceContext";

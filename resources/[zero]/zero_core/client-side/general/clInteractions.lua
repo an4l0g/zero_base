@@ -2,12 +2,12 @@ cacheInteractions = {}
 
 local setPed = {
     [GetHashKey('mp_m_freemode_01')] = {
-        Handcuff = {
+        _Handcuff = {
             { 7, 41, 0, 2 }
         }
     },
     [GetHashKey('mp_f_freemode_01')] = {
-        Handcuff = {
+        _Handcuff = {
             { 7, 25, 0, 2 }
         }
     }
@@ -19,7 +19,7 @@ RegisterCommand('+algemar', function() if (not IsPedInAnyVehicle(PlayerPedId()))
 RegisterNetEvent('zero_interactions:algemas', function(action)
     local ped = PlayerPedId()
     if (action == 'colocar') then
-        local Handcuff = setPed[GetEntityModel(ped)].Handcuff
+        local Handcuff = setPed[GetEntityModel(ped)]._Handcuff
         if (Handcuff) then SetPedComponentVariation(ped, Handcuff[1], Handcuff[2], Handcuff[3], Handcuff[4]); end;
     else
         SetPedComponentVariation(ped, 7, 0, 0, 2)

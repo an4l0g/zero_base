@@ -27,16 +27,17 @@ RegisterCommand('god', function(source, args)
     if (_userId) and zero.hasPermission(_userId, 'staff.permissao') then
         local _identity = zero.getUserIdentity(_userId)
         if (args[1]) then
+            args[1] = parseInt(args[1])
             local nPlayer = zero.getUserSource(args[1])
             if (nPlayer) then
                 zeroClient.killGod(nPlayer)
-                zeroClient.setHealth(nPlayer, 400) 
+                zeroClient.setHealth(nPlayer, 200) 
                 zero.varyHunger(other_id, -100)     
                 zero.varyThirst(other_id, -100)          
 			end
         else
             zeroClient.killGod(source)
-			zeroClient.setHealth(source, 400)
+			zeroClient.setHealth(source, 200)
             zero.varyHunger(_userId, -100)     
             zero.varyThirst(_userId, -100)    
         end
@@ -57,7 +58,7 @@ RegisterCommand('godall', function(source)
             local id = zero.getUserSource(parseInt(k))
             if (id) then
             	zeroClient._killGod(id)
-				zeroClient._setHealth(id, 400)
+				zeroClient._setHealth(id, 200)
             end
         end
         zero.webhook('GodAll', '```prolog\n[/GODALL]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[REVIVEU]: TODOS!\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -78,7 +79,7 @@ RegisterCommand('godarea', function(source)
             local players = zeroClient.getNearestPlayers(source, radius[1])
             for k, v in pairs(players) do
                 zeroClient._killGod(k)
-				zeroClient._setHealth(k, 400) 
+				zeroClient._setHealth(k, 200) 
             end
             zero.webhook('GodArea', '```prolog\n[/GODAREA]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[ÁREA]: '..radius[1]..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end

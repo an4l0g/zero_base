@@ -13,15 +13,17 @@ function useResult() {
   const { appearance, setAppearance } = useContext(AppearanceContext);
   const { setVariations } = useContext(VariationsContext);
 
-  useEffect(() => {
-    console.log("Change result", result);
-  }, [result]);
-
   const prices = {
     barber: 500,
     tattoo: 500,
-    skin: 5000,
+    skin: 500,
   };
+
+  const currentPrice = useCallback(() => {
+    if (appearance.barbershop) return prices.barber;
+    if (appearance.tattooshop) return prices.tattoo;
+    if (appearance.skinshop) return prices.skin;
+  }, [appearance]);
 
   const sendDemoPedVariations = useCallback(() => {
     if (appearance.skinshop) {
@@ -118,10 +120,13 @@ function useResult() {
       if (appearance.tattooshop) {
         let hasModel = false;
         const newPathResult = result.current[typeLabel].filter((item) => {
-          if (item === value) {
-            hasModel = true;
-            return false;
+          if (!hasModel) {
+            if (item.name === value.model.name) {
+              hasModel = true;
+              return false;
+            }
           }
+          return true;
         });
 
         if (hasModel) {
@@ -137,7 +142,7 @@ function useResult() {
             ...old,
             current: {
               ...old.current,
-              [typeLabel]: [...old.current[typeLabel], value],
+              [typeLabel]: [...old.current[typeLabel], value.model],
             },
           }));
         }
@@ -161,19 +166,35 @@ function useResult() {
     (types) => {
       let total = 0;
       if (result.current) {
-        types.map((item) => {
-          if (
-            JSON.stringify(result.default[item.path]) !==
-            JSON.stringify(result.current[item.path])
-          ) {
-            total += prices;
-          }
-        });
+        if (appearance.tattooshop) {
+          types.map((item, index) => {
+            result.current[index].map((cItem) => {
+              if (!result.default[index].includes(cItem)) {
+                total += currentPrice();
+              }
+            });
+
+            result.default[index].map((dItem) => {
+              if (!result.current[index].includes(dItem)) {
+                total -= currentPrice();
+              }
+            });
+          });
+        } else {
+          types.map((item) => {
+            if (
+              JSON.stringify(result.default[item.path]) !==
+              JSON.stringify(result.current[item.path])
+            ) {
+              total += currentPrice();
+            }
+          });
+        }
       }
 
       return total;
     },
-    [result, appearance]
+    [result, appearance, currentPrice]
   );
 
   const buyCustomizations = useCallback(
@@ -188,13 +209,13 @@ function useResult() {
         skin: () => {
           request("buySkinshopCustomizations", {
             drawables: result.current,
-            total: calculateTotal(SkinTypes[appearance.barbershop.sex]),
+            total: calculateTotal(SkinTypes[appearance.skinshop.sex]),
           });
         },
         tattoo: () => {
           request("buyTattooshopCustomizations", {
             drawables: result.current,
-            total: calculateTotal(TattooTypes[appearance.barbershop.sex]),
+            total: calculateTotal(TattooTypes[appearance.tattooshop.sex]),
           });
         },
       };

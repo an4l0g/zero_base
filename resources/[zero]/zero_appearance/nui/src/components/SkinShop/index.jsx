@@ -19,12 +19,14 @@ function SkinShop() {
 
   const [customization, setCustomization] = useState(false);
   const [hasCustom, setHasCustom] = useState(false);
-  const [labelType, setLabelType] = useState(Types[0].path);
+  const [labelType, setLabelType] = useState(
+    Types[appearance.skinshop.sex][0].path
+  );
   const [indexType, setIndexType] = useState(0);
   const [limit, setLimit] = useState(0);
 
   useEffect(() => {
-    setLabelType(Types[0].path);
+    setLabelType(Types[appearance.skinshop.sex][0].path);
     setIndexType(0);
     setLimit(appearance.skinshop.drawables[0].amount);
   }, [appearance]);
@@ -40,7 +42,7 @@ function SkinShop() {
 
   const handleChangeType = (index, customLimit) => {
     firstRender.current = true;
-    setLabelType(Types[index].path);
+    setLabelType(Types[appearance.skinshop.sex][index].path);
     setIndexType(index);
     setLimit(customLimit.amount);
   };
@@ -54,7 +56,7 @@ function SkinShop() {
             <TypeList
               indexType={indexType}
               handleChangeType={handleChangeType}
-              types={Types}
+              types={Types[appearance.skinshop.sex]}
               shop={"skinshop"}
             />
             <S.RightWrap>
@@ -63,7 +65,7 @@ function SkinShop() {
                   shop={"skinshop"}
                   labelType={labelType}
                   limit={limit}
-                  types={Types}
+                  types={Types[appearance.skinshop.sex]}
                   indexType={indexType}
                 />
               </S.OptionsListWrap>
@@ -74,7 +76,7 @@ function SkinShop() {
             setCustomization={setCustomization}
             buyCustomizations={() => buyCustomizations("skin")}
             hasCustom={hasCustom}
-            total={calculateTotal(Types)}
+            total={calculateTotal(Types[appearance.skinshop.sex])}
           />
         </S.Content>
       </S.Container>
@@ -82,7 +84,7 @@ function SkinShop() {
         <Customization
           indexType={indexType}
           labelType={labelType}
-          types={Types}
+          types={Types[appearance.skinshop.sex]}
         />
       )}
     </>
