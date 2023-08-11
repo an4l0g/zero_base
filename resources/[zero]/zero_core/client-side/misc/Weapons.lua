@@ -190,10 +190,10 @@ Citizen.CreateThread(function()
                     end
                 end 
             else
-                if (Holster) then Holster = false; end;
+                if (Holster) then LastWeapon = nil; Holster = false; end;
             end
         else
-            if (Holster) then Holster = false; end;
+            if (Holster) then LastWeapon = nil; Holster = false; end;
             SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
         end
 		Citizen.Wait(100)
