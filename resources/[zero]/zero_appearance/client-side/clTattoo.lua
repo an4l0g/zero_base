@@ -17,13 +17,13 @@ local getTattoos = function(_tattoos, model)
             { part = _tattoos.male.overlay.tattoo, model = (custom.overlay or 0), type = 'overlay' },
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            { part = _tattoos.male.torso.tattoo, model = (custom.torso or 0), type = 'torso' },
-            { part = _tattoos.male.head.tattoo, model = (custom.head or 0), type = 'head' },
-            { part = _tattoos.male.leftarm.tattoo, model = (custom.leftarm or 0), type = 'leftarm' },
-            { part = _tattoos.male.rightarm.tattoo, model = (custom.rightarm or 0), type = 'rightarm' },
-            { part = _tattoos.male.leftleg.tattoo, model = (custom.leftleg or 0), type = 'leftleg' },
-            { part = _tattoos.male.rightleg.tattoo, model = (custom.rightleg or 0), type = 'rightleg' },
-            { part = _tattoos.male.overlay.tattoo, model = (custom.overlay or 0), type = 'overlay' },
+            { part = _tattoos.female.torso.tattoo, model = (custom.torso or 0), type = 'torso' },
+            { part = _tattoos.female.head.tattoo, model = (custom.head or 0), type = 'head' },
+            { part = _tattoos.female.leftarm.tattoo, model = (custom.leftarm or 0), type = 'leftarm' },
+            { part = _tattoos.female.rightarm.tattoo, model = (custom.rightarm or 0), type = 'rightarm' },
+            { part = _tattoos.female.leftleg.tattoo, model = (custom.leftleg or 0), type = 'leftleg' },
+            { part = _tattoos.female.rightleg.tattoo, model = (custom.rightleg or 0), type = 'rightleg' },
+            { part = _tattoos.female.overlay.tattoo, model = (custom.overlay or 0), type = 'overlay' },
         }
     }
     return pedTattoos[model]

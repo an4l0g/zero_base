@@ -189,6 +189,8 @@ Citizen.CreateThread(function()
                         Holster = false
                     end
                 end 
+            else
+                if (Holster) then Holster = false; end;
             end
         else
             if (Holster) then Holster = false; end;
