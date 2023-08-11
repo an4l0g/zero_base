@@ -242,6 +242,7 @@ closeNui = function()
 	if (IsCamActive(cam)) then SetCamActive(cam, false); end;
 	ResetCam()
 	camControl('close')
+	setVehicleMods(vehicle, myVehicle)
 	SetVehicleLights(vehicle, 0)
 	FreezeEntityPosition(vehicle, false)
 	vSERVER.removeVehicle(VehToNet(vehicle))
