@@ -470,8 +470,8 @@ RegisterCommand('tptome', function(source, args)
             if (nPlayer) then
                 local nUser = zero.getUserId(nPlayer)
                 local pCoords = GetEntityCoords(GetPlayerPed(source))
+                zeroClient.teleport(nPlayer, pCoords.x, pCoords.y, pCoords.z)
                 zero.webhook('TeleportTo', '```prolog\n[/TPTOME]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[PUXOU]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[COORDENADA]: '..tostring(pCoords)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')    
-                SetEntityCoords(nPlayer, pCoords)
             end
         end
     end
@@ -594,12 +594,17 @@ RegisterCommand('cv', function(source)
     local source = source
 	local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-	if (zero.hasPermission(user_id, 'polpar.permissao') and not zeroClient.isInVehicle(source)) then
-		local nplayer = zeroClient.getNearestPlayer(source, 10)
+	if (zero.hasPermission(user_id, 'polpar.permissao')) then
+        if (zeroClient.isInVehicle(source)) then
+            TriggerClientEvent('notify', source, 'Colocar no veículo', 'Você não pode utilizar este comando de dentro de um <b>veículo</b>.')
+            return
+        end
+
+		local nplayer = zeroClient.getNearestPlayer(source, 2.0)
 		if (nplayer) then
 			local nUser = zero.getUserId(nplayer)
 			local nIdentity = zero.getUserIdentity(nUser)
-            zeroClient.putInNearestVehicleAsPassenger(nplayer, 7)
+            zeroClient.putInNearestVehicleAsPassenger(nplayer, 5)
 			zero.webhook('PoliceCommands', '```prolog\n[/CV]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DEU CV NO]\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         else
             TriggerClientEvent('notify', source, 'Colocar Veículo', 'Você não se encontra próximo de um <b>cidadão</b>.')
@@ -615,7 +620,12 @@ RegisterCommand('rv', function(source)
 	local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
 	if (zero.hasPermission(user_id, 'polpar.permissao')) then
-		local nplayer = zeroClient.getNearestPlayer(source, 10)
+        if (zeroClient.isInVehicle(source)) then
+            TriggerClientEvent('notify', source, 'Retirar do veículo', 'Você não pode utilizar este comando de dentro de um <b>veículo</b>.')
+            return
+        end
+
+		local nplayer = zeroClient.getNearestPlayer(source, 2.0)
 		if (nplayer) then
 			local nUser = zero.getUserId(nplayer)
 			local nIdentity = zero.getUserIdentity(nUser)

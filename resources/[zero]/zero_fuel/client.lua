@@ -68,7 +68,7 @@ local markerThread = function(k, v)
         while (fuelConfig.index ~= nil) do
             local pool = {}
             local pCoord = GetEntityCoords(PlayerPedId())
-            dataVehicle2 = GetClosestVehicle(pCoord.x, pCoord.y, pCoord.z, 2.0, 0, 70)
+            dataVehicle2 = GetClosestVehicle(pCoord.x, pCoord.y, pCoord.z, 3.0, 0, 70)
             dataVName2 = GetEntityModel(dataVehicle2)
             for k, v in pairs(GetGamePool('CObject')) do
                 for k2, v2 in pairs(config.fuelPumps) do
@@ -96,6 +96,7 @@ local markerThread = function(k, v)
             local idle = 1000
             if (configFuelI.vehicleEletrical ~= nil) then
                 fuelConfig.abastecer = false
+                local vehicleNow = GetEntityModel(GetVehiclePedIsIn(ped, false))
                 local dataVehicle = GetPlayersLastVehicle()
                 local vehicleCoords = GetEntityCoords(dataVehicle)
                 for k, v in pairs(fuelPumps) do
@@ -104,8 +105,9 @@ local markerThread = function(k, v)
                     local abType = 0
                     local pumpDist = 3.0
                     if (dataVehicle ~= nil) then
+                        if (IsPedInAnyVehicle(ped)) then dataVName2 = vehicleNow end
                         if (pumpType == 'eletrical' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
-                            if (configFuelI.vehicleEletrical[dataVName2]) then
+                           if (configFuelI.vehicleEletrical[dataVName2]) then
                                 fuelConfig.abastecer = true
                                 pumpDist = 3.0
                                 abType = 1
@@ -129,9 +131,6 @@ local markerThread = function(k, v)
                             pumpDist = 8.0
                             abType = 1
                         end
-                    else
-                        fuelConfig.abastecer = true
-                        pumpDist = 1.5
                     end
 
                     local distance = #(pCoord - v[3])

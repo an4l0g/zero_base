@@ -159,9 +159,9 @@ end
 function zero.putInNearestVehicleAsPassenger(radius)
 	local veh = zero.getNearestVehicle(radius)
 	if IsEntityAVehicle(veh) then
-		for i=1,math.max(GetVehicleMaxNumberOfPassengers(veh),3) do
+		for i = 0, GetVehicleMaxNumberOfPassengers(veh) do
 			if IsVehicleSeatFree(veh,i) then
-				SetPedIntoVehicle(PlayerPedId(),veh,i)
+				TaskEnterVehicle(PlayerPedId(), veh, -1, i, 1.5, 1, 0)
 				return true
 			end
 		end

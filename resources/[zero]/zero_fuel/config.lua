@@ -44,12 +44,12 @@ config = {
         },
 
         vehicleEletrical = {
-            [`neon`] = true,
-            [`raiden`] = true,
-            [`tesla`] = true,
-            [`teslaprior`] = true,
-            [`cyclone`] = true,
-            [`tezeract`] = true,
+            [GetHashKey('neon')] = true,
+            [GetHashKey('raiden')] = true,
+            [GetHashKey('tesla')] = true,
+            [GetHashKey('teslaprior')] = true,
+            [GetHashKey('cyclone')] = true,
+            [GetHashKey('tezeract')] = true,
         }
     },
     
