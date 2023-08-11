@@ -7,7 +7,7 @@ import TypeList from "../TypeList";
 import Footer from "../Footer";
 import Customization from "../Customization";
 import ItemList from "../ItemList";
-import { BsScissors } from "react-icons/bs";
+import { RiMarkPenLine } from "react-icons/ri";
 import useResult from "../../hooks/useResult";
 
 function TattooShop() {
@@ -16,21 +16,23 @@ function TattooShop() {
   const { calculateTotal, buyCustomizations } = useResult();
 
   const [customization, setCustomization] = useState(false);
-  const [labelType, setLabelType] = useState(Types[0].path);
+  const [labelType, setLabelType] = useState(
+    Types[appearance.tattooshop.sex][0].path
+  );
   const [indexType, setIndexType] = useState(0);
   const [limit, setLimit] = useState(0);
 
   useEffect(() => {
-    setLabelType(Types[0].path);
+    setLabelType(Types[appearance.tattooshop.sex][0].path);
     setIndexType(0);
-    setLimit(appearance.tattooshop.drawables[0][Types[0].path]);
+    setLimit(appearance.tattooshop.drawables[0].part.length);
   }, [appearance]);
 
   const handleChangeType = (index) => {
     firstRender.current = true;
-    setLabelType(Types[index].path);
+    setLabelType(Types[appearance.tattooshop.sex][index].path);
     setIndexType(index);
-    setLimit(appearance.tattooshop.drawables[index][Types[index].path]);
+    setLimit(appearance.tattooshop.drawables[index].part.length);
   };
 
   return (
@@ -39,12 +41,12 @@ function TattooShop() {
         <>
           <S.Container>
             <S.Content>
-              <Header title="Barbearia" icon={<BsScissors />} />
+              <Header title="Tattoo" icon={<RiMarkPenLine />} />
               <S.Shop>
                 <TypeList
                   indexType={indexType}
                   handleChangeType={handleChangeType}
-                  types={Types}
+                  types={Types[appearance.tattooshop.sex]}
                   shop={"tattooshop"}
                 />
                 <S.RightWrap>
@@ -53,7 +55,7 @@ function TattooShop() {
                       shop={"tattooshop"}
                       labelType={labelType}
                       limit={limit}
-                      types={Types}
+                      types={Types[appearance.tattooshop.sex]}
                       indexType={indexType}
                     />
                   </S.OptionsListWrap>
@@ -62,8 +64,8 @@ function TattooShop() {
               <Footer
                 customization={customization}
                 setCustomization={setCustomization}
-                buyCustomizations={() => buyCustomizations("barber")}
-                total={calculateTotal(Types)}
+                buyCustomizations={() => buyCustomizations("tattoo")}
+                total={calculateTotal(Types[appearance.tattooshop.sex])}
               />
             </S.Content>
           </S.Container>

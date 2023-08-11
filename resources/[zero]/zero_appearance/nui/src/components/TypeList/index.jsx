@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from "react";
-import * as S from "../GenericalStyles";
 import AppearanceContext from "../../contexts/AppearanceContext";
+import * as S from "../GenericalStyles";
 
 function TypeList({ indexType, handleChangeType, types, shop }) {
   const { appearance } = useContext(AppearanceContext);
