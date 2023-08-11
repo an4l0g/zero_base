@@ -109,7 +109,8 @@ export const WrapBrokenImage = styled.div`
 
 export const ItemWrapIcon = styled.div`
   ${({ theme }) => css`
-    width: 1.7rem;
+    min-width: 1.7rem;
+    padding: 0.1rem;
     height: 1.7rem;
     border-radius: 5px;
     border: 1px solid ${theme.colors.primary(0.5)};
