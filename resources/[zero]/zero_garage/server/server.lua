@@ -93,7 +93,7 @@ srv.processState = function(state)
     return { windows = {}, doors = {}, tyres = {}, data = {} }
 end
 
-local getMods = function(custom, mod)
+getMods = function(custom, mod)
     local data = json.decode(custom)
     if (data) and data.mods then
         return countMods(data.mods[mod].mod, mod)

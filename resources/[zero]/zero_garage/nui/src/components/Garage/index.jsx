@@ -15,6 +15,11 @@ function Garage() {
   const { garage, setGarage } = useContext(GarageContext);
   const { request } = useRequest();
 
+  const CurrencyFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
   const closeGarage = useCallback(() => {
     setGarage({});
     request("close");
@@ -150,7 +155,9 @@ function Garage() {
                   </S.DealershipStatus>
                   <S.DealershipStatus>
                     <S.DealerTitle>Preço</S.DealerTitle>
-                    <S.DealerValue>R${car.price},00</S.DealerValue>
+                    <S.DealerValue>
+                      {CurrencyFormatter.format(car.price)}
+                    </S.DealerValue>
                   </S.DealershipStatus>
                 </S.DealershipStatusList>
               )}
@@ -173,9 +180,7 @@ function Garage() {
               <S.BtnAction onClick={handleSaveNextCar}>
                 Guardar próximo
               </S.BtnAction>
-              <S.BtnAction onClick={handleSaveCar}>
-                Guardar este carro
-              </S.BtnAction>
+              <S.BtnAction onClick={handleSaveCar}>Guardar</S.BtnAction>
               <S.BtnAction onClick={handleUseCar}>Retirar</S.BtnAction>
             </>
           )}
