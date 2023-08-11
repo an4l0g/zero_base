@@ -22,9 +22,11 @@ function Queue:IsPriority(ids)
 				end
 			end
 		end
-		return (upriority ~= 0)
+		if (upriority > 0) then
+			return upriority
+		end
 	end
-	return false
+	return 0
 end
 ------------------------------------------------------------------
 
