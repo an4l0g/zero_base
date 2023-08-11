@@ -109,8 +109,8 @@ export const WrapBrokenImage = styled.div`
 
 export const ItemWrapIcon = styled.div`
   ${({ theme }) => css`
-    width: 30px;
-    height: 30px;
+    width: 1.7rem;
+    height: 1.7rem;
     border-radius: 5px;
     border: 1px solid ${theme.colors.primary(0.5)};
     color: ${theme.colors.shape()};
@@ -121,12 +121,13 @@ export const ItemWrapIcon = styled.div`
     position: absolute;
     top: 5px;
     right: 5px;
+    font-size: 0.8rem;
   `}
 `;
 
 export const ItemWrapMoney = styled.div`
   ${({ theme }) => css`
-    height: 30px;
+    height: 1.7rem;
     border-radius: 5px;
     border: 1px solid ${theme.colors.primary(0.5)};
     color: ${theme.colors.shape()};
@@ -137,7 +138,8 @@ export const ItemWrapMoney = styled.div`
     position: absolute;
     font-size: 0.7rem;
     padding: 0 0.2rem;
-    bottom: 7px;
+    left: 7px;
+    top: 7px;
   `}
 `;
 
@@ -338,7 +340,7 @@ export const BtnAction = styled.button`
     transition: background-color 0.5s;
 
     &:hover {
-      background-color: ${theme.colors.dark(0.3)};
+      background-color: ${theme.colors.primary(0.1)};
     }
 
     & > svg {

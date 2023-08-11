@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import * as S from "../GenericalStyles";
 import Rotation from "../Rotation";
 import { IoMdColorPalette } from "react-icons/io";
-import { MdAttachMoney } from "react-icons/md";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
 function Footer({
   customization,
@@ -18,15 +18,17 @@ function Footer({
       </S.WrapAction>
       <S.WrapAction>
         {hasCustom && (
-          <S.CustomButton
-            onClick={() => setCustomization((old) => !old)}
-            customization={customization}
-          >
-            <IoMdColorPalette />
-          </S.CustomButton>
+          <>
+            <S.CustomButton
+              onClick={() => setCustomization((old) => !old)}
+              customization={customization}
+            >
+              <IoMdColorPalette />
+            </S.CustomButton>
+          </>
         )}
         <S.BtnAction onClick={buyCustomizations}>
-          <MdAttachMoney /> {total}
+          <AiOutlineShoppingCart /> R$ {total},00
         </S.BtnAction>
       </S.WrapAction>
     </S.Actions>

@@ -8,13 +8,13 @@ local getTattoos = function(_tattoos, model)
     local custom = LocalPlayer.state.pedTattoo
     local pedTattoos = {
         [GetHashKey('mp_m_freemode_01')] = {
-            { part = _tattoos.male.torso.tattoo, model = (custom.torso or 0), type = 'torso' },
-            { part = _tattoos.male.head.tattoo, model = (custom.head or 0), type = 'head' },
-            { part = _tattoos.male.leftarm.tattoo, model = (custom.leftarm or 0), type = 'leftarm' },
-            { part = _tattoos.male.rightarm.tattoo, model = (custom.rightarm or 0), type = 'rightarm' },
-            { part = _tattoos.male.leftleg.tattoo, model = (custom.leftleg or 0), type = 'leftleg' },
-            { part = _tattoos.male.rightleg.tattoo, model = (custom.rightleg or 0), type = 'rightleg' },
-            { part = _tattoos.male.overlay.tattoo, model = (custom.overlay or 0), type = 'overlay' },
+            { part = _tattoos.male.torso.tattoo, model = (custom.torso or {}), type = 'torso' },
+            { part = _tattoos.male.head.tattoo, model = (custom.head or {}), type = 'head' },
+            { part = _tattoos.male.leftarm.tattoo, model = (custom.leftarm or {}), type = 'leftarm' },
+            { part = _tattoos.male.rightarm.tattoo, model = (custom.rightarm or {}), type = 'rightarm' },
+            { part = _tattoos.male.leftleg.tattoo, model = (custom.leftleg or {}), type = 'leftleg' },
+            { part = _tattoos.male.rightleg.tattoo, model = (custom.rightleg or {}), type = 'rightleg' },
+            { part = _tattoos.male.overlay.tattoo, model = (custom.overlay or {}), type = 'overlay' },
         },
         [GetHashKey('mp_f_freemode_01')] = {
             { part = _tattoos.female.torso.tattoo, model = (custom.torso or 0), type = 'torso' },
@@ -50,7 +50,7 @@ openTattooShop = function(locs)
 
     local tattoos = getTattoos(general.shopConfig, model)
     SendNUIMessage({ 
-        method = 'openTattooShop', 
+        action = 'openTattooShop', 
         data = {
             drawables = tattoos, 
             sex = (model == GetHashKey('mp_m_freemode_01') and 'male' or 'female'), 
