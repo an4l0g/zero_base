@@ -668,6 +668,28 @@ cli.Discard = function()
 end
 
 cli.StartEditor = function()
-	print('oi')
 	StartRecording(1)
 end
+
+---------------------------------------
+-- BVIDA
+---------------------------------------
+RegisterCommand('bvida', function()
+	local ped = PlayerPedId()
+	if (LocalPlayer.state.BlockTasks) then return; end;
+
+	if (IsPedFalling(ped)) then
+		TriggerEvent('notify', 'Bvida', 'Você não pode executar este comando em <b>queda livre</b>. <br><br>Boa queda amigão, tenha uma boa morte! ;)</b>')
+		return
+	end
+
+	if (IsPedInAnyVehicle(ped)) then
+		TriggerEvent('notify', 'Bvida', 'Você não pode executar este <b>comando</b> dentro de um veículo')
+		return
+	end
+
+	if not IsEntityPlayingAnim(ped, 'anim@heists@ornate_bank@grab_cash_heels','grab', 3) and not IsEntityPlayingAnim(ped, 'mini@repair','fixing_a_player', 3) and not IsEntityPlayingAnim(ped, 'amb@medic@standing@tendtodead@idle_a','idle_a', 3) and not IsEntityPlayingAnim(ped, 'oddjobs@shop_robbery@rob_till','loop', 3) and not IsEntityPlayingAnim(ped, 'amb@world_human_sunbathe@female@back@idle_a','idle_a', 3) then
+		vSERVER.Bvida()
+		zero.DeletarObjeto()
+	end
+end)

@@ -1447,3 +1447,21 @@ RegisterCommand('rockstar', function(source, args)
         end
     end
 end)
+
+---------------------------------------
+-- BVIDA
+---------------------------------------
+srv.Bvida = function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local cooldown = 'bvida:'..user_id
+        if (exports[GetCurrentResourceName()]:GetCooldown(cooldown)) then
+            TriggerClientEvent('notify', source, 'Bvida', 'Aguarde <b>'..exports[GetCurrentResourceName()]:GetCooldown(cooldown)..' segundos</b> para utilizar este comando novamente.')
+            return
+        end
+        exports[GetCurrentResourceName()]:CreateCooldown(cooldown, 100)
+
+        exports.zero_appearance:setCustomization(source, user_id)
+    end
+end
