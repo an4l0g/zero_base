@@ -44,6 +44,7 @@ AddEventHandler('gameEventTriggered', function(event, args)
         local vehicle = args[2]
         if (id == PlayerId()) then
             LocalPlayer.state.inVehicle = true
+            ClearPedTasks(PlayerPedId())
             if (inVehicle) then return; end;
             TriggerEvent('zero_core:spikeThread')
 

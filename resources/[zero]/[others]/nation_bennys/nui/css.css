@@ -22,6 +22,7 @@ h6,
 input,
 button,
 textarea {
+  text-transform: capitalize;
   font-family: "Geologica", sans-serif;
 }
 
@@ -216,14 +217,14 @@ img {
 .textbox {
   display: none;
   position: absolute;
-  background-color: rgb(168, 168, 168);
+  background-color: transparent;
   right: 1px;
   padding: 2px 0;
   bottom: 1px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   width: 66px;
-
+  color: wheat !important;
   -webkit-animation-name: slideInDown;
   animation-name: slideInDown;
   -webkit-animation-duration: 0.2s;
@@ -419,7 +420,7 @@ strong {
   padding: 2px 0;
   margin: 15px 5px;
   background-color: rgba(0, 0, 0, 0.514);
-  color: rgb(196, 196, 196);
+  color: rgb(255, 255, 255);
 
   font-weight: 100;
   border: 1px solid rgb(161, 161, 161);
@@ -429,7 +430,7 @@ strong {
 }
 
 .colortype:hover {
-  background-color: rgba(0, 132, 141, 0.685);
+  background-color: rgba(255, 255, 255, 0.685);
 }
 
 .colortype:active {
@@ -438,7 +439,7 @@ strong {
 }
 
 .colortype:focus {
-  background-color: rgba(0, 132, 141, 0.733);
+  background-color: rgba(255, 255, 255, 0.733);
 }
 
 .other-colors {
