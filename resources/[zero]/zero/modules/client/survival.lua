@@ -50,13 +50,19 @@ zero.killGod = function()
     zeroServer._updateArmour(0)
 
     SetEntityInvincible(ped, false)
+    ClearPedDamageDecalByZone(ped, 0, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 1, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 2, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 3, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 4, 'ALL')
+ 	ClearPedDamageDecalByZone(ped, 5, 'ALL')
     ClearPedBloodDamage(ped)    
     ClearPedTasks(ped)
 	ClearPedSecondaryTask(ped)    
 end
 
 local _disableActions = function()
-    DisablePlayerFiring(PlayerId(), true)
+    DisablePlayerFiring(PlayerPedId(), true)
     DisableControlAction(0, 21, true)
     DisableControlAction(0, 22, true)
     DisableControlAction(0, 23, true)
@@ -107,24 +113,23 @@ local mainSurvival = function()
 	_isDied = true
     cooldownSurvival(30)
 	Citizen.CreateThread(function()
-		zeroServer._updateHealth(100)
-        SetEntityHealth(PlayerPedId(), 100)
+        SetEntityHealth(PlayerPedId(), 0)
+		zeroServer._updateHealth(0)
         TransitionToBlurred(1000)
 		while (_isDied) do
 			local ped = PlayerPedId()
             SetEntityInvincible(ped, true)
             _disableActions() 
             if (deathTimer > 0) then
-                exports['zero_works']:Text2D(0, 0.39, 0.9, 'NOCAUTEADO, AGUARDE ~b~'..deathTimer..' SEGUNDOS', 0.4)
+                Text2D(0, 0.39, 0.9, 'NOCAUTEADO, AGUARDE ~b~'..deathTimer..' SEGUNDOS', 0.4)
             else
-                exports['zero_works']:Text2D(0, 0.43, 0.9, 'PRESSIONE ~b~E~w~ PARA DESISTIR', 0.4)
+                Text2D(0, 0.43, 0.9, 'PRESSIONE ~b~E~w~ PARA DESISTIR', 0.4)
                 if (IsControlJustPressed(0, 38)) then
                     reviveSurvival(ped)
                 end
             end
 			Citizen.Wait(5)
 		end
-        
 	end)
 end
 
@@ -141,18 +146,18 @@ reviveSurvival = function(ped)
         zero.killGod()
 
         Citizen.SetTimeout(5000, function()
+            SetEntityHealth(ped, 150)
             FreezeEntityPosition(ped, false)
             Citizen.Wait(1000)
             DoScreenFadeIn(1000)
-            TriggerEvent('notify', 'Prefeitura', 'Você acabou de acordar de um coma profundo...')
+            TriggerEvent('notify', 'Prefeitura', 'Você acabou de acordar de um <b>coma</b> profundo...')
         end)
     end
 end
 
 cooldownSurvival = function(time)
-    if (deathTimer > 0) then return; end;
-    deathTimer = time
     Citizen.CreateThread(function()
+        deathTimer = time
         while (deathTimer > 0) do
             deathTimer = (deathTimer - 1)
             Citizen.Wait(1000)
@@ -165,7 +170,7 @@ AddEventHandler('gameEventTriggered', function (name, args)
 	if (name == 'CEventNetworkEntityDamage')  then
 		local ped = PlayerPedId()
 		if (args[1] == ped and args[6] == 1) then 
-			mainSurvival()
+            if (GetEntityHealth(ped) <= 100) then mainSurvival(); end;
 		end
 	end
 end) 
@@ -177,4 +182,16 @@ end
 zero.getSpeed = function()
 	local speed = GetEntityVelocity(PlayerPedId())
 	return math.sqrt(speed.x*speed.x+speed.y*speed.y+speed.z*speed.z)
+end
+
+Text2D = function(font, x, y, text, scale)
+    SetTextFont(font)
+    SetTextProportional(7)
+    SetTextScale(scale, scale)
+    SetTextColour(255, 255, 255, 255)
+    SetTextDropShadow(0, 0, 0, 0,255)
+    SetTextEdge(4, 0, 0, 0, 255)
+    SetTextEntry("STRING")
+    AddTextComponentString(text)
+    DrawText(x, y)
 end

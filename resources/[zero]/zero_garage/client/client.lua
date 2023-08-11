@@ -35,6 +35,7 @@ local markerThread = function()
                     createMarker(config)
                     if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         openGarage(index) 
+						CheckNui(ped, GetEntityCoords(PlayerPedId()), 1.3)
                     end
                 end
             end
@@ -65,7 +66,7 @@ local nearestGarageId = 0
 openGarage = function(index)
 	nearestGarageId = index
 	local config = garagesConfig[index]
-    if (vSERVER.checkPermissions(config.permission)) then
+    if (vSERVER.checkPermissions(config.permission, config.home)) then
 		inGarage = true
         SetNuiFocus(true, true)
         SendNUIMessage({
@@ -298,7 +299,7 @@ cli.removeGPSVehicle = function(vname)
 end
 
 RegisterKeyMapping('+lockVehicle', 'Garagem - Trancar/Destrancar Veículo', 'keyboard', 'L')
-RegisterCommand('+lockVehicle',function() vSERVER.vehicleLock() end)
+RegisterCommand('+lockVehicle', function() vSERVER.vehicleLock() end)
 
 cli.vehicleClientLock = function(vehid, lock)
 	if (NetworkDoesNetworkIdExist(vehid)) then
@@ -531,6 +532,23 @@ trunkThread = function()
 				end
 			end
 			Citizen.Wait(timeDistance)
+		end
+	end)
+end
+
+local _checkNui = false
+CheckNui = function(entity, location, dist)
+	Citizen.CreateThread(function()
+		_checkNui = true
+		while (_checkNui) do
+			local distance = #(GetEntityCoords(entity) - location)
+			if (distance > dist) then
+				SetNuiFocus(true, true)
+				SendNUIMessage({ action = 'close' })
+				_checkNui = false
+				break
+			end
+			Citizen.Wait(1000)
 		end
 	end)
 end

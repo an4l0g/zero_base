@@ -1,86 +1,34 @@
 local vSERVER = Tunnel.getInterface('barberShop')
-local config = module('zero_appearance', 'cfg/cfgBarber')
 
 local locsConfig = config.locs
-local generalConfig =  config.general
+local generalConfig =  config.general['barbershop']
 
 local getDrawables = function(playerModel)
     local ped = PlayerPedId()
     local custom = LocalPlayer.state.pedCustom
     local pedDrawables = {
-        [GetHashKey('mp_m_freemode_01')] = {
-            { blemishes = GetNumHeadOverlayValues(0), model = custom.blemishesModel, opacity = custom.blemishesOpacity },
-            { beard = GetNumHeadOverlayValues(1), model = custom.beardModel, main_color = custom.beardColor, opacity = custom.beardOpacity },
-            { eyebrows = GetNumHeadOverlayValues(2), model = custom.eyebrowsModel, main_color = custom.eyebrowsColor, opacity = custom.eyebrowsOpacity },
-            { hair = GetNumberOfPedDrawableVariations(ped, 2), model = custom.hairModel, main_color = custom.firstHairColor, secondary_color = custom.secondHairColor },
-            { ageing = GetNumHeadOverlayValues(3), model = custom.ageingModel, opacity = custom.ageingOpacity },
-            { makeup = GetNumHeadOverlayValues(4), model = custom.makeupModel, opacity = custom.makeupOpacity },
-            { blush = GetNumHeadOverlayValues(5), model = custom.blushModel, main_color = custom.blushColor, opacity = custom.blushOpacity },
-            { complexion = GetNumHeadOverlayValues(6), model = custom.complexionModel, opacity = custom.complexionOpacity },
-            { sundamage = GetNumHeadOverlayValues(7), model = custom.sundamageModel, opacity = custom.sundamageOpacity },
-            { lipstick = GetNumHeadOverlayValues(8), model = custom.lipstickModel, main_color = custom.lipstickColor, opacity = custom.lipstickOpacity },
-            { freckles = GetNumHeadOverlayValues(9), model = custom.frecklesModel, opacity = custom.frecklesOpacity },
-            { chestModel = GetNumHeadOverlayValues(10), model = custom.chestModel, main_color = custom.chestColor, opacity = custom.chestOpacity },
-        },
-        [GetHashKey('mp_f_freemode_01')] = {
-            { blemishes = GetNumHeadOverlayValues(0), model = custom.blemishesModel, opacity = custom.blemishesOpacity },
-            { eyebrows = GetNumHeadOverlayValues(2), model = custom.eyebrowsModel, main_color = custom.eyebrowsColor, opacity = custom.eyebrowsOpacity },
-            { hair = GetNumberOfPedDrawableVariations(ped, 2), model = custom.hairModel, main_color = custom.firstHairColor, secondary_color = custom.secondHairColor },
-            { ageing = GetNumHeadOverlayValues(3), model = custom.ageingModel, opacity = custom.ageingOpacity },
-            { makeup = GetNumHeadOverlayValues(4), model = custom.makeupModel, opacity = custom.makeupOpacity },
-            { blush = GetNumHeadOverlayValues(5), model = custom.blushModel, main_color = custom.blushColor, opacity = custom.blushOpacity },
-            { complexion = GetNumHeadOverlayValues(6), model = custom.complexionModel, opacity = custom.complexionOpacity },
-            { sundamage = GetNumHeadOverlayValues(7), model = custom.sundamageModel, opacity = custom.sundamageOpacity },
-            { lipstick = GetNumHeadOverlayValues(8), model = custom.lipstickModel, main_color = custom.lipstickColor, opacity = custom.lipstickOpacity },
-            { freckles = GetNumHeadOverlayValues(9), model = custom.frecklesModel, opacity = custom.frecklesOpacity },
-        },
+        { blemishes = GetNumHeadOverlayValues(0), model = custom.blemishesModel, opacity = custom.blemishesOpacity },
+        { beard = GetNumHeadOverlayValues(1), model = custom.beardModel, main_color = custom.beardColor, opacity = custom.beardOpacity },
+        { eyebrows = GetNumHeadOverlayValues(2), model = custom.eyebrowsModel, main_color = custom.eyebrowsColor, opacity = custom.eyebrowsOpacity },
+        { hair = GetNumberOfPedDrawableVariations(ped, 2), model = custom.hairModel, main_color = custom.firstHairColor, secondary_color = custom.secondHairColor },
+        { ageing = GetNumHeadOverlayValues(3), model = custom.ageingModel, opacity = custom.ageingOpacity },
+        { makeup = GetNumHeadOverlayValues(4), model = custom.makeupModel, opacity = custom.makeupOpacity },
+        { blush = GetNumHeadOverlayValues(5), model = custom.blushModel, main_color = custom.blushColor, opacity = custom.blushOpacity },
+        { complexion = GetNumHeadOverlayValues(6), model = custom.complexionModel, opacity = custom.complexionOpacity },
+        { sundamage = GetNumHeadOverlayValues(7), model = custom.sundamageModel, opacity = custom.sundamageOpacity },
+        { lipstick = GetNumHeadOverlayValues(8), model = custom.lipstickModel, main_color = custom.lipstickColor, opacity = custom.lipstickOpacity },
+        { freckles = GetNumHeadOverlayValues(9), model = custom.frecklesModel, opacity = custom.frecklesOpacity },
+        { chestModel = GetNumHeadOverlayValues(10), model = custom.chestModel, main_color = custom.chestColor, opacity = custom.chestOpacity },
     }
-    return pedDrawables[playerModel]
+    return pedDrawables
 end
-
-local nearestBlips = {}
-
-local _markerThread = false
-local markerThread = function()
-    if (_markerThread) then return; end;
-    _markerThread = true
-    Citizen.CreateThread(function()
-        while (countTable(nearestBlips) > 0) do
-            local ped = PlayerPedId()
-            local _cache = nearestBlips
-            for index, dist in pairs(_cache) do
-                if (dist <= 5) then
-                    local coord = locsConfig[index].coord
-                    createMarkers(coord)
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                        openBarberShop(index)  
-                    end
-                end
-            end
-            Citizen.Wait(5)
-        end
-        _markerThread = false
-    end)
-end
-
-Citizen.CreateThread(function()
-    addBlips(locsConfig, generalConfig)
-    while (true) do
-        local ped = PlayerPedId()
-        local pCoord = GetEntityCoords(ped)
-        nearestBlips = {}
-        for k, v in ipairs(locsConfig) do
-            local distance = #(pCoord - v.coord.xyz)
-            if (distance <= 5) then
-                nearestBlips[k] = distance
-            end
-        end
-        if (countTable(nearestBlips) > 0) then markerThread(); end;
-        Citizen.Wait(500)
-    end
-end)
 
 openBarberShop = function(locs)
+    local ped = PlayerPedId()
+    local model = GetEntityModel(ped)
+    if (model ~= GetHashKey('mp_m_freemode_01') and model ~= GetHashKey('mp_f_freemode_01')) then return; end;
+
+    TriggerEvent('zero_hud:toggleHud', false)
     local location = locsConfig[locs]
     local general = generalConfig[location.config]
 
@@ -89,17 +37,14 @@ openBarberShop = function(locs)
     LocalPlayer.state.pedCustom = vSERVER.getCharacter()
     inMenu = true
     
-    local ped = PlayerPedId()
-    local model = GetEntityModel(ped)
-
-    oldCustom = getCustomization()
+    oldCustom = zero.getCustomization()
     SetEntityCoords(ped, location.coord.xyz)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
 
-    if (general.hidePlayers) then setPlayersVisible(true); end;
+    if (general.hidePlayers) then setPlayersVisible(false); end;
 
-    local drawables = getDrawables(model)
+    local drawables = getDrawables()
     SendNUIMessage({
         action = 'openBarberShop',
         data = {
@@ -236,8 +181,10 @@ RegisterNuiCallback('changeBarbershopDemo', function(data)
         SetPedHeadOverlayColor(ped, 1, 1, data.drawables.beard.main_color, data.drawables.beard.main_color)
 
         -- PELO CORPORAL
-        SetPedHeadOverlay(ped, 10, data.drawables.chestModel.model, (data.drawables.chestModel.opacity or 0.99))
-        SetPedHeadOverlayColor(ped, 10, 1, data.drawables.chestModel.main_color, data.drawables.chestModel.main_color)
+        if (data.drawables.chestModel) then
+            SetPedHeadOverlay(ped, 10, data.drawables.chestModel.model, (data.drawables.chestModel.opacity or 0.99))
+            SetPedHeadOverlayColor(ped, 10, 1, data.drawables.chestModel.main_color, data.drawables.chestModel.main_color)
+        end
 
         -- BLUSH
         SetPedHeadOverlay(ped, 5, data.drawables.blush.model, (data.drawables.blush.opacity or 0.99))
@@ -276,7 +223,7 @@ end)
 RegisterNuiCallback('buyBarbershopCustomizations', function(data)
     local ped = PlayerPedId()
     local oldCustom = LocalPlayer.state.pedCustom
-    if (data.drawables) then
+    if (data.drawables and data.total > 0) then
         -- SOBRANCELHA
         oldCustom.eyebrowsModel = data.drawables.eyebrows.model
         oldCustom.eyebrowsColor = data.drawables.eyebrows.main_color

@@ -65,7 +65,6 @@ else
         BeginTextCommandDisplayHelp('FloatingHelpText')
         EndTextCommandDisplayHelp(1, false, false, -1)
     end
-    exports('TextFloating', TextFloating)
 
     Text2D = function(font, x, y, text, scale)
         SetTextFont(font)
@@ -78,5 +77,4 @@ else
         AddTextComponentString(text)
         DrawText(x, y)
     end
-    exports('Text2D', Text2D)
 end

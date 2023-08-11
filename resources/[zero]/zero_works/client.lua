@@ -209,7 +209,7 @@ startJob = function(work)
                     task = true
                     if (lastVehicleModel(GetPlayersLastVehicle(), _config.vehicle)) then
                         if (vSERVER.checkItem(_config.requireItem)) then
-                            TriggerEvent('disableAllActions', true)
+                            LocalPlayer.state.BlockTasks = true
 
                             if (_config.anim) then ExecuteCommand('e '.._config.anim); end;
 
@@ -225,7 +225,7 @@ startJob = function(work)
 
                             TriggerEvent('progress', lang[work]['progressBar'], _config.setTimeOut)
                             Citizen.SetTimeout(_config.setTimeOut, function()
-                                TriggerEvent('disableAllActions', false)
+                                LocalPlayer.state.BlockTasks = false
                                 if (_config.blipWithCar) then
                                     FreezeEntityPosition(GetVehiclePedIsIn(ped), false)
                                 else
@@ -270,12 +270,12 @@ startJob = function(work)
                 ExecuteCommand('e '..product[_production['config']]['anim'])
             end
 
-            TriggerEvent('disableAllActions', true)
+            LocalPlayer.state.BlockTasks = true
             FreezeEntityPosition(ped, true)
             TriggerEvent('progressBar', product[_production['config']]['progressBarText'], product[_production['config']]['duration'])
             Citizen.SetTimeout(product[_production['config']]['duration'], function()
                 task = false
-                TriggerEvent('disableAllActions', false)
+                LocalPlayer.state.BlockTasks = false
                 FreezeEntityPosition(ped, false)
                 vSERVER.giveItem(product[_production['config']]['receiveItems'])
                 ClearPedTasks(ped)

@@ -1,5 +1,6 @@
 zero._prepare('zero_homes/getApartamentOwner', 'select * from zero_homes where home like @home and user_id = @user_id and home_owner = 1')
 zero._prepare('zero_homes/getApartamentOwnerWithoutUser', 'select * from zero_homes where home like @home and home_owner = 1')
+zero._prepare('zero_homes/apartamentPermissions', 'select * from zero_homes where home like @home AND user_id = @user_id')
 zero._prepare('zero_homes/getHomeOwner', 'select * from zero_homes where home = @home AND home_owner = 1')
 zero._prepare('zero_homes/buyHome', 'insert zero_homes (user_id, home, home_owner, garages, tax, configs, vip) values (@user_id, @home, @home_owner, @garages, @tax, @configs, @vip)')
 zero._prepare('zero_homes/homePermissions', 'select * from zero_homes where home = @home AND user_id = @user_id')

@@ -5,6 +5,6 @@ ui_page 'ui/index.html'
 
 client_scripts { 'client-side/**/*' }
 server_scripts { 'server-side/**/*' }                                                        
-shared_scripts { '@zero/lib/utils.lua', 'cfg/**.lua', 'vRP.lua' }
+shared_scripts { '@zero/lib/utils.lua', 'lib.lua', 'cfg/**.lua' }
 
 files { 'ui/*' }

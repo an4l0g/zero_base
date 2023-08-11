@@ -149,7 +149,7 @@ startSpray = function()
             else
                 IsSpraying = false
                 spray.text = ''
-                TriggerEvent('disableAllActions', false)
+                LocalPlayer.state.BlockTasks = false
             end
             Citizen.Wait(4)
         end
@@ -631,7 +631,7 @@ CancellableProgress = function(time, animDict, animName, flag, text, item, finis
         LastHp = newHp
         DisableControlAction(0, 23, true)
         DisplayHelpTextThisFrame('RC_CANCEL', true)
-        if (IsControlPressed(0, 23) or IsDisabledControlPressed(0, 23)) then TriggerEvent('disableAllActions', false) IsCancelled = true; end;
+        if (IsControlPressed(0, 23) or IsDisabledControlPressed(0, 23)) then LocalPlayer.state.BlockTasks = false IsCancelled = true; end;
 
         if (IsCancelled) then
             if (animDict) then ClearPedTasks(ped) end
@@ -651,7 +651,7 @@ CancellableProgress = function(time, animDict, animName, flag, text, item, finis
 
     if finish then
         vSERVER.getItem(item)
-        TriggerEvent('disableAllActions', false)
+        LocalPlayer.state.BlockTasks = false
         finish()
     end
 end

@@ -4,10 +4,6 @@ local vSERVER = Tunnel.getInterface('Commands')
 
 local CommandsData = {}
 
-RegisterCommand('heal',function()
-	print(GetEntityHealth(PlayerPedId()))
-	print(GetPedMaxHealth(PlayerPedId()))
-end)
 ---------------------------------------
 -- TPWAY
 ---------------------------------------
@@ -391,7 +387,7 @@ function GetObject()
 
             if distance < closestDist then
                 closestDist = distance
-                closestObject = GetEntityModel(ped)
+                CommandsData['closestObject'] = GetEntityModel(ped)
             end
 
             rped = ped
@@ -567,6 +563,7 @@ RegisterCommand('fps', function(source, args)
 	if (args[1]) then
 		local command = string.lower(args[1])
 		if (command == 'on') then
+			LocalPlayer.state.FPS = true
 			SetTimecycleModifier('cinema')
 			RopeDrawShadowEnabled(false)
 			CascadeShadowsClearShadowSampleType()
@@ -580,6 +577,7 @@ RegisterCommand('fps', function(source, args)
 			SetLightsCutoffDistanceTweak(0.0)
 			TriggerEvent('notify', 'FPS', 'Boost de <b>FPS</b> ligado.')
 		elseif (command == 'off') then
+			LocalPlayer.state.FPS = false
 			SetTimecycleModifier('default')
 			RopeDrawShadowEnabled(true)
 			CascadeShadowsSetAircraftMode(true)
@@ -648,3 +646,28 @@ RegisterCommand('vtuning', function()
 		TriggerEvent('notify', 'Ver Tunagens', '<b>Motor:</b> '..motor..'<br><b>Freio:</b> '..freio..'<br><b>Transmissão:</b> '..transmissao..'<br><b>Suspensão:</b> '..suspensao..'<br><b>Blindagem:</b> '..blindagem..'<br><b>Chassi:</b> '..parseInt(body/10)..'%<br><b>Engine:</b> '..parseInt(engine/10)..'%<br><b>Gasolina:</b> '..parseInt(fuel)..'%', 15000)
 	end
 end)
+
+---------------------------------------
+-- ROCKSTAR EDITOR
+---------------------------------------
+cli.stopAndSave = function()
+	if (IsRecording()) then
+		StopRecordingAndSaveClip()
+	end
+end
+
+cli.openEditor = function()
+	NetworkSessionLeaveSinglePlayer()
+	ActivateRockstarEditor()
+end
+
+cli.Discard = function()
+	if (IsRecording()) then
+		StopRecordingAndDiscardClip()
+	end
+end
+
+cli.StartEditor = function()
+	print('oi')
+	StartRecording(1)
+end

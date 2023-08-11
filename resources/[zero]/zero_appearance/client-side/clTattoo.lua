@@ -1,78 +1,40 @@
 local vSERVER = Tunnel.getInterface('tattooShop')
-local config = module('zero_appearance', 'cfg/cfgTattoo')
 
 local locsConfig = config.locs
-local generalConfig =  config.general
+local generalConfig = config.general['tattooshop']
 
 local getTattoos = function(_tattoos, model)
     local ped = PlayerPedId()
     local custom = LocalPlayer.state.pedTattoo
     local pedTattoos = {
         [GetHashKey('mp_m_freemode_01')] = {
-            { torso = _tattoos.male.torso.tattoo, model = custom.torso },
-            { head = _tattoos.male.head.tattoo, model = custom.head },
-            { leftarm = _tattoos.male.leftarm.tattoo, model = custom.leftarm },
-            { rightarm = _tattoos.male.rightarm.tattoo, model = custom.rightarm },
-            { leftleg = _tattoos.male.leftleg.tattoo, model = custom.leftleg },
-            { rightleg = _tattoos.male.rightleg.tattoo, model = custom.rightleg },
-            { overlay = _tattoos.male.overlay.tattoo, model = custom.overlay },
+            { part = _tattoos.male.torso.tattoo, model = (custom['0'] or {}), type = 'torso' },
+            { part = _tattoos.male.head.tattoo, model = (custom['1'] or {}), type = 'head' },
+            { part = _tattoos.male.leftarm.tattoo, model = (custom['2'] or {}), type = 'leftarm' },
+            { part = _tattoos.male.rightarm.tattoo, model = (custom['3'] or {}), type = 'rightarm' },
+            { part = _tattoos.male.leftleg.tattoo, model = (custom['4'] or {}), type = 'leftleg' },
+            { part = _tattoos.male.rightleg.tattoo, model = (custom['5'] or {}), type = 'rightleg' },
+            { part = _tattoos.male.overlay.tattoo, model = (custom['6'] or {}), type = 'overlay' },
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            { torso = _tattoos.female.torso.tattoo, model = custom.torso },
-            { head = _tattoos.female.head.tattoo, model = custom.head },
-            { leftarm = _tattoos.female.leftarm.tattoo, model = custom.leftarm },
-            { rightarm = _tattoos.female.rightarm.tattoo, model = custom.rightarm },
-            { leftleg = _tattoos.female.leftleg.tattoo, model = custom.leftleg },
-            { rightleg = _tattoos.female.rightleg.tattoo, model = custom.rightleg },
-            { overlay = _tattoos.female.overlay.tattoo, model = custom.overlay },
+            { part = _tattoos.female.torso.tattoo, model = (custom['0'] or {}), type = 'torso' },
+            { part = _tattoos.female.head.tattoo, model = (custom['1'] or {}), type = 'head' },
+            { part = _tattoos.female.leftarm.tattoo, model = (custom['2'] or {}), type = 'leftarm' },
+            { part = _tattoos.female.rightarm.tattoo, model = (custom['3'] or {}), type = 'rightarm' },
+            { part = _tattoos.female.leftleg.tattoo, model = (custom['4'] or {}), type = 'leftleg' },
+            { part = _tattoos.female.rightleg.tattoo, model = (custom['5'] or {}), type = 'rightleg' },
+            { part = _tattoos.female.overlay.tattoo, model = (custom['6'] or {}), type = 'overlay' },
         }
     }
     return pedTattoos[model]
 end
 
-local nearestBlips = {}
-
-local _markerThread = false
-local markerThread = function()
-    if (_markerThread) then return; end;
-    _markerThread = true
-    Citizen.CreateThread(function()
-        while (countTable(nearestBlips) > 0) do
-            local ped = PlayerPedId()
-            local _cache = nearestBlips
-            for index, dist in pairs(_cache) do
-                if (dist <= 5) then
-                    local coord = locsConfig[index].coord
-                    createMarkers(coord)
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                        openTattooShop(index)  
-                    end
-                end
-            end
-            Citizen.Wait(5)
-        end
-        _markerThread = false
-    end)
-end
-
-Citizen.CreateThread(function()
-    addBlips(locsConfig, generalConfig)
-    while (true) do
-        local ped = PlayerPedId()
-        local pCoord = GetEntityCoords(ped)
-        nearestBlips = {}
-        for k, v in ipairs(locsConfig) do
-            local distance = #(pCoord - v.coord.xyz)
-            if (distance <= 5) then
-                nearestBlips[k] = distance
-            end
-        end
-        if (countTable(nearestBlips) > 0) then markerThread(); end;
-        Citizen.Wait(500)
-    end
-end)
-
 openTattooShop = function(locs)
+    local ped = PlayerPedId()
+    local model = GetEntityModel(ped)
+    if (model ~= GetHashKey('mp_m_freemode_01') and model ~= GetHashKey('mp_f_freemode_01')) then return; end;
+
+    TriggerEvent('zero_hud:toggleHud', false)
     local location = locsConfig[locs]
     local general = generalConfig[location.config]
 
@@ -80,21 +42,18 @@ openTattooShop = function(locs)
 
     inMenu = true
 
-    local ped = PlayerPedId()
-    local model = GetEntityModel(ped)
-    
-    oldCustom = getCustomization()
+    oldCustom = zero.getCustomization()
     SetEntityCoords(ped, location.coord.xyz)
     SetEntityHeading(ped, location.coord.w)
     ClearPedTasks(ped)
 
-    if (general.hidePlayers) then setPlayersVisible(true); end;
+    if (general.hidePlayers) then setPlayersVisible(false); end;
 
     local tattoos = getTattoos(general.shopConfig, model)
     SendNUIMessage({ 
-        method = 'openTattooShop', 
+        action = 'openTattooShop', 
         data = {
-            tattoos = tattoos, 
+            drawables = tattoos, 
             sex = (model == GetHashKey('mp_m_freemode_01') and 'male' or 'female'), 
         }
     })
@@ -107,9 +66,49 @@ end
 
 RegisterNetEvent('zero:tattooUpdate', function()
     if (LocalPlayer.state.pedTattoo == nil) then 
-        LocalPlayer.state.pedTattoo = vSERVER.getCharacter()             
-        -- setPedTattoo()
+        LocalPlayer.state.pedTattoo = vSERVER.getTattoo()      
+        setPedTattoos()
     else 
-        -- setPedTattoo()
+        setPedTattoos()
     end
+end)
+
+setPedTattoos = function()
+    Citizen.Wait(100)
+    local ped = PlayerPedId()
+    local data = LocalPlayer.state.pedTattoo
+
+    if (data) then
+        ClearPedDecorations(ped)
+        for k, table in pairs(data) do
+            for _, v in pairs(table) do
+                AddPedDecorationFromHashes(ped, GetHashKey(v.part), GetHashKey(v.name))
+            end
+        end
+    end
+end
+
+RegisterNuiCallback('changeTattooDemo', function(data)
+    local ped = PlayerPedId()
+    if (data.drawables) then
+        ClearPedDecorations(ped)
+        for k, table in pairs(data.drawables) do
+            for _, v in pairs(table) do
+                AddPedDecorationFromHashes(ped, GetHashKey(v.part), GetHashKey(v.name))
+            end
+        end
+    end
+end)
+
+RegisterNuiCallback('buyTattooshopCustomizations', function(data)
+    local ped = PlayerPedId()
+    local Drawables = data.drawables
+    if (Drawables and data.total > 0) then
+        if (vSERVER.tryPayment(data.total, Drawables)) then
+            LocalPlayer.state.pedTattoo = Drawables
+            setPedTattoos()
+        end
+    end
+    closeNui()
+    setPedTattoos() 
 end)

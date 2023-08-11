@@ -1,15 +1,13 @@
 local config = module('zero_core', 'cfg/cfgAnimations')
 local configAnimations = config.animations
 
-local cancelAnims = false
-
 for index, value in pairs(configAnimations.keyMapping) do
     RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)
-    RegisterCommand('+'..index, function() if (not cancelAnims) then value.action() end; end)
+    RegisterCommand('+'..index, function() if (not LocalPlayer.state.BlockTasks and not IsPedReloading(PlayerPedId())) then value.action() end; end)
 end
 
 RegisterNetEvent('zero_animations:setAnim', function(anim)
-    if (cancelAnims) then return; end;
+    if (LocalPlayer.state.BlockTasks) then return; end;
     local ped = PlayerPedId()
     local emote = configAnimations.animations[anim]
     zero.DeletarObjeto()
@@ -57,7 +55,7 @@ RegisterNetEvent('zero_animation:sharedClearAnimation', function()
 end)
 
 RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
-    if (cancelAnims) then return; end;
+    if (LocalPlayer.state.BlockTasks) then return; end;
     sharedAnimation = target
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]
@@ -88,7 +86,7 @@ RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
 end)
 
 RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)   
-    if (cancelAnims) then return; end;
+    if (LocalPlayer.state.BlockTasks) then return; end;
     sharedAnimation = target
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]
@@ -158,17 +156,6 @@ apontarThread = function(state)
     end)
 end
 
-local disableStart = false
-disableActions = function(state)
-    disableStart = state
-    Citizen.CreateThread(function()
-        while (disableStart) do
-            DisableControlAction(0, 21, true)
-            Citizen.Wait(1)
-        end
-    end)
-end
-
 local animations = {}
 generateAnimations = function()
     local sharedList = {}
@@ -199,13 +186,42 @@ getAllAnimations = function()
 end
 exports('getAllAnimations', getAllAnimations)
 
-RegisterNetEvent('disableAllActions', function(boolean)
-    cancelAnims = boolean
-    if (cancelAnims) then
-        TriggerEvent('zero_inventory:disableActions')
-    else
-        TriggerEvent('zero_inventory:enableActions')
-    end
-end)
-
 CreateThread(generateAnimations)
+
+local disabled = false
+disableActions = function(bool)
+    Citizen.CreateThread(function()
+        disabled = bool
+        while (disabled) do
+            BlockWeaponWheelThisFrame()
+            DisableControlAction(0, 21, true)
+            DisableControlAction(0, 37, true)
+            DisableControlAction(0, 25, true)
+            DisableControlAction(0, 24, true)
+            DisableControlAction(0, 29, true)
+            DisableControlAction(0, 47, true)
+            DisableControlAction(0, 56, true)
+            DisableControlAction(0, 57, true)
+            DisableControlAction(0, 73, true)
+            DisableControlAction(0, 137, true)
+            DisableControlAction(0, 166, true)
+            DisableControlAction(0, 167, true)
+            DisableControlAction(0, 169, true)
+            DisableControlAction(0, 170, true)
+            DisableControlAction(0, 182, true)
+            DisableControlAction(0, 187, true)
+            DisableControlAction(0, 188, true)
+            DisableControlAction(0, 189, true)
+            DisableControlAction(0, 190, true)
+            DisableControlAction(0, 243, true)
+            DisableControlAction(0, 245, true)
+            DisableControlAction(0, 257, true)
+            DisableControlAction(0, 288, true)
+            DisableControlAction(0, 289, true)
+            DisableControlAction(0, 311, true)
+            DisableControlAction(0, 344, true)		
+            DisablePlayerFiring(PlayerPedId(), true)
+            Citizen.Wait(5)
+        end
+    end)
+end

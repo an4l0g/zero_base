@@ -2,14 +2,10 @@ cacheInteractions = {}
 
 local setPed = {
     [GetHashKey('mp_m_freemode_01')] = {
-        Handcuff = {
-            { 7, 41, 0, 2 }
-        }
+        _Handcuff = { 7, 41, 0, 2 }
     },
     [GetHashKey('mp_f_freemode_01')] = {
-        Handcuff = {
-            { 7, 25, 0, 2 }
-        }
+        _Handcuff = {  7, 25, 0, 2 }
     }
 }
 
@@ -19,7 +15,7 @@ RegisterCommand('+algemar', function() if (not IsPedInAnyVehicle(PlayerPedId()))
 RegisterNetEvent('zero_interactions:algemas', function(action)
     local ped = PlayerPedId()
     if (action == 'colocar') then
-        local Handcuff = setPed[GetEntityModel(ped)].Handcuff
+        local Handcuff = setPed[GetEntityModel(ped)]._Handcuff
         if (Handcuff) then SetPedComponentVariation(ped, Handcuff[1], Handcuff[2], Handcuff[3], Handcuff[4]); end;
     else
         SetPedComponentVariation(ped, 7, 0, 0, 2)
@@ -83,6 +79,26 @@ RegisterNetEvent('syncwins', function(index, open)
 				end
 			end
 		end
+	end
+end)
+
+RegisterCommand('seat', function(source, args)
+	local ped = PlayerPedId()
+	local vehicle = GetVehiclePedIsUsing(ped)
+	if (IsEntityAVehicle(vehicle) and IsPedInAnyVehicle(ped)) then
+		local seat = 0
+		if (parseInt(args[1]) <= 1) then
+			seat = -1
+		else
+			seat = parseInt(args[1])-2
+		end
+		if (IsVehicleSeatFree(vehicle, seat)) then
+			SetPedIntoVehicle(ped, vehicle, seat)
+		else
+			TriggerEvent('notify', 'Seat', 'Este <b>assento</b> está ocupado.')
+		end
+	else
+		TriggerEvent('notify', 'Seat', 'Você não está dentro de um <b>veículo</b>.')
 	end
 end)
 

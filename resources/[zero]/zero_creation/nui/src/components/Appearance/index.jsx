@@ -18,7 +18,6 @@ function Appearance() {
   const { setCreation } = useContext(CreationContext);
 
   const handleFinish = async () => {
-    setCreation(false);
     await request("finish");
   };
 

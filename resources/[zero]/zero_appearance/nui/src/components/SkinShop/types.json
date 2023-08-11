@@ -1,0 +1,146 @@
+{
+  "male": [
+    {
+      "path": "1",
+      "title": "Máscara",
+      "var": true
+    },
+    {
+      "path": "3",
+      "title": "Mãos",
+      "var": true
+    },
+    {
+      "path": "4",
+      "title": "Calça",
+      "var": true
+    },
+    {
+      "path": "5",
+      "title": "Mochila",
+      "var": true
+    },
+    {
+      "path": "6",
+      "title": "Sapato",
+      "var": true
+    },
+    {
+      "path": "7",
+      "title": "Colar",
+      "var": true
+    },
+    {
+      "path": "8",
+      "title": "Camisa",
+      "var": true
+    },
+    {
+      "path": "9",
+      "title": "Colete",
+      "var": true
+    },
+    {
+      "path": "11",
+      "title": "Jaqueta",
+      "var": true
+    },
+    {
+      "path": "p0",
+      "title": "Chapéu",
+      "var": true
+    },
+    {
+      "path": "p1",
+      "title": "Óculos",
+      "var": true
+    },
+    {
+      "path": "p2",
+      "title": "Brinco",
+      "var": true
+    },
+    {
+      "path": "p6",
+      "title": "Relógio",
+      "var": true
+    },
+    {
+      "path": "p7",
+      "title": "Bracelete",
+      "var": true
+    }
+  ],
+  "female": [
+    {
+      "path": "1",
+      "title": "Máscara",
+      "var": true
+    },
+    {
+      "path": "3",
+      "title": "Mãos",
+      "var": true
+    },
+    {
+      "path": "4",
+      "title": "Calça",
+      "var": true
+    },
+    {
+      "path": "5",
+      "title": "Mochila",
+      "var": true
+    },
+    {
+      "path": "6",
+      "title": "Sapato",
+      "var": true
+    },
+    {
+      "path": "7",
+      "title": "Colar",
+      "var": true
+    },
+    {
+      "path": "8",
+      "title": "Camisa",
+      "var": true
+    },
+    {
+      "path": "9",
+      "title": "Colete",
+      "var": true
+    },
+    {
+      "path": "11",
+      "title": "Jaqueta",
+      "var": true
+    },
+    {
+      "path": "p0",
+      "title": "Chapéu",
+      "var": true
+    },
+    {
+      "path": "p1",
+      "title": "Óculos",
+      "var": true
+    },
+    {
+      "path": "p2",
+      "title": "Brinco",
+      "var": true
+    },
+    {
+      "path": "p6",
+      "title": "Relógio",
+      "var": true
+    },
+    {
+      "path": "p7",
+      "title": "Bracelete",
+      "var": true
+    }
+  ]
+}

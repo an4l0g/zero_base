@@ -1,0 +1,62 @@
+{
+  "male": [
+    {
+      "path": 0,
+      "title": "Torso"
+    },
+    {
+      "path": 1,
+      "title": "Cabeça"
+    },
+    {
+      "path": 2,
+      "title": "Braço Esq"
+    },
+    {
+      "path": 3,
+      "title": "Braço Dir"
+    },
+    {
+      "path": 4,
+      "title": "Perna Esq"
+    },
+    {
+      "path": 5,
+      "title": "Perna Dir"
+    },
+    {
+      "path": 6,
+      "title": "Micropig"
+    }
+  ],
+  "female": [
+    {
+      "path": 0,
+      "title": "Torso"
+    },
+    {
+      "path": 1,
+      "title": "Cabeça"
+    },
+    {
+      "path": 2,
+      "title": "Braço Esq"
+    },
+    {
+      "path": 3,
+      "title": "Braço Dir"
+    },
+    {
+      "path": 4,
+      "title": "Perna Esq"
+    },
+    {
+      "path": 5,
+      "title": "Perna Dir"
+    },
+    {
+      "path": 6,
+      "title": "Micropig"
+    }
+  ]
+}

@@ -1,28 +1,15 @@
 import { RiPlayFill } from "react-icons/ri";
 import { GiCarDoor, GiKey } from "react-icons/gi";
+import { AiFillCar } from "react-icons/ai";
 
 export default [
   {
-    title: "Chave",
-    icon: <GiKey />,
+    title: "Meu veículo",
+    icon: <AiFillCar />,
     type: "category",
-    action: "carKeys",
-    value: "keys",
+    action: "Vehicle",
+    value: "vehicle",
     category: "car",
-  },
-  {
-    title: "Emprestar chave",
-    icon: <RiPlayFill />,
-    type: "action",
-    action: "addKey",
-    category: "keys",
-  },
-  {
-    title: "Remover chave",
-    icon: <RiPlayFill />,
-    type: "action",
-    action: "delKey",
-    category: "keys",
   },
   {
     title: "Portas",
@@ -30,21 +17,38 @@ export default [
     type: "category",
     action: "carDoors",
     value: "doors",
-    category: "car",
+    category: "vehicle",
   },
   {
-    title: "Instalar nitro",
+    title: "Chave",
+    icon: <GiKey />,
+    type: "category",
+    action: "keys",
+    value: "keys",
+    category: "vehicle",
+  },
+  {
+    title: "Emprestar chave",
     icon: <RiPlayFill />,
     type: "action",
-    action: "nitro",
-    category: "car",
+    action: "carKeys",
+    category: "keys",
+    value: "add",
+  },
+  {
+    title: "Remover chave",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "carKeys",
+    category: "keys",
+    value: "rem",
   },
   {
     title: "Abrir janelas",
     icon: <RiPlayFill />,
     type: "action",
     action: "carWins",
-    category: "car",
+    category: "vehicle",
     side: "client",
   },
   {
@@ -66,21 +70,21 @@ export default [
     icon: <RiPlayFill />,
     type: "action",
     action: "carTrancar",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Ancorar barco",
     icon: <RiPlayFill />,
     type: "action",
     action: "carAncorar",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Vender veículo",
     icon: <RiPlayFill />,
     type: "action",
     action: "carVehs",
-    category: "car",
+    category: "vehicle",
   },
   {
     title: "Abrir portas",

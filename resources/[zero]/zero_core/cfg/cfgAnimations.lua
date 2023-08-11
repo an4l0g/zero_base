@@ -184,6 +184,9 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
+
+                if (IsPedArmed(ped, 4)) then return; end;
+
                 if (GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     zero.CarregarAnim('anim@mp_point')
                     if (not LocalPlayer.state.animApontar) then
@@ -810,10 +813,10 @@ config.animations = {
             hand = 60309,
             pos = { 0.0, -0.28, 0.04, -97.4, -98.66, 10.89 },
             extra = function()
-                disableActions(true)
                 RequestAnimDict('gndpacientecarregandosoro@animations')
                 while not HasAnimDictLoaded('gndpacientecarregandosoro@animations') do Citizen.Wait(0); end;
 	            TaskPlayAnim(PlayerPedId(), 'gndpacientecarregandosoro@animations', 'gndpacientecarregandosoro_clip', 4.0, 4.0, -1, 49, 0.0)
+                disableActions(true)
             end,
             andar = true,
             loop = true,
@@ -864,6 +867,12 @@ config.animations = {
             andar = true,
             loop = true,
         },
+        ['mexer'] = {
+            dict = 'amb@prop_human_parking_meter@female@idle_a',
+            anim = 'idle_a_female',
+            andar = true,
+            loop = true
+        }
     } 
 }
 
