@@ -67,9 +67,11 @@ srv.testDrive = function(vehicle)
     local user_id = zero.getUserId(source)
     if user_id then
         if not (inTest[user_id]) then
+            local ply = GetPlayerPed(source)
             inTest[user_id] = {
                 bucket = GetPlayerRoutingBucket(source),
-                origin = GetEntityCoords(GetPlayerPed(source))
+                origin = GetEntityCoords(ply),
+                health = GetEntityHealth(ply)
             }
 
             SetPlayerRoutingBucket(source, parseInt(1000 + user_id))
@@ -82,6 +84,8 @@ srv.exitTestDrive = function()
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) and inTest[user_id] then
+        zeroClient.killComa(source)
+        zeroClient.setHealth(source, inTest[user_id].health)
         SetPlayerRoutingBucket(source, inTest[user_id].bucket)
         SetEntityCoords(GetPlayerPed(source), inTest[user_id].origin)
         inTest[user_id] = nil
@@ -90,12 +94,16 @@ end
 
 RegisterNetEvent('zero_garage:CacheExecute', function(source, user_id, quit)
     SetPlayerRoutingBucket(source, 0)
+    local health = inTest[user_id].health
     local coord = inTest[user_id].origin
-    if (coord ~= nil) then
+    if (inTest[user_id]) then
         if (quit) then
             zero.updatePos(coord.x, coord.y, coord.z)
+            zero.updateHealth(health)
         else
             zeroClient.teleport(source, coord.x, coord.y, coord.z)
+            zeroClient.killComa(source)
+            zeroClient.setHealth(source, health)
         end
     end
 end)

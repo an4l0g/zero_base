@@ -304,12 +304,12 @@ zero.dropPlayer = function(source, reason)
 			zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION] (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
 			
 			zero.setUData(user_id, 'zero:userTable', json.encode(userTable))
+			
+			cacheUsers.users[cacheUsers.rusers[user_id]] = nil
+			cacheUsers.rusers[user_id] = nil
+			cacheUsers.user_source[user_id] = nil
+			cacheUsers.user_tables[user_id] = nil
 		end
-
-		cacheUsers.users[cacheUsers.rusers[user_id]] = nil
-		cacheUsers.rusers[user_id] = nil
-		cacheUsers.user_source[user_id] = nil
-		cacheUsers.user_tables[user_id] = nil
 	end
 end
 
