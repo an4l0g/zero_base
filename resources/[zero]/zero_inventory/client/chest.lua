@@ -1,12 +1,13 @@
 nearbyVehicle = nil
 
 cInventory.getChestInfo = function(chestType, lootId)
+    if chestType ~= nil then currentChestType = chestType
+    else chestType = currentChestType end
     local chest = {}
     local chestInfo = split(chestType, ':')
     local prefix = chestInfo[1]
     local prefixVip = chestInfo[2]
     chest.bag_type = chestType
-    currentChest = chestType
     if chestType == 'loot' then
         currentLootId = lootId
     end
