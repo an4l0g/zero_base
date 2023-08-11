@@ -1,9 +1,9 @@
 export const theme = {
   fontFamily: "'Raleway', sans-serif",
   colors: {
-    primary: "#bbff00",
-    primary_opacity: (opacity: number = 1) => `rgba(187,255,0, ${opacity})`,
-    secondary: "#1e1e1e",
+    primary: "#0099ff",
+    primary_opacity: (opacity: number = 1) => `rgba(0, 153, 255, ${opacity})`,
+    secondary: "#111",
     tablet: {},
   },
 };

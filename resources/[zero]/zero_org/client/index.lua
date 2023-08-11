@@ -3,6 +3,8 @@ gbGoals = Tunnel.getInterface('gb_core_ilegal/goals')
 gbMessage = Tunnel.getInterface('gb_core_ilegal/message')
 gbProduction = Tunnel.getInterface('gb_core_ilegal/production')
 
+print("MEU CU")
+
 -- blips = { 
 -- 	{ 
 -- 		label = 'ENTREGAR PRODUTOS',
@@ -91,7 +93,7 @@ gbProduction = Tunnel.getInterface('gb_core_ilegal/production')
 RegisterCommand('painel', function()
     local permissions = gbMembers.getPermissions()
     if permissions ~= nil then
-		TriggerEvent('GrupoBrazuca:tabletAnim')
+		-- TriggerEvent('GrupoBrazuca:tabletAnim')
         SetNuiFocus(true, true)
         SendNUIMessage({
             action = 'openPanel',
