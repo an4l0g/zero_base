@@ -1,25 +1,7 @@
-Tunnel = module('vrp','lib/Tunnel')
-Proxy = module('vrp','lib/Proxy')
-vRPClient = Proxy.getInterface('vRP')
-vRP = Tunnel.getInterface('vRP')
 gbMembers = Tunnel.getInterface('gb_core_ilegal/members')
 gbGoals = Tunnel.getInterface('gb_core_ilegal/goals')
 gbMessage = Tunnel.getInterface('gb_core_ilegal/message')
 gbProduction = Tunnel.getInterface('gb_core_ilegal/production')
-
--- RegisterCommand('cacete', function()
--- local permissions = gbMembers.getPermissions()
--- 			if permissions ~= nil then 
--- 				SetNuiFocus(true, true)
--- 				SendNUIMessage({
--- 					action = 'openFabrication',
--- 					userData = permissions,
--- 					productsAndStorage = gbGoals.getStorageAndProducts(permissions.fac)
--- 				})
--- 			else
--- 				TriggerEvent('Notify', 'negado', 'Você não deveria estar aqui!')
--- 			end
--- end)
 
 blips = { 
 	{ 
