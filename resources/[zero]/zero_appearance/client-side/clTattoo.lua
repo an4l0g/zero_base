@@ -1,7 +1,7 @@
 local vSERVER = Tunnel.getInterface('tattooShop')
 
 local locsConfig = config.locs
-local generalConfig =  config.general['tattooshop']
+local generalConfig = config.general['tattooshop']
 
 local getTattoos = function(_tattoos, model)
     local ped = PlayerPedId()
@@ -17,13 +17,13 @@ local getTattoos = function(_tattoos, model)
             { part = _tattoos.male.overlay.tattoo, model = (custom.overlay or {}), type = 'overlay' },
         },
         [GetHashKey('mp_f_freemode_01')] = {
-            { part = _tattoos.female.torso.tattoo, model = (custom.torso or 0), type = 'torso' },
-            { part = _tattoos.female.head.tattoo, model = (custom.head or 0), type = 'head' },
-            { part = _tattoos.female.leftarm.tattoo, model = (custom.leftarm or 0), type = 'leftarm' },
-            { part = _tattoos.female.rightarm.tattoo, model = (custom.rightarm or 0), type = 'rightarm' },
-            { part = _tattoos.female.leftleg.tattoo, model = (custom.leftleg or 0), type = 'leftleg' },
-            { part = _tattoos.female.rightleg.tattoo, model = (custom.rightleg or 0), type = 'rightleg' },
-            { part = _tattoos.female.overlay.tattoo, model = (custom.overlay or 0), type = 'overlay' },
+            { part = _tattoos.female.torso.tattoo, model = (custom.torso or {}), type = 'torso' },
+            { part = _tattoos.female.head.tattoo, model = (custom.head or {}), type = 'head' },
+            { part = _tattoos.female.leftarm.tattoo, model = (custom.leftarm or {}), type = 'leftarm' },
+            { part = _tattoos.female.rightarm.tattoo, model = (custom.rightarm or {}), type = 'rightarm' },
+            { part = _tattoos.female.leftleg.tattoo, model = (custom.leftleg or {}), type = 'leftleg' },
+            { part = _tattoos.female.rightleg.tattoo, model = (custom.rightleg or {}), type = 'rightleg' },
+            { part = _tattoos.female.overlay.tattoo, model = (custom.overlay or {}), type = 'overlay' },
         }
     }
     return pedTattoos[model]
