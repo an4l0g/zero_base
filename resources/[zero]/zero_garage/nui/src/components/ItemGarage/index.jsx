@@ -11,6 +11,7 @@ function ItemGarage({ item, setCar }) {
       {!imageError ? (
         <S.CarItemImage
           src={`http://189.0.88.222/zero_garage/${item.spawn}.png`}
+          loading="lazy"
           onError={() => setImageError(true)}
         />
       ) : (
