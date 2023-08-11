@@ -1,6 +1,7 @@
 import { useState } from "react";
 import * as S from "./styles";
 import { FaCarSide, FaMotorcycle } from "react-icons/fa";
+import { RiVipDiamondLine } from "react-icons/ri";
 
 function ItemGarage({ item, setCar }) {
   const [imageError, setImageError] = useState(false);
@@ -16,11 +17,17 @@ function ItemGarage({ item, setCar }) {
         <>
           {item.type === "car" && <FaCarSide />}
           {item.type === "motocycle" && <FaMotorcycle />}
+          {item.type === "vip" && <RiVipDiamondLine />}
         </>
       )}
 
       <S.CarItemTitle>{item.name}</S.CarItemTitle>
       <S.CarItemSubtitle>{item.maker}</S.CarItemSubtitle>
+      <S.CategoryItem>
+        {item.type === "car" && <FaCarSide />}
+        {item.type === "motocycle" && <FaMotorcycle />}
+        {item.type === "vip" && <RiVipDiamondLine />}
+      </S.CategoryItem>
     </S.CarItem>
   );
 }
