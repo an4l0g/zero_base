@@ -30,6 +30,10 @@ local getTattoos = function(_tattoos, model)
 end
 
 openTattooShop = function(locs)
+    local ped = PlayerPedId()
+    local model = GetEntityModel(ped)
+    if (model ~= GetHashKey('mp_m_freemode_01') or model ~= GetHashKey('mp_f_freemode_01')) then return; end;
+
     TriggerEvent('zero_hud:toggleHud', false)
     local location = locsConfig[locs]
     local general = generalConfig[location.config]
@@ -38,9 +42,6 @@ openTattooShop = function(locs)
 
     inMenu = true
 
-    local ped = PlayerPedId()
-    local model = GetEntityModel(ped)
-    
     oldCustom = zero.getCustomization()
     SetEntityCoords(ped, location.coord.xyz)
     SetEntityHeading(ped, location.coord.w)
