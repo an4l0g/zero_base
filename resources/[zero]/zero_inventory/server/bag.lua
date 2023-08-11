@@ -2,8 +2,10 @@ sInventory.getBag = function(bag_type)
     local items = {}    
     items = zero.query('zero_inventory:getBag', { bag_type = bag_type })
     if #items > 0 then
+        print(items[1].slots)
         local currentSlots = json.decode(items[1].slots)
         for i, v in pairs(currentSlots) do
+            print("item", json.encode(v))
             local currentItem = config.items[v.index]
             currentSlots[i].name = currentItem.name
             currentSlots[i].usable = (currentItem.usable ~= nil)
