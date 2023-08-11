@@ -26,7 +26,7 @@ end
 openBarberShop = function(locs)
     local ped = PlayerPedId()
     local model = GetEntityModel(ped)
-    if (model ~= GetHashKey('mp_m_freemode_01') or model ~= GetHashKey('mp_f_freemode_01')) then return; end;
+    if (model ~= GetHashKey('mp_m_freemode_01') and model ~= GetHashKey('mp_f_freemode_01')) then return; end;
 
     TriggerEvent('zero_hud:toggleHud', false)
     local location = locsConfig[locs]

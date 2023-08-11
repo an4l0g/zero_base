@@ -83,7 +83,7 @@ RegisterNuiCallback('changeSkinshopDemo', function(data)
     local ped = PlayerPedId()
     local draw = data.drawables
     local variations = {}
-    if (data.drawables) then
+    if (draw) then
         -- Mascara
         SetPedComponentVariation(ped, 1, draw['1'].model, draw['1'].var)
         variations['1'] = GetNumberOfPedTextureVariations(ped, 1, draw['1'].model)
