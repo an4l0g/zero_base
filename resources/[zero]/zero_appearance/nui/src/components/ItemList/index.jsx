@@ -19,12 +19,15 @@ function ItemList({ shop, limit, indexType, labelType }) {
     return new Array(limit).fill(0);
   }, [limit]);
 
-  const handleClick = (item) => {
-    handleSetResult(labelType, {
-      model: item,
-      var: 0,
-    });
-  };
+  const handleClick = useCallback(
+    (item, index) => {
+      handleSetResult(labelType, {
+        model: appearance.tattooshop ? item : index,
+        var: 0,
+      });
+    },
+    [appearance, labelType]
+  );
 
   const renderClassName = useCallback(
     (index, item = null) => {
@@ -47,7 +50,7 @@ function ItemList({ shop, limit, indexType, labelType }) {
           className={renderClassName(index, item)}
           labelType={labelType}
           tattooImage={item.name}
-          handleClick={() => handleClick(item)}
+          handleClick={() => handleClick(item, index)}
         />
       ))}
     </S.OptionsList>
