@@ -1424,7 +1424,6 @@ end)
 ---------------------------------------
 local rockstarCommands = {
     ['start'] = function(source)
-        print('aqui')
         vCLIENT.StartEditor(source)
     end,
     ['save'] = function(source)
@@ -1441,9 +1440,7 @@ local rockstarCommands = {
 RegisterCommand('rockstar', function(source, args) 
     local user_id = zero.getUserId(source)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
-        print(args[1])
         if (args[1]) and rockstarCommands[args[1]] then
-            print('oi')
             rockstarCommands[args[1]](source)
         else
             TriggerClientEvent('notify', source, 'Prefeitura', 'Você não <b>especificou</b> o que gostaria de utilizar, tente novamente:<br><br><b>- /rockstar start<br>- /rockstar save<br>- /rockstar open<br>- /rockstar discard</b>')
