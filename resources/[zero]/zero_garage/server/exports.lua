@@ -124,6 +124,8 @@ end
 exports('generateChassis', generateChassis)
 
 addVehicle = function(user_id, vehicle, service)
+	local query = zero.query('zero_garage/getVehiclePlate', { user_id = user_id, vehicle = vehicle })[1]
+	if (query) then return; end;
 	zero.execute('zero_garage/addVehicle', { user_id = user_id, vehicle = vehicle, plate = generatePlate(), chassis = generateChassis(), ipva = os.time(), service = service, state = json.encode({}), custom = json.encode({}) })
 end
 exports('addVehicle', addVehicle)

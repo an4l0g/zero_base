@@ -356,7 +356,7 @@ AddEventHandler('onResourceStop', function(resourceName)
             local user_id = zero.getUserId(_source)
             if (user_id) then
                 TriggerEvent('zero_homes:CacheExecute', _source)
-                serverNotify(_source, 'O sistema de <b>homes</b> de nossa cidade foi reiniciado.')
+                serverNotify(_source, 'O sistema de <b>homes</b> da nossa cidade foi reiniciado.')
                 print('^5[Zero Homes]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro da casa.')
                 tempHome[source] = nil
             end
@@ -367,7 +367,6 @@ end)
 AddEventHandler('zero:playerLeave', function(user_id, source)
 	if (tempHome[source]) then
         TriggerEvent('zero_homes:CacheExecute', source, true)
-        serverNotify(source, 'O sistema de <b>homes</b> de nossa cidade foi reiniciado.')
         print('^5[Zero Homes]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro da casa.')
         tempHome[source] = nil
     end

@@ -39,6 +39,7 @@ config.webhooks = {
     ['Hwid'] = 'https://discord.com/api/webhooks/1116585321090523187/hQCrStNv5P6ofa-2liNyI2481-wj1daSztypXxvI-lwFKq5h5tlT1T2I7njCfchhAP-g',
     ['IpBanned'] = 'https://discord.com/api/webhooks/1116585370478456882/gM6V3HcFxMIsTTSZBGhs6whNafkB7Z9HiXF1bFAu2TYOAgnHIBy1P6hnbDxYLH3cEHjS',
 
+    ['buyVehicle'] = 'https://discord.com/api/webhooks/1139623371785654313/0fDge4Ks2uHt9edjx2BVGF-2nukEsHRbCOYjn90_1nYDx-DLoXXIdP6rJj7r40GAQqEl',
     ['DeleteVehicle'] = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF',
     ['DVArea'] = 'https://discord.com/api/webhooks/1119313191684550746/HUVLo3Qrt9XvOoyr04DNXWcHGUgzZzWUVPRJw_G1zqSCrD9NzApykPRFDBqT6bV8LKfk',
     ['DVAll'] = 'https://discord.com/api/webhooks/1119322941763633202/PYQLW7s3YB5nDWwGSOofbWaKl7EgDvQZak_DxK1k_QBfOez2UsfcbGNcOdoliVZmOLxs',

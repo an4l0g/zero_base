@@ -44,6 +44,7 @@ AddEventHandler('gameEventTriggered', function(event, args)
         local vehicle = args[2]
         if (id == PlayerId()) then
             LocalPlayer.state.inVehicle = true
+            ClearPedTasks(PlayerPedId())
             if (inVehicle) then return; end;
             TriggerEvent('zero_core:spikeThread')
 
@@ -137,7 +138,9 @@ drivingVehicle = function(model)
                     -- RETIRAR O CHUTE DA MOTO
                     if (GetVehicleClass(vehicle) == 8) then
                         DisableControlAction(0, 345, true)
+                        SetPedConfigFlag(ped, 35, false) 
                     end
+                    
                     -- SEAT SHUFFLE
                     if (not GetIsTaskActive(ped, 164) and GetIsTaskActive(ped, 165)) then
                         SetPedIntoVehicle(ped, vehicle, 0)

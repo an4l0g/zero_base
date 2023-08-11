@@ -242,6 +242,7 @@ closeNui = function()
 	if (IsCamActive(cam)) then SetCamActive(cam, false); end;
 	ResetCam()
 	camControl('close')
+	setVehicleMods(vehicle, myVehicle)
 	SetVehicleLights(vehicle, 0)
 	FreezeEntityPosition(vehicle, false)
 	vSERVER.removeVehicle(VehToNet(vehicle))
@@ -255,7 +256,7 @@ end
 RegisterNetEvent('zero_bennys:applymods')
 AddEventHandler('zero_bennys:applymods', function(veh, custom)
 	if (veh) then
-		TriggerServerEvent('zero_bennys:syncApplyMods', custom, VehToNet(veh))
+		TriggerServerEvent('zero_bennys:syncApplyMods', custom, veh)
 	end
 end)
 

@@ -68,6 +68,7 @@ openGarage = function(index)
 	local config = garagesConfig[index]
     if (vSERVER.checkPermissions(config.permission, config.home)) then
 		inGarage = true
+		TriggerEvent('zero_core:tabletAnim')
         SetNuiFocus(true, true)
         SendNUIMessage({
             action = 'open',
@@ -394,6 +395,7 @@ end)
 
 RegisterNuiCallback('close', function()
     SetNuiFocus(false, false)
+	TriggerEvent('zero_core:stopTabletAnim')
 end)
 
 RegisterNetEvent('syncreparar', function(index)
