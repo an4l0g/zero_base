@@ -38,7 +38,7 @@ function useResult() {
       });
     }
 
-    if (appearance.tattoo) {
+    if (appearance.tattooshop) {
       request("changeTattooDemo", {
         drawables: result.current,
       });
