@@ -3,11 +3,11 @@ local configAnimations = config.animations
 
 for index, value in pairs(configAnimations.keyMapping) do
     RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)
-    RegisterCommand('+'..index, function() if (not LocalPlayer.state.BlockTasks and not IsPedReloading(PlayerPedId())) then value.action() end; end)
+    RegisterCommand('+'..index, function() if (not LocalPlayer.state.BlockTasks and not LocalPlayer.state.Handcuff and not IsPedReloading(PlayerPedId())) then value.action() end; end)
 end
 
 RegisterNetEvent('zero_animations:setAnim', function(anim)
-    if (LocalPlayer.state.BlockTasks) then return; end;
+    if (LocalPlayer.state.BlockTasks and LocalPlayer.state.Handcuff) then return; end;
     local ped = PlayerPedId()
     local emote = configAnimations.animations[anim]
     zero.DeletarObjeto()
@@ -55,7 +55,7 @@ RegisterNetEvent('zero_animation:sharedClearAnimation', function()
 end)
 
 RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
-    if (LocalPlayer.state.BlockTasks) then return; end;
+    if (LocalPlayer.state.BlockTasks and LocalPlayer.state.Handcuff) then return; end;
     sharedAnimation = target
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]
@@ -86,7 +86,7 @@ RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
 end)
 
 RegisterNetEvent('zero_animations:setAnimShared2', function(anim, target)   
-    if (LocalPlayer.state.BlockTasks) then return; end;
+    if (LocalPlayer.state.BlockTasks and LocalPlayer.state.Handcuff) then return; end;
     sharedAnimation = target
     local ped = PlayerPedId()
     local emote = configAnimations.shared[anim]

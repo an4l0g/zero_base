@@ -11,7 +11,7 @@ currentLootId = nil
 RegisterKeyMapping("openInventory", "Abrir inventario", 'KEYBOARD', "Oem_3")
 RegisterCommand("openInventory", function()
     local playerPed = PlayerPedId()
-    if (not disableActions and GetEntityHealth(playerPed) > 100 and not LocalPlayer.state.BlockTasks) then
+    if (not disableActions and GetEntityHealth(playerPed) > 100 and not LocalPlayer.state.BlockTasks and not LocalPlayer.state.Handcuff) then
         disableActions = true
         cInventory.openInventory('open', 'ground')
     end

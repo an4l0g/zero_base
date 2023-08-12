@@ -13,6 +13,14 @@ else
     zero = Proxy.getInterface('zero')
     zeroServer = Tunnel.getInterface('zero')
 
+    LoadAnim = function(Dict)
+        while (not HasAnimDictLoaded(Dict)) do
+            RequestAnimDict(Dict)
+            Citizen.Wait(1)
+        end
+        return true
+    end
+    
     TextFloating = function(text, coord)
         AddTextEntry('FloatingHelpText', text)
         SetFloatingHelpTextWorldPosition(0, coord)

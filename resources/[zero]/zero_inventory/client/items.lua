@@ -21,5 +21,6 @@ RegisterNuiCallback('changeItemPosition', function(data)
 end)
 
 RegisterNuiCallback('useItem', function(data)
+    if (LocalPlayer.state.BlockTasks and LocalPlayer.state.Handcuff) then return; end;
     sInventory.useItem(data.item, data.amount)
 end)
