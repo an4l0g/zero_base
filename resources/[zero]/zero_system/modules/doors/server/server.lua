@@ -37,12 +37,10 @@ RegisterServerEvent('zero_doors:open',function(id, autoLock)
     end
 end)
 
-setDoorState = function(id,state)
+setDoorState = function(id, state)
 	Doors[id].lock = state
 	TriggerClientEvent('zero_doors:statusSend', -1, id, state)
 	if (Doors[id].other) then
-		local idsecond = Doors[id].other
-		Doors[idsecond].lock = state
-		TriggerClientEvent('zero_doors:statusSend', -1, idsecond, state)
+		TriggerClientEvent('zero_doors:statusSend', -1, id, state)
 	end
 end

@@ -3,7 +3,6 @@ local vSERVER = Tunnel.getInterface('Doors')
 RegisterNetEvent('zero_doors:statusSend')
 AddEventHandler('zero_doors:statusSend',function(i,status)
 	if (i ~= nil and status ~= nil) then
-        if (not Doors[i].lock) then Doors[i].lock = true; end;
 		Doors[i].lock = status
 	end
 end)
@@ -58,6 +57,21 @@ Citizen.CreateThread(function()
                             FreezeEntityPosition(door, false)
                         end
                         NetworkRequestControlOfEntity(door)
+                    end
+                end
+        
+                if (v.other) then
+                    local door2 = GetClosestObjectOfType(v.coord.x, v.coord.y, v.coord.z, v.distance, v.other, false, false, false)
+                    if (door2 ~= 0) then
+                        local lock, heading = GetStateOfClosestDoorOfType(v.other, v.coord.x, v.coord.y, v.coord.z, lock, heading)
+                        if (heading > -0.02 and heading < 0.02) then
+                            if (v.lock) then
+                                FreezeEntityPosition(door2, true)
+                            else
+                                FreezeEntityPosition(door2, false)
+                            end
+                            NetworkRequestControlOfEntity(door2)
+                        end
                     end
                 end
             end
