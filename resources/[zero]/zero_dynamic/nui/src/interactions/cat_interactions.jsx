@@ -3,26 +3,6 @@ import { AiOutlineHeart } from "react-icons/ai";
 
 export default [
   {
-    title: "Saquear",
-    icon: <RiPlayFill />,
-    type: "action",
-    category: "interactions",
-  },
-  {
-    title: "Roubar",
-    icon: <RiPlayFill />,
-    type: "action",
-    category: "interactions",
-  },
-  {
-    title: "Algemar/Desalgemar",
-    icon: <RiPlayFill />,
-    type: "action",
-    action: "handcuff",
-    closeLater: true,
-    category: "interactions",
-  },
-  {
     title: "Enviar dinheiro",
     icon: <RiPlayFill />,
     type: "action",
@@ -35,6 +15,23 @@ export default [
     icon: <AiOutlineHeart />,
     type: "category",
     value: "couple",
+    category: "interactions",
+  },
+  {
+    title: "Colocar capuz",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "capuz",
+    value: "colocar",
+    closeLater: true,
+    category: "interactions",
+  },
+  {
+    title: "Retirar capuz",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "capuz",
+    closeLater: true,
     category: "interactions",
   },
 ];

@@ -4,9 +4,11 @@ vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 RegisterKeyMapping('openIdentity', 'Abrir identidade', 'keyboard', 'F11')
 RegisterCommand('openIdentity', function()
-    SetNuiFocus(true, true)
-    animIdentity()
-    updateNui()
+    if (GetEntityHealth(PlayerPedId()) > 100 and not LocalPlayer.state.Handcuff) then
+        SetNuiFocus(true, true)
+        animIdentity()
+        updateNui()
+    end
 end)
 
 updateNui = function()

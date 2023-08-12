@@ -472,7 +472,7 @@ end)
 ------------------------------------------------------------------
 RegisterCommand('fila', function(source)
 	if source == 0 then 
-		print('^2[FILA DO SERVIDOR]:^7 '..Queue:GetSize()..' jogadores.')
+		print('^5[FILA DO SERVIDOR]:^7 '..Queue:GetSize()..' jogadores.')
 	else
 		if (zero.hasPermission(zero.getUserId(source), 'staff.permissao')) then
 			TriggerClientEvent('Notify', source, 'aviso', '<b>FILA:</b><br>'..Queue:GetSize()..' jogadores se encontram na fila, para entrar no servidor!')

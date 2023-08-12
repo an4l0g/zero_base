@@ -1,82 +1,169 @@
 RegisterNetEvent('zero_interactions:handcuff', function()
     local source = source
     local user_id = zero.getUserId(source)
-    local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
-    if (user_id) and nPlayer then
-        if (not zeroClient.isHandcuffed(source)) then 
-            if (zero.hasPermission(user_id, 'staff.permissao')) then
-                if (not zeroClient.isHandcuffed(nPlayer)) then
-                    zeroClient.playAnim(source, false, {{ 'mp_arrest_paired', 'cop_p2_back_left' }}, false)
-                    zeroClient.playAnim(nPlayer, false, {{ 'mp_arrest_paired', 'crook_p2_back_left' }}, false)
-                    FreezeEntityPosition(GetPlayerPed(nPlayer), true)
-                    Citizen.SetTimeout(3500, function()
-                        FreezeEntityPosition(GetPlayerPed(nPlayer), false)
-                        ClearPedTasks(GetPlayerPed(source))
-                        ClearPedTasks(GetPlayerPed(nPlayer))
-                        zeroClient.toggleHandcuff(nPlayer)
-                        TriggerClientEvent('zero_sound:source', source, 'uncuff', 0.1)
-						TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
-                        TriggerClientEvent('zero_interactions:algemas', nPlayer, 'colocar')
-                    end)
-                else
-                    FreezeEntityPosition(GetPlayerPed(nPlayer), true)
-                    zeroClient.playAnim(source,false, {{ 'mp_arresting', 'a_uncuff' }}, false)
-                    zeroClient.playAnim(nPlayer, false, {{ 'mp_arresting', 'b_uncuff' }}, false)
+    if (user_id) then
+        if (zeroClient.isHandcuffed(source)) then return; end;
+        if (GetSelectedPedWeapon(GetPlayerPed(source)) ~= GetHashKey('WEAPON_UNARMED')) then TriggerClientEvent('notify', source, 'Interação Algemar', 'Sua <b>mão</b> está ocupada.') return; end;
+        local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+        if (nPlayer) then
+            local cooldown = 'algemar:'..nPlayer
+            if (exports[GetCurrentResourceName()]:GetCooldown(cooldown)) then
+                TriggerClientEvent('notify', source, 'Interação Algemar', 'Aguarde <b>'..exports[GetCurrentResourceName()]:GetCooldown(cooldown)..' segundos</b> para algemar novamente.')
+                return
+            end
+            exports[GetCurrentResourceName()]:CreateCooldown(cooldown, 10)
+
+            if (zeroClient.getNoCarro(nPlayer)) then return; end;
+            
+            local ply = GetPlayerPed(nPlayer)
+            if (zeroClient.isHandcuffed(nPlayer)) then
+                if (zero.hasPermission(user_id, 'staff.permissao') or zero.tryGetInventoryItem(user_id, 'chave-algema', 1)) then
+                    TriggerClientEvent('zero:attach', nPlayer, source, 4103, 0.1, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 2, true)
+
+                    Player(source).state.BlockTasks = true
+                    Player(nPlayer).state.BlockTasks = true
+
+                    zeroClient.playAnim(source, false, {
+                        { 'mp_arresting', 'a_uncuff' }
+                    }, false)
+                    zeroClient.playAnim(nPlayer, false, {
+                        { 'mp_arresting', 'b_uncuff' }
+                    }, false)
+
                     Citizen.SetTimeout(5000, function()
-                        FreezeEntityPosition(GetPlayerPed(nPlayer), false)
-                        zeroClient.toggleHandcuff(nPlayer)
+                        TriggerClientEvent('zero:attach', nPlayer, source)
+
+                        Player(source).state.BlockTasks = false
+                        Player(nPlayer).state.BlockTasks = false
+
+                        ClearPedTasks(ply)
                         ClearPedTasks(GetPlayerPed(source))
-                        ClearPedTasks(GetPlayerPed(nPlayer))
+                        
+                        Player(nPlayer).state.Handcuff = false
+                        zeroClient.setHandcuffed(nPlayer, false)
+
                         TriggerClientEvent('zero_sound:source', source, 'uncuff', 0.1)
-						TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
+                        TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
                         TriggerClientEvent('zero_interactions:algemas', nPlayer)
+
+                        zero.giveInventoryItem(user_id, 'algema', 1)
                     end)
+                elseif (zero.tryGetInventoryItem(user_id, 'lockpick', 1)) then
+                    if (exports['zero_system']:Task(source, 3, 8000)) then
+                        TriggerClientEvent('zero:attach', nPlayer, source, 4103, 0.1, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 2, true)
+
+                        Player(source).state.BlockTasks = true
+                        Player(nPlayer).state.BlockTasks = true
+
+                        zeroClient.playAnim(source, false, {
+                            { 'mp_arresting', 'a_uncuff' }
+                        }, false)
+                        zeroClient.playAnim(nPlayer, false, {
+                            { 'mp_arresting', 'b_uncuff' }
+                        }, false)
+
+                        Citizen.SetTimeout(5000, function()
+                            TriggerClientEvent('zero:attach', nPlayer, source)
+
+                            Player(source).state.BlockTasks = false
+                            Player(nPlayer).state.BlockTasks = false
+
+                            ClearPedTasks(ply)
+                            ClearPedTasks(GetPlayerPed(source))
+                            
+                            Player(nPlayer).state.Handcuff = false
+                            zeroClient.setHandcuffed(nPlayer, false)
+
+                            TriggerClientEvent('zero_sound:source', source, 'uncuff', 0.1)
+                            TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
+                            TriggerClientEvent('zero_interactions:algemas', nPlayer)
+
+                            zero.giveInventoryItem(user_id, 'algema', 1)
+                        end)
+                    end
+                else
+                    TriggerClientEvent('notify', source, 'Interação Algemar', 'Você não possui uma <b>lockpick</b> ou <b>chave de algema</b>.')
                 end
             else
-                if (zero.getInventoryItemAmount(user_id, 'algema') >= 1) then
-                    if (not zeroClient.isHandcuffed(nPlayer)) then
-                        if (zero.tryGetInventoryItem(user_id, 'algema', 1)) then
-                            zero.giveInventoryItem(user_id, 'chave-algema', 1)
-                            zeroClient.playAnim(source, false, {{ 'mp_arrest_paired', 'cop_p2_back_left' }}, false)
-                            zeroClient.playAnim(nPlayer, false, {{ 'mp_arrest_paired', 'crook_p2_back_left' }}, false)
-                            FreezeEntityPosition(GetPlayerPed(nPlayer), true)
-                            Citizen.SetTimeout(3500, function()
-                                FreezeEntityPosition(GetPlayerPed(nPlayer), false)
-                                ClearPedTasks(GetPlayerPed(source))
-                                ClearPedTasks(GetPlayerPed(nPlayer))
-                                zeroClient.toggleHandcuff(nPlayer)
-                                TriggerClientEvent('zero_sound:source', source, 'uncuff', 0.1)
-						        TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
-                                TriggerClientEvent('zero_interactions:algemas', nPlayer, 'colocar')
-                            end)
-                        end
-                    else
-                        TriggerClientEvent('notify', source, 'Interação Algemar', 'Este <b>cidadão</b> já se encontra algemado.')
-                    end
-                elseif (zero.getInventoryItemAmount(user_id, 'chave-algema') >= 1) then
-                    if (zeroClient.isHandcuffed(nPlayer)) then
-                        if (zero.tryGetInventoryItem(user_id, 'chave-algema', 1)) then
-                            zero.giveInventoryItem(user_id, 'algema', 1)
-                            FreezeEntityPosition(GetPlayerPed(nPlayer), true)
-                            zeroClient.playAnim(source,false, {{ 'mp_arresting', 'a_uncuff' }}, false)
-                            zeroClient.playAnim(nPlayer, false, {{ 'mp_arresting', 'b_uncuff' }}, false)
-                            Citizen.SetTimeout(5000, function()
-                                FreezeEntityPosition(GetPlayerPed(nPlayer), false)
-                                zeroClient.toggleHandcuff(nPlayer)
-                                ClearPedTasks(GetPlayerPed(source))
-                                ClearPedTasks(GetPlayerPed(nPlayer))
-                                TriggerClientEvent('zero_sound:source', source, 'uncuff', 0.1)
-						        TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
-                                TriggerClientEvent('zero_interactions:algemas', nPlayer)
-                            end)
-                        end
-                    else
-                        TriggerClientEvent('notify', source, 'Interação Algemar', 'Este <b>cidadão</b> não se encontra algemado.')
-                    end
+                if (zero.hasPermission(user_id, 'staff.permissao') or zero.tryGetInventoryItem(user_id, 'algema', 1)) then
+                    TriggerClientEvent('zero:attach', nPlayer, source, 4103, 0.0, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 2, true)
+
+                    Player(source).state.BlockTasks = true
+                    Player(nPlayer).state.BlockTasks = true
+
+                    zeroClient.playAnim(source, false, {
+                        { 'mp_arrest_paired', 'cop_p2_back_left' }
+                    }, false)
+                    zeroClient.playAnim(nPlayer, false, {
+                        { 'mp_arrest_paired', 'crook_p2_back_left' }
+                    }, false)
+                    
+                    Citizen.SetTimeout(3500, function()
+                        TriggerClientEvent('zero:attach', nPlayer, source)
+
+                        Player(source).state.BlockTasks = false
+                        Player(nPlayer).state.BlockTasks = false
+
+                        ClearPedTasks(ply)
+                        ClearPedTasks(GetPlayerPed(source))
+                        
+                        Player(nPlayer).state.Handcuff = true
+                        zeroClient.setHandcuffed(nPlayer, true)
+
+                        TriggerClientEvent('zero_sound:source', source, 'cuff', 0.1)
+                        TriggerClientEvent('zero_sound:source', nPlayer, 'cuff', 0.1)
+                        TriggerClientEvent('zero_interactions:algemas', nPlayer, 'colocar')
+
+                        zero.giveInventoryItem(user_id, 'chave-algema', 1)
+                    end)
                 else
                     TriggerClientEvent('notify', source, 'Interação Algemar', 'Você não possui uma <b>algema</b>.')
-                end    
-            end    
+                end
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('zero_interactions:capuz', function(value)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        if (value == 'colocar') then
+            if (zeroClient.getNoCarro(source)) then return; end;
+            if (zeroClient.isHandcuffed(source)) then return; end;
+            if (GetSelectedPedWeapon(GetPlayerPed(source)) ~= GetHashKey('WEAPON_UNARMED')) then TriggerClientEvent('notify', source, 'Interação Algemar', 'Sua <b>mão</b> está ocupada.') return; end;
+
+            local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+            if (nPlayer) then
+                local cooldown = 'capuz:'..nPlayer
+                if (exports.zero_core:GetCooldown(cooldown)) then
+                    TriggerClientEvent('notify', source, 'Interação Capuz', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para encapuzar novamente.')
+                    return
+                end
+                exports.zero_core:CreateCooldown(cooldown, 10)
+
+                if (zeroClient.getNoCarro(nPlayer)) then return; end;
+                if (not zeroClient.isHandcuffed(nPlayer)) then TriggerClientEvent('notify', source, 'Interação Capuz', 'Você não pode <b>encapuzar</b> uma pessoa desalgemada.') return; end;
+                if (zeroClient.isCapuz(nPlayer)) then TriggerClientEvent('notify', source, 'Interação Capuz', 'O mesmo já está <b>encapuzado</b>.') return; end;
+                
+                if (not zero.tryGetInventoryItem(user_id, 'capuz', 1)) then TriggerClientEvent('notify', source, 'Interação Capuz', 'Você não possui um <b>capuz</b> em seu inventário.') return; end;
+
+                Player(nPlayer).state.Capuz = true
+                zeroClient.setCapuz(nPlayer, true)
+            end
+        else
+            if (zeroClient.getNoCarro(source)) then return; end;
+            if (GetSelectedPedWeapon(GetPlayerPed(source)) ~= GetHashKey('WEAPON_UNARMED')) then TriggerClientEvent('notify', source, 'Interação Algemar', 'Sua <b>mão</b> está ocupada.') return; end;
+            
+            local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+            if (nPlayer) then
+                if (zeroClient.getNoCarro(nPlayer)) then return; end;
+                if (not zeroClient.isCapuz(nPlayer)) then TriggerClientEvent('notify', source, 'Interação Capuz', 'O mesmo não está <b>encapuzado</b>') return; end;
+
+                Player(nPlayer).state.Capuz = false
+                zeroClient.setCapuz(nPlayer, false)
+                zero.giveInventoryItem(user_id, 'capuz', 1)
+            end
         end
     end
 end)

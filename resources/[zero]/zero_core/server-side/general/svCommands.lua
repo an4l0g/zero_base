@@ -576,7 +576,8 @@ RegisterCommand('rcapuz', function(source)
             local nUser = zero.getUserId(nplayer)
 			local nIdentity = zero.getUserIdentity(nUser)
             if (zeroClient.isCapuz(nplayer)) then
-                zeroClient.setCapuz(nplayer) 
+                Player(nplayer).state.Capuz = false
+                zeroClient.setCapuz(nplayer, false) 
 				zero.webhook('PoliceCommands', '```prolog\n[/RCAPUZ]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RETIROU O CAPUZ DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             else
                 TriggerClientEvent('notify', source, 'Remover Capuz', 'O <b>cidadão</b> não está com o capuz na cabeça.')
@@ -881,17 +882,27 @@ end)
 ---------------------------------------
 -- UNCUFF
 ---------------------------------------
-RegisterCommand('uncuff', function(source)
+RegisterCommand('uncuff', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
-        if (zeroClient.isHandcuffed(source)) then
-            TriggerClientEvent('zero_core:uncuff', source)
-            zero.webhook('Uncuff', '```prolog\n[/UNCUFF]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SE DESALGEMOU] \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (zeroClient.isHandcuffed(nSource)) then
+                TriggerClientEvent('zero_core:uncuff', nSource)
+            else
+                TriggerClientEvent('notify', source, 'Uncuff', 'O jogador não se encontra <b>algemado</b>.')
+            end
         else
-            TriggerClientEvent('notify', source, 'Uncuff', 'Você não se encontra <b>algemado</b>.')
+            if (zeroClient.isHandcuffed(source)) then
+                TriggerClientEvent('zero_core:uncuff', source)
+            else
+                TriggerClientEvent('notify', source, 'Uncuff', 'Você não se encontra <b>algemado</b>.')
+            end
         end
+
+        local text = (not args[1] and user_id or args[1])
+        zero.webhook('Uncuff', '```prolog\n[/UNCUFF]\n[USER]: '..user_id..'\n[TARGET]: '..text..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
 end)
 
@@ -1329,10 +1340,11 @@ end)
 RegisterCommand('rg2', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         if (args[1]) then
             local nUser = parseInt(args[1])
+            local identity = zero.getUserIdentity(nUser)
+
             local bankMoney = zero.getBankMoney(nUser)
             local paypalMoney = zero.getPaypalMoney(nUser)
             local walletMoney = zero.getMoney(nUser)
@@ -1426,6 +1438,20 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
         if (identity) then
             TriggerClientEvent('zero_core:discord', source, '#'..user_id..' '..identity.firstname..' '..identity.lastname)
         end
+
+        Citizen.SetTimeout(8000, function()
+            local userTable = zero.getUserDataTable(user_id)
+            if (userTable.Handcuff == true) then
+                Player(source).state.Handcuff = true
+                zeroClient.setHandcuffed(source, true)
+                TriggerClientEvent('zero_interactions:algemas', source, 'colocar')
+            end
+
+            if (userTable.Capuz == true) then
+                Player(source).state.Capuz = true
+		        zeroClient.setCapuz(source, true)
+            end
+        end)
     end
 end)
 

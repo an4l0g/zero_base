@@ -1,7 +1,7 @@
 config.maxPlayers = GetConvarInt('sv_maxclients')
 
 config.priorityGroups = {
-  ['Dono'] = 500,
+  ['CEO'] = 500,
   ['Priority100'] = 100,
   ['Priority75'] = 75,
   ['Priority50'] = 50,
@@ -11,7 +11,7 @@ config.priorityGroups = {
 
 config.maintenanceMode = false
 config.maintenaneGroups = {
-  ['Dono'] = true
+  ['CEO'] = true
 }
 
 config.language = {

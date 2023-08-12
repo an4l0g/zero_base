@@ -12,6 +12,23 @@ local setPed = {
 RegisterKeyMapping('+algemar', 'Interação - Algemar', 'keyboard', 'G')
 RegisterCommand('+algemar', function() if (not IsPedInAnyVehicle(PlayerPedId())) then TriggerServerEvent('zero_interactions:handcuff') end; end)
 
+cacheInteractions['zero:attach:src'] = nil
+cacheInteractions['zero:attach:active'] = false
+
+RegisterNetEvent('zero:attach', function(_source, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, rotationOrder, syncRot)
+    cacheInteractions['zero:attach:src'] = _source
+    cacheInteractions['zero:attach:active'] = (not cacheInteractions['zero:attach:active'])
+    local ped = PlayerPedId()
+	if (cacheInteractions['zero:attach:active']) then
+		local player = GetPlayerFromServerId(cacheInteractions['zero:attach:src'])
+		if (player > -1) then
+			AttachEntityToEntity(ped, GetPlayerPed(player), boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, rotationOrder, syncRot)
+		end
+	else
+		DetachEntity(ped, true, false)
+	end
+end)
+
 RegisterNetEvent('zero_interactions:algemas', function(action)
     local ped = PlayerPedId()
     if (action == 'colocar') then
