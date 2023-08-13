@@ -137,6 +137,14 @@ create table zero_hospital(
     primary key (doctor_id,patient_id,service_type,service_date)
 );
 
+create table zero_relationship(
+    id int unsigned auto_increment not null,
+    user_1 int unsigned not null,
+    user_2 int unsigned not null,
+    start_relationship varchar(50) not null,
+    primary key(id)
+);
+
 create table zero_user_vehicles (
     user_id int unsigned not null,
     vehicle varchar(50) not null, 
