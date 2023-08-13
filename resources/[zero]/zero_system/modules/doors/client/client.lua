@@ -19,7 +19,7 @@ local markerThread = function()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
                 local _config = Doors[index]
-                if (dist <= 3.0) then
+                if (dist <= 1.8) then
                     if (_config.text) then
                         if (_config.lock) then
                             TextFloating('~b~E~w~ - Destrancar', _config.coord)
