@@ -14,11 +14,10 @@
 
     home = 'Homes0001' -- ( Caso seja uma porta de casa, você terá que por o nome da casa para somente quem mora nesta casa consiga abrir a porta ),
 
-    other = 1 -- ( Você so irá utilizar esse caso queira abrir 2 portas ao mesmo tempo. Exemplo abaixo:)
+    other = 1664299099 -- ( Você so irá utilizar esse caso queira abrir 2 portas ao mesmo tempo. Exemplo abaixo:)
 
     -- Exemplo do other:
-    [1] = { text = true, hash = 1664299099, coord = vector3(-1724.08, 359.13, 89.46), lock = true, home = 'MansaoRichmanSt', other = 2 },
-    [2] = { text = true, hash = 1664299099, coord = vector3(-1723.19, 359.99, 89.46), lock = true, home = 'MansaoRichmanSt', other = 1 },
+    { text = true, hash = 1664299099, coord = vector3(-1724.08, 359.13, 89.46), lock = true, home = 'MansaoRichmanSt', other = -1664299099 },
 
     -- Caso você abra o 2 irá abrir o 1 junto. Caso abra o 1 irá abrir o 2 junto.
 

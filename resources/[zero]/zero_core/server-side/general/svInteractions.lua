@@ -168,6 +168,10 @@ RegisterNetEvent('zero_interactions:capuz', function(value)
     end
 end)
 
+RegisterNetEvent('zero_interactions:namorar', function()
+
+end)
+
 RegisterNetEvent('zero_interactions:carregar', function()
     local source = source
     local user_id = zero.getUserId(source)
@@ -198,7 +202,9 @@ RegisterNetEvent('zero_interactions:vestimenta', function(value)
 			    zero.webhook('PoliceCommands', '```prolog\n[/RCHAPEU]\n[USER_ID]: #'..user_id..' '..identity.name..' '..identity.firstname..'\n[RETIROU O CHAPEU DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.name..' '..nIdentity.firstname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             elseif (value == 'rcapuz') then
                 if (zeroClient.isCapuz(nplayer)) then
-                    zeroClient.setCapuz(nplayer) 
+                    Player(nPlayer).state.Capuz = false
+                    zeroClient.setCapuz(nplayer, false)
+                    zero.giveInventoryItem(user_id, 'capuz', 1)
                     zero.webhook('PoliceCommands', '```prolog\n[/RCAPUZ]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RETIROU O CAPUZ DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 else
                     TriggerClientEvent('notify', source, 'Remover Capuz', 'O <b>cidadão</b> não está com o capuz na cabeça.')
@@ -242,15 +248,20 @@ RegisterNetEvent('zero_interactions:cv', function()
     local source = source
 	local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-	if (zero.hasPermission(user_id, 'polpar.permissao') and not zeroClient.isInVehicle(source)) then
-		local nplayer = zeroClient.getNearestPlayer(source, 10)
+	if (zero.hasPermission(user_id, 'polpar.permissao')) then
+        if (zeroClient.isInVehicle(source)) then
+            TriggerClientEvent('notify', source, 'Colocar no veículo', 'Você não pode utilizar este comando de dentro de um <b>veículo</b>.')
+            return
+        end
+
+		local nplayer = zeroClient.getNearestPlayer(source, 2.0)
 		if (nplayer) then
 			local nUser = zero.getUserId(nplayer)
 			local nIdentity = zero.getUserIdentity(nUser)
-            zeroClient.putInNearestVehicleAsPassenger(nplayer, 7)
+            zeroClient.putInNearestVehicleAsPassenger(nplayer, 5)
 			zero.webhook('PoliceCommands', '```prolog\n[/CV]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DEU CV NO]\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         else
-            TriggerClientEvent('notify', source, 'Interação Policia', 'Você não se encontra próximo de um <b>cidadão</b>.')
+            TriggerClientEvent('notify', source, 'Colocar Veículo', 'Você não se encontra próximo de um <b>cidadão</b>.')
         end
 	end
 end)
@@ -260,14 +271,19 @@ RegisterNetEvent('zero_interactions:rv', function()
 	local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
 	if (zero.hasPermission(user_id, 'polpar.permissao')) then
-		local nplayer = zeroClient.getNearestPlayer(source, 10)
+        if (zeroClient.isInVehicle(source)) then
+            TriggerClientEvent('notify', source, 'Retirar do veículo', 'Você não pode utilizar este comando de dentro de um <b>veículo</b>.')
+            return
+        end
+
+		local nplayer = zeroClient.getNearestPlayer(source, 2.0)
 		if (nplayer) then
 			local nUser = zero.getUserId(nplayer)
 			local nIdentity = zero.getUserIdentity(nUser)
             zeroClient.ejectVehicle(nplayer)
 			zero.webhook('PoliceCommands', '```prolog\n[/RV]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DEU RV NO]\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         else
-            TriggerClientEvent('notify', source, 'Interação Policia', 'Você não se encontra próximo de um <b>cidadão</b>.')
+            TriggerClientEvent('notify', source, 'Retirar Veículo', 'Você não se encontra próximo de um <b>cidadão</b>.')
         end
 	end
 end)
