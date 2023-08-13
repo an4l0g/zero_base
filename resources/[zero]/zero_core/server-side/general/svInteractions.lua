@@ -168,8 +168,16 @@ RegisterNetEvent('zero_interactions:capuz', function(value)
     end
 end)
 
-RegisterNetEvent('zero_interactions:namorar', function()
 
+RegisterNetEvent('zero_interactions:namorar', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+	if (user_id) then
+        local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+        if (nPlayer) then
+            
+        end
+    end
 end)
 
 RegisterNetEvent('zero_interactions:carregar', function()
