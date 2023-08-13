@@ -32,6 +32,7 @@ zero.registerDBDriver = function(name, on_init, on_prepare, on_query)
 		end
 	end
 end
+vRP.registerDBDriver = zero.registerDBDriver
 
 zero.prepare = function(name, query)
 	prepared_queries[name] = true
@@ -41,6 +42,7 @@ zero.prepare = function(name, query)
 		table.insert(cached_prepares,{ name,query })
 	end
 end
+vRP.prepare = zero.prepare
 
 zero.query = function(name, params, mode)
 	if not mode then mode = "query" end
@@ -52,31 +54,38 @@ zero.query = function(name, params, mode)
 		return r:wait()
 	end
 end
+vRP.query = zero.query
 
 zero.execute = function(name, params)
 	return zero.query(name, params, "execute")
 end
+vRP.execute = zero.execute
 
 zero.insert = function(name, params)
 	return zero.query(name, params, "insert")
 end
+vRP.insert = zero.insert
 
 zero.scalar = function(name, params)
 	return zero.query(name, params, "scalar")
 end
+vRP.scalar = zero.scalar
 
 zero.format = function(n)
 	local left, num, right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
 	return left..(num:reverse():gsub('(%d%d%d)','%1.'):reverse())..right
 end
+vRP.format = zero.format
 
 zero.isBanned = function(user_id)
 	return exports['zero_core']:isBanned(user_id)
 end
+vRP.isBanned = zero.isBanned
 
 zero.setBanned = function(user_id, banned)
 	return exports['zero_core']:setBanned(user_id, banned)
 end
+vRP.setBanned = zero.setBanned
 
 zero.getIdentifiers = function(source)
     local identifiers = {}
@@ -88,6 +97,7 @@ zero.getIdentifiers = function(source)
     end
     return identifiers
 end
+vRP.getIdentifiers = zero.getIdentifiers
 
 zero.getUData = function(user_id, key)
 	local rows = zero.query("vRP/get_userdata", { user_id = user_id, key = key })
@@ -96,10 +106,12 @@ zero.getUData = function(user_id, key)
 	end
 	return ""
 end
+vRP.getUData = zero.getUData
 
 zero.setUData = function(user_id, key, value)
 	zero.execute("vRP/set_userdata", { user_id = user_id, key = key, value = value })
 end
+vRP.setUData = zero.setUData
 
 zero.getSData = function(key)
 	local rows = zero.query("vRP/get_srvdata", { key = key })
@@ -108,14 +120,17 @@ zero.getSData = function(key)
 	end
 	return ""
 end
+vRP.getSData = zero.getSData
 
 zero.setSData = function(key, value)
 	zero.execute("vRP/set_srvdata",{ key = key, value = value })
 end
+vRP.setSData = zero.setSData
 
 zero.remSData = function(dkey)
 	zero.execute("vRP/rem_srv_data",{ dkey = dkey })
 end
+vRP.remSData = zero.remSData
 
 zero.getUsers = function()
 	local users = {}
@@ -124,10 +139,12 @@ zero.getUsers = function()
 	end
 	return users
 end
+vRP.getUsers = zero.getUsers
 
 zero.getUserDataTable = function(user_id)
 	return cacheUsers.user_tables[user_id]
 end
+vRP.getUserDataTable = zero.getUserDataTable
 
 zero.getUserId = function(source)
 	if (source ~= nil) then
@@ -139,10 +156,12 @@ zero.getUserId = function(source)
 	print('^2[WARNING]^7 Não foi possivel encontrar o user_id do source ^2'..source..'^7.')
 	return nil
 end
+vRP.getUserId = zero.getUserId
 
 zero.getUserSource = function(user_id)
 	return cacheUsers.user_source[user_id]
 end
+vRP.getUserSource = zero.getUserSource
 
 concatInv = function(TableInv)
 	local txt = ''
@@ -179,6 +198,7 @@ end
 zero.kick = function(source, reason)
 	DropPlayer(source, reason)
 end
+vRP.kick = zero.kick
 
 zero.getUserIdByIdentifiers = function(ids)
 	if (#ids) then
@@ -203,6 +223,7 @@ zero.getUserIdByIdentifiers = function(ids)
 	end
 	return false
 end
+vRP.getUserIdByIdentifiers = zero.getUserIdByIdentifiers
 
 formatIdentifiers = function(source)
 	local _identifiers = zero.getIdentifiers(source)
@@ -288,6 +309,7 @@ zero.dropPlayer = function(source, reason)
 		local user_id = zero.getUserId(source)
 		if (user_id) then
 			TriggerEvent('zero:playerLeave', user_id, source)
+			TriggerEvent('vRP:playerLeave', user_id, source)
 			TriggerClientEvent('zero:playerExit', -1, user_id, reason, playerCoords)
 
 			local userTable = zero.getUserDataTable(user_id)
@@ -316,6 +338,7 @@ zero.dropPlayer = function(source, reason)
 		end)
 	end
 end
+vRP.dropPlayer = zero.dropPlayer
 
 RegisterNetEvent('zeroClient:playerSpawned', function()
 	local source = source
@@ -338,10 +361,12 @@ end)
 zero.prompt = function(source, questions)
 	return exports['zero_hud']:prompt(source, questions)
 end
+vRP.prompt = zero.prompt
 
 zero.request = function(source, title, time)
 	return exports['zero_hud']:request(source, title, time)
 end
+vRP.request = zero.request
 
 zero.getDayHours = function(seconds)
     local days = math.floor(seconds/86400)
@@ -353,6 +378,7 @@ zero.getDayHours = function(seconds)
         return string.format('<b>%d Horas</b>', hours)
     end
 end
+vRP.getDayHours = zero.getDayHours
 
 zero.getMinSecs = function(seconds)
     local days = math.floor(seconds/86400)
@@ -368,6 +394,7 @@ zero.getMinSecs = function(seconds)
         return string.format('<b>%d Segundos</b>', seconds)
     end
 end
+vRP.getMinSecs = zero.getMinSecs
 
 local delayflood = {}
 local flood = {}
@@ -399,6 +426,7 @@ zero.antiflood = function(source, key, limite)
         delayflood[key][source] = os.time()
     end
 end
+vRP.antiflood = zero.antiflood
 
 task_save_datatables = function()
 	SetTimeout(5000, task_save_datatables); 

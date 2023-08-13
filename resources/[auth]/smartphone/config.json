@@ -1,0 +1,47 @@
+{
+    "token": "ad1ba8b6-d128-4970-aee8-49f242466cb2",
+    "client": {
+        "bankType": "fleeca",
+        "uploadServer": "webhook-para-imagens-do-celular",
+        "allowUnsafeURL": true,
+        "videoServer": "ws://167.114.185.18:29873/BrazucaCityRP",
+        "isAndroid": true,
+        "case": "s20black",
+        "useGameClock": true,
+        "phone_template": "XXX-XXX",
+        "backgroundURL": "",
+        "disabledApps": []
+    },
+    "call_mode": "mumble-voip",
+    "webhookURL": "webhook-para-logs-de-celular",
+    "instagram_verify": "staff.permissao",
+    "instagram_accounts": {
+        "*": 1,
+        "manager.permissao": 2
+    },
+    "moderator": "staff.permissao",
+    "item": "celular",
+    "services": [
+        {
+            "name": "Policia",
+            "number": "190",
+            "permission": "policia.permissao"
+        },
+        {
+            "name": "Paramédico",
+            "number": "192",
+            "permission": "paramedico.permissao"
+        },
+        {
+            "name": "Mecânico",
+            "number": "0800 042",
+            "permission": "mecanico.permissao"
+        },
+        {
+            "name": "Taxi",
+            "number": "0800 075",
+            "permission": "taxi.permissao"
+        }
+    ],
+    "base": "zero"
+}

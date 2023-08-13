@@ -6,12 +6,14 @@ zero.computeItemsWeight = function(items)
 	end
 	return weight
 end
+vRP.computeItemsWeight = zero.computeItemsWeight
 
 zero.giveInventoryItem = function(user_id,idname,amount)
 	if user_id and idname and amount then
 		exports.zero_inventory:giveInventoryItem(user_id, idname, amount)
 	end
 end
+vRP.giveInventoryItem = zero.giveInventoryItem
 
 zero.tryGetInventoryItem = function(user_id,idname,amount)
 	if user_id and idname and amount then
@@ -21,10 +23,12 @@ zero.tryGetInventoryItem = function(user_id,idname,amount)
 	end
 	return false
 end
+vRP.tryGetInventoryItem = zero.tryGetInventoryItem
 
 zero.getInventoryItemAmount = function(user_id,idname)
 	return exports.zero_inventory:getInventoryItemAmount(user_id, idname)
 end
+vRP.getInventoryItemAmount = zero.getInventoryItemAmount
 
 zero.getInventory = function(user_id)
 	local data = exports.zero_inventory:getInventory(user_id)
@@ -40,18 +44,22 @@ zero.getInventory = function(user_id)
 		return old_format
 	end
 end
+vRP.getInventory = zero.getInventory
 
 zero.getInventoryWeight = function(user_id)
 	return exports.zero_inventory:getInventoryWeight(user_id)
 end
+vRP.getInventoryWeight = zero.getInventoryWeight
 
 zero.getInventoryMaxWeight = function(user_id)
     return exports.zero_inventory:getInventoryMaxWeight(user_id) 
 end
+vRP.getInventoryMaxWeight = zero.getInventoryMaxWeight
 
 zero.setInventoryMaxWeight = function(user_id,max)
     exports.zero_inventory:setInventoryMaxWeight(user_id, max)
 end
+vRP.setInventoryMaxWeight = zero.setInventoryMaxWeight
 
 zero.varyInventoryMaxWeight = function(user_id,vary)
     local max = zero.getInventoryMaxWeight(user_id)
@@ -59,6 +67,7 @@ zero.varyInventoryMaxWeight = function(user_id,vary)
         zero.setInventoryMaxWeight(user_id,max+vary)
     end
 end
+vRP.varyInventoryMaxWeight = zero.varyInventoryMaxWeight
 
 zero.clearInventory = function(user_id)
 	local source = zero.getUserSource(user_id)
@@ -69,32 +78,40 @@ zero.clearInventory = function(user_id)
 		end		
 	end
 end
+vRP.clearInventory = zero.clearInventory
 
 zero.itemBodyList = function(item)
 	return exports.zero_inventory:getItemInfo(item) or {}
 end
+vRP.itemBodyList = zero.itemBodyList
 
 zero.itemExists = function(item)
 	return (zero.itemBodyList(item).name ~= nil)
 end
+vRP.itemExists = zero.itemExists
 
 zero.itemNameList = function(item)
 	return zero.itemBodyList(item).name
 end
+vRP.itemNameList = zero.itemNameList
 
 zero.itemIndexList = function(item)
 	return item
 end
+vRP.itemIndexList = zero.itemIndexList
 
 zero.itemTypeList = function(item)
 	return zero.itemBodyList(item).type
 end
+vRP.itemTypeList = zero.itemTypeList
 
 zero.getItemWeight = function(item)
 	return (zero.itemBodyList(item).weight or 0)
 end
+vRP.getItemWeight = zero.getItemWeight
 
 zero.getItemDefinition = function(item)
     local data = zero.itemBodyList(item)
 	return data.name,(data.weight or 0)
 end
+vRP.getItemDefinition = zero.getItemDefinition

@@ -5,6 +5,7 @@ export default [
     title: "Pedir em namoro",
     icon: <RiPlayFill />,
     type: "action",
+    action: "namorar",
     category: "couple",
   },
   {

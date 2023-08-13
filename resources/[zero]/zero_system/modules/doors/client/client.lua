@@ -47,31 +47,20 @@ Citizen.CreateThread(function()
             local distance = #(pCoord - v.coord)
             if (distance <= v.distance) then
                 nearestBlips[k] = distance
-                local door = GetClosestObjectOfType(v.coord.x, v.coord.y, v.coord.z, v.distance, v.hash, false, false, false)
-				if (door ~= 0) then
-                    local lock, heading = GetStateOfClosestDoorOfType(v.hash, v.coord.x, v.coord.y, v.coord.z, lock, heading)
-                    if (heading > -0.02 and heading < 0.02) then
-                        if (v.lock) then
-                            FreezeEntityPosition(door, true)
-                        else
-                            FreezeEntityPosition(door, false)
-                        end
-                        NetworkRequestControlOfEntity(door)
+                if (not v.other) then
+                    local door = GetClosestObjectOfType(v.coord.x, v.coord.y, v.coord.z, v.distance, v.hash, false, false, false)
+                    if (door ~= 0) then
+                        HandleDoorState(door, v.lock)
                     end
-                end
-        
-                if (v.other) then
-                    local door2 = GetClosestObjectOfType(v.coord.x, v.coord.y, v.coord.z, v.distance, v.other, false, false, false)
+                else
+                    local door1 = GetClosestObjectOfType(v.door_1.x, v.door_1.y, v.door_1.z, v.distance, v.hash, false, false, false)
+                    local door2 = GetClosestObjectOfType(v.door_2.x, v.door_2.y, v.door_2.z, v.distance, v.other, false, false, false)
+                    if (door1 ~= 0) then
+                        HandleDoorState(door1, v.lock)
+                    end
+                    
                     if (door2 ~= 0) then
-                        local lock, heading = GetStateOfClosestDoorOfType(v.other, v.coord.x, v.coord.y, v.coord.z, lock, heading)
-                        if (heading > -0.02 and heading < 0.02) then
-                            if (v.lock) then
-                                FreezeEntityPosition(door2, true)
-                            else
-                                FreezeEntityPosition(door2, false)
-                            end
-                            NetworkRequestControlOfEntity(door2)
-                        end
+                        HandleDoorState(door2, v.lock)
                     end
                 end
             end
@@ -80,3 +69,14 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
     end
 end)
+
+HandleDoorState = function(door, lock)
+    local heading = 0.0
+    local lockStatus, currentHeading = GetStateOfClosestDoorOfType(door)
+    if (lockStatus) then heading = currentHeading; end;
+    
+    if (heading > -0.02 and heading < 0.02) then
+        FreezeEntityPosition(door, lock)
+        NetworkRequestControlOfEntity(door)
+    end
+end

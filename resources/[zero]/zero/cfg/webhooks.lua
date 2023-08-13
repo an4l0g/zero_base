@@ -98,5 +98,11 @@ config.webhooks = {
     ['EditPix'] = 'https://discord.com/api/webhooks/1128492563192610927/IVpc9T2re0EzL0u8JzeQn6K5ryOw0s2tz0Q8Dio072XO0Hd7E8pxlYi6CTYsyLlaJ7aR',
     ['DelPix'] = 'https://discord.com/api/webhooks/1128493068627226804/CvfFTqomDKqKCvPKi0NtdES7YLKQN4Mq1Vi59VuAbBySp86aQG8ydxCxdUvVRmAT32TX',
     ['MoneyJoin'] = 'https://discord.com/api/webhooks/1128494210799108177/7DmO6fE75yDePDVrNaQCAC4W-cm_fKVc7Yx4fXV_O792ECcmZU1bJc82NnihUGmda-AL',
-    ['MoneyExit'] = 'https://discord.com/api/webhooks/1128494403573522562/ZZM_O74r_rApzHdNfFzBCTTxVS2rLXty0SHPK-ImeH23Px42f0qRxvspdyAwLX8TWJBC'
+    ['MoneyExit'] = 'https://discord.com/api/webhooks/1128494403573522562/ZZM_O74r_rApzHdNfFzBCTTxVS2rLXty0SHPK-ImeH23Px42f0qRxvspdyAwLX8TWJBC',
+
+    ['Namorar'] = 'https://discord.com/api/webhooks/1140106765422317648/wOWeq3An-GwQABK-LrMWoybUPLEmjrHR1Ev-Si6fpDYndAg3LGEq8oZs8wRDtYkL3XM3',
+    ['Casar'] = 'https://discord.com/api/webhooks/1140106902722842736/QhlJXVFG322DDyLToohsu7UNT2wbXu7ruuPYZRM27-_ON6NAku0OzBt0BvqVhY98D9AR',
+    ['Terminar'] = 'https://discord.com/api/webhooks/1140107049032757348/xvpN_54SZj21y8gQifrp3bSoNIo3UTchv6WH1b49afeZvFYZWl2e0tEWMPsPexBJ25qF',
+    ['Noivar'] = 'https://discord.com/api/webhooks/1140107290649837678/ski9v8gHQ4ZzfrytZM3ag31dxX5iqtbP_yOt7uTxq9wWiJZqgIO9wqCBUSyVDVLs4S-1',
+    ['Divorciar'] = 'https://discord.com/api/webhooks/1140107188682104982/zJi-oHo3aBUQLEU78p_fzRKQdcU9cdTaqi4fR0c1oDcqKBxJahujWw9ZuAdAoxFHppH9'
 }

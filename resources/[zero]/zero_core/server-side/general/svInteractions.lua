@@ -168,14 +168,50 @@ RegisterNetEvent('zero_interactions:capuz', function(value)
     end
 end)
 
+zero._prepare('zero_relationship/getUser1', 'select user_2 from zero_relationship where user_1 = @user')
+zero._prepare('zero_relationship/getUser2', 'select user_1 from zero_relationship where user_2 = @user')
+zero._prepare('zero_relationship/createRelation', 'insert into zero_relationship (user_1, user_2, start_relationship) values (@user_1, @user_2, @start_relationship)')
+
+local CheckUser1 = function(user_id)
+    local query = zero.query('zero_relationship/getUser1', { user = user_id })[1]
+    if (query) then
+        return true
+    end
+    return false
+end
+
+local CheckUser2 = function(user_id)
+    local query = zero.query('zero_relationship/getUser2', { user = user_id })[1]
+    if (query) then
+        return true
+    end
+    return false
+end
 
 RegisterNetEvent('zero_interactions:namorar', function()
     local source = source
     local user_id = zero.getUserId(source)
 	if (user_id) then
+        if (CheckUser1(user_id)) then TriggerClientEvent('notify', source, 'Pedido de namoro', 'Você já está <b>namorando</b> seu sapeca.') return; end;
+        local identity = zero.getUserIdentity(user_id)
         local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
         if (nPlayer) then
-            
+            local nUser = zero.getUserId(nPlayer)
+            if (CheckUser2(nUser)) then TriggerClientEvent('notify', source, 'Pedido de namoro', 'Está pessoa já está <b>namorando</b> seu talarico.') return; end;
+            if (nUser) then
+                local nIdentity = zero.getUserIdentity(nUser)
+                if (zero.request(source, 'Você gostaria de pedir o(a) '..nIdentity.firstname..' '..nIdentity.lastname..' em namoro?', 30000)) then
+                    if (zero.request(nPlayer, 'Você gostaria de aceitar o pedido de namoro de '..identity.firstname..' '..identity.lastname..'?', 30000)) then
+                        TriggerClientEvent('notify', nPlayer, 'Pedido de namoro', 'Parabéns aos pombinhos! Agora vocês estão <b>namorando</b>.')
+                        TriggerClientEvent('notify', source, 'Pedido de namoro', 'Parabéns aos pombinhos! Agora vocês estão <b>namorando</b>.')
+
+                        zero.execute('zero_relationship/createRelation', { user_1 = user_id, user_2 = nUser, start_relationship = os.time() })
+                        zero.webhook('Namorar', '```prolog\n[RELATION SHIP]\n[ACTION]: (START RELATION)\n[USER]: '..user_id..'\n[TARGET]: '..nUser..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    else
+                        TriggerClientEvent('notify', source, 'Pedido de namoro', 'O seu pedido de <b>namoro</b> foi negado.')
+                    end
+                end
+            end
         end
     end
 end)
