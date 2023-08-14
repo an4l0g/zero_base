@@ -72,7 +72,12 @@ vRP.varyInventoryMaxWeight = zero.varyInventoryMaxWeight
 zero.clearInventory = function(user_id)
 	local source = zero.getUserSource(user_id)
 	if source then
+		local Alianca = (zero.getInventoryItemAmount(user_id, 'alianca-casamento') > 0)
+
 		exports.zero_inventory:clearInventory(user_id)
+
+		if (Alianca) then zero.giveInventoryItem(user_id, 'alianca-casamento', 1); end;
+		
 		if not zero.hasPermission(user_id,'mochila.permissao') then
 			zero.setInventoryMaxWeight(user_id, 6)
 		end		

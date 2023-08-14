@@ -25,6 +25,7 @@ zero.getBankMoney = function(user_id)
 	end
 	return 0
 end
+vRP.getBankMoney = zero.getBankMoney
 exports('getBankMoney', zero.getBankMoney)
 
 zero.getPaypalMoney = function(user_id)

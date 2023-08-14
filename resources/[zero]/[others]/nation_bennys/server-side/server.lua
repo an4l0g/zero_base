@@ -2,7 +2,7 @@ srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
-zero._prepare('zero_bennys/setCustom', 'update zero_user_vehicles set custom = @custom where user_id = @user_id and plate = @plate')
+zero._prepare('zero_bennys/setCustom', 'update user_vehicles set custom = @custom where user_id = @user_id and plate = @plate')
 
 srv.checkPermission = function(perm)
     local source = source

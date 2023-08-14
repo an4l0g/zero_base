@@ -215,6 +215,7 @@ zero.hasPermission = function(user_id, perm)
 	end
 	return false
 end
+vRP.hasPermission = zero.hasPermission
 ------------------------------------------------------------------
 
 ------------------------------------------------------------------

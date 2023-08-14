@@ -2,10 +2,10 @@ local srv = {}
 Tunnel.bindInterface('Dealership', srv)
 local vCLIENT = Tunnel.getInterface('Dealership')
 
-zero._prepare('zero_dealership/setStock', 'insert ignore into zero_dealership (car, stock) values (@car, @stock)')
-zero._prepare('zero_dealership/getAll', 'select * from zero_dealership')
-zero._prepare('zero_dealership/getVehStock', 'select stock from zero_dealership where car = @car')
-zero._prepare('zero_dealership/updateVehStock', 'update zero_dealership set stock = @stock where car = @car')
+zero._prepare('zero_dealership/setStock', 'insert ignore into dealership (car, stock) values (@car, @stock)')
+zero._prepare('zero_dealership/getAll', 'select * from dealership')
+zero._prepare('zero_dealership/getVehStock', 'select stock from dealership where car = @car')
+zero._prepare('zero_dealership/updateVehStock', 'update dealership set stock = @stock where car = @car')
 
 local allVehicles = false
 

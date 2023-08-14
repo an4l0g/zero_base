@@ -1,7 +1,7 @@
 create database zero_roleplay;
 use zero_roleplay;
 
-create table zero_users(
+create table users(
     id int unsigned auto_increment not null,
     whitelist tinyint not null,
     banned tinyint not null,
@@ -10,7 +10,7 @@ create table zero_users(
     primary key(id)
 );
 
-create table zero_fine(
+create table fine(
 	id int unsigned auto_increment not null,
     user_id int not null,
     fine_reason varchar(50) not null,
@@ -20,19 +20,19 @@ create table zero_fine(
     primary key(id)
 );
 
-create table zero_pix(
+create table pix(
 	user_id int unsigned not null,
     chave varchar(10) not null,
     primary key(user_id)
 );
 
-create table zero_user_ids (
+create table user_ids (
     identifier varchar(100) not null,
     user_id int unsigned not null,
     primary key(identifier)
 );
 
-create table zero_user_groups (
+create table user_groups (
     user_id int unsigned not null,
     groupId varchar(50) not null,
     gradeId varchar(50) not null,
@@ -40,7 +40,7 @@ create table zero_user_groups (
     primary key(user_id, groupId)
 );
 
-create table zero_user_identities (
+create table user_identities (
     user_id int unsigned not null,
     registration varchar(8) not null,
     phone varchar(7) not null,
@@ -50,7 +50,7 @@ create table zero_user_identities (
     primary key(user_id)
 );
 
-create table zero_user_moneys (
+create table user_moneys (
     user_id int unsigned not null,
     wallet int unsigned not null,
     bank int unsigned not null,
@@ -59,20 +59,20 @@ create table zero_user_moneys (
     primary key(user_id)
 );
 
-create table zero_srv_data (
+create table srv_data (
     dkey varchar(100) not null,
     dvalue json not null,
     primary key(dkey)
 );
 
-create table zero_user_data (
+create table user_data (
     user_id int unsigned not null,
     dkey varchar(100) not null,
     dvalue json not null,
     primary key(user_id, dkey)
 );
 
-create table zero_creation(
+create table creation(
   user_id int unsigned not null,
   controller tinyint not null,
   user_character json not null,
@@ -82,7 +82,7 @@ create table zero_creation(
   primary key(user_id)
 );
 
-create table zero_homes(
+create table homes(
     id int unsigned auto_increment not null,
     user_id int unsigned not null,
     home varchar(50) not null,
@@ -94,39 +94,39 @@ create table zero_homes(
     primary key(id)
 );
 
-create table zero_homes_garages(
+create table homes_garages(
     home varchar(50) not null,
     blip json not null,
     spawn json not null,
     primary key(home)
 );
 
-create table zero_dynamic(
+create table dynamic(
     user_id int unsigned not null,
     action varchar(50) not null,
     primary key(user_id, action)
 );
 
-create table zero_inventory(
+create table inventory(
     bag_type varchar(25) not null,
     slots json not null,
     weight int not null,
     primary key(bag_type)    
 );
 
-create table zero_hwid(
+create table hwid(
     token varchar(100) not null,
     user_id int not null,
     primary key(token, user_id)
 );
 
-create table zero_dealership(
+create table dealership(
     car varchar(50) not null,
     stock int not null,
     primary key(car)
 );
 
-create table zero_hospital(
+create table hospital(
     doctor_id int unsigned not null,
     service_type char(1) not null,
     patient_id int unsigned not null,
@@ -137,15 +137,16 @@ create table zero_hospital(
     primary key (doctor_id,patient_id,service_type,service_date)
 );
 
-create table zero_relationship(
+create table relationship(
     id int unsigned auto_increment not null,
     user_1 int unsigned not null,
     user_2 int unsigned not null,
+    relation varchar(50) not null,
     start_relationship varchar(50) not null,
     primary key(id)
 );
 
-create table zero_user_vehicles (
+create table user_vehicles (
     user_id int unsigned not null,
     vehicle varchar(50) not null, 
     plate varchar(8) not null, 
@@ -159,7 +160,7 @@ create table zero_user_vehicles (
     primary key(user_id, vehicle, plate, chassis)
 );
 
-create table zero_spray(
+create table spray(
     id int unsigned auto_increment not null,
     interior tinyint not null,
     x float(8, 4) not null,
@@ -176,7 +177,7 @@ create table zero_spray(
     primary key(id)
 );
 
-create table zero_identity(
+create table identity(
 	user_id int unsigned not null,
     url text not null,
     primary key(user_id)

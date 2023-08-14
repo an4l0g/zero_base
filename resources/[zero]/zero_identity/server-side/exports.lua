@@ -34,7 +34,7 @@ getUserPhone = function(user_id)
 end
 exports('getUserPhone', getUserPhone)
 
-zero._prepare('zero_identity/getUserRH', 'select rh from zero_creation where user_id = @user_id')
+zero._prepare('zero_identity/getUserRH', 'select rh from creation where user_id = @user_id')
 getUserRH = function(user_id)
     local query = zero.query('zero_identity/getUserRH', { user_id = user_id })[1]
     if (query) then

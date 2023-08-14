@@ -55,7 +55,7 @@ sInventory.sendItem = function(user_source, index, amount)
     local _source = source
     local id = zero.getUserId(_source)
     local user_id = zero.getUserId(user_source)
-    
+    if (config.blacklist[index]) then TriggerClientEvent('notify', source, 'Inventário', 'Você não pode executar esta ação com este <b>item</b>.') return; end;
     if sInventory.tryGetInventoryItem(id, index, amount) then
         if sInventory.tryAddInventoryItem(user_id, index, amount) then
             cInventory.animation(_source, 'mp_common', 'givetake1_a', false)
