@@ -269,6 +269,7 @@ cli.tryDeleteVehicle = function(vnet)
 		end
 	end
 end
+exports('deleteVehicle', cli.tryDeleteVehicle)
 
 local gps = {}
 local vehBlips = {}

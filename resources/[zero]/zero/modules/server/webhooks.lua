@@ -2,9 +2,7 @@ local webhook = config.webhooks
 
 zero.webhook = function(link, message)
     if (message and link) and link ~= '' then
-        if (webhook[link]) then
-            PerformHttpRequest(webhook[link], function(err, text, headers) end, 'POST', json.encode({ content = message }), { ['Content-Type'] = 'application/json' })
-        end
+        PerformHttpRequest((webhook[link] or link), function(err, text, headers) end, 'POST', json.encode({ content = message }), { ['Content-Type'] = 'application/json' })
     end
 end
 exports('webhook', zero.webhook)

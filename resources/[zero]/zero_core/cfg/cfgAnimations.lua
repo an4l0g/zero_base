@@ -760,6 +760,11 @@ config.animations = {
         },
     },
     ['animations'] = {
+        ['consertar'] = {
+            category = 'animations',
+            title = 'Consertar',
+            anim = 'WORLD_HUMAN_WELDING'
+        },
         ['continencia'] = {
             category = 'animations',
             title = 'Continência vibrante',
