@@ -24,6 +24,11 @@ cInventory.unequipAllWeapons = function()
     end
 end
 
+cInventory.removeWeapons = function()
+    local ped = PlayerPedId()
+    RemoveAllPedWeapons(ped, true)
+end
+
 
 cInventory.addAmmo = function(index, amount)
     AddAmmoToPed(PlayerPedId(), index, tonumber(amount))

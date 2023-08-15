@@ -1,8 +1,8 @@
 local srv = {}
 Tunnel.bindInterface('skinShop', srv)
 
-zero._prepare('zero_appearance/saveClothes', 'update zero_creation set user_clothes = @user_clothes where user_id = @user_id')
-zero._prepare('zero_appearance/getClothes', 'select user_clothes from zero_creation where user_id = @user_id')
+zero._prepare('zero_appearance/saveClothes', 'update creation set user_clothes = @user_clothes where user_id = @user_id')
+zero._prepare('zero_appearance/getClothes', 'select user_clothes from creation where user_id = @user_id')
 
 srv.tryPayment = function(price, customization)
     local _source = source

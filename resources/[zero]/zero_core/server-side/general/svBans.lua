@@ -1,8 +1,8 @@
-zero.prepare('zero_hwid/setUserTokens', 'replace into zero_hwid (token, user_id) values (@token, @user_id)')
-zero.prepare('zero_hwid/getUserTokens', 'select * from zero_hwid where token = @token')
-zero.prepare('zero_hwid/getUserIpBanned', 'select id from zero_users where ip = @ip and banned = 1')
-zero.prepare('zero_hwid/userIsBanned', 'select banned from zero_users where id = @user_id')
-zero.prepare('zero_hwid/setUserBanned', 'update zero_users set banned = @banned where id = @user_id')
+zero.prepare('zero_hwid/setUserTokens', 'replace into hwid (token, user_id) values (@token, @user_id)')
+zero.prepare('zero_hwid/getUserTokens', 'select * from hwid where token = @token')
+zero.prepare('zero_hwid/getUserIpBanned', 'select id from users where ip = @ip and banned = 1')
+zero.prepare('zero_hwid/userIsBanned', 'select banned from users where id = @user_id')
+zero.prepare('zero_hwid/setUserBanned', 'update users set banned = @banned where id = @user_id')
 
 local userIsBanned = function(user_id)
     local getBanned = zero.query('zero_hwid/userIsBanned', { user_id = user_id })[1]

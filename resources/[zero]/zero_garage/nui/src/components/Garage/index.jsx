@@ -1,6 +1,7 @@
 import * as S from "./styles";
 import Input from "../Input";
 import { FaCarSide, FaMotorcycle } from "react-icons/fa";
+import { RiVipDiamondLine } from "react-icons/ri";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import GarageContext from "../../contexts/GarageContext";
 import ItemGarage from "../ItemGarage";
@@ -13,6 +14,11 @@ function Garage() {
   const [filter, setFilter] = useState("");
   const { garage, setGarage } = useContext(GarageContext);
   const { request } = useRequest();
+
+  const CurrencyFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   const closeGarage = useCallback(() => {
     setGarage({});
@@ -56,6 +62,20 @@ function Garage() {
     closeGarage();
   }, [request, car, closeGarage]);
 
+  const handleTestDrive = () => {
+    request("testDrive", {
+      spawn: car.spawn,
+    });
+    closeGarage();
+  };
+
+  const handleBuyCar = () => {
+    request("buyCar", {
+      spawn: car.spawn,
+    });
+    closeGarage();
+  };
+
   return (
     <S.Container>
       <S.Left>
@@ -80,6 +100,7 @@ function Garage() {
                 <S.WrapIconCar>
                   {car.type === "car" && <FaCarSide />}
                   {car.type === "motocycle" && <FaMotorcycle />}
+                  {car.type === "vip" && <RiVipDiamondLine />}
                 </S.WrapIconCar>
               )}
               <S.CarTitle>{car.name}</S.CarTitle>
@@ -109,26 +130,60 @@ function Garage() {
                     <S.Progress progress={car.suspension} />
                   </S.ProgressBar>
                 </S.ItemStats>
-                <S.ItemStats>
-                  <S.StatsLabel>Combustível</S.StatsLabel>
-                  <S.ProgressBar>
-                    <S.Progress progress={car.fuel} />
-                  </S.ProgressBar>
-                </S.ItemStats>
-                <S.ItemStats>
-                  <S.StatsLabel>Porta-malas</S.StatsLabel>
-                  <S.ProgressBar>
-                    <S.Progress progress={car.trunk} />
-                  </S.ProgressBar>
-                </S.ItemStats>
+                {!garage.dealership && (
+                  <>
+                    <S.ItemStats>
+                      <S.StatsLabel>Combustível</S.StatsLabel>
+                      <S.ProgressBar>
+                        <S.Progress progress={car.fuel} />
+                      </S.ProgressBar>
+                    </S.ItemStats>
+                    <S.ItemStats>
+                      <S.StatsLabel>Porta-malas</S.StatsLabel>
+                      <S.ProgressBar>
+                        <S.Progress progress={car.trunk} />
+                      </S.ProgressBar>
+                    </S.ItemStats>
+                  </>
+                )}
               </S.Stats>
+              {garage.dealership && car.type !== "vip" && (
+                <S.DealershipStatusList>
+                  <S.DealershipStatus>
+                    <S.DealerTitle>Estoque</S.DealerTitle>
+                    <S.DealerValue>{car.stock}</S.DealerValue>
+                  </S.DealershipStatus>
+                  <S.DealershipStatus>
+                    <S.DealerTitle>Preço</S.DealerTitle>
+                    <S.DealerValue>
+                      {CurrencyFormatter.format(car.price)}
+                    </S.DealerValue>
+                  </S.DealershipStatus>
+                </S.DealershipStatusList>
+              )}
             </>
           )}
         </S.Car>
         <S.Actions>
-          <S.BtnAction onClick={handleSaveNextCar}>Guardar próximo</S.BtnAction>
-          <S.BtnAction onClick={handleSaveCar}>Guardar este carro</S.BtnAction>
-          <S.BtnAction onClick={handleUseCar}>Retirar</S.BtnAction>
+          {garage.dealership && (
+            <>
+              <S.BtnAction onClick={handleTestDrive}>Teste Drive</S.BtnAction>
+              {car.type !== "vip" && (
+                <S.BtnAction className="active" onClick={handleBuyCar}>
+                  Comprar
+                </S.BtnAction>
+              )}
+            </>
+          )}
+          {!garage.dealership && (
+            <>
+              <S.BtnAction onClick={handleSaveNextCar}>
+                Guardar próximo
+              </S.BtnAction>
+              <S.BtnAction onClick={handleSaveCar}>Guardar</S.BtnAction>
+              <S.BtnAction onClick={handleUseCar}>Retirar</S.BtnAction>
+            </>
+          )}
         </S.Actions>
       </S.Left>
       <S.Right>
@@ -148,6 +203,12 @@ function Garage() {
               onClick={() => setFilter("motocycle")}
             >
               <FaMotorcycle />
+            </S.CarFilter>
+            <S.CarFilter
+              active={filter === "vip"}
+              onClick={() => setFilter("vip")}
+            >
+              <RiVipDiamondLine />
             </S.CarFilter>
           </S.Filters>
           <S.CloseButton onClick={closeGarage}>Esc</S.CloseButton>

@@ -13,6 +13,7 @@ export const CarItem = styled.li`
     align-items: center;
     cursor: pointer;
     transition: all 0.5s;
+    position: relative;
 
     & > svg {
       font-size: 2.5rem;
@@ -47,5 +48,21 @@ export const CarItemSubtitle = styled.span`
     text-transform: uppercase;
     font-size: 0.6rem;
     color: ${theme.colors.primary()};
+  `}
+`;
+
+export const CategoryItem = styled.div`
+  ${({ theme }) => css`
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${theme.colors.primary()};
+    color: ${theme.colors.shape()};
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 5px 0 5px 0;
   `}
 `;

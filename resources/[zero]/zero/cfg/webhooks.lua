@@ -39,6 +39,7 @@ config.webhooks = {
     ['Hwid'] = 'https://discord.com/api/webhooks/1116585321090523187/hQCrStNv5P6ofa-2liNyI2481-wj1daSztypXxvI-lwFKq5h5tlT1T2I7njCfchhAP-g',
     ['IpBanned'] = 'https://discord.com/api/webhooks/1116585370478456882/gM6V3HcFxMIsTTSZBGhs6whNafkB7Z9HiXF1bFAu2TYOAgnHIBy1P6hnbDxYLH3cEHjS',
 
+    ['buyVehicle'] = 'https://discord.com/api/webhooks/1139623371785654313/0fDge4Ks2uHt9edjx2BVGF-2nukEsHRbCOYjn90_1nYDx-DLoXXIdP6rJj7r40GAQqEl',
     ['DeleteVehicle'] = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF',
     ['DVArea'] = 'https://discord.com/api/webhooks/1119313191684550746/HUVLo3Qrt9XvOoyr04DNXWcHGUgzZzWUVPRJw_G1zqSCrD9NzApykPRFDBqT6bV8LKfk',
     ['DVAll'] = 'https://discord.com/api/webhooks/1119322941763633202/PYQLW7s3YB5nDWwGSOofbWaKl7EgDvQZak_DxK1k_QBfOez2UsfcbGNcOdoliVZmOLxs',
@@ -97,5 +98,11 @@ config.webhooks = {
     ['EditPix'] = 'https://discord.com/api/webhooks/1128492563192610927/IVpc9T2re0EzL0u8JzeQn6K5ryOw0s2tz0Q8Dio072XO0Hd7E8pxlYi6CTYsyLlaJ7aR',
     ['DelPix'] = 'https://discord.com/api/webhooks/1128493068627226804/CvfFTqomDKqKCvPKi0NtdES7YLKQN4Mq1Vi59VuAbBySp86aQG8ydxCxdUvVRmAT32TX',
     ['MoneyJoin'] = 'https://discord.com/api/webhooks/1128494210799108177/7DmO6fE75yDePDVrNaQCAC4W-cm_fKVc7Yx4fXV_O792ECcmZU1bJc82NnihUGmda-AL',
-    ['MoneyExit'] = 'https://discord.com/api/webhooks/1128494403573522562/ZZM_O74r_rApzHdNfFzBCTTxVS2rLXty0SHPK-ImeH23Px42f0qRxvspdyAwLX8TWJBC'
+    ['MoneyExit'] = 'https://discord.com/api/webhooks/1128494403573522562/ZZM_O74r_rApzHdNfFzBCTTxVS2rLXty0SHPK-ImeH23Px42f0qRxvspdyAwLX8TWJBC',
+
+    ['Namorar'] = 'https://discord.com/api/webhooks/1140106765422317648/wOWeq3An-GwQABK-LrMWoybUPLEmjrHR1Ev-Si6fpDYndAg3LGEq8oZs8wRDtYkL3XM3',
+    ['Casar'] = 'https://discord.com/api/webhooks/1140106902722842736/QhlJXVFG322DDyLToohsu7UNT2wbXu7ruuPYZRM27-_ON6NAku0OzBt0BvqVhY98D9AR',
+    ['Terminar'] = 'https://discord.com/api/webhooks/1140107049032757348/xvpN_54SZj21y8gQifrp3bSoNIo3UTchv6WH1b49afeZvFYZWl2e0tEWMPsPexBJ25qF',
+    ['Noivar'] = 'https://discord.com/api/webhooks/1140107290649837678/ski9v8gHQ4ZzfrytZM3ag31dxX5iqtbP_yOt7uTxq9wWiJZqgIO9wqCBUSyVDVLs4S-1',
+    ['Divorciar'] = 'https://discord.com/api/webhooks/1140107188682104982/zJi-oHo3aBUQLEU78p_fzRKQdcU9cdTaqi4fR0c1oDcqKBxJahujWw9ZuAdAoxFHppH9'
 }

@@ -328,12 +328,15 @@ srv.setBucket = function(homeName, status)
     end
 end
 
-RegisterNetEvent('zero_homes:CacheExecute', function(source)
+RegisterNetEvent('zero_homes:CacheExecute', function(source, quit)
     SetPlayerRoutingBucket(source, 0)
     local coord = tempHome[source].oldCoords
     if (coord ~= nil) then
-        zeroClient.teleport(source, coord.x, coord.y, coord.z)
-        coord = nil
+        if (quit) then
+            zero.updatePos(coord.x, coord.y, coord.z)
+        else
+            zeroClient.teleport(source, coord.x, coord.y, coord.z)
+        end
     end
 end)
 
@@ -350,14 +353,23 @@ AddEventHandler('onResourceStop', function(resourceName)
 		print('^5[Zero Homes]^7 sistema stopado/reiniciado.')
         for k, _ in pairs(tempHome) do
             local _source = k
-            if (_source) then
+            local user_id = zero.getUserId(_source)
+            if (user_id) then
                 TriggerEvent('zero_homes:CacheExecute', _source)
-                serverNotify(_source, 'O sistema de <b>homes</b> de nossa cidade foi reiniciado.')
-                print('^5[Zero Homes]^7 o user_id ^5('..zero.getUserId(_source)..')^7 foi retirado de dentro da casa.')
+                serverNotify(_source, 'O sistema de <b>homes</b> da nossa cidade foi reiniciado.')
+                print('^5[Zero Homes]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro da casa.')
                 tempHome[source] = nil
             end
         end
 	end
+end)
+
+AddEventHandler('zero:playerLeave', function(user_id, source)
+	if (tempHome[source]) then
+        TriggerEvent('zero_homes:CacheExecute', source, true)
+        print('^5[Zero Homes]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro da casa.')
+        tempHome[source] = nil
+    end
 end)
 
 local buyedHomes = {}
@@ -444,50 +456,4 @@ RegisterNetEvent('zero_homes:registerOwnerBlips', function(source, bool, table)
     else
         setHouseBlip(source, table[1], table[2])
     end
-end)
-
-gerarNome = function(nomeBase, contador)
-    return nomeBase .. string.format("%04d", contador)
-end
-
-local nomeBase = ''
-local contador = 1
-local criados = {}
-local tipoBase = ''
-local oldName = ''
-
-RegisterCommand('criar',function(source)
-    if (nomeBase == '') then
-        local prompt = zero.prompt(source, { 'Nome da Residência', 'Tipo' })
-        if (prompt) then
-            nomeBase = prompt[1]
-            tipoBase = prompt[2]
-        end
-        local nomeCompleto = gerarNome(nomeBase, contador)
-        oldName = nomeCompleto
-        table.insert(criados, {
-            [nomeCompleto] = { coord = GetEntityCoords(GetPlayerPed(source)), type = tipoBase }
-        })
-        zeroClient.addBlip(source, GetEntityCoords(GetPlayerPed(source)).x, GetEntityCoords(GetPlayerPed(source)).y, GetEntityCoords(GetPlayerPed(source)).z, 1, 1, 'Marcou Aqui', 0.5, false)
-        contador = contador + 1
-    else
-        local nomeCompleto = gerarNome(nomeBase, contador)
-        oldName =  nomeCompleto
-        table.insert(criados, {
-            [nomeCompleto] = { coord = GetEntityCoords(GetPlayerPed(source)), type = tipoBase }
-        })
-        contador = contador + 1
-        zeroClient.addBlip(source, GetEntityCoords(GetPlayerPed(source)).x, GetEntityCoords(GetPlayerPed(source)).y, GetEntityCoords(GetPlayerPed(source)).z, 1, 1, 'Marcou Aqui', 0.5, false)
-    end
-    serverNotify(source, 'Você criou a residência <b>'..oldName..'</b>.')
-end)
-
-RegisterCommand('pegar', function(source)
-    local linha = ''
-    for nome, info in pairs(criados) do
-        for k, v in pairs(info) do
-            linha = linha.."\n ['"..k.."'] = { coord = "..tostring(v.coord)..", type = '"..v.type.."' },"
-        end
-    end
-    TriggerClientEvent('clipboard', source, 'Pegar', linha)
 end)

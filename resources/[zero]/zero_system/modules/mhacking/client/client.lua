@@ -9,9 +9,9 @@ local showText = function()
         while (showHelp) do
             if (GetEntityHealth(PlayerPedId()) > 101) then
                 if (helpTimer > GetGameTimer()) then
-                exports['zero_works']:Text2D(0, 0.235, 0.90, 'NAVEGUE COM (~b~W, A, S, D~w~) E CONFIRME COM ~b~ESPAÇO~w~ PARA O BLOCO DE CÓDIGO DA ESQUERDA', 0.4)
+                Text2D(0, 0.235, 0.90, 'NAVEGUE COM (~b~W, A, S, D~w~) E CONFIRME COM ~b~ESPAÇO~w~ PARA O BLOCO DE CÓDIGO DA ESQUERDA', 0.4)
                 elseif (helpTimer > (GetGameTimer() - helpCycle)) then
-                    exports['zero_works']:Text2D(0, 0.235, 0.90, 'NAVEGUE COM AS (~b~SETAS~w~) E CONFIRME COM ~b~ENTER~w~ PARA O BLOCO DE CÓDIGO DA DIREITA', 0.4)
+                    Text2D(0, 0.235, 0.90, 'NAVEGUE COM AS (~b~SETAS~w~) E CONFIRME COM ~b~ENTER~w~ PARA O BLOCO DE CÓDIGO DA DIREITA', 0.4)
                 else
                     helpTimer = (GetGameTimer() + helpCycle)
                 end

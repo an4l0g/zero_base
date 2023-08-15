@@ -5,46 +5,56 @@ local vCLIENT = Tunnel.getInterface('Garage')
 local garagesConfig = config.garages
 local rulesConfig = config.rules
 
-zero._prepare('zero_garage/getVehicles', 'select * from zero_user_vehicles where user_id = @user_id')
-zero._prepare('zero_garage/getVehiclesWithVeh', 'select * from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/getVehiclesWithPlate', 'select * from zero_user_vehicles where plate = @plate')
-zero._prepare('zero_garage/getVehiclesWithChassis', 'select * from zero_user_vehicles where chassis = @chassis')
-zero._prepare('zero_garage/setDetained', 'update zero_user_vehicles set detained = @detained where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/setIPVA', 'update zero_user_vehicles set ipva = @ipva where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/updateState', 'update zero_user_vehicles set state = @state where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/getVehiclePlate', 'select plate from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/delVehicle', 'delete from zero_user_vehicles where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/setRented', 'update zero_user_vehicles set rented = @rented where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/getVehicleWithPlate', 'select user_id, vehicle from zero_user_vehicles where plate = @plate')
-zero._prepare('zero_garage/updatePlate', 'update zero_user_vehicles set plate = @plate where user_id = @user_id and vehicle = @vehicle')
-zero._prepare('zero_garage/getVehicleOwn', 'select * from zero_user_vehicles where user_id = @user_id and service = 0')
-zero._prepare('zero_garage/getGarages', 'select garages from zero_users where id = @id')
-zero._prepare('zero_garage/getVehByPlate', 'select * from zero_user_vehicles where plate = @plate')
-zero._prepare('zero_garage/getVehByChassis', 'select * from zero_user_vehicles where chassis = @chassis')
-zero._prepare('zero_garage/getRented', 'select user_id, vehicle, rented from zero_user_vehicles where rented != ""')
-zero._prepare('zero_garage/addVehicle', 'insert ignore into zero_user_vehicles (user_id, vehicle, plate, chassis, service, ipva, state, custom) values (@user_id, @vehicle, @plate, @chassis, @service, @ipva, @state, @custom)')
+zero._prepare('zero_garage/getVehicles', 'select * from user_vehicles where user_id = @user_id')
+zero._prepare('zero_garage/getVehiclesWithVeh', 'select * from user_vehicles where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/getVehiclesWithPlate', 'select * from user_vehicles where plate = @plate')
+zero._prepare('zero_garage/getVehiclesWithChassis', 'select * from user_vehicles where chassis = @chassis')
+zero._prepare('zero_garage/setDetained', 'update user_vehicles set detained = @detained where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/setIPVA', 'update user_vehicles set ipva = @ipva where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/updateState', 'update user_vehicles set state = @state where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/getVehiclePlate', 'select plate from user_vehicles where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/delVehicle', 'delete from user_vehicles where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/setRented', 'update user_vehicles set rented = @rented where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/getVehicleWithPlate', 'select user_id, vehicle from user_vehicles where plate = @plate')
+zero._prepare('zero_garage/updatePlate', 'update user_vehicles set plate = @plate where user_id = @user_id and vehicle = @vehicle')
+zero._prepare('zero_garage/getVehicleOwn', 'select * from user_vehicles where user_id = @user_id and service = 0')
+zero._prepare('zero_garage/getGarages', 'select garages from users where id = @id')
+zero._prepare('zero_garage/getVehByPlate', 'select * from user_vehicles where plate = @plate')
+zero._prepare('zero_garage/getVehByChassis', 'select * from user_vehicles where chassis = @chassis')
+zero._prepare('zero_garage/getRented', 'select user_id, vehicle, rented from user_vehicles where rented != ""')
+zero._prepare('zero_garage/addVehicle', 'insert ignore into user_vehicles (user_id, vehicle, plate, chassis, service, ipva, state, custom) values (@user_id, @vehicle, @plate, @chassis, @service, @ipva, @state, @custom)')
 
 Citizen.CreateThread(function()
     Citizen.Wait(1000)
 	for user_id, source in pairs(zero.getUsers()) do
 		local myHomes = zero.query('zero_homes/userHomesList', { user_id = user_id })
-		for k,v in ipairs(myHomes) do
-			local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
-			if (gar) then
-				local blip = json.decode(gar.blip)
-				local spawn = json.decode(gar.spawn)
-				addGarage(source, v.home, blip, spawn )
-			end
-		end
+        for k,v in ipairs(myHomes) do
+            local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
+            if (gar) then
+                local blip = json.decode(gar.blip)
+                local spawn = json.decode(gar.spawn)
+                addGarage(source, v.home, blip, spawn )
+            end
+        end
 		Citizen.Wait(1)
 	end
 end)
 
-srv.checkPermissions = function(perm)
+local permission = {
+    ['perm'] = function(user_id, perm, home)
+        return zero.checkPermissions(user_id, perm)
+    end,
+    ['home'] = function(user_id, perm, home)
+        return exports['zero_homes']:checkHomePermission(user_id, home)
+    end
+}
+
+srv.checkPermissions = function(perm, home)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
-        return zero.checkPermissions(user_id, perm)
+        local isHome = (home and 'home' or 'perm')
+        return permission[isHome](user_id, perm, home)
     end
 end
 
@@ -83,7 +93,7 @@ srv.processState = function(state)
     return { windows = {}, doors = {}, tyres = {}, data = {} }
 end
 
-local getMods = function(custom, mod)
+getMods = function(custom, mod)
     local data = json.decode(custom)
     if (data) and data.mods then
         return countMods(data.mods[mod].mod, mod)
@@ -911,18 +921,18 @@ end)
 AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 	if (first_spawn) then
 		local myHomes = zero.query('zero_homes/userHomesList', { user_id = user_id })
-		for k,v in ipairs(myHomes) do
-			local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
-			if (gar) then
-				local blip = json.decode(gar.blip)
-				local spawn = json.decode(gar.spawn)
-				addGarage(source, v.home, blip, spawn)
-			end
-		end
+        for k,v in ipairs(myHomes) do
+            local gar = zero.query('zero_homes/getGarage', { home = v.home })[1]
+            if (gar) then
+                local blip = json.decode(gar.blip)
+                local spawn = json.decode(gar.spawn)
+                addGarage(source, v.home, blip, spawn)
+            end
+        end
 	end
 end)
 
-RegisterNetEvent('zero_homes:addGarage', function(source, homeName, blip, spawn)
+RegisterNetEvent('homes:addGarage', function(source, homeName, blip, spawn)
     local homes = zero.query('zero_homes/permissions', { home = homeName })
     for _, v in ipairs(homes) do
         local source = zero.getUserSource(v.user_id)

@@ -87,6 +87,8 @@ hotbarListener = function()
                 currentIndex = hotbar[tostring(v)]
 
                 if currentIndex ~= nil and not (disableActions) then
+                    if (LocalPlayer.state.Handcuff) then return; end;
+                    if (LocalPlayer.state.BlockTasks) then return; end;
                     sInventory.useItem(currentIndex.index, amount)
                 end
             end

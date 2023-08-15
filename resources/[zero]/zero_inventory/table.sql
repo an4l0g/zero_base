@@ -1,6 +1,6 @@
 use zero_roleplay;
 
-create table zero_inventory(
+create table inventory(
 	slots json not null,
     user_id int not null,
     weight int not null,

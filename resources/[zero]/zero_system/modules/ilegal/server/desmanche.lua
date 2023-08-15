@@ -2,14 +2,14 @@ local srv = {}
 Tunnel.bindInterface('Dismantle', srv)
 local vCLIENT = Tunnel.getInterface('Dismantle')
 
-local table = 'zero_user_vehicles'
+local table = 'user_vehicles'
 zero._prepare('zero_dismantle/getVehicleInfo', 'select * from '..table..' where user_id = @user_id and vehicle = @vehicle')
 
 local dismantleTemp = {}
 local dismantleTime = {}
 
 srv.checkDismantle = function(index)
-    local _config = Dismantle[index]
+    local _config = Dismantle.locations[index]
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) and zero.checkPermissions(user_id, _config.perm) then
@@ -57,12 +57,26 @@ srv.checkDismantle = function(index)
                 if (vtype) then
                     registerDismantleTime(index, _config.cooldown)
                     vCLIENT.generateParts(source, vehicle, vtype, vehState.model, vehState.plate)
+                    zero.execute('zero_garage/setDetained', { detained = 1, user_id = vehState.user_id, vehicle = vehState.model })
+                    zero.webhook(_config.webhook, '```prolog\n[DISMANTLE]\n[ACTION]: (DISMANTLED VEHICLE)\n[USER]: '..user_id..' \n[VEHICLE MODEL]: '..vehState.model..'\n[OWNER VEHICLE]: '..vehState.user_id..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     return true
                 end
             end
         end
     end
     return false
+end
+
+srv.finishDismantle = function(vtype)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local price = (vtype == 'vip' and 'vip' or 'conce')
+        if (price) then
+            zero.giveInventoryItem(user_id, Dismantle.payments['item'], Dismantle.payments[price])
+            TriggerClientEvent('notify', source, 'Desmanche', 'Você recebeu <b>R$'..zero.format(Dismantle.payments[price])..'</b> de dinheiro sujo')
+        end
+    end
 end
 
 registerDismantleTime = function(id, time)

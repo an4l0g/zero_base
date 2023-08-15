@@ -108,6 +108,13 @@ zero.clearAfterDie = function()
 		zeroClient._setHandcuffed(source, false)
 
 		zero.clearInventory(user_id)
+
+		Player(source).state.Capuz = false
+		zeroClient.setCapuz(source, false)
+
+		Player(source).state.Handcuff = false
+        zeroClient.setHandcuffed(source, false)
+		TriggerClientEvent('zero_interactions:algemas', source)
 		return true
     end
 	return false

@@ -82,7 +82,7 @@ export const WrapIconCar = styled.div`
 `;
 
 export const CarImage = styled.img`
-  height: 125px;
+  height: 80px;
   align-self: center;
   margin-bottom: 1rem;
   object-fit: cover;
@@ -91,7 +91,7 @@ export const CarImage = styled.img`
 
 export const CarTitle = styled.h1`
   ${({ theme }) => css`
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     font-weight: 400;
     text-transform: uppercase;
     color: ${theme.colors.shape()};
@@ -103,6 +103,7 @@ export const CarSubtitle = styled.span`
     text-transform: uppercase;
     color: ${theme.colors.primary()};
     margin-bottom: 2rem;
+    font-size: 1rem;
   `}
 `;
 
@@ -174,6 +175,7 @@ export const BtnAction = styled.li`
     display: flex;
     justify-content: center;
     text-align: center;
+    text-transform: uppercase;
     align-items: center;
     font-weight: 400;
     font-size: 0.7rem;
@@ -182,6 +184,15 @@ export const BtnAction = styled.li`
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.5s;
+
+    &.active {
+      background-color: ${theme.colors.primary()};
+      text-shadow: 1px 1px 1px ${theme.colors.dark(0.5)};
+
+      &:hover {
+        background-color: ${theme.colors.primary(0.6)};
+      }
+    }
 
     &:hover {
       background-color: ${theme.colors.primary(0.05)};
@@ -289,3 +300,42 @@ export const EmptyCarList = styled.div`
     color: ${theme.colors.shape()};
   `}
 `;
+
+export const DealershipStatusList = styled.ul`
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+`;
+
+export const DealershipStatus = styled.li`
+  ${({ theme }) => css`
+    display: flex;
+    background-color: ${theme.colors.dark(0.2)};
+    flex-direction: column;
+    flex: 1;
+    min-width: calc(50% - 0.5rem);
+    padding: 0.5rem;
+    border-radius: 5px;
+  `}
+`;
+
+export const DealerTitle = styled.small`
+  ${({ theme }) => css`
+    color: ${theme.colors.primary()};
+    display: flex;
+    flex-direction: column;
+    font-size: 0.7rem;
+  `}
+`;
+
+export const DealerValue = styled.span`
+  ${({ theme }) => css`
+    color: ${theme.colors.shape()};
+    display: flex;
+    flex-direction: column;
+  `}
+`;
+

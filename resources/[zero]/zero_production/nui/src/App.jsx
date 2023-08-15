@@ -11,7 +11,6 @@ function App() {
   const nuiMessage = useCallback(
     (event) => {
       const { action, products, title, org } = event.data;
-      console.log(event.data);
       if (action === "open") {
         setProduction({
           title,

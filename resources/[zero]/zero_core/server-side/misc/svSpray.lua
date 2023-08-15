@@ -5,9 +5,9 @@ local vCLIENT = Tunnel.getInterface('Spray')
 local config = module('zero_core', 'cfg/cfgSpray')
 local configSpray = config.spray
 
-zero.prepare('zero_spray/createSprays', 'insert zero_spray (interior, x, y, z, rx, ry, rz, scale, spray_text, font, color) values (@interior, @x, @y, @z, @rx, @ry, @rz, @scale, @spray_text, @font, @color)')
-zero.prepare('zero_spray/selectSprays', 'select interior, x, y, z, rx, ry, rz, scale, spray_text, font, color from zero_spray')
-zero.prepare('zero_spray/deleteSprays', 'delete from zero_spray where x = @x and y = @y and z = @z limit 1')
+zero.prepare('zero_spray/createSprays', 'insert spray (interior, x, y, z, rx, ry, rz, scale, spray_text, font, color) values (@interior, @x, @y, @z, @rx, @ry, @rz, @scale, @spray_text, @font, @color)')
+zero.prepare('zero_spray/selectSprays', 'select interior, x, y, z, rx, ry, rz, scale, spray_text, font, color from spray')
+zero.prepare('zero_spray/deleteSprays', 'delete from spray where x = @x and y = @y and z = @z limit 1')
 
 -- FAZER FUNÇÃO PRA REMOVER NO RR
 

@@ -45,63 +45,47 @@ function zero.isNoclip()
 	return noclip
 end
 
-local handcuffed = false
-function zero.toggleHandcuff()
-	handcuffed = not handcuffed
-	SetEnableHandcuffs(PlayerPedId(),handcuffed)
-	if handcuffed then
-		zero.playAnim(true,{{"mp_arresting","idle"}},true)
+function zero.setHandcuffed(bool)
+	local ply = PlayerPedId()
+	if (bool) then
+		LocalPlayer.state.Handcuff = true
+		SetEnableHandcuffs(ply, true)
 	else
-		zero.stopAnim(true)
+		LocalPlayer.state.Handcuff = false
+		SetEnableHandcuffs(ply, false)
 	end
 end
+exports('setHandcuffed', zero.setHandcuffed)
 
-function zero.setHandcuffed(flag)
-	if handcuffed ~= flag then
-		zero.toggleHandcuff()
-	end
+function zero.isHandcuffed()
+	return LocalPlayer.state.Handcuff
 end
+exports('isHandcuffed', zero.isHandcuffed)
 
 function zero.setFreeze(bool)
 	FreezeEntityPosition(PlayerPedId(),bool)
 end
 
-function zero.isHandcuffed()
-	return handcuffed
-end
-
-exports("isHandcuffed",zero.isHandcuffed)
-
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(15000)
-		if handcuffed then
-			zero.playAnim(true,{{"mp_arresting","idle"}},true)
-		end
-	end
-end)
-
-local capuz = false
-function zero.toggleCapuz()
-	capuz = not capuz
-	if capuz then
-		zero.setDiv("capuz",".div_capuz { background: #000; margin-top: -150px; margin: 0; padding: 0; width: 100vw; height: 100vh; }","")
-		SetPedComponentVariation(PlayerPedId(),1,69,2,2)
+function zero.setCapuz(bool)
+	local ply = PlayerPedId()
+	if (bool) then
+		exports.zero_system:SendNuiMessage('capuz', true)
+		TriggerEvent('zero_hud:toggleHud', false)
+		LocalPlayer.state.Capuz = true
+		SetPedComponentVariation(ply, 1, 69, 1, 2)
 	else
-		zero.removeDiv("capuz")
-		SetPedComponentVariation(PlayerPedId(),1,0,0,2)
+		exports.zero_system:SendNuiMessage('capuz', false)
+		TriggerEvent('zero_hud:toggleHud', true)
+		LocalPlayer.state.Capuz = false
+		SetPedComponentVariation(ply, 1, 0, 0, 2)
 	end
 end
-
-function zero.setCapuz(flag)
-	if capuz ~= flag then
-		zero.toggleCapuz()
-	end
-end
+exports('setCapuz', zero.setCapuz)
 
 function zero.isCapuz()
-	return capuz
+	return LocalPlayer.state.Capuz
 end
+exports('isCapuz', zero.isCapuz)
 
 local mala = false
 function zero.toggleMalas()
@@ -159,9 +143,9 @@ end
 function zero.putInNearestVehicleAsPassenger(radius)
 	local veh = zero.getNearestVehicle(radius)
 	if IsEntityAVehicle(veh) then
-		for i=1,math.max(GetVehicleMaxNumberOfPassengers(veh),3) do
+		for i = 0, GetVehicleMaxNumberOfPassengers(veh) do
 			if IsVehicleSeatFree(veh,i) then
-				SetPedIntoVehicle(PlayerPedId(),veh,i)
+				TaskEnterVehicle(PlayerPedId(), veh, -1, i, 1.5, 1, 0)
 				return true
 			end
 		end

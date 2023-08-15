@@ -27,7 +27,7 @@ RegisterCommand('cinv', function(source, args)
     local user_id = (args[1] or zero.getUserId(source))
     if (zero.hasPermission(user_id, '+Staff.COO')) then
         if (exports.zero_hud:request(source, 'Deseja realmente limpar o inventário do id '..user_id..'?')) then
-            sInventory.clearInventory(source, user_id)
+            sInventory.clearInventory(user_id)
             zero.formatWebhook('delBag', 'Limpar Inventario', {
                 { 'staff', zero.getUserId(source) },
                 { 'id', user_id }

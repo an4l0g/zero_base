@@ -1,16 +1,12 @@
-shared_script "@vrp/lib/lib.lua" --Para remover esta pendencia de todos scripts, execute no console o comando "uninstall"
-
 fx_version 'bodacious'
 game 'gta5'
 
-ui_page "http://189.127.164.125:8603/"
+author 'bluenzzz#0001 & an4log#0001'
+description 'Zero Org'
+version '0.1'
 
-client_scripts {
-    '@vrp/lib/utils.lua',
-    'client/*.lua',
-}
+ui_page 'http://localhost:5173/'
 
-server_scripts {
-    '@vrp/lib/utils.lua',
-    'server/*.lua',
-}              
+client_script 'client/*'
+server_script 'server/*'        
+shared_scripts { '@zero/lib/utils.lua', 'main.lua' }

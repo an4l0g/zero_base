@@ -88,17 +88,18 @@ export const ActionButton = styled.button`
   background-color: rgba(0, 0, 0, 0.3);
   height: 30px;
   width: 100%;
-  border: 0;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   color: white;
   font-size: 14px;
   font-weight: normal;
-  border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
   justify-content: center;
+  border-radius: 5px;
+  border: 0;
+  border-bottom: 1px solid ${theme.colors.primary_opacity(0.5)};
 
   &.small-rounded {
     font-size: 15px;
@@ -113,38 +114,6 @@ export const ActionButton = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-  }
-
-  &.success {
-    background-color: rgba(51, 204, 51, 0.07);
-
-    &:hover:not([disabled]) {
-      background-color: rgba(0, 100, 0, 0.1);
-    }
-  }
-
-  &.normal {
-    background-color: rgba(0, 0, 200, 0.07);
-
-    &:hover:not([disabled]) {
-      background-color: rgba(0, 0, 200, 0.1);
-    }
-  }
-
-  &.warn {
-    background-color: rgba(200, 200, 0, 0.07);
-
-    &:hover:not([disabled]) {
-      background-color: rgba(200, 200, 0, 0.1);
-    }
-  }
-
-  &.error {
-    background-color: rgba(200, 0, 0, 0.07);
-
-    &:hover:not([disabled]) {
-      background-color: rgba(200, 0, 0, 0.1);
-    }
   }
 `;
 

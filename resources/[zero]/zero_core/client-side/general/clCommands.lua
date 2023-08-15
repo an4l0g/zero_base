@@ -387,7 +387,7 @@ function GetObject()
 
             if distance < closestDist then
                 closestDist = distance
-                closestObject = GetEntityModel(ped)
+                CommandsData['closestObject'] = GetEntityModel(ped)
             end
 
             rped = ped
@@ -563,6 +563,7 @@ RegisterCommand('fps', function(source, args)
 	if (args[1]) then
 		local command = string.lower(args[1])
 		if (command == 'on') then
+			LocalPlayer.state.FPS = true
 			SetTimecycleModifier('cinema')
 			RopeDrawShadowEnabled(false)
 			CascadeShadowsClearShadowSampleType()
@@ -576,6 +577,7 @@ RegisterCommand('fps', function(source, args)
 			SetLightsCutoffDistanceTweak(0.0)
 			TriggerEvent('notify', 'FPS', 'Boost de <b>FPS</b> ligado.')
 		elseif (command == 'off') then
+			LocalPlayer.state.FPS = false
 			SetTimecycleModifier('default')
 			RopeDrawShadowEnabled(true)
 			CascadeShadowsSetAircraftMode(true)
@@ -642,5 +644,52 @@ RegisterCommand('vtuning', function()
 		end
 
 		TriggerEvent('notify', 'Ver Tunagens', '<b>Motor:</b> '..motor..'<br><b>Freio:</b> '..freio..'<br><b>Transmissão:</b> '..transmissao..'<br><b>Suspensão:</b> '..suspensao..'<br><b>Blindagem:</b> '..blindagem..'<br><b>Chassi:</b> '..parseInt(body/10)..'%<br><b>Engine:</b> '..parseInt(engine/10)..'%<br><b>Gasolina:</b> '..parseInt(fuel)..'%', 15000)
+	end
+end)
+
+---------------------------------------
+-- ROCKSTAR EDITOR
+---------------------------------------
+cli.stopAndSave = function()
+	if (IsRecording()) then
+		StopRecordingAndSaveClip()
+	end
+end
+
+cli.openEditor = function()
+	NetworkSessionLeaveSinglePlayer()
+	ActivateRockstarEditor()
+end
+
+cli.Discard = function()
+	if (IsRecording()) then
+		StopRecordingAndDiscardClip()
+	end
+end
+
+cli.StartEditor = function()
+	StartRecording(1)
+end
+
+---------------------------------------
+-- BVIDA
+---------------------------------------
+RegisterCommand('bvida', function()
+	local ped = PlayerPedId()
+	if (LocalPlayer.state.BlockTasks) then return; end;
+
+	if (IsPedFalling(ped)) then
+		TriggerEvent('notify', 'Bvida', 'Você não pode executar este comando em <b>queda livre</b>. <br><br>Boa queda amigão, tenha uma boa morte! ;)</b>')
+		return
+	end
+
+	if (IsPedInAnyVehicle(ped)) then
+		TriggerEvent('notify', 'Bvida', 'Você não pode executar este <b>comando</b> dentro de um veículo')
+		return
+	end
+
+	if not IsEntityPlayingAnim(ped, 'anim@heists@ornate_bank@grab_cash_heels','grab', 3) and not IsEntityPlayingAnim(ped, 'mini@repair','fixing_a_player', 3) and not IsEntityPlayingAnim(ped, 'amb@medic@standing@tendtodead@idle_a','idle_a', 3) and not IsEntityPlayingAnim(ped, 'oddjobs@shop_robbery@rob_till','loop', 3) and not IsEntityPlayingAnim(ped, 'amb@world_human_sunbathe@female@back@idle_a','idle_a', 3) then
+		vSERVER.Bvida()
+		zero.DeletarObjeto()
 	end
 end)

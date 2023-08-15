@@ -12,10 +12,15 @@ function App() {
     (event) => {
       const { action, cars } = event.data;
       if (action === "open") {
-        setGarage({ cars });
+        setGarage({ cars, dealership: false });
+      } else if (action === "dealership") {
+        setGarage({ cars, dealership: true });
+      } else if (action === "close") {
+        setGarage({});
+        request("close");
       }
     },
-    [setGarage]
+    [setGarage, request]
   );
 
   useEffect(() => {

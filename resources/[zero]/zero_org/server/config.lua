@@ -1,7 +1,3 @@
-Proxy = module('vrp','lib/Proxy')
-Tunnel = module('vrp','lib/Tunnel')
-vRP = Proxy.getInterface('vRP')
-
 config = {}
 
 config.types = {

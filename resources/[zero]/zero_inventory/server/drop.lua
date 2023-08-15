@@ -7,7 +7,7 @@ end
 sInventory.dropItem = function(item, pos, amount)
     local _source = source
     local user_id = zero.getUserId(_source)    
-        
+    if (config.blacklist[item.index]) then TriggerClientEvent('notify', source, 'Inventário', 'Você não pode executar esta ação com este <b>item</b>.') return; end;
     if sInventory.tryGetInventoryItem(user_id, item.index, amount) then
         zero.formatWebhook('dropItem', 'Dropar item', {
             { 'item', item.index },

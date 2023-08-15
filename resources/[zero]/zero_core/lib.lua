@@ -24,16 +24,11 @@ else
     end
 
     
-    Text3D = function(x,y,z,text,size)
-        local onScreen,_x,_y = World3dToScreen2d(x,y,z)
-        SetTextFont(4)
-        SetTextScale(0.35,0.35)
-        SetTextColour(255,255,255,155)
-        SetTextEntry('STRING')
-        SetTextCentre(1)
-        AddTextComponentString(text)
-        DrawText(_x,_y)
-        local factor = (string.len(text))/size
-        DrawRect(_x,_y+0.0125,0.01+factor,0.03,0,0,0,80)
+    TextFloating = function(text, coord)
+        AddTextEntry('FloatingHelpText', text)
+        SetFloatingHelpTextWorldPosition(0, coord)
+        SetFloatingHelpTextStyle(0, true, 2, -1, 3, 0)
+        BeginTextCommandDisplayHelp('FloatingHelpText')
+        EndTextCommandDisplayHelp(1, false, false, -1)
     end
 end

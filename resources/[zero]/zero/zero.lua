@@ -7,6 +7,11 @@ Proxy.addInterface('zero', zero)
 Tunnel.bindInterface('zero', zero)
 exportTable(zero)
 
+vRP = {}
+Proxy.addInterface('vRP', vRP)
+Tunnel.bindInterface('vRP', vRP)
+exportTable(vRP)
+
 config = {}
 
 if (IsDuplicityVersion()) then

@@ -27,14 +27,6 @@ export default [
     category: "vestimenta",
   },
   {
-    title: "Retirar capuz",
-    icon: <RiPlayFill />,
-    type: "action",
-    action: "vestimenta",
-    value: "rcapuz",
-    category: "vestimenta",
-  },
-  {
     title: "Acessórios",
     icon: <GiPoliceOfficerHead />,
     type: "category",

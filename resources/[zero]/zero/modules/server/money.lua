@@ -25,6 +25,7 @@ zero.getBankMoney = function(user_id)
 	end
 	return 0
 end
+vRP.getBankMoney = zero.getBankMoney
 exports('getBankMoney', zero.getBankMoney)
 
 zero.getPaypalMoney = function(user_id)
@@ -50,12 +51,10 @@ zero.setPaypalMoney = function(user_id, value)
 end
 
 zero.tryPayment = function(user_id, value)
-	if (value > 0) then
-		local money = zero.getMoney(user_id)
-		if (money >= value) then
-			zero.setMoney(user_id, parseInt(money - value))
-			return true
-		end
+	local money = zero.getMoney(user_id)
+	if (money >= value) then
+		zero.setMoney(user_id, parseInt(money - value))
+		return true
 	end
 	return false
 end
@@ -86,24 +85,20 @@ end
 exports('givePaypalMoney', zero.givePaypalMoney)
 
 zero.tryBankPayment = function(user_id, value)
-	if (value > 0) then
-		local money = zero.getBankMoney(user_id)
-		if (money >= value) then
-			zero.setBankMoney(user_id, parseInt(money - value))
-			return true
-		end
+	local money = zero.getBankMoney(user_id)
+	if (money >= value) then
+		zero.setBankMoney(user_id, parseInt(money - value))
+		return true
 	end
 	return false
 end
 exports('tryBankPayment', zero.tryBankPayment)
 
 zero.tryPaypalPayment = function(user_id, value)
-	if (value > 0) then
-		local money = zero.getPaypalMoney(user_id)
-		if (money >= value) then
-			zero.setPaypalMoney(user_id, parseInt(money - value))
-			return true
-		end
+	local money = zero.getPaypalMoney(user_id)
+	if (money >= value) then
+		zero.setPaypalMoney(user_id, parseInt(money - value))
+		return true
 	end
 	return false
 end
@@ -134,15 +129,13 @@ end
 exports('tryDeposit', zero.tryDeposit)
 
 zero.tryFullPayment = function(user_id, value)
-	if (value > 0) then
-		if (zero.getMoney(user_id) >= value) then
-			return zero.tryPayment(user_id, value)
-		elseif (zero.getBankMoney(user_id) >= value) then
-			return zero.tryBankPayment(user_id, value)
-		else
-			if (zero.getPaypalMoney(user_id) >= value) then
-				return zero.tryPaypalPayment(user_id, value)
-			end
+	if (zero.getMoney(user_id) >= value) then
+		return zero.tryPayment(user_id, value)
+	elseif (zero.getBankMoney(user_id) >= value) then
+		return zero.tryBankPayment(user_id, value)
+	else
+		if (zero.getPaypalMoney(user_id) >= value) then
+			return zero.tryPaypalPayment(user_id, value)
 		end
 	end
 	return false

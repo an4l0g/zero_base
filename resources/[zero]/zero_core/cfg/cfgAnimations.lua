@@ -97,7 +97,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@arrests@busted', 'idle_a', 3) then
                         zero.DeletarObjeto()
                     else
@@ -113,7 +113,7 @@ config.animations = {
             action = function()
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
-                if (GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
+                if (not IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100 and not menuCelular and not cancelKeyMapping) then
                     if IsEntityPlayingAnim(ped, 'random@mugging3', 'handsup_standing_base', 3) then
                         zero.DeletarObjeto()
                     else
@@ -760,6 +760,11 @@ config.animations = {
         },
     },
     ['animations'] = {
+        ['consertar'] = {
+            category = 'animations',
+            title = 'Consertar',
+            anim = 'WORLD_HUMAN_WELDING'
+        },
         ['continencia'] = {
             category = 'animations',
             title = 'Continência vibrante',
@@ -813,10 +818,10 @@ config.animations = {
             hand = 60309,
             pos = { 0.0, -0.28, 0.04, -97.4, -98.66, 10.89 },
             extra = function()
-                disableActions(true)
                 RequestAnimDict('gndpacientecarregandosoro@animations')
                 while not HasAnimDictLoaded('gndpacientecarregandosoro@animations') do Citizen.Wait(0); end;
 	            TaskPlayAnim(PlayerPedId(), 'gndpacientecarregandosoro@animations', 'gndpacientecarregandosoro_clip', 4.0, 4.0, -1, 49, 0.0)
+                disableActions(true)
             end,
             andar = true,
             loop = true,

@@ -1,25 +1,20 @@
 import { RiPlayFill } from "react-icons/ri";
 import { AiOutlineHeart } from "react-icons/ai";
+import { GiBandit } from "react-icons/gi";
 
 export default [
   {
-    title: "Saquear",
-    icon: <RiPlayFill />,
-    type: "action",
+    title: "Casal",
+    icon: <AiOutlineHeart />,
+    type: "category",
+    value: "couple",
     category: "interactions",
   },
   {
-    title: "Roubar",
-    icon: <RiPlayFill />,
-    type: "action",
-    category: "interactions",
-  },
-  {
-    title: "Algemar/Desalgemar",
-    icon: <RiPlayFill />,
-    type: "action",
-    action: "handcuff",
-    closeLater: true,
+    title: "Ilegal",
+    icon: <GiBandit />,
+    type: "category",
+    value: "ilegal",
     category: "interactions",
   },
   {
@@ -31,10 +26,20 @@ export default [
     category: "interactions",
   },
   {
-    title: "Casal",
-    icon: <AiOutlineHeart />,
-    type: "category",
-    value: "couple",
-    category: "interactions",
+    title: "Colocar capuz",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "capuz",
+    value: "colocar",
+    closeLater: true,
+    category: "ilegal",
+  },
+  {
+    title: "Retirar capuz",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "capuz",
+    closeLater: true,
+    category: "ilegal",
   },
 ];

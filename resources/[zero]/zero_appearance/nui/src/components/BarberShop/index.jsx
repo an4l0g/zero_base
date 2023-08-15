@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import * as S from "../GenericalStyles";
 import Types from "./types.json";
 import AppearanceContext from "../../contexts/AppearanceContext";
@@ -11,27 +11,42 @@ import { BsScissors } from "react-icons/bs";
 import useResult from "../../hooks/useResult";
 
 function BarberShop() {
-  const firstRender = useRef(true);
   const { appearance } = useContext(AppearanceContext);
   const { calculateTotal, buyCustomizations } = useResult();
 
   const [customization, setCustomization] = useState(false);
-  const [labelType, setLabelType] = useState(Types[0].path);
+  const [labelType, setLabelType] = useState(
+    Types[appearance.barbershop.sex][0].path
+  );
   const [indexType, setIndexType] = useState(0);
   const [limit, setLimit] = useState(0);
 
   useEffect(() => {
-    setLabelType(Types[0].path);
-    setIndexType(0);
-    setLimit(appearance.barbershop.drawables[0][Types[0].path]);
+    if (appearance.barbershop) {
+      setLabelType(Types[appearance.barbershop.sex][0].path);
+      setIndexType(0);
+      setLimit(
+        appearance.barbershop.drawables[0][
+          Types[appearance.barbershop.sex][0].path
+        ]
+      );
+    }
   }, [appearance]);
 
-  const handleChangeType = (index, customLimit) => {
-    firstRender.current = true;
-    setLabelType(Types[index].path);
-    setIndexType(index);
-    setLimit(appearance.barbershop.drawables[index][Types[index].path]);
-  };
+  const handleChangeType = useCallback(
+    (index) => {
+      if (appearance.barbershop) {
+        setLabelType(Types[appearance.barbershop.sex][index].path);
+        setIndexType(index);
+        setLimit(
+          appearance.barbershop.drawables[index][
+            Types[appearance.barbershop.sex][index].path
+          ]
+        );
+      }
+    },
+    [appearance]
+  );
 
   return (
     <>
@@ -44,7 +59,7 @@ function BarberShop() {
                 <TypeList
                   indexType={indexType}
                   handleChangeType={handleChangeType}
-                  types={Types}
+                  types={Types[appearance.barbershop.sex]}
                   shop={"barbershop"}
                 />
                 <S.RightWrap>
@@ -53,7 +68,7 @@ function BarberShop() {
                       shop={"barbershop"}
                       labelType={labelType}
                       limit={limit}
-                      types={Types}
+                      types={Types[appearance.barbershop.sex]}
                       indexType={indexType}
                     />
                   </S.OptionsListWrap>
@@ -62,8 +77,9 @@ function BarberShop() {
               <Footer
                 customization={customization}
                 setCustomization={setCustomization}
+                hasCustom={true}
                 buyCustomizations={() => buyCustomizations("barber")}
-                total={calculateTotal(Types)}
+                total={calculateTotal(Types[appearance.barbershop.sex])}
               />
             </S.Content>
           </S.Container>
@@ -71,7 +87,7 @@ function BarberShop() {
             <Customization
               indexType={indexType}
               labelType={labelType}
-              types={Types}
+              types={Types[appearance.barbershop.sex]}
             />
           )}
         </>

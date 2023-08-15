@@ -19,6 +19,7 @@ const Wrapper = () => {
 
   const actions = {
     openPanel: (data: any) => {
+      console.log("EUUUUU");
       setUser(data.userData);
       setVisible("tablet");
     },

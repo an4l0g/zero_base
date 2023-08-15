@@ -2,25 +2,38 @@ cacheInteractions = {}
 
 local setPed = {
     [GetHashKey('mp_m_freemode_01')] = {
-        Handcuff = {
-            { 7, 41, 0, 2 }
-        }
+        _Handcuff = { 7, 41, 0, 2 }
     },
     [GetHashKey('mp_f_freemode_01')] = {
-        Handcuff = {
-            { 7, 25, 0, 2 }
-        }
+        _Handcuff = {  7, 25, 0, 2 }
     }
 }
 
 RegisterKeyMapping('+algemar', 'Interação - Algemar', 'keyboard', 'G')
 RegisterCommand('+algemar', function() if (not IsPedInAnyVehicle(PlayerPedId())) then TriggerServerEvent('zero_interactions:handcuff') end; end)
 
+cacheInteractions['zero:attach:src'] = nil
+cacheInteractions['zero:attach:active'] = false
+
+RegisterNetEvent('zero:attach', function(_source, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, rotationOrder, syncRot)
+    cacheInteractions['zero:attach:src'] = _source
+    cacheInteractions['zero:attach:active'] = (not cacheInteractions['zero:attach:active'])
+    local ped = PlayerPedId()
+	if (cacheInteractions['zero:attach:active']) then
+		local player = GetPlayerFromServerId(cacheInteractions['zero:attach:src'])
+		if (player > -1) then
+			AttachEntityToEntity(ped, GetPlayerPed(player), boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, rotationOrder, syncRot)
+		end
+	else
+		DetachEntity(ped, true, false)
+	end
+end)
+
 RegisterNetEvent('zero_interactions:algemas', function(action)
     local ped = PlayerPedId()
     if (action == 'colocar') then
-        local Handcuff = setPed[GetEntityModel(ped)].Handcuff
-        if (Handcuff) then SetPedComponentVariation(ped, Handcuff[1], Handcuff[2], Handcuff[3], Handcuff[4]); end;
+        local Handcuff = setPed[GetEntityModel(ped)]
+        if (Handcuff) and Handcuff._Handcuff then Handcuff = Handcuff._Handcuff SetPedComponentVariation(ped, Handcuff[1], Handcuff[2], Handcuff[3], Handcuff[4]); end;
     else
         SetPedComponentVariation(ped, 7, 0, 0, 2)
     end

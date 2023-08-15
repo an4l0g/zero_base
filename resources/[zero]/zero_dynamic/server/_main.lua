@@ -1,7 +1,7 @@
 sDynamic = {}
 interactions = {}
 zero = Proxy.getInterface('zero')
-dbTable = 'zero_dynamic'
+dbTable = 'dynamic'
 
 Tunnel.bindInterface('zero_dynamic', sDynamic)
 cDynamic = Tunnel.getInterface('zero_dynamic')

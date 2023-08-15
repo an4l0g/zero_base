@@ -15,10 +15,14 @@ local markerThread = function()
             local _cache = nearestBlips
             if (IsPedInAnyVehicle(ped) and not inDismantle) then
                 for index, dist in pairs(_cache) do
-                    local coord = Dismantle[index].coord
+                    local coord = Dismantle.locations[index].coord
                     DrawMarker(27, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 5.0, 5.0, 0, 153, 255, 155, 0, 0, 0, 1)
                     if (dist <= 5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100) then
-                        vSERVER.checkDismantle(index)  
+                        if (not Dismantle.vehicles_blacklisted[GetEntityModel(GetVehiclePedIsUsing(ped))]) then
+                            vSERVER.checkDismantle(index)  
+                        else
+                            TriggerEvent('notify', 'Desmanche', 'A <b>prefeitura</b> bloqueou o desmanche deste veículo.')
+                        end
                     end
                 end
             end
@@ -33,7 +37,7 @@ Citizen.CreateThread(function()
         local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)
         nearestBlips = {}
-        for k, v in pairs(Dismantle) do
+        for k, v in pairs(Dismantle.locations) do
             local distance = #(pCoord - v.coord)
             if (distance <= 10) then
                 nearestBlips[k] = distance
@@ -55,16 +59,18 @@ local parts = {
             return IsVehicleDoorDamaged(vehicle, id)
         end,
         action = function(vehicle, vehicletype, id, time, name, plate)
+            local ped = PlayerPedId()
             LocalPlayer.state.BlockTasks = true
-            propConsaw(true)
+            TriggerEvent('zero_animations:setAnim', 'consertar')
+            FreezeEntityPosition(ped, true)
             SetVehicleDoorOpen(vehicle, id, false, false)
 
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
-                LocalPlayer.state.BlockTasks = false
-                propConsaw(false)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(ped)
+            FreezeEntityPosition(ped, false)
+            return true
         end
     },
     ['door_pside_f'] = {
@@ -75,16 +81,18 @@ local parts = {
             return IsVehicleDoorDamaged(vehicle, id)
         end,
         action = function(vehicle, vehicletype, id, time, name, plate)
+            local ped = PlayerPedId()
             LocalPlayer.state.BlockTasks = true
-            propConsaw(true)
+            TriggerEvent('zero_animations:setAnim', 'consertar')
+            FreezeEntityPosition(ped, true)
             SetVehicleDoorOpen(vehicle, id, false, false)
 
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
-                LocalPlayer.state.BlockTasks = false
-                propConsaw(false)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(ped)
+            FreezeEntityPosition(ped, false)
+            return true
         end
     },
     ['door_dside_r'] = {
@@ -95,16 +103,18 @@ local parts = {
             return IsVehicleDoorDamaged(vehicle, id)
         end,
         action = function(vehicle, vehicletype, id, time, name, plate)
+            local ped = PlayerPedId()
             LocalPlayer.state.BlockTasks = true
-            propConsaw(true)
+            TriggerEvent('zero_animations:setAnim', 'consertar')
+            FreezeEntityPosition(ped, true)
             SetVehicleDoorOpen(vehicle, id, false, false)
 
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
-                LocalPlayer.state.BlockTasks = false
-                propConsaw(false)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(ped)
+            FreezeEntityPosition(ped, false)
+            return true
         end
     },
     ['door_pside_r'] = {
@@ -115,16 +125,18 @@ local parts = {
             return IsVehicleDoorDamaged(vehicle, id)
         end,
         action = function(vehicle, vehicletype, id, time, name, plate)
+            local ped = PlayerPedId()
             LocalPlayer.state.BlockTasks = true
-            propConsaw(true)
+            TriggerEvent('zero_animations:setAnim', 'consertar')
+            FreezeEntityPosition(ped, true)
             SetVehicleDoorOpen(vehicle, id, false, false)
 
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
-                LocalPlayer.state.BlockTasks = false
-                propConsaw(false)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(ped)
+            FreezeEntityPosition(ped, false)
+            return true
         end
     },
     ['bonnet'] = {
@@ -135,16 +147,18 @@ local parts = {
             return IsVehicleDoorDamaged(vehicle, id)
         end,
         action = function(vehicle, vehicletype, id, time, name, plate)
+            local ped = PlayerPedId()
             LocalPlayer.state.BlockTasks = true
-            propConsaw(true)
+            TriggerEvent('zero_animations:setAnim', 'consertar')
+            FreezeEntityPosition(ped, true)
             SetVehicleDoorOpen(vehicle, id, false, false)
 
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
-                LocalPlayer.state.BlockTasks = false
-                propConsaw(false)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleDoorBroken', VehToNet(vehicle), id)
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(ped)
+            FreezeEntityPosition(ped, false)
+            return true
         end
     },
     ['wheel_lf'] = {
@@ -160,12 +174,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lf')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lf')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_rf'] = {
@@ -181,12 +194,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rf')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rf')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_lm1'] = {
@@ -202,12 +214,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lm1')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lm1')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_rm1'] = {
@@ -223,12 +234,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rm1')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rm1')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_lm2'] = {
@@ -244,12 +254,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lm2')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lm2')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_rm2'] = {
@@ -265,12 +274,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rm2')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rm2')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_lm3'] = {
@@ -286,12 +294,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lm3')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lm3')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_rm3'] = {
@@ -307,12 +314,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rm3')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rm3')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_lr'] = {
@@ -328,12 +334,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lr')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_lr')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['wheel_rr'] = {
@@ -349,12 +354,11 @@ local parts = {
                 { 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@', 'machinic_loop_mechandplayer', 1 }, 
             false)
              
-            Citizen.SetTimeout(time, function()
-                TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rr')
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)
+            TriggerServerEvent('syncVehicleTireBroken', VehToNet(vehicle), id, 'wheel_rr')
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     },
     ['engine'] = {
@@ -377,52 +381,19 @@ local parts = {
             SetVehicleEngineCanDegrade(vehicle, true)
             TriggerServerEvent('syncVehicleEngineBroken', VehToNet(vehicle))
 
-            Citizen.SetTimeout(time, function()    
-                LocalPlayer.state.BlockTasks = false
-                zero.stopAnim(true)
-                return true
-            end)
+            Citizen.Wait(10000)    
+            LocalPlayer.state.BlockTasks = false
+            ClearPedTasks(PlayerPedId())
+            return true
         end
     }
 }
-
-local consaw_object = nil
-local consaw_hash = GetHashKey('prop_tool_consaw')
-
-propConsaw = function(use)
-    local ped = PlayerPedId()
-    if (use) then      
-        if (consaw_object) then propConsaw(false); end;
-
-        consaw_object = true
-        FreezeEntityPosition(ped, true)
-
-        RequestAnimDict('weapons@heavy@minigun')
-        while (not HasAnimDictLoaded('weapons@heavy@minigun')) do
-            Citizen.Wait(10)
-        end
-        TaskPlayAnim(ped, 'weapons@heavy@minigun', 'idle_2_aim_right_med', 1.0, -1, -1, 50, 0, 0, 0, 0)
-
-        Citizen.CreateThread(function()
-            while (consaw_object) do
-                if (not IsEntityPlayingAnim(ped, 'weapons@heavy@minigun', 'idle_2_aim_right_med', 3)) then
-                    TaskPlayAnim(ped, 'weapons@heavy@minigun', 'idle_2_aim_right_med', 1.0, -1, -1, 50, 0, 0, 0, 0)
-                end
-                Citizen.Wait(100)
-            end
-        end)
-
-    else    
-        consaw_object = nil
-        ClearPedTasks(ped)
-        FreezeEntityPosition(ped,false)
-    end
-end
 
 cli.generateParts = function(vehicle, vtype, vname, vplate)
     local ped = PlayerPedId()
     if (vehicle and vtype) and DoesEntityExist(vehicle) then
         vehicleCache.vehicle = vehicle
+        vehicleCache.vtype = vtype
         vehicleCache.parts = {}
         for k, v in pairs(parts) do
             local ebone = GetEntityBoneIndexByName(vehicle, k)
@@ -437,10 +408,31 @@ cli.generateParts = function(vehicle, vtype, vname, vplate)
                 vehicleCache.parts[k].destroy = parts[k].status(vehicle, v.id)
             end
         end
-        print(json.encode(vehicleCache))
+        -- print(json.encode(vehicleCache))
         FreezeEntityPosition(vehicle, true)
+        Citizen.Wait(500)
+        TriggerEvent('notify', 'Desmanche', 'Desmanche <b>iniciado</b>, saia do veículo.')
+        inDismantle = true
         startDismantle()
     end
+end
+
+local act = false
+
+local checkAllPartsDestroyed = function()
+    local f = 0
+    if vehicleCache.parts and countTable(vehicleCache.parts) > 0 then
+        for k, v in pairs(vehicleCache.parts) do
+            if v.destroy or v.destroy == 1 then
+                f = f + 1
+            end
+        end
+    end
+
+    if vehicleCache.parts and (f >= countTable(vehicleCache.parts)) then
+        return true
+    end
+    return false
 end
 
 startDismantle = function()
@@ -450,9 +442,9 @@ startDismantle = function()
             local vehicle = vehicleCache.vehicle
             for k, v in pairs(vehicleCache.parts) do
                 local new_vehicle = GetVehiclePedIsIn(ped, false)
-                if (new_vehicle > 0 and new_vehicle ~= vehicle) or not in_range then
+                if (new_vehicle > 0 and new_vehicle ~= vehicle) then
                     vehicleCache = {}
-                    TriggerServerEvent('vrp_garages:delete', VehToNet(vehicle))
+                    exports.zero_garage:deleteVehicle(VehToNet(vehicle))
                 end
 
                 local pCoord = GetEntityCoords(ped)
@@ -461,12 +453,29 @@ startDismantle = function()
                 local cbone = GetWorldPositionOfEntityBone(vehicle, ebone)
 
                 local distance = #(pCoord - cbone)
-                if (distance <= 1.5 and (not parts[k].status(vehicle, v.id)) and (not vehicleCache.parts[k].destroy) and (not IsPedInVehicle(ped, vehicle, false))) then
-                    
+                if (distance <= 1.5 and not act and not parts[k].status(vehicle, v.id) and not vehicleCache.parts[k].destroy and not IsPedInVehicle(ped, vehicle, false)) then
+                    TextFloating('~b~E~w~ - Para remover', cbone)
+                    if (distance <= 1.2 and IsControlJustPressed(0, 38)) then
+                        act = true
+                        if (parts[k].action(vehicle, v.type, v.id, v.time, v.name, v.plate)) then
+                            vehicleCache.parts[k].destroy = true
+                            act = false
+                        else
+                            act = false
+                        end
+                    end
+                end
+            end
+            if (checkAllPartsDestroyed()) then
+                if (DoesEntityExist(vehicle)) then
+                    exports.zero_garage:deleteVehicle(VehToNet(vehicle))
+                    vSERVER.finishDismantle(vehicleCache.vtype)
+                    inDismantle = false
                 end
             end
             Citizen.Wait(5)
         end
+        vehicleCache = {}
     end)
 end
 
