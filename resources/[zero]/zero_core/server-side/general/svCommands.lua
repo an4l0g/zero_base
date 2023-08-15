@@ -889,6 +889,35 @@ RegisterCommand('uncuff', function(source, args)
 end)
 
 ---------------------------------------
+-- RCAPUZ
+---------------------------------------
+RegisterCommand('rcapuz', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (zeroClient.isCapuz(nSource)) then
+                Player(nPlayer).state.Capuz = false
+                zeroClient.setCapuz(nSource, false)
+            else
+                TriggerClientEvent('notify', source, 'Remover capuz', 'O jogador não se encontra <b>encapuzado</b>.')
+            end
+        else
+            if (zeroClient.isCapuz(source)) then
+                Player(source).state.Capuz = false
+                zeroClient.setCapuz(source, false)
+            else
+                TriggerClientEvent('notify', source, 'Remover capuz', 'Você não se encontra <b>encapuzado</b>.')
+            end
+        end
+
+        local text = (not args[1] and user_id or args[1])
+        zero.webhook('Uncuff', '```prolog\n[/UNCUFF]\n[USER]: '..user_id..'\n[TARGET]: '..text..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+    end
+end)
+
+---------------------------------------
 -- LIMPARAREA
 ---------------------------------------
 RegisterCommand('limpararea', function(source)

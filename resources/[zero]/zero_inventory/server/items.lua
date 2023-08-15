@@ -218,6 +218,7 @@ sInventory.changeItemPosition = function(cItem, cPos, nItem, nPos, amount)
         end
     else
         nSlots = sInventory.getBag(nItem.bagType)
+        if (config.blacklist[cItem.index]) then TriggerClientEvent('notify', _source, 'Inventário', 'Você não pode executar esta ação com este <b>item</b>.') return; end;
         
         if not sInventory.validateItem(nSlots, nItem, nPos) then 
             config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item, 5000)
