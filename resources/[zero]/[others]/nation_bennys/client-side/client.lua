@@ -255,7 +255,7 @@ end
 RegisterNetEvent('zero_bennys:applymods')
 AddEventHandler('zero_bennys:applymods', function(veh, custom)
 	if (veh) then
-		TriggerServerEvent('zero_bennys:syncApplyMods', custom, VehToNet(veh))
+		TriggerServerEvent('zero_bennys:syncApplyMods', custom, veh)
 	end
 end)
 
