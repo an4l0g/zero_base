@@ -1,8 +1,8 @@
 local srv = {}
 Tunnel.bindInterface('tattooShop', srv)
 
-zero._prepare('zero_character/getTattoos', 'select user_tattoo from zero_creation where user_id = @user_id')
-zero._prepare('zero_character/saveTattoo', 'update zero_creation set user_tattoo = @user_tattoo where user_id = @user_id')
+zero._prepare('zero_character/getTattoos', 'select user_tattoo from creation where user_id = @user_id')
+zero._prepare('zero_character/saveTattoo', 'update creation set user_tattoo = @user_tattoo where user_id = @user_id')
 
 srv.getTattoo = function()
     local _source = source

@@ -32,8 +32,8 @@ end)
 RegisterNetEvent('zero_interactions:algemas', function(action)
     local ped = PlayerPedId()
     if (action == 'colocar') then
-        local Handcuff = setPed[GetEntityModel(ped)]._Handcuff
-        if (Handcuff) then SetPedComponentVariation(ped, Handcuff[1], Handcuff[2], Handcuff[3], Handcuff[4]); end;
+        local Handcuff = setPed[GetEntityModel(ped)]
+        if (Handcuff) and Handcuff._Handcuff then Handcuff = Handcuff._Handcuff SetPedComponentVariation(ped, Handcuff[1], Handcuff[2], Handcuff[3], Handcuff[4]); end;
     else
         SetPedComponentVariation(ped, 7, 0, 0, 2)
     end

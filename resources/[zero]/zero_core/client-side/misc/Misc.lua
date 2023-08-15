@@ -95,6 +95,7 @@ RemovePickups = function(Pid)
 		`PICKUP_VEHICLE_HEALTH_STANDARD`,
 		`PICKUP_VEHICLE_HEALTH_STANDARD_LOW_GLOW`,
 		`PICKUP_VEHICLE_MONEY_VARIABLE`,
+		`PICKUP_VEHICLE_WEAPON_SNIPERRIFLE`,
 		`PICKUP_VEHICLE_WEAPON_APPISTOL`,
 		`PICKUP_VEHICLE_WEAPON_ASSAULTSMG`,
 		`PICKUP_VEHICLE_WEAPON_COMBATPISTOL`,
@@ -181,48 +182,3 @@ RemovePickups = function(Pid)
 		ToggleUsePickupsForPlayer(Pid,Pickups[Number],false)
 	end
 end
-
-
--- function tvRP.PlayAnim(animUpper,animSequency,animLoop)
--- 	local playFlags = 0
--- 	local ped = PlayerPedId()
--- 	if animSequency["task"] then
--- 		tvRP.stopAnim(true)
-
--- 		if animSequency["task"] == "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER" then
--- 			local coords = GetEntityCoords(ped)
--- 			TaskStartScenarioAtPosition(ped,animSequency["task"],coords["x"],coords["y"],coords["z"] - 1,GetEntityHeading(ped),0,0,false)
--- 		else
--- 			TaskStartScenarioInPlace(ped,animSequency["task"],0,false)
--- 		end
--- 	else
--- 		tvRP.stopAnim(animUpper)
-
--- 		if animUpper then
--- 			playFlags = playFlags + 48
--- 		end
-
--- 		if animLoop then
--- 			playFlags = playFlags + 1
--- 		end
-
--- 		CreateThread(function()
--- 			RequestAnimDict(animSequency[1])
--- 			while not HasAnimDictLoaded(animSequency[1]) do
--- 				Wait(1)
--- 			end
-
--- 			if HasAnimDictLoaded(animSequency[1]) then
--- 				animDict = animSequency[1]
--- 				animName = animSequency[2]
--- 				animFlags = playFlags
-
--- 				if playFlags == 49 then
--- 					animActived = true
--- 				end
-
--- 				TaskPlayAnim(ped,animSequency[1],animSequency[2],8.0,8.0,-1,playFlags,0,0,0,0)
--- 			end
--- 		end)
--- 	end
--- end

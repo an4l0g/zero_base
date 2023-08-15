@@ -1,7 +1,7 @@
 local srv = {}
 Tunnel.bindInterface('barberShop', srv)
 
-zero._prepare('zero_character/getCharacter', 'select user_character from zero_creation where user_id = @user_id')
+zero._prepare('zero_character/getCharacter', 'select user_character from creation where user_id = @user_id')
 
 srv.getCharacter = function()
     local _source = source

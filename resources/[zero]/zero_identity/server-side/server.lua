@@ -4,14 +4,16 @@ vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 local configGeneral = config.general
 
-zero._prepare('zero_identity/getUserPhoto', 'select url from zero_identity where user_id = @user_id')
-zero._prepare('zero_identity/insertPhoto', 'insert into zero_identity (user_id, url) values (@user_id, @url)')
-zero._prepare('zero_identity/updatePhoto', 'update zero_identity set url = @url where user_id = @user_id')
+zero._prepare('zero_identity/getUserPhoto', 'select url from identity where user_id = @user_id')
+zero._prepare('zero_identity/insertPhoto', 'insert into identity (user_id, url) values (@user_id, @url)')
+zero._prepare('zero_identity/updatePhoto', 'update identity set url = @url where user_id = @user_id')
 
 srv.getUserIdentity = function()
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
+        zero.resetIdentity(user_id)
+        
         local table = {}
         table.id = user_id
         table.fullname = getUserFullname(user_id)

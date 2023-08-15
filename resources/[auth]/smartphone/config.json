@@ -1,47 +1,56 @@
 {
-    "token": "ad1ba8b6-d128-4970-aee8-49f242466cb2",
-    "client": {
-        "bankType": "fleeca",
-        "uploadServer": "webhook-para-imagens-do-celular",
-        "allowUnsafeURL": true,
-        "videoServer": "ws://167.114.185.18:29873/BrazucaCityRP",
-        "isAndroid": true,
-        "case": "s20black",
-        "useGameClock": true,
-        "phone_template": "XXX-XXX",
-        "backgroundURL": "",
-        "disabledApps": []
+  "token": "ad1ba8b6-d128-4970-aee8-49f242466cb2",
+  "client": {
+    "bankType": "fleeca",
+    "uploadServer": "https://discord.com/api/webhooks/1140439539807166504/YDeqj82Ws4O1iTovEcNDS7oBe4bprIuQ0CXtfsCumv2y7ygWKMGHUPjCZN7URAUKsOxO",
+    "allowUnsafeURL": true,
+    "videoServer": "ws://167.114.185.18:29873/BrazucaCityRP",
+    "isAndroid": true,
+    "case": "s20black",
+    "apps": {
+      "calculator": "https://fivem.jesteriruka.dev/apps/samsung/calculator.webp",
+      "notes": "https://fivem.jesteriruka.dev/apps/samsung/notes.webp",
+      "settings": "https://fivem.jesteriruka.dev/apps/samsung/settings.webp",
+      "contacts": "https://fivem.jesteriruka.dev/apps/samsung/contacts.webp",
+      "sms": "https://fivem.jesteriruka.dev/apps/samsung/sms.webp",
+      "gallery": "https://fivem.jesteriruka.dev/apps/samsung/gallery.webp",
+      "phone": "https://fivem.jesteriruka.dev/apps/samsung/phone.webp",
+      "facetime": "https://fivem.jesteriruka.dev/apps/samsung/facetime.webp"
     },
-    "call_mode": "mumble-voip",
-    "webhookURL": "webhook-para-logs-de-celular",
-    "instagram_verify": "staff.permissao",
-    "instagram_accounts": {
-        "*": 1,
-        "manager.permissao": 2
+    "useGameClock": true,
+    "phone_template": "XXX-XXX",
+    "backgroundURL": "https://cdn.discordapp.com/attachments/922885255386517535/1140494871602397224/Design_sem_nome_3.png",
+    "disabledApps": []
+  },
+  "call_mode": "mumble-voip",
+  "webhookURL": "https://discord.com/api/webhooks/1140437829822971924/fwcth6U7dbMhavvHThW67iU-x_sZ42H8GYE3X-K-_i-ilHJRDha4qOKWmVQju1_41JRp",
+  "instagram_verify": "staff.permissao",
+  "instagram_accounts": {
+    "*": 1,
+    "manager.permissao": 2
+  },
+  "moderator": "staff.permissao",
+  "item": "celular",
+  "services": [
+    {
+      "name": "Policia",
+      "number": "190",
+      "permission": "policia.permissao"
     },
-    "moderator": "staff.permissao",
-    "item": "celular",
-    "services": [
-        {
-            "name": "Policia",
-            "number": "190",
-            "permission": "policia.permissao"
-        },
-        {
-            "name": "Paramédico",
-            "number": "192",
-            "permission": "paramedico.permissao"
-        },
-        {
-            "name": "Mecânico",
-            "number": "0800 042",
-            "permission": "mecanico.permissao"
-        },
-        {
-            "name": "Taxi",
-            "number": "0800 075",
-            "permission": "taxi.permissao"
-        }
-    ],
-    "base": "zero"
+    {
+      "name": "Paramédico",
+      "number": "192",
+      "permission": "paramedico.permissao"
+    },
+    {
+      "name": "Mecânico",
+      "number": "0800 042",
+      "permission": "mecanico.permissao"
+    },
+    {
+      "name": "Taxi",
+      "number": "0800 075",
+      "permission": "taxi.permissao"
+    }
+  ]
 }

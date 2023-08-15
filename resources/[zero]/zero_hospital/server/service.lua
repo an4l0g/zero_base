@@ -1,4 +1,4 @@
-tableName = 'zero_hospital'
+tableName = 'hospital'
 zero.prepare('zero_hospital:registerService','insert into '..tableName..' (doctor_id, patient_id, total_price, service_date, request, description) values (@doctor_id, @patient_id, @total_price, @service_date, @request, @description)');
 zero.prepare('zero_hospital:listServicesByPatient','select * from ' ..tableName.. ' where patient_id like @search order by service_date desc limit 7 offset @offset');
 zero.prepare('zero_hospital:listServicesByDoctor','select * from ' ..tableName.. ' where doctor_id like @search order by service_date desc limit 7 offset @offset');

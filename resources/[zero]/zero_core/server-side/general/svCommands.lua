@@ -162,7 +162,7 @@ RegisterCommand('wl', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') and args[1] then
         local nUser = parseInt(args[1])
         if (nUser) then
             exports['zero']:setWhitelisted(nUser, true)
@@ -176,7 +176,7 @@ RegisterCommand('unwl', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') and args[1] then
         local nUser = parseInt(args[1])
         if (nUser) then
             exports['zero']:setWhitelisted(nUser, false)
@@ -193,7 +193,7 @@ RegisterCommand('ban', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') and args[1] then
         local nUser = parseInt(args[1])
         local nPlayer = zero.getUserSource(nUser)
         if (nUser > 0) then
@@ -213,7 +213,7 @@ RegisterCommand('unban', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Manager') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Manager') and args[1] then
         local nUser = parseInt(args[1])
         if (nUser > 0) then
             local prompt = zero.prompt(source, { 'Motivo' })
@@ -299,26 +299,28 @@ end)
 RegisterCommand('delmoney', function(source, args)
     if (#args > 0) then
         local nSource = zero.getUserSource(parseInt(args[1]))
-        local nUser = zero.getUserId(nSource)
-        local nIdentity = zero.getUserIdentity(nUser)
-        local money = parseInt(args[2])
-        if (source == 0) then
-            if (nUser and money) then
-                zero.tryFullPayment(nUser, money)
-                print('^5[ZERO MONEY]^7 Voce tirou ^2R$'..zero.format(money)..'^7 do passaporte ^2'..nUser..'^7.')
-                TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
-                zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: CONSOLE\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-            end
-        else
-            local user_id = zero.getUserId(source)
-            local identity = zero.getUserIdentity(user_id)
-            if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
-                if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
+        if (nSource) then
+            local nUser = zero.getUserId(nSource)
+            local nIdentity = zero.getUserIdentity(nUser)
+            local money = parseInt(args[2])
+            if (source == 0) then
                 if (nUser and money) then
                     zero.tryFullPayment(nUser, money)
-                    TriggerClientEvent('notify', source, 'Money', 'Você retirou <b>R$'..zero.format(money)..'</b>, do jogador <b>#'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
+                    print('^5[ZERO MONEY]^7 Voce tirou ^2R$'..zero.format(money)..'^7 do passaporte ^2'..nUser..'^7.')
                     TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
-                    zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[JOGADOR]: #'..nUser..' | '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: CONSOLE\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                end
+            else
+                local user_id = zero.getUserId(source)
+                local identity = zero.getUserIdentity(user_id)
+                if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
+                    if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
+                    if (nUser and money) then
+                        zero.tryFullPayment(nUser, money)
+                        TriggerClientEvent('notify', source, 'Money', 'Você retirou <b>R$'..zero.format(money)..'</b>, do jogador <b>#'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
+                        TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
+                        zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[JOGADOR]: #'..nUser..' | '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    end
                 end
             end
         end
@@ -561,30 +563,6 @@ RegisterCommand('spike', function(source, args)
 	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
 		TriggerClientEvent('spike', source, args[1])
 		zero.webhook('PoliceCommands', '```prolog\n[/SPIKE]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n['..(args[1] and 'DELETOU' or 'CRIOU')..' UMA SPIKE NA]\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-	end
-end)
-
----------------------------------------
--- RCAPUZ
----------------------------------------
-RegisterCommand('rcapuz', function(source)
-	local user_id = zero.getUserId(source)
-    local identity = zero.getUserIdentity(user_id)
-	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
-        local nplayer = zeroClient.getNearestPlayer(source, 2)
-		if (nplayer) then
-            local nUser = zero.getUserId(nplayer)
-			local nIdentity = zero.getUserIdentity(nUser)
-            if (zeroClient.isCapuz(nplayer)) then
-                Player(nplayer).state.Capuz = false
-                zeroClient.setCapuz(nplayer, false) 
-				zero.webhook('PoliceCommands', '```prolog\n[/RCAPUZ]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RETIROU O CAPUZ DO]\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-            else
-                TriggerClientEvent('notify', source, 'Remover Capuz', 'O <b>cidadão</b> não está com o capuz na cabeça.')
-            end
-        else
-            TriggerClientEvent('notify', source, 'Remover Capuz', 'Você não se encontra próximo de um <b>cidadão</b>.')
-        end
 	end
 end)
 
@@ -889,15 +867,48 @@ RegisterCommand('uncuff', function(source, args)
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
             if (zeroClient.isHandcuffed(nSource)) then
+                Player(nPlayer).state.Handcuff = false
+                zeroClient.setHandcuffed(nSource, false)
                 TriggerClientEvent('zero_core:uncuff', nSource)
             else
                 TriggerClientEvent('notify', source, 'Uncuff', 'O jogador não se encontra <b>algemado</b>.')
             end
         else
             if (zeroClient.isHandcuffed(source)) then
+                Player(source).state.Handcuff = false
+                zeroClient.setHandcuffed(source, false)
                 TriggerClientEvent('zero_core:uncuff', source)
             else
                 TriggerClientEvent('notify', source, 'Uncuff', 'Você não se encontra <b>algemado</b>.')
+            end
+        end
+
+        local text = (not args[1] and user_id or args[1])
+        zero.webhook('Uncuff', '```prolog\n[/UNCUFF]\n[USER]: '..user_id..'\n[TARGET]: '..text..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+    end
+end)
+
+---------------------------------------
+-- RCAPUZ
+---------------------------------------
+RegisterCommand('rcapuz', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (zeroClient.isCapuz(nSource)) then
+                Player(nPlayer).state.Capuz = false
+                zeroClient.setCapuz(nSource, false)
+            else
+                TriggerClientEvent('notify', source, 'Remover capuz', 'O jogador não se encontra <b>encapuzado</b>.')
+            end
+        else
+            if (zeroClient.isCapuz(source)) then
+                Player(source).state.Capuz = false
+                zeroClient.setCapuz(source, false)
+            else
+                TriggerClientEvent('notify', source, 'Remover capuz', 'Você não se encontra <b>encapuzado</b>.')
             end
         end
 
@@ -1005,9 +1016,9 @@ RegisterCommand('clearweapons', function(source, args)
         local text = ''
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
-            local nUser = zero.getUserId(nSource)
-            local nIdentity = zero.getUserIdentity(nUser)
             if (nSource) then
+                local nUser = zero.getUserId(nSource)
+                local nIdentity = zero.getUserIdentity(nUser)
                 zeroClient.giveWeapons(nSource, {}, true, GlobalState.weaponToken)
                 TriggerClientEvent('notify', source, 'Clear Weapon', 'Você limpou os <b>armamentos</b> do passaporte <b>'..nUser..'</b>.')
                 text = '#'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname
@@ -1052,9 +1063,9 @@ RegisterCommand('umsg', function(source, args)
             local message = zero.prompt(source, { 'Mensagem' })
             if (message[1]) then
                 local nPlayer = zero.getUserSource(parseInt(args[1]))
-                local nUser = zero.getUserId(nPlayer)
-                local nIdentity = zero.getUserIdentity(nUser)
                 if (nPlayer) then
+                    local nUser = zero.getUserId(nPlayer)
+                    local nIdentity = zero.getUserIdentity(nUser)
                     TriggerClientEvent('notify', nPlayer, 'Mensagem Privada', 'O staff <b>'..identity.firstname..' '..identity.lastname..'</b> te enviou uma mensagem: <br /><br />'..message[1], 10000)
                     TriggerClientEvent('notify', source, 'Mensagem Privada', 'A mensagem foi enviada com <b>sucesso</b>.')
                     zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
@@ -1441,13 +1452,13 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
 
         Citizen.SetTimeout(8000, function()
             local userTable = zero.getUserDataTable(user_id)
-            if (userTable.Handcuff == true) then
+            if (userTable.Handcuff) and userTable.Handcuff == true then
                 Player(source).state.Handcuff = true
                 zeroClient.setHandcuffed(source, true)
                 TriggerClientEvent('zero_interactions:algemas', source, 'colocar')
             end
 
-            if (userTable.Capuz == true) then
+            if (userTable.Capuz) and userTable.Capuz == true then
                 Player(source).state.Capuz = true
 		        zeroClient.setCapuz(source, true)
             end

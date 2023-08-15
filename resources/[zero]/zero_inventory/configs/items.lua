@@ -9,6 +9,8 @@ config.items = {
 ----------------------------------------------------------------------------
 -- LEGAL
 ----------------------------------------------------------------------------
+    ['par-alianca'] = { name = 'Par de Alianças', type = 'common', weight = 0.0 },
+    ['alianca-casamento'] = { name = 'Aliança de Casamento', type = 'common', weight = 0.0 },
     ['celular'] = { name = 'Celular', type = 'common', weight = 0.5 },
     ['algema'] = { name = 'Algema', type = 'common', weight = 0.5 },
     ['chave-algema'] = { name = 'Chave da Algema', type = 'common', weight = 0.5 },
@@ -419,6 +421,9 @@ config.items = {
     },
 }
 
+config.blacklist = {
+    ['alianca-casamento'] = true
+}
 
 function consumableItem(index)
    local _source = source

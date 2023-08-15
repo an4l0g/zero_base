@@ -2,9 +2,9 @@ srv = {}
 Tunnel.bindInterface('Creation', srv)
 vCLIENT = Tunnel.getInterface('Creation')
 
-zero._prepare('zero_character/createUser', 'INSERT IGNORE INTO zero_creation (user_id, controller, user_character, user_tattoo, user_clothes, rh) VALUES (@user_id, @controller, @user_character, @user_tattoo, @user_clothes, @rh)')
-zero._prepare('zero_character/verifyUser', 'SELECT controller FROM zero_creation WHERE user_id = @user_id')
-zero._prepare('zero_character/saveUser', 'UPDATE zero_creation SET user_character = @user_character, controller = 1 WHERE user_id = @user_id')
+zero._prepare('zero_character/createUser', 'INSERT IGNORE INTO creation (user_id, controller, user_character, user_tattoo, user_clothes, rh) VALUES (@user_id, @controller, @user_character, @user_tattoo, @user_clothes, @rh)')
+zero._prepare('zero_character/verifyUser', 'SELECT controller FROM creation WHERE user_id = @user_id')
+zero._prepare('zero_character/saveUser', 'UPDATE creation SET user_character = @user_character, controller = 1 WHERE user_id = @user_id')
 
 srv.changeSession = function(bucket)
     local _source = source
@@ -35,6 +35,7 @@ srv.verifyIdentity = function(identity)
     if (user_id) then
         zero.execute('vRP/update_user_first_spawn', { user_id = user_id, firstname = identity.firstname, lastname = identity.lastname, age = identity.age  } )
         zero.execute('zero_framework/money_init_user', { user_id = user_id, wallet = 5000, bank = 25000 })
+        zero.resetIdentity(user_id)
         return true
     end
     return false

@@ -1,4 +1,4 @@
-bagsTable = 'zero_inventory'
+bagsTable = 'inventory'
 zero.prepare('zero_inventory:getBag', 'select * from '..bagsTable..' where bag_type = @bag_type')
 zero.prepare('zero_inventory:insertBag', 'insert into '..bagsTable..' (slots, bag_type, weight) values (@slots, @bag_type, @weight)')
 zero.prepare('zero_inventory:updateBag', 'insert into '..bagsTable..' (slots, bag_type) values (@slots, @bag_type) on duplicate key update slots = @slots')
