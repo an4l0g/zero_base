@@ -245,6 +245,7 @@ local vehicleDetained = {
         return true
     end,
     [1] = function(source, user_id, vehicle)
+        TriggerClientEvent('notify', source, 'Garagem', 'O seu veículo foi desmanchado e perdeu <b>tunagem</b>', 15000)
         local value = parseInt(vehiclePrice(vehicle) * config.taxDetained)
         local request = zero.request(source, 'Veículo na detenção, deseja acionar o seguro pagando R$'..zero.format(value)..'?', 60000)
         if (request) then

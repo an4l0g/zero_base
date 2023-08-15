@@ -5,7 +5,6 @@ local vCLIENT = Tunnel.getInterface('Dismantle')
 local table = 'user_vehicles'
 zero._prepare('zero_dismantle/getVehicleInfo', 'select * from '..table..' where user_id = @user_id and vehicle = @vehicle')
 
-local dismantleTemp = {}
 local dismantleTime = {}
 
 srv.checkDismantle = function(index)
@@ -27,10 +26,10 @@ srv.checkDismantle = function(index)
                     return false
                 end
 
-                -- if (vehState.user_id == user_id) then
-                --     TriggerClientEvent('notify', source, 'Desmanche', 'Você não pode desmanchar o seu próprio <b>veículo</b>.')
-                --     return false
-                -- end 
+                if (vehState.user_id == user_id) then
+                    TriggerClientEvent('notify', source, 'Desmanche', 'Você não pode desmanchar o seu próprio <b>veículo</b>.')
+                    return false
+                end 
 
                 local veh = zero.query('zero_dismantle/getVehicleInfo', { user_id = vehState.user_id, vehicle = vehState.model }) [1]
                 if (not veh) then
@@ -57,6 +56,7 @@ srv.checkDismantle = function(index)
                 if (vtype) then
                     registerDismantleTime(index, _config.cooldown)
                     vCLIENT.generateParts(source, vehicle, vtype, vehState.model, vehState.plate)
+                    zero.execute('zero_bennys/setCustom', { user_id = vehState.user_id, plate = vehState.plate, custom = json.encode({}) })
                     zero.execute('zero_garage/setDetained', { detained = 1, user_id = vehState.user_id, vehicle = vehState.model })
                     zero.webhook(_config.webhook, '```prolog\n[DISMANTLE]\n[ACTION]: (DISMANTLED VEHICLE)\n[USER]: '..user_id..' \n[VEHICLE MODEL]: '..vehState.model..'\n[OWNER VEHICLE]: '..vehState.user_id..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     return true
