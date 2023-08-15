@@ -26,7 +26,7 @@ export const Input = styled.input`
     color: ${theme.colors.shape()};
 
     &[disabled] {
-      background-color: ${theme.colors.dark(0.3)};
+      background-color: ${theme.colors.primary(0.1)};
       cursor: not-allowed;
     }
 

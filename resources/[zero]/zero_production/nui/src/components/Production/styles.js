@@ -147,6 +147,13 @@ export const HeaderProduction = styled.div`
     gap: 1rem;
     display: flex;
     align-items: center;
+
+    &.p-item {
+      background-color: ${theme.colors.primary(0.3)};
+      & > img {
+        background-color: ${theme.colors.dark(0.5)};
+      }
+    }
   `}
 `;
 
