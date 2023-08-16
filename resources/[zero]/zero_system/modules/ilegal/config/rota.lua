@@ -44,7 +44,7 @@ Routes = {
             },
             extras = {
                 anim = 'mexer',
-                drug = true,
+                drug = true, -- Deixar true somente quando for rota de venda de droga.
                 police = 70,
                 timeout = 5000,
             }
