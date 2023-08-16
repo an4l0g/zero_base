@@ -29,9 +29,7 @@ local check = {
     end,
     ['without-receive'] = function(user_id, item, quantity, receive, payment)
         if ((zero.getInventoryWeight(user_id) + (zero.getItemWeight(item) * quantity)) <= zero.getInventoryMaxWeight(user_id)) then
-            if (zero.getInventoryItemAmount(user_id, item) >= quantity) then
-                return true
-            end
+            return true
         end
         return false
     end

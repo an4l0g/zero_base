@@ -45,7 +45,9 @@ config.items = {
 ----------------------------------------------------------------------------
 -- ILEGAL
 ----------------------------------------------------------------------------
-    ['maconha'] = { name = 'Maconha', type = 'common', weight = 0.5 },
+    ['maconha'] = { name = 'Maconha', type = 'common', weight = 1.5 },
+    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1.5 },
+    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1.5 },
     ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0 },
     ['nota-fiscal'] = { name = 'Nota fiscal', type = 'common', weight = 1 },
     ['lockpick'] = { name = 'Lockpick', type = 'common', weight = 1.0, usable = true, 

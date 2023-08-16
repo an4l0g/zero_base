@@ -46,6 +46,7 @@ end)
 
 local selected = 0
 local blip = nil
+local action = false
 
 startRoute = function(index)
     local _config = Routes.general[Routes.locations[index].config]
@@ -63,10 +64,11 @@ startRoute = function(index)
 
             local coords = _config.coords[selected]
             local distance = #(pCoord - coords)
-            if (distance <= 10) then
+            if (distance <= 10 and not action) then
                 idle = 5
                 TextFloating(_config.texts.text, coords)
                 if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                    action = true
                     if (vSERVER.checkBackpack(_config.itens, _config.extras.drug)) then
                         RemoveBlip(blip)
 
@@ -76,7 +78,7 @@ startRoute = function(index)
 
                         LocalPlayer.state.BlockTasks = true
                         FreezeEntityPosition(ped, true)
-                        Citizen.SetTimeout(_config.progress, function()
+                        Citizen.SetTimeout(_config.extras.timeout, function()
                             LocalPlayer.state.BlockTasks = false
                             FreezeEntityPosition(ped, false)
                             ClearPedTasks(ped)
@@ -87,6 +89,7 @@ startRoute = function(index)
 
                             TriggerEvent('notify', 'Rotas', 'Olá, foi adicionada uma nova <b>localização</b> em seu <b>GPS</b>.')
                             CreateBlip(_config.coords, selected)
+                            action = false
                         end)
                     else
                         RemoveBlip(blip)
@@ -98,6 +101,7 @@ startRoute = function(index)
                         
                         TriggerEvent('notify', 'Rotas', 'Olá, foi adicionada uma nova <b>localização</b> em seu <b>GPS</b>.')
                         CreateBlip(_config.coords, selected)
+                        action = false
                     end
                 end
             end
