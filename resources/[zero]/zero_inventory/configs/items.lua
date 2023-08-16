@@ -45,6 +45,7 @@ config.items = {
 ----------------------------------------------------------------------------
 -- ILEGAL
 ----------------------------------------------------------------------------
+    ['maconha'] = { name = 'Maconha', type = 'common', weight = 0.5 },
     ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0 },
     ['lockpick'] = { name = 'Lockpick', type = 'common', weight = 1.0, usable = true, 
         interaction = function(source, user_id)

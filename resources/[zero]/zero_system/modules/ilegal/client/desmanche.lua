@@ -13,7 +13,7 @@ local markerThread = function()
         while (countTable(nearestBlips) > 0) do
             local ped = PlayerPedId()
             local _cache = nearestBlips
-            if (IsPedInAnyVehicle(ped) and not inDismantle) then
+            if (not inDismantle and IsPedInAnyVehicle(ped)) then
                 for index, dist in pairs(_cache) do
                     local coord = Dismantle.locations[index].coord
                     DrawMarker(27, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 5.0, 5.0, 0, 153, 255, 155, 0, 0, 0, 1)
