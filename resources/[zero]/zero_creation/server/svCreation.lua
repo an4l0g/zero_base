@@ -20,9 +20,19 @@ srv.verifyIdentity = function(identity)
         return false
     end
 
+    if (string.len(identity.firstname) > 50) then
+        TriggerClientEvent('notify', source, 'Criação de Personagem', 'O seu <b>nome</b> não pode passar de <b>50 caracteres</b>.')
+        return false
+    end
+
     if (generalConfig.blacklistNames[identity.lastname] or identity.lastname == '') then
-        local text = (identity.firstname == '' and '<b>Sobrenome</b> inválido!' or '<b>'..identity.firstname..'</b> este sobrenome é inválido!')
+        local text = (identity.lastname == '' and '<b>Sobrenome</b> inválido!' or '<b>'..identity.lastname..'</b> este sobrenome é inválido!')
         TriggerClientEvent('notify', source, 'Criação de Personagem', text)
+        return false
+    end
+
+    if (string.len(identity.lastname) > 50) then
+        TriggerClientEvent('notify', source, 'Criação de Personagem', 'O seu <b>sobrenome</b> não pode passar de <b>50 caracteres</b>.')
         return false
     end
 
@@ -83,11 +93,9 @@ end)
 playerSpawn = function(source, user_id, firstSpawn)
     vCLIENT.loadingPlayer(source, true) 
     if (firstSpawn) then
-        Citizen.Wait(8000)
-        -- TriggerClientEvent('gb_spawn:SpawnSelector', source, false)
+        TriggerClientEvent('zero_spawn:selector', source, true)
     else
-        Citizen.Wait(5000)
-        -- TriggerClientEvent('gb_spawn:SpawnSelector', source, true)
+        TriggerClientEvent('zero_spawn:selector', source, false)
     end
     TriggerEvent('zero_appearance_barbershop:init', user_id)
 end
