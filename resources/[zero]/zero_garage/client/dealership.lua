@@ -34,6 +34,7 @@ RegisterNuiCallback('buyCar', function(data)
     vSERVER.buyVehicle(data.spawn)
 end)
 
+local cooldown = 0
 cli.startTest = function(spawn)
     DoScreenFadeOut(500)
     Wait(500)
@@ -57,11 +58,13 @@ cli.startTest = function(spawn)
     SetPedIntoVehicle(ped, vehicle, -1)
 
     DoScreenFadeIn(500)
-
-    while (IsPedInVehicle(ped, vehicle)) do
-        Text2D(0, 0.35, 0.95, 'SAIA DO ~b~VEÍCULO~w~ PARA CANCELAR O ~b~TEST DRIVE~w~', 0.4)
+    TimeDealership(60)
+    while (cooldown > 0 and IsPedInAnyVehicle(ped)) do
+        DisableControlAction(0, 23, true)
+        Text2D(0, 0.35, 0.95, 'O ~b~TESTE DRIVE~w~ TERMINA EM ~b~'..cooldown..' SEGUNDOS~w~', 0.4)
         Citizen.Wait(5)
     end
+    cooldown = 0
 
     DoScreenFadeOut(500)
     Wait(500)
@@ -70,4 +73,16 @@ cli.startTest = function(spawn)
     vSERVER.exitTestDrive()
 
     DoScreenFadeIn(500)
+end
+
+TimeDealership = function(time)
+    if (cooldown > 0) then return; end;
+    cooldown = time
+    Citizen.CreateThread(function()
+        while (cooldown > 0) do
+            Citizen.Wait(1000)
+            cooldown = (cooldown - 1)
+        end
+        cooldown = 0
+    end)
 end
