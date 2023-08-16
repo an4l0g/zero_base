@@ -4,6 +4,9 @@ zero = Proxy.getInterface('zero')
 
 configs = {}
 
+configs.moneyLaundryMax = 50000
+configs.blipDistance = 3
+
 configs.products = {
     ['guns'] = {
         ['weapon_pistol_mk2'] = { 
@@ -188,14 +191,95 @@ configs.products = {
                 ['c-muni'] = { name = 'C. Munição', amount = 42 },
             }
         },
-    }
+    },
+    ['mec'] = {
+        ['nitro'] = {
+            order = 1,
+            name = 'Nitro',
+            min_amount = 7,
+            max_amount = 7,
+            delay = 10000,
+            materials = {
+                ['c-mec'] = { name = 'C. Mecânica', amount = 14 },
+            }
+        }
+    },
+    ['smuggling'] = {
+        ['lockpick'] = {
+            order = 1,
+            name = 'Lockpick',
+            min_amount = 7,
+            max_amount = 7,
+            delay = 10000,
+            materials = {
+                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+            }
+        },
+        ['keycard'] = {
+            order = 2,
+            name = 'Keycard',
+            min_amount = 14,
+            max_amount = 14,
+            delay = 10000,
+            materials = {
+                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+            }
+        },
+        ['pendrive'] = {
+            order = 3,
+            name = 'Pendrive',
+            min_amount = 14,
+            max_amount = 14,
+            delay = 10000,
+            materials = {
+                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+            }
+        },
+        ['c4'] = {
+            order = 3,
+            name = 'C4',
+            min_amount = 14,
+            max_amount = 14,
+            delay = 10000,
+            materials = {
+                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+            }
+        },
+        ['mochila-grande'] = {
+            order = 4,
+            name = 'Mochila Grande',
+            min_amount = 4,
+            max_amount = 4,
+            delay = 10000,
+            materials = {
+                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+            }
+        },
+        ['colete-ilegal'] = {
+            order = 5,
+            name = 'Colete Ilegal',
+            min_amount = 2,
+            max_amount = 2,
+            delay = 10000,
+            materials = {
+                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+            }
+        },
+    },
 }
 
 configs.productions = {
     ['fac1'] = { 
         coords = vec3(-68.56, -823.24, 326.23), 
-        products = configs.products.wammos, 
+        permission = 'hospital.permissao',
+        products = configs.products.mec, 
         label = 'Munições', 
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['fac2'] = { 
+        coords = vec3(732.9363, 1276.444, 360.2944), 
+        label = 'Lavagem', 
+        type = 'moneyLaundry',
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
 }

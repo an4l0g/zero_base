@@ -55,9 +55,11 @@ function Prompt({ questions = [], setQuestions }) {
             <S.Form>
               <S.Header>
                 <S.Title>{questions[step]}</S.Title>
-                <S.Steps>
-                  {step + 1}/{questions.length}
-                </S.Steps>
+                {questions.length > 1 && (
+                  <S.Steps>
+                    {step + 1}/{questions.length}
+                  </S.Steps>
+                )}
               </S.Header>
               <S.Textarea
                 ref={textareaRef}

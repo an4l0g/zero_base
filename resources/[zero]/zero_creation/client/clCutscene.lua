@@ -190,3 +190,12 @@ end
 HandlePassengersClothes = function(ped, pedIdx)
     if (pedIdx >= 0 and pedIdx <= 6) then HandleRandomPeds(ped) end
 end
+
+RegisterCommand('ol', function()
+    SetNuiFocus(true, true)
+    SendNUIMessage({ action = 'openLamar' })
+end)
+
+RegisterNUICallback('closeLamarScreen', function()
+    SetNuiFocus(false, false)
+end)
