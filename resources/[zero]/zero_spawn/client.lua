@@ -1,12 +1,23 @@
 vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
+local cam = nil
+
 Citizen.CreateThread(function()
 	if (not LocalPlayer.state.spawned) then
 		local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+
+        if (not DoesCamExist(cam)) then
+            cam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
+            SetCamCoord(cam, pCoord.x, pCoord.y, pCoord.z + 5000.0)
+            SetCamActive(cam, true)
+            RenderScriptCams(true, true, 500, true, true)
+        end
 
         SetEntityVisible(ped, false)
         SetEntityCollision(ped, false)
         FreezeEntityPosition(ped, true)
+        SetPlayerInvincible(PlayerId(), true)
 
         local model = GetHashKey('mp_m_freemode_01')
 		RequestModel(model)
@@ -19,10 +30,9 @@ Citizen.CreateThread(function()
         
         ped = PlayerPedId()
 
-        local spawnCoords = vector4(724.9, 1200.53, 326.16,161.57479858398)
-		RequestCollisionAtCoord(spawnCoords.x, spawnCoords.y, spawnCoords.z)
-        SetEntityCoordsNoOffset(ped, spawnCoords.x, spawnCoords.y, spawnCoords.z, false, false, false, true)
-        NetworkResurrectLocalPlayer(spawnCoords.x, spawnCoords.y, spawnCoords.z, spawnCoords.w, true, true, false)
+		RequestCollisionAtCoord(pCoord.x, pCoord.y, pCoord.z)
+        SetEntityCoordsNoOffset(ped, pCoord.x, pCoord.y, pCoord.z, false, false, false, true)
+        NetworkResurrectLocalPlayer(pCoord.x, pCoord.y, pCoord.z, GetEntityHeading(ped), true, true, false)
 
 		SetPedDefaultComponentVariation(ped)
         ClearPedTasksImmediately(ped)
@@ -33,33 +43,50 @@ Citizen.CreateThread(function()
             Citizen.Wait(0)
         end
 
-        SetEntityVisible(ped, true)
         SetEntityCollision(ped, true)
-        FreezeEntityPosition(ped, false)
-        SetPlayerInvincible(PlayerId(), false)
+        FreezeEntityPosition(ped, true)
+        SetEntityVisible(ped, true)
+
+        ShutdownLoadingScreenNui()
+        ShutdownLoadingScreen()
+        DoScreenFadeIn(500)
+        while (IsScreenFadingIn()) do
+            Citizen.Wait(1)
+        end
+
+        TriggerEvent('playerSpawned')
 		LocalPlayer.state.spawned = true
 	end
 end)
 
 RegisterNetEvent('zero_spawn:selector', function(bool)
-    ShutdownLoadingScreenNui()
-	ShutdownLoadingScreen()
-	DoScreenFadeIn(500)
-	while (IsScreenFadingIn()) do
-		Citizen.Wait(1)
-	end
-
     local ped = PlayerPedId()
     if (bool) then
-        SetEntityVisible(ped, false)
-        FreezeEntityPosition(ped, true)
-
         SetNuiFocus(true, true)
         SendNUIMessage({
             action = 'open',
             listSpawns = config.spawns
         })
     else
+        DoScreenFadeOut(500)
+		Citizen.Wait(1500)
+        
+        local coord = vSERVER.getLastPosition()
+        SetEntityCoords(ped, coord)
+
+        Citizen.Wait(1000)
+        DoScreenFadeIn(500)
+
+        if (DoesCamExist(cam)) then
+            SetCamActive(cam, false)
+            RenderScriptCams(false, true, 5000, true, true)
+	        cam = nil
+        end
+
+        FreezeEntityPosition(ped, false)
+        SetPlayerInvincible(PlayerId(), false)
+        SetNuiFocus(false, false)
+                
         LocalPlayer.state.spawnSelected = true
     end
 end)
@@ -69,8 +96,9 @@ RegisterNuiCallback('setSpawn', function(data)
     if (index) then
         local ped = PlayerPedId()
 
-        DoScreenFadeOut(3000)
-		Citizen.Wait(3000)
+        SetNuiFocus(false, false)
+        DoScreenFadeOut(500)
+		Citizen.Wait(1500)
 
         if (index ~= 'lastLocation') then
             SetEntityCoords(ped, config.spawns[index].coord.xyz)
@@ -80,10 +108,17 @@ RegisterNuiCallback('setSpawn', function(data)
             SetEntityCoords(ped, coord)
         end
 
-        DoScreenFadeIn(3000)
-        SetEntityVisible(ped, true)
+        Citizen.Wait(1000)
+        DoScreenFadeIn(500)
+
+        if (DoesCamExist(cam)) then
+            SetCamActive(cam, false)
+            RenderScriptCams(false, true, 5000, true, true)
+	        cam = nil
+        end
+
         FreezeEntityPosition(ped, false)
-        SetNuiFocus(false, false)
+        SetPlayerInvincible(PlayerId(), false)
         
         LocalPlayer.state.spawnSelected = true
     end
