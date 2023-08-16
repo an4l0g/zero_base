@@ -149,7 +149,8 @@ end
 
 RegisterNetEvent('zero:barberUpdate', function()
     if (LocalPlayer.state.pedCustom == nil) then 
-        LocalPlayer.state.pedCustom = vSERVER.getCharacter()             
+        LocalPlayer.state.pedCustom = vSERVER.getCharacter()           
+        Citizen.Wait(500)
         setPedCustom()
     else 
         setPedCustom()
