@@ -46,6 +46,7 @@ config.items = {
 -- ILEGAL
 ----------------------------------------------------------------------------
     ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0 },
+    ['nota-fiscal'] = { name = 'Nota fiscal', type = 'common', weight = 1 },
     ['lockpick'] = { name = 'Lockpick', type = 'common', weight = 1.0, usable = true, 
         interaction = function(source, user_id)
             local identity = zero.getUserIdentity(user_id)

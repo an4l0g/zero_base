@@ -40,6 +40,10 @@ TextFloating = function(text, coord)
     EndTextCommandDisplayHelp(1, false, false, -1)
 end
 
+openMoneyLaundry = function()
+    sProduction.moneyLaundry()
+end
+
 Citizen.CreateThread(function()
     while true do
         local idle = 500
@@ -47,13 +51,17 @@ Citizen.CreateThread(function()
         local pedCoords = GetEntityCoords(ped)
         for k, v in pairs(configs.productions) do
             local distance = #(pedCoords - v.coords)
-            if (distance <= 3) then
+            if (distance <= configs.blipDistance) then
                 if v.coords then
                     idle = 4
                     TextFloating('~b~[E]~w~ - Produzir', v.coords)
                     if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         if v.permission == nil or sProduction.hasPermission(v.permission) then
-                            openProduction(v.products, v.label, v.index)
+                            if v.type == 'moneyLaundry' then
+                                openMoneyLaundry(v)
+                            else
+                                openProduction(v.products, v.label, v.index)
+                            end
                         else
                             TriggerEvent('notify', 'Produção', 'Você não pode produzir aqui!')
                         end

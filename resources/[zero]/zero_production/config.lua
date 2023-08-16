@@ -4,6 +4,9 @@ zero = Proxy.getInterface('zero')
 
 configs = {}
 
+configs.moneyLaundryMax = 50000
+configs.blipDistance = 3
+
 configs.products = {
     ['guns'] = {
         ['weapon_pistol_mk2'] = { 
@@ -274,9 +277,9 @@ configs.productions = {
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
     ['fac2'] = { 
-        coords = vec3(-72.42197, -821.222, 326.1736), 
-        products = configs.products.mec, 
-        label = 'Munições', 
+        coords = vec3(732.9363, 1276.444, 360.2944), 
+        label = 'Lavagem', 
+        type = 'moneyLaundry',
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
 }
