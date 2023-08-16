@@ -32,27 +32,12 @@ RegisterNuiCallback('production', function(data)
     end
 end)
 
-DrawText3D = function(x, y, z, text)
-    local onScreen, _x, _y = World3dToScreen2d(x, y, z)
-    local p = GetGameplayCamCoords()
-    local distance = GetDistanceBetweenCoords(p.x, p.y, p.z, x, y, z, 1)
-    local scale = (1 / distance) * 2
-    local fov = (1 / GetGameplayCamFov()) * 100
-    local scale = scale * fov
-    if onScreen then
-        SetTextScale(0.0 * scale, 0.35 * scale)
-        SetTextFont(0)
-        SetTextProportional(1)
-        SetTextColour(255, 255, 255, 255)
-        SetTextDropshadow(0, 0, 0, 0, 255)
-        SetTextEdge(2, 0, 0, 0, 150)
-        SetTextDropShadow()
-        SetTextOutline()
-        SetTextEntry('STRING')
-        SetTextCentre(1)
-        AddTextComponentString(text)
-        DrawText(_x, _y)
-    end
+TextFloating = function(text, coord)
+    AddTextEntry('FloatingHelpText', text)
+    SetFloatingHelpTextWorldPosition(0, coord)
+    SetFloatingHelpTextStyle(0, true, 2, -1, 3, 0)
+    BeginTextCommandDisplayHelp('FloatingHelpText')
+    EndTextCommandDisplayHelp(1, false, false, -1)
 end
 
 Citizen.CreateThread(function()
@@ -62,18 +47,18 @@ Citizen.CreateThread(function()
         local pedCoords = GetEntityCoords(ped)
         for k, v in pairs(configs.productions) do
             local distance = #(pedCoords - v.coords)
-            if (distance <= 5) then
-                nearbyProduction = v
-                nearbyProduction.index = k
-            else
-                nearbyProduction = nil
-            end
-        end
-        if (nearbyProduction) and nearbyProduction['coords'] then
-            idle = 4
-            DrawText3D(nearbyProduction.coords.x, nearbyProduction.coords.y, nearbyProduction.coords.z+0.07, '~b~[E]~w~ - ['..nearbyProduction.label..'] Produção')
-            if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                openProduction(nearbyProduction.products, nearbyProduction.label, nearbyProduction.index)
+            if (distance <= 3) then
+                if v.coords then
+                    idle = 4
+                    TextFloating('~b~[E]~w~ - Produzir', v.coords)
+                    if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                        if v.permission == nil or sProduction.hasPermission(v.permission) then
+                            openProduction(v.products, v.label, v.index)
+                        else
+                            TriggerEvent('notify', 'Produção', 'Você não pode produzir aqui!')
+                        end
+                    end
+                end
             end
         end
         Citizen.Wait(idle)
