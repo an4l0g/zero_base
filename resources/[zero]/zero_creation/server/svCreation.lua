@@ -75,7 +75,6 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
     vCLIENT.loadingPlayer(source, false) 
     local query = zero.query('zero_character/verifyUser', { user_id = user_id })[1]
     if (query) then
-        Citizen.Wait(1000)
         if (query.controller == 1) then
             if (not userLogin[user_id]) then
                 userLogin[user_id] = true
