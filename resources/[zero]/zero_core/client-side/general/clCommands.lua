@@ -188,10 +188,32 @@ RegisterNetEvent('zero_core:spikeThread', spikeThread)
 CommandsData['mec:tow'] = nil
 CommandsData['mec:towed'] = nil
 
+local BlacklistHash = {
+	-- [GetHashKey('zentorno')] = 'Zentorno'
+}
+
 RegisterNetEvent('vTow',function()
 	local vehicle = GetPlayersLastVehicle()
 	if IsVehicleModel(vehicle,GetHashKey('flatbed')) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
 		CommandsData['mec:towed'] = zero.getNearestVehicle(7)
+		if (not CommandsData['mec:tow']) then
+			if (GetPedInVehicleSeat(CommandsData['mec:towed'], -1) ~= 0) then 
+				return TriggerEvent('notify', 'Rebocar', 'Este <b>veículo</b> possui uma pessoa dentro!') 
+			end
+
+			if (BlacklistHash[GetEntityModel(CommandsData['mec:towed'])]) then
+				return TriggerEvent('notify', 'Rebocar', 'Você não pode rebocar o <b>'..BlacklistHash[GetEntityModel(CommandsData['mec:towed'])]..'</b>.')
+			end
+		else
+			if (GetPedInVehicleSeat(CommandsData['mec:tow'], -1) ~= 0) then 
+				return TriggerEvent('notify', 'Rebocar', 'Este <b>veículo</b> possui uma pessoa dentro!') 
+			end
+
+			if (BlacklistHash[GetEntityModel(CommandsData['mec:tow'])]) then
+				return TriggerEvent('notify', 'Rebocar', 'Você não pode rebocar o <b>'..BlacklistHash[GetEntityModel(CommandsData['mec:tow'])]..'</b>.')
+			end
+		end
+
 		if IsEntityAVehicle(vehicle) and IsEntityAVehicle(CommandsData['mec:towed']) then
 			if CommandsData['mec:tow'] then
 				TriggerServerEvent('trytow',VehToNet(vehicle),VehToNet(CommandsData['mec:tow']),'out')

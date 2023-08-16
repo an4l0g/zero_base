@@ -388,7 +388,8 @@ end)
 RegisterNetEvent('zero_interactions:tow', function()
     local source = source
 	local user_id = zero.getUserId(source)
-	if (user_id) and zero.hasPermission(user_id, 'mecanico.permissao') then
+	if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (Player(source).state.Handcuff) then return; end;
 		TriggerClientEvent('vTow', source)
 	end
 end)
