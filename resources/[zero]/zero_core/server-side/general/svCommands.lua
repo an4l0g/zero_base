@@ -619,14 +619,6 @@ end)
 ---------------------------------------
 -- TOW
 ---------------------------------------
-RegisterCommand('tow', function(source)
-    local source = source
-	local user_id = zero.getUserId(source)
-	if (user_id) and zero.hasPermission(user_id, 'mecanico.permissao') then
-		TriggerClientEvent('vTow', source)
-	end
-end)
-
 RegisterServerEvent('trytow', function(vehid01, vehid02, mod)
 	TriggerClientEvent('synctow', -1, vehid01, vehid02, mod)
 end)
