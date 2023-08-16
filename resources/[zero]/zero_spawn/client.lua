@@ -54,6 +54,9 @@ Citizen.CreateThread(function()
             Citizen.Wait(1)
         end
 
+        SetBigmapActive(true, false)
+	    SetBigmapActive(false, false)
+
         TriggerEvent('playerSpawned')
 		LocalPlayer.state.spawned = true
 	end
@@ -126,4 +129,27 @@ end)
 
 RegisterNuiCallback('close', function()
     SetNuiFocus(false, false)
+
+    local ped = PlayerPedId()
+
+    DoScreenFadeOut(500)
+    Citizen.Wait(1500)
+    
+    local coord = vSERVER.getLastPosition()
+    SetEntityCoords(ped, coord)
+
+    Citizen.Wait(1000)
+    DoScreenFadeIn(500)
+
+    if (DoesCamExist(cam)) then
+        SetCamActive(cam, false)
+        RenderScriptCams(false, true, 5000, true, true)
+        cam = nil
+    end
+
+    FreezeEntityPosition(ped, false)
+    SetPlayerInvincible(PlayerId(), false)
+    SetNuiFocus(false, false)
+            
+    LocalPlayer.state.spawnSelected = true
 end)
