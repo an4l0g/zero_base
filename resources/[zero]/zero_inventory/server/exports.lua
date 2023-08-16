@@ -174,13 +174,15 @@ sInventory.getInventoryWeight = function(user_id)
     local hotbar = zero.query('zero_inventory:getBag', { bag_type = 'hotbar:'..user_id })[1]
 
     local totalWeight = 0
-    
-    for k,v in pairs(json.decode(bag.slots)) do
+
+    local data_slots = (json.decode(bag.slots) or {})
+    for k,v in pairs(data_slots) do
         local cItem = config.items[v.index]
         totalWeight = totalWeight + (cItem.weight * v.amount)
     end 
 
-    for k,v in pairs(json.decode(hotbar.slots)) do
+    local data_hotbar = (json.decode(hotbar.slots) or {})
+    for k,v in pairs(data_hotbar) do
         local cItem = config.items[v.index]
         totalWeight = totalWeight + (cItem.weight * v.amount)
     end 
@@ -258,3 +260,11 @@ sInventory.getItemInfo = function(index)
     return config.items[index]
 end
 exports('getItemInfo', sInventory.getItemInfo)
+
+AddEventHandler('vRP:playerSpawn', function(user_id, source)    
+    local bag = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })[1]
+    if (not bag) then
+        zero.execute('zero_inventory:insertBag', { slots = json.encode({}), bag_type = 'bag:'..user_id, weight = config.bag_max_weight })
+        zero.execute('zero_inventory:insertBag', { slots = json.encode({}), bag_type = 'hotbar:'..user_id, weight = 0 })
+    end
+end)
