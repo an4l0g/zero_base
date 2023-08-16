@@ -1,48 +1,43 @@
 AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	local data = zero.getUserDataTable(user_id)
-	if (firstSpawn) then
-		-- [ Health ] --
-		if (data.health == nil) then
-			data.health = 400
+	
+	-- [ Health ] --
+	if (data.health == nil) then
+		data.health = 400
+	end
+	zeroClient.setHealth(source, data.health)
+	Citizen.SetTimeout(5000, function()
+		if (zeroClient.isInComa(source)) then
+			zeroClient.killComa(source)
 		end
-		zeroClient.setHealth(source, data.health)
-		Citizen.SetTimeout(5000, function()
-			if (zeroClient.isInComa(source)) then
-				zeroClient.killComa(source)
-			end
-		end)
-		----------------------------------
+	end)
+	----------------------------------
 
-		-- [ Armour ] --
-		if (data.armour == nil) then
-			data.armour = 0
-		end
-		Citizen.SetTimeout(10000, function()
-			zeroClient.setArmour(source, data.armour)
-		end)
-		----------------------------------
+	-- [ Armour ] --
+	if (data.armour == nil) then
+		data.armour = 0
+	end
+	Citizen.SetTimeout(10000, function()
+		zeroClient.setArmour(source, data.armour)
+	end)
+	----------------------------------
 
-		-- [ Weapons ] --
-		if (data.weapons == nil) then
-			data.weapons = {}
-		end
-		zeroClient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken)
-		----------------------------------
+	-- [ Weapons ] --
+	if (data.weapons == nil) then
+		data.weapons = {}
+	end
+	zeroClient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken)
+	----------------------------------
 
-		-- [ Fome ] --
-		if (data.hunger == nil) then
-			data.hunger = 0
-		end
-
-		if (data.thirst == nil) then
-			data.thirst = 0
-		end
-		----------------------------------
+	-- [ Fome ] --
+	if (data.hunger == nil) then
+		data.hunger = 0
 	end
 
-	if (data.position) then 
-		zeroClient.teleport(source, data.position.x, data.position.y, data.position.z)
+	if (data.thirst == nil) then
+		data.thirst = 0
 	end
+	----------------------------------
 
 	exports.zero_appearance:setCustomization(source, user_id)
 	zeroClient._setFriendlyFire(source, true)

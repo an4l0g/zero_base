@@ -1,8 +1,8 @@
-:: zero_appearance
-set nui_name="zero_appearance"
-set nui_path=%BASE_PATH%\resources\[zero]\zero_appearance\nui
-set nui_path_build=%BASE_PATH%\resources\[zero]\zero_appearance\nui\dist
-set nui_port=8509
+:: zero_spawn
+set nui_name="zero_spawn"
+set nui_path=%BASE_PATH%\resources\[zero]\zero_spawn\nui
+set nui_path_build=%BASE_PATH%\resources\[zero]\zero_spawn\nui\dist
+set nui_port=8510
 
 call pm2 delete %nui_name% --silent
 

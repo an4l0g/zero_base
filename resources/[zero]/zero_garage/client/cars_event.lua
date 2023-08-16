@@ -10,10 +10,6 @@ Citizen.CreateThread(function()
 	AddReplaceTexture('platform:/textures/graphics', 'radarmasksm', 'circlemap', 'radarmasksm')
 	SetMinimapClipType(1)
 	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.015, 0.007, 0.21, 0.25)
-	Citizen.Wait(0)
-    SetBigmapActive(true, false)
-	SetBigmapActive(false, false)
-
     while (true) do
         local idle = 5000
         local ped = PlayerPedId()

@@ -1444,13 +1444,13 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
 
         Citizen.SetTimeout(8000, function()
             local userTable = zero.getUserDataTable(user_id)
-            if (userTable.Handcuff) and userTable.Handcuff == true then
+            if (userTable) and userTable.Handcuff == true then
                 Player(source).state.Handcuff = true
                 zeroClient.setHandcuffed(source, true)
                 TriggerClientEvent('zero_interactions:algemas', source, 'colocar')
             end
 
-            if (userTable.Capuz) and userTable.Capuz == true then
+            if (userTable) and userTable.Capuz == true then
                 Player(source).state.Capuz = true
 		        zeroClient.setCapuz(source, true)
             end
