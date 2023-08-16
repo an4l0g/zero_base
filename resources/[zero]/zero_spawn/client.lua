@@ -7,13 +7,6 @@ Citizen.CreateThread(function()
 		local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)
 
-        if (not DoesCamExist(cam)) then
-            cam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
-            SetCamCoord(cam, pCoord.x, pCoord.y, pCoord.z + 5000.0)
-            SetCamActive(cam, true)
-            RenderScriptCams(true, true, 500, true, true)
-        end
-
         SetEntityVisible(ped, false)
         SetEntityCollision(ped, false)
         FreezeEntityPosition(ped, true)
@@ -64,6 +57,15 @@ end)
 
 RegisterNetEvent('zero_spawn:selector', function(bool)
     local ped = PlayerPedId()
+    local pCoord = GetEntityCoords(ped)
+
+    if (not DoesCamExist(cam)) then
+        cam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
+        SetCamCoord(cam, pCoord.x, pCoord.y, pCoord.z + 5000.0)
+        SetCamActive(cam, true)
+        RenderScriptCams(true, true, 500, true, true)
+    end
+    
     if (bool) then
         SetNuiFocus(true, true)
         SendNUIMessage({
