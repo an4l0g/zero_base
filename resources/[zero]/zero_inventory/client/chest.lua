@@ -64,6 +64,7 @@ RegisterCommand("openCarChest", function()
     if GetEntityHealth(ped) > 100 and not config.functions.isHandcuffed() and not IsPedBeingStunned(ped) and not IsPlayerFreeAiming(ped) then
         local vehicle,vnetid,placa,vname,lock,banned,trunk  = zero.vehList(5)
         local veh = { isLocked = lock, carName = vname, ownerId = sInventory.getVehOwnerId(vnetid) } 
+        if (banned) then return; end;
         if veh.isLocked == 1 then
             if veh.ownerId then
                 SetNuiFocus(true, true)
