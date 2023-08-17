@@ -30,7 +30,7 @@ local generateWeather = function()
         end  
     end
     GlobalState.weather = weathersConfig[weatherRandom].name
-    print('Clima da cidade ^5Zero Roleplay^7 alterado para ^5'..GlobalState.weather..'^7.')
+    print('Clima da cidade ^5Zero City^7 alterado para ^5'..GlobalState.weather..'^7.')
 end
 
 RegisterCommand('time', function(source, args)
@@ -40,7 +40,7 @@ RegisterCommand('time', function(source, args)
             if (not args[2]) then args[2] = 0; end;
             GlobalState.hours, GlobalState.minutes = parseInt(args[1]), parseInt(args[2]);
             if (source ~= 0) then TriggerClientEvent('notify', source, 'Clima', 'O <b>horário da cidade</b> foi alterado com sucesso!'); end;
-            print('Tempo da cidade ^5Zero Roleplay^7 alterado para ^5'..GlobalState.hours..':'..GlobalState.minutes..'^7.')
+            print('Tempo da cidade ^5Zero City^7 alterado para ^5'..GlobalState.hours..':'..GlobalState.minutes..'^7.')
         end
     end
 end)
@@ -50,7 +50,7 @@ RegisterCommand('freezetime', function(source)
     if (allow) then
         freezetime = (not freezetime)
         if (source ~= 0) then TriggerClientEvent('notify', source, 'Clima', 'O tempo foi <b>'..(freezetime == true and 'congelado' or 'descongelado')..'</b> com sucesso!'); end;
-        print('Tempo da cidade ^5Zero Roleplay^7 foi ^5'..(freezetime == true and 'congelado' or 'descongelado')..'^7.')
+        print('Tempo da cidade ^5Zero City^7 foi ^5'..(freezetime == true and 'congelado' or 'descongelado')..'^7.')
     end
 end)
 
@@ -60,7 +60,7 @@ RegisterCommand('weather', function(source, args)
         if (args[1]) then
             GlobalState.weather = string.upper(args[1])
             if (source ~= 0) then TriggerClientEvent('notify', source, 'Clima', 'O clima foi <b>alterado</b> com sucesso!'); end;
-            print('Clima da cidade ^5Zero Roleplay^7 alterado para ^5'..GlobalState.weather..'^7.')
+            print('Clima da cidade ^5Zero City^7 alterado para ^5'..GlobalState.weather..'^7.')
         end
     end
 end)

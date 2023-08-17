@@ -32,6 +32,24 @@ config.groups = {
 			grades_default = 'Paramedico',
 		},
 		'hospital.permissao'
+	},
+
+	['ZeroFome'] = {
+		information = { 
+			title = 'Zero Fome', 
+			groupType = 'job', 
+			grades = {
+				['Novato'] = { title = '[ZeroFome] Novato', level = 1 },
+				['Entregador'] = { title = '[ZeroFome] Entregador', level = 2 },
+				['Atendente'] = { title = '[ZeroFome] Atendente', level = 3 },
+				['Cozinheiro'] = { title = '[ZeroFome] Cozinheiro', level = 4 },
+				['Gerente'] = { title = '[ZeroFome] Gerente', level = 5 },
+				['Sócio'] = { title = '[ZeroFome] Sócio', level = 6 },
+				['Dono'] = { title = '[ZeroFome] Dono', level = 7 },
+			},
+			grades_default = 'Novato',
+		},
+		'zerofome.permissao'
 	}
 }
 

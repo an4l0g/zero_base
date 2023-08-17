@@ -170,24 +170,28 @@ end
 exports('getInventory', sInventory.getInventory)
 
 sInventory.getInventoryWeight = function(user_id)
-    local bag = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })[1]
-    local hotbar = zero.query('zero_inventory:getBag', { bag_type = 'hotbar:'..user_id })[1]
+    local bag = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })
+    local hotbar = zero.query('zero_inventory:getBag', { bag_type = 'hotbar:'..user_id })
 
-    local totalWeight = 0
+    
+    if(#bag > 0 and #hotbar > 0) then
+        local totalWeight = 0
+        local data_slots = (json.decode(bag[1].slots) or {})
+        for k,v in pairs(data_slots) do
+            local cItem = config.items[v.index]
+            totalWeight = totalWeight + (cItem.weight * v.amount)
+        end 
 
-    local data_slots = (json.decode(bag.slots) or {})
-    for k,v in pairs(data_slots) do
-        local cItem = config.items[v.index]
-        totalWeight = totalWeight + (cItem.weight * v.amount)
-    end 
+        local data_hotbar = (json.decode(hotbar[1].slots) or {})
+        for k,v in pairs(data_hotbar) do
+            local cItem = config.items[v.index]
+            totalWeight = totalWeight + (cItem.weight * v.amount)
+        end 
 
-    local data_hotbar = (json.decode(hotbar.slots) or {})
-    for k,v in pairs(data_hotbar) do
-        local cItem = config.items[v.index]
-        totalWeight = totalWeight + (cItem.weight * v.amount)
-    end 
-
-    return totalWeight
+        return totalWeight
+    else
+        return 0
+    end
 end
 exports('getInventoryWeight', sInventory.getInventoryWeight)
 

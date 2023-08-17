@@ -80,10 +80,43 @@ Routes = {
                 police = 70,
                 timeout = 5000,
             }
+        },
+        ['ZeroFome'] = {
+            name = 'ZeroFome',
+            coords = {
+                vector3(-1343.71, -240.9363, 42.67542),
+                vector3(-602.1362, -1105.727, 22.32092),
+                vector3(410.4791, -1910.031, 25.43811),
+                vector3(281.2747, -801.1912, 29.3136),
+                vector3(-838.5758, -607.6219, 29.01025),
+                vector3(-1191.495, -1546.378, 4.359009),
+                vector3(54.54066, -799.2527, 31.57141),
+                vector3(81.09891, 274.4835, 110.1926),
+                vector3(1241.552, -366.844, 69.0791),
+                vector3(-242.5055, 279.7451, 92.02856),
+                vector3(-1251.125, -294.9362, 37.33411),
+                vector3(-1040.004, -1353.719, 5.538452),
+                vector3(-1471.767, -135.5604, 51.10034),
+                vector3(-1278.91, -876.2901, 11.92456),
+            },
+            itens = {
+                item = 'c-ingredientes',
+                quantity = 1
+            },
+            texts = {
+                text = '~b~E~w~ - Pegar',
+                progress = 'Coletando ingredientes...'
+            },
+            extras = {
+                anim = 'mexer',
+                police = 0,
+                timeout = 5000,
+            }
         }
     },
 
     locations = {
-        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Maconha', cooldown = 900 }
+        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Maconha', cooldown = 900 },
+        { coord = vector3(-1855.332, -1204.009, 13.00293), config = 'ZeroFome', cooldown = 900 },
     }
 }

@@ -60,7 +60,7 @@ Citizen.CreateThread(function()
                             if v.type == 'moneyLaundry' then
                                 openMoneyLaundry(v)
                             else
-                                openProduction(v.products, v.label, v.index)
+                                openProduction(v.products, v.label, k)
                             end
                         else
                             TriggerEvent('notify', 'Produção', 'Você não pode produzir aqui!')

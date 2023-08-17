@@ -5,7 +5,89 @@ bandagemCooldown = {}
 config.itemTypes = { 'common', 'weapon', 'wammo' }
 this = exports[GetCurrentResourceName()]
 
+comboFood = function(index)
+    local _source = source
+    local user_id = zero.getUserId(_source)
+    if zero.tryGetInventoryItem(user_id, index, 1) then
+        for k,v in pairs(config.items[index].combo) do
+            zero.giveInventoryItem(user_id, v.index, v.qtd)
+        end
+        TriggerClientEvent('notify', _source, 'Inventário', 'Você abriu o combo: <b>'..config.items[index].name..'</b>.')
+    end
+end
+
 config.items = {
+----------------------------------------------------------------------------
+-- COMIDAS
+----------------------------------------------------------------------------
+
+    ['c-ingredientes'] = { name = 'C. Ingredientes', type = 'common', weight = 2 },
+    ['camarao'] = { name = 'Esp. Camarão', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
+    ['milho'] = { name = 'Milho Cozido', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
+    ['chocolate'] = { name = 'Chuculate', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
+    ['caviar'] = { name = 'Aviar', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
+    ['suco-morango'] = { name = 'Suco Morango', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
+    ['suco-abacaxi'] = { name = 'Suco Abacaxi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
+    ['suco-kiwi'] = { name = 'Suco Kivi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
+    ['suco-caju'] = { name = 'Suco Aju', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
+    ['combo-camarao'] = { 
+        name = 'Camarão da Laurinha', 
+        combo = { 
+            { index = 'camarao', qtd = 1 },
+            { index = 'suco-morango', qtd = 1 }
+        },  
+        usable = true, 
+        type = 'common', 
+        weight = 2, 
+        interaction = function()
+            comboFood('combo-camarao')
+        end
+    },
+    ['combo-milho'] = { 
+        name = 'Larissa Manuela', 
+        combo = { 
+            { index = 'milho', qtd = 1 },
+            { index = 'suco-abacaxi', qtd = 1 }
+        },  
+        usable = true, 
+        type = 'common', 
+        weight = 2, 
+        interaction = function()
+            comboFood('combo-milho')
+        end
+    },
+    ['combo-chocolate'] = { 
+        name = 'Tudo isso, aceito o desafio', 
+        combo = { 
+            { index = 'chocolate', qtd = 1 },
+            { index = 'suco-kiwi', qtd = 1 }
+        },  
+        usable = true, 
+        type = 'common', 
+        weight = 2, 
+        interaction = function()
+            comboFood('combo-chocolate')
+        end
+    },
+    ['combo-caviar'] = { 
+        name = 'Pra aralho', 
+        combo = { 
+            { index = 'caviar', qtd = 1 },
+            { index = 'suco-caju', qtd = 1 }
+        },  
+        usable = true, 
+        type = 'common', 
+        weight = 2, 
+        interaction = function()
+            comboFood('combo-caviar')
+        end
+    },
+    ['energetico'] = { name = 'Energético', type = 'common', weight = 1, interaction = function()
+        --
+    end},
+    ['cafe'] = { name = 'Café', type = 'common', weight = 1, interaction = function()
+        --
+    end},
 ----------------------------------------------------------------------------
 -- LEGAL
 ----------------------------------------------------------------------------
@@ -38,22 +120,23 @@ config.items = {
             exports['zero_core']:removeSpray(source)
         end
     },
+    ----------------------------------------------------------------------------
+    -- POLICIA
 ----------------------------------------------------------------------------
--- POLICIA
-----------------------------------------------------------------------------
-    ['mandado-241'] = { name = 'Mandado Art.241', type = 'common', weight = 0.1 },
+['mandado-241'] = { name = 'Mandado Art.241', type = 'common', weight = 0.1 },
+
 ----------------------------------------------------------------------------
 -- ILEGAL
 ----------------------------------------------------------------------------
-    ['maconha'] = { name = 'Maconha', type = 'common', weight = 1.5 },
-    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1.5 },
-    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1.5 },
+['maconha'] = { name = 'Maconha', type = 'common', weight = 1.5 },
+['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1.5 },
+['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1.5 },
     ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0 },
     ['nota-fiscal'] = { name = 'Nota fiscal', type = 'common', weight = 1 },
     ['lockpick'] = { name = 'Lockpick', type = 'common', weight = 1.0, usable = true, 
         interaction = function(source, user_id)
             local identity = zero.getUserIdentity(user_id)
-
+            
             cInventory.closeInventory(source)
             
             local Police = zero.getUsersByPermission('policia.permissao')
@@ -75,7 +158,7 @@ config.items = {
                         TriggerClientEvent('notify', source, 'Drumond', 'O <b>veículo</b> já está aberto.')
                         return
                     end
-
+                    
                     if (exports['zero_garage']:carDoor(source, 1.5, 'door_dside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_dside_r') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_r')) then
                         local isPolice = zero.hasPermission(user_id, 'policia.permissao')
                         
@@ -90,7 +173,7 @@ config.items = {
                             local Ped = GetPlayerPed(source)
                             local PedCoords = GetEntityCoords(Ped)
                             local text = ''
-
+                            
                             LocalPlayer.state.BlockTasks = true
 
                             zeroClient._playAnim(source, false, {
@@ -111,7 +194,7 @@ config.items = {
                             end
 
                             exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(source, 'https://discord.com/api/webhooks/1136116707883237526/iRQQrUdANFOk2HFDV_IqWA1LImcD4dfWIZyeejwG7I6fkisMXHz8MjteR4fiqJ4f5Pgz', 
-                                {
+                            {
                                     encoding = 'jpg',
                                     quality = 0.80
                                 },
@@ -121,7 +204,7 @@ config.items = {
                                     content = '```prolog\n[ZERO INVENTORY]\n[ACTION]: (LOCKPICK)\n[USER]: '..user_id..'\n[RESULT]: '..text..'\n[STREET]: '..street..'\n[CAR OWNER]: '..vehState.user_id..'\n[CAR]: '..vehState.model..'\n[PLATE]: '..vehState.plate..'\n[COORD]: '..tostring(GetEntityCoords(Ped))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```',
                                 }
                             )
-
+                            
                             LocalPlayer.state.BlockTasks = false
                         end
                     else
@@ -132,7 +215,7 @@ config.items = {
         end
     },
     ['capuz'] = { name = 'Capuz', type = 'common', weight = 0.5, usable = true },
-----------------------------------------------------------------------------
+    ----------------------------------------------------------------------------
     -- Armas
     ----------------------------------------------------------------------------
     ['weapon_doubleaction'] = {
@@ -432,6 +515,7 @@ config.blacklist = {
 function consumableItem(index)
    local _source = source
    local user_id = zero.getUserId(_source)
+   local ped = GetPlayerPed(_source)
    local customTimeout = 10000
 
    local cItem = config.items[index]
@@ -447,17 +531,12 @@ function consumableItem(index)
 --     end
 
    if zero.tryGetInventoryItem(user_id, index, 1) then
-    TriggerClientEvent('progress', _source, customTimeout, 'Consumindo '..zero.itemNameList(index)..'...')
-    if cItem.animation then 
-        if cItem.animation.prop then
-            zeroClient._CarregarObjeto(_source, cItem.animation.anim[1], cItem.animation.anim[2], cItem.animation.prop, cItem.animation.anim[3], cItem.animation.anim[4])
-        end
-        zeroClient._playAnim(_source, true, { cItem.animation.anim }, true)
+    TriggerClientEvent('progressBar', _source, 'Consumindo '..zero.itemNameList(index)..'...', customTimeout)
+    if cItem.food then 
+        TriggerClientEvent('zero_animations:setAnim', _source, 'comer')
     end
     
     SetTimeout(customTimeout, function()
-        zeroClient._DeletarObjeto(_source)
-        -- Sede, fome e Toxicidade
         local consumable = cItem.consumable
         
         if consumable.hunger and consumable.hunger ~= 0 then
@@ -466,46 +545,8 @@ function consumableItem(index)
         if consumable.thirst and consumable.thirst ~= 0 then
             zero.varyThirst(user_id, consumable.thirst)
         end
-        if consumable.toxic > 0 then
-            zero.varyToxic(user_id, consumable.toxic)
-            TriggerClientEvent(
-                'Notify',
-                _source,
-                'sucesso',
-                'Infecção',
-                'O seu nível de infecção aumentou.',
-                5000
-            )
-        end
         if cItem.afterItem then 
             zero.giveInventoryItem(user_id, cItem.afterItem, 1)
-        end
-        
-        if consumable.buff then
-            zeroClient._playAnim(_source, false, {{'mini@triathlon', 'idle_e'}}, false)
-            zero.addUserGroup(user_id, consumable.buff, consumable.buff)
-            TriggerClientEvent(
-                'Notify',
-                _source,
-                'vermelho',
-                consumable.buffTitleNotify,
-                consumable.buffNotify,
-                5000
-            )
-        end
-        
-        if consumable.armor ~= 0 and consumable.armor ~= nil then 
-            local newArmor = cl.getArmor(_source) + consumable.armor
-            if newArmor > 100 then newArmor = 100; end;
-            cl.setArmour(_source,newArmor)
-            TriggerClientEvent(
-                'Notify',
-                _source,
-                'sucesso',
-                'Shield',
-                'Você recebeu mais '..consumable.armor..'% de shield.',
-                5000
-            )
         end
 
         TriggerClientEvent(

@@ -1,5 +1,5 @@
 cityInformations = {
-  name = 'ZERO ROLEPLAY',
-  discord = 'discord.gg/zerorp',
-  shop = 'https://zerorp.hydrus.gg/'
+  name = 'ZERO CITY',
+  discord = 'discord.gg/zerocity',
+  shop = 'https://zerocity.hydrus.gg/'
 }

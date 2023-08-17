@@ -266,6 +266,68 @@ configs.products = {
             }
         },
     },
+    ['cook'] = {
+        ['combo-camarao'] = {
+            order = 1,
+            name = 'Camarão de Laurinha',
+            min_amount = 2,
+            max_amount = 2,
+            delay = 10000,
+            materials = {
+                ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
+            }
+        },
+        ['combo-milho'] = {
+            order = 2,
+            name = 'Larissa Manuela',
+            min_amount = 2,
+            max_amount = 2,
+            delay = 10000,
+            materials = {
+                ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
+            }
+        },
+        ['combo-chocolate'] = {
+            order = 3,
+            name = 'Tudo isso, aceito o desafio',
+            min_amount = 2,
+            max_amount = 2,
+            delay = 10000,
+            materials = {
+                ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
+            }
+        },
+        ['combo-caviar'] = {
+            order = 4,
+            name = 'Pra aralho',
+            min_amount = 2,
+            max_amount = 2,
+            delay = 10000,
+            materials = {
+                ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
+            }
+        },
+        ['energetico'] = {
+            order = 5,
+            name = 'Energético',
+            min_amount = 1,
+            max_amount = 1,
+            delay = 10000,
+            materials = {
+                ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
+            }
+        },
+        ['cafe'] = {
+            order = 5,
+            name = 'Café',
+            min_amount = 1,
+            max_amount = 1,
+            delay = 10000,
+            materials = {
+                ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
+            }
+        },
+    },
 }
 
 configs.productions = {
@@ -280,6 +342,18 @@ configs.productions = {
         coords = vec3(732.9363, 1276.444, 360.2944), 
         label = 'Lavagem', 
         type = 'moneyLaundry',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['zerofome1'] = { 
+        coords = vector3(-1843.661, -1186.18, 14.30042), 
+        label = 'Alimentos', 
+        products = configs.products.cook, 
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['zerofome2'] = { 
+        coords = vector3(-1839.969, -1188.026, 14.30042), 
+        label = 'Alimentos', 
+        products = configs.products.cook, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
 }

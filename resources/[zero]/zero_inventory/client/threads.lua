@@ -40,7 +40,7 @@ renderChests = function()
 
         if nextToChest then
             _sleep = 1
-            DrawMarker(27,cdsChest.x,cdsChest.y,cdsChest.z - 0.97,0,0,0,0,0,130.0,0.5,0.5,0.5,0,153, 255,200,0,0,0,1)
+            cInventory.TextFloating('~b~[E]~w~ - '..v.title, cdsChest)
             if IsControlJustPressed(0,38) then
                 local currentType = v.type
                 local isPrivate = false

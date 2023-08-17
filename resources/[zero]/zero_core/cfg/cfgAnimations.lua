@@ -877,6 +877,12 @@ config.animations = {
             anim = 'idle_a_female',
             andar = true,
             loop = true
+        },
+        ['comer'] = {
+            dict = 'mp_player_inteat@burger',
+            anim = 'mp_player_int_eat_burger_enter',
+            andar = true,
+            loop = true
         }
     } 
 }
