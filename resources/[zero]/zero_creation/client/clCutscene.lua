@@ -195,5 +195,5 @@ end
 
 RegisterNUICallback('closeLamarScreen', function()
     SetNuiFocus(false, false)
-    TriggerEvent('zero_hud:toggleHud', false)
+    TriggerEvent('zero_hud:toggleHud', true)
 end)

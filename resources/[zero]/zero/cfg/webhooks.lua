@@ -104,5 +104,7 @@ config.webhooks = {
     ['Casar'] = 'https://discord.com/api/webhooks/1140106902722842736/QhlJXVFG322DDyLToohsu7UNT2wbXu7ruuPYZRM27-_ON6NAku0OzBt0BvqVhY98D9AR',
     ['Terminar'] = 'https://discord.com/api/webhooks/1140107049032757348/xvpN_54SZj21y8gQifrp3bSoNIo3UTchv6WH1b49afeZvFYZWl2e0tEWMPsPexBJ25qF',
     ['Noivar'] = 'https://discord.com/api/webhooks/1140107290649837678/ski9v8gHQ4ZzfrytZM3ag31dxX5iqtbP_yOt7uTxq9wWiJZqgIO9wqCBUSyVDVLs4S-1',
-    ['Divorciar'] = 'https://discord.com/api/webhooks/1140107188682104982/zJi-oHo3aBUQLEU78p_fzRKQdcU9cdTaqi4fR0c1oDcqKBxJahujWw9ZuAdAoxFHppH9'
+    ['Divorciar'] = 'https://discord.com/api/webhooks/1140107188682104982/zJi-oHo3aBUQLEU78p_fzRKQdcU9cdTaqi4fR0c1oDcqKBxJahujWw9ZuAdAoxFHppH9',
+
+    ['Cirurgia'] = 'https://discord.com/api/webhooks/1142111770044018768/6geLbDdjnTWQ-ruB23b0c8BlcqiTQ2ZTic7K1o4YRLPJgdy-0_p7HP4ddRXITcFbsSdQ'
 }
