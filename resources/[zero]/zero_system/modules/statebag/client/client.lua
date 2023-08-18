@@ -6,6 +6,7 @@ LocalPlayer.state:set('victimHostage', false, true)
 LocalPlayer.state:set('FPS', false, true)
 LocalPlayer.state:set('Handcuff', false, true)
 LocalPlayer.state:set('Capuz', false, true)
+LocalPlayer.state:set('SafeZone', false, true)
 
 local disableActions = function(ply)
     BlockWeaponWheelThisFrame()

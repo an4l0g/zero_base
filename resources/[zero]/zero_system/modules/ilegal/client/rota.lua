@@ -85,7 +85,7 @@ startRoute = function(index)
                             vSERVER.routePayment(coords, _config.itens, _config.extras.drug)
 
                             selected = (selected + 1)
-                            if (selected > #coords) then selected = 1; end;
+                            if (selected > #_config.coords) then selected = 1; end;
 
                             TriggerEvent('notify', 'Rotas', 'Olá, foi adicionada uma nova <b>localização</b> em seu <b>GPS</b>.')
                             CreateBlip(_config.coords, selected)
@@ -97,7 +97,7 @@ startRoute = function(index)
                         if (_config.extras.police) then end;
 
                         selected = (selected + 1)
-                        if (selected > #coords) then selected = 1; end;
+                        if (selected > #_config.coords) then selected = 1; end;
                         
                         TriggerEvent('notify', 'Rotas', 'Olá, foi adicionada uma nova <b>localização</b> em seu <b>GPS</b>.')
                         CreateBlip(_config.coords, selected)
@@ -114,6 +114,7 @@ startRoute = function(index)
             Text2D(0, 0.42, 0.95, '~b~F7~w~ PARA CANCELAR A ~b~ROTA~w~', 0.4)
             if (IsControlJustPressed(0, 168)) then
                 inRoute = false
+                RemoveBlip(blip)
                 TriggerEvent('notify', 'Rotas', 'Você finalizou a sua rota de <b>'.._config.name..'</b>. Todas as localizações marcadas foram retiradas de seu <b>GPS</b>.')
             end
             Citizen.Wait(5)
@@ -124,7 +125,7 @@ startRoute = function(index)
 end
 
 CreateBlip = function(coord, selected)
-    blip = AddBlipForCoord(coord[selected])
+    blip = AddBlipForCoord(coord[selected].x, coord[selected].y, coord[selected].z)
     SetBlipSprite(blip, 478)
     SetBlipColour(blip, 74)
     SetBlipScale(blip, 0.5)

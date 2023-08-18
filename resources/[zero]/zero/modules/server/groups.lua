@@ -264,7 +264,7 @@ end)
 
 RegisterCommand('reloadgroups', function(source)
     if (source == 0) then
-		local config = module('cfg/groups', true)
+		print(json.encode(config.groups))
 		groups = config.groups
 		users = config.users
 		TriggerEvent('zero:groupsRefresh')

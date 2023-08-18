@@ -34,18 +34,19 @@ threadSafe = function()
     Citizen.CreateThread(function()
         local ped = PlayerPedId()
         NetworkSetFriendlyFireOption(false)
+        LocalPlayer.state.SafeZone = true
         TriggerEvent('notify', 'Zona Segura', 'Você entrou em uma <b>Zona Segura</b>.')
-        SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true) 
+        -- SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true) 
         while (inSafe) do
-            ped = PlayerPedId()
-            DisableControlAction(2, 37, true) 
-			DisablePlayerFiring(ped, true) 
+            -- DisableControlAction(2, 37, true) 
+			DisablePlayerFiring(PlayerId(), true) 
 			DisableControlAction(0, 106, true)
 			DisableControlAction(0, 140, true)
 			DisableControlAction(0, 263, true)
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         NetworkSetFriendlyFireOption(true)
+        LocalPlayer.state.SafeZone = false
         TriggerEvent('notify', 'Zona Segura', 'Você saiu de uma <b>Zona Segura</b>.')
         _threadSafe = false
     end)

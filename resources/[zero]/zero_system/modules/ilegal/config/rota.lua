@@ -82,7 +82,7 @@ Routes = {
             }
         },
         ['ZeroFome'] = {
-            name = 'ZeroFome',
+            name = 'Zero Fome',
             coords = {
                 vector3(-1343.71, -240.9363, 42.67542),
                 vector3(-602.1362, -1105.727, 22.32092),

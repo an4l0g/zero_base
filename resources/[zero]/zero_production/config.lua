@@ -202,6 +202,16 @@ configs.products = {
             materials = {
                 ['c-mec'] = { name = 'C. Mecânica', amount = 14 },
             }
+        },
+        ['kitreparo'] = {
+            order = 1,
+            name = 'Kit Reparo',
+            min_amount = 1,
+            max_amount = 1,
+            delay = 10000,
+            materials = {
+                ['c-mec'] = { name = 'C. Mecânica', amount = 0 },
+            }
         }
     },
     ['smuggling'] = {
@@ -331,12 +341,24 @@ configs.products = {
 }
 
 configs.productions = {
-    ['fac1'] = { 
-        coords = vec3(-68.56, -823.24, 326.23), 
-        permission = 'hospital.permissao',
-        products = configs.products.mec, 
+    ['espanha'] = { 
+        coords = vector3(412.167, 3.718682, 84.91797), 
+        products = configs.products.guns, 
+        label = 'Armas', 
+        permission = 'espanha.permissao',
+        webhook = '' 
+    },
+    ['colombia'] = { 
+        coords = vector3(-1486.299, 835.8461, 176.9854), 
+        products = configs.products.guns, 
+        label = 'Armas', 
+        webhook = '' 
+    },
+    ['canada'] = { 
+        coords = vector3(-1834.497, 425.1693, 118.3649), 
         label = 'Munições', 
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        products = configs.products.wammos, 
+        webhook = '' 
     },
     ['fac2'] = { 
         coords = vec3(732.9363, 1276.444, 360.2944), 
@@ -354,6 +376,18 @@ configs.productions = {
         coords = vector3(-1839.969, -1188.026, 14.30042), 
         label = 'Alimentos', 
         products = configs.products.cook, 
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['zeromec1'] = { 
+        coords = vector3(-310.8, -113.433, 39.0022), 
+        label = 'Mecânica', 
+        products = configs.products.mec, 
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['zeromec2'] = { 
+        coords = vector3(-322.7736, -146.3473, 39.0022), 
+        label = 'Mecânica', 
+        products = configs.products.mec, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
 }

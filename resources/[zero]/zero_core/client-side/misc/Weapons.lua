@@ -140,7 +140,7 @@ local _disableActions = false
 local disableActions = function(bool)
     _disableActions = bool
     while (_disableActions == true) do
-        DisablePlayerFiring(PlayerPedId(), true) 
+        if (not LocalPlayer.state.SafeZone) then DisablePlayerFiring(PlayerPedId(), true); end;
         DisableControlAction(0, 140, true) 
         DisableControlAction(0, 263, true)
         Citizen.Wait(5)
@@ -156,6 +156,7 @@ Citizen.CreateThread(function()
                 if (Weapons[GetSelectedPedWeapon(ped)]) then
                     zero.CarregarAnim('reaction@intimidation@1h')
                     if (not Holster and LastWeapon ~= GetHashKey(Weapons[GetSelectedPedWeapon(ped)]) and GetSelectedPedWeapon(ped) == GetHashKey(Weapons[GetSelectedPedWeapon(ped)])) then
+                        LocalPlayer.state.BlockTasks = true
                         LastWeapon = GetHashKey(Weapons[GetSelectedPedWeapon(ped)])
                         TriggerEvent('disableActionsWeapon', true)
                         SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
@@ -166,6 +167,7 @@ Citizen.CreateThread(function()
 					    ClearPedTasks(ped)
                         TriggerEvent('disableActionsWeapon', false)
                         Holster = true
+                        LocalPlayer.state.BlockTasks = false
                     end
 
                     if (Holster and LastWeapon ~= GetHashKey(Weapons[GetSelectedPedWeapon(ped)])) then
@@ -177,6 +179,7 @@ Citizen.CreateThread(function()
                     end
                 else
                     if (Holster and GetSelectedPedWeapon(ped) == GetHashKey('WEAPON_UNARMED')) then
+                        LocalPlayer.state.BlockTasks = true
                         TriggerEvent('disableActionsWeapon', true)
                         SetCurrentPedWeapon(ped, LastWeapon, true)
                         TaskPlayAnim(ped, 'reaction@intimidation@1h', 'outro', 8.0,8.0,-1,48,10,0,0,0)
@@ -187,6 +190,7 @@ Citizen.CreateThread(function()
                         LastWeapon = nil
                         TriggerEvent('disableActionsWeapon', false)
                         Holster = false
+                        LocalPlayer.state.BlockTasks = false
                     end
                 end 
             else

@@ -24,7 +24,7 @@ set mysql_connection_string "mysql://root@localhost/zero_roleplay?charset=utf8mb
 set mysql_slow_query_warning 1500
 # set mysql_debug true
 
-set sv_enforceGameBuild 2944
+set sv_enforceGameBuild 2699
 set svgui_disable true
 set gametype "Roleplay"
 set mapname "Los Santos"

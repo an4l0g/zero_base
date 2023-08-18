@@ -14,8 +14,6 @@ zero.formatWebhook = function(url, title, body)
     end
     currentBody = currentBody..os.date('\n\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```'
     if (currentBody and url) and url ~= '' then
-        if (webhook[url]) then
-		    PerformHttpRequest(webhook[url], function(err, text, headers) end, 'POST', json.encode({ content = currentBody }), { ['Content-Type'] = 'application/json' })
-	    end
+		PerformHttpRequest((webhook[url] or url), function(err, text, headers) end, 'POST', json.encode({ content = currentBody }), { ['Content-Type'] = 'application/json' })
     end
 end
