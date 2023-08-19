@@ -73,6 +73,15 @@ config.peds = {
             'single_team_loop_boss'
         }
     },
+    -- [ Hospital ] --
+    {
+        coord = vector4(-814.8132, -1234.919, 7.324585, 0),
+        hash = 's_m_m_doctor_01',
+        anim = {
+            'anim@heists@heist_corona@single_team',
+            'single_team_loop_boss'
+        }
+    },
 }
 
 return config

@@ -83,6 +83,7 @@ config.animations = {
                 local ped = PlayerPedId()
                 local menuCelular = zero.getMenuCelular()
                 TriggerEvent('zero_animations:cancelSharedAnimation')
+                TriggerEvent('zero:CancelAnimations')
                 cancelKeyMapping = false
                 if (GetEntityHealth(ped) > 100 and not menuCelular) then
                     disableActions(false)
@@ -883,7 +884,62 @@ config.animations = {
             anim = 'mp_player_int_eat_burger_enter',
             andar = true,
             loop = true
-        }
+        },
+        ['deitar'] = {
+            dict = 'amb@world_human_sunbathe@female@back@idle_a', 
+            anim = 'idle_a', 
+            andar = false, 
+            loop = true 
+        },
+    
+        ['deitar2'] = {
+            dict = 'amb@world_human_sunbathe@female@front@idle_a', 
+            anim = 'idle_a', 
+            andar = false, 
+            loop = true 
+        },
+    
+        ['deitar3'] = {
+            dict = 'amb@world_human_sunbathe@male@back@idle_a', 
+            anim = 'idle_a', 
+            andar = false, 
+            loop = true 
+        },
+    
+        ['deitar4'] = {
+            dict = 'amb@world_human_sunbathe@male@front@idle_a', 
+            anim = 'idle_a', 
+            andar = false, 
+            loop = true 
+        },
+    
+        -- ['deitar5'] = {
+        --     dict = 'mini@cpr@char_b@cpr_str', 
+        --     anim = 'cpr_kol_idle', 
+        --     andar = false, 
+        --     loop = true 
+        -- },
+    
+        ['deitar6'] = {
+            dict = 'switch@trevor@scares_tramp', 
+            anim = 'trev_scares_tramp_idle_tramp', 
+            andar = false, 
+            loop = true 
+        },
+    
+        ['deitar7'] = {
+            dict = 'switch@trevor@annoys_sunbathers',
+            anim = 'trev_annoys_sunbathers_loop_girl',
+            andar = false, 
+            loop = true 
+        },
+        
+        ['deitar8'] = {
+            dict = 'switch@trevor@annoys_sunbathers',
+            anim = 'trev_annoys_sunbathers_loop_guy', 
+            andar = false, 
+            loop = true 
+        },
     } 
 }
 

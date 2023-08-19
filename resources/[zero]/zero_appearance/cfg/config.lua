@@ -25,7 +25,7 @@ config.general = {
                 [GetHashKey('a_m_y_hipster_02')] = 'male',
             },
             blip = {
-                name = 'Zero Roupas',
+                name = 'Loja de Roupas',
                 id = 73,
                 color = 5,
                 scale = 0.7
@@ -77,7 +77,7 @@ config.general = {
                 }
             },
             blip = {
-                name = 'Zero Barbearia',
+                name = 'Barbearia',
                 id = 71,
                 color = 3,
                 scale = 0.6
@@ -1682,7 +1682,7 @@ config.general = {
                 }
             },
             blip = {
-                name = 'Zero Tatuagem',
+                name = 'Estúdio de Tatuagem',
                 id = 75,
                 color = 0,
                 scale = 0.7,

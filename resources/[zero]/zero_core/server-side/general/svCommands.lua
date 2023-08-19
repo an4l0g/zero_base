@@ -1422,7 +1422,7 @@ RegisterCommand('listrhp', function(source)
         local list, paramedics = '', 0
         for src, id in ipairs(inService) do
             local user = Player(src).state.patrolHospital
-            if (Player(src).state.patrolHospital) then
+            if (user) then
                 list = list..'<b>'..user.name..' ('..user.id..')</b> <br>'
                 paramedics = (paramedics + 1)
             end

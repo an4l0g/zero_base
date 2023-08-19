@@ -10,6 +10,7 @@ import Car from "./cat_car";
 import Police from "./cat_police";
 import Mechanic from "./cat_mechanic";
 import Homes from "./cat_homes";
+import Medic from "./cat_medic";
 
 export const AllInteractions = () => {
   const { dynamic } = useContext(DynamicContext);
@@ -23,6 +24,7 @@ export const AllInteractions = () => {
       ...Police,
       ...Mechanic,
       ...Homes,
+      ...Medic,
     ];
   }, []);
 
