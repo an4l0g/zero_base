@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------
 Citizen.CreateThread(function()
 	while true do
-		local timeDistance = 1000
+		local timeDistance = 500
 		local ped = PlayerPedId()
 		if not IsPedInAnyVehicle(ped) and IsPedJumping(ped) then
 			timeDistance = 5
