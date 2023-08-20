@@ -29,6 +29,7 @@ local markerThread = function()
 end
 
 Citizen.CreateThread(function()
+    addBlips()
     while (true) do
         local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)
@@ -75,3 +76,22 @@ end)
 RegisterNUICallback('close', function()
     SetNuiFocus(false, false)
 end)
+
+addBlips = function()
+    for _, v in pairs(configShops) do
+        if (v.blip) then
+            local coords = v.coord
+            local blipConfig = config.blips[v.config]
+            if (coords) then
+                local blip = AddBlipForCoord(coords.xyz)
+                SetBlipSprite(blip, blipConfig.sprite)
+                SetBlipColour(blip, blipConfig.color)
+                SetBlipScale(blip, blipConfig.scale)
+                SetBlipAsShortRange(blip, true)
+                BeginTextCommandSetBlipName('STRING')
+                AddTextComponentString(blipConfig.name)
+                EndTextCommandSetBlipName(blip)
+            end
+        end
+    end
+end
