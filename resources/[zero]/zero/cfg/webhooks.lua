@@ -107,5 +107,7 @@ config.webhooks = {
     ['Divorciar'] = 'https://discord.com/api/webhooks/1140107188682104982/zJi-oHo3aBUQLEU78p_fzRKQdcU9cdTaqi4fR0c1oDcqKBxJahujWw9ZuAdAoxFHppH9',
 
     ['Cirurgia'] = 'https://discord.com/api/webhooks/1142111770044018768/6geLbDdjnTWQ-ruB23b0c8BlcqiTQ2ZTic7K1o4YRLPJgdy-0_p7HP4ddRXITcFbsSdQ',
-    ['Reanimar'] = 'https://discord.com/api/webhooks/1142601727216975943/_UsynUcApnHYN_U9EjkhTQvVAtVTMNKIyTsJXVNRdqVQk4gz-rP-9bZvcjyDlbVY2d9A'
+    ['Reanimar'] = 'https://discord.com/api/webhooks/1142601727216975943/_UsynUcApnHYN_U9EjkhTQvVAtVTMNKIyTsJXVNRdqVQk4gz-rP-9bZvcjyDlbVY2d9A',
+
+    ['Roubos'] = 'https://discord.com/api/webhooks/1142819210339299350/rpqe6_yoz3D4bwHvoqKFPW2lGb10m_M2I4igES5a5ArsFQ42rwDUZs8rsEyxO5js-we2'
 }

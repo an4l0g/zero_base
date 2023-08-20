@@ -1504,3 +1504,7 @@ srv.Bvida = function()
         exports.zero_appearance:setCustomization(source, user_id)
     end
 end
+
+---------------------------------------
+-- FREEZE
+---------------------------------------
