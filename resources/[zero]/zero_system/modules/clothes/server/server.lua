@@ -1,8 +1,6 @@
-sClothes = {}
-zero = Proxy.getInterface('zero')
-cZero = Tunnel.getInterface('zero')
-Tunnel.bindInterface('zero_clothes', sClothes) 
-cClothes = Tunnel.getInterface('zero_clothes')
+local srv = {}
+Tunnel.bindInterface('Clothes', srv) 
+local vCLIENT = Tunnel.getInterface('Clothes')
 
 zero.prepare('zero_clothes:insertPreset', 'insert into clothes (title, preset, user_id) values (@title, @preset, @user_id)')
 zero.prepare('zero_clothes:getAllPresets', 'select * from clothes where user_id = @user_id')
@@ -10,19 +8,18 @@ zero.prepare('zero_clothes:getPreset', 'select * from clothes where user_id = @u
 zero.prepare('zero_clothes:deletePreset', 'delete from clothes where title = @title and user_id = @user_id')
 zero.prepare('zero_clothes:deleteAllPreset', 'delete from clothes where user_id = @user_id')
 
-sClothes.getAllPresets = function()
+srv.getAllPresets = function()
     local _source = source
     local user_id = zero.getUserId(_source)
-
     return zero.query('zero_clothes:getAllPresets', { user_id = user_id })
 end
 
-sClothes.verifyVip = function(user_id)
+srv.verifyVip = function(user_id)
     local groups = zero.getUserGroups(user_id)
-    local maxPresets = cfg.vips['default'];
+    local maxPresets = Clothes.vips['default'];
 
     for k,v in pairs(groups) do
-        local currentGroup = cfg.vips[v.grade]
+        local currentGroup = Clothes.vips[v.grade]
         if currentGroup and currentGroup > maxPresets then
             maxPresets = currentGroup
         end 
@@ -31,10 +28,9 @@ sClothes.verifyVip = function(user_id)
     return maxPresets
 end
 
-sClothes.verifyTitlePreset = function(presets, title)
+srv.verifyTitlePreset = function(presets, title)
     local titleExists = false
     for k,v in pairs(presets) do
-        print(json.encode(v.title == title), title, v.title)
         if v.title == title then 
             titleExists = true
         end 
@@ -42,7 +38,7 @@ sClothes.verifyTitlePreset = function(presets, title)
     return titleExists
 end
 
-sClothes.addPreset = function()
+srv.addPreset = function()
     local _source = source
     local user_id = zero.getUserId(_source)
     local result = exports.zero_hud:prompt(_source, {
@@ -51,11 +47,11 @@ sClothes.addPreset = function()
     if result then
         result = result[1]
         local presets = zero.query('zero_clothes:getAllPresets', { user_id = user_id })
-        if #presets < sClothes.verifyVip(user_id) then
-            if sClothes.verifyTitlePreset(presets, result) then
+        if #presets < srv.verifyVip(user_id) then
+            if srv.verifyTitlePreset(presets, result) then
                 TriggerClientEvent('notify', _source, 'Roupas', 'Você já possui um preset com esse nome!')
             else
-                local currentPreset = cClothes.getCurrentPreset(_source)
+                local currentPreset = vCLIENT.getCurrentPreset(_source)
                 zero.execute('zero_clothes:insertPreset', { title = result, user_id = user_id, preset = json.encode(currentPreset) })
                 TriggerClientEvent('notify', _source, 'Roupas', 'Preset de roupas <b>'..result..'</b> salvo com sucesso!')
             end
@@ -64,9 +60,9 @@ sClothes.addPreset = function()
         end
     end
 end
-RegisterNetEvent('zero_interactions:addPreset', sClothes.addPreset)
+RegisterNetEvent('zero_interactions:addPreset', srv.addPreset)
 
-sClothes.usePreset = function(presetTitle)
+srv.usePreset = function(presetTitle)
     local _source = source
     local user_id = zero.getUserId(_source)
 
@@ -74,13 +70,13 @@ sClothes.usePreset = function(presetTitle)
 
     if savedPreset then
         savedPreset = savedPreset[1]
-        cClothes.setClothes(_source, json.decode(savedPreset.preset))
+        vCLIENT.setClothes(_source, json.decode(savedPreset.preset))
         zero.execute('zero_appearance/saveClothes', { user_id = user_id, user_clothes = json.encode(savedPreset.preset) })
     end
 end
-RegisterNetEvent('zero_interactions:usePreset', sClothes.usePreset)
+RegisterNetEvent('zero_interactions:usePreset', srv.usePreset)
 
-sClothes.deletePreset = function()
+srv.deletePreset = function()
     local _source = source
     local user_id = zero.getUserId(_source)
 
@@ -94,9 +90,9 @@ sClothes.deletePreset = function()
         TriggerClientEvent('notify', _source, 'Roupas', 'Preset deletado com sucesso!')
     end
 end
-RegisterNetEvent('zero_interactions:deletePreset', sClothes.deletePreset)
+RegisterNetEvent('zero_interactions:deletePreset', srv.deletePreset)
 
-sClothes.deleteAllPreset = function()
+srv.deleteAllPreset = function()
     local _source = source
     local user_id = zero.getUserId(_source)
 
@@ -106,4 +102,4 @@ sClothes.deleteAllPreset = function()
         TriggerClientEvent('notify', _source, 'Roupas', 'Presets deletados com sucesso!')
     end
 end
-RegisterNetEvent('zero_interactions:deleteAllPreset', sClothes.deleteAllPreset)
+RegisterNetEvent('zero_interactions:deleteAllPreset', srv.deleteAllPreset)

@@ -1,13 +1,13 @@
-cClothes = {}
-Tunnel.bindInterface('zero_clothes', cClothes)
-sClothes = Tunnel.getInterface('zero_clothes')
+local cli = {}
+Tunnel.bindInterface('Clothes', cli)
+local vSERVER = Tunnel.getInterface('Clothes')
 
 local checkValues = function(value)
     if (value >= 0) then return value; end;
     return 0
 end
 
-cClothes.getCurrentPreset = function()
+cli.getCurrentPreset = function()
     local ped = PlayerPedId()
     local currentPreset = {
         ['1'] = { model = checkValues(GetPedDrawableVariation(ped, 1)), var = checkValues(GetPedTextureVariation(ped, 1)) },
@@ -25,11 +25,10 @@ cClothes.getCurrentPreset = function()
         ['p6'] = { model = checkValues(GetPedPropIndex(ped, 6)), var = checkValues(GetPedPropTextureIndex(ped, 6)) },
         ['p7'] = { model = checkValues(GetPedPropIndex(ped, 7)), var = checkValues(GetPedPropTextureIndex(ped, 7)) },
     }
-    print(json.encode(currentPreset))
     return currentPreset
 end
 
-cClothes.setClothes = function(clothes)
+cli.setClothes = function(clothes)
     local ped = PlayerPedId()
     zero._playAnim(true, {{'clothingshirt','try_shirt_positive_d'}}, false)
     Wait(2000)
@@ -44,7 +43,7 @@ cClothes.setClothes = function(clothes)
     end
 end
 
-cClothes.getClothesPresets = function()
-    return sClothes.getAllPresets()
+cli.getClothesPresets = function()
+    return vSERVER.getAllPresets()
 end
-exports('getClothesPresets', cClothes.getClothesPresets)
+exports('getClothesPresets', cli.getClothesPresets)

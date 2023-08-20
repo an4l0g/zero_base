@@ -17,7 +17,7 @@ cDynamic.openOrUpdateNui = function()
     SendNUIMessage({
         action = 'open',
         favorites = sDynamic.getFavorites(),
-        clothes = exports.zero_clothes:getClothesPresets()
+        clothes = exports.zero_system:getClothesPresets()
         -- print(json.encode(exports['zero_core']:getAllAnimations()))
     })
 end
