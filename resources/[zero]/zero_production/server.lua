@@ -6,7 +6,6 @@ sProduction.validateProduction = function(index, amount, org)
     local user_id = zero.getUserId(_source)
 
     local validatedProduction = true
-    print(org, json.encode(configs.productions[org]))
     local materials = configs.productions[org].products[index].materials
     for k,v in pairs(materials) do
         if zero.getInventoryItemAmount(user_id, k) < (v.amount * amount) then

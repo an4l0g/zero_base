@@ -17,6 +17,24 @@ config.groups = {
 		'dv.permissao'
 	},
 
+	['Vips'] = {
+		information = {
+			title = 'Vips',
+			groupType = 'vips',
+			grades = {
+				['Bronze'] = { title = 'Bronze', level = 1 },
+				['Prata'] = { title = 'Prata', level = 2 },
+				['Ouro'] = { title = 'Ouro', level = 3 },
+				['Rubi'] = { title = 'Rubi', level = 4 },
+				['Ametista'] = { title = 'Ametista', level = 5 },
+				['Safira'] = { title = 'Safira', level = 6 },
+				['Diamante'] = { title = 'Diamante', level = 7 },
+				['Zero'] = { title = 'Zero', level = 8 }
+			}
+		},
+		'vip.permissao',
+	},
+
 	['Hospital'] = {
 		information = { 
 			title = 'Centro Médico', 

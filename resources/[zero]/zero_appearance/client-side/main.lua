@@ -14,6 +14,7 @@ setClothes = function(clothes)
     end
     zero.setCustomization(idleCopy)
 end
+exports('setClothes', setClothes)
 
 local povCam = {
     ['body'] = function()

@@ -8,7 +8,7 @@ const useInteractions = () => {
   const [category, setCategory] = useState(["main"]);
   const [search, setSearch] = useState("");
   const { setDynamic } = useContext(DynamicContext);
-  const { formattedWithFavorites, isFavorite } = AllInteractions();
+  const { renderAllInteractions, isFavorite } = AllInteractions();
 
   const handleClickInteraction = async (interaction) => {
     if (interaction.type === "category") {
@@ -30,7 +30,7 @@ const useInteractions = () => {
 
   return {
     handleClickInteraction,
-    interactions: formattedWithFavorites(),
+    interactions: renderAllInteractions(),
     search,
     setSearch,
     category,

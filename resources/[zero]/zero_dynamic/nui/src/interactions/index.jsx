@@ -1,16 +1,18 @@
 // import React from "react";
 import { AiFillStar } from "react-icons/ai";
-import { useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import DynamicContext from "../contexts/DynamicContext";
 
 import Main from "./main";
 import Interactions from "./cat_interactions";
+import Clothes from "./cat_clothes";
 import Couple from "./cat_couple";
 import Car from "./cat_car";
 import Police from "./cat_police";
 import Mechanic from "./cat_mechanic";
 import Homes from "./cat_homes";
 import Medic from "./cat_medic";
+import { RiPlayFill } from "react-icons/ri";
 
 export const AllInteractions = () => {
   const { dynamic } = useContext(DynamicContext);
@@ -19,6 +21,7 @@ export const AllInteractions = () => {
     return [
       ...Main,
       ...Interactions,
+      ...Clothes,
       ...Couple,
       ...Car,
       ...Police,
@@ -28,42 +31,54 @@ export const AllInteractions = () => {
     ];
   }, []);
 
-  const isFavorite = (action, value) => {
-    return dynamic.favorites.some((item) => {
-      if (value) {
-        return item === action + ":" + value;
-      } else {
-        return item === action;
-      }
-    });
-  };
-  const formattedWithFavorites = () => {
-    if (dynamic.favorites.length > 0) {
-      return [
-        {
-          title: "Favoritos",
-          icon: <AiFillStar />,
-          type: "category",
-          value: "favorites",
-          category: "main",
-        },
-        ...interactionsList.map((item) => {
-          if (isFavorite(item.action, item.value)) {
-            return {
-              ...item,
-              category: item.category + `,favorites`,
-            };
-          }
+  const isFavorite = useCallback(
+    (action, value) => {
+      return dynamic.favorites.some((item) => {
+        if (value) {
+          return item === action + ":" + value;
+        } else {
+          return item === action;
+        }
+      });
+    },
+    [dynamic]
+  );
 
-          return item;
-        }),
-      ];
-    }
-    return interactionsList;
-  };
+  const renderClothesPreset = useMemo(() => {
+    return dynamic.clothes.map((item) => ({
+      title: item.title,
+      icon: <RiPlayFill />,
+      type: "action",
+      action: "usePreset",
+      category: "clothes",
+      value: item.title,
+      closeLater: true,
+    }));
+  }, [dynamic]);
+
+  const renderAllInteractions = useCallback(() => {
+    return [
+      {
+        title: "Favoritos",
+        icon: <AiFillStar />,
+        type: "category",
+        value: "favorites",
+        category: "main",
+      },
+      ...[...interactionsList, ...renderClothesPreset].map((item) => {
+        if (isFavorite(item.action, item.value)) {
+          return {
+            ...item,
+            category: item.category + `,favorites`,
+          };
+        }
+        return item;
+      }),
+    ];
+  }, [interactionsList, isFavorite, renderClothesPreset]);
 
   return {
-    formattedWithFavorites,
+    renderAllInteractions,
     isFavorite,
   };
 };

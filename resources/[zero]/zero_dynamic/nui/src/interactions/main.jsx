@@ -4,6 +4,7 @@ import { MdOutlineLocalPolice } from "react-icons/md";
 import { IoIosBody } from "react-icons/io";
 import { LuCar } from "react-icons/lu";
 import { BsFillHouseFill } from "react-icons/bs";
+import { FaTshirt } from "react-icons/fa";
 
 const interactions = [
   {
@@ -19,6 +20,13 @@ const interactions = [
     type: "category",
     category: "main",
     value: "animations",
+  },
+  {
+    title: "Roupas",
+    icon: <FaTshirt />,
+    type: "category",
+    category: "main",
+    value: "clothes",
   },
   {
     title: "Casa",

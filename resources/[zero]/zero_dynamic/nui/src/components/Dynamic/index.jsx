@@ -23,6 +23,7 @@ function Dynamic() {
   }, []);
 
   const filteredInteractions = useMemo(() => {
+    console.log("interactions", interactions);
     return interactions.filter((item) => {
       if (search !== "") {
         return item.title.toLowerCase().includes(search.toLowerCase());

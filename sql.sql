@@ -182,3 +182,10 @@ create table identity(
     url text not null,
     primary key(user_id)
 );
+
+create table clothes(
+	title varchar(50) not null,
+    preset json not null,
+    user_id int not null,
+    primary key(title, user_id)
+)

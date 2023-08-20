@@ -1,6 +1,6 @@
-local Tunnel = module('vrp','lib/Tunnel')
-local Proxy = module('vrp','lib/Proxy')
-vRP = Proxy.getInterface('vRP')
+local Tunnel = module('zero','lib/Tunnel')
+local Proxy = module('zero','lib/Proxy')
+zero = Proxy.getInterface('zero')
 
 vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
