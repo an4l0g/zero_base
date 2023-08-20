@@ -14,10 +14,15 @@ RegisterNetEvent('zero_animations:setAnim', function(anim)
     if (not IsPedInAnyVehicle(ped) and not emote.carros) then       
         if (emote.extra) then emote.extra(); end;
         if emote.pos then
-            local emoteDict = (emote.dict or nil)
-            local emoteAnim = (emote.anim or nil)
+            local emoteDict = emote.dict or nil
+            local emoteAnim = emote.anim or nil
             if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
-            zero.CarregarObjeto(emoteDict, emoteAnim, emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+            if (type(emote.prop) == 'table') then
+                zero.CarregarObjeto('', '', emote.prop[1], emote.flag, emote.hand[1], emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+                zero.CarregarObjeto('', '', emote.prop[2], emote.flag, emote.hand[2], emote.pos2[1], emote.pos[2], emote.pos2[3], emote.pos2[4], emote.pos2[5], emote.pos2[6])
+            else
+                zero.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+            end
         elseif (emote.prop) then
             zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
         elseif (emote.dict) then
@@ -75,7 +80,12 @@ RegisterNetEvent('zero_animations:setAnimShared', function(anim, target)
         local emoteDict = emote.dict or nil
         local emoteAnim = emote.anim or nil
         if (emoteDict) then zero._playAnim(emote.andar, {{ emote.dict, emote.anim }}, emote.loop); end;
-        zero.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+        if (type(emote.prop) == 'table') then
+            zero.CarregarObjeto('', '', emote.prop[1], emote.flag, emote.hand[1], emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+            zero.CarregarObjeto('', '', emote.prop[2], emote.flag, emote.hand[2], emote.pos2[1], emote.pos[2], emote.pos2[3], emote.pos2[4], emote.pos2[5], emote.pos2[6])
+        else
+            zero.CarregarObjeto('', '', emote.prop, emote.flag, emote.hand, emote.pos[1], emote.pos[2], emote.pos[3], emote.pos[4], emote.pos[5], emote.pos[6])
+        end
     elseif emote.prop then
         zero.CarregarObjeto(emote.dict, emote.anim, emote.prop, emote.flag, emote.hand)
     elseif emote.dict then

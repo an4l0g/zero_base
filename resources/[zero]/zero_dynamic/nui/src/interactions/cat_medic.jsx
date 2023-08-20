@@ -17,4 +17,28 @@ export default [
     category: "medic",
     closeLater: true,
   },
+  {
+    title: "Anestesia",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "anestesia",
+    category: "medic",
+    closeLater: true,
+  },
+  {
+    title: "Reanimar",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "reanimar",
+    category: "medic",
+    closeLater: true,
+  },
+  {
+    title: "Vacinar",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "vacinar",
+    category: "medic",
+    closeLater: true,
+  },
 ];

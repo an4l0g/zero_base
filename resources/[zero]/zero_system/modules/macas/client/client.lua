@@ -114,3 +114,42 @@ cli.setTratamento = function(index)
     inTratamento = false
     LocalPlayer.state.BlockTasks = false
 end
+
+local anestesia = 0
+cli.setAnestesia = function(time)
+    local ped = PlayerPedId()
+	DoScreenFadeOut(5000)
+    Citizen.Wait(5000)
+    startEffect(time)
+    SetPedMotionBlur(ped, true) 
+    SetPedIsDrunk(ped, true)
+    DoScreenFadeIn(5000)
+    FreezeEntityPosition(ped,true)
+    TriggerEvent('progressBar', 'Sua anestesia acaba em '..time..' segundos...', time * 1000)
+    Citizen.Wait(time * 1000)
+    anestesia = 0
+    FreezeEntityPosition(ped, false)
+    ResetScenarioTypesEnabled()
+    ResetPedMovementClipset(ped, 0)
+    SetPedIsDrunk(ped, false)
+    SetPedMotionBlur(ped, false)
+end
+
+startEffect = function(time)
+    Citizen.CreateThread(function()
+        anestesia = time
+        while (anestesia > 0) do
+            SetTimecycleModifier('spectator5')
+            Citizen.Wait(5)
+        end
+        ClearTimecycleModifier()
+    end)
+end
+
+RegisterNetEvent('zero_macas:reanimar', function(time)
+    local coords = GetEntityCoords(PlayerPedId())
+    local foundGround, z = GetGroundZFor_3dCoord(coords.x, coords.y, 1000.0, 0.0)
+    object = CreateObject(GetHashKey('gnd_desfribilador_maleta'), coords.x+0.5, coords.y+0.5, z, false,false,false)
+    Citizen.Wait(time * 1000)
+    DeleteObject(object)
+end)

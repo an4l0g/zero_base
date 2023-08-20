@@ -309,8 +309,8 @@ config.animations = {
         ['cadeiraderodas'] = {
             category = 'medic',
             title = '[Médico] - Cadeira de rodas',
-            dict = 'gndempurrandochairwhell@animations',
-            anim = 'gndempurrandochairwhell_clip',
+            dict = 'gndempurrandomacasospackhospital@animationss',
+            anim = 'gndempurrandomacasospackhospital_clip',
             prop = 'gnd_cadeira_de_rodas_prop',
             flag = 50,
             hand = 28422,
@@ -319,9 +319,9 @@ config.animations = {
             loop = true,
             extra = function()
                 cancelKeyMapping = true
-                RequestAnimDict('gndempurrandochairwhell@animations')
-                while (not HasAnimDictLoaded('gndempurrandochairwhell@animations')) do Citizen.Wait(0); end;
-                TaskPlayAnim(PlayerPedId(), 'gndempurrandochairwhell@animations', 'gndempurrandochairwhell_clip', 4.0, 4.0, -1, 50, 0.0)
+                RequestAnimDict('gndempurrandomacasospackhospital@animationss')
+                while (not HasAnimDictLoaded('gndempurrandomacasospackhospital@animationss')) do Citizen.Wait(0); end;
+                TaskPlayAnim(PlayerPedId(), 'gndempurrandomacasospackhospital@animationss', 'gndempurrandomacasospackhospital_clip', 4.0, 4.0, -1, 50, 0.0)
                 disableActions(true)
             end,
             syncOption = {
@@ -355,6 +355,84 @@ config.animations = {
                 zRot = 0.0
             },
             otherAnim = 'cadeiraderodas',
+        },
+        ['maca'] = {
+            category = 'medic',
+            title = '[Médico] - Maca',
+            dict = 'gndempurrandomacasospackhospital@animations',
+            anim = 'gndempurrandomacasospackhospital_clip',
+            prop = 'gnd_maca_socorros',
+            flag = 50,
+            hand = 26614,
+            pos = { 1.17, -0.23, -0.05, -101.17, -258.46, 5.43 },
+            andar = true,
+            loop = true,
+            extra = function()
+                cancelKeyMapping = true
+                RequestAnimDict('gndempurrandomacasospackhospital@animations')
+                while (not HasAnimDictLoaded('gndempurrandomacasospackhospital@animations')) do Citizen.Wait(0); end;
+                TaskPlayAnim(PlayerPedId(), 'gndempurrandomacasospackhospital@animations', 'gndempurrandomacasospackhospital_clip', 4.0, 4.0, -1, 50, 0.0)
+                disableActions(true)
+            end,
+            syncOption = {
+                attachTo = false,
+                bone = 28442,
+                xPos = 0.81,
+                yPos = 0.09,
+                zPos = -0.24,
+                xRot = 51.64,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'maca2',
+            perm = 'hospital.permissao'  
+        },
+        ['maca2'] = {
+            dict = 'anim@gangops@morgue@table@', 
+            anim = 'body_search', 
+            andar = false, 
+            loop = true,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = -0.05,
+                yPos = 1.2,
+                zPos = 1.05,
+                xRot = -49.31,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'maca',
+        },
+        ['reanimar'] = {
+            perm = 'hospital.permissao',
+            dict = 'gndmedicdesfribilador@animations',
+            anim = 'gndmedicdesfribilador_clip', 
+            prop = { 'gnd_desfribilador_prop', 'gnd_desfribilador_prop' },
+            flag = 50,
+            hand = { 60309, 28422 },
+            pos = { 0.07, 0.08, 0.02, -102.78, -70.6, 13.84 },
+            pos2 = { 0.07, 0.07, -0.03, -85.36, -304.17, 13.84 },
+            andar = false, 
+            loop = true,
+            syncOption = {
+                attachTo = true,
+                bone = 28442,
+                xPos = 0.2,
+                yPos = -0.05,
+                zPos = 0.0,
+                xRot = 0.0,
+                yRot = 0.0,
+                zRot = 0.0
+            },
+            otherAnim = 'reanimar2'
+        },
+        ['reanimar2'] = {
+            perm = 'hospital.permissao',
+            dict = 'gndpacientdesfribilador@animations',
+            anim = 'gndpacientdesfribilador_clip', 
+            andar = false, 
+            loop = true 
         },
         ['casal'] = {
             category = 'couple',
@@ -761,6 +839,37 @@ config.animations = {
         },
     },
     ['animations'] = {
+        ["dormir"] = {
+            dict = "anim@heists@ornate_bank@hostages@hit", 
+            anim = "hit_react_die_loop_ped_a", 
+            andar = false, 
+            loop = true 
+        },
+        ["dormir2"] = {
+            dict = "anim@heists@ornate_bank@hostages@hit", 
+            anim = "hit_react_die_loop_ped_e", 
+            andar = false, 
+            loop = true 
+        },
+        ["dormir3"] = {
+            dict = "anim@heists@ornate_bank@hostages@hit", 
+            anim = "hit_react_die_loop_ped_h", 
+            andar = false, 
+            loop = true 
+        },
+        ["dormir4"] = {
+            dict = "mp_sleep", 
+            anim = "sleep_loop", 
+            andar = false, 
+            loop = true 
+        },
+        ["dormir5"] = {
+            dict = "missarmenian2", 
+            anim = "drunk_loop", 
+            andar = false, 
+            loop = true 
+        },
+
         ['consertar'] = {
             category = 'animations',
             title = 'Consertar',
@@ -885,60 +994,73 @@ config.animations = {
             andar = true,
             loop = true
         },
+
         ['deitar'] = {
             dict = 'amb@world_human_sunbathe@female@back@idle_a', 
             anim = 'idle_a', 
             andar = false, 
             loop = true 
         },
-    
         ['deitar2'] = {
             dict = 'amb@world_human_sunbathe@female@front@idle_a', 
             anim = 'idle_a', 
             andar = false, 
             loop = true 
         },
-    
         ['deitar3'] = {
             dict = 'amb@world_human_sunbathe@male@back@idle_a', 
             anim = 'idle_a', 
             andar = false, 
             loop = true 
         },
-    
         ['deitar4'] = {
             dict = 'amb@world_human_sunbathe@male@front@idle_a', 
             anim = 'idle_a', 
             andar = false, 
             loop = true 
         },
-    
-        -- ['deitar5'] = {
-        --     dict = 'mini@cpr@char_b@cpr_str', 
-        --     anim = 'cpr_kol_idle', 
-        --     andar = false, 
-        --     loop = true 
-        -- },
-    
+        ['deitar5'] = {
+            dict = 'mini@cpr@char_b@cpr_str', 
+            anim = 'cpr_kol_idle', 
+            andar = false, 
+            loop = true 
+        },
         ['deitar6'] = {
             dict = 'switch@trevor@scares_tramp', 
             anim = 'trev_scares_tramp_idle_tramp', 
             andar = false, 
             loop = true 
         },
-    
         ['deitar7'] = {
             dict = 'switch@trevor@annoys_sunbathers',
             anim = 'trev_annoys_sunbathers_loop_girl',
             andar = false, 
             loop = true 
         },
-        
         ['deitar8'] = {
             dict = 'switch@trevor@annoys_sunbathers',
             anim = 'trev_annoys_sunbathers_loop_guy', 
             andar = false, 
             loop = true 
+        },
+        ['deitar9'] = {
+            dict = 'anim@gangops@morgue@table@', 
+            anim = 'body_search', 
+            andar = false, 
+            loop = true 
+        },
+
+        ['reanimar'] = {
+            perm = 'hospital.permissao',
+            dict = 'gndmedicdesfribilador@animations',
+            anim = 'gndmedicdesfribilador_clip', 
+            prop = { 'gnd_desfribilador_prop', 'gnd_desfribilador_prop' },
+            flag = 50,
+            hand = { 60309, 28422 },
+            pos = { 0.07, 0.08, 0.02, -102.78, -70.6, 13.84 },
+            pos2 = { 0.07, 0.07, -0.03, -85.36, -304.17, 13.84 },
+            andar = false, 
+            loop = true,
         },
     } 
 }
