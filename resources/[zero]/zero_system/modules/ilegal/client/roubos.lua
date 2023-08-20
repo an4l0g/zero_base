@@ -60,7 +60,9 @@ cli.startRobbery = function(robbery, location)
     Citizen.Wait(500)
     FreezeEntityPosition(ped, true)
     SetPedComponentVariation(ped, 5, 45, 0, 2)
-    zero._playAnim(false, {{ 'anim@heists@ornate_bank@grab_cash_heels','grab' }}, true)
+    zero._playAnim(false, {
+        { 'anim@heists@ornate_bank@grab_cash_heels', 'grab' }
+    }, true)
 end
 
 local blips = {}
