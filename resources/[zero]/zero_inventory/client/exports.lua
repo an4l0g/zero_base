@@ -35,13 +35,5 @@ cInventory.closeInventory = function(data)
     SendNUIMessage({
         action = 'close'
     })
-    
-    local ped = PlayerPedId()
-    if (pedCache[ped]) then
-        sInventory.callBackInteractions(sendersTable[1], sendersTable[2])
-        pedCache[ped] = nil
-    else
-        sInventory.checkAction()
-    end
 end
 exports('closeInventory', cInventory.closeInventory)

@@ -1,20 +1,20 @@
 const app = {
   open: () => {
-    $('#mainElevador').fadeIn(500);
+    $("#mainElevador").fadeIn(500);
   },
   close: () => {
-    $('#mainElevador').fadeOut(500);
-    $.post('https://gb_elevator/close')
-  }
-}
+    $("#mainElevador").fadeOut(500);
+    $.post("https://zero_elevator/close");
+  },
+};
 
 window.addEventListener("message", function (event) {
-  eName = event.data.elevatorName
-  locs = event.data.elevatorLocs
-  if (event.data.action == 'OPEN_NUI') {
-    app.open()
-    $('#mainElevador').css('display', 'flex');
-    $('#mainElevador menu section').html('');
+  eName = event.data.elevatorName;
+  locs = event.data.elevatorLocs;
+  if (event.data.action == "OPEN_NUI") {
+    app.open();
+    $("#mainElevador").css("display", "flex");
+    $("#mainElevador menu section").html("");
     if (eName != undefined) {
       $(".elevadorName").html(eName);
     } else {
@@ -37,12 +37,12 @@ window.addEventListener("message", function (event) {
   }
   document.onkeyup = function (data) {
     if (data.which == 27) {
-      app.close()
+      app.close();
     }
   };
-})
+});
 
 function elevadorMove(i) {
-  $.post('https://gb_elevator/elevatorFloor', JSON.stringify(i))
-  app.close()
+  $.post("https://zero_elevator/elevatorFloor", JSON.stringify(i));
+  app.close();
 }

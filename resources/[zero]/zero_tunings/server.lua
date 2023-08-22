@@ -14,6 +14,38 @@ srv.getNitro = function()
     end
 end
 
+local GlobalNitro = {}
+local GlobalPurge = {}
+
+srv.hasNitro = function(vehicle)
+    if (GlobalNitro[vehicle]) then
+        return true
+    end
+    return false
+end
+
+srv.getVehicleSyncNitro = function(vehicle)
+    if (GlobalNitro[vehicle]) then
+        return GlobalNitro[vehicle]
+    end
+    return 0.0
+end
+
+srv.getVehicleSyncPurge = function(vehicle)
+    if (GlobalPurge[vehicle]) then
+        return GlobalPurge[vehicle]
+    end
+    return 0.0
+end
+
+RegisterNetEvent('zero_tunings:syncNitro', function(vehicle, value)
+    GlobalNitro[vehicle] = value
+end)
+
+RegisterNetEvent('zero_tunings:syncPurge', function(vehicle, value)
+    GlobalPurge[vehicle] = value
+end)
+
 RegisterNetEvent('ND_Nitro:purge', function(status, vehid)
     local source = source
     if (vehid) then

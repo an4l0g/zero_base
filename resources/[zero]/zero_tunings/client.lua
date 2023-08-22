@@ -4,21 +4,14 @@ local vSERVER = Tunnel.getInterface('Nitro')
 
 local display = false
 
-DecorRegister('ND_NITRO_STATUS', 2)
-DecorRegister('ND_NITRO_NOS', 1)
-DecorRegister('ND_NITRO_PURGE', 1)
-
 local hasNitro = function(veh)
-    if (not DecorExistOn(veh, 'ND_NITRO_STATUS')) then; return false; end;
-    return DecorGetBool(veh, 'ND_NITRO_STATUS')
-end
-
-local setNitro = function(veh, status)
-    DecorSetBool(veh, 'ND_NITRO_STATUS', status)
+    veh = VehToNet(veh)
+    return vSERVER.hasNitro(veh)
 end
 
 local getValuesNitro = function(veh)
-    return DecorGetFloat(veh, 'ND_NITRO_NOS'), DecorGetFloat(veh, 'ND_NITRO_PURGE')
+    veh = VehToNet(veh)
+    return vSERVER.getVehicleSyncNitro(veh), vSERVER.getVehicleSyncPurge(veh)
 end
 
 local install = false
@@ -56,12 +49,10 @@ cli.installNitro = function()
                             FreezeEntityPosition(ped, false)
                             FreezeEntityPosition(pVehicle, false)
                             SetVehicleDoorShut(pVehicle, 4, 0)
-                            setNitro(pVehicle, true)
-                            DecorSetFloat(pVehicle, 'ND_NITRO_NOS', 100.0)
-                            DecorSetFloat(pVehicle, 'ND_NITRO_PURGE', 0.0)
 
-                            SendNUIMessage({ type = 'nosLevel', nos = 100 })
-                            SendNUIMessage({ type = 'purgeLevel', purge = 0 })
+                            TriggerServerEvent('zero_tunings:syncNitro', VehToNet(pVehicle), 100.0)
+                            TriggerServerEvent('zero_tunings:syncPurge', VehToNet(pVehicle), 0.0)
+
                             install = false
                         end)
                     end      
@@ -190,7 +181,7 @@ nitroThread = function(ped)
                     idle = 500
                     nosLevel, purgeLevel = getValuesNitro(veh)
                     if (nosLevel < 1) then
-                        setNitro(veh, false)
+                        TriggerServerEvent('zero_tunings:syncNitro', VehToNet(veh), false)
                         
                         display = false
                         SendNUIMessage({ type = 'status', display = display })
@@ -207,23 +198,23 @@ nitroThread = function(ped)
 
                     if (activated and nosLevel > 0) then
                         local lvl = nosLevel - 1.0
-                        DecorSetFloat(veh, 'ND_NITRO_NOS', lvl)
+                        TriggerServerEvent('zero_tunings:syncNitro', VehToNet(veh), lvl)
                         SendNUIMessage({ type = 'nosLevel', nos = lvl })
 
                         if (purgeLevel < 100) then
                             local lvl = purgeLevel + 4.0
-                            DecorSetFloat(veh, 'ND_NITRO_PURGE', lvl)
+                            TriggerServerEvent('zero_tunings:syncPurge', VehToNet(veh), lvl)
                             SendNUIMessage({ type = 'purgeLevel', purge = lvl })
                         end
                     end
 
                     if (purging and purgeLevel > 0) then
                         local lvl = purgeLevel - 15.0
-                        DecorSetFloat(veh, 'ND_NITRO_PURGE', lvl)
+                        TriggerServerEvent('zero_tunings:syncPurge', VehToNet(veh), lvl)
                         SendNUIMessage({ type = 'purgeLevel', purge = lvl })
                     elseif (purging and purgeLevel < 0) then
                         local lvl = nosLevel - 5.0
-                        DecorSetFloat(veh, 'ND_NITRO_NOS', lvl)
+                        TriggerServerEvent('zero_tunings:syncNitro', VehToNet(veh), lvl)
                         SendNUIMessage({ type = 'nosLevel', nos = lvl })
                     end
 

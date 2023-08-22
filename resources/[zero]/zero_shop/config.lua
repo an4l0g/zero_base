@@ -6,27 +6,199 @@ config = {}
 
 config.general = {
     ['departament'] = {
+        ['sanduiche'] = {
+            name = 'Sanduiche', index = 'sanduiche',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['donut'] = {
+            name = 'Donut', index = 'donut',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['pirulito'] = {
+            name = 'Pirulito', index = 'pirulito',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['cola'] = {
+            name = 'Cola', index = 'cola',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['agua'] = {
+            name = 'Agua', index = 'agua',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['soda'] = {
+            name = 'Soda', index = 'soda',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['radio'] = {
+            name = 'Radio', index = 'radio',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
+        ['celular'] = {
+            name = 'Celular', index = 'celular',
+            price = {
+                buy = 800,
+            },
+            method = 'legal'
+        },
+        ['kit-reparo'] = {
+            name = 'Kit Reparo', index = 'kit-reparo',
+            price = {
+                buy = 7500,
+            },
+            method = 'legal'
+        },
+        ['par-alianca'] = {
+            name = 'Par de alianças', index = 'par-alianca',
+            price = {
+                buy = 25000,
+            },
+            method = 'legal'
+        },
+        ['gps'] = {
+            name = 'GPS', index = 'gps',
+            price = {
+                buy = 10000,
+            },
+            method = 'legal'
+        },
+        ['hotdog'] = {
+            name = 'Hotdog', index = 'hotdog',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['mochila-pequena'] = {
+            name = 'Mochila Pequena', index = 'mochila-pequena',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
+        ['mochila-grande'] = {
+            name = 'Mochila Grande', index = 'mochila-grande',
+            price = {
+                buy = 1750,
+            },
+            method = 'legal'
+        },
+        ['hotdog'] = {
+            name = 'Hotdog', index = 'hotdog',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+    },
+     ['ammu'] = {
         ['algema'] = {
             name = 'Algema', index = 'algema',
             price = {
-                buy = 5000,
+                buy = 3500,
             },
             method = 'legal'
         },
-        ['spray'] = {
-            name = 'Spray', index = 'spray',
+        ['capuz'] = {
+            name = 'Capuz', index = 'capuz',
             price = {
-                buy = 5000,
+                buy = 3500,
             },
             method = 'legal'
         },
-        ['nitro'] = {
-            name = 'Nitro', index = 'nitro',
+        ['weapon_ceramicpistol'] = {
+            name = 'Pistola', index = 'weapon_ceramicpistol',
             price = {
-                buy = 5000,
+                buy = 25000,
             },
-            method = 'ilegal'
-        }
+            method = 'legal'
+        },
+        ['m_weapon_ceramicpistol'] = {
+            name = 'M. Pistola', index = 'm_weapon_ceramicpistol',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
+    },
+    ['bebidas'] = {
+        ['cola'] = {
+            name = 'Cola', index = 'cola',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['agua'] = {
+            name = 'Água', index = 'agua',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['soda'] = {
+            name = 'Soda', index = 'soda',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['vodka'] = {
+            name = 'Vodka', index = 'vodka',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
+        ['whisky'] = {
+            name = 'Whisky', index = 'whisky',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
+        ['cerveja'] = {
+            name = 'Cerveja', index = 'cerveja',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
+        ['conhaque'] = {
+            name = 'Conhaque', index = 'conhaque',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
+        ['tequila'] = {
+            name = 'Tequila', index = 'tequila',
+            price = {
+                buy = 500,
+            },
+            method = 'legal'
+        },
     }
 }
 

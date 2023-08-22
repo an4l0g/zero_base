@@ -1,5 +1,5 @@
 multarPlayer = function(user_id, motivo, valor, descricao)
-    if (user_id and motivo and valor and descricao) then
+    if (user_id and motivo and valor > 0 and descricao) then
         zero.execute('zero_bank/addMultas', { user_id = user_id, reason = motivo, value = parseInt(valor), time = os.time(), description = descricao })
     end
 end

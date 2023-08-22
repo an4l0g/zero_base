@@ -77,7 +77,7 @@ end
 zero.updateCustomization = function(customization)
 	local user_id = zero.getUserId(source)
 	if user_id then
-		zero.execute('zero_appearance/saveClothes', { user_id = _userId, user_clothes = json.encode(customization) } )
+		zero.execute('zero_appearance/saveClothes', { user_id = user_id, user_clothes = json.encode(customization) } )
 	end
 end
 

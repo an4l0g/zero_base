@@ -342,8 +342,8 @@ radarPolice = function()
 						end
                     end
 
-                    drawTxt(radar.info, 7, 0.5, 0.905, 0.4, 255, 255, 255, 255)
-                    drawTxt(radar.info, 7, 0.5, 0.93, 0.4, 255, 255, 255, 255)
+                    Text2D(0, 0.4, 0.905, radar.info, 0.4)
+                    Text2D(0, 0.4, 0.93, radar.info, 0.4)
                 end
             end
             Citizen.Wait(idle)

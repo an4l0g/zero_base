@@ -25,7 +25,7 @@ Citizen.CreateThread(function()
 			-- COORDINATES SAVE
 			if state_cache.coords_tick >= 5 then
 				
-				local coords = GetEntityCoords(PlayerPedId(),true)			
+				local coords = GetEntityCoords(PlayerPedId())			
 				if ( #(coords - state_cache.coords) >= 2 ) then
 					state_cache.coords = coords
 					zeroServer._updatePos(coords.x,coords.y,coords.z)				
@@ -194,7 +194,6 @@ zero.setCustomization = function(clothes)
 
         TriggerEvent('zero:barberUpdate')
         TriggerEvent('zero:tattooUpdate')
-        TriggerServerEvent('zero_whitelist:server')
     end
 end
 

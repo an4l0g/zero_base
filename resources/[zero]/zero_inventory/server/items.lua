@@ -93,8 +93,7 @@ sInventory.useItem = function(index, amount)
     zero.webhook('useItems', '```prolog\n[Utilizar Item]\n[ID]: '..user_id..'\n[Item]: '..(index or 'ND')..'\n[Qtd]: '..(amount or '1')..'```')
 
     if item.consumable then
-        print("AQUIII", json.encode(item), index)
-        consumableItem(index)
+        consumableItem(_source, user_id, index)
     end
 
     if item.drug then

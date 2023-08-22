@@ -1,6 +1,16 @@
 local srv = {}
 Tunnel.bindInterface('Commands', srv)
 local vCLIENT = Tunnel.getInterface('Commands')
+
+---------------------------------------
+-- GIVE INVENTORY ITEM
+---------------------------------------
+srv.giveInventoryItem = function(item)
+    local source = source
+    local user_id = zero.getUserId(source)
+    zero.giveInventoryItem(user_id, item, 1)
+end
+
 ---------------------------------------
 -- DELETE ALL OBJECTS
 ---------------------------------------
@@ -527,42 +537,6 @@ RegisterCommand('rchapeu', function(source)
         else
             TriggerClientEvent('notify', source, 'Remover Chápeu', 'Você não se encontra próximo de um <b>cidadão</b>.')
         end
-	end
-end)
-
----------------------------------------
--- CONE
----------------------------------------
-RegisterCommand('cone', function(source, args)
-	local user_id = zero.getUserId(source)
-    local identity = zero.getUserIdentity(user_id)
-	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
-		TriggerClientEvent('cone', source, args[1])
-		zero.webhook('PoliceCommands', '```prolog\n[/CONE]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n['..(args[1] and 'DELETOU' or 'CRIOU')..' UM CONE NA]\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-	end
-end)
-
----------------------------------------
--- BARREIRA
----------------------------------------
-RegisterCommand('barreira', function(source, args)
-	local user_id = zero.getUserId(source)
-    local identity = zero.getUserIdentity(user_id)
-	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
-		TriggerClientEvent('barreira', source, args[1])
-		zero.webhook('PoliceCommands', '```prolog\n[/BARREIRA]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n['..(args[1] and 'DELETOU' or 'CRIOU')..' UMA BARREIRA NA]\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-	end
-end)
-
----------------------------------------
--- SPIKE
----------------------------------------
-RegisterCommand('spike', function(source, args)
-	local user_id = zero.getUserId(source)
-    local identity = zero.getUserIdentity(user_id)
-	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
-		TriggerClientEvent('spike', source, args[1])
-		zero.webhook('PoliceCommands', '```prolog\n[/SPIKE]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n['..(args[1] and 'DELETOU' or 'CRIOU')..' UMA SPIKE NA]\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 	end
 end)
 

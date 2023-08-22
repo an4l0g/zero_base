@@ -1,6 +1,9 @@
 Dismantle = {
     locations = {
-        { coord = vector3(-126.1319, 89.59122, 71.03369-0.97), cooldown = 300, webhook = 'https://discord.com/api/webhooks/1120343943704477777/TxoX6bn2jclT1mPx2CcpZBR-r8AstAnTAcPj_HtWu4ztQc35e4U3mjtsmP0dlaYtQR-b' }
+        { coord = vector3(-342.6066, -142.5495, 60.60364), cooldown = 300, webhook = 'https://discord.com/api/webhooks/1142692376687689789/R-n89AUxhmm_sYIyegtA2r44dlSgDOSy1F-ODGnWkOMh6uYxtE2O5laxn-DmYhXoN-nU' },
+        { coord = vector3(-356.611, -159.7714, 38.7157), cooldown = 300, webhook = 'https://discord.com/api/webhooks/1142692376687689789/R-n89AUxhmm_sYIyegtA2r44dlSgDOSy1F-ODGnWkOMh6uYxtE2O5laxn-DmYhXoN-nU' },
+        { coord = vector3(-365.8681, -85.18681, 39.0022), cooldown = 300, webhook = 'https://discord.com/api/webhooks/1142692376687689789/R-n89AUxhmm_sYIyegtA2r44dlSgDOSy1F-ODGnWkOMh6uYxtE2O5laxn-DmYhXoN-nU' },
+        { coord = vector3(-352.3385, -90.17142, 38.85059), cooldown = 300, webhook = 'https://discord.com/api/webhooks/1142692376687689789/R-n89AUxhmm_sYIyegtA2r44dlSgDOSy1F-ODGnWkOMh6uYxtE2O5laxn-DmYhXoN-nU' }
     },
     payments = {
         ['vip'] = 6000,

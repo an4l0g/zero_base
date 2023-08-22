@@ -14,8 +14,25 @@ comboFood = function(index)
     end
 end
 
-fullStamina = function(source, user_id)
-    cInventory.fullStamina(source)
+newPet = function(source, user_id, item, petType)
+    if zero.tryGetInventoryItem(user_id, item, 1) then
+        TriggerClientEvent('createPet', source, petType)
+    else
+        TriggerClientEvent('notify', source, 'Inventário', 'Você não possui este pet!')
+    end
+end
+
+useBag = function(source, user_id, index, weight) 
+    if weight > exports.zero_inventory:getInventoryMaxWeight(user_id) then
+        if zero.tryGetInventoryItem(user_id, index, 1) then
+            exports.zero_inventory:setInventoryMaxWeight(user_id, weight)
+            TriggerClientEvent('notify', source, 'Inventário', 'Você utilizou a mochila com sucesso!')
+        else
+            TriggerClientEvent('notify', source, 'Inventário', 'Você não possui esta mochila!')
+        end
+    else
+        TriggerClientEvent('notify', source, 'Inventário', 'Você já utilizou uma mochila desta ou melhor!')
+    end
 end
 
 config.items = {
@@ -45,27 +62,57 @@ config.items = {
             end
         end 
     },
-    ----------------------------------------------------------------------------
-    -- COMIDAS
-    ----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+-- COMIDAS
+----------------------------------------------------------------------------
     ['c-ingredientes'] = { name = 'C. Ingredientes', type = 'common', weight = 2 },
-    ['camarao'] = { name = 'Esp. Camarão', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
-    ['milho'] = { name = 'Milho Cozido', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
-    ['chocolate'] = { name = 'Chuculate', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
-    ['caviar'] = { name = 'Aviar', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
-    ['suco-morango'] = { name = 'Suco Morango', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
-    ['suco-abacaxi'] = { name = 'Suco Abacaxi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
-    ['suco-kiwi'] = { name = 'Suco Kivi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
-    ['suco-caju'] = { name = 'Suco Aju', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
-    ['sanduiche'] = { name = 'Sanduiche', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0 }, usable = true, },
-    ['donut'] = { name = 'Donut', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0 }, usable = true, },
-    ['pirulito'] = { name = 'Pirulito', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0 }, usable = true, },
-    ['cola'] = { name = 'Cola', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25 }, usable = true, },
-    ['agua'] = { name = 'Água', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25 }, usable = true, },
-    ['soda'] = { name = 'Soda', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25 }, usable = true, },
-    ['energetico'] = { name = 'Soda', type = 'common', weight = 1, usable = true, interaction = function(source, user_id)
-        fullStamina(source, user_id)
-    end},
+    ['camarao'] = { name = 'Esp. Camarão', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
+    ['milho'] = { name = 'Milho Cozido', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
+    ['chocolate'] = { name = 'Chuculate', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
+    ['caviar'] = { name = 'Aviar', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
+    ['suco-morango'] = { name = 'Suco Morango', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
+    ['suco-abacaxi'] = { name = 'Suco Abacaxi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
+    ['suco-kiwi'] = { name = 'Suco Kivi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
+    ['suco-caju'] = { name = 'Suco Aju', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
+    ['sanduiche'] = { name = 'Sanduiche', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
+    ['donut'] = { name = 'Donut', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
+    ['pirulito'] = { name = 'Pirulito', type = 'common', weight = 0.5, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
+    ['hotdog'] = { name = 'Hotdog', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
+    ['cola'] = { name = 'Cola', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25, timeout = 5000 }, usable = true, },
+    ['agua'] = { name = 'Água', type = 'common', weight = 1.0, 
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_energy_drink', 
+        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        usable = true 
+    },
+    ['soda'] = { name = 'Soda', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25, timeout = 5000 }, usable = true, },
+    ['vodka'] = { name = 'vodka', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
+    ['whisky'] = { name = 'Whisky', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
+    ['cerveja'] = { name = 'Cerveja', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
+    ['conhaque'] = { name = 'Conhaque', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
+    ['tequila'] = { name = 'Tequila', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true },
+    ['energetico'] = { name = 'Energético', type = 'common', weight = 1.0, usable = true,
+        interaction = function(source, user_id)
+            cInventory.closeInventory(source)
+
+            zero.tryGetInventoryItem(user_id, 'energetico', 1)
+            Player(source).state.BlockTasks = true
+            
+            zeroClient.CarregarObjeto(source, 'mp_player_intdrink', 'loop_bottle', 'prop_energy_drink', 49, 60309)
+            TriggerClientEvent('progressBar', source, 'Bebendo energético...', 5000)
+            Citizen.SetTimeout(5000, function()
+                Player(source).state.Energetico = true
+                Player(source).state.BlockTasks = false
+                zeroClient.DeletarObjeto(source)
+                TriggerClientEvent('notify', source, 'Inventário', 'O <b>energético</b> foi utilizado com sucesso!')
+            end)
+
+            Citizen.SetTimeout(60000, function()
+                Player(source).state.Energetico = false
+                TriggerClientEvent('notify', source, 'Inventário', 'O efeito do <b>energético</b> passou e o coração voltou a bater normalmente.')
+            end)
+        end
+    },
     ['combo-camarao'] = { 
         name = 'Camarão da Laurinha', 
         combo = { 
@@ -118,9 +165,137 @@ config.items = {
             comboFood('combo-caviar')
         end
     },
+    ['cafe'] = { name = 'Café', type = 'common', weight = 1, interaction = function()
+        --
+    end},
+----------------------------------------------------------------------------
+-- PETS
+----------------------------------------------------------------------------
+    ['pet-jaguatirica'] = { 
+        name = 'Jaguatirica', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-jaguatirica', 'jaguatirica')
+        end
+    },
+    ['pet-pantera'] = { 
+        name = 'Pantera', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-pantera', 'pantera')
+        end
+    },
+    ['pet-husky'] = { 
+        name = 'Husky', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-husky', 'husky')
+        end
+    },
+    ['pet-poodle'] = { 
+        name = 'Poodle', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-poodle', 'poodle')
+        end
+    },
+    ['pet-cat'] = { 
+        name = 'Gato', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-cat', 'cat')
+        end
+    },
+    ['pet-shepherd'] = { 
+        name = 'Shepherd', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-shepherd', 'shepherd')
+        end
+    },
+    ['pet-rottweiler'] = { 
+        name = 'Rottweiler', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-rottweiler', 'rottweiler')
+        end
+    },
+    ['pet-retriever'] = { 
+        name = 'Retriever', 
+        type = 'common', 
+        weight = 0.0, 
+        usable = true,  
+        interaction = function(source, user_id)
+            newPet(source, user_id, 'pet-retriever', 'retriever')
+        end
+    },
+    ['racao'] = { 
+        name = 'Ração', 
+        type = 'common', 
+        weight = 1, 
+        usable = true,  
+        interaction = function(source, user_id)
+            TriggerClientEvent('feedPet', source)
+        end
+    },
+    ['agua-animal'] = { 
+        name = 'Água', 
+        type = 'common', 
+        weight = 1, 
+        usable = true,  
+        interaction = function(source, user_id)
+            TriggerClientEvent('waterToPet', source)
+        end
+    },
+    ['petkit'] = { 
+        name = 'Kit Veterinário', 
+        type = 'common', 
+        weight = 1, 
+    },
 ----------------------------------------------------------------------------
 -- LEGAL
 ----------------------------------------------------------------------------
+    ['mochila-pequena'] = { 
+        name = 'Mochila Pequena', 
+        type = 'common', 
+        weight = 2, 
+        usable = true, 
+        interaction = function(source, user_id)
+            useBag(source, user_id, 'mochila-pequena', 60)
+        end
+    },
+    ['mochila-grande'] = { 
+        name = 'Mochila Grande', 
+        type = 'common', 
+        weight = 2, 
+        usable = true, 
+        interaction = function(source, user_id)
+            useBag(source, user_id, 'mochila-grande', 125)
+        end
+    },
+    ['kit-reparo'] = { 
+        name = 'Kit Reparo', 
+        type = 'common', 
+        weight = 2, 
+        usable = true, 
+        interaction = function(source, user_id)
+            -- Kit reparo
+        end
+    },
     ['par-alianca'] = { name = 'Par de Alianças', type = 'common', weight = 0.0 },
     ['alianca-casamento'] = { name = 'Aliança de Casamento', type = 'common', weight = 0.0 },
     ['celular'] = { name = 'Celular', type = 'common', weight = 0.5 },
@@ -150,20 +325,34 @@ config.items = {
             exports['zero_core']:removeSpray(source)
         end
     },
-    ----------------------------------------------------------------------------
-    -- POLICIA
 ----------------------------------------------------------------------------
-['mandado-241'] = { name = 'Mandado Art.241', type = 'common', weight = 0.1 },
-
+-- POLICIA
+----------------------------------------------------------------------------
+    ['mandado-241'] = { name = 'Mandado Art.241', type = 'common', weight = 0.1 },
+    ['spike'] = { name = 'Spike', type = 'common', weight = 5.0 },
+    ['barreira'] = { name = 'Barreira', type = 'common', weight = 5.0 },
+    ['cone'] = { name = 'Cone', type = 'common', weight = 2.5 },
 ----------------------------------------------------------------------------
 -- ILEGAL
 ----------------------------------------------------------------------------
-['maconha'] = { name = 'Maconha', type = 'common', weight = 1.5 },
-['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1.5 },
-['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1.5 },
+    ['m-droga'] = { name = 'M. Droga', type = 'common', weight = 1 },
+    ['m-municoes'] = { name = 'M. Munições', type = 'common', weight = 1 },
+    ['m-mecanica'] = { name = 'M. Mecânica', type = 'common', weight = 1 },
+    ['p-armas'] = { name = 'P. Armas', type = 'common', weight = 1 },
+    ['colete-ilegal'] = { name = 'Colete Ilegal', type = 'common', weight = 2.5 },
+    ['pendrive'] = { name = 'Pen Drive', type = 'common', weight = 0.5 },
+    ['c4'] = { name = 'C4', type = 'common', weight = 1 },
+    ['keycard'] = { name = 'Keycard', type = 'common', weight = 0.5 },
+    ['maconha'] = { name = 'Maconha', type = 'common', weight = 1 },
+    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1 },
+    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1 },
     ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0 },
     ['nota-fiscal'] = { name = 'Nota fiscal', type = 'common', weight = 1 },
-    ['lockpick'] = { name = 'Lockpick', type = 'common', weight = 1.0, usable = true, 
+    ['lockpick'] = { 
+        name = 'Lockpick', 
+        type = 'common', 
+        weight = 1.5, 
+        usable = true, 
         interaction = function(source, user_id)
             local identity = zero.getUserIdentity(user_id)
             
@@ -542,54 +731,6 @@ config.blacklist = {
     ['alianca-casamento'] = true
 }
 
-function consumableItem(index)
-   local _source = source
-   local user_id = zero.getUserId(_source)
-   local ped = GetPlayerPed(_source)
-   local customTimeout = 10000
-
-   local cItem = config.items[index]
-
---    if index == 'agua' and exports['an4log_pets']:petIsClose(_source) then
---         TriggerClientEvent('waterToPet', _source)
---         return 
---     end
-
---    if cItem.consumable.hunger ~= 0 and exports['an4log_pets']:petIsClose(_source) then
---         TriggerClientEvent('feedPet', _source)
---         return 
---     end
-
-   if zero.tryGetInventoryItem(user_id, index, 1) then
-    TriggerClientEvent('progressBar', _source, 'Consumindo '..zero.itemNameList(index)..'...', customTimeout)
-    if cItem.food then 
-        TriggerClientEvent('zero_animations:setAnim', _source, 'comer')
-    end
-    
-    SetTimeout(customTimeout, function()
-        local consumable = cItem.consumable
-        
-        if consumable.hunger and consumable.hunger ~= 0 then
-            zero.varyHunger(user_id, consumable.hunger)
-        end
-        if consumable.thirst and consumable.thirst ~= 0 then
-            zero.varyThirst(user_id, consumable.thirst)
-        end
-        if cItem.afterItem then 
-            zero.giveInventoryItem(user_id, cItem.afterItem, 1)
-        end
-
-        TriggerClientEvent(
-            'Notify',
-            _source,
-            'sucesso',
-            'Inventário',
-            'Você consumiu ' .. zero.itemNameList(index) .. '.',
-            5000
-        )
-    end)
-   end
-end
 
 function healing(item)
     local _source = source
@@ -643,31 +784,6 @@ function healing(item)
     end
 end
 
-function setupCumpfire()
-	if exports['zBrazuca']:isSafe() then
-        return false
-    end
-    
-    local modelhash = GetHashKey('prop_hobo_stove_01')
-	RequestModel(modelhash)
-	while not HasModelLoaded(modelhash) do
-		Wait(50)
-	end
-	local coords = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 2.0, - 0.94)
-	local heading = GetEntityHeading(PlayerPedId())
-	local object = CreateObject(modelhash, coords.x, coords.y - 0.5, coords.z, true, true, true)
-	while not DoesEntityExist(object) do
-		Wait(10)
-	end
-    SetEntityAsMissionEntity(object, true, true)
-	SlideObject(object, coords.x, coords.y - 0.5, coords.z - GetEntityHeightAboveGround(object - 0.1), 10.0, 10.0, 10.0, true)	
-	SetEntityHeading(object, heading)
-    SetModelAsNoLongerNeeded(modelhash)
-	FreezeEntityPosition(object, true)
-
-    return true
-end
-
 threadBandagem = function(user_id, time)
     Citizen.CreateThread(function()
         bandagemCooldown[user_id] = time
@@ -679,72 +795,45 @@ threadBandagem = function(user_id, time)
     end)
 end
 
-function adoptPet(pet)
-    local _source = source 
-    local user_id = zero.getUserId(_source)
-    if zero.tryGetInventoryItem(user_id, pet, 1) then
-        local pet_type = splitString(pet,'-')[2]
-        if pet_type then
-            TriggerClientEvent('createPet', _source, pet_type)
-        end
-    end
-end
+local isServer = IsDuplicityVersion()
+if (isServer) then
+    consumableItem = function(source, user_id, index)
+        local cItem = config.items[index]
+        if (zero.tryGetInventoryItem(user_id, index, 1)) then
+            Player(source).state.BlockTasks = true
 
-function pescar(source, user_id, item)
-    if true then
-        local lucky = 0
-        if item == 'vara-pesca-pro' then
-            lucky = 5
-        end
-        local fishes = {
-            { name = 'lagosta', chance = 2 + lucky },
-            { name = 'bacalhau', chance = 10 + lucky },
-            { name = 'atum', chance = 40 + lucky },
-            { name = 'sardinha', chance = 40 + lucky },
-            { name = 'tilapia', chance = 30 + lucky },
-            { name = 'salmao', chance = 30 + lucky },
-        }
-        
-        local inWater, distance = cInventory.getWaterHeight(source)
-        if inWater then
-            if zero.tryGetInventoryItem(user_id, 'isca', 1) then
-                LocalPlayer.state.BlockTasks = true
-                TriggerClientEvent('zero_inventory:disableActions', source, true)
-                TriggerClientEvent('emotes', source, 'pescar')
-                cInventory.closeInventory(source)
-                local taskResult = cTASKBAR.taskLockpick(source)
-                if taskResult then
-                    local currentFish = ''
-                    for k, fish in pairs(fishes) do
-                        local random = math.random(0, 100)
-                        local chance = fish['chance']
-                        if zero.getInventoryItemAmount(user_id, 'pe-coelho') then
-                            chance = chance + 5
-                        end
-
-                        if random <= chance then
-                            currentFish = fish['name']
-                            break
-                        end
-                    end
-
-                    if currentFish == '' then currentFish = 'tilapia' end
-
-                    if (zero.getItemWeight(currentFish)+zero.getInventoryWeight(user_id)) <= zero.getInventoryMaxWeight(user_id) then
-                        TriggerClientEvent('Notify', source, 'Inventário', 'Pesca', 'Você pescou um(a) <b>'..currentFish..'</b>!', 5000)
-                        zero.giveInventoryItem(user_id, currentFish, 1)
-                    else 
-                        TriggerClientEvent('Notify', source, 'Inventário', 'Inventário', 'Você não possui espaço na mochila!', 5000)
-                    end
-                end
-                TriggerClientEvent('zero_inventory:enableActions', source, true)
-                LocalPlayer.state.BlockTasks = false
-                zeroClient._stopAnim(source, false)
-                zeroClient._DeletarObjeto(source)
+            if (cItem.prop) then
+                zeroClient.CarregarObjeto(source, cItem.anim[1], cItem.anim[2], cItem.prop, cItem.anim[3], cItem.anim[4])
+            else
+                zeroClient._playAnim(source, true, {
+                    cItem.anim
+                }, true)
             end
+
+            local customTimeout = (cItem.timeout or 5000)
+            TriggerClientEvent('progressBar', source, 'Consumindo '..zero.itemNameList(index)..'...', customTimeout)
+            SetTimeout(customTimeout, function()
+                local consumable = cItem.consumable
+                
+                if consumable.hunger and consumable.hunger ~= 0 then
+                    zero.varyHunger(user_id, consumable.hunger)
+                end
+
+                if consumable.thirst and consumable.thirst ~= 0 then
+                    zero.varyThirst(user_id, consumable.thirst)
+                end
+
+                if cItem.afterItem then 
+                    zero.giveInventoryItem(user_id, cItem.afterItem, 1)
+                end
+
+                TriggerClientEvent('Notify', source, 'sucesso', 'Inventário', 'Você consumiu '..zero.itemNameList(index)..'.', 5000)
+                Player(source).state.BlockTasks = false
+
+                ClearPedTasks(GetPlayerPed(source))
+                zeroClient.DeletarObjeto(source)
+            end)
         end
-    else
-        TriggerClientEvent('Notify', source, 'Inventário', 'Proficiência', 'Você não possui conhecimento em pesca para fazer isso!!', 5000)
     end
 end
 

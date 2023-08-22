@@ -52,6 +52,13 @@ export default [
     side: "client",
   },
   {
+    title: "Checar porta-malas",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "checkTrunkin",
+    category: "car",
+  },
+  {
     title: "Entrar porta-malas",
     icon: <RiPlayFill />,
     type: "action",

@@ -1,5 +1,6 @@
-zero.checkWhitelist = function()
+zero.checkWhitelist = function(target)
 	local source = source
+	if (target) then source = target; end;
 	local user_id = zero.getUserId(source)
 	if (user_id) then return zero.isWhitelisted(user_id); end;
 end
@@ -18,10 +19,11 @@ zero.setWhitelisted = function(user_id, whitelisted)
 end
 exports('setWhitelisted', zero.setWhitelisted)
 
-RegisterNetEvent('zero_whitelist:server', function()
+RegisterNetEvent('zero_whitelist:server', function(target)
 	local source = source
+	if (target) then source = target; end;
 	local user_id = zero.getUserId(source)
-    if (not zero.checkWhitelist()) then
-        TriggerClientEvent('zero_whitelist:open', zero.getUserSource(user_id), user_id)
+    if (not zero.checkWhitelist(source)) then
+        TriggerClientEvent('zero_whitelist:open', source, user_id)
     end
 end)

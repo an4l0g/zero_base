@@ -77,7 +77,7 @@ RegisterNetEvent('zero_spawn:selector', function(bool)
 		Citizen.Wait(1500)
         
         local coord = vSERVER.getLastPosition()
-        SetEntityCoords(ped, coord)
+        zero.teleport(coord.x, coord.y, coord.z)
 
         Citizen.Wait(1000)
         DoScreenFadeIn(500)
@@ -136,7 +136,7 @@ RegisterNuiCallback('close', function()
 
     DoScreenFadeOut(500)
     Citizen.Wait(1500)
-    
+
     local coord = vSERVER.getLastPosition()
     SetEntityCoords(ped, coord)
 

@@ -22,7 +22,7 @@ zero.setFriendlyFire = function(flag)
 end
 
 zero.isInComa = function()
-	return _isDied
+	return (GetEntityHealth(PlayerPedId()) <= 100)
 end
 
 zero.setDeathTime = function(time)

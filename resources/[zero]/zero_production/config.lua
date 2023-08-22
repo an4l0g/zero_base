@@ -218,61 +218,51 @@ configs.products = {
         ['lockpick'] = {
             order = 1,
             name = 'Lockpick',
-            min_amount = 7,
-            max_amount = 7,
-            delay = 10000,
+            min_amount = 1,
+            max_amount = 1,
+            delay = 1000,
             materials = {
-                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+                ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 2100 },
             }
         },
         ['keycard'] = {
             order = 2,
             name = 'Keycard',
-            min_amount = 14,
-            max_amount = 14,
-            delay = 10000,
+            min_amount = 1,
+            max_amount = 1,
+            delay = 1000,
             materials = {
-                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+                ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
             }
         },
         ['pendrive'] = {
             order = 3,
             name = 'Pendrive',
-            min_amount = 14,
-            max_amount = 14,
-            delay = 10000,
+            min_amount = 1,
+            max_amount = 1,
+            delay = 1000,
             materials = {
-                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+                ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
             }
         },
         ['c4'] = {
             order = 3,
             name = 'C4',
-            min_amount = 14,
-            max_amount = 14,
-            delay = 10000,
+            min_amount = 1,
+            max_amount = 1,
+            delay = 1000,
             materials = {
-                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
-            }
-        },
-        ['mochila-grande'] = {
-            order = 4,
-            name = 'Mochila Grande',
-            min_amount = 4,
-            max_amount = 4,
-            delay = 10000,
-            materials = {
-                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+                ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
             }
         },
         ['colete-ilegal'] = {
             order = 5,
             name = 'Colete Ilegal',
-            min_amount = 2,
-            max_amount = 2,
-            delay = 10000,
+            min_amount = 1,
+            max_amount = 1,
+            delay = 1000,
             materials = {
-                ['c-contrabando'] = { name = 'C. Contrabando', amount = 14 },
+                ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 7350 },
             }
         },
     },
@@ -342,52 +332,67 @@ configs.products = {
 
 configs.productions = {
     ['espanha'] = { 
+        type = 'production',
         coords = vector3(412.167, 3.718682, 84.91797), 
         products = configs.products.guns, 
-        label = 'Armas', 
+        label = 'Produção de Armas', 
         permission = 'espanha.permissao',
         webhook = '' 
     },
     ['colombia'] = { 
+        type = 'production',
         coords = vector3(-1486.299, 835.8461, 176.9854), 
         products = configs.products.guns, 
-        label = 'Armas', 
+        label = 'Produção de Armas', 
         webhook = '' 
     },
     ['canada'] = { 
+        type = 'production',
         coords = vector3(-1834.497, 425.1693, 118.3649), 
-        label = 'Munições', 
+        label = 'Produção de Munições', 
         products = configs.products.wammos, 
         webhook = '' 
     },
     ['fac2'] = { 
+        type = 'production',
         coords = vec3(732.9363, 1276.444, 360.2944), 
-        label = 'Lavagem', 
+        label = 'Lavagem de dinheiro', 
         type = 'moneyLaundry',
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
     ['zerofome1'] = { 
+        type = 'production',
         coords = vector3(-1843.661, -1186.18, 14.30042), 
-        label = 'Alimentos', 
+        label = 'Produção de Alimentos', 
         products = configs.products.cook, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
     ['zerofome2'] = { 
+        type = 'production',
         coords = vector3(-1839.969, -1188.026, 14.30042), 
-        label = 'Alimentos', 
+        label = 'Produção de Alimentos', 
         products = configs.products.cook, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
     ['zeromec1'] = { 
+        type = 'production',
         coords = vector3(-310.8, -113.433, 39.0022), 
-        label = 'Mecânica', 
+        label = 'Produção de Mecânica', 
         products = configs.products.mec, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
     ['zeromec2'] = { 
+        type = 'production',
         coords = vector3(-322.7736, -146.3473, 39.0022), 
-        label = 'Mecânica', 
+        label = 'Produção de Mecânica', 
         products = configs.products.mec, 
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['smuggling'] = { 
+        type = 'shop',
+        coords = vector3(1273.358, -1708.391, 54.75684), 
+        label = 'Negociações com Contrabandista', 
+        products = configs.products.smuggling, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
 }

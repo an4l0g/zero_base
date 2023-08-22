@@ -988,11 +988,22 @@ config.animations = {
             andar = true,
             loop = true
         },
-        ['comer'] = {
-            dict = 'mp_player_inteat@burger',
-            anim = 'mp_player_int_eat_burger_enter',
+
+        ['mexer'] = {
+            dict = 'amb@prop_human_parking_meter@female@idle_a',
+            anim = 'idle_a_female',
             andar = true,
             loop = true
+        },
+
+        ['comer'] = {
+            dict = 'mp_player_inteat@burger',
+            anim = 'mp_player_int_eat_burger',
+            prop = 'prop_peyote_chunk_01',
+            flag = 49,
+            hand = 60309,
+            andar = true,
+            loop = false
         },
 
         ['deitar'] = {

@@ -52,7 +52,7 @@ zero.CarregarAnim = function(dict)
 	while not HasAnimDictLoaded(dict) do Citizen.Wait(10) end
 end
 
-zero.CarregarObjeto = function(dict, anim, prop, flag, hand, pos1, pos2, pos3, pos4, pos5, pos6)
+zero.CarregarObjeto = function(dict, anim, prop, flag, hand, pos1, pos2, pos3, pos4, pos5, pos6, anim2)
 	local ped = PlayerPedId()
 
 	RequestModel(GetHashKey(prop))
@@ -63,6 +63,11 @@ zero.CarregarObjeto = function(dict, anim, prop, flag, hand, pos1, pos2, pos3, p
 	local id = objIDS:gen()
 
 	if pos1 then
+		if (anim2) then 
+			zero.CarregarAnim(dict)
+			TaskPlayAnim(ped,dict,anim,3.0,3.0,-1,flag,0,0,0,0)
+		end
+		
 		local coords = GetOffsetFromEntityInWorldCoords(ped,0.0,0.0,-5.0)
 		local object = CreateObject(GetHashKey(prop),coords.x,coords.y,coords.z,true,true,true)
 		SetEntityCollision(object,false,false)

@@ -347,7 +347,7 @@ srv.spawnVehicle = function(vehicle, id)
                                 Citizen.Wait(1)
                             end
                             if (not netHandle) then return; end;
-
+                            
                             Entity(vehHandle).state['veh:plate'] = veh.plate
                             Entity(vehHandle).state['veh:chassis'] = veh.chassis
                             Entity(vehHandle).state['veh:user_id'] = user_id
@@ -898,6 +898,17 @@ RegisterCommand('trunkin', function(source)
     local source = source
     if (GetEntityHealth(GetPlayerPed(source)) > 100 and not zeroClient.isHandcuffed(source)) then
         TriggerClientEvent('zero_garage:enterTrunk', source)
+    end
+end)
+
+RegisterNetEvent('zero_interactions:checkTrunkin', function()
+    local source = source
+    if (GetEntityHealth(GetPlayerPed(source)) > 100 and not zeroClient.getNoCarro(source) and not zeroClient.isHandcuffed(source)) then
+        local nplayer = zeroClient.getNearestPlayer(source, 2.0)
+        if (nplayer) then 
+            TriggerClientEvent('notify', source, 'Garagem', 'Retirando cidadão do <b>porta-malas</b>.')
+            TriggerClientEvent('zero_garage:checkTrunk', nplayer)
+        end
     end
 end)
 

@@ -3,7 +3,7 @@ Tunnel.bindInterface('Fuel', srv)
 
 local vehicleGlobal = {}
 
-srv.getVehicleSyncFuel = function(source, vehicle)
+srv.getVehicleSyncFuel = function(vehicle)
     if (vehicleGlobal[vehicle] ~= nil) then
         return vehicleGlobal[vehicle]
     end
@@ -43,3 +43,24 @@ srv.finishFuel = function(veh, atualFuel, newFuel, price)
         return false
     end
 end
+
+RegisterCommand('addfuel', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then 
+        local dataVehicle, dataVnetId, dataVPlaca, dataVName = zeroClient.vehList(source, 5)
+        if (dataVehicle) then 
+            local fuel = 20.00
+            if (args[1]) then 
+                fuel = args[1] + 0.000000001
+            else 
+                fuel = 99.99
+            end
+
+            vehicleGlobal[dataVnetId] = fuel
+            TriggerClientEvent('notify', source, 'Combustível', 'Valor do <b>combustível</b> foi alterado!')
+        else 
+            TriggerClientEvent('notify', source, 'Combustível', 'O veículo não foi <b>localizado</b>!')
+        end
+    end
+end)

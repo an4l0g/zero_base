@@ -33,14 +33,13 @@ DecorRegister(configFuelI.FuelDecor, 1)
 AddStateBagChangeHandler('inVehicle', nil, function(bagName, key, value) 
     local entity = GetPlayerFromStateBagName(bagName)
     if (entity == 0) then return; end;
-
     if (value) then
         Citizen.CreateThread(function()
             while (LocalPlayer.state.inVehicle) do
                 local ped = PlayerPedId()
                 local vehicle = GetVehiclePedIsIn(ped)
                 local idle = 1000
-                if (GetPedInVehicleSeat(vehicle, -1) == ped) then
+                if (vehicle) then
                     fuelUsage(vehicle)
                     local fuel = GetVehicleFuelLevel(vehicle)
                     if (fuel <= 0.0) then

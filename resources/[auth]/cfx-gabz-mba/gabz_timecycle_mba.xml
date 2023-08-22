@@ -1,0 +1,38 @@
+<timecycle_modifier_data version="1.000000">
+  <modifier name="gabz_mba_arena" numMods="34" userFlags="0">
+    <light_directional_amb_col_r>0.000 1.000</light_directional_amb_col_r>
+    <light_directional_amb_col_g>0.000 1.000</light_directional_amb_col_g>
+    <light_directional_amb_col_b>0.000 1.000</light_directional_amb_col_b>
+    <light_directional_amb_intensity_mult>2.500 0.000</light_directional_amb_intensity_mult>
+    <light_directional_amb_bounce_enabled>0.800 0.000</light_directional_amb_bounce_enabled>
+    <light_natural_amb_down_col_r>0.522 1.000</light_natural_amb_down_col_r>
+    <light_natural_amb_down_col_g>0.655 1.000</light_natural_amb_down_col_g>
+    <light_natural_amb_down_col_b>1.000 1.000</light_natural_amb_down_col_b>
+    <light_natural_amb_down_intensity>0.100 0.000</light_natural_amb_down_intensity>
+    <light_natural_amb_up_col_r>0.024 1.000</light_natural_amb_up_col_r>
+    <light_natural_amb_up_col_g>0.227 1.000</light_natural_amb_up_col_g>
+    <light_natural_amb_up_col_b>0.612 1.000</light_natural_amb_up_col_b>
+    <light_natural_amb_up_intensity>0.100 0.000</light_natural_amb_up_intensity>
+    <light_artificial_int_down_col_r>0.525 1.000</light_artificial_int_down_col_r>
+    <light_artificial_int_down_col_g>0.824 1.000</light_artificial_int_down_col_g>
+    <light_artificial_int_down_col_b>1.000 1.000</light_artificial_int_down_col_b>
+    <light_artificial_int_down_intensity>0.050 0.000</light_artificial_int_down_intensity>
+    <light_artificial_int_up_col_r>0.525 1.000</light_artificial_int_up_col_r>
+    <light_artificial_int_up_col_g>0.824 1.000</light_artificial_int_up_col_g>
+    <light_artificial_int_up_col_b>1.000 1.000</light_artificial_int_up_col_b>
+    <light_artificial_int_up_intensity>0.100 0.000</light_artificial_int_up_intensity>
+    <ped_light_col_r>0.498 1.000</ped_light_col_r>
+    <ped_light_col_g>0.678 1.000</ped_light_col_g>
+    <ped_light_col_b>1.000 1.000</ped_light_col_b>
+    <ped_light_mult>0.100 1.000</ped_light_mult>
+    <ssao_inten>4.000 0.000</ssao_inten>
+    <postfx_bright_pass_thresh>0.605 0.000</postfx_bright_pass_thresh>
+    <postfx_intensity_bloom>0.700 0.000</postfx_intensity_bloom>
+    <postfx_vignetting_intensity>0.000 0.000</postfx_vignetting_intensity>
+    <fog_start>100.000 100.000</fog_start>
+    <far_clip>0.000 200.000</far_clip>
+    <temperature>20.000 0.000</temperature>
+    <natural_ambient_multiplier>0.154 0.000</natural_ambient_multiplier>
+    <artificial_int_ambient_multiplier>0.632 0.000</artificial_int_ambient_multiplier>
+  </modifier>
+</timecycle_modifier_data>

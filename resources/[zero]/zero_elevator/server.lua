@@ -1,25 +1,20 @@
-local Tunnel = module('zero','lib/Tunnel')
-local Proxy = module('zero','lib/Proxy')
-zero = Proxy.getInterface('zero')
-
 srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
-Proxy.addInterface(GetCurrentResourceName(), srv)
 
-srv.checkPermission = function(permissions)
+local permission = {
+    ['perm'] = function(user_id, perm, home)
+        return zero.checkPermissions(user_id, perm)
+    end,
+    ['home'] = function(user_id, perm, home)
+        return exports['zero_homes']:checkHomePermission(user_id, home)
+    end
+}
+
+srv.checkPermissions = function(perm, home)
+    local source = source
     local user_id = zero.getUserId(source)
-    if user_id then
-        if permissions then
-            if type(permissions) == 'table' then
-                for i, perm in pairs(permissions) do
-                    if zero.hasPermission(user_id, perm) then
-                        return true
-                    end
-                end
-                return false
-            end
-            return zero.hasPermission(user_id, permissions)
-        end
-        return true
+    if (user_id) then
+        local isHome = (home and 'home' or 'perm')
+        return permission[isHome](user_id, perm, home)
     end
 end

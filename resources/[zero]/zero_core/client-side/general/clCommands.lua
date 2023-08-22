@@ -87,6 +87,7 @@ RegisterNetEvent('cone', function(arg)
 			local cone = GetClosestObjectOfType(coord.x,coord.y,coord.z,1.9,prop,false,false,false)
 			if (cone > 0) then
 				TriggerServerEvent('trydeleteobj',ObjToNet(cone))
+				vSERVER.giveInventoryItem('cone')
 			end
 		end
 	end
@@ -117,6 +118,7 @@ RegisterNetEvent('barreira', function(arg)
 			local barrier = GetClosestObjectOfType(coord.x,coord.y,coord.z,1.9,prop,false,false,false)
 			if (barrier > 0) then
 				TriggerServerEvent('trydeleteobj',ObjToNet(barrier))
+				vSERVER.giveInventoryItem('barreira')
 			end
 		end
 	end
@@ -147,6 +149,7 @@ RegisterNetEvent('spike', function(arg)
 			local spike = GetClosestObjectOfType(coord.x,coord.y,coord.z,1.9,prop,false,false,false)
 			if (spike > 0) then
 				TriggerServerEvent('trydeleteobj',ObjToNet(spike))
+				vSERVER.giveInventoryItem('spike')
 			end
 		end
 	end
@@ -559,8 +562,8 @@ RegisterNetEvent('zero_core:terremoto', function()
 	CommandsData['terremoto'] = true
 	Citizen.CreateThread(function()
 		while (CommandsData['terremoto']) do
-			Citizen.Wait(500)
 			ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.2)
+			Citizen.Wait(500)
 		end
 	end)
 end)

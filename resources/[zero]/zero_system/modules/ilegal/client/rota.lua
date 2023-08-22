@@ -72,7 +72,7 @@ startRoute = function(index)
                     if (vSERVER.checkBackpack(_config.itens, _config.extras.drug)) then
                         RemoveBlip(blip)
 
-                        if (_config.extras.police) then end;
+                        if (_config.extras.police) then vSERVER.callPolice(_config.extras.police, _config.name) end;
                         if (_config.texts.progress) then TriggerEvent('progressBar', _config.texts.progress, _config.extras.timeout) end;
                         if (_config.extras.anim) then ExecuteCommand('e '.._config.extras.anim) end;
 
@@ -82,7 +82,7 @@ startRoute = function(index)
                             LocalPlayer.state.BlockTasks = false
                             FreezeEntityPosition(ped, false)
                             ClearPedTasks(ped)
-                            vSERVER.routePayment(coords, _config.itens, _config.extras.drug)
+                            vSERVER.routePayment(coords, _config.itens, _config.extras.drug, _config.name)
 
                             selected = (selected + 1)
                             if (selected > #_config.coords) then selected = 1; end;
@@ -94,7 +94,7 @@ startRoute = function(index)
                     else
                         RemoveBlip(blip)
                         
-                        if (_config.extras.police) then end;
+                        if (_config.extras.police) then vSERVER.callPolice(_config.extras.police, _config.name) end;
 
                         selected = (selected + 1)
                         if (selected > #_config.coords) then selected = 1; end;
@@ -135,3 +135,21 @@ CreateBlip = function(coord, selected)
     AddTextComponentString('Entrega')
     EndTextCommandSetBlipName(blip)
 end
+
+local blips = {}
+RegisterNetEvent('zero_routes:Blip', function(coord, id)
+    blips[id] = AddBlipForCoord(coord)
+    SetBlipSprite(blips[id], 161)
+    SetBlipAsShortRange(blips[id], true)
+    SetBlipColour(blips[id], 1)
+    SetBlipScale(blips[id], 0.3)
+    BeginTextCommandSetBlipName('STRING')
+    AddTextComponentString('Tráfico avistado')
+    EndTextCommandSetBlipName(blips[id])
+    Citizen.SetTimeout(60000, function()
+        if (DoesBlipExist(blips[id])) then
+            RemoveBlip(blips[id])
+            blips[id] = nil
+        end
+    end)
+end)

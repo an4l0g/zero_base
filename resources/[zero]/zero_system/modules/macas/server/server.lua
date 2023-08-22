@@ -200,6 +200,7 @@ RegisterNetEvent('zero_interactions:reanimar', function()
         local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
         if (zeroClient.getNoCarro(nPlayer) and zeroClient.getNoCarro(source)) then return; end;
         if (nPlayer) then
+            local nUser = zero.getUserId(nPlayer)
             if (GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then
                 local cooldown = 'reanimar:'..nPlayer
                 if (exports.zero_core:GetCooldown(cooldown)) then

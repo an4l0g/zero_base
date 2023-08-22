@@ -1,33 +1,44 @@
-local Tunnel = module('zero','lib/Tunnel')
-local Proxy = module('zero','lib/Proxy')
-zero = Proxy.getInterface('zero')
-
 vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
-local elevatorsConfiguration = cfg.elevatorsConfiguration
-local elevatorsLocation = cfg.elevatorsLocation
+local nearestBlips = {}
 
-Citizen.CreateThread(function()
-	SetNuiFocus(false, false)
-	while true do
-		local idle = 1000
-        local ped = PlayerPedId()
-		local pCoord = GetEntityCoords(ped)
-		for k, v in pairs(elevatorsLocation) do
-			local distance = #(pCoord - elevatorsLocation[k].coord)
-			if distance <= 5 then 
-				idle = 5
-				DrawMarker(27,elevatorsLocation[k].coord.x,elevatorsLocation[k].coord.y,elevatorsLocation[k].coord.z-0.97, 0, 0, 0, 0, 180.0, 130.0, 1.0, 1.0, 1.0, 0, 255, 0, 75, 0, 0, 0, 1)
-				if distance <= 1.2 and IsControlJustPressed(0, 38) then
-					local elevatorConfig = elevatorsConfiguration[elevatorsLocation[k].config]
-					if vSERVER.checkPermission(elevatorConfig.permission) then
-						openElevator(elevatorConfig.locations, elevatorConfig.elevatorName)
+local _markerThread = false
+local markerThread = function()
+    if (_markerThread) then return; end;
+    _markerThread = true
+    Citizen.CreateThread(function()
+        while (countTable(nearestBlips) > 0) do
+            local ped = PlayerPedId()
+            local _cache = nearestBlips
+            for index, dist in pairs(_cache) do
+				local _config = config.location[index]
+				DrawMarker(27, _config.coord.x, _config.coord.y, _config.coord.z, 0, 0, 0, 0, 0, 0, 1.2, 1.2, 1.2, 0, 153, 255, 155, 0, 0, 0, 1)
+				if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+					if (vSERVER.checkPermissions(_config.perm, _config.home)) then
+						openElevator(config.general[_config.config].locations, config.general[_config.config].name)
 					end
 				end
-			end
-		end
-		Wait(idle)
-	end
+            end
+            Citizen.Wait(5)
+        end
+        _markerThread = false
+    end)
+end
+
+Citizen.CreateThread(function()
+    while (true) do
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        nearestBlips = {}
+        for k, v in pairs(config.location) do
+            local distance = #(pCoord - v.coord)
+            if (distance <= 5) then
+                nearestBlips[k] = distance
+            end
+        end
+        if (countTable(nearestBlips) > 0) then markerThread(); end;
+        Citizen.Wait(1000)
+    end
 end)
 
 local elevatorsLocationCache = {}
@@ -44,10 +55,11 @@ end)
 RegisterNUICallback('elevatorFloor', function(data, cb)
 	local ped = PlayerPedId()
 	DoScreenFadeOut(1000)
-	Wait(1000)
-	SetEntityCoords(ped, elevatorsLocationCache[data].coord, false, false, false, true)
-	SetEntityHeading(ped, elevatorsLocationCache[data].heading)
-	Wait(1000)
+	Citizen.Wait(1000)
+	SetEntityCoords(ped, elevatorsLocationCache[data].coord.xyz, false, false, false, true)
+	SetEntityHeading(ped, elevatorsLocationCache[data].coord.w)
+	Citizen.Wait(1000)
+	TriggerEvent('zero_sound:source', 'elevator-bell', 0.3)
 	SetNuiFocus(false, false)
 	DoScreenFadeIn(1000)
 	elevatorsLocationCache = {}

@@ -22,7 +22,7 @@ RegisterNuiCallback('production', function(data)
         local delay = product.delay * data.amount
         TriggerEvent('blockPed', true)
         zero.playAnim(false, {{'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female'}}, true)
-        TriggerEvent('progressBar', 'Produzindo...', delay)
+        TriggerEvent('progressBar', 'Produzindo/comprando...', delay)
         Wait(delay)
         TriggerEvent('blockPed', false)
         ClearPedTasks(PlayerPedId())
@@ -54,7 +54,11 @@ Citizen.CreateThread(function()
             if (distance <= configs.blipDistance) then
                 if v.coords then
                     idle = 4
-                    TextFloating('~b~[E]~w~ - Produzir', v.coords)
+                    if v.type == 'shop' then
+                        TextFloating('~b~[E]~w~ - Negociar', v.coords)
+                    else
+                        TextFloating('~b~[E]~w~ - Produzir', v.coords)
+                    end
                     if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         if v.permission == nil or sProduction.hasPermission(v.permission) then
                             if v.type == 'moneyLaundry' then
@@ -63,7 +67,11 @@ Citizen.CreateThread(function()
                                 openProduction(v.products, v.label, k)
                             end
                         else
-                            TriggerEvent('notify', 'Produção', 'Você não pode produzir aqui!')
+                            if v.type == 'shop' then
+                                TriggerEvent('notify', 'Negociação', 'Você não pode negociar aqui!')
+                            else
+                                TriggerEvent('notify', 'Produção', 'Você não pode produzir aqui!')
+                            end
                         end
                     end
                 end

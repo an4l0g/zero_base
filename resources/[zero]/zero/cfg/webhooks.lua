@@ -109,5 +109,8 @@ config.webhooks = {
     ['Cirurgia'] = 'https://discord.com/api/webhooks/1142111770044018768/6geLbDdjnTWQ-ruB23b0c8BlcqiTQ2ZTic7K1o4YRLPJgdy-0_p7HP4ddRXITcFbsSdQ',
     ['Reanimar'] = 'https://discord.com/api/webhooks/1142601727216975943/_UsynUcApnHYN_U9EjkhTQvVAtVTMNKIyTsJXVNRdqVQk4gz-rP-9bZvcjyDlbVY2d9A',
 
-    ['Roubos'] = 'https://discord.com/api/webhooks/1142819210339299350/rpqe6_yoz3D4bwHvoqKFPW2lGb10m_M2I4igES5a5ArsFQ42rwDUZs8rsEyxO5js-we2'
+    ['Roubos'] = 'https://discord.com/api/webhooks/1142819210339299350/rpqe6_yoz3D4bwHvoqKFPW2lGb10m_M2I4igES5a5ArsFQ42rwDUZs8rsEyxO5js-we2',
+
+    ['Rotas'] = 'https://discord.com/api/webhooks/1142972664235970640/CY1SU5Xs03txQc4TLuOa-JKx7-E9Yz_Pz40u_IStdWXdpf6qrUBJKli58UwoJcPAv_eS',
+    ['RotasDenuncia'] = 'https://discord.com/api/webhooks/1142972875259781251/NbOHNkysuoRe_ffs42EfADvcev1AJQW4XvW92UKXcMPUdnOauEf0KaqcwtdvlNdwyboo'
 }

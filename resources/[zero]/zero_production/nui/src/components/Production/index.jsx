@@ -62,9 +62,7 @@ function Production({ data }) {
         <S.ProductMaterials>
           {product.name ? (
             <S.Form>
-              <S.Title>
-                Produção de <span>{data.title}</span>
-              </S.Title>
+              <S.Title>{data.title}</S.Title>
               <S.HeaderProduction className="p-item">
                 <S.ProductionImage
                   src={`http://189.0.88.222/zero_inventory/${productIndex}.png`}

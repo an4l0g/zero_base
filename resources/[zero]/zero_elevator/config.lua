@@ -1,75 +1,62 @@
-cfg = {}
+config = {}
 
-cfg.elevatorsConfiguration = {
-    ['PREDIO'] = {
-        elevatorName = 'Elevador Apartamento',
-        permission = 'rooftop.permissao',
+config.general = {
+    ['hospital'] = {
+        name = 'Elevador Hospital',
         locations = {
-            {coord = vec3(-770.94,319.73,85.67), heading = 171.82, name = 'Andar 1°'},
-            {coord = vec3(-768.69,336.85,243.38), heading = 84.96, name = 'Andar 2°'}
+            { coord = vector4(-777.8373, -1219.134, 7.324585, 51.02362), text = 'Andar 1°' },
+            { coord = vector4(-777.1121, -1220.479, 15.54724, 138.8976), text = 'Andar 2°' },
         }
     },
-    ['PREDIO2'] = {
-        elevatorName = 'Elevador Apartamento',
-        permission = 'rooftop2.permissao',
+    ['lux'] = {
+        name = 'Elevador Lux',
         locations = {
-            {coord = vec3(-305.24,-721.37,28.03), heading = 156.39, name = 'Andar 1°'},
-            {coord = vec3(-288.02,-722.61,125.48), heading = 247.23, name = 'Andar 2°'}
+            { coord = vector4(-323.4198, 209.4066, 87.95093, 280.6299), text = 'Térreo' },
+            { coord = vector4(-301.833, 192, 144.4147, 82.20473), text = 'Cobertura' },
+            { coord = vector4(-323.222, 209.4725, 81.83447, 280.6299), text = 'Subsolo' },
         }
     },
-    ['CASSINO'] = {
-        elevatorName = 'Elevador Cassino',
-        permission = nil,
+    ['ordem'] = {
+        name = 'Elevador Ordem',
         locations = {
-            {coord = vec3(973.09,31.21,71.85), heading = 139.07, name = 'Andar 1°'},
-            {coord = vec3(965.04,58.56,112.56), heading = 50.87, name = 'Terraço'}
+            { coord = vector4(5012.229, -5748.896, 28.94287, 138.8976), text = 'Andar 1°' },
+            { coord = vector4(5012.479, -5746.734, 15.47986, 150.2362), text = 'Subsolo' },
         }
     },
-    ['CASSINO2'] = {
-        elevatorName = 'Elevador Cassino',
-        permission = nil,
+    ['eclipse'] = {
+        name = 'Elevador Eclipse',
         locations = {
-            {coord = vec3(967.32,7.48,81.16), heading = 53.91, name = 'Garagem'},
-            {coord = vec3(953.41,58.46,75.44), heading = 249.22, name = 'Escritório'}
+            { coord = vector4(-776.9011, 319.622, 85.6593, 0), text = 'Andar 1°' },
+            { coord = vector4(-768.8176, 336.7912, 243.3737, 87.87402), text = 'Andar 2°' },
         }
     },
-    ['ORDEM'] = {
-        elevatorName = 'Elevador Ordem',
-        permission = 'ordem.permissao',
+    ['cobertura'] = {
+        name = 'Elevador Cobertura',
         locations = {
-            {coord = vec3(5012.32,-5749.0,28.95), heading = 32.71, name = 'Escritório'},
-            {coord = vec3(5012.76,-5746.9,15.49), heading = 219.92, name = 'Porão'}
+            { coord = vector4(-305.011, -721.1473, 28.01611, 158.7402), text = 'Andar 1°' },
+            { coord = vector4(-288.2637, -722.4264, 125.4586, 249.4488), text = 'Andar 2°' },
         }
-    },  
-    ['LUX'] = {
-        elevatorName = 'Elevador Lux',
-        permission = nil,
-        locations = {
-            {coord = vec3(-326.967, 185.5648, 87.91724), heading = 32.71, name = 'Apartamento'},
-            {coord = vec3(-338.3077, 191.5121, 103.6886), heading = 219.92, name = 'Porão'}
-        }
-    } 
+    },
 }
 
-cfg.elevatorsLocation = {
-    {coord = vec3(-326.967, 185.5648, 87.91724), config = 'LUX'},
-    {coord = vec3(-338.3077, 191.5121, 103.6886), config = 'LUX'},
+config.location = {
+    { coord = vector4(-777.8373, -1219.134, 7.324585, 51.02362), config = 'hospital', perm = { 'staff.permissao', 'hospital.permissao' } },
+    { coord = vector4(-777.1121, -1220.479, 15.54724, 138.8976), config = 'hospital', perm = { 'staff.permissao', 'hospital.permissao' } },
 
-    {coord = vec3(-770.94,319.73,85.67), config = 'PREDIO'},
-    {coord = vec3(-768.69,336.85,243.38), config = 'PREDIO'},
+    { coord = vector4(-323.4198, 209.4066, 87.95093, 280.6299), config = 'lux' }, -- perm = { 'staff.permissao' } },
+    { coord = vector4(-301.833, 192, 144.4147, 82.20473), config = 'lux' }, -- perm = { 'staff.permissao' } },
+    { coord = vector4(-323.222, 209.4725, 81.83447, 280.6299), config = 'lux' }, -- perm = { 'staff.permissao' } },
 
-    {coord = vec3(-305.24,-721.37,28.03), config = 'PREDIO2'},
-    {coord = vec3(-288.02,-722.61,125.48), config = 'PREDIO2'},
+    { coord = vector4(5012.229, -5748.896, 28.94287, 138.8976), config = 'ordem' }, -- perm = { 'staff.permissao' } },
+    { coord = vector4(5012.479, -5746.734, 15.47986, 150.2362), config = 'ordem' }, -- perm = { 'staff.permissao' } },
 
-    {coord = vec3(973.09,31.21,71.85), config = 'CASSINO'},
-    {coord = vec3(965.04,58.56,112.56), config = 'CASSINO'},
+    { coord = vector4(-776.9011, 319.622, 85.6593, 0), config = 'eclipse' }, -- perm = { 'staff.permissao' } },
+    { coord = vector4(-768.8176, 336.7912, 243.3737, 87.87402), config = 'eclipse' }, -- perm = { 'staff.permissao' } },
 
-    {coord = vec3(967.32,7.48,81.16), config = 'CASSINO2'},
-    {coord = vec3(953.41,58.46,75.44), config = 'CASSINO2'},
-    
-    {coord = vec3(380.98,-15.89,83.0), config = 'MILICIA'},
-    {coord = vec3(414.15,-14.7,99.65), config = 'MILICIA'},
-
-    {coord = vec3(5012.32,-5749.0,28.95), config = 'ORDEM'},
-    {coord = vec3(5012.76,-5746.9,15.49), config = 'ORDEM'},
+    { coord = vector4(-305.011, -721.1473, 28.01611, 158.7402), config = 'cobertura' }, -- perm = { 'staff.permissao' } },
+    { coord = vector4(-288.2637, -722.4264, 125.4586, 249.4488), config = 'cobertura' }, -- perm = { 'staff.permissao' } },
 }
+
+Tunnel = module('zero', 'lib/Tunnel')
+Proxy = module('zero', 'lib/Proxy')
+zero = Proxy.getInterface('zero')

@@ -431,29 +431,31 @@ AddEventHandler('zero_garage:enterTrunk', function()
     if (not inTrunk) then
 		local isopen = GetVehicleDoorAngleRatio(vehicle, 4)
 		if (DoesEntityExist(vehicle) and not IsPedInAnyVehicle(ped)) then
-			if (GetVehicleDoorLockStatus(vehicle) == 1 and vSERVER.checkTrunk(vehNet)) then
-				local trunk = GetEntityBoneIndexByName(vehicle, 'boot')
-				if (trunk ~= -1) then
-					local coords = GetEntityCoords(ped)
-					local coordsEnt = GetWorldPositionOfEntityBone(vehicle, trunk)
-					local distance = #(coords - coordsEnt)
-					if (distance <= 3.0) then
-						if (GetVehicleDoorAngleRatio(vehicle, 5) < 0.9 and GetVehicleDoorsLockedForPlayer(vehicle, PlayerId()) ~= 1) then
-							vSERVER.insertTrunk(vehNet)
-							updateTrunkInfos()
-							SetCarBootOpen(vehicle)
-							SetEntityVisible(ped, false, false)
-							Citizen.Wait(750)
-							AttachEntityToEntity(ped, vehicle, -1, 0.0, -2.2, 0.5, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
-							inTrunk = true
-							trunkThread()
-							Citizen.Wait(500)
-							SetVehicleDoorShut(vehicle, 5)
+			if (vSERVER.checkTrunk(vehNet)) then
+				if (GetVehicleDoorLockStatus(vehicle) == 1) then
+					local trunk = GetEntityBoneIndexByName(vehicle, 'boot')
+					if (trunk ~= -1) then
+						local coords = GetEntityCoords(ped)
+						local coordsEnt = GetWorldPositionOfEntityBone(vehicle, trunk)
+						local distance = #(coords - coordsEnt)
+						if (distance <= 3.0) then
+							if (GetVehicleDoorAngleRatio(vehicle, 5) < 0.9 and GetVehicleDoorsLockedForPlayer(vehicle, PlayerId()) ~= 1) then
+								vSERVER.insertTrunk(vehNet)
+								updateTrunkInfos()
+								SetCarBootOpen(vehicle)
+								SetEntityVisible(ped, false, false)
+								Citizen.Wait(750)
+								AttachEntityToEntity(ped, vehicle, -1, 0.0, -2.2, 0.5, 0.0, 0.0, 0.0, false, false, false, false, 20, true)
+								inTrunk = true
+								trunkThread()
+								Citizen.Wait(500)
+								SetVehicleDoorShut(vehicle, 5)
+							end
 						end
 					end
+				else
+					TriggerEvent('notify', 'Garagem', 'O <b>veículo</b> se encontra trancado.')
 				end
-			else
-				TriggerEvent('notify', 'Garagem', 'O <b>veículo</b> se encontra trancado.')
 			end
 		end
 	else
@@ -491,7 +493,7 @@ trunkThread = function()
 				if (DoesEntityExist(vehicle)) then
 					idle = 5
 
-					drawTxt('PRESSIONE ~b~E~w~ PARA SAIR DO PORTA-MALAS', 7, 0.5, 0.9, 0.5, 255, 255, 255, 255)
+					Text2D(0, 0.375, 0.9, 'PRESSIONE ~b~E~w~ PARA SAIR DO PORTA-MALAS', 0.4)
 
 					DisableControlAction(1,73,true)
 					DisableControlAction(1,29,true)
@@ -556,13 +558,14 @@ CheckNui = function(entity, location, dist)
 	end)
 end
 
-drawTxt = function(text, font, x, y, scale, r, g, b, a)
+Text2D = function(font, x, y, text, scale)
 	SetTextFont(font)
+	SetTextProportional(7)
 	SetTextScale(scale, scale)
-	SetTextColour(r, g, b, a)
-	SetTextOutline()
-	SetTextCentre(1)
-	SetTextEntry('STRING')
+	SetTextColour(255, 255, 255, 255)
+	SetTextDropShadow(0, 0, 0, 0,255)
+	SetTextEdge(4, 0, 0, 0, 255)
+	SetTextEntry("STRING")
 	AddTextComponentString(text)
 	DrawText(x, y)
 end

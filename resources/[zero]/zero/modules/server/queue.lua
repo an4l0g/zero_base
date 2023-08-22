@@ -26,7 +26,7 @@ function Queue:IsPriority(ids)
 			return upriority
 		end
 	end
-	return 0
+	return false
 end
 ------------------------------------------------------------------
 

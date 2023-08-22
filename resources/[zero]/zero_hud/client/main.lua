@@ -12,7 +12,7 @@ local toggleSeatbelt = function()
         updateSeatbelt(seatbeltOn)
         if not (LocalPlayer.state['gps']) then checkRadar(seatbeltOn) end
         SetPedConfigFlag(ped, 32, not seatbeltOn)
-        if seatbeltOn then TriggerEvent('vrp_sound:source','belt',0.5) else TriggerEvent('vrp_sound:source','unbelt',0.5) end
+        if seatbeltOn then TriggerEvent('zero_sound:source','belt',0.5) else TriggerEvent('zero_sound:source','unbelt',0.5) end
     end
 end
 RegisterCommand('zero_hud:seatBelt', toggleSeatbelt)
@@ -67,7 +67,7 @@ end
 
 doesVehicleHasSeatbelt = function(veh)
     local vehClass = GetVehicleClass(veh or vehicle)
-    return (vehClass >= 0 and vehClass <= 7) or (vehClass >= 9 and vehClass <= 12) or (vehClass >= 15 and vehClass <= 20)
+    return (vehClass >= 0 and vehClass <= 7) or (vehClass >= 9 and vehClass <= 12) or (vehClass >= 17 and vehClass <= 20)
 end
 
 startVehicle = function()

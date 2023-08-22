@@ -320,18 +320,30 @@ RegisterNetEvent('zero_interactions:acessorios', function(value)
 	if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') then
         local coord = GetEntityCoords(GetPlayerPed(source))
         if (value == 'cone') then
+            if (not zero.tryGetInventoryItem(user_id, 'cone', 1)) then
+                TriggerClientEvent('notify', source, 'Inventário', 'Você não possui um <b>cone</b> em sua mochila!')
+                return
+            end
             TriggerClientEvent('cone', source)
             zero.webhook('PoliceCommands', '```prolog\n[/CONE]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[CRIOU UM CONE NA]\n[COORDENADA]: '..tostring(coord)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         elseif (value == 'coned') then
             TriggerClientEvent('cone', source, 'd')
             zero.webhook('PoliceCommands', '```prolog\n[/CONE]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU UM CONE NA]\n[COORDENADA]: '..tostring(coord)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         elseif (value == 'barreira') then
+            if (not zero.tryGetInventoryItem(user_id, 'barreira', 1)) then
+                TriggerClientEvent('notify', source, 'Inventário', 'Você não possui uma <b>barreira</b> em sua mochila!')
+                return
+            end
             TriggerClientEvent('barreira', source)
 		    zero.webhook('PoliceCommands', '```prolog\n[/BARREIRA]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[CRIOU UMA BARREIRA NA]\n[COORDENADA]: '..tostring(coord)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         elseif (value == 'barreirad') then
             TriggerClientEvent('barreira', source, 'd')
 		    zero.webhook('PoliceCommands', '```prolog\n[/BARREIRA]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU UMA BARREIRA NA]\n[COORDENADA]: '..tostring(coord)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         elseif (value == 'spike') then
+            if (not zero.tryGetInventoryItem(user_id, 'spike', 1)) then
+                TriggerClientEvent('notify', source, 'Inventário', 'Você não possui uma <b>spike</b> em sua mochila!')
+                return
+            end
             TriggerClientEvent('spike', source)
 		    zero.webhook('PoliceCommands', '```prolog\n[/SPIKE]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[CRIOU UMA SPIKE NA]\n[COORDENADA]: '..tostring(coord)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         elseif (value == 'spiked') then

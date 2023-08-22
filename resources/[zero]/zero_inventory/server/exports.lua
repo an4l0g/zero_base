@@ -47,7 +47,9 @@ exports("giveBagItem", sInventory.giveBagItem)
 local tasking = {}
 
 sInventory.giveInventoryItem = function(user_id, item, amount)
+    -- TriggerClientEvent('notify', zero.getUserSource(user_id), 'Inventário', 'Você recebeu <b>'..amount..'x</b> de <b>'..zero.itemNameList(item)..'</b>.')
     local _source = source
+    
     if user_id == 0 then
         user_id = zero.getUserId(_source)
     end
@@ -94,6 +96,7 @@ end
 exports("giveInventoryItem", sInventory.giveInventoryItem)
 
 sInventory.tryGetInventoryItem = function(user_id, index, amount)
+    -- TriggerClientEvent('notify', zero.getUserSource(user_id), 'Inventário', 'Você perdeu <b>'..amount..'x</b> de <b>'..zero.itemNameList(index)..'</b>.')
     index = string.lower(index)
     
     local items = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })

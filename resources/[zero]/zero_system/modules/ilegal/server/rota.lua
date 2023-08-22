@@ -8,6 +8,11 @@ srv.checkRoutes = function(index)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) and zero.checkPermissions(user_id, _config.perm) then
+        if (GetPlayerRoutingBucket(source) ~= 0) then
+            TriggerClientEvent('notify', source, 'Rotas', 'Você não pode iniciar uma rota em outro <b>mundo</b>.')
+            return false
+        end
+
         if (routeTime[user_id]) then
             TriggerClientEvent('notify', source, 'Rotas', 'Aguarde <b>'..routeTime[user_id]..' segundos</b> para iniciar uma rota novamente.')
             return false
@@ -60,7 +65,7 @@ srv.checkBackpack = function(itens, drug)
     return false
 end
 
-srv.routePayment = function(coords, itens, drug)
+srv.routePayment = function(coords, itens, drug, name)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
@@ -72,6 +77,7 @@ srv.routePayment = function(coords, itens, drug)
                         if (zero.tryGetInventoryItem(user_id, v.item, v.quantity)) then
                             zero.giveInventoryItem(user_id, v.receive, v.payment)
                             TriggerClientEvent('notify', source, 'Rotas', 'Você vendeu <b>'..v.quantity..'x</b> de <b>'..zero.itemNameList(v.item)..'</b> e recebeu <b>R$'..zero.format(v.payment)..'</b> de dinheiro sujo pela sua venda!')
+                            zero.webhook('Rotas', '```prolog\n[ROUTES]\n[NAME]: '..name..'\n[USER]: '..user_id..'\n[TYPE]: DRUG\n[ITEM SELL]: '..zero.itemNameList(v.item)..'\n[QUANTITY SELL]: '..v.quantity..'\n[ITEM RECEIVED]: '..zero.itemNameList(v.receive)..'\n[VALUE RECEIVED]: R$'..zero.format(v.payment)..' dinheiro sujo\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                             return true
                         end
                         TriggerClientEvent('notify', source, 'Rotas', 'Você não possui <b>'..v.quantity..'x</b> de <b>'..zero.itemNameList(v.item)..'</b> em sua mochila!')
@@ -81,6 +87,7 @@ srv.routePayment = function(coords, itens, drug)
                 if (CheckWeight(user_id, itens.item, itens.quantity)) then
                     zero.giveInventoryItem(user_id, itens.item, itens.quantity)
                     TriggerClientEvent('notify', source, 'Rotas', 'Você recebeu <b>'..itens.quantity..'x</b> de <b>'..zero.itemNameList(itens.item)..'</b>!')
+                    zero.webhook('Rotas', '```prolog\n[ROUTES]\n[NAME]: '..name..'\n[USER]: '..user_id..'\n[ITEM RECEIVED]: '..zero.itemNameList(itens.item)..'\n[QUANTITY RECEIVED]: '..itens.quantity..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                     return true
                 end
             end
@@ -89,6 +96,27 @@ srv.routePayment = function(coords, itens, drug)
         end
     end
     return false
+end
+
+srv.callPolice = function(porcentage, name)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local pCoord = GetEntityCoords(GetPlayerPed(source))
+    local porcentagem = math.random(100)
+    if (porcentagem >= porcentage) then
+        local police = zero.getUsersByPermission('policia.permissao')
+        for k, v in pairs(police) do
+            local nSource = zero.getUserSource(parseInt(v))
+            if (nSource) then
+                async(function()
+                    TriggerClientEvent('zero_routes:Blip', nSource, pCoord, user_id)
+                    TriggerClientEvent('announcement', nSource, 'Tráfico avistado', 'Atenção <b>unidades</b> foram avistados tráficos de drogas próximo as suas regiões, tomem cuidado!', 'Delegacia Zero', true, 10000)
+                end)
+            end
+        end
+        zero.webhook('RotasDenuncia', '```prolog\n[ROUTES]\n[NAME]: '..name..'\n[USER]: '..user_id..'\n[PORCENTAGE]: '..porcentage..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+        TriggerClientEvent('notify', source, 'Rotas', 'Os <b>coxinhas</b> foram alertados, saia do local imediatamente.')
+    end
 end
 
 registerRoutesTime = function(id, time)
