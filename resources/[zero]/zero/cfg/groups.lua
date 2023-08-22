@@ -35,6 +35,13 @@ config.groups = {
 		'vip.permissao',
 	},
 
+	['VipArmas'] = {
+		information = {
+			title = 'Vip Armas',
+		},
+		'attachs2.permissao'
+	}
+
 	['Hospital'] = {
 		information = { 
 			title = 'Centro Médico', 

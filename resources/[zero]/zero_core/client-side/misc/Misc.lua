@@ -309,3 +309,46 @@ IsCrouched = function()
     return Crouched
 end
 exports("IsCrouched", IsCrouched)
+
+local Dispatch = false
+
+Citizen.CreateThread(function()
+	while (true) do
+		local idle = 1000
+		local ped = PlayerPedId()
+		if (not Dispatch and IsPedArmed(ped, 4)) then
+			idle = 5
+			if (IsPedShooting(ped)) then
+				Dispatch = true
+				TriggerServerEvent('zero_core:shoting', GetEntityCoords(ped))
+				Citizen.SetTimeout(40000, function()
+					Dispatch = false
+				end)
+			end
+		end
+		Citizen.Wait(idle)
+	end
+end)
+
+local shot = {}
+RegisterNetEvent('zero_core:shotingBlip', function(coord, user_id)
+	if (not DoesBlipExist(shot[user_id])) then
+		PlaySoundFrontend(-1, 'Enter_1st', 'GTAO_FM_Events_Soundset', false)
+		TriggerEvent('announcement', 'Disparos de arma de fogo', 'Atenção <b>unidades</b> foram avistados disparos de arma de fogo próximo as suas regiões, tomem cuidado!', 'Delegacia Zero', true, 10000)
+
+		shot[user_id] = AddBlipForCoord(coord)
+		SetBlipScale(shot[user_id], 0.5)
+		SetBlipSprite(shot[user_id], 10)
+		SetBlipColour(shot[user_id], 3)
+		BeginTextCommandSetBlipName('STRING')
+		AddTextComponentString('Disparos de arma de fogo')
+		EndTextCommandSetBlipName(shot[user_id])
+		SetBlipAsShortRange(shot[user_id], false)
+
+		Citizen.SetTimeout(35000,function()
+			if (DoesBlipExist(shot[user_id])) then
+				RemoveBlip(shot[user_id])
+			end
+		end)
+	end
+end)
