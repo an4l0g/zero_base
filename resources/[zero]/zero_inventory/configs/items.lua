@@ -1,5 +1,3 @@
-cInventory = Tunnel.getInterface('zero_inventory')
-
 bandagemCooldown = {}
 
 config.itemTypes = { 'common', 'weapon', 'wammo' }
@@ -16,20 +14,58 @@ comboFood = function(index)
     end
 end
 
-config.items = {
-----------------------------------------------------------------------------
--- COMIDAS
-----------------------------------------------------------------------------
+fullStamina = function(source, user_id)
+    cInventory.fullStamina(source)
+end
 
+config.items = {
+    ----------------------------------------------------------------------------
+    -- HOSPITAL
+    ----------------------------------------------------------------------------
+    ['bandagem'] = { 
+        name = 'Bandagem', 
+        type = 'common', 
+        usable = true,
+        weight = 2, 
+        interaction = function(source, user_id)
+            if bandagemCooldown[user_id] then 
+                TriggerClientEvent('notify', source, 'Bandagem', 'Você ainda não pode utilizar a bandagem...')
+            else 
+                if zero.tryGetInventoryItem(user_id, "bandagem", 1) then
+                    local countHeal = 0
+                    TriggerClientEvent('progressBar', source, 'Utilizando bandagem...')
+                    while countHeal < 3 do
+                        zeroClient.varyHealth(source, 20)
+                        countHeal = countHeal + 1
+                        cInventory.closeInventory(source)
+                        Wait(5000)
+                    end
+                    threadBandagem(user_id, 600000) -- 10 minutos
+                end
+            end
+        end 
+    },
+    ----------------------------------------------------------------------------
+    -- COMIDAS
+    ----------------------------------------------------------------------------
     ['c-ingredientes'] = { name = 'C. Ingredientes', type = 'common', weight = 2 },
-    ['camarao'] = { name = 'Esp. Camarão', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
-    ['milho'] = { name = 'Milho Cozido', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
-    ['chocolate'] = { name = 'Chuculate', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
-    ['caviar'] = { name = 'Aviar', type = 'common', weight = 1, consumable = { hunger = 50, thirst = 0 }, usable = true, },
-    ['suco-morango'] = { name = 'Suco Morango', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
-    ['suco-abacaxi'] = { name = 'Suco Abacaxi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
-    ['suco-kiwi'] = { name = 'Suco Kivi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
-    ['suco-caju'] = { name = 'Suco Aju', type = 'common', weight = 1, consumable = { hunger = 0, thirst = 50 }, usable = true, },
+    ['camarao'] = { name = 'Esp. Camarão', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
+    ['milho'] = { name = 'Milho Cozido', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
+    ['chocolate'] = { name = 'Chuculate', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
+    ['caviar'] = { name = 'Aviar', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0 }, usable = true, },
+    ['suco-morango'] = { name = 'Suco Morango', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
+    ['suco-abacaxi'] = { name = 'Suco Abacaxi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
+    ['suco-kiwi'] = { name = 'Suco Kivi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
+    ['suco-caju'] = { name = 'Suco Aju', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75 }, usable = true, },
+    ['sanduiche'] = { name = 'Sanduiche', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0 }, usable = true, },
+    ['donut'] = { name = 'Donut', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0 }, usable = true, },
+    ['pirulito'] = { name = 'Pirulito', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0 }, usable = true, },
+    ['cola'] = { name = 'Cola', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25 }, usable = true, },
+    ['agua'] = { name = 'Água', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25 }, usable = true, },
+    ['soda'] = { name = 'Soda', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25 }, usable = true, },
+    ['energetico'] = { name = 'Soda', type = 'common', weight = 1, usable = true, interaction = function(source, user_id)
+        fullStamina(source, user_id)
+    end},
     ['combo-camarao'] = { 
         name = 'Camarão da Laurinha', 
         combo = { 
@@ -82,12 +118,6 @@ config.items = {
             comboFood('combo-caviar')
         end
     },
-    ['energetico'] = { name = 'Energético', type = 'common', weight = 1, interaction = function()
-        --
-    end},
-    ['cafe'] = { name = 'Café', type = 'common', weight = 1, interaction = function()
-        --
-    end},
 ----------------------------------------------------------------------------
 -- LEGAL
 ----------------------------------------------------------------------------

@@ -3,8 +3,8 @@ gbMembers = {}
 Tunnel.bindInterface('gb_core_ilegal/members', gbMembers)
 
 
-vRP._prepare("members/getAllMembers", "select * from vrp_user_groups where groupId = @fac")
-vRP._prepare("members/countAllMembers", "select COUNT(*) from vrp_user_groups where groupId = @fac")
+vRP._prepare("members/getAllMembers", "select * from user_groups where groupId = @fac")
+vRP._prepare("members/countAllMembers", "select COUNT(*) from user_groups where groupId = @fac")
 
 --======================================================================================================================
 local webhook_enterBlack = "https://discord.com/api/webhooks/1067163058255962212/u2wY13I1RFwOVwxdri8etmUsVZ21xwkJo1BKu-Ex3cQPciTzz4Nh8RFxIwW3WaHfUsir"

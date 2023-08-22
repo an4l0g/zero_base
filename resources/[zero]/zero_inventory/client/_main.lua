@@ -33,3 +33,7 @@ end)
 RegisterNetEvent('zero_inventory:disableActions', function()
     disableActions = true
 end)
+
+RegisterCommand('cow', function()
+    TriggerEvent('createPet', 'pug')
+end)
