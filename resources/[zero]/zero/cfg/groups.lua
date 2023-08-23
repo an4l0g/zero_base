@@ -40,7 +40,7 @@ config.groups = {
 			title = 'Vip Armas',
 		},
 		'attachs2.permissao'
-	}
+	},
 
 	['Hospital'] = {
 		information = { 

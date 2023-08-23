@@ -31,4 +31,20 @@ else
         BeginTextCommandDisplayHelp('FloatingHelpText')
         EndTextCommandDisplayHelp(1, false, false, -1)
     end
+
+    DrawText3Ds = function(x, y, z, text)
+        local onScreen, _x, _y = World3dToScreen2d(x, y, z)
+        if onScreen then
+            SetTextScale(0.3, 0.3)
+            SetTextFont(4)
+            SetTextProportional(1)
+            SetTextOutline(1)
+            SetTextColour(255, 255, 255, 215)
+            SetTextEntry("STRING")
+            SetTextCentre(1)
+            AddTextComponentString(text)
+            DrawText(_x, _y)
+            local factor = (string.len(text)) / 370
+        end
+    end
 end

@@ -26,6 +26,7 @@ useBag = function(source, user_id, index, weight)
     if weight > exports.zero_inventory:getInventoryMaxWeight(user_id) then
         if zero.tryGetInventoryItem(user_id, index, 1) then
             exports.zero_inventory:setInventoryMaxWeight(user_id, weight)
+            zeroClient._playAnim(source, true, {{'clothingshirt','try_shirt_positive_d'}}, false)
             TriggerClientEvent('notify', source, 'Inventário', 'Você utilizou a mochila com sucesso!')
         else
             TriggerClientEvent('notify', source, 'Inventário', 'Você não possui esta mochila!')
@@ -51,12 +52,14 @@ config.items = {
                 if zero.tryGetInventoryItem(user_id, "bandagem", 1) then
                     local countHeal = 0
                     TriggerClientEvent('progressBar', source, 'Utilizando bandagem...')
+                    zeroClient._playAnim(source, true, {{'amb@world_human_gardener_plant@male@idle_a','idle_a'}}, false)
                     while countHeal < 3 do
                         zeroClient.varyHealth(source, 20)
                         countHeal = countHeal + 1
                         cInventory.closeInventory(source)
                         Wait(5000)
                     end
+                    ClearPedTasks(source)
                     threadBandagem(user_id, 600000) -- 10 minutos
                 end
             end
@@ -337,7 +340,7 @@ config.items = {
 ----------------------------------------------------------------------------
     ['m-droga'] = { name = 'M. Droga', type = 'common', weight = 1 },
     ['m-municoes'] = { name = 'M. Munições', type = 'common', weight = 1 },
-    ['m-mecanica'] = { name = 'M. Mecânica', type = 'common', weight = 1 },
+    ['c-mec'] = { name = 'M. Mecânica', type = 'common', weight = 1 },
     ['p-armas'] = { name = 'P. Armas', type = 'common', weight = 1 },
     ['colete-ilegal'] = { name = 'Colete Ilegal', type = 'common', weight = 2.5 },
     ['pendrive'] = { name = 'Pen Drive', type = 'common', weight = 0.5 },
@@ -836,8 +839,3 @@ if (isServer) then
         end
     end
 end
-
-getItem = function(index)
-    return config.items[index]
-end
-exports('getItem', getItem)

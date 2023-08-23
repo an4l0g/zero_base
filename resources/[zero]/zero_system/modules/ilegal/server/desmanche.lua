@@ -101,3 +101,9 @@ end)
 RegisterNetEvent('syncVehicleEngineBroken', function(vehicle)
     TriggerClientEvent('setVehicleEngineBroken', -1, vehicle, 0)
 end)
+
+srv.hasPermission = function(perm)
+    local _source = source
+    local user_id = zero.getUserId(_source)
+    return zero.hasPermission(user_id, perm)
+end

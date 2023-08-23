@@ -8,7 +8,7 @@ srv.checkPermission = function(perm)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
-        return zero.checkPermissions(user_id, perm)
+        return zero.hasPermission(user_id, perm)
     end
 end
 

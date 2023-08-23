@@ -16,7 +16,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 28 },
+                ['p-armas'] = { name = 'P. Armas', amount = 42 },
             }
         },
         ['weapon_snspistol_mk2'] = { 
@@ -26,7 +26,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 28 },
+                ['p-armas'] = { name = 'P. Armas', amount = 42 },
             }
         },
         ['weapon_revolver_mk2'] = { 
@@ -36,7 +36,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 28 },
+                ['p-armas'] = { name = 'P. Armas', amount = 42 },
             }
         },
         ['weapon_tecpistol'] = { 
@@ -46,7 +46,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 56 },
+                ['p-armas'] = { name = 'P. Armas', amount = 70 },
             }
         },
         ['weapon_machinepistol'] = { 
@@ -56,7 +56,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 56 },
+                ['p-armas'] = { name = 'P. Armas', amount = 70 },
             }
         },
         ['weapon_minismg'] = { 
@@ -66,7 +66,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 56 },
+                ['p-armas'] = { name = 'P. Armas', amount = 70 },
             }
         },
         ['weapon_compactrifle'] = { 
@@ -76,7 +76,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 84 },
+                ['p-armas'] = { name = 'P. Armas', amount = 98 },
             }
         },
         ['weapon_heavyrifle'] = { 
@@ -86,7 +86,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 84 },
+                ['p-armas'] = { name = 'P. Armas', amount = 98 },
             }
         },
         ['weapon_bullpuprifle_mk2'] = { 
@@ -96,7 +96,7 @@ configs.products = {
             max_amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 84 },
+                ['p-armas'] = { name = 'P. Armas', amount = 98 },
             }
         },
     },
@@ -203,7 +203,7 @@ configs.products = {
                 ['c-mec'] = { name = 'C. Mecânica', amount = 14 },
             }
         },
-        ['kitreparo'] = {
+        ['kit-reparo'] = {
             order = 1,
             name = 'Kit Reparo',
             min_amount = 1,
@@ -378,6 +378,7 @@ configs.productions = {
         type = 'production',
         coords = vector3(-310.8, -113.433, 39.0022), 
         label = 'Produção de Mecânica', 
+        permission = 'zeromecanica.permissao',
         products = configs.products.mec, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
@@ -385,6 +386,7 @@ configs.productions = {
         type = 'production',
         coords = vector3(-322.7736, -146.3473, 39.0022), 
         label = 'Produção de Mecânica', 
+        permission = 'zeromecanica.permissao',
         products = configs.products.mec, 
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },

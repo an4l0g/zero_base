@@ -196,7 +196,7 @@ Routes = {
                 vector3(-232.3648, -1311.996, 31.28503),
             },
             itens = {
-                item = 'm-mecanica',
+                item = 'm-mec',
                 quantity = 1
             },
             texts = {

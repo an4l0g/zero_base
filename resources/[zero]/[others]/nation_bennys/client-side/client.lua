@@ -61,7 +61,6 @@ local cam = nil
 local gameplaycam = nil
 
 openBennys = function(config)
-	nui = true
 	if (vSERVER.checkPermission(config.perm)) then
 		vehicle = zero.getNearestVehicle(7)
 		if (vehicle and vSERVER.checkVehicle(VehToNet(vehicle))) then
@@ -71,6 +70,7 @@ openBennys = function(config)
 			
 			SetVehicleModKit(vehicle, 0)
 			FreezeEntityPosition(vehicle, true)
+			nui = true
 			SendNUIMessage({ 
 				action = 'vehicle', 
 				vehicle = getVehicleMods(vehicle), 
@@ -79,7 +79,11 @@ openBennys = function(config)
 
 			openNui()
 			isVehicleTooFar(vehicle)
+		else
+			TriggerEvent('notify', 'Zero Mecânica', 'Você precisa estar dentro de um veículo!')
 		end
+	else
+		TriggerEvent('notify', 'Zero Mecânica', 'Você não possui permissão!')
 	end
 end
 

@@ -5,6 +5,55 @@ local vSERVER = Tunnel.getInterface('Commands')
 local CommandsData = {}
 
 ---------------------------------------
+-- WALL
+---------------------------------------
+LocalPlayer.state:set('Wall', false, true)
+
+CommandsData['players'] = {}
+AddStateBagChangeHandler('Wall', nil, function(bagName, key, value) 
+    local entity = GetPlayerFromStateBagName(bagName)
+    if (entity == 0) then return; end;
+
+    if (value) then
+        Citizen.CreateThread(function()
+            while (LocalPlayer.state.Wall) do
+                for _, id in ipairs(GetActivePlayers()) do
+                    local ply = GetPlayerPed(id)
+                    if (NetworkIsPlayerActive(id) and ply ~= PlayerPedId()) then
+                        local pCoord = GetEntityCoords(PlayerPedId())
+                        local eCoord = GetEntityCoords(ply)
+
+                        local distance = #(pCoord - eCoord)
+                        if (distance <= 150) then
+                            if (ply ~= -1 and CommandsData['players'][id] ~= nil) then
+                                DrawText3Ds(eCoord.x, eCoord.y, eCoord.z+1.3, '~b~ID:~w~ '..CommandsData['players'][id]..'\n~b~VIDA:~w~ '..GetEntityHealth(ply)..'\n~b~NOME:~w~ '..(GetPlayerName(id) or 'NÃO IDENTIFICADO'))
+                            end
+                        end
+                    end
+                end
+                Citizen.Wait(5)
+            end
+        end)
+
+		Citizen.CreateThread(function()
+            while (LocalPlayer.state.Wall) do
+                for _, id in ipairs(GetActivePlayers()) do
+					if id == -1 or id == nil then return end
+					local pid = vSERVER.getWallId(GetPlayerServerId(id))
+					if pid == -1 then
+						return
+					end
+					if CommandsData['players'][id] ~= pid or not CommandsData['players'][id] then
+						CommandsData['players'][id] = pid
+					end
+				end
+                Citizen.Wait(1500)
+            end
+        end)
+    end
+end)
+
+---------------------------------------
 -- TPWAY
 ---------------------------------------
 cli.tpToWayFunction = function()

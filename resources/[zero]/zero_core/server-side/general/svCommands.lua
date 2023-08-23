@@ -95,6 +95,26 @@ RegisterCommand('godarea', function(source)
         end
     end
 end)
+---------------------------------------
+-- WALL
+---------------------------------------
+srv.getWallId = function(sourceplayer)
+    return zero.getUserId(sourceplayer) 
+end
+
+RegisterCommand('ids', function(source)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (Player(source).state.Wall) then
+            Player(source).state.Wall = false
+            TriggerClientEvent('notify', source, 'Wall', 'Você desativou o <b>wall</b>!')
+        else
+            Player(source).state.Wall = true
+            TriggerClientEvent('notify', source, 'Wall', 'Você ativou o <b>wall</b>!')
+        end
+    end
+end)
 
 ---------------------------------------
 -- KILL
@@ -315,10 +335,13 @@ RegisterCommand('delmoney', function(source, args)
             local money = parseInt(args[2])
             if (source == 0) then
                 if (nUser and money) then
-                    zero.tryFullPayment(nUser, money)
-                    print('^5[ZERO MONEY]^7 Voce tirou ^2R$'..zero.format(money)..'^7 do passaporte ^2'..nUser..'^7.')
-                    TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
-                    zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: CONSOLE\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    if (zero.tryFullPayment(nUser, money)) then
+                        print('^5[ZERO MONEY]^7 Voce tirou ^2R$'..zero.format(money)..'^7 do passaporte ^2'..nUser..'^7.')
+                        TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
+                        zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: CONSOLE\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    else
+                        print('^5[ZERO MONEY]^7 este jogador não possui esta quantia de dinheiro.')
+                    end
                 end
             else
                 local user_id = zero.getUserId(source)
@@ -326,10 +349,13 @@ RegisterCommand('delmoney', function(source, args)
                 if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
                     if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
                     if (nUser and money) then
-                        zero.tryFullPayment(nUser, money)
-                        TriggerClientEvent('notify', source, 'Money', 'Você retirou <b>R$'..zero.format(money)..'</b>, do jogador <b>#'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
-                        TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
-                        zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[JOGADOR]: #'..nUser..' | '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                        if (zero.tryFullPayment(nUser, money)) then
+                            TriggerClientEvent('notify', source, 'Money', 'Você retirou <b>R$'..zero.format(money)..'</b>, do jogador <b>#'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
+                            TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
+                            zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[JOGADOR]: #'..nUser..' | '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                        else
+                            TriggerClientEvent('notify', source, 'Money', 'Este <b>jogador</b> não possui esta quantia de dinheiro!')
+                        end
                     end
                 end
             end

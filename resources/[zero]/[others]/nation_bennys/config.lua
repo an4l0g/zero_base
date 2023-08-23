@@ -308,7 +308,9 @@ config.prices = {
 }
 
 config.mechanics = {
-	{ coord = vector3(105.9429, -1413.758, 29.22925), perm = nil }
+	{ coord = vector3(-342.8571, -113.789, 38.63147), perm = 'zeromecanica.permissao' },
+	{ coord = vector3(-346.9978, -124.3912, 38.63147), perm = 'zeromecanica.permissao' },
+	{ coord = vector3(-349.4242, -131.3802, 38.63147), perm = 'zeromecanica.permissao' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

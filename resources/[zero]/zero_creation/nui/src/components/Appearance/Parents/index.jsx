@@ -26,7 +26,7 @@ function Parents() {
         max={ParentsList.length - 1}
       />
       <Slider
-        label={ParentsList[character.fatherId].name}
+        label={ParentsList[character.motherId].name}
         value={character.motherId}
         setValue={(val) => setCharacter((old) => ({ ...old, motherId: val }))}
         min={0}

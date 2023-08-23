@@ -16,10 +16,15 @@ local markerThread = function()
             if (not inDismantle and IsPedInAnyVehicle(ped)) then
                 for index, dist in pairs(_cache) do
                     local coord = Dismantle.locations[index].coord
+                    local perm = Dismantle.locations[index].perm
                     DrawMarker(27, coord.x, coord.y, coord.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.0, 5.0, 5.0, 0, 153, 255, 155, 0, 0, 0, 1)
                     if (dist <= 5 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100) then
                         if (not Dismantle.vehicles_blacklisted[GetEntityModel(GetVehiclePedIsUsing(ped))]) then
-                            vSERVER.checkDismantle(index)  
+                            if vSERVER.hasPermission(perm) then
+                                vSERVER.checkDismantle(index)  
+                            else
+                               TriggerEvent('notify', 'Desmanche', 'Você não possui permissão para acessar este blip.')
+                            end
                         else
                             TriggerEvent('notify', 'Desmanche', 'A <b>prefeitura</b> bloqueou o desmanche deste veículo.')
                         end
