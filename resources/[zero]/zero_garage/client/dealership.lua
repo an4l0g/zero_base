@@ -11,7 +11,7 @@ Citizen.CreateThread(function()
         local ped = PlayerPedId()
         local distance = #(GetEntityCoords(ped) - dealerShip)
         if (distance <= 5.0) then
-            _idle = 5
+            _idle = 1
             DrawMarker(0, dealerShip.x, dealerShip.y, dealerShip.z, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 153, 255, 155, 1, 0, 0, 1)
             if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                 SetNuiFocus(true, true)
@@ -62,7 +62,7 @@ cli.startTest = function(spawn)
     while (cooldown > 0 and IsPedInAnyVehicle(ped)) do
         DisableControlAction(0, 23, true)
         Text2D(0, 0.35, 0.95, 'O ~b~TESTE DRIVE~w~ TERMINA EM ~b~'..cooldown..' SEGUNDOS~w~', 0.4)
-        Citizen.Wait(5)
+        Citizen.Wait(1)
     end
     cooldown = 0
 

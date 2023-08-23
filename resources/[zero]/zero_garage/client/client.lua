@@ -39,7 +39,7 @@ local markerThread = function()
                     end
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         _markerThread = false
     end)
@@ -486,12 +486,12 @@ end)
 trunkThread = function()
 	Citizen.CreateThread(function()
 		while (inTrunk) do
-			local idle = 500
+			local idle = 100
 			if (inTrunk) then
 				local ped = PlayerPedId()
 				local vehicle = GetEntityAttachedTo(ped)
 				if (DoesEntityExist(vehicle)) then
-					idle = 5
+					idle = 1
 
 					Text2D(0, 0.375, 0.9, 'PRESSIONE ~b~E~w~ PARA SAIR DO PORTA-MALAS', 0.4)
 

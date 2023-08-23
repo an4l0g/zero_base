@@ -151,7 +151,7 @@ startSpray = function()
                 spray.text = ''
                 LocalPlayer.state.BlockTasks = false
             end
-            Citizen.Wait(4)
+            Citizen.Wait(1)
         end
     end)
 
@@ -195,7 +195,7 @@ startSpray = function()
                     end
                 end
             end
-            Citizen.Wait(4)
+            Citizen.Wait(1)
         end
     end)
 end
@@ -216,7 +216,7 @@ Citizen.CreateThread(function()
         for _, sprays in pairs(SPRAYS) do
             local distance = #(pCoord - sprays.location)
             if (distance <= 10.0) then
-                idle = 4
+                idle = 1
                 DrawSpray(PLAYER_NAME_HEAP[scaleformHandleIdx], sprays)
                 scaleformHandleIdx = scaleformHandleIdx + 1
                 if (scaleformHandleIdx >= SCALEFORM_ID_MAX) then break; end;

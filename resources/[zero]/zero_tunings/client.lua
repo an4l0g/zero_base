@@ -28,7 +28,7 @@ cli.installNitro = function()
             if (pVehicle and not IsPedInAnyVehicle(ped)) then
                 local engine = GetWorldPositionOfEntityBone(pVehicle, GetEntityBoneIndexByName(pVehicle, 'engine'))
                 local distance = #(pCoord - engine)
-                idle = 4
+                idle = 1
                 if (distance <= 3.0) then
                     DrawMarker(0, engine.x, engine.y, engine.z+0.7, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 153, 255, 155, 1, 0, 0, 1)
                     if (distance <= 1.5 and IsControlJustPressed(0, 38) and vSERVER.getNitro()) then
@@ -178,7 +178,7 @@ nitroThread = function(ped)
             local veh = GetVehiclePedIsIn(ped)
             if (IsPedInAnyVehicle(ped) and GetEntityHealth(ped) > 100) then
                 if (veh and hasNitro(veh)) then
-                    idle = 500
+                    idle = 100
                     nosLevel, purgeLevel = getValuesNitro(veh)
                     if (nosLevel < 1) then
                         TriggerServerEvent('zero_tunings:syncNitro', VehToNet(veh), false)

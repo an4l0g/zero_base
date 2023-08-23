@@ -31,7 +31,7 @@ local markerThread = function()
                     end
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         _markerThread = false
     end)
@@ -478,7 +478,7 @@ startDismantle = function()
                     inDismantle = false
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         vehicleCache = {}
     end)

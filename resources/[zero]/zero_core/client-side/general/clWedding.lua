@@ -9,7 +9,7 @@ Citizen.CreateThread(function()
         local pCoord = GetEntityCoords(ped)
         local distance = #(pCoord - coord)
         if (distance <= 3.0) then
-            idle = 5
+            idle = 1
             TextFloating('~b~E~w~ - Iniciar casamento\n~b~F~w~ - Iniciar divórcio', coord)
             if (distance <= 1.2 and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                 if (IsControlJustPressed(0, 38)) then

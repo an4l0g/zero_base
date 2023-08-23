@@ -177,7 +177,7 @@ AddStateBagChangeHandler('holdingHostage', nil, function(bagName, key, value)
                     TriggerServerEvent('zero_prefem:stop', target)
                     killHostage()
                 end
-                Citizen.Wait(5)
+                Citizen.Wait(1)
             end
         end)
     end
@@ -213,7 +213,7 @@ AddStateBagChangeHandler('victimHostage', nil, function(bagName, key, value)
                 DisableControlAction(0,270,true)
                 DisableControlAction(0,35,true) -- disable move right
                 DisableControlAction(0,271,true)
-                Citizen.Wait(5)
+                Citizen.Wait(1)
             end
         end)
     end

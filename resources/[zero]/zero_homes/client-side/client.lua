@@ -24,7 +24,7 @@ local markerThread = function()
                     end
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         _markerThread = false
     end)
@@ -180,7 +180,7 @@ threadInHome = function(interior)
                     local coord = vector3(v[1], v[2], v[3])
                     local distance = #(pCoord - coord)
                     if (distance <= 5.0) then
-                        idle = 4
+                        idle = 1
                         DrawMarker(0, coord.x, coord.y, coord.z, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 153, 255, 155, 1, 0, 0, 1)
                         if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100) then
                             if (v[4] == 'exit') then
@@ -294,7 +294,7 @@ cli.createGarage = function(homeCoords)
             stage = 0
             TriggerEvent('notify', 'Residências', 'Você saiu do raio máximo permitido de sua <b>residência</b>.')
         end
-        Citizen.Wait(5)
+        Citizen.Wait(1)
     end
     return finish, cacheCreation
 end

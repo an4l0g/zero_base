@@ -151,7 +151,7 @@ local markerThread = function()
                     end
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         _markerThread = false
     end)

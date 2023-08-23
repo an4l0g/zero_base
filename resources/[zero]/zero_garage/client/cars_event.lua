@@ -11,12 +11,12 @@ Citizen.CreateThread(function()
 	SetMinimapClipType(1)
 	SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.015, 0.007, 0.21, 0.25)
     while (true) do
-        local idle = 5000
+        local idle = 1000
         local ped = PlayerPedId()
         if (not IsPedInAnyVehicle(ped)) then
             local veh = GetVehiclePedIsTryingToEnter(ped)
             if (veh > 0) then
-                idle = 5     
+                idle = 1     
                 local pedVeh = GetPedInVehicleSeat(veh, -1)         
                 if (pedVeh) then SetPedCanBeDraggedOut(pedVeh, false); end;             
             end  
@@ -124,21 +124,21 @@ drivingVehicle = function(model)
     Citizen.CreateThread(function()
         while (inVehicle) do
             local ped = PlayerPedId()
-            local idle = 5000
+            local idle = 1000
             inVehicle = IsPedInAnyVehicle(ped)
             if (inVehicle) then
-                idle = 5000
+                idle = 1000
                 
                 local vehicle = GetVehiclePedIsIn(ped)
                 if (weaponLock[model]) then SetPlayerCanDoDriveBy(PlayerId(), false); end;
                 
                 if (IsPedShooting(ped) and not IsPedInAnyHeli(ped)) then
-                    idle = 5
+                    idle = 1
                     ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.3)
                 end
 
                 if (GetPedInVehicleSeat(vehicle, -1) == ped or GetPedInVehicleSeat(vehicle, 0) == ped) then
-                    idle = 5
+                    idle = 1
                     -- RETIRAR O CHUTE DA MOTO
                     if (GetVehicleClass(vehicle) == 8) then
                         DisableControlAction(0, 345, true)
@@ -185,7 +185,7 @@ damageCar = function(class)
             
             local idle = 1000
             if (pedInSameVehicleLast) then
-				idle = 5
+				idle = 1
 				local factor = 1.0
 				if (healthEngineNew < 900) then factor = ((healthEngineNew + 200.0) / 1100); end;
 				SetVehicleEngineTorqueMultiplier(vehicle, factor)
@@ -311,7 +311,7 @@ radarPolice = function()
             
             local idle = 1000
             if (IsPedInAnyPoliceVehicle(ped)) then
-                idle = 4
+                idle = 1
                 if (IsControlJustPressed(0, 306)) then radar.shown = (not radar.shown); end;
                 if (IsControlJustPressed(0, 301)) then radar.freeze = (not radar.freeze); end;
 
@@ -399,12 +399,12 @@ local vision_state = 0 -- 0 is normal, 1 is nightmode, 2 is thermal vision
 heliCam = function()
     Citizen.CreateThread(function()
         while (inVehicle) do
-            local idle = 5000
+            local idle = 1000
             local ped = PlayerPedId()
             inVehicle = IsPedInAnyVehicle(ped)
             if (getHeliWithCam()) then
                 local vehicle = GetVehiclePedIsIn(ped)
-                idle = 5
+                idle = 1
 
                 if (IsControlJustPressed(0, 38)) then 
                     helicam = true 

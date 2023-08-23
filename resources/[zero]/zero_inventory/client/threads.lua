@@ -113,7 +113,7 @@ Citizen.CreateThread(function()
         hotbarListener()
         trunkDistanceControl()
         if nextToAnyChest or #nearbyItemsGroups > 0 or nearbyVehicle ~= nil then
-            _sleep = 5
+            _sleep = 1
         else 
             _sleep = 100
         end

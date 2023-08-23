@@ -43,7 +43,7 @@ AddStateBagChangeHandler('inVehicle', nil, function(bagName, key, value)
                     fuelUsage(vehicle)
                     local fuel = GetVehicleFuelLevel(vehicle)
                     if (fuel <= 0.0) then
-                        idle = 5
+                        idle = 1
                         SetVehicleUndriveable(vehicle, true)
                     end
                 end
@@ -99,7 +99,7 @@ local markerThread = function(k, v)
                 local dataVehicle = GetPlayersLastVehicle()
                 local vehicleCoords = GetEntityCoords(dataVehicle)
                 for k, v in pairs(fuelPumps) do
-                    idle = 5
+                    idle = 1
                     local pumpType = v[5]
                     local abType = 0
                     local pumpDist = 3.0

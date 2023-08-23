@@ -8,6 +8,8 @@ LocalPlayer.state:set('Handcuff', false, true)
 LocalPlayer.state:set('Capuz', false, true)
 LocalPlayer.state:set('SafeZone', false, true)
 LocalPlayer.state:set('Energetico', false, true)
+LocalPlayer.state:set('Cam', false, true)
+LocalPlayer.state:set('Control', false, true)
 
 local disableActions = function(ply)
     BlockWeaponWheelThisFrame()
@@ -74,7 +76,7 @@ AddStateBagChangeHandler('BlockTasks', nil, function(bagName, key, value)
                 DisableControlAction(0, 311, true)
                 DisableControlAction(0, 344, true)		
                 DisablePlayerFiring(PlayerPedId(), true)
-                Citizen.Wait(5)
+                Citizen.Wait(1)
             end
         end)
     end
@@ -97,7 +99,7 @@ AddStateBagChangeHandler('Handcuff', nil, function(bagName, key, value)
                     end
                     disableActions(ped)
                 end
-                Citizen.Wait(5)
+                Citizen.Wait(1)
             end
             ClearPedTasks(ped)
         end)
@@ -127,7 +129,7 @@ AddStateBagChangeHandler('Capuz', nil, function(bagName, key, value)
             while (LocalPlayer.state.Capuz) do
                 local idle = 1000
                 if (GetEntityHealth(ped) > 100 and not LocalPlayer.state.Handcuff) then
-                    idle = 5
+                    idle = 4
                     disableActions(ped)
                 end
                 Citizen.Wait(idle)
@@ -146,7 +148,7 @@ AddStateBagChangeHandler('Energetico', nil, function(bagName, key, value)
             SetRunSprintMultiplierForPlayer(PlayerId(), 1.15)
             while (LocalPlayer.state.Energetico) do
                 RestorePlayerStamina(PlayerId(), 1.0)
-                Citizen.Wait(5)
+                Citizen.Wait(1)
             end
             SetRunSprintMultiplierForPlayer(PlayerId(), 1.0)
         end)

@@ -143,7 +143,7 @@ local disableActions = function(bool)
         if (not LocalPlayer.state.SafeZone) then DisablePlayerFiring(PlayerPedId(), true); end;
         DisableControlAction(0, 140, true) 
         DisableControlAction(0, 263, true)
-        Citizen.Wait(5)
+        Citizen.Wait(1)
     end
 end
 RegisterNetEvent('disableActionsWeapon', disableActions)

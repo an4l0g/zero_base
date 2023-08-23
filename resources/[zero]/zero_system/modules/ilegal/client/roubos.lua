@@ -26,7 +26,7 @@ local markerThread = function()
                     vSERVER.checkRobbery(index)
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         _markerThread = false
     end)
@@ -93,7 +93,7 @@ startRobbery = function(time, name)
                 FreezeEntityPosition(ped, false)
                 vSERVER.cancelRobbery(name)
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
     end)
 end

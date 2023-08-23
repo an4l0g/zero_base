@@ -22,7 +22,7 @@ local markerThread = function()
                     end
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         _markerThread = false
     end)
@@ -65,7 +65,7 @@ startRoute = function(index)
             local coords = _config.coords[selected]
             local distance = #(pCoord - coords)
             if (distance <= 10 and not action) then
-                idle = 5
+                idle = 1
                 TextFloating(_config.texts.text, coords)
                 if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                     action = true
@@ -117,7 +117,7 @@ startRoute = function(index)
                 RemoveBlip(blip)
                 TriggerEvent('notify', 'Rotas', 'Você finalizou a sua rota de <b>'.._config.name..'</b>. Todas as localizações marcadas foram retiradas de seu <b>GPS</b>.')
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         selected = 0
         blip = nil

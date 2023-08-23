@@ -22,7 +22,7 @@ local markerThread = function()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
                 if (dist <= 10 and not nui) then
-					_idle = 5
+					_idle = 1
                     local config = configMechanics[index]
 					DrawMarker(36, config.coord.x, config.coord.y, config.coord.z+0.1, 0, 0, 0, 0, 0, 0, 0.8, 0.8, 0.8, 0, 153, 255, 155, 1, 0, 0, 1)
 					DrawMarker(27, config.coord.x, config.coord.y, config.coord.z-0.97, 0, 0, 0, 0, 0, 0, 3.0, 3.0, 3.0, 0, 153, 255, 155, 0, 0, 0, 1)
@@ -214,7 +214,7 @@ freeCam = function()
 					action = 'cam' 
 				})
 			end
-			Citizen.Wait(5)
+			Citizen.Wait(1)
 		end
 	end)
 end

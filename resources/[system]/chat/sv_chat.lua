@@ -40,6 +40,15 @@ RegisterCommand('clearchat', function(source)
     end
 end)
 
+RegisterCommand('togglechat', function(source)
+	vCLIENT.disableChat(source)
+end)
+
+disableChat = function(source, bool)
+	vCLIENT.desactiveChat(source, bool)
+end
+exports('DisableChat', disableChat)
+
 function statusChat(source)
 	return vCLIENT.statusChat(source)
 end

@@ -42,7 +42,7 @@ local markerThread = function()
                     end
                 end
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         _markerThread = false
     end)
@@ -140,7 +140,7 @@ startEffect = function(time)
         anestesia = time
         while (anestesia > 0) do
             SetTimecycleModifier('spectator5')
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
         ClearTimecycleModifier()
     end)

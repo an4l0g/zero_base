@@ -171,7 +171,7 @@ disableActionsAnim = function()
 			DisableControlAction(0, 311, true)
 			DisableControlAction(0, 344, true)		
 			DisablePlayerFiring(PlayerPedId(), true)
-			Citizen.Wait(5)
+			Citizen.Wait(1)
 		end
 	end)
 end

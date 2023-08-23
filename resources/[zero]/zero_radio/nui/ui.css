@@ -1,0 +1,65 @@
+div {
+  border: 0;
+  outline: 0;
+  vertical-align: baseline;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+input,
+textarea,
+select,
+button {
+  font-family: "Montserrat", sans-serif;
+}
+
+:focus {
+  outline: 0;
+}
+::selection {
+  background: transparent;
+}
+
+#actionmenu {
+  top: 40%;
+  left: 50%;
+  display: none;
+  position: fixed;
+  transform: translate(-50%, -50%);
+}
+
+#actionmenu button {
+  display: block;
+  width: 200%;
+  cursor: pointer;
+  background-color: rgba(30, 30, 30, 0.8);
+  border: 0;
+  color: #fff;
+  font-weight: 400;
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  padding: 5 25px;
+}
+
+#actionmenu button:hover {
+  transition: all 0.3s;
+  background: rgb(0, 153, 255);
+  color: #222;
+}
+
+l {
+  width: 75%;
+  text-align: left;
+  float: left;
+}
+
+r {
+  color: rgba(255, 255, 255, 0.5);
+  width: 25%;
+  text-align: right;
+  float: left;
+}

@@ -41,7 +41,7 @@ Citizen.CreateThread(function()
 		_idle = 1000
 		SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
 		if (IsPauseMenuActive()) then
-			_idle = 5
+			_idle = 1
 			SetRadarAsExteriorThisFrame()
 			SetRadarAsInteriorThisFrame('h4_fake_islandx', vec(4700.0, -5145.0), 0, 0)
 		end
@@ -205,7 +205,7 @@ end
 
 SetupCrouch = function()
     while not HasAnimSetLoaded('move_ped_crouched') do
-        Citizen.Wait(5)
+        Citizen.Wait(1)
         RequestAnimSet('move_ped_crouched')
     end
 end
@@ -286,23 +286,25 @@ end
 
 RegisterKeyMapping('Crouch', 'Agachar', 'keyboard', 'LCONTROL')
 RegisterCommand('Crouch', function()
-    DisableControlAction(0, 36, true) -- magic
-    if IsPedInAnyVehicle(PlayerPedId()) then 
-        CrouchedForce = false
-        return
-    end
-    if not Cooldown then
-        CrouchedForce = not CrouchedForce
+	if (not LocalPlayer.state.Control) then
+		DisableControlAction(0, 36, true) -- magic
+		if IsPedInAnyVehicle(PlayerPedId()) then 
+			CrouchedForce = false
+			return
+		end
+		if not Cooldown then
+			CrouchedForce = not CrouchedForce
 
-        if CrouchedForce then
-            CreateThread(CrouchLoop) -- Magic Part 2 lamo
-        end
+			if CrouchedForce then
+				CreateThread(CrouchLoop) -- Magic Part 2 lamo
+			end
 
-        Cooldown = true
-        SetTimeout(CoolDownTime, function()
-            Cooldown = false
-        end)
-    end
+			Cooldown = true
+			SetTimeout(CoolDownTime, function()
+				Cooldown = false
+			end)
+		end
+	end
 end, false)
 
 IsCrouched = function()
@@ -317,7 +319,7 @@ Citizen.CreateThread(function()
 		local idle = 1000
 		local ped = PlayerPedId()
 		if (not Dispatch and IsPedArmed(ped, 4)) then
-			idle = 5
+			idle = 1
 			if (IsPedShooting(ped)) then
 				Dispatch = true
 				TriggerServerEvent('zero_core:shoting', GetEntityCoords(ped))

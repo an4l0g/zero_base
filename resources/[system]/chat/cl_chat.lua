@@ -79,18 +79,28 @@ AddEventHandler('chat:clear', function(name)
 	})
 end)
 
-RegisterCommand('togglechat', function(source, args)
-	if chatOpen then
-		if chatActive then
-			chatActive = false
-			SendNUIMessage({ type = 'ON_CLEAR' })
-			TriggerEvent('Notify','aviso','chat <b>desativado')
-		else
-			chatActive = true
-			TriggerEvent('Notify','sucesso','chat <b>ativado')
-		end
+cRP.disableChat = function()
+	if chatActive then
+		chatActive = false
+		SendNUIMessage({ type = 'ON_CLEAR' })
+		TriggerEvent('notify','Chat','Chat <b>desativado</b>.')
+	else
+		chatActive = true
+		TriggerEvent('notify','Chat','Chat <b>ativado</b>.')
 	end
-end)
+end
+
+cRP.desactiveChat = function(bool)
+	if bool then
+		chatActive = true
+		TriggerEvent('notify','Chat','Chat <b>ativado</b>.')
+	else
+		chatActive = false
+		SendNUIMessage({ type = 'ON_CLEAR' })
+		TriggerEvent('notify','Chat','Chat <b>desativado</b>.')
+	end
+end
+
 
 Citizen.CreateThread(function()
 	SetTextChatEnabled(false)

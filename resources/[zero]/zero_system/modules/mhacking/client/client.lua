@@ -20,7 +20,7 @@ local showText = function()
                     fail = true
                 })
             end
-            Citizen.Wait(5)
+            Citizen.Wait(1)
         end
     end)
 end

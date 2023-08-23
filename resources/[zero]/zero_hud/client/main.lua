@@ -42,7 +42,7 @@ local checkComponents = function()
         local idle = 1000
         if inVehicle and hasSeatbelt then
             if seatbeltOn then
-                idle = 5
+                idle = 1
                 DisableControlAction(1,75,true)
             end
         end

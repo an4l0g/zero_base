@@ -46,14 +46,14 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        local idle = 500
+        local idle = 100
         local ped = PlayerPedId()
         local pedCoords = GetEntityCoords(ped)
         for k, v in pairs(configs.productions) do
             local distance = #(pedCoords - v.coords)
             if (distance <= configs.blipDistance) then
                 if v.coords then
-                    idle = 4
+                    idle = 1
                     if v.type == 'shop' then
                         TextFloating('~b~[E]~w~ - Negociar', v.coords)
                     else

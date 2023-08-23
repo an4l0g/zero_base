@@ -31,7 +31,7 @@ AddStateBagChangeHandler('Wall', nil, function(bagName, key, value)
                         end
                     end
                 end
-                Citizen.Wait(5)
+                Citizen.Wait(1)
             end
         end)
 
@@ -214,7 +214,7 @@ spikeThread = function()
 			local veh = GetVehiclePedIsIn(ped,false)
 			inVehicle = IsPedInAnyVehicle(ped)
 			if (veh > 0) then
-				_sleep = 500
+				_sleep = 100
 				local vcoord = GetEntityCoords(veh)
 				local spike = GetClosestObjectOfType(vcoord.x,vcoord.y,vcoord.z,1.0,spikeHash,false,false,false)
 				if (spike > 0) then
@@ -523,7 +523,7 @@ function debugThread()
         while (CommandsData['debug']) do 
             local idle = 1000 
             if (CommandsData['debug']) then
-                idle = 4
+                idle = 1
                 local pos = GetEntityCoords(GetPlayerPed(-1))
 
                 local forPos = GetOffsetFromEntityInWorldCoords(GetPlayerPed(-1), 0, 1.0, 0.0)
