@@ -109,9 +109,11 @@ RegisterCommand('ids', function(source)
         if (Player(source).state.Wall) then
             Player(source).state.Wall = false
             TriggerClientEvent('notify', source, 'Wall', 'Você desativou o <b>wall</b>!')
+            zero.webhook('Ids', '```prolog\n[IDS]\n[ACTION]: (DISABLE WALL)\n[USER]: '..user_id..'\n[COORD]: '..GetEntityCoords(GetPlayerPed(source))..os.date('\n[DATE]: %d/%m/%y [HOUR]: %X')..'```')
         else
             Player(source).state.Wall = true
             TriggerClientEvent('notify', source, 'Wall', 'Você ativou o <b>wall</b>!')
+            zero.webhook('Ids', '```prolog\n[IDS]\n[ACTION]: (ACTIVE WALL)\n[USER]: '..user_id..'\n[COORD]: '..GetEntityCoords(GetPlayerPed(source))..os.date('\n[DATE]: %d/%m/%y [HOUR]: %X')..'```')
         end
     end
 end)
@@ -859,7 +861,7 @@ RegisterCommand('uncuff', function(source, args)
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
             if (zeroClient.isHandcuffed(nSource)) then
-                Player(nPlayer).state.Handcuff = false
+                Player(nSource).state.Handcuff = false
                 zeroClient.setHandcuffed(nSource, false)
                 TriggerClientEvent('zero_core:uncuff', nSource)
             else
@@ -1035,7 +1037,12 @@ RegisterCommand('vroupas',function(source)
         local content = {}
         for k, v in pairs(custom) do
             if (v ~= GetEntityModel(GetPlayerPed(source))) then
-                table.insert(content, '['..k..'] = { '..v.model..', '..v.var..', '..v.palette..' },') 
+                if (string.sub(k, 1, 1) == 'p') then
+                    k = "['"..k.."']"
+                else
+                    k = '['..k..']'
+                end
+                table.insert(content, k..' = { '..v.model..', '..v.var..', '..v.palette..' },') 
             end
         end
         content = table.concat(content, '\n ')
@@ -1499,12 +1506,8 @@ srv.Bvida = function()
             TriggerClientEvent('notify', source, 'Bvida', 'Aguarde <b>'..exports[GetCurrentResourceName()]:GetCooldown(cooldown)..' segundos</b> para utilizar este comando novamente.')
             return
         end
-        exports[GetCurrentResourceName()]:CreateCooldown(cooldown, 100)
+        exports[GetCurrentResourceName()]:CreateCooldown(cooldown, 30)
 
         exports.zero_appearance:setCustomization(source, user_id)
     end
 end
-
----------------------------------------
--- FREEZE
----------------------------------------

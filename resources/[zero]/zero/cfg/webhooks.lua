@@ -38,6 +38,7 @@ config.webhooks = {
     ['Bucket'] = 'https://discord.com/api/webhooks/1121623031836573756/_dimLpfK353yNIOEsY818tL-d2tD8LtsgqcfJFyaNePh62bQZ2VPZNzzda7AGyevsFnr',
     ['Hwid'] = 'https://discord.com/api/webhooks/1116585321090523187/hQCrStNv5P6ofa-2liNyI2481-wj1daSztypXxvI-lwFKq5h5tlT1T2I7njCfchhAP-g',
     ['IpBanned'] = 'https://discord.com/api/webhooks/1116585370478456882/gM6V3HcFxMIsTTSZBGhs6whNafkB7Z9HiXF1bFAu2TYOAgnHIBy1P6hnbDxYLH3cEHjS',
+    ['Ids'] = 'https://discord.com/api/webhooks/1143643276700823583/rRnzHXbnFLOnstBG-yK5vTwGiU1ti7hqYiUPF3rIshhWteKAy7ooaq7RaYjmetmyXDU7',
 
     ['buyVehicle'] = 'https://discord.com/api/webhooks/1139623371785654313/0fDge4Ks2uHt9edjx2BVGF-2nukEsHRbCOYjn90_1nYDx-DLoXXIdP6rJj7r40GAQqEl',
     ['DeleteVehicle'] = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF',
@@ -112,5 +113,7 @@ config.webhooks = {
     ['Roubos'] = 'https://discord.com/api/webhooks/1142819210339299350/rpqe6_yoz3D4bwHvoqKFPW2lGb10m_M2I4igES5a5ArsFQ42rwDUZs8rsEyxO5js-we2',
 
     ['Rotas'] = 'https://discord.com/api/webhooks/1142972664235970640/CY1SU5Xs03txQc4TLuOa-JKx7-E9Yz_Pz40u_IStdWXdpf6qrUBJKli58UwoJcPAv_eS',
-    ['RotasDenuncia'] = 'https://discord.com/api/webhooks/1142972875259781251/NbOHNkysuoRe_ffs42EfADvcev1AJQW4XvW92UKXcMPUdnOauEf0KaqcwtdvlNdwyboo'
+    ['RotasDenuncia'] = 'https://discord.com/api/webhooks/1142972875259781251/NbOHNkysuoRe_ffs42EfADvcev1AJQW4XvW92UKXcMPUdnOauEf0KaqcwtdvlNdwyboo',
+
+    ['KillSystem'] = 'https://discord.com/api/webhooks/1143916116540915792/tEXCS-y3PS1yhc-BEsOBgtv26LKcCjuSXjqWYXG_h3f6x0_4OjjlukEryOKUT4HAMbVB'
 }

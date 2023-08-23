@@ -27,6 +27,17 @@ RegisterCommand('prefem', function(source)
     end
 end)
 
+RegisterServerEvent('zero_prefem:killHostage')
+AddEventHandler('zero_prefem:killHostage', function()
+    local source = source
+    local nPlayer = zeroClient.getNearestPlayer(source, 2)
+    if (nPlayer) then
+        zeroClient.killGod(nPlayer)
+        zeroClient.setHealth(nPlayer, 0)
+        zeroClient.setArmour(nPlayer, 0)
+    end
+end)
+
 RegisterServerEvent('zero_prefem:sync')
 AddEventHandler('zero_prefem:sync', function(targetSrc, animationLib,animationLib2, animation, animation2, distans, distans2, height,length,spin,controlFlagSrc,controlFlagTarget,animFlagTarget,attachFlag)
     Player(source).state.BlockTasks = true

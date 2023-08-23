@@ -2,6 +2,7 @@ Citizen.CreateThread(function()
 	local Pid = PlayerId()
 	local ped = PlayerPedId()
 
+	SetWeaponDamageModifier(GetHashKey('WEAPON_UNARMED'), 0.2)
 	ReplaceHudColour(116, 9)
     AddTextEntry('FE_THDR_GTAO', 'ZERO')
 	StartAudioScene('CHARACTER_CHANGE_IN_SKY_SCENE')
@@ -186,7 +187,6 @@ end
 local Crouched = false
 local CrouchedForce = false
 local Aimed = false
-local LastCam = 0
 local Cooldown = false
 local CoolDownTime = 500 -- in ms
 local actionTime = 0.25 -- tempo  para abaixar e levantar
@@ -263,13 +263,6 @@ CrouchLoop = function()
         elseif not CanDo and Crouched then
             CrouchedForce = false
             NormalWalk()
-        end
-
-        local NowCam = GetFollowPedCamViewMode()
-        if CanDo and Crouched and NowCam == 4 then
-            SetFollowPedCamViewMode(LastCam)
-        elseif CanDo and Crouched and NowCam ~= 4 then
-            LastCam = NowCam
         end
         local sleep = 15
         if Crouched then sleep = 1 end

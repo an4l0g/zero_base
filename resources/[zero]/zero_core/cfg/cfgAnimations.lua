@@ -231,8 +231,6 @@ config.animations = {
     },
     ['shared'] = {
         ['otoscopio'] = {
-            category = 'medic',
-            title = '[Médico] - Otoscopia',
             dict = 'gndostopiomedic@animations',
             anim = 'gndostopiomedic_clip',
             prop = 'gnd_ostopio_medic_prop',
@@ -260,8 +258,6 @@ config.animations = {
             perm = 'hospital.permissao'
         },
         ['otoscopio2'] = {
-            category = 'medic',
-            title = '[Paciente] - Otoscopia',
             dict = 'gndostopiopacient@animations',
             anim = 'gndostopiopacient_clip',
             andar = false,
@@ -269,8 +265,6 @@ config.animations = {
             otherAnim = 'otoscopio',
         },
         ['otoscopio3'] = {
-            category = 'medic',
-            title = '[Médico] - Otoscopia criança',
             dict = 'gndkidotoscopiomedic@animations',
             anim = 'gndkidotoscopiomedic_clip',
             prop = 'gnd_ostopio_medic_prop',
@@ -298,8 +292,6 @@ config.animations = {
             perm = 'hospital.permissao'
         },
         ['otoscopio4'] = {
-            category = 'medic',
-            title = '[Paciente] - Otoscopia criança',
             dict = 'gndkidotoscopiopacient@animations',
             anim = 'gndkidotoscopiopacient_clip',
             andar = false,
@@ -307,8 +299,6 @@ config.animations = {
             otherAnim = 'otoscopio3',
         },
         ['cadeiraderodas'] = {
-            category = 'medic',
-            title = '[Médico] - Cadeira de rodas',
             dict = 'gndempurrandomacasospackhospital@animationss',
             anim = 'gndempurrandomacasospackhospital_clip',
             prop = 'gnd_cadeira_de_rodas_prop',
@@ -338,8 +328,6 @@ config.animations = {
             perm = 'hospital.permissao'  
         },
         ['cadeiraderodas2'] = {
-            category = 'medic',
-            title = '[Paciente] - Cadeira de rodas',
             dict = 'gndcadeirantepernaquebrada@animations',
             anim = 'gndcadeirantepernaquebrada_clip',
             andar = false,
@@ -357,8 +345,6 @@ config.animations = {
             otherAnim = 'cadeiraderodas',
         },
         ['maca'] = {
-            category = 'medic',
-            title = '[Médico] - Maca',
             dict = 'gndempurrandomacasospackhospital@animations',
             anim = 'gndempurrandomacasospackhospital_clip',
             prop = 'gnd_maca_socorros',
@@ -435,8 +421,6 @@ config.animations = {
             loop = true 
         },
         ['casal'] = {
-            category = 'couple',
-            title = '[Mulher] - Holdface',
             dict = 'genesismods@bmv_holdfacef',
             anim = 'holdfacef',
             andar = false,
@@ -457,8 +441,6 @@ config.animations = {
             otherAnim = 'casal2',
         },
         ['casal2'] = {
-            category = 'couple',
-            title = '[Homem] - Holdface',
             dict = 'genesismods@bmv_holdfacem',
             anim = 'holdfacem',
             andar = false,
@@ -469,8 +451,6 @@ config.animations = {
             otherAnim = 'casal',
         },
         ['casal3'] = {
-            category = 'couple',
-            title = '[Mulher] - Holdhands',
             dict = 'genesismods@bmv_holdhandsf',
             anim = 'holdhandsf',
             andar = false,
@@ -491,8 +471,6 @@ config.animations = {
             otherAnim = 'casal4',
         },
         ['casal4'] = {
-            category = 'couple',
-            title = '[Homem] - Holdhands',
             dict = 'genesismods@bmv_holdhandsm',
             anim = 'holdhandsm',
             andar = false,
@@ -503,8 +481,6 @@ config.animations = {
             otherAnim = 'casal3',
         },
         ['casal5'] = {
-            category = 'couple',
-            title = '[Mulher] - Hug',
             dict = 'genesismods@bmv_hugf',
             anim = 'hugf',
             andar = false,
@@ -525,8 +501,6 @@ config.animations = {
             otherAnim = 'casal6',
         },
         ['casal6'] = {
-            category = 'couple',
-            title = '[Homem] - Hug',
             dict = 'genesismods@bmv_hugm',
             anim = 'hugm',
             andar = false,
@@ -537,8 +511,6 @@ config.animations = {
             otherAnim = 'casal5',
         },
         ['casal7'] = {
-            category = 'couple',
-            title = '[Mulher] - Hug 2',
             dict = 'genesismods@bmv_hug2f',
             anim = 'hug2f',
             andar = false,
@@ -559,8 +531,6 @@ config.animations = {
             otherAnim = 'casal8',
         },
         ['casal8'] = {
-            category = 'couple',
-            title = '[Homem] - Hug 2',
             dict = 'genesismods@bmv_hug2m',
             anim = 'hug2m',
             andar = false,
@@ -571,8 +541,6 @@ config.animations = {
             otherAnim = 'casal7',
         },
         ['casal9'] = {
-            category = 'couple',
-            title = '[Mulher] - Kissing hand',
             dict = 'genesismods@bmv_kissinghandf',
             anim = 'kissinghandf',
             andar = false,
@@ -593,8 +561,6 @@ config.animations = {
             otherAnim = 'casal10',
         },
         ['casal10'] = {
-            category = 'couple',
-            title = '[Homem] - Kissing hand',
             dict = 'genesismods@bmv_kissinghandm',
             anim = 'kissinghandm',
             andar = false,
@@ -605,8 +571,6 @@ config.animations = {
             otherAnim = 'casal9',
         },
         ['casal11'] = {
-            category = 'couple',
-            title = '[Mulher] - Laying',
             dict = 'genesismods@bmv_layingf',
             anim = 'layingf',
             andar = false,
@@ -627,8 +591,6 @@ config.animations = {
             otherAnim = 'casal12',
         },
         ['casal12'] = {
-            category = 'couple',
-            title = '[Homem] - Laying',
             dict = 'genesismods@bmv_layingm',
             anim = 'layingm',
             andar = false,
@@ -639,8 +601,6 @@ config.animations = {
             otherAnim = 'casal11',
         },
         ['casal13'] = {
-            category = 'couple',
-            title = '[Mulher] - Stare',
             dict = 'genesismods@bmv_staref',
             anim = 'staref',
             andar = false,
@@ -661,8 +621,6 @@ config.animations = {
             otherAnim = 'casal14',
         },
         ['casal14'] = {
-            category = 'couple',
-            title = '[Homem] - Stare',
             dict = 'genesismods@bmv_starem',
             anim = 'starem',
             andar = false,
@@ -673,8 +631,6 @@ config.animations = {
             otherAnim = 'casal13',
         },
         ['casal15'] = {
-            category = 'couple',
-            title = '[Mulher] - Pedido',
             dict = 'genesismods@bmv_proposalf',
             anim = 'proposalf',
             andar = false,
@@ -695,8 +651,6 @@ config.animations = {
             otherAnim = 'casal16',
         },
         ['casal16'] = {
-            category = 'couple',
-            title = '[Homem] - Pedido',
             dict = 'genesismods@bmv_proposalm',
             anim = 'proposalm',
             prop = 'love_anel_genesis',
@@ -711,8 +665,6 @@ config.animations = {
             otherAnim = 'casal15',
         },
         ['sexo'] = {
-            category = 'sex',
-            title = '[Mulher] - 69',
             dict = 'genesismods@oralfixation_69f',
             anim = '69f',
             andar = false,
@@ -733,8 +685,6 @@ config.animations = {
             otherAnim = 'sexo2',
         },
         ['sexo2'] = {
-            category = 'sex',
-            title = '[Homem] - 69',
             dict = 'genesismods@oralfixation_69m',
             anim = '69m',
             andar = false,
@@ -745,8 +695,6 @@ config.animations = {
             otherAnim = 'sexo',
         },
         ['sexo3'] = {
-            category = 'sex',
-            title = '[Mulher] - Blowjob',
             dict = 'genesismods@oralfixation_blowjobf',
             anim = 'blowjobf',
             andar = false,
@@ -767,8 +715,6 @@ config.animations = {
             otherAnim = 'sexo4',
         },
         ['sexo4'] = {
-            category = 'sex',
-            title = '[Homem] - Blowjob',
             dict = 'genesismods@oralfixation_blowjobm',
             anim = 'blowjobm',
             andar = false,
@@ -776,8 +722,6 @@ config.animations = {
             otherAnim = 'sexo3',
         },
         ['sexo5'] = {
-            category = 'sex',
-            title = '[Mulher] - Deepthroat',
             dict = 'genesismods@oralfixation_deepthroatf',
             anim = 'deepthroatf',
             andar = false,
@@ -798,8 +742,6 @@ config.animations = {
             otherAnim = 'sexo6',
         },
         ['sexo6'] = {
-            category = 'sex',
-            title = '[Homem] - Deepthroat',
             dict = 'genesismods@oralfixation_deepthroatm',
             anim = 'deepthroatm',
             andar = false,
@@ -807,8 +749,6 @@ config.animations = {
             otherAnim = 'sexo5',
         },
         ['sexo7'] = {
-            category = 'sex',
-            title = '[Mulher] - Licking',
             dict = 'genesismods@oralfixation_lickingf',
             anim = 'lickingf',
             andar = false,
@@ -829,8 +769,6 @@ config.animations = {
             otherAnim = 'sexo8',
         },
         ['sexo8'] = {
-            category = 'sex',
-            title = '[Homem] - Licking',
             dict = 'genesismods@oralfixation_lickingm',
             anim = 'lickingm',
             andar = false,
@@ -839,44 +777,58 @@ config.animations = {
         },
     },
     ['animations'] = {
-        ["dormir"] = {
-            dict = "anim@heists@ornate_bank@hostages@hit", 
-            anim = "hit_react_die_loop_ped_a", 
+        ['malhar'] = {
+            dict = 'amb@world_human_muscle_free_weights@male@barbell@base', 
+            anim = 'base', 
+            prop = 'prop_curl_bar_01', 
+            flag = 49, 
+            hand = 28422 
+        },
+    
+        ['malhar2'] = {
+            dict = 'amb@prop_human_muscle_chin_ups@male@base', 
+            anim = 'base', 
             andar = false, 
             loop = true 
         },
-        ["dormir2"] = {
-            dict = "anim@heists@ornate_bank@hostages@hit", 
-            anim = "hit_react_die_loop_ped_e", 
+
+        ['dormir'] = {
+            dict = 'anim@heists@ornate_bank@hostages@hit', 
+            anim = 'hit_react_die_loop_ped_a', 
             andar = false, 
             loop = true 
         },
-        ["dormir3"] = {
-            dict = "anim@heists@ornate_bank@hostages@hit", 
-            anim = "hit_react_die_loop_ped_h", 
+        ['dormir2'] = {
+            dict = 'anim@heists@ornate_bank@hostages@hit', 
+            anim = 'hit_react_die_loop_ped_e', 
             andar = false, 
             loop = true 
         },
-        ["dormir4"] = {
-            dict = "mp_sleep", 
-            anim = "sleep_loop", 
+        ['dormir3'] = {
+            dict = 'anim@heists@ornate_bank@hostages@hit', 
+            anim = 'hit_react_die_loop_ped_h', 
             andar = false, 
             loop = true 
         },
-        ["dormir5"] = {
-            dict = "missarmenian2", 
-            anim = "drunk_loop", 
+        ['dormir4'] = {
+            dict = 'mp_sleep', 
+            anim = 'sleep_loop', 
+            andar = false, 
+            loop = true 
+        },
+        ['dormir5'] = {
+            dict = 'missarmenian2', 
+            anim = 'drunk_loop', 
             andar = false, 
             loop = true 
         },
 
         ['consertar'] = {
-            category = 'animations',
             title = 'Consertar',
             anim = 'WORLD_HUMAN_WELDING'
         },
+
         ['continencia'] = {
-            category = 'animations',
             title = 'Continência vibrante',
             dict = 'genesismodssalute',
             anim = 'salute',
@@ -884,7 +836,6 @@ config.animations = {
             loop = false,
         },
         ['continencia2'] = {
-            category = 'animations',
             title = 'Continência',
             dict = 'mp_player_int_uppersalute',
             anim = 'mp_player_int_salute',
@@ -892,7 +843,6 @@ config.animations = {
             loop = true,
         },
         ['raiox'] = {
-            category = 'medic',
             title = 'Raio X',
             dict = 'gndraioxavaliando@animations',
             anim = 'gndraioxavaliando_clip',
@@ -909,7 +859,6 @@ config.animations = {
             loop = true,
         },
         ['testededo'] = {
-            category = 'medic',
             title = 'Teste de dedo',
             prop = 'gnd_test_dedo_prop',
             flag = 50,
@@ -919,7 +868,6 @@ config.animations = {
             loop = true,
         },
         ['soro'] = {
-            category = 'medic',
             title = 'Soro',
             dict = 'gndpacientecarregandosoro@animations',
             anim = 'gndpacientecarregandosoro_clip',
@@ -937,7 +885,6 @@ config.animations = {
             loop = true,
         },
         ['inalacao'] = {
-            category = 'medic',
             title = 'Inalação',
             dict = 'gndinalacaopacientepackhospital@animations',
             anim = 'gndinalacaopacientepackhospital_clip',
@@ -954,7 +901,6 @@ config.animations = {
             loop = true,
         },
         ['medico'] = {
-            category = 'medic',
             title = 'Maleta de utensílios',
             prop = 'gnd_bag_paramedic',
             flag = 50,
@@ -969,7 +915,6 @@ config.animations = {
             perm = 'hospital.permissao'
         },
         ['medico2'] = {
-            category = 'medic',
             title = 'Maleta do desfribilador',
             prop = 'gnd_desfribilador_maleta',
             flag = 50,
@@ -981,12 +926,6 @@ config.animations = {
             end,
             andar = true,
             loop = true,
-        },
-        ['mexer'] = {
-            dict = 'amb@prop_human_parking_meter@female@idle_a',
-            anim = 'idle_a_female',
-            andar = true,
-            loop = true
         },
 
         ['mexer'] = {

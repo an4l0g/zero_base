@@ -1,11 +1,3 @@
-hotkeys = {
-    [157] = 0,
-    [158] = 1,
-    [160] = 2,
-    [164] = 3,
-    [165] = 4
-}
-
 RegisterNuiCallback('sendItem', function(data)
     local nearestPlayer = zero.getNearestPlayer(2)
 

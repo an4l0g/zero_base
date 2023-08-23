@@ -71,29 +71,20 @@ renderChests = function()
     end
 end
 
+hotkeys = {
+    [157] = 0,
+    [158] = 1,
+    [160] = 2,
+    [164] = 3,
+    [165] = 4
+}
+
 hotbarListener = function()
     if GetEntityHealth(PlayerPedId()) <= 100 then
-            verifyNearest = false
-            disableActions = false
-            exports.zero_inventory:closeInventory()
-        end
-
-        for k, v in pairs(hotkeys) do
-            DisableControlAction(0, k, true)
-            if IsDisabledControlPressed(0, k) then
-                local hotbar = sInventory.getHotbar()
-                local currentIndex = nil
-
-                currentIndex = hotbar[tostring(v)]
-
-                if currentIndex ~= nil and not (disableActions) then
-                    if (LocalPlayer.state.Handcuff) then return; end;
-                    if (LocalPlayer.state.BlockTasks) then return; end;
-                    sInventory.useItem(currentIndex.index, amount)
-                end
-            end
-        end
-        EnableControlAction(0, 37, true)
+        verifyNearest = false
+        disableActions = false
+        exports.zero_inventory:closeInventory()
+    end
 end
 
 trunkDistanceControl = function()
@@ -110,7 +101,6 @@ Citizen.CreateThread(function()
     while true do
         renderDroppedItems()
         renderChests()
-        hotbarListener()
         trunkDistanceControl()
         if nextToAnyChest or #nearbyItemsGroups > 0 or nearbyVehicle ~= nil then
             _sleep = 1
@@ -120,3 +110,39 @@ Citizen.CreateThread(function()
         Wait(_sleep)
     end
 end)
+
+Citizen.CreateThread(function()
+    while (true) do
+        DisableControlAction(1, 157, false) -- bind 1
+        DisableControlAction(1, 158, false) -- bind 2
+        DisableControlAction(1, 160, false) -- bind 3
+        DisableControlAction(1, 164, false) -- bind 4
+        DisableControlAction(1, 165, false) -- bind 5
+        Citizen.Wait(1)
+    end
+end)
+
+local useMiddleware = function(bind)
+    local hotbar = sInventory.getHotbar()
+    local currentIndex = nil
+
+    currentIndex = hotbar[tostring(bind)]
+
+    if currentIndex ~= nil and not (disableActions) then
+        if (LocalPlayer.state.Handcuff) then return; end;
+        if (LocalPlayer.state.BlockTasks) then return; end;
+        sInventory.useItem(currentIndex.index, amount)
+    end
+end
+
+RegisterCommand('+invbind01',function(source) useMiddleware(0); end)
+RegisterCommand('+invbind02',function(source) useMiddleware(1); end)
+RegisterCommand('+invbind03',function(source) useMiddleware(2); end)
+RegisterCommand('+invbind04',function(source) useMiddleware(3); end)
+RegisterCommand('+invbind05',function(source) useMiddleware(4); end)
+
+RegisterKeyMapping('+invbind01', 'Bind Inventario 1', 'keyboard', '1')
+RegisterKeyMapping('+invbind02', 'Bind Inventario 2', 'keyboard', '2')
+RegisterKeyMapping('+invbind03', 'Bind Inventario 3', 'keyboard', '3')
+RegisterKeyMapping('+invbind04', 'Bind Inventario 4', 'keyboard', '4')
+RegisterKeyMapping('+invbind05', 'Bind Inventario 5', 'keyboard', '5')

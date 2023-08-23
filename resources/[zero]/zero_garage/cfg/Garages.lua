@@ -581,6 +581,10 @@ config.vehicles = {
     ['bison3'] = { name = 'Bison3', maker = 'Bravado', price = 0, trunk = 0, glove = 15, type = 'work', class = 'vans', banned = true },
     ['utillitruck'] = { name = 'Utillitruck', maker = 'Vapid', price = 180000, trunk = 120, glove = 15, type = 'work', class = 'utility', banned = true },
     ['scorcher'] = { name = 'Scorcher', maker = 'Bmx', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'cycles', banned = true },
+    ['404_r1200'] = { name = 'Bmw R1200', maker = 'BMW', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['jaguarhospital'] = { name = 'Jaguar', maker = 'Jaguar', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['wrspeedoems'] = { name = 'Ambulância', maker = 'Vapid', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['wrvolito'] = { name = 'Volito', maker = 'Hospital', price = 1000, trunk = 200, glove = 0, type = 'work', class = 'emergency', banned = true },
 }
 
 config.garages = {
@@ -784,24 +788,24 @@ config.garages = {
         }
     },
     {
-        coords = vector3(-1037.565, -2730.673, 20.16406), 
+        coords = vector3(-1644.158, -989.4989, 13.00293), 
         rule = 'carOnly',
         points = {
-            vector4(-1036.655, -2729.037, 20.04614, 334.4882),
-            vector4(-1039.741, -2727.31, 20.04614, 56.69291),
-            vector4(-1033.609, -2731.319, 20.0293, 240.9449),
-            vector4(-1037.683, -2726.637, 20.13037, 243.7795)
+            vector4(-1641.996, -990.6857, 13.00293, 232.4409),
+            vector4(-1640.44, -989.011, 13.00293, 232.4409),
+            vector4(-1638.857, -987.3099, 13.00293, 232.4409),
+            vector4(-1637.591, -985.9648, 13.00293, 235.2756)
         },
         vehicles = { 'bmx' }
     },
     {
-        coords = vector3(1899.785, 2605.253, 45.96118), 
+        coords = vector3(-1653.758, -1001.407, 13.00293), 
         rule = 'carOnly',
         points = {
-            vector4(1900.51, 2600.796, 45.72522, 269.2914),
-            vector4(1901.209, 2609.776, 45.72522, 266.4567),
-            vector4(1901.802, 2598.29, 45.70837, 274.9606),
-            vector4(1896.422, 2600.492, 45.70837, 269.2914)
+            vector4(-1652.057, -1002.778, 13.00293, 232.4409),
+            vector4(-1653.574, -1004.624, 13.00293, 232.4409),
+            vector4(-1655.051, -1006.602, 13.00293, 232.4409),
+            vector4(-1656.633, -1008.554, 13.00293, 229.6063)
         },
         vehicles = { 'bmx' }
     },
@@ -813,6 +817,83 @@ config.garages = {
         points = {
             vector4(370.7868, -9.639557, 83.06445, 36.85),
             vector4(366.5538, -11.76263, 83.06445, 36.85)
+        },
+    },
+    -- ECLIPSE
+    {
+        coords = vector3(-788.5978, 305.367, 85.69299),
+        rule = 'carOnly',
+        home = 'Eclipse',
+        points = {
+            vector4(-797.9604, 305.9209, 85.69299, 175.748),
+            vector4(-794.0571, 305.6967, 85.69299, 178.5827)
+        },
+    },
+    -- JETTY
+    {
+        coords = vector3(-2006.651, -322.7736, 48.10107),
+        rule = 'carOnly',
+        home = 'Jetty',
+        points = {
+            vector4(-2009.921, -326.9406, 48.10107, 240.9449),
+            vector4(-2011.556, -329.3143, 48.10107, 238.1102)
+        },
+    },
+    -- RICHMAN
+    {
+        coords = vector3(-1301.604, 275.7099, 64.20947),
+        rule = 'carOnly',
+        home = 'Richman',
+        points = {
+            vector4(-1305.442, 275.8549, 64.02417, 147.4016),
+            vector4(-1309.187, 278.1231, 63.99048, 147.4016)
+        },
+    },
+    -- TINSEL
+    {
+        coords = vector3(-619.8989, 56.41319, 43.73694),
+        rule = 'carOnly',
+        home = 'Tinsel',
+        points = {
+            vector4(-621.6263, 53.78902, 43.72009, 82.20473),
+            vector4(-621.3494, 59.45934, 43.72009, 93.5433)
+        },
+    },
+    -- ELGIN
+    {
+        coords = vector3(-60.0923, 162.778, 81.48059),
+        rule = 'carOnly',
+        home = 'Elgin',
+        points = {
+            vector4(-59.09011, 159.5868, 81.34583, 119.0551),
+            vector4(-62.37362, 165.2835, 81.34583, 127.5591)
+        },
+    },
+    -- GENTRY
+    {
+        coords = vector3(-50.66373, 347.5648, 112.3663),
+        rule = 'carOnly',
+        home = 'Gentry',
+        points = {
+            vector4(-55.63516, 343.5824, 112.1135, 153.0709),
+        },
+    },
+    -- GARDEN
+    {
+        coords = vector3(358.6945, -81.62637, 67.74805),
+        rule = 'carOnly',
+        home = 'Garden',
+        points = {
+            vector4(365.3539, -80.2945, 67.34363, 249.4488),
+        },
+    },
+    -- Banner
+    {
+        coords = vector3(-277.0945, -1052.967, 27.20728),
+        rule = 'carOnly',
+        home = 'Banner',
+        points = {
+            vector4(-271.6088, -1059.191, 26.31433, 158.7402),
         },
     }
 }

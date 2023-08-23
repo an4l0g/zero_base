@@ -258,7 +258,8 @@ killHostage = function()
 	local closestPlayer = GetClosestPlayer(1.5)
 	if (closestPlayer ~= nil) then
 		TriggerServerEvent('zero_prefem:sync', closestPlayer, lib,lib2, anim1, anim2, distans, distans2, height,length,spin,controlFlagMe,controlFlagTarget,animFlagTarget,attachFlag)
-	end	
+        TriggerServerEvent('zero_prefem:killHostage')
+    end	
 end
 
 TextHostage = function(coords, text)

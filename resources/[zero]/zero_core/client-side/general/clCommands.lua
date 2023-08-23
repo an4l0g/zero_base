@@ -763,7 +763,10 @@ RegisterCommand('bvida', function()
 	end
 
 	if not IsEntityPlayingAnim(ped, 'anim@heists@ornate_bank@grab_cash_heels','grab', 3) and not IsEntityPlayingAnim(ped, 'mini@repair','fixing_a_player', 3) and not IsEntityPlayingAnim(ped, 'amb@medic@standing@tendtodead@idle_a','idle_a', 3) and not IsEntityPlayingAnim(ped, 'oddjobs@shop_robbery@rob_till','loop', 3) and not IsEntityPlayingAnim(ped, 'amb@world_human_sunbathe@female@back@idle_a','idle_a', 3) then
-		vSERVER.Bvida()
-		zero.DeletarObjeto()
+		if (vSERVER.Bvida()) then
+			zero.DeletarObjeto()
+			TriggerEvent('zero:barberUpdate')
+			TriggerEvent('zero:tattooUpdate')
+		end
 	end
 end)

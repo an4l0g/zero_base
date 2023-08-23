@@ -24,7 +24,7 @@ end)
 
 -- Limpa hotbar e bag do player
 RegisterCommand('cinv', function(source, args)
-    local user_id = (args[1] or zero.getUserId(source))
+    local user_id = (args[1] and parseInt(args[1]) or zero.getUserId(source))
     if (zero.hasPermission(user_id, '+Staff.COO')) then
         if (exports.zero_hud:request(source, 'Deseja realmente limpar o inventário do id '..user_id..'?')) then
             sInventory.clearInventory(user_id)

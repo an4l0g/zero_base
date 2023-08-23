@@ -170,7 +170,7 @@ AddEventHandler('gameEventTriggered', function (name, args)
 	if (name == 'CEventNetworkEntityDamage')  then
 		local ped = PlayerPedId()
 		if (args[1] == ped and args[6] == 1) then 
-            if (GetEntityHealth(ped) <= 100) then mainSurvival(); end;
+            if (GetEntityHealth(ped) <= 101) then mainSurvival(); end;
 		end
 	end
 end) 

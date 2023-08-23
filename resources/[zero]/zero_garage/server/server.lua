@@ -705,32 +705,24 @@ RegisterNetEvent('zero_interactions:carVehs', function()
                                         local vehicles = zero.query('zero_garage/getVehicleOwn', { user_id = nUser })
                                         for _, v in ipairs(vehicles) do
                                             local vtype = vehicleType(v.vehicle)
-                                            if (vtype ~= 'exclusive' and vtype ~= 'vip') then vqtd = vqtd + 1; end;
+                                            if (vtype == 'vip' or vtype == 'work') then return; end;
+                                            if (zero.tryFullPayment(nUser, price)) then
+                                                addVehicle(nUser, model, 0)
+                                                delVehicle(user_id, model)
 
-                                            local maxGarages = zero.query('zero_garage/getGarages', { id = nUser })[1]
-                                            maxGarages = maxGarages.garages
-                                            if (vqtd < maxGarages) then
-                                                if (zero.tryFullPayment(nUser, price)) then
-                                                    addVehicle(nUser, model, 0)
-                                                    delVehicle(user_id, model)
-
-                                                    TriggerClientEvent('notify', source, 'Garagem', 'Você vendeu <b>'..vname..'</b> e recebeu <b>R$'..zero.format(price)..'</b>.')
-                                                    TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu as chaves do veículo <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> e pagou <b>R$'..zero.format(price)..'</b>.')
-                                                    
-                                                    zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
-                                                    zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
-                                                    
-                                                    zero.giveBankMoney(user_id, nUser)
-                                                    zero.webhook('Vehs', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-                                                    local vehEntity = findVehicle(user_id, model)
-                                                    if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
-                                                else
-                                                    TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>dinheiro</b> o suficiente.')
-                                                    TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não possui <b>dinheiro</b> o suficiente.')
-                                                end
+                                                TriggerClientEvent('notify', source, 'Garagem', 'Você vendeu <b>'..vname..'</b> e recebeu <b>R$'..zero.format(price)..'</b>.')
+                                                TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu as chaves do veículo <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> e pagou <b>R$'..zero.format(price)..'</b>.')
+                                                
+                                                zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                                                zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                                                
+                                                zero.giveBankMoney(user_id, nUser)
+                                                zero.webhook('Vehs', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                                local vehEntity = findVehicle(user_id, model)
+                                                if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
                                             else
-                                                TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>vagas</b> em sua garagem.')
-                                                TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não <b>vagas</b> em sua garagem.')
+                                                TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>dinheiro</b> o suficiente.')
+                                                TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não possui <b>dinheiro</b> o suficiente.')
                                             end
                                         end
                                     end

@@ -156,6 +156,7 @@ Citizen.CreateThread(function()
                 if (Weapons[GetSelectedPedWeapon(ped)]) then
                     zero.CarregarAnim('reaction@intimidation@1h')
                     if (not Holster and LastWeapon ~= GetHashKey(Weapons[GetSelectedPedWeapon(ped)]) and GetSelectedPedWeapon(ped) == GetHashKey(Weapons[GetSelectedPedWeapon(ped)])) then
+                        if (not LocalPlayer.state.Armed) then LocalPlayer.state.Armed = true; end;
                         LocalPlayer.state.BlockTasks = true
                         LastWeapon = GetHashKey(Weapons[GetSelectedPedWeapon(ped)])
                         TriggerEvent('disableActionsWeapon', true)
@@ -179,6 +180,7 @@ Citizen.CreateThread(function()
                     end
                 else
                     if (Holster and GetSelectedPedWeapon(ped) == GetHashKey('WEAPON_UNARMED')) then
+                        if (LocalPlayer.state.Armed) then LocalPlayer.state.Armed = false; end;
                         LocalPlayer.state.BlockTasks = true
                         TriggerEvent('disableActionsWeapon', true)
                         SetCurrentPedWeapon(ped, LastWeapon, true)

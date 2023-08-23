@@ -14,8 +14,8 @@ local markerThread = function()
             local ped = PlayerPedId()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
-                if (dist <= 2) then
-                    local coord = configHomes[index].coord
+                local coord = configHomes[index].coord
+                if (configHomes[index].type ~= 'mlo') then
                     DrawMarker3D(coord, '~b~['..capitalizeString(index)..']~w~\n~b~[E]~w~ - Entrar\n~b~[G]~w~ - Invadir')
                     if (dist <= 0.5  and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         if (IsControlJustPressed(0, 38)) then vSERVER.tryEnterHome(index)
