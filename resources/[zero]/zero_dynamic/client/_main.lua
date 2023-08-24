@@ -1,8 +1,8 @@
 sDynamic = Tunnel.getInterface('zero_dynamic')
 cDynamic = {}
-
 Tunnel.bindInterface('zero_dynamic', cDynamic)
 zero = Proxy.getInterface('zero')
+
 
 RegisterKeyMapping("openDynamic", "Abrir ações possíveis", 'KEYBOARD', "F9")
 RegisterCommand("openDynamic", function()
@@ -18,7 +18,13 @@ cDynamic.openOrUpdateNui = function()
         action = 'open',
         favorites = sDynamic.getFavorites(),
         clothes = exports.zero_system:getClothesPresets(),
-        animations = exports.zero_core:getAllAnimations()
+        animations = exports.zero_core:getAllAnimations(),
+        permissions = {
+            hospital = sDynamic.checkPermission('hospital.permissao'),
+            policia = sDynamic.checkPermission('policia.permissao'),
+            staff = sDynamic.checkPermission('staff.permissao'),
+            mecanica = sDynamic.checkPermission('zeromecanica.permissao'),
+        }
     })
 end
 

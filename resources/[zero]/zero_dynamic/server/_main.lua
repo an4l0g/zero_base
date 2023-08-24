@@ -43,3 +43,9 @@ sDynamic.deleteFavorite = function(action)
     zero.execute('zero_dynamic:deleteFavorite', { action = action, user_id = user_id })
     cDynamic.openOrUpdateNui(_source)
 end
+
+sDynamic.checkPermission = function(permission)
+    local _source = source
+    local user_id = zero.getUserId(_source)
+    return zero.hasPermission(user_id, permission)
+end

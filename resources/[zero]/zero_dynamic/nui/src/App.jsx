@@ -11,13 +11,14 @@ function App() {
 
   const nuiMessage = useCallback(
     (event) => {
-      const { action, favorites, clothes, animations } = event.data;
-      console.log("animacoes", animations);
+      const { action, favorites, clothes, animations, permissions } =
+        event.data;
       if (action === "open") {
         setDynamic({
           favorites,
           clothes,
           animations,
+          permissions,
         });
       }
     },

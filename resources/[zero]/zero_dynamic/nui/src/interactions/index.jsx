@@ -20,18 +20,27 @@ export const AllInteractions = () => {
 
   const interactionsList = useMemo(() => {
     return [
-      ...Main,
+      ...Main.filter((item) => {
+        if (item.permission) {
+          if (dynamic.permissions[item.permission]) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+        return true;
+      }),
       ...Interactions,
       ...Clothes,
       ...Couple,
       ...Car,
-      ...Police,
-      ...Mechanic,
       ...Homes,
-      ...Medic,
-      ...Staff,
+      ...(dynamic.permissions.policia ? Police : []),
+      ...(dynamic.permissions.mecanica ? Mechanic : []),
+      ...(dynamic.permissions.hospital ? Medic : []),
+      ...(dynamic.permissions.staff ? Staff : []),
     ];
-  }, []);
+  }, [dynamic]);
 
   const isFavorite = useCallback(
     (action, value) => {

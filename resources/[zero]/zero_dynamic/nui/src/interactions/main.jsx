@@ -49,6 +49,7 @@ const interactions = [
     type: "category",
     category: "main",
     value: "staff",
+    permission: "staff",
   },
   {
     title: "Casa",
@@ -70,6 +71,7 @@ const interactions = [
     type: "category",
     category: "main",
     value: "police",
+    permission: "policia",
   },
   {
     title: "Medicina",
@@ -77,6 +79,7 @@ const interactions = [
     type: "category",
     category: "main",
     value: "medic",
+    permission: "hospital",
   },
   {
     title: "Mecânico",
@@ -84,6 +87,7 @@ const interactions = [
     type: "category",
     category: "main",
     value: "mechanic",
+    permission: "mecanica",
   },
 ];
 
