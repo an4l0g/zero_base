@@ -48,7 +48,7 @@ else
     stopWork = function(text)
         TriggerEvent('notify', 'Emprego', text) 
         Citizen.SetTimeout(500, function()
-            if (DoesBlipExist(blip)) then 
+            if (DoesBlipExist(blips)) then 
                 RemoveBlip(blips) 
             end
             selection = 0

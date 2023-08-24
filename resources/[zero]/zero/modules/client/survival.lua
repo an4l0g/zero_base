@@ -113,6 +113,7 @@ local mainSurvival = function()
 	_isDied = true
     cooldownSurvival(30)
     TriggerServerEvent('zero_hospital:CitizenDeath')
+    if (LocalPlayer.state.GPS) then LocalPlayer.state.GPS = false; DisplayRadar(false); TriggerServerEvent('zero_system:gps_server') end;
 	Citizen.CreateThread(function()
         SetEntityHealth(PlayerPedId(), 0)
 		zeroServer._updateHealth(0)

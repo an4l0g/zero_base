@@ -19,7 +19,9 @@ local markerThread = function()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
                 local _config = Doors[index]
-                if (dist <= 1.8) then
+
+                local open = _config.open
+                if (dist <= (open or 1.8)) then
                     if (_config.text) then
                         if (_config.lock) then
                             TextFloating('~b~E~w~ - Destrancar', _config.coord)
@@ -27,7 +29,8 @@ local markerThread = function()
                             TextFloating('~b~E~w~ - Trancar', _config.coord)
                         end
                     end
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and vSERVER.checkPermissions(_config.perm, _config.home) and GetEntityHealth(ped) > 100) then
+                    if (dist <= (open or 1.2) and IsControlJustPressed(0, 38) and vSERVER.checkPermissions(_config.perm, _config.home) and GetEntityHealth(ped) > 100) then
+                        if (open) then if (not IsPedInAnyVehicle(ped)) then zero._playAnim(true, {{ 'anim@mp_player_intmenu@key_fob@', 'fob_click' }}, false); end; end;
                         TriggerServerEvent('zero_doors:open', index, _config.autoLock)
                     end
                 end
@@ -74,8 +77,13 @@ Citizen.CreateThread(function()
 end)
 
 HandleDoorState = function(door, lock, heading)
-    if (heading > -0.02 and heading < 0.02) then
+    if (not lock) then
         FreezeEntityPosition(door, lock)
         NetworkRequestControlOfEntity(door)
+    else
+        if (heading > -0.02 and heading < 0.02) then
+            FreezeEntityPosition(door, lock)
+            NetworkRequestControlOfEntity(door)
+        end
     end
 end

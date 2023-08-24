@@ -66,14 +66,20 @@ config.items = {
         end 
     },
 ----------------------------------------------------------------------------
--- works
+-- WORKS
 ----------------------------------------------------------------------------
-['caixaroupas'] = { name = 'Caixa de roupas', type = 'common', weight = 1 },
-['encomendapostop'] = { name = 'Encomenda PO', type = 'common', weight = 1 },
-['encomendagopostal'] = { name = 'Encomenda GP', type = 'common', weight = 1 },
-['caixabebidas'] = { name = 'Caixa de bebidas', type = 'common', weight = 1 },
-['botijao-cheio'] = { name = 'Botijão Cheio', type = 'common', weight = 1 },
-['ferramentas'] = { name = 'Botijão Cheio', type = 'common', weight = 1 },
+    ['caixaroupas'] = { name = 'Caixa de roupas', type = 'common', weight = 1 },
+    ['encomendapostop'] = { name = 'Encomenda PO', type = 'common', weight = 1 },
+    ['encomendagopostal'] = { name = 'Encomenda GP', type = 'common', weight = 1 },
+    ['caixabebidas'] = { name = 'Caixa de bebidas', type = 'common', weight = 1 },
+    ['botijao-vazio'] = { name = 'Botijão Vázio', type = 'common', weight = 1 },
+    ['botijao-cheio'] = { name = 'Botijão Cheio', type = 'common', weight = 1 },
+    ['ferramentas'] = { name = 'Ferramentas', type = 'common', weight = 1 },
+    ['tecidos'] = { name = 'Tecidos', type = 'common', weight = 0.5 },
+    ['roupa'] = { name = 'Roupa', type = 'common', weight = 0.5 },
+    ['tecidos'] = { name = 'Tecidos', type = 'common', weight = 0.5 },
+    ['tecidos'] = { name = 'Tecidos', type = 'common', weight = 0.5 },
+    ['tecidos'] = { name = 'Tecidos', type = 'common', weight = 0.5 },
 ----------------------------------------------------------------------------
 -- COMIDAS
 ----------------------------------------------------------------------------
@@ -453,6 +459,18 @@ config.items = {
 -- LEGAL
 ----------------------------------------------------------------------------
     ['radio'] = { name = 'Rádio', type = 'common', weight = 0.5 },
+    ['gps'] = { name = 'GPS', type = 'common', weight = 2.5, usable = true, 
+        interaction = function(source, user_id)
+            cInventory.closeInventory(source)
+
+            zero.tryGetInventoryItem(user_id, 'gps', 1)
+
+            Player(source).state.GPS = true
+
+            TriggerClientEvent('zero_system:gps', source)
+            TriggerClientEvent('notify', source, 'Inventário', 'O <b>GPS</b> foi utilizado com sucesso.')
+        end
+    },
     ['mochila-pequena'] = { 
         name = 'Mochila Pequena', 
         type = 'common', 
@@ -477,7 +495,34 @@ config.items = {
         weight = 2, 
         usable = true, 
         interaction = function(source, user_id)
-            -- Kit reparo
+            if (GetEntityHealth(GetPlayerPed(source)) <= 100) then return; end;
+            if (zeroClient.isInVehicle(source)) then return; end;
+
+            cInventory.closeInventory(source)
+
+            zero.tryGetInventoryItem(user_id, 'kit-reparo', 1)
+
+            local vehicle, vehnet = zeroClient.vehList(source,3.5)
+            if (vehnet) then
+                local time = 30000
+                if (zero.hasPermission(user_id, 'zeromecanica.permissao')) then
+                    time = 15000
+                end
+
+                print(time)
+
+                Player(source).state.BlockTasks = true
+                FreezeEntityPosition(GetPlayerPed(source), true)
+
+                TriggerClientEvent('zero_animations:setAnim', source, 'mecanico2')                    
+                TriggerClientEvent('progressBar', source, 'Reparando...', time)
+                Citizen.SetTimeout(time, function()
+                    Player(source).state.BlockTasks = false
+                    FreezeEntityPosition(GetPlayerPed(source), false)
+                    ClearPedTasks(GetPlayerPed(source))
+                    TriggerClientEvent('syncreparar', -1, vehnet)
+                end)
+            end
         end
     },
     ['par-alianca'] = { name = 'Par de Alianças', type = 'common', weight = 0.0 },
@@ -602,7 +647,7 @@ config.items = {
                                     quality = 0.80
                                 },
                                 {
-                                    username = identity.name,
+                                    username = identity.firstname,
                                     avatar_url = 'https://cdn.discordapp.com/attachments/1098816084917891092/1136128680440102962/logo.png',
                                     content = '```prolog\n[ZERO INVENTORY]\n[ACTION]: (LOCKPICK)\n[USER]: '..user_id..'\n[RESULT]: '..text..'\n[STREET]: '..street..'\n[CAR OWNER]: '..vehState.user_id..'\n[CAR]: '..vehState.model..'\n[PLATE]: '..vehState.plate..'\n[COORD]: '..tostring(GetEntityCoords(Ped))..'\n'..os.date('[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'```',
                                 }
@@ -617,7 +662,8 @@ config.items = {
             end
         end
     },
-    ['capuz'] = { name = 'Capuz', type = 'common', weight = 0.5, usable = true },
+    ['capuz'] = { name = 'Capuz', type = 'common', weight = 0.5 },
+    ['modificador-armas'] = { name = 'Modificador de Armas', type = 'common', weight = 1.5 },
     ----------------------------------------------------------------------------
     -- Armas
     ----------------------------------------------------------------------------

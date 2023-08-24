@@ -1,5 +1,4 @@
 Doors = {
-
     -- [ LUX ] --
     { text = true, hash = -1675576017, coord = vector3(-310.1275, 221.3275, 87.91724), door_1 = vector3(-309.4286, 221.4989, 87.91724), door_2 = vector3(-310.7077, 221.367, 87.91724), lock = true, distance = 5.0, autoLock = 20000, other = 2117632351, perm = { 'staff.permissao'} },
     { text = true, hash = -947252223, coord = vector3(-314.9802, 210.6461, 81.76709), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
@@ -130,12 +129,12 @@ Doors = {
     { text = true, hash = -826011544, coord = vector3(-1741.661, 365.2879, 88.72595), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -826011544, coord = vector3(-1733.064, 379.0022, 89.72009), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 1664299099, coord = vector3(-1723.477, 359.5121, 89.43372), door_1 = vector3(-1723.912, 358.6813, 89.41687), door_2 = vector3(-1722.62, 359.8681, 89.41687), lock = true, distance = 5.0, autoLock = 20000, other = 1664299099, perm = { 'staff.permissao'} },
-    { text = true, hash = 634017584, coord = vector3(-1745.552, 368.1231, 89.72009), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 634017584, coord = vector3(-1745.552, 368.1231, 89.72009), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
 
     -- [ MOUNT HAAN ] --
     { text = true, hash = 1901183774, coord = vector3(177.6791, 1700.677, 227.3832), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 2052512905, coord = vector3(169.4505, 1694.532, 227.3832), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 702880916, coord = vector3(179.1429, 1677.982, 230.1296), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 2052512905, coord = vector3(169.4505, 1694.532, 227.3832), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 702880916, coord = vector3(179.1429, 1677.982, 230.1296), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
 
     -- [ CAESARS ] --
     { text = false, hash = 362837712, coord = vector3(-888.6329, 42.85715, 49.14575), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
@@ -195,13 +194,13 @@ Doors = {
     { text = true, hash = 736699661, coord = vector3(2557.596, 6191.723, 165.3759), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     
     -- [ BEACH ] --
-    { text = true, hash = 2052512905, coord = vector3(-1980.158, -496.0352, 12.17725), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 2052512905, coord = vector3(-1980.158, -496.0352, 12.17725), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 1980513646, coord = vector3(-1987.108, -502.9187, 12.17725), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -550386901, coord = vector3(-1993.622, -517.9912, 11.99194), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -550386901, coord = vector3(-1976.149, -497.8418, 12.17725), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
 
     -- [ MICHAEL ] --
-    { text = true, hash = -2125423493, coord = vector3(-844.4967, 159.0198, 66.73706), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = -2125423493, coord = vector3(-844.4967, 159.0198, 66.73706), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = false, hash = 159994461, coord = vector3(-816.778, 178.1802, 72.21313), door_1 = vector3(-817.1208, 178.2989, 72.21313), door_2 = vector3(-816.7385, 177.7055, 72.21313), lock = true, distance = 5.0, autoLock = 20000, other = -1686014385, perm = { 'staff.permissao'} },
     { text = true, hash = -1454760130, coord = vector3(-793.7934, 181.6615, 72.81982), door_1 = vector3(-793.2527, 181.3978, 72.81982), door_2 = vector3(-793.6616, 182.3604, 72.81982), lock = true, distance = 5.0, autoLock = 20000, other = 1245831483, perm = { 'staff.permissao'} },
     { text = true, hash = -1454760130, coord = vector3(-795.4813, 177.3231, 72.81982), door_1 = vector3(-795.7978, 177.0593, 72.81982), door_2 = vector3(-794.8351, 177.6791, 72.81982), lock = true, distance = 5.0, autoLock = 20000, other = 1245831483, perm = { 'staff.permissao'} },
@@ -211,7 +210,7 @@ Doors = {
     { text = false, hash = 1448171236, coord = vector3(-819.2703, 267.7187, 86.38391), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -449097539, coord = vector3(-818.1495, 270.6857, 86.18164), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -449097539, coord = vector3(-830.5582, 272.545, 86.18164), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 1783199408, coord = vector3(-827.6572, 267.7055, 86.18164), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 1783199408, coord = vector3(-827.6572, 267.7055, 86.18164), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -264728216, coord = vector3(-833.0769, 264.211, 86.18164), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 65586107, coord = vector3(-815.9868, 251.4857, 79.18896), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 65586107, coord = vector3(-818.9934, 257.7231, 79.25647), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
@@ -221,8 +220,8 @@ Doors = {
     -- [ WEST ] --
     { text = false, hash = -1017013428, coord = vector3(-1465.411, -34.64175, 55.04321), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -1017013428, coord = vector3(-1486.457, -22.58901, 54.63879), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = -349730013, coord = vector3(-1453.925, -32.00439, 54.63879), door_1 = vector3(-1453.688, -30.71209, 54.63879), door_2 = vector3(-1454.466, -33.38901, 54.62195), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, other = -1918480350, perm = { 'staff.permissao'} },
-    { text = true, hash = -349730013, coord = vector3(-1472.809, -14.30769, 54.63879), door_1 = vector3(-1473.917, -14.78241, 54.63879), door_2 = vector3(-1471.068, -14.41319, 54.63879), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, other = -1918480350, perm = { 'staff.permissao'} },
+    { text = true, hash = -349730013, coord = vector3(-1453.925, -32.00439, 54.63879), door_1 = vector3(-1453.688, -30.71209, 54.63879), door_2 = vector3(-1454.466, -33.38901, 54.62195), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, other = -1918480350, perm = { 'staff.permissao'} },
+    { text = true, hash = -349730013, coord = vector3(-1472.809, -14.30769, 54.63879), door_1 = vector3(-1473.917, -14.78241, 54.63879), door_2 = vector3(-1471.068, -14.41319, 54.63879), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, other = -1918480350, perm = { 'staff.permissao'} },
     { text = true, hash = -1017013428, coord = vector3(-1482.804, -49.63516, 54.63879), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -1017013428, coord = vector3(-1473.244, -58.47033, 54.63879), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -1017013428, coord = vector3(-1472.189, -49.56923, 54.63879), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
@@ -231,16 +230,16 @@ Doors = {
 
     -- [ PICTURE ] --
     { text = false, hash = -88942360, coord = vector3(-1136.215, 375.2308, 71.30334), door_1 = vector3(-1135.49, 375.3099, 71.2865), door_2 = vector3(-1136.703, 375.8506, 71.2865), lock = true, distance = 5.0, autoLock = 20000, other = -88942360, perm = { 'staff.permissao'} },
-    { text = true, hash = -1159421424, coord = vector3(-1129.081, 389.3934, 70.74731), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = -1159421424, coord = vector3(-1091.763, 369.6923, 68.70837), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = -1159421424, coord = vector3(-1129.081, 389.3934, 70.74731), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = -1159421424, coord = vector3(-1091.763, 369.6923, 68.70837), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = false, hash = -88942360, coord = vector3(-1141.965, 365.9736, 71.30334), door_1 = vector3(-1142.637, 365.9341, 71.30334), door_2 = vector3(-1141.437, 365.4594, 71.30334), lock = true, distance = 5.0, autoLock = 20000, other = -88942360, perm = { 'staff.permissao'} },
     { text = false, hash = -88942360, coord = vector3(-1143.455, 371.5912, 74.92603), door_1 = vector3(-1144.009, 371.6967, 74.92603), door_2 = vector3(-1142.835, 370.9583, 74.92603), lock = true, distance = 5.0, autoLock = 20000, other = -88942360, perm = { 'staff.permissao'} },
     { text = true, hash = -1821777087, coord = vector3(-1134.013, 362.9539, 74.94287), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -1821777087, coord = vector3(-1130.202, 360.7912, 71.70764), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
 
     -- [ PICTURE ] --
-    { text = true, hash = -1939670839, coord = vector3(-719.433, 500.8088, 109.266), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = -1939670839, coord = vector3(-716.3209, 502.5099, 109.3165), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = -1939670839, coord = vector3(-719.433, 500.8088, 109.266), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = -1939670839, coord = vector3(-716.3209, 502.5099, 109.3165), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = false, hash = -533948079, coord = vector3(-722.7297, 490.233, 109.6198), door_1 = vector3(-723.2967, 490.1275, 109.6534), door_2 = vector3(-722.0439, 490.4572, 109.6198), lock = true, distance = 5.0, autoLock = 20000, other = -721607029, perm = { 'staff.permissao'} },
     { text = true, hash = -533948079, coord = vector3(-741.4681, 485.3275, 109.704), door_1 = vector3(-741.8901, 485.9077, 109.704), door_2 = vector3(-741.244, 484.7209, 109.704), lock = true, distance = 5.0, autoLock = 20000, other = -721607029, perm = { 'staff.permissao'} },
 
@@ -248,8 +247,8 @@ Doors = {
     { text = true, hash = 308207762, coord = vector3(8.254946, 539.6572, 176.0249), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
 
     -- [ DEVIL ] --
-    { text = true, hash = 546378757, coord = vector3(-2557.741, 1913.156, 168.8806), door_1 = vector3(-2558.11, 1911.969, 168.8638), door_2 = vector3(-2557.437, 1914.409, 168.8806), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, other = -1249591818, perm = { 'staff.permissao'} },
-    { text = true, hash = 1068002766, coord = vector3(-2596.985, 1927.187, 167.2968), lock = true, distance = 5.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 546378757, coord = vector3(-2557.741, 1913.156, 168.8806), door_1 = vector3(-2558.11, 1911.969, 168.8638), door_2 = vector3(-2557.437, 1914.409, 168.8806), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, other = -1249591818, perm = { 'staff.permissao'} },
+    { text = true, hash = 1068002766, coord = vector3(-2596.985, 1927.187, 167.2968), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = -2037125726, coord = vector3(-2594.809, 1917.297, 167.2968), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 308207762, coord = vector3(-2588.492, 1910.809, 167.4821), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 813813633, coord = vector3(-2600.189, 1900.484, 167.3136), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },

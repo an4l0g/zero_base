@@ -74,6 +74,7 @@ local CamThread = function()
         ResetFilter()
         EndFreeCam()
         LocalPlayer.state.Cam = false
+        TriggerServerEvent('zero_cam:disableCam')
     end)
 
     Citizen.CreateThread(function()

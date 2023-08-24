@@ -250,6 +250,7 @@ local vehicleDetained = {
         local request = zero.request(source, 'Veículo na detenção, deseja acionar o seguro pagando R$'..zero.format(value)..'?', 60000)
         if (request) then
             if (zero.tryFullPayment(user_id, value)) then
+                exports.zero_bank:extrato(user_id, 'Veículo detido', -value)
                 setDetained(user_id, vehicle, 0)
                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
                 return true
@@ -264,6 +265,7 @@ local vehicleDetained = {
         if (request) then
             if (zero.tryFullPayment(user_id, value)) then
                 setDetained(user_id, vehicle, 0)
+                exports.zero_bank:extrato(user_id, 'Veículo retido', -value)
                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
                 return true
             end
@@ -301,6 +303,7 @@ srv.spawnVehicle = function(vehicle, id)
                         local request = zero.request(source, 'Deseja pagar o Vehicle Tax do veículo '..vehicleName(vehicle)..' por R$'..zero.format(priceTax)..'?', 60000)
                         if (request) then
                             if (zero.tryFullPayment(user_id, priceTax)) then
+                                exports.zero_bank:extrato(user_id, 'IPVA', -priceTax)
                                 zero.execute('zero_garage/setIPVA', { user_id = user_id, vehicle = vehicle, ipva = os.time() })
                                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
                             end
@@ -707,6 +710,7 @@ RegisterNetEvent('zero_interactions:carVehs', function()
                                             local vtype = vehicleType(v.vehicle)
                                             if (vtype == 'vip' or vtype == 'work') then return; end;
                                             if (zero.tryFullPayment(nUser, price)) then
+                                                exports.zero_bank:extrato(nUser, 'Compra de veículo', -price)
                                                 addVehicle(nUser, model, 0)
                                                 delVehicle(user_id, model)
 
@@ -716,7 +720,8 @@ RegisterNetEvent('zero_interactions:carVehs', function()
                                                 zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
                                                 zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
                                                 
-                                                zero.giveBankMoney(user_id, nUser)
+                                                zero.giveBankMoney(user_id, price)
+                                                exports.zero_bank:extrato(user_id, 'Venda de veículo', price)
                                                 zero.webhook('Vehs', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                                 local vehEntity = findVehicle(user_id, model)
                                                 if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;

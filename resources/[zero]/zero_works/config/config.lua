@@ -21,7 +21,7 @@ config.works = {
         },
         ['payment'] = { 
             ['money'] = { ['min'] = 2000, ['max'] = 3000 },
-            ['bonus'] = { ['after'] = 7, ['multiply'] = 1.5 }
+            ['bonus'] = { ['after'] = 100, ['multiply'] = 1.5 }
         },
         ['anim'] = 'caixa',
         ['vehicle'] = 'bison3',
@@ -61,7 +61,7 @@ config.works = {
         },
         ['payment'] = { 
             ['money'] = { ['min'] = 2000, ['max'] = 3000 },
-            ['bonus'] = { ['after'] = 6, ['multiply'] = 1.5 }
+            ['bonus'] = { ['after'] = 100, ['multiply'] = 1.0 }
         },
         ['anim'] = 'caixa',
         ['vehicle'] = 'boxville4',
@@ -99,7 +99,7 @@ config.works = {
         },
         ['payment'] = { 
             ['money'] = { ['min'] = 2000, ['max'] = 3000 },
-            ['bonus'] = { ['after'] = 5, ['multiply'] = 1.5 }
+            ['bonus'] = { ['after'] = 100, ['multiply'] = 1.5 }
         },
         ['anim'] = 'enviar',
         ['vehicle'] = 'boxville2',

@@ -14,8 +14,8 @@ srv.giveSalary = function()
             local value = v.value
             if (zero.hasPermission(user_id, v.perm)) then
                 TriggerClientEvent('zero_sound:source', source, 'coins', 0.5)
-                -- exports['gb_bank']:register_trans(user_id,"Salário: "..v.nome, payment)
                 zero.giveBankMoney(user_id, value)
+                exports.zero_bank:extrato(user_id, 'Salário', value)
                 TriggerClientEvent('notify', source, 'Salário', 'Olá! Seu salário ('..v.name..') de <b>R$'..zero.format(value)..'</b> foi depositado em sua conta bancária.')
             end
         end

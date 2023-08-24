@@ -24,12 +24,12 @@ cli.installNitro = function()
             local idle = 1500
             local ped = PlayerPedId()
             local pCoord = GetEntityCoords(ped)
-            local pVehicle = GetClosestVehicle(pCoord, 3.001, 0, 71)
+            local pVehicle = GetClosestVehicle(pCoord, 10.0, 0, 71)
             if (pVehicle and not IsPedInAnyVehicle(ped)) then
                 local engine = GetWorldPositionOfEntityBone(pVehicle, GetEntityBoneIndexByName(pVehicle, 'engine'))
                 local distance = #(pCoord - engine)
-                idle = 1
-                if (distance <= 3.0) then
+                if (distance <= 5.0) then
+                    idle = 1
                     DrawMarker(0, engine.x, engine.y, engine.z+0.7, 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 153, 255, 155, 1, 0, 0, 1)
                     if (distance <= 1.5 and IsControlJustPressed(0, 38) and vSERVER.getNitro()) then
                         installing = true
@@ -48,11 +48,13 @@ cli.installNitro = function()
                             LocalPlayer.state.BlockTasks = false
                             FreezeEntityPosition(ped, false)
                             FreezeEntityPosition(pVehicle, false)
-                            SetVehicleDoorShut(pVehicle, 4, 0)
 
                             TriggerServerEvent('zero_tunings:syncNitro', VehToNet(pVehicle), 100.0)
                             TriggerServerEvent('zero_tunings:syncPurge', VehToNet(pVehicle), 0.0)
-
+                            
+                            Citizen.Wait(800)
+                            
+                            SetVehicleDoorShut(pVehicle, 4, 0)
                             install = false
                         end)
                     end      

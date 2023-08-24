@@ -37,7 +37,7 @@ const Wrapper = () => {
 
   const closeNui = () => {
     setVisible("off");
-    fetch("http://gb_core_ilegal/close");
+    fetch("http://zero_org/close");
   };
 
   useEffect(() => {

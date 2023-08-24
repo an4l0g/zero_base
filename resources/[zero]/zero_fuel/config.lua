@@ -5,28 +5,28 @@ config = {
         DisableKeys = { 0, 22, 23, 24, 29, 30, 31, 37, 44, 56, 82, 140, 166, 167, 168, 170, 288, 289, 311, 323 },
 
         Classes = {
-            [0] = 0.4, -- Compacts
-            [1] = 0.4, -- Sedans
-            [2] = 0.4, -- SUVs
-            [3] = 0.4, -- Coupes
-            [4] = 0.4, -- Muscle
-            [5] = 0.4, -- Sports Classics
-            [6] = 0.4, -- Sports
-            [7] = 0.4, -- Super
-            [8] = 0.4, -- Motorcycles
-            [9] = 0.4, -- Off-road
-            [10] = 0.4, -- Industrial
-            [11] = 0.4, -- Utility
-            [12] = 0.4, -- Vans
+            [0] = 0.6, -- Compacts
+            [1] = 0.6, -- Sedans
+            [2] = 0.6, -- SUVs
+            [3] = 0.6, -- Coupes
+            [4] = 0.6, -- Muscle
+            [5] = 0.6, -- Sports Classics
+            [6] = 0.6, -- Sports
+            [7] = 0.6, -- Super
+            [8] = 0.6, -- Motorcycles
+            [9] = 0.6, -- Off-road
+            [10] = 0.6, -- Industrial
+            [11] = 0.6, -- Utility
+            [12] = 0.6, -- Vans
             [13] = 0.0, -- Cycles
             [14] = 0.0008, -- Boats
             [15] = 5.0008, -- Helicopters
             [16] = 0.0008, -- Planes
-            [17] = 0.4, -- Service
-            [18] = 0.4, -- Emergency
-            [19] = 0.4, -- Military
-            [20] = 0.4, -- Commercial
-            [21] = 0.4, -- Trains
+            [17] = 0.6, -- Service
+            [18] = 0.6, -- Emergency
+            [19] = 0.6, -- Military
+            [20] = 0.6, -- Commercial
+            [21] = 0.6, -- Trains
         },
 
         FuelUsage = {
@@ -36,7 +36,7 @@ config = {
             [0.7] = 0.7,
             [0.6] = 0.6,
             [0.5] = 0.5,
-            [0.4] = 0.4,
+            [0.6] = 0.6,
             [0.3] = 0.3,
             [0.2] = 0.2,
             [0.1] = 0.1,
@@ -303,7 +303,7 @@ config = {
         { showBlip = true, markerDistance = 30.0, coord = vector3(2581.34,362.21,108.46), heading = 359.29, config = 'configFuelOilCE', id = 16 },
 
         { showBlip = true, markerDistance = 30.0, coord = vector3(-66.24,-1762.22,29.25), heading = 359.29, config = 'configFuelLtdC', id = 17 },
-        { showBlip = true, markerDistance = 30.0, coord = vector3(1182.01,-330.44,69.31), heading = 359.29, config = 'configFuelLtdC', id = 18 },
+        { showBlip = true, markerDistance = 30.0, coord = vector3(1182.01,-330.64,69.31), heading = 359.29, config = 'configFuelLtdC', id = 18 },
         { showBlip = true, markerDistance = 30.0, coord = vector3(-1800.05,804.011,138.65), heading = 359.29, config = 'configFuelLtdC', id = 19 },
         { showBlip = true, markerDistance = 30.0, coord = vector3(1690.35,4928.67,42.23), heading = 359.29, config = 'configFuelLtdC2', id = 20 },
         { showBlip = true, markerDistance = 30.0, coord = vector3(-722.32,-935.76,19.01), heading = 359.29, config = 'configFuelLtdCE', id = 21 },

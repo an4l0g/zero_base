@@ -41,7 +41,6 @@ srv.checkItem = function(_require, production)
 end
 
 srv.givePayment = function(location, _payment, work, selection)
-    print(location, _payment, work, selection)
     local _source = source
     local _userId = zero.getUserId(source)
     if (_userId) then
@@ -56,6 +55,7 @@ srv.givePayment = function(location, _payment, work, selection)
                 zero.giveMoney(_userId, parseInt(randomMoney * bonus))
                 onPayment(_userId,  parseInt(randomMoney * bonus),  location, _payment, work, selection)
             end
+            exports.zero_bank:extrato(_userId, work, parseInt(randomMoney * bonus))
             TriggerClientEvent('notify', _source, 'Emprego', 'Entrega feita com sucesso!<br>A empresa <b>'..work..'</b> efetuou um pagamento em sua conta.<br><br>Valor Recebido: <b>R$'..parseInt(randomMoney * bonus)..'</b>.', 8000)
             return true
         else

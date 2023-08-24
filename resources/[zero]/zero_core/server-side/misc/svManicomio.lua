@@ -70,7 +70,7 @@ local typeManicomio = {
                     TriggerClientEvent('notify', nSource, 'Manicômio', 'Você foi <b>solto</b>!')
                     TriggerClientEvent('notify', source, 'Manicômio', 'Você soltou o <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
 
-                    zero.webhook('Manicomio', '```prolog\n[ASYLUM]\n[ACTION]: (UNFASTEN)\n[STAFF]: '..user_id..'\n[TARGET]: '..nUser..'\n[REASON]: '..Reasonos.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    zero.webhook('Manicomio', '```prolog\n[ASYLUM]\n[ACTION]: (UNFASTEN)\n[STAFF]: '..user_id..'\n[TARGET]: '..nUser..'\n[REASON]: '..Reason..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                 else
                     TriggerClientEvent('notify', source, 'Manicômio', 'O mesmo se encontra <b>offline</b>!')
                 end
@@ -98,7 +98,7 @@ RegisterNetEvent('zero_interactions:manicomio', function()
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao' }) then
-        typePrender['colocar'](source, user_id)
+        typeManicomio['colocar'](source, user_id)
     end
 end)
 
@@ -106,7 +106,7 @@ RegisterNetEvent('zero_interactions:rmanicomio', function()
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao' }) then
-        typePrender['retirar'](source, user_id)
+        typeManicomio['retirar'](source, user_id)
     end
 end)
 

@@ -96,8 +96,9 @@ startJob = function(work)
             if (distance <= 10.0) then
                 DrawMarker(1, _config.coords.start.x, _config.coords.start.y, _config.coords.start.z-0.97, 0, 0, 0, 0, 0, 0, 0.6, 0.6, 0.4, 0, 153, 255, 155, 0, 0, 0, 1)
                 if (distance <= 1.2 and not IsPedInAnyVehicle(ped)) then 
+                    RemoveBlip(blips)
                     PlaySoundFrontend(-1, 'CONFIRM_BEEP', 'HUD_MINI_GAME_SOUNDSET', 1)
-                    _stage = 2
+                    _stage = 0
                     secondStage()
                 end
             end
@@ -127,7 +128,7 @@ startJob = function(work)
                     local configProductions = productions[work][index]
                     if (dist <= 2.0) then
                         local _coord = vector3(configProductions.coord.x, configProductions.coord.y, configProductions.coord.z)
-                        TextFloating('Pressione E para '..product[configProductions.config].blipText, _coord)
+                        TextFloating('Pressione ~b~E~w~ para '..product[configProductions.config].blipText, _coord)
                         if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped) and not task) then
                             _functionProduction(configProductions)
                         end
@@ -154,7 +155,7 @@ startJob = function(work)
 
         if (productions[work]) then
             Citizen.CreateThread(function()
-                while (_stage == 2) do
+                while (inWork) do
                     ped = PlayerPedId()
                     pCoord = GetEntityCoords(ped)
                     for k, v in pairs(productions[work]) do
@@ -170,7 +171,7 @@ startJob = function(work)
         end
 
         Citizen.CreateThread(function()
-            while (_stage == 2) do
+            while (inWork) do
                 if (not productions[work]) then
                     ped = PlayerPedId()
                     pCoord = GetEntityCoords(ped)
@@ -203,7 +204,7 @@ startJob = function(work)
             local distance = #(pCoord - _config.routes[selection])
             if (distance <= 5.0) then
                 _idle = 1
-                TextFloating('Pressione E para '.._config.text, _config.routes[selection])
+                TextFloating('Pressione ~b~E~w~ para '.._config.text, _config.routes[selection])
                 if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and checkVehicleFunctions(ped, config) and not task) then
                     RemoveBlip(blips)
                     task = true
@@ -223,7 +224,7 @@ startJob = function(work)
                                 FreezeEntityPosition(ped, true)
                             end
 
-                            TriggerEvent('progress', lang[work]['progressBar'], _config.setTimeOut)
+                            TriggerEvent('progressBar', lang[work]['progressBar'], _config.setTimeOut)
                             Citizen.SetTimeout(_config.setTimeOut, function()
                                 LocalPlayer.state.BlockTasks = false
                                 if (_config.blipWithCar) then
@@ -247,11 +248,12 @@ startJob = function(work)
                                 createBlip(_config.routes, selection, true)
                             end)
                         else
-                            stopWork(_config.name, lang[work]['backBusiness'](_config.name))
+                            TriggerEvent('notify', 'Emprego', lang[work]['backBusiness'](_config.name))
+                            task = false
                         end
                     else
                         TriggerEvent('notify', 'Emprego', lang[work]['noVehicleBusiness'](_config.name))
-                        stopWork(_config.name, lang[work]['backBusinessVehicle'](_config.name))
+                        task = false
                     end
                 end
             end

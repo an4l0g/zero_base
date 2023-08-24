@@ -103,7 +103,7 @@ end)
 RegisterNuiCallback('buyTattooshopCustomizations', function(data)
     local ped = PlayerPedId()
     local Drawables = data.drawables
-    if (Drawables and data.total > 0) then
+    if (Drawables) then
         if (vSERVER.tryPayment(data.total, Drawables)) then
             LocalPlayer.state.pedTattoo = Drawables
             setPedTattoos()

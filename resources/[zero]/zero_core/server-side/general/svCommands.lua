@@ -95,11 +95,74 @@ RegisterCommand('godarea', function(source)
         end
     end
 end)
+
+---------------------------------------
+-- FREEZE
+---------------------------------------
+RegisterCommand('freeze', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (nSource) then
+                local ped = GetPlayerPed(nSource)
+                TriggerClientEvent('notify', source, 'Freeze', 'Você <b>freezou</b> o jogador!')
+                TriggerClientEvent('notify', nSource, 'Freeze', 'Você foi <b>freezado</b> por um staff!')
+                FreezeEntityPosition(ped, true)
+            end
+        else
+            local ped = GetPlayerPed(source)
+            TriggerClientEvent('notify', source, 'Freeze', 'Você se <b>freezou</b>!')
+            FreezeEntityPosition(ped, true)
+        end
+    end
+end)
+
+RegisterCommand('unfreeze', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (nSource) then
+                local ped = GetPlayerPed(nSource)
+                TriggerClientEvent('notify', source, 'Freeze', 'Você <b>desfreezou</b> o jogador!')
+                TriggerClientEvent('notify', nSource, 'Freeze', 'Você foi <b>desfreezado</b> por um staff!')
+                FreezeEntityPosition(ped, false)
+            end
+        else
+            local ped = GetPlayerPed(source)
+            TriggerClientEvent('notify', source, 'Freeze', 'Você se <b>desfreezou</b>!')
+            FreezeEntityPosition(ped, false)
+        end
+    end
+end)
+
+---------------------------------------
+-- NEYMAR
+---------------------------------------
+RegisterCommand('ney', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (nSource) then
+                TriggerClientEvent('ney', nSource)
+                TriggerClientEvent('notify', source, 'Neymar', 'Você <b>derrubou</b> o jogador!')
+            end
+        end
+    end
+end)
+
 ---------------------------------------
 -- WALL
 ---------------------------------------
 srv.getWallId = function(sourceplayer)
-    return zero.getUserId(sourceplayer) 
+    if (sourceplayer ~= nil and parseInt(sourceplayer) > 0) then
+        return zero.getUserId(sourceplayer), Player(sourceplayer).state.Cam
+    end
 end
 
 RegisterCommand('ids', function(source)
@@ -279,6 +342,7 @@ RegisterCommand('money', function(source, args)
         local amount = parseInt(args[1])
 		if (amount) then
 			zero.giveBankMoney(user_id, amount)
+            exports.zero_bank:extrato(user_id, 'Prefeitura', amount)
             TriggerClientEvent('notify', source, 'Money', 'Você spawnou <b>R$'..zero.format(amount)..'</b>.')
 			zero.webhook('Money', '```prolog\n[/MONEY]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[MONEY]: R$'..zero.format(amount)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 		end
@@ -294,6 +358,7 @@ RegisterCommand('money2', function(source, args)
         if (source == 0) then
             if (nUser and money) then
                 zero.giveBankMoney(nUser, money)
+                exports.zero_bank:extrato(nUser, 'Prefeitura', money)
                 print('^5[ZERO MONEY]^7 Voce setou ^2R$'..zero.format(money)..'^7 para o passaporte ^2'..nUser..'^7.')
                 TriggerClientEvent('notify', nSource, 'Money', 'Você recebeu <b>R$'..zero.format(money)..'</b> da <b>Prefeitura</b>.', 10000)
                 zero.webhook('Money', '```prolog\n[/MONEY2]\n[STAFF]: CONSOLE\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[RECEBEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -305,6 +370,7 @@ RegisterCommand('money2', function(source, args)
                 if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
                 if (nUser and money) then
                     zero.giveBankMoney(nUser, money)
+                    exports.zero_bank:extrato(nUser, 'Prefeitura', money)
                     TriggerClientEvent('notify', source, 'Money', 'Você spawnou <b>R$'..zero.format(money)..'</b>, para o jogador <b>#'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
                     TriggerClientEvent('notify', nSource, 'Money', 'Você recebeu <b>R$'..zero.format(money)..'</b> da <b>Prefeitura</b>.', 10000)
                     zero.webhook('Money', '```prolog\n[/MONEY2]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[JOGADOR]: #'..nUser..' | '..nIdentity.firstname..' '..nIdentity.lastname..'\n[RECEBEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -328,6 +394,7 @@ RegisterCommand('moneyall', function(source, args)
                 local nUser = zero.getUserId(nSource)
                 if (nSource) then
                     zero.giveBankMoney(nUser, amount)
+                    exports.zero_bank:extrato(nUser, 'Prefeitura', amount)
                     TriggerClientEvent('notify', nSource, 'Money', 'Você recebeu <b>R$'..zero.format(amount)..'</b> da <b>Prefeitura</b>.', 10000)
                 end
             end
@@ -346,6 +413,7 @@ RegisterCommand('delmoney', function(source, args)
             if (source == 0) then
                 if (nUser and money) then
                     if (zero.tryFullPayment(nUser, money)) then
+                        exports.zero_bank:extrato(nUser, 'Prefeitura', -money)
                         print('^5[ZERO MONEY]^7 Voce tirou ^2R$'..zero.format(money)..'^7 do passaporte ^2'..nUser..'^7.')
                         TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
                         zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: CONSOLE\n[JOGADOR]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -360,6 +428,7 @@ RegisterCommand('delmoney', function(source, args)
                     if (not user_id == 1 and not user_id == 2 and not user_id == 3) then return; end;
                     if (nUser and money) then
                         if (zero.tryFullPayment(nUser, money)) then
+                            exports.zero_bank:extrato(nUser, 'Prefeitura', -money)
                             TriggerClientEvent('notify', source, 'Money', 'Você retirou <b>R$'..zero.format(money)..'</b>, do jogador <b>#'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
                             TriggerClientEvent('notify', nSource, 'Money', 'Você perdeu <b>R$'..zero.format(money)..'</b> pra <b>Prefeitura</b>.', 10000)
                             zero.webhook('Money', '```prolog\n[/DELMONEY]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[JOGADOR]: #'..nUser..' | '..nIdentity.firstname..' '..nIdentity.lastname..'\n[PERDEU]: R$'..zero.format(money)..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -780,6 +849,8 @@ RegisterCommand('enviar', function(source, args)
             if (amount > 0) then
                 if (zero.tryPayment(user_id, amount)) then
                     zero.giveMoney(nUser, amount)
+                    exports.zero_bank:extrato(user_id, 'Transferência', -amount)
+                    exports.zero_bank:extrato(nUser, 'Transferência', amount)
                     zeroClient._playAnim(source, true, {{ 'mp_common', 'givetake1_a' }}, false)
 			        zeroClient._playAnim(nPlayer, true, {{ 'mp_common', 'givetake1_a' }}, false)
                     TriggerClientEvent('notify', source, 'Enviar', 'Você enviou <b>R$'..zero.format(amount)..'</b>.')
@@ -1474,18 +1545,30 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
 
         Citizen.SetTimeout(8000, function()
             local userTable = zero.getUserDataTable(user_id)
-            if (userTable) and userTable.Handcuff == true then
-                Player(source).state.Handcuff = true
-                zeroClient.setHandcuffed(source, true)
-                TriggerClientEvent('zero_interactions:algemas', source, 'colocar')
-            end
+            if (userTable) then
+                if (userTable.Handcuff == true) then
+                    Player(source).state.Handcuff = true
+                    zeroClient.setHandcuffed(source, true)
+                    TriggerClientEvent('zero_interactions:algemas', source, 'colocar')
+                end
 
-            if (userTable) and userTable.Capuz == true then
-                Player(source).state.Capuz = true
-		        zeroClient.setCapuz(source, true)
+                if (userTable.Capuz == true) then
+                    Player(source).state.Capuz = true
+                    zeroClient.setCapuz(source, true)
+                end
+
+                if (userTable.GPS == true) then
+                    Player(source).state.GPS = true
+                    TriggerClientEvent('zero_system:gps', source)
+                end
             end
         end)
     end
+end)
+
+RegisterNetEvent('zero_system:gps_server', function()
+    local source = source
+    Player(source).state.GPS = false
 end)
 
 ---------------------------------------
