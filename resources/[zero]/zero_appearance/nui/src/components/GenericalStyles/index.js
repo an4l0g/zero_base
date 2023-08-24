@@ -264,6 +264,10 @@ export const OptionItem = styled.li`
       background-color: ${theme.colors.primary(0.3)};
     }
 
+    &.current {
+      border-color: ${theme.colors.shape()};
+    }
+
     &:hover {
       background-color: ${theme.colors.primary(0.1)};
     }
