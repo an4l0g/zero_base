@@ -36,7 +36,10 @@ function ItemList({ shop, limit, indexType, labelType }) {
   const renderClassName = useCallback(
     (index, item = null) => {
       if (appearance.tattooshop) {
-        if (result.current[indexType].includes(item)) return "active";
+        const filter = result.current[indexType].filter(
+          (cItem) => cItem.name === item.name && cItem.part === item.part
+        );
+        if (filter.length > 0) return "active";
         return "";
       }
       return result.current[labelType].model === index ? "active" : "";
