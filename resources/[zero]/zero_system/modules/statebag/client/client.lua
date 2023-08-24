@@ -14,6 +14,7 @@ LocalPlayer.state:set('Cam', false, true)
 LocalPlayer.state:set('Control', false, true)
 LocalPlayer.state:set('Armed', false, true)
 LocalPlayer.state:set('Prison', false, true)
+LocalPlayer.state:set('Asylum', false, true)
 
 local disableActions = function(ply)
     BlockWeaponWheelThisFrame()
@@ -194,7 +195,7 @@ local prison = PolyZone:Create(
     }, 
     {
         name = 'Prisão',
-        debugPoly = true,
+        -- debugPoly = true,
         minZ = 35.0,
         maxZ = 100.0
     }
@@ -212,11 +213,87 @@ local lose_prison = PolyZone:Create(
         vector2(1656.053, 2532.013) 
     }, 
     {
-        debugPoly = true,
+        -- debugPoly = true,
         minZ = 40.0,
         maxZ = 70.0
     }
 )
+
+RegisterNetEvent('zero_prison:setClothes', function()
+    local prisonClothes = {
+        [GetHashKey('mp_m_freemode_01')] = {
+            [1] = { model = 0, var = 0, palette = 0 },
+            [2] = { model = 0, var = 0, palette = 0 },
+            [3] = { model = 5, var = 0, palette = 0 },
+            [4] = { model = 5, var = 7, palette = 0 },
+            [5] = { model = 0, var = 0, palette = 0 },
+            [6] = { model = 5, var = 0, palette = 0 },
+            [7] = { model = 0, var = 0, palette = 0 },
+            [8] = { model = 15, var = 0, palette = 0 },
+            [9] = { model = 0, var = 0, palette = 0 },
+            [10] = { model = 0, var = 0, palette = 0 },
+            [11] = { model = 237, var = 0, palette = 0 },
+            [12] = { model = 0, var = 0, palette = 0 },
+            [13] = { model = 0, var = 0, palette = 0 },
+            [14] = { model = 0, var = 0, palette = 255 },
+            [15] = { model = 0, var = 0, palette = 100 },
+            [16] = { model = 7, var = 0, palette = 255 },
+            [17] = { model = 0, var = 0, palette = 255 },
+            [18] = { model = 0, var = 0, palette = 255 },
+            [19] = { model = 0, var = 0, palette = 255 },
+            [20] = { model = 0, var = 0, palette = 255 },
+            [0] = { model = 0, var = 0, palette = 0 },
+            ['p2'] = { model = -1, var = -1, palette = 0 },
+            ['p3'] = { model = -1, var = -1, palette = 0 },
+            ['p4'] = { model = -1, var = -1, palette = 0 },
+            ['p6'] = { model = -1, var = -1, palette = 0 },
+            ['p5'] = { model = -1, var = -1, palette = 0 },
+            ['p8'] = { model = -1, var = -1, palette = 0 },
+            ['p7'] = { model = -1, var = -1, palette = 0 },
+            ['p10'] = { model = -1, var = -1, palette = 0 },
+            ['p1'] = { model = -1, var = -1, palette = 0 },
+            ['p0'] = { model = -1, var = -1, palette = 0 },
+            ['p9'] = { model = -1, var = -1, palette = 0 },
+        },
+        [GetHashKey('mp_f_freemode_01')] = {
+            [1] = { model = 0, var = 0, palette = 0 },
+            [2] = { model = 0, var = 0, palette = 0 },
+            [3] = { model = 4, var = 0, palette = 0 },
+            [4] = { model = 66, var = 6, palette = 0 },
+            [5] = { model = 0, var = 0, palette = 0 },
+            [6] = { model = 5, var = 0, palette = 0 },
+            [7] = { model = 0, var = 0, palette = 0 },
+            [8] = { model = 15, var = 0, palette = 0 },
+            [9] = { model = 0, var = 0, palette = 0 },
+            [10] = { model = 0, var = 0, palette = 0 },
+            [11] = { model = 5, var = 0, palette = 0 },
+            [12] = { model = 0, var = 0, palette = 0 },
+            [13] = { model = 0, var = 0, palette = 0 },
+            [14] = { model = 0, var = 0, palette = 255 },
+            [15] = { model = 0, var = 0, palette = 102 },
+            [16] = { model = 6, var = 0, palette = 255 },
+            [17] = { model = 0, var = 0, palette = 255 },
+            [18] = { model = 0, var = 0, palette = 255 },
+            [19] = { model = 0, var = 0, palette = 255 },
+            [20] = { model = 0, var = 0, palette = 255 },
+            ['p10'] = { model = -1, var = -1, palette = 0 },
+            ['p8'] = { model = -1, var = -1, palette = 0 },
+            ['p7'] = { model = -1, var = -1, palette = 0 },
+            ['p6'] = { model = -1, var = -1, palette = 0 },
+            ['p1'] = { model = -1, var = -1, palette = 0 },
+            ['p0'] = { model = -1, var = -1, palette = 0 },
+            ['p3'] = { model = -1, var = -1, palette = 0 },
+            ['p2'] = { model = -1, var = -1, palette = 0 },
+            ['p4'] = { model = -1, var = -1, palette = 0 },
+            [0] = { model = 0, var = 0, palette = 0 },
+            ['p5'] = { model = -1, var = -1, palette = 0 },
+            ['p9'] = { model = -1, var = -1, palette = 0 },
+        }
+    }
+
+    local model = GetEntityModel(PlayerPedId())
+    if (prisonClothes[model]) then zero.setCustomization(prisonClothes[model]); end;
+end)
 
 AddStateBagChangeHandler('Prison', nil, function(bagName, key, value) 
     local entity = GetPlayerFromStateBagName(bagName)
@@ -264,6 +341,56 @@ AddStateBagChangeHandler('Prison', nil, function(bagName, key, value)
                 end
                 Citizen.Wait(idle)
             end
+        end)
+    end
+end)
+
+local asylum = PolyZone:Create({
+    vector2(-23.48, 7681.82),
+    vector2(-121.97, 7643.94),
+    vector2(-143.94, 7554.55),
+    vector2(-141.67, 7418.94),
+    vector2(-197.73, 7236.36),
+    vector2(-145.45, 7160.61),
+    vector2(-1.52, 7206.82),
+    vector2(50.00, 7250.76),
+    vector2(96.21, 7227.27),
+    vector2(126.52, 7197.73),
+    vector2(191.67, 7200.76),
+    vector2(237.12, 7225.00),
+    vector2(271.97, 7275.00),
+    vector2(307.58, 7339.39),
+    vector2(327.27, 7425.76),
+    vector2(326.52, 7495.45),
+    vector2(311.36, 7546.21),
+    vector2(260.61, 7568.94),
+    vector2(181.06, 7610.61),
+    vector2(96.21, 7677.27),
+    vector2(33.33, 7707.58)
+}, {
+    name = 'Asylum'
+})
+
+AddStateBagChangeHandler('Asylum', nil, function(bagName, key, value) 
+    local entity = GetPlayerFromStateBagName(bagName)
+    if (entity == 0) then return; end;
+
+    if (value) then
+        Citizen.CreateThread(function()
+            NetworkSetFriendlyFireOption(false)
+            SetLocalPlayerAsGhost(true)
+            SetGhostedEntityAlpha(254)
+            while (LocalPlayer.state.Asylum) do
+                local inside = asylum:isPointInside(GetEntityCoords(PlayerPedId()))
+                if (not inside) then
+                    TriggerEvent('notify', 'Manicômio', 'O <b>Guaxinim</b> encontrou você tentando escapar.')
+                    zero.teleport(-110.6769, 7488.092, 5.808105)
+                end
+                Citizen.Wait(1500)
+            end
+            NetworkSetFriendlyFireOption(true)
+            SetLocalPlayerAsGhost(false)	
+            ResetGhostedEntityAlpha()
         end)
     end
 end)
