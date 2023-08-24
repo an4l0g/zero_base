@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, { useCallback, useContext, useEffect, useMemo } from "react";
 import * as S from "../GenericalStyles";
 import Item from "../Item";
 import ResultContext from "../../contexts/ResultContext";
@@ -9,6 +9,10 @@ function ItemList({ shop, limit, indexType, labelType }) {
   const { appearance } = useContext(AppearanceContext);
   const { result } = useContext(ResultContext);
   const { handleSetResult } = useResult();
+
+  useEffect(() => {
+    console.log(appearance);
+  }, []);
 
   const renderItems = useMemo(() => {
     if (appearance.tattooshop) {
@@ -42,6 +46,16 @@ function ItemList({ shop, limit, indexType, labelType }) {
 
   return (
     <S.OptionsList>
+      {!appearance.tattooshop && (
+        <Item
+          key={-1}
+          index={-1}
+          shop={shop}
+          className={renderClassName(-1, -1)}
+          labelType={labelType}
+          handleClick={() => handleClick(-1, -1)}
+        />
+      )}
       {renderItems.map((item, index) => (
         <Item
           key={index}
