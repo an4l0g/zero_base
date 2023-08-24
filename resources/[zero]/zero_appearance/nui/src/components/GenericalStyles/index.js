@@ -367,3 +367,10 @@ export const Customization = styled.div`
     border-radius: 10px;
   `}
 `;
+
+export const ItemTitle = styled.div`
+  ${({ theme }) => css`
+    color: ${theme.colors.shape()};
+    text-transform: uppercase;
+  `}
+`;

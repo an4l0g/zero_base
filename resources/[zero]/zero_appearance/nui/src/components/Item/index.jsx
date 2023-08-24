@@ -40,14 +40,20 @@ function Item({
 
   return (
     <S.OptionItem onClick={handleClick} className={className}>
-      {!imageError ? (
-        <>{renderImage()}</>
+      {index !== -1 ? (
+        <>
+          {!imageError ? (
+            <>{renderImage()}</>
+          ) : (
+            <S.WrapBrokenImage>
+              <CiImageOff />
+            </S.WrapBrokenImage>
+          )}
+        </>
       ) : (
-        <S.WrapBrokenImage>
-          <CiImageOff />
-        </S.WrapBrokenImage>
+        <S.ItemTitle>Retirar</S.ItemTitle>
       )}
-      <S.ItemWrapIcon>{index}</S.ItemWrapIcon>
+      {index !== -1 && <S.ItemWrapIcon>{index}</S.ItemWrapIcon>}
       <S.ItemWrapMoney>R$ 5000</S.ItemWrapMoney>
     </S.OptionItem>
   );

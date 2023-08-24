@@ -118,34 +118,35 @@ function useResult() {
   const handleSetResult = useCallback(
     (typeLabel, value) => {
       if (appearance.tattooshop) {
-        let hasModel = false;
-        const newPathResult = result.current[typeLabel].filter((item) => {
-          if (!hasModel) {
-            if (item.name === value.model.name) {
-              hasModel = true;
-              return false;
+        setResult((old) => {
+          let hasModel = false;
+          const newPathResult = old.current[typeLabel].filter((item) => {
+            if (!hasModel) {
+              if (item.name === value.model.name) {
+                hasModel = true;
+                return false;
+              }
             }
+            return true;
+          });
+          if (hasModel) {
+            return {
+              ...old,
+              current: {
+                ...old.current,
+                [typeLabel]: newPathResult,
+              },
+            };
+          } else {
+            return {
+              ...old,
+              current: {
+                ...old.current,
+                [typeLabel]: [...old.current[typeLabel], value.model],
+              },
+            };
           }
-          return true;
         });
-
-        if (hasModel) {
-          setResult((old) => ({
-            ...old,
-            current: {
-              ...old.current,
-              [typeLabel]: newPathResult,
-            },
-          }));
-        } else {
-          setResult((old) => ({
-            ...old,
-            current: {
-              ...old.current,
-              [typeLabel]: [...old.current[typeLabel], value.model],
-            },
-          }));
-        }
       } else {
         setResult((old) => ({
           ...old,
@@ -159,7 +160,7 @@ function useResult() {
         }));
       }
     },
-    [appearance, result, setResult]
+    [appearance, setResult]
   );
 
   const calculateTotal = useCallback(
