@@ -255,8 +255,8 @@ config.works = {
     },
     ['Gari'] = {
         ['coords'] = {
-            start = vector3(-363.178, -1525.306, 27.71277),
-            route = vector3(-304.0483, -1524.976, 27.64539)
+            start = vector3(-304.0483, -1524.976, 27.64539),
+            route = vector3(-363.178, -1525.306, 27.71277)
         },
         ['cams'] = {
             { vector3(-368.8088, -1534.747, 27.52747+6.0), -20.0, 0.0, -30.0 },
@@ -269,7 +269,7 @@ config.works = {
             ['money'] = { ['min'] = 3500, ['max'] = 4000 },
             ['bonus'] = { ['after'] = 6, ['multiply'] = 1.5 }
         },
-        ['vehicle'] = 'caddy',
+        ['vehicle'] = 'caddy2',
         ['anim'] = 'varrer',
         ['routes'] = {
             vector3(-539.31, -1215.97, 18.46),

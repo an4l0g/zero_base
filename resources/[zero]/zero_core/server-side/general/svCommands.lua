@@ -116,6 +116,8 @@ RegisterCommand('freeze', function(source, args)
             TriggerClientEvent('notify', source, 'Freeze', 'Você se <b>freezou</b>!')
             FreezeEntityPosition(ped, true)
         end
+
+        zero.webhook('Freeze', '```prolog\n[/FREEZE]\n[USER]: '..user_id..'\n[TARGET]: '..(args[1] and args[1] or user_id)..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
     end
 end)
 
@@ -136,6 +138,8 @@ RegisterCommand('unfreeze', function(source, args)
             TriggerClientEvent('notify', source, 'Freeze', 'Você se <b>desfreezou</b>!')
             FreezeEntityPosition(ped, false)
         end
+
+        zero.webhook('Freeze', '```prolog\n[/UNFREEZE]\n[USER]: '..user_id..'\n[TARGET]: '..(args[1] and parseInt(args[1]) or user_id)..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
     end
 end)
 
@@ -151,6 +155,8 @@ RegisterCommand('ney', function(source, args)
             if (nSource) then
                 TriggerClientEvent('ney', nSource)
                 TriggerClientEvent('notify', source, 'Neymar', 'Você <b>derrubou</b> o jogador!')
+
+                zero.webhook('Neymar', '```prolog\n[/FREEZE]\n[USER]: '..user_id..'\n[TARGET]: '..(args[1] and args[1] or user_id)..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
             end
         end
     end
@@ -1216,7 +1222,7 @@ RegisterCommand('checkbugados', function(source)
         local message = ''
         for _, v in ipairs(GetPlayers()) do 
             local pName = GetPlayerName(v)
-            local uId = vRP.getUserId(tonumber(v))
+            local uId = zero.getUserId(tonumber(v))
             if (not uId) then 
                 message = message .. string.format('</br> <b>%s</b> | Source: <b>%s</b> | Ready: %s',pName,v,((Player(v).state.ready) and 'Sim' or 'Não'))
             end
@@ -1314,12 +1320,6 @@ local queries = {
 	{ query = 'DELETE FROM vrp_user_vehicles WHERE user_id = :user_id'},
     { query = 'DELETE FROM vrp_mdt WHERE user_id = :user_id'},
 }
-
-RegisterCommand('health',function(source)
-    print(GetPlayerPed(source))
-    print(GetEntityHealth(GetPlayerPed(source)))
-    print(GetPedMaxHealth(GetPlayerPed(source)))
-end)
 
 local reset_player = function(user_id)
 	local _queries = queries
@@ -1617,3 +1617,122 @@ srv.Bvida = function()
         exports.zero_appearance:setCustomization(source, user_id)
     end
 end
+
+---------------------------------------
+-- DETIDO
+---------------------------------------
+RegisterCommand('detido', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao', 'policia.permissao' }) then
+        local vehicle, vnetid = zeroClient.vehList(source, 5.0)
+        if (vnetid) then
+            local prompt = exports.zero_hud:prompt(source, {
+                'Motivo'
+            })
+
+            if (prompt) then
+                prompt = prompt[1]
+
+                local vehState = exports.zero_garage:getVehicleData(vnetid)
+                if (vehState.user_id) then
+                    local veh = zero.query('zero_dismantle/getVehicleInfo', { user_id = vehState.user_id, vehicle = vehState.model })[1]
+                    if (parseInt(veh.detained) > 0) then
+                        TriggerClientEvent('notify', source, 'Detido', 'Este <b>veículo</b> já se encontra detido.')
+                    else
+                        local nplayer = zero.getUserSource(vehState.user_id)
+                        if (nplayer) then TriggerClientEvent('notify', nplayer, 'Detido', 'Seu veículo ('..zero.vehicleName(vehState.model)..') foi <b>detido</b>.', 10000); end;
+
+                        zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                        TriggerClientEvent('notify', source, 'Detido', 'O <b>veículo</b> foi apreendido com sucesso.')
+                        zero.execute('zero_garage/setDetained', { detained = 2, user_id = vehState.user_id, vehicle = vehState.model })
+                        zero.webhook('Detido', '```prolog\n[/DETIDO]\n[OFFICER]: '..user_id..'\n[VEHICLE]: '..vehState.model..'\n[VEHICLE OWNER]: '..vehState.user_id..'\n[REASON]: '..prompt..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    end
+                end
+            end
+        end
+    end
+end)
+
+---------------------------------------
+-- TOOGLE
+---------------------------------------
+local _ToogleDefault = 'https://discord.com/api/webhooks/1144388223624282143/9o-TWD0hG26CnVCynfmNsk8dJeoqsDsgSy7Kzq_7Ab7UJ6pufUVGztbu8TRJZYPhoId_'
+
+local Toogle = {
+    -- ['Policia'] = { 
+	-- 	blip = { name = 'Policia', view = { ['Policia'] = true, ['Paramedico'] = true } },
+	-- 	webhook = '',
+	-- 	toggleCoords = {
+	-- 		{ coord = vec3(-432.18, 1095.91, 327.69), radius = 30 },
+	-- 		{ coord = vec3(-447.47, 6010.2, 40.47), radius = 30 }
+	-- 	}
+	-- },
+}
+
+RegisterCommand('toogle', function(source)
+    local user_id = zero.getUserId(source)
+    
+    for k, v in pairs(Toogle) do
+        local inGroup, inGrade = zero.hasGroup(user_id, k)
+		if (inGroup) then
+
+            local neartoggle = true	
+			if (v.toggleCoords) then
+				neartoggle = false
+				local coords = GetEntityCoords(GetPlayerPed(source))
+				for _, pos in pairs(v.toggleCoords) do
+					if #(pos.coord - coords) <= pos.radius then
+						neartoggle = true
+					end
+ 				end
+			end
+
+            if (neartoggle) then
+                local newState = (not zero.hasGroupActive(user_id, k))
+				local groupName = zero.getGroupTitle(k, inGrade)
+
+                zero.setGroupActive(user_id, k, newState)
+                local logsmg = ''
+				if (newState) then
+					TriggerClientEvent('notify', source, 'Toogle', '<b>'..groupName..'</b> | Você entrou em serviço.')
+					logmsg = '[STATUS]: JOIN'
+					if (v.blip) then TriggerEvent("sw-blips:tracePlayer", source, v.blip.name, v.blip.view); end;
+				else
+					TriggerClientEvent('notify', source, 'Toogle', '<b>'..groupName..'</b> | Você saiu de serviço.')
+					logmsg = '[STATUS]: LEAVE'
+					if (v.blip) then TriggerEvent('sw-blips:unTracePlayer', source); end;
+				end
+
+                zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..'\n'..logsmg..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+            else
+                TriggerClientEvent('notify', source, 'Toogle', 'Você só pode usar <b>/toogle</b> nos locais de Trabalho!')
+            end
+        end	
+    end
+end)
+
+local prefeituraCoord = vector3(-550.9846, -193.2, 38.21021)
+RegisterCommand('staff',function(source)
+	local user_id = zero.getUserId(source)
+	local groupName, groupInfo = zero.getUserGroupByType(user_id, 'staff')
+    if (groupName) then
+        if (#(GetEntityCoords(GetPlayerPed(source)) - prefeituraCoord) <= 50) then
+            zero.setGroupActive(user_id, groupName, (not groupInfo.active))
+
+            local logmsg = ''
+            if (not groupInfo.active) then
+                TriggerClientEvent('notify', source, 'Toogle', '<b>'..groupName..'</b> | Você entrou em serviço.')	
+                logmsg = '[STATUS]: JOIN'
+            else
+                TriggerClientEvent('notify', source, 'Toogle', '<b>'..groupName..'</b> | Você saiu de serviço.')
+                logmsg = '[STATUS]: LEAVE'
+            end
+
+            -- zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..'\n'..logsmg..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+            -- local identity = zero.getUserIdentity(user_id)
+            -- zero.webhook(webhooks['staff'],"```prolog\n["..groupName.."]: "..user_id.." "..identity.name.." "..identity.firstname.." \n"..logsmg..os.date("\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").." \r```")
+        else
+            TriggerClientEvent('notify', source, 'Toogle', 'Você não está na <b>prefeitura</b>!')
+        end   
+    end
+end)

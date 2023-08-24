@@ -39,7 +39,10 @@ config.webhooks = {
     ['Hwid'] = 'https://discord.com/api/webhooks/1116585321090523187/hQCrStNv5P6ofa-2liNyI2481-wj1daSztypXxvI-lwFKq5h5tlT1T2I7njCfchhAP-g',
     ['IpBanned'] = 'https://discord.com/api/webhooks/1116585370478456882/gM6V3HcFxMIsTTSZBGhs6whNafkB7Z9HiXF1bFAu2TYOAgnHIBy1P6hnbDxYLH3cEHjS',
     ['Ids'] = 'https://discord.com/api/webhooks/1143643276700823583/rRnzHXbnFLOnstBG-yK5vTwGiU1ti7hqYiUPF3rIshhWteKAy7ooaq7RaYjmetmyXDU7',
-
+    ['Freeze'] = 'https://discord.com/api/webhooks/1144343898043469874/35foarMGqrM5DkGOC19VQUKxXUBYECHr3XRjBYU9xzIsIzR1vy0G_wUDpbgg8FE01UI5',
+    ['Neymar'] = 'https://discord.com/api/webhooks/1144343818297147512/5poHNoQeLiX49SMDzWWJqs5KHAMG5xP5SzuEQy-61KVh5--AfHqvCGyZOQFM7K86cswF',
+    ['Detido'] = 'https://discord.com/api/webhooks/1144342947215712417/i8M2-wOBl5c3Jmesr8XaIiRMNoIzlmM7vhJBKe70CMjBaaOpKIesc3GZjWusWwk-brxL',
+    
     ['buyVehicle'] = 'https://discord.com/api/webhooks/1139623371785654313/0fDge4Ks2uHt9edjx2BVGF-2nukEsHRbCOYjn90_1nYDx-DLoXXIdP6rJj7r40GAQqEl',
     ['DeleteVehicle'] = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF',
     ['DVArea'] = 'https://discord.com/api/webhooks/1119313191684550746/HUVLo3Qrt9XvOoyr04DNXWcHGUgzZzWUVPRJw_G1zqSCrD9NzApykPRFDBqT6bV8LKfk',

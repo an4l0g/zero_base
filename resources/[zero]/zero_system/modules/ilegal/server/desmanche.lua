@@ -31,7 +31,7 @@ srv.checkDismantle = function(index)
                     return false
                 end 
 
-                local veh = zero.query('zero_dismantle/getVehicleInfo', { user_id = vehState.user_id, vehicle = vehState.model }) [1]
+                local veh = zero.query('zero_dismantle/getVehicleInfo', { user_id = vehState.user_id, vehicle = vehState.model })[1]
                 if (not veh) then
                     TriggerClientEvent('notify', source, 'Desmanche', 'Este veículo não foi encontrado na lista do <b>proprietário</b>.')
                     return false

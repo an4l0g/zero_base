@@ -551,6 +551,7 @@ config.vehicles = {
     ['rebel'] = { name = 'Rebel', maker = 'Karin', price = 1000, trunk = 80, glove = 15, type = 'work', class = 'offroad', banned = false },
     ['rubble'] = { name = 'Caminhão', maker = 'Jobuilt', price = 1000, trunk = 200, glove = 15, type = 'work', class = 'industrial', banned = false },
     ['caddy'] = { name = 'Caddy', maker = 'Work', price = 180000, trunk = 120, glove = 15, type = 'work', class = 'utility', banned = true },
+    ['caddy2'] = { name = 'Caddy 2', maker = 'Work', price = 180000, trunk = 120, glove = 15, type = 'work', class = 'utility', banned = true },
     ['stafford'] = { name = 'Stafford', maker = 'Enus', price = 150000, trunk = 40, glove = 15, type = 'work', class = 'sedans', banned = false },
     ['dinghy'] = { name = 'Dinghy', maker = 'Nagasaki', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
     ['mammatus'] = { name = 'Mammatus', maker = 'Jobuilt', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'planes', banned = true },
@@ -985,6 +986,16 @@ config.garages = {
         },
         vehicles = {
             'caddy'
+        }
+    },
+    {
+        coords = vector3(745.622, 136.2989, 80.16626),
+        rule = 'carOnly',
+        points = {
+            vector4(749.2615, 129.4022, 78.93628, 235.2756)
+        },
+        vehicles = {
+            'utillitruck'
         }
     }
 }
