@@ -10,7 +10,7 @@ local toggleSeatbelt = function()
     if inVehicle and vehicleHudOn and hasSeatbelt then
         seatbeltOn = not seatbeltOn
         updateSeatbelt(seatbeltOn)
-        if not (LocalPlayer.state['gps']) then checkRadar(seatbeltOn) end
+        if not (LocalPlayer.state.GPS) then checkRadar(seatbeltOn) end
         SetPedConfigFlag(ped, 32, not seatbeltOn)
         if seatbeltOn then TriggerEvent('zero_sound:source','belt',0.5) else TriggerEvent('zero_sound:source','unbelt',0.5) end
     end
@@ -88,11 +88,11 @@ statusVehicle = function(bool,veh)
         vehicleHudOn = true
         startVehicle()
         TriggerEvent('zero_hud:updateVehicleHud', true)
-        if not (LocalPlayer.state['gps']) then checkRadar( not doesVehicleHasSeatbelt(veh) ) end
+        if not (LocalPlayer.state.GPS) then checkRadar( not doesVehicleHasSeatbelt(veh) ) end
     else
         inVehicle = false
         vehicleHudOn = false
-        if not (LocalPlayer.state['gps']) then checkRadar(false) end
+        if not (LocalPlayer.state.GPS) then checkRadar(false) end
         TriggerEvent('zero_hud:updateVehicleHud', false)
     end
 end
@@ -114,11 +114,12 @@ local checkPlayerLevels = function()
     updateHealth(currentHealth)
     updateArmour(currentArmour) 
     updateTime(currentTime)
-    if not (LocalPlayer.state['gps']) then checkRadar(false) end
+    if not (LocalPlayer.state.GPS) then checkRadar(false) end
 
     while true do
         ped = PlayerPedId()
         veh = GetVehiclePedIsIn(ped, false)
+
         local health = getHealth(ped)
         local armour = getArmour(ped)
         local oxygen = getOxygen(ped) 
@@ -210,6 +211,11 @@ end)
 
 RegisterNetEvent('zero_hud:toggleHud',function(bool)
     SendNUIMessage({ method = 'updateHud', data = bool })
+end)
+
+RegisterNetEvent('zero_system:gps', function()
+    LocalPlayer.state.GPS = true
+    DisplayRadar(true)
 end)
 
 RegisterNuiCallback('close', function()

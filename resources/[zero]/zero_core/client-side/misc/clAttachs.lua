@@ -1,3 +1,5 @@
+local vSERVER = Tunnel.getInterface('Attachs')
+
 local weapons = {
 	['attachs'] = {
 		-- PISTOLAS
@@ -177,30 +179,26 @@ local weapons = {
 
 RegisterCommand('attachs',function(source, args)
 	local ped = PlayerPedId()
-	-- if sPLAYER.checkAttachs("weapcustom") then
+	if (vSERVER.checkAttachs({ 'attachs.permissao', 'attachs2.permissao' })) then
 		if not (args[1]) then
 			TriggerEvent('notify', 'Attachs', 'Utilize o <b>comando</b> listado abaixo: <br> <br><b>/attachs colocar;</b> <br><b>/attachs retirar.</b>')
 		else
 			args[1] = string.lower(args[1])
 			addComponents(ped, weapons['attachs'], args[1])
 		end
-	-- else
-	-- 	TriggerEvent('Notify', 'negado', 'Você não possui <b>VIP</b> ou </b>Modificação de Arma</b> para utilizar esse comando.')
-	-- end
+	end
 end)
 
 RegisterCommand('attachs2',function(source, args)
 	local ped = PlayerPedId()
-	-- if sPLAYER.checkAttachs2("attachs2") then
+	if (vSERVER.checkAttachs({ 'attachs2.permissao' })) then
 		if not (args[1]) then
 			TriggerEvent('notify', 'Attachs', 'Utilize o <b>comando</b> listado abaixo: <br> <br><b>/attachs2 colocar;</b> <br><b>/attachs2 retirar.</b>')
 		else
 			args[1] = string.lower(args[1])
 			addComponents(ped, weapons['attachs2'], args[1])
 		end
-	-- else
-	-- 	TriggerEvent('Notify', 'negado', 'Você não possui <b>VIP Armas</b> para utilizar esse comando.')
-	-- end
+	end
 end)
 
 addComponents = function(ped, weapons, args)
@@ -221,7 +219,7 @@ end
 
 RegisterCommand('wcolor',function(source, args)
 	local tinta = parseInt(args[1])
-	if (tinta >= 0) then
+	if (tinta >= 0) and vSERVER.checkColor({ 'cor.permissao' }) then
 		local ped = PlayerPedId()
 		SetPedWeaponTintIndex(ped, GetSelectedPedWeapon(ped), tinta)
 	end

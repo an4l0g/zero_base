@@ -366,7 +366,11 @@ end)
 
 AddEventHandler('zero:playerLeave', function(user_id, source)
 	if (tempHome[source]) then
-        TriggerEvent('zero_homes:CacheExecute', source, true)
+        SetPlayerRoutingBucket(source, 0)
+        local coord = tempHome[source].oldCoords
+        if (coord ~= nil) then
+            zero.setKeyDataTable(user_id, 'position', { x = coord.x, y = coord.y, z = coord.z })
+        end
         print('^5[Zero Homes]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro da casa.')
         tempHome[source] = nil
     end

@@ -73,14 +73,14 @@ RegisterNetEvent('zero_spawn:selector', function(bool)
             listSpawns = config.spawns
         })
     else
-        DoScreenFadeOut(500)
-		Citizen.Wait(1500)
+        -- DoScreenFadeOut(500)
+		-- Citizen.Wait(1500)
         
         local coord = vSERVER.getLastPosition()
         zero.teleport(coord.x, coord.y, coord.z)
 
-        Citizen.Wait(1000)
-        DoScreenFadeIn(500)
+        -- Citizen.Wait(1000)
+        -- DoScreenFadeIn(500)
 
         if (DoesCamExist(cam)) then
             SetCamActive(cam, false)

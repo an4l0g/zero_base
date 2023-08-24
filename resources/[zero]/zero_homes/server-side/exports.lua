@@ -284,6 +284,7 @@ homesVender = function(source)
                 zero.execute('zero_homes/delGarage', { home = homeName })
                 zero.execute('zero_inventory:deleteBag', { bag_type = 'homes:'..homeName })
                 zero.giveBankMoney(user_id, homePrice)
+                exports.zero_bank:extrato(user_id, 'Venda da casa', homePrice)
                 TriggerClientEvent('zero_garage:removeGarage', source, homeName)
                 zero.webhook('sellHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (SELL HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[VALUE RECEIVED]: '..homePrice..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[REMOVED HOUSE]: items and garages and upgrades\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 serverNotify(source, 'Você vendeu a residência <b>'..homeName..'</b> para a prefeitura por R$'..zero.format(homePrice)..'.')                    
@@ -338,6 +339,7 @@ homesTax = function(source)
                 local request = zero.request(source, 'Deseja pagar o IPTU da residência '..homeName..' por R$'..zero.format(taxPrice)..'?', 30000)
                 if (request) then
                     if (zero.tryFullPayment(user_id, taxPrice)) then
+                        exports.zero_bank:extrato(user_id, 'IPTU', -taxPrice)
                         zero.execute('zero_homes/updateTax', { home = homeName, tax = os.time() })
                         serverNotify(source, 'O <b>IPTU</b> da sua residência foi pago com sucesso.')
                         zero.webhook('buyTax', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY TAX)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..taxPrice..'\n[TAX RENEWED]: '..homesTax..' ('..os.date('%d/%m/%Y - %H:%M', homesTax)..')\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -410,6 +412,7 @@ updateInterior = function(source, interior)
                         local request = zero.request(source, 'Você deseja alterar o interior da sua residência '..homeName..' para '..configInterior[interior].name..' por R$'..zero.format(interiorType.value)..'?', 30000)
                         if (request) then
                             if (zero.tryFullPayment(user_id, interiorType.value)) then
+                                exports.zero_bank:extrato(user_id, 'Upgrade Homes', -interiorType.value)
                                 local items = exports['zero_inventory']:getBag('homes:'..homeName)
                                 zero.webhook('buyInterior', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY INTERIOR)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..interiorType.value..'\n[OLD INTERIOR]: '..homeConfig.interior..'\n[NEW INTERIOR]: '..interior..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                 if (homeConfig.decorations ~= 0) then homeConfig.decorations = 0 end;
@@ -481,6 +484,7 @@ updateDecoration = function(source, decoration)
                             local request = zero.request(source, 'Você deseja alterar o interior da sua residência '..homeName..' para '..homeDecoration[decoration].name..' por R$'..zero.format(homeDecoration[decoration].value)..'?', 30000)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, homeDecoration[decoration].value)) then
+                                    exports.zero_bank:extrato(user_id, 'Upgrade Homes', -homeDecoration[decoration].value)
                                     local items = exports['zero_inventory']:getBag('homes:'..homeName)
                                     zero.webhook('buyDecoration', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY DECORATION)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..homeDecoration[decoration].value..'\n[OLD DECORATION]: '..homeConfig.decorations..'\n[NEW DECORATION]: '..decoration..'\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                     homeConfig.decorations = decoration
@@ -530,6 +534,7 @@ homesBau = function(source)
                             local request = zero.request(source, 'Você deseja pagar R$'..zero.format(price)..', para aumentar o baú de sua residência '..homeName..'?', 30000)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, price)) then
+                                    exports.zero_bank:extrato(user_id, 'Upgrade Homes', -price)
                                     local items = exports['zero_inventory']:getBag('homes:'..homeName)
                                     zero.webhook('buyChest', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY CHEST)\n[USER]: '..user_id..'\n[HOME]: '..homeName:upper()..'\n[TYPE]: '..homeType..'\n[PRICE]: '..price..'\n[OLD CHEST]: '..homeConfig.chest..'kg\n[NEW CHEST]: '.._upgrade..'kg\n[ITEMS]: '..json.encode(items, { indent = true })..'\n[TABLE]: '..json.encode(homeConfig, { indent = true })..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                                     homeConfig.chest = _upgrade
@@ -580,6 +585,7 @@ homesGaragem = function(source)
                             local request = zero.request(source, 'Você deseja pagar R$'..zero.format(price)..', para adicionar uma garagem em sua residência '..homeName..'?', 30000)
                             if (request) then
                                 if (zero.tryFullPayment(user_id, price)) then
+                                    exports.zero_bank:extrato(user_id, 'Upgrade Homes', -price)
                                     zero.execute('zero_homes/updateGarages', { home = homeName, garages = 1 })
                                     zero.execute('zero_homes/addGarage', { home = homeName, blip = json.encode(coords.blip), spawn = json.encode(coords.spawn) })
                                     serverNotify(source, 'Você comprou uma garagem para a sua residência <b>'..homeName..'</b>.')

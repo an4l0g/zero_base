@@ -175,7 +175,21 @@ local healthBodyNew = 1000.0
 local healthBodyDelta = 0.0
 local healthBodyDeltaScaled = 0.0
 
-local classDamageMultiplier = { 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 0.0, 0.0, 1.0, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5 }
+local classDamageMultiplier = { [0] = 1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,1.5,0.0,0.0,1.0,1.5,1.5,1.5,1.5,1.5,1.5 }
+
+local isPedDrivingAVehicle = function()
+	local ped = PlayerPedId()
+	vehicle = GetVehiclePedIsIn(ped)
+	if (IsPedInAnyVehicle(ped)) then
+		if (GetPedInVehicleSeat(vehicle,-1) == ped) then
+			local class = GetVehicleClass(vehicle)
+			if (class ~= 13 and class ~= 14) then
+				return true
+			end
+		end
+	end
+	return false
+end
 
 damageCar = function(class)
     Citizen.CreateThread(function()
@@ -234,7 +248,7 @@ damageCar = function(class)
             inVehicle = IsPedInAnyVehicle(ped)
 
             local idle = 1000
-            if (GetPedInVehicleSeat(vehicle, -1) == ped) then
+            if (isPedDrivingAVehicle() and GetPedInVehicleSeat(vehicle, -1) == ped) then
                 idle = 100
 
                 vehicle = GetVehiclePedIsIn(ped)

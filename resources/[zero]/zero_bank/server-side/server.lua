@@ -23,6 +23,33 @@ RegisterCommand('clearmultas', function(source, args)
 end)
 
 RegisterCommand('multar', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao', 'policia.permissao' }) then
+        local prompt = exports.zero_hud:prompt(source, {
+            'Passaporte do jogador', 'Motivo da multa', 'Descrição da multa', 'Valor da multa'
+        })
+
+        if (prompt) and prompt[1] and prompt[2] and prompt[3] and prompt[4] then
+            local nUser = parseInt(prompt[1])
+            local Reason = prompt[2]
+            local Description = prompt[3]
+            local Value = parseInt(prompt[4])
+
+            local nIdentity = zero.getUserIdentity(user_id)
+            local request = exports.zero_hud:request(source, 'Você tem certeza que desja multar o '..nIdentity.firstname..' '..nIdentity.lastname..' em R$'..zero.format(Value)..'?', 60000)
+            if (request) then
+                multarPlayer(nUser, Reason, Value, Description)
+
+                TriggerClientEvent('notify', source, 'Multa', 'Você aplicou uma multa de <b>R$'..zero.format(Value)..'</b> no <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
+                TriggerClientEvent('notify', zero.getUserSource(nUser), 'Multa', 'Você foi multado no valor de <b>R$'..zero.format(Value)..'</b>.')
+            
+                zero.webhook('Multar', '```prolog\n[ZERO BANK]\n[ACTION]: (FINE)\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[REASON]: '..Reason..'\n[DESCRIPTION]: '..Description..'\n[FINE VALUE]: '..zero.format(Value)..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..'\n```')        
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('zero_interactions:multar', function()
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao', 'policia.permissao' }) then
@@ -134,6 +161,8 @@ srv.transferir = function(id, value)
         if (user_id ~= id and _identity) then
             if (zero.tryBankPayment(user_id, value)) then
                 zero.giveBankMoney(id, value)
+                exports.zero_bank:extrato(user_id, 'Transferência', -value)
+                exports.zero_bank:extrato(id, 'Transferência', value)
                 zero.webhook('Transfer', '```prolog\n[ZERO BANK]\n[ACTION]: (TRANSFER)\n[USER]: '..user_id..'\n[TARGET]: '..id..'\n[VALUE]: '..zero.format(value)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
                 TriggerClientEvent('bank_notify', source, 'sucesso', 'Banco', 'Você transferiu R$'..zero.format(value)..' para o passaporte '..id..'.')
             else

@@ -31,6 +31,7 @@ srv.finishFuel = function(veh, atualFuel, newFuel, price)
     local user_id = zero.getUserId(source)
     if (user_id) then
         if (zero.tryFullPayment(user_id, price)) then
+            exports.zero_bank:extrato(user_id, 'Posto de Gasolina', -price)
             TriggerClientEvent('notify', source, 'Posto de Gasolina', 'Você fez um pagamento de <b>R$'..zero.format(tonumber(price))..'</b>.')
             local nFuel = (atualFuel + newFuel)
             if (nFuel > 99.99) then

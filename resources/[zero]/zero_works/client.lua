@@ -127,7 +127,7 @@ startJob = function(work)
                     local configProductions = productions[work][index]
                     if (dist <= 2.0) then
                         local _coord = vector3(configProductions.coord.x, configProductions.coord.y, configProductions.coord.z)
-                        TextFloating('Pressione E para '..product[configProductions.config].blipText, _coord)
+                        TextFloating('Pressione ~b~E~w~ para '..product[configProductions.config].blipText, _coord)
                         if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped) and not task) then
                             _functionProduction(configProductions)
                         end

@@ -39,7 +39,7 @@ AddStateBagChangeHandler('inVehicle', nil, function(bagName, key, value)
                 local ped = PlayerPedId()
                 local vehicle = GetVehiclePedIsIn(ped)
                 local idle = 1000
-                if (vehicle) then
+                if (vehicle ~= 0) then
                     fuelUsage(vehicle)
                     local fuel = GetVehicleFuelLevel(vehicle)
                     if (fuel <= 0.0) then

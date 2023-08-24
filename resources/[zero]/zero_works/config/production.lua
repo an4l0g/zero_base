@@ -22,28 +22,28 @@ config.production = {
             ['roupa'] = { ['min'] = 1, ['max'] = 1 }
         },
         ['receiveItems'] = {
-            ['caixa-roupa'] = { ['min'] = 1, ['max'] = 1 }
+            ['caixaroupas'] = { ['min'] = 1, ['max'] = 1 }
         },
         ['duration'] = 5000, ['anim'] = 'mexer'
     },
     ['encomenda_entregador'] = {
         ['blipText'] = 'pegar a Encomenda', ['progressBarText'] = 'Pegando a encomenda...',
         ['receiveItems'] = {
-            ['encomenda-postop'] = { ['min'] = 1, ['max'] = 1 }
+            ['encomendapostop'] = { ['min'] = 1, ['max'] = 1 }
         },
         ['duration'] = 5000, ['anim'] = 'mexer'
     },
     ['encomenda_carteiro'] = {
         ['blipText'] = 'pegar a Encomenda', ['progressBarText'] = 'Pegando a encomenda...',
         ['receiveItems'] = {
-            ['encomenda-gopostal'] = { ['min'] = 1, ['max'] = 1 }
+            ['encomendagopostal'] = { ['min'] = 1, ['max'] = 1 }
         },
         ['duration'] = 5000, ['anim'] = 'mexer'
     },
     ['caixa_bebidas'] = {
         ['blipText'] = 'pegar Caixa', ['progressBarText'] = 'Pegando a caixa...',
         ['receiveItems'] = {
-            ['caixa-bebidas'] = { ['min'] = 1, ['max'] = 1 }
+            ['caixabebidas'] = { ['min'] = 1, ['max'] = 1 }
         },
         ['duration'] = 5000, ['anim'] = 'mexer'
     },

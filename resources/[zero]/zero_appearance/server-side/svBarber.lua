@@ -21,6 +21,7 @@ srv.tryPayment = function(price, data)
     if (_userId) then
         local _sucess = zero.tryFullPayment(_userId, price)
         if (_sucess) then
+            exports.zero_bank:extrato(_userId, 'Barbearia', -price)
             zero.execute('zero_character/saveUser', { user_id = _userId, user_character = json.encode(data) } )
             TriggerClientEvent('notify', _source, 'Barbearia', 'Pagamento <b>efetuado</b> com sucesso!')
         else

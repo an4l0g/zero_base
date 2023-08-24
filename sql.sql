@@ -206,7 +206,7 @@ create table banned_records(
     user_id int not null,
     staff_id int not null,
     ban_type varchar(50) not null,
-    ban_date current_timestamp() not null,
+    ban_date timestamp default current_timestamp not null,
     ban_reason varchar(50) not null,
     primary key(id)
 )

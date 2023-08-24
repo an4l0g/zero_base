@@ -419,6 +419,8 @@ RegisterNetEvent('zero_interactions:enviar', function()
             if (amount > 0) then
                 if (zero.tryPayment(user_id, amount)) then
                     zero.giveMoney(nUser, amount)
+                    exports.zero_bank:extrato(user_id, 'Transferência', -amount)
+                    exports.zero_bank:extrato(nUser, 'Transferência', amount)
                     zeroClient._playAnim(source, true, {{ 'mp_common', 'givetake1_a' }}, false)
 			        zeroClient._playAnim(nPlayer, true, {{ 'mp_common', 'givetake1_a' }}, false)
                     TriggerClientEvent('notify', source, 'Interação Enviar', 'Você enviou <b>R$'..zero.format(amount)..'</b>.')

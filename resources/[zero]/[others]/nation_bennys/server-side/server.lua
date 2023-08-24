@@ -17,6 +17,7 @@ srv.checkPayment = function(value)
     local user_id = zero.getUserId(source)
     if (user_id) then
         if (zero.tryFullPayment(user_id, value)) then
+            exports.zero_bank:extrato(user_id, 'Bennys', -value)
             return true
         end
         TriggerClientEvent('notify', source, 'Zero Mecânica', 'Você não possui <b>dinheiro</b> o suficiente para pagar esta tunagem.')

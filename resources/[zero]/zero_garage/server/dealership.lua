@@ -49,6 +49,7 @@ srv.buyVehicle = function(vehicle)
             if (_config.type == 'vip') then return; end;
             if (_config) then
                 if (zero.tryFullPayment(user_id, _config.price)) then
+                    exports.zero_bank:extrato(user_id, 'Concessionária', -_config.price)
                     addVehicle(user_id, vehicle, 0)
                     TriggerClientEvent('notify', source, 'Concessionária', 'Sua compra foi <b>efetuada</b> com sucesso. Parabéns pela a sua nova requisiçao! O <b>'.._config.name..'</b> já se encontra em sua garagem.')
                     zero.execute('zero_dealership/updateVehStock', { stock = parseInt(query.stock - 1), car = vehicle })

@@ -22,6 +22,7 @@ srv.tryPayment = function(price, data)
     if (_userId) then
         local _sucess = zero.tryFullPayment(_userId, price)
         if (_sucess) then
+            exports.zero_bank:extrato(_userId, 'Estúdio de Tatuagem', -price)
             zero.execute('zero_character/saveTattoo', { user_id = _userId, user_tattoo = json.encode(data) } )
             TriggerClientEvent('notify', _source, 'Tatuagem', 'Pagamento <b>efetuado</b> com sucesso!')
         else

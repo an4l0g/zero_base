@@ -895,6 +895,71 @@ config.garages = {
         points = {
             vector4(-271.6088, -1059.191, 26.31433, 158.7402),
         },
+    },
+    -- Works
+    {
+        coords = vector3(713.3143, -976.8132, 24.12378),
+        rule = 'carOnly',
+        points = {
+            vector4(712.7077, -981.3758, 24.14062, 223.937),
+            vector4(708.3824, -981.7319, 24.10693, 221.1024)
+        },
+        vehicles = {
+            'bison3'
+        }
+    },
+    {
+        coords = vector3(1189.912, -3249.455, 6.060791),
+        rule = 'carOnly',
+        points = {
+            vector4(1188.343, -3245.96, 6.0271, 87.87402),
+            vector4(1188.079, -3242.651, 6.0271, 85.03937)
+        },
+        vehicles = {
+            'boxville4'
+        }
+    },
+    {
+        coords = vector3(116.0176, 102.7516, 81.1604),
+        rule = 'carOnly',
+        points = {
+            vector4(116.0176, 96.8044, 80.73926, 141.7323),
+            vector4(112.3516, 98.18901, 80.58752, 164.4095)
+        },
+        vehicles = {
+            'boxville2'
+        }
+    },
+    {
+        coords = vector3(1998.738, 3056.769, 47.03955),
+        rule = 'carOnly',
+        points = {
+            vector4(2000.11, 3060.791, 47.03955, 223.937)
+        },
+        vehicles = {
+            'boxville'
+        }
+    },
+    {
+        coords = vector3(916.2593, 3560.506, 33.79565),
+        rule = 'carOnly',
+        points = {
+            vector4(923.7495, 3564.026, 33.79565, 172.9134)
+        },
+        vehicles = {
+            'bison2'
+        }
+    },
+    {
+        coords = vector3(-333.244, -1518.25, 27.52747),
+        rule = 'carOnly',
+        points = {
+            vector4(-329.2879, -1518.185, 27.52747, 175.748),
+            vector4(-325.9648, -1518.488, 27.52747, 175.748)
+        },
+        vehicles = {
+            'caddy'
+        }
     }
 }
 
