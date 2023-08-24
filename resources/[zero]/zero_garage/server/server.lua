@@ -325,7 +325,10 @@ srv.spawnVehicle = function(vehicle, id)
                         if (garagesConfig.clientSpawn or garagesConfig.clientSpawnForced) then
                             local vehNet = vCLIENT.clientSpawn(source, GetHashKey(vehicle), vector3(coords.x, coords.y, coords.z - 0.5), heading, veh.plate)
                             vehHandle = NetworkGetEntityFromNetworkId(vehNet)
-                            while (vehHandle == 0) do vehHandle = NetworkGetEntityFromNetworkId(vehNet) Citizen.Wait(40) end;
+                            while (vehHandle == 0) do 
+                                vehHandle = NetworkGetEntityFromNetworkId(vehNet) 
+                                Citizen.Wait(1) 
+                            end;
                         else
                             vehHandle = Citizen.InvokeNative(`CREATE_AUTOMOBILE`, GetHashKey(vehicle), vector3(coords.x, coords.y, coords.z - 0.3), heading)
                         end
@@ -339,6 +342,8 @@ srv.spawnVehicle = function(vehicle, id)
                                 Citizen.Wait(1)
                             end
                             if (not owner) then return; end;
+
+                            Citizen.Wait(700)
 
                             SetVehicleNumberPlateText(vehHandle, veh.plate)
                             SetVehicleDoorsLocked(vehHandle, 2)
@@ -413,7 +418,7 @@ srv.vehicleLock = function()
             if (user_id == vehState.user_id) or (user_id == carKeys[vnetid]) then
                 vCLIENT.vehicleClientLock(-1, vnetid, lock)
                 if (not zeroClient.isInVehicle(source)) then zeroClient._playAnim(source, true, {{ 'anim@mp_player_intmenu@key_fob@', 'fob_click' }}, false); end;
-                TriggerClientEvent('zero_sound:vehicle', -1, vnetid, 15.0, 'lock', 0.05)
+                TriggerClientEvent('zero_sound:vehicle', -1, vnetid, 15.0, 'lock', 0.1)
                 if (lock == 1) then
                     TriggerClientEvent('notify', source, 'Garagem', 'O veículo foi <b>trancado</b> com sucesso.', 1000)
                 else
