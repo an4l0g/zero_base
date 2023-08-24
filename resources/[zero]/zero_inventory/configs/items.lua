@@ -66,34 +66,197 @@ config.items = {
         end 
     },
 ----------------------------------------------------------------------------
+-- works
+----------------------------------------------------------------------------
+['caixaroupas'] = { name = 'Caixa de roupas', type = 'common', weight = 1 },
+['encomendapostop'] = { name = 'Encomenda PO', type = 'common', weight = 1 },
+['encomendagopostal'] = { name = 'Encomenda GP', type = 'common', weight = 1 },
+['caixabebidas'] = { name = 'Caixa de bebidas', type = 'common', weight = 1 },
+['botijao-cheio'] = { name = 'Botijão Cheio', type = 'common', weight = 1 },
+['ferramentas'] = { name = 'Botijão Cheio', type = 'common', weight = 1 },
+----------------------------------------------------------------------------
 -- COMIDAS
 ----------------------------------------------------------------------------
     ['c-ingredientes'] = { name = 'C. Ingredientes', type = 'common', weight = 2 },
-    ['camarao'] = { name = 'Esp. Camarão', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
-    ['milho'] = { name = 'Milho Cozido', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
-    ['chocolate'] = { name = 'Chuculate', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
-    ['caviar'] = { name = 'Aviar', type = 'common', weight = 1, consumable = { hunger = -75, thirst = 0, timeout = 5000 }, usable = true, },
-    ['suco-morango'] = { name = 'Suco Morango', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
-    ['suco-abacaxi'] = { name = 'Suco Abacaxi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
-    ['suco-kiwi'] = { name = 'Suco Kivi', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
-    ['suco-caju'] = { name = 'Suco Aju', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -75, timeout = 5000 }, usable = true, },
-    ['sanduiche'] = { name = 'Sanduiche', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
-    ['donut'] = { name = 'Donut', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
-    ['pirulito'] = { name = 'Pirulito', type = 'common', weight = 0.5, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
-    ['hotdog'] = { name = 'Hotdog', type = 'common', weight = 1, consumable = { hunger = -25, thirst = 0, timeout = 5000 }, usable = true, },
-    ['cola'] = { name = 'Cola', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25, timeout = 5000 }, usable = true, },
-    ['agua'] = { name = 'Água', type = 'common', weight = 1.0, 
+    ['camarao'] = {
+        name = 'Esp. Camarão', 
+        type = 'common', 
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01', 
+        weight = 1,
+        consumable = { hunger = -75, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['milho'] = {
+        name = 'Milho Cozido', 
+        type = 'common', 
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01', 
+        weight = 1,
+        consumable = { hunger = -75, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['chocolate'] = {
+        name = 'Chuculate', 
+        type = 'common', 
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01', 
+        weight = 1,
+        consumable = { hunger = -75, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['caviar'] = {
+        name = 'Aviar', 
+        type = 'common', 
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01', 
+        weight = 1,
+        consumable = { hunger = -75, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['suco-morango'] = { 
+        name = 'Suco Morango', 
+        type = 'common',
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_food_bs_juice02', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        usable = true,
+    },
+    ['suco-abacaxi'] = { 
+        name = 'Suco Abacaxi', 
+        type = 'common',
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_food_bs_juice02', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        usable = true,
+    },
+    ['suco-kiwi'] = { 
+        name = 'Suco Kiwi', 
+        type = 'common',
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_food_bs_juice02', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        usable = true,
+    },
+    ['suco-caju'] = { 
+        name = 'Suco Caju', 
+        type = 'common',
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_food_bs_juice02', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        usable = true,
+    },
+    ['sanduiche'] = { 
+        name = 'Sanduiche', 
+        type = 'common', 
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01',
+        weight = 1, 
+        consumable = { hunger = -25, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['donut'] = { 
+        name = 'Donut',
+        type = 'common', 
+        weight = 1, 
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01',
+        consumable = { hunger = -25, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['pirulito'] = { 
+        name = 'Pirulito', 
+        type = 'common',
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01',
+        weight = 0.5, 
+        consumable = { hunger = -25, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['hotdog'] = { 
+        name = 'Hotdog', 
+        type = 'common',
+        anim = { 'mp_player_inteat@burger', 'mp_player_int_eat_burger', 49, 60309 }, 
+        prop = 'prop_peyote_chunk_01',
+        weight = 1, 
+        consumable = { hunger = -25, thirst = 0, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['cola'] = { 
+        name = 'Cola', 
+        type = 'common',
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_ecola_can', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        usable = true,
+    },
+    ['agua'] = { 
+        name = 'Água', 
+        type = 'common',
+        weight = 1.0, 
         anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
         prop = 'prop_energy_drink', 
         consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
         usable = true 
     },
-    ['soda'] = { name = 'Soda', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -25, timeout = 5000 }, usable = true, },
-    ['vodka'] = { name = 'vodka', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
-    ['whisky'] = { name = 'Whisky', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
-    ['cerveja'] = { name = 'Cerveja', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
-    ['conhaque'] = { name = 'Conhaque', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true, },
-    ['tequila'] = { name = 'Tequila', type = 'common', weight = 1, consumable = { hunger = 0, thirst = -10, timeout = 5000 }, usable = true },
+    ['soda'] = { 
+        name = 'Soda', 
+        type = 'common', 
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'ng_proc_sodacan_01b', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, usable = true, 
+    },
+    ['vodka'] = { 
+        name = 'Vodka', 
+        type = 'common', 
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_drink_whtwine', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -10, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['whisky'] = { 
+        name = 'Whisky', 
+        type = 'common', 
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_drink_whtwine', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -10, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['cerveja'] = { 
+        name = 'Cerveja', 
+        type = 'common',
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_beer_bison', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -10, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['conhaque'] = { 
+        name = 'Conhaque',
+        type = 'common', 
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_drink_whtwine', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -10, timeout = 5000 }, 
+        usable = true, 
+    },
+    ['tequila'] = {
+        name = 'Tequila', 
+        type = 'common', 
+        anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
+        prop = 'prop_drink_whtwine', 
+        weight = 1, 
+        consumable = { hunger = 0, thirst = -10, timeout = 5000 }, 
+        usable = true 
+    },
     ['energetico'] = { name = 'Energético', type = 'common', weight = 1.0, usable = true,
         interaction = function(source, user_id)
             cInventory.closeInventory(source)
@@ -168,8 +331,25 @@ config.items = {
             comboFood('combo-caviar')
         end
     },
-    ['cafe'] = { name = 'Café', type = 'common', weight = 1, interaction = function()
-        --
+    ['cafe'] = { name = 'Café', type = 'common', weight = 1, usable = true, interaction = function(source, user_id)
+        cInventory.closeInventory(source)
+
+        zero.tryGetInventoryItem(user_id, 'cafe', 1)
+        Player(source).state.BlockTasks = true
+        
+        zeroClient.CarregarObjeto(source, 'mp_player_intdrink', 'loop_bottle', 'prop_energy_drink', 49, 60309)
+        TriggerClientEvent('progressBar', source, 'Bebendo café...', 5000)
+        Citizen.SetTimeout(5000, function()
+            Player(source).state.Energetico = true
+            Player(source).state.BlockTasks = false
+            zeroClient.DeletarObjeto(source)
+            TriggerClientEvent('notify', source, 'Inventário', 'O <b>café</b> foi utilizado com sucesso!')
+        end)
+
+        Citizen.SetTimeout(60000, function()
+            Player(source).state.Energetico = false
+            TriggerClientEvent('notify', source, 'Inventário', 'O efeito do <b>café</b> passou e o coração voltou a bater normalmente.')
+        end)
     end},
 ----------------------------------------------------------------------------
 -- PETS

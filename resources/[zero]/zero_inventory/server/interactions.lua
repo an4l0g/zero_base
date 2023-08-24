@@ -30,6 +30,7 @@ local inAction = {}
 -- end)
 
 -- RegisterCommand('roubar', function(source)
+--     print(roubar)
 --     if (GetEntityHealth(GetPlayerPed(source)) > 100) then
 --         local user_id = zero.getUserId(source)
 --         if (user_id) then
@@ -74,7 +75,7 @@ RegisterCommand('revistar', function(source)
                 if (nearestPlayerSource) then
                     local nearestPlayerId = zero.getUserId(nearestPlayerSource)
                     if not (inAction[nearestPlayerId]) then
-                        if zero.request(nearestPlayerSource, 'Você está sendo revistado, deseja aceitar?', 60) then
+                        if zero.request(nearestPlayerSource, 'Você está sendo revistado, deseja aceitar?', 60000) then
                             inAction[user_id] = nearestPlayerSource
                             inAction[nearestPlayerId] = true
                             if GetEntityHealth(GetPlayerPed(nearestPlayerSource)) > 100 then

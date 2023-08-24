@@ -12,6 +12,7 @@ import Police from "./cat_police";
 import Mechanic from "./cat_mechanic";
 import Homes from "./cat_homes";
 import Medic from "./cat_medic";
+import Staff from "./cat_staff";
 import { RiPlayFill } from "react-icons/ri";
 
 export const AllInteractions = () => {
@@ -28,6 +29,7 @@ export const AllInteractions = () => {
       ...Mechanic,
       ...Homes,
       ...Medic,
+      ...Staff,
     ];
   }, []);
 

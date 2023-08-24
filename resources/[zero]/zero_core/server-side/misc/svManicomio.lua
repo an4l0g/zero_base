@@ -97,7 +97,7 @@ end)
 RegisterNetEvent('zero_interactions:manicomio', function()
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao', 'policia.permissao' }) then
+    if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao' }) then
         typePrender['colocar'](source, user_id)
     end
 end)
@@ -105,7 +105,7 @@ end)
 RegisterNetEvent('zero_interactions:rmanicomio', function()
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao', 'policia.permissao' }) then
+    if (user_id) and zero.checkPermissions(user_id, { 'staff.permissao' }) then
         typePrender['retirar'](source, user_id)
     end
 end)

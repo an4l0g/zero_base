@@ -5,6 +5,7 @@ import { IoIosBody } from "react-icons/io";
 import { LuCar } from "react-icons/lu";
 import { BsFillHouseFill } from "react-icons/bs";
 import { FaTshirt } from "react-icons/fa";
+import { RiShieldFill } from "react-icons/ri";
 
 const interactions = [
   {
@@ -41,6 +42,13 @@ const interactions = [
     type: "category",
     category: "main",
     value: "clothes",
+  },
+  {
+    title: "Staff",
+    icon: <RiShieldFill />,
+    type: "category",
+    category: "main",
+    value: "staff",
   },
   {
     title: "Casa",

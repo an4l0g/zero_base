@@ -185,7 +185,7 @@ RegisterCommand('attachs',function(source, args)
 			addComponents(ped, weapons['attachs'], args[1])
 		end
 	-- else
-		-- TriggerEvent('Notify', 'negado', 'Você não possui <b>VIP</b> ou </b>Modificação de Arma</b> para utilizar esse comando.')
+	-- 	TriggerEvent('Notify', 'negado', 'Você não possui <b>VIP</b> ou </b>Modificação de Arma</b> para utilizar esse comando.')
 	-- end
 end)
 
@@ -199,7 +199,7 @@ RegisterCommand('attachs2',function(source, args)
 			addComponents(ped, weapons['attachs2'], args[1])
 		end
 	-- else
-		-- TriggerEvent('Notify', 'negado', 'Você não possui <b>VIP Armas</b> para utilizar esse comando.')
+	-- 	TriggerEvent('Notify', 'negado', 'Você não possui <b>VIP Armas</b> para utilizar esse comando.')
 	-- end
 end)
 

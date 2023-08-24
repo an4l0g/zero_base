@@ -16,7 +16,7 @@ config.works = {
         ['description'] = 'Entrega de roupas',
         ['text'] = 'Entregar', ['blipWithCar'] = false,
         ['requireItem'] = { 
-            ['spawn'] = 'spray',
+            ['spawn'] = 'caixaroupas',
             ['quantity'] = 1
         },
         ['payment'] = { 
@@ -56,7 +56,7 @@ config.works = {
         ['description'] = 'Entrega de encomenda',
         ['text'] = 'Entregar', ['blipWithCar'] = false,
         ['requireItem'] = { 
-            ['spawn'] = 'encomenda-postop',
+            ['spawn'] = 'encomendapostop',
             ['quantity'] = 1
         },
         ['payment'] = { 
@@ -94,7 +94,7 @@ config.works = {
         ['description'] = 'Entrega de jornal',
         ['text'] = 'Entregar', ['blipWithCar'] = false,
         ['requireItem'] = { 
-            ['spawn'] = 'encomenda-gopostal',
+            ['spawn'] = 'encomendagopostal',
             ['quantity'] = 1
         },
         ['payment'] = { 
@@ -130,7 +130,7 @@ config.works = {
         ['description'] = 'Entrega de bebidas',
         ['text'] = 'Entregar', ['blipWithCar'] = false,
         ['requireItem'] = { 
-            ['spawn'] = 'caixa-bebidas',
+            ['spawn'] = 'caixabebidas',
             ['quantity'] = 1
         },
         ['payment'] = { 
