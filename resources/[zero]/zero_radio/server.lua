@@ -98,7 +98,7 @@ function sRADIO.setPlayerName(f)
 			name = phonetic[source]
 		else
 			local identity = zero.getUserIdentity(user_id)
-			name = identity.name..' '..identity.firstname..' | '..user_id
+			name = identity.firstname..' '..identity.firstname..' | '..user_id
 		end   
 		if (GetResourceState('pma-listners') == 'started') then
 			exports['pma-listners']:setListName(source,name)

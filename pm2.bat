@@ -22,6 +22,8 @@ cd %BASE_PATH%\pm2
 call zero_appearance.bat
 cd %BASE_PATH%\pm2
 call zero_spawn.bat
+cd %BASE_PATH%\pm2
+call zero_org.bat
 
 echo [zero_base] Todas as NUIs foram iniciadas
 pause

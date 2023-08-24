@@ -29,14 +29,14 @@ config.language = {
     return '['..cityInformations.name..']\n\nOlá '..name..', não foi possível adicioná-lo na fila.\n\nNosso discord: '..cityInformations.discord
   end,
   error = function(name)
-    return '['..cityInformations.name..']\n\nnOlá '..name..', não foi possível identificar sua Social Club.'
+    return '['..cityInformations.name..']\n\nOlá '..name..', não foi possível identificar sua Social Club.'
   end,
   kick = function(name)
-    return '['..cityInformations.name..']\n\nnOlá '..name..', você foi expulso da fila'
+    return '['..cityInformations.name..']\n\nOlá '..name..', você foi expulso da fila'
   end,
   desconnect = function(name)
     if not (name) then name = 'user' end;
-    return '['..cityInformations.name..']\n\nnOlá '..name..', você foi desconectado por demorar demais na fila.'
+    return '['..cityInformations.name..']\n\nOlá '..name..', você foi desconectado por demorar demais na fila.'
   end,
   position = function(name, yourPosition, size)
     return '['..cityInformations.name..']\n\nOlá '..name..', você é o '..yourPosition..'/'..size..' da fila, aguarde a sua conexão...\n\nAdquira prioridade na fila para logar mais rápido em nossa loja: '..cityInformations.shop

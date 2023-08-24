@@ -210,3 +210,10 @@ create table banned_records(
     ban_reason varchar(50) not null,
     primary key(id)
 )
+
+create table facs_blacklist(
+    user_id int not null,
+    org varchar(50) not null,
+    expires varchar(50) not null,
+    primary key(user_id)
+)

@@ -10,9 +10,9 @@ vRP._prepare("members/countAllMembers", "select COUNT(*) from user_groups where 
 local webhook_enterBlack = "https://discord.com/api/webhooks/1067163058255962212/u2wY13I1RFwOVwxdri8etmUsVZ21xwkJo1BKu-Ex3cQPciTzz4Nh8RFxIwW3WaHfUsir"
 local webhook_exitBlack = "https://discord.com/api/webhooks/1067163135854788628/RoEUQ0t6eaaYzTUSNarZhGV99FX1pKzLiI04no07SoMCmzpS-sdqhONaTeZKHL1p3YyD"
 
-vRP._prepare("members/getBlacklist", "SELECT * FROM gb_facs_blacklist WHERE user_id = @user_id")
-vRP._prepare("members/setBlacklist", "REPLACE INTO gb_facs_blacklist(user_id,org,expires) VALUES(@user_id,@org,@expires)")
-vRP._prepare("members/delBlacklist", "DELETE FROM gb_facs_blacklist WHERE user_id = @user_id")
+vRP._prepare("members/getBlacklist", "SELECT * FROM facs_blacklist WHERE user_id = @user_id")
+vRP._prepare("members/setBlacklist", "REPLACE INTO facs_blacklist(user_id,org,expires) VALUES(@user_id,@org,@expires)")
+vRP._prepare("members/delBlacklist", "DELETE FROM facs_blacklist WHERE user_id = @user_id")
 
 gbMembers.inBlacklist = function(user_id)
     local data = vRP.query("members/getBlacklist",{ user_id = user_id })
@@ -23,7 +23,7 @@ gbMembers.setBlacklist = function(user_id,org,days)
     local expires = os.time() + parseInt(86400*days)
     vRP.execute("members/setBlacklist",{ user_id = user_id, org = org, expires = expires})
     local identity = vRP.getUserIdentity(user_id)
-    vRP._webhook(webhook_enterBlack,"```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.."\n[FAC]: "..org.."\n[BLACKLIST]: "..days.." dias\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
+    vRP._webhook(webhook_enterBlack,"```prolog\n[ID]: "..user_id.." "..identity.firstname.." "..identity.lastname.."\n[FAC]: "..org.."\n[BLACKLIST]: "..days.." dias\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
 end
 exports("setBlacklist",gbMembers.setBlacklist)
 
@@ -32,7 +32,7 @@ delBlacklist = function(user_id)
     if blacklist then
         vRP.execute("members/delBlacklist",{ user_id = user_id })
         local identity = vRP.getUserIdentity(user_id)
-        vRP._webhook(webhook_exitBlack,"```prolog\n[LOJA]\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.."\n[FAC]: "..blacklist.org.."\n[SAIU BLACKLIST]\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
+        vRP._webhook(webhook_exitBlack,"```prolog\n[LOJA]\n[ID]: "..user_id.." "..identity.firstname.." "..identity.lastname.."\n[FAC]: "..blacklist.org.."\n[SAIU BLACKLIST]\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
         return true
     end
 end
@@ -46,7 +46,7 @@ AddEventHandler("vRP:playerSpawn",function(user_id, source)
             vRP.execute("members/delBlacklist",{ user_id = user_id })
             TriggerClientEvent("Notify",source,"importante","Seu tempo de Blacklist terminou! Você já pode se candidatar á uma nova <b>Organização</b>!",30000)
             local identity = vRP.getUserIdentity(user_id)
-            vRP._webhook(webhook_exitBlack,"```prolog\n[ID]: "..user_id.." "..identity.name.." "..identity.firstname.."\n[FAC]: "..blacklist.org.."\n[SAIU BLACKLIST]\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
+            vRP._webhook(webhook_exitBlack,"```prolog\n[ID]: "..user_id.." "..identity.firstname.." "..identity.lastname.."\n[FAC]: "..blacklist.org.."\n[SAIU BLACKLIST]\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
         else
             local exp_date = os.date("%d/%m/%Y às %H:%M", blacklist.expires)
             TriggerClientEvent("Notify",source,"importante","Você está na Blacklist! Aguarde até <b>"..exp_date.."</b> ou compre a remoção na Loja!",30000)
@@ -87,7 +87,7 @@ gbMembers.getAllMembers = function(fac)
             user_id = v.user_id,
             fac = v.groupId, 
             role = v.gradeId,
-            name = userData.name .." ".. userData.firstname,
+            name = userData.firstname .." ".. userData.lastname,
             rg = userData.registration,
             phone = userData.phone,
             age = userData.age,
@@ -100,7 +100,7 @@ end
 gbMembers.searchUser = function(user_id)
     local userData = vRP.getUserIdentity(user_id)
     if userData then
-        userData.name = userData.name .." ".. userData.firstname 
+        userData.name = userData.firstname .." ".. userData.lastname 
         userData.rg = userData.registration
         return userData
     end
@@ -130,7 +130,7 @@ gbMembers.admit = function(fac, user_id)
                     TriggerClientEvent('Notify',user_source,'sucesso','Você acabou de ser contratado pela <b>'..fac..'</b>.')
                      
                     local identity = vRP.getUserIdentity(user_id)
-                    vRP._webhook(webhook_admit,"```prolog\n[ID]: "..leader_id.." "..leader_idt.name.." "..leader_idt.firstname.."\n[FAC]: "..fac.." ("..grades[#grades]..")\n[CONTRATOU]: "..user_id.." "..identity.name.." "..identity.firstname.."\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
+                    vRP._webhook(webhook_admit,"```prolog\n[ID]: "..leader_id.." "..leader_idt.firstname.." "..leader_idt.lastname.."\n[FAC]: "..fac.." ("..grades[#grades]..")\n[CONTRATOU]: "..user_id.." "..identity.firstname.." "..identity.lastname.."\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
                     
                     return { result = 'success', message = 'Membro contratado com sucesso!' }
                 else
@@ -161,7 +161,7 @@ gbMembers.dismiss = function(fac, user_id)
             end
 
             local identity = vRP.getUserIdentity(user_id)
-            vRP._webhook(webhook_dismiss,"```prolog\n[ID]: "..leader_id.." "..leader_idt.name.." "..leader_idt.firstname.."\n[FAC]: "..fac.." ("..tostring(hasGrade)..")\n[DEMITIU]: "..user_id.." "..identity.name.." "..identity.firstname.."\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
+            vRP._webhook(webhook_dismiss,"```prolog\n[ID]: "..leader_id.." "..leader_idt.firstname.." "..leader_idt.lastname.."\n[FAC]: "..fac.." ("..tostring(hasGrade)..")\n[DEMITIU]: "..user_id.." "..identity.firstname.." "..identity.lastname.."\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
 
             return { result = 'success', message = 'Membro demitido com sucesso!' }
         else

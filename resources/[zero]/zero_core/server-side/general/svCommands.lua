@@ -99,7 +99,7 @@ end)
 -- WALL
 ---------------------------------------
 srv.getWallId = function(sourceplayer)
-    return zero.getUserId(sourceplayer) 
+    return zero.getUserId(sourceplayer), Player(sourceplayer).state.Cam
 end
 
 RegisterCommand('ids', function(source)
