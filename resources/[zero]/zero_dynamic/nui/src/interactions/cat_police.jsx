@@ -96,4 +96,18 @@ export default [
     action: "cv",
     category: "police",
   },
+  {
+    title: "Prender",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "prender",
+    category: "police",
+  },
+  {
+    title: "Retirar prisão",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "tirarprisao",
+    category: "police",
+  },
 ];

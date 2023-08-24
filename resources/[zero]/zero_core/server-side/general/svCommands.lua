@@ -1042,7 +1042,7 @@ RegisterCommand('vroupas',function(source)
                 else
                     k = '['..k..']'
                 end
-                table.insert(content, k..' = { '..v.model..', '..v.var..', '..v.palette..' },') 
+                table.insert(content, k..' = { model = '..v.model..', var = '..v.var..', palette = '..v.palette..' },') 
             end
         end
         content = table.concat(content, '\n ')

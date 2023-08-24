@@ -100,6 +100,7 @@ config.webhooks = {
     ['DelPix'] = 'https://discord.com/api/webhooks/1128493068627226804/CvfFTqomDKqKCvPKi0NtdES7YLKQN4Mq1Vi59VuAbBySp86aQG8ydxCxdUvVRmAT32TX',
     ['MoneyJoin'] = 'https://discord.com/api/webhooks/1128494210799108177/7DmO6fE75yDePDVrNaQCAC4W-cm_fKVc7Yx4fXV_O792ECcmZU1bJc82NnihUGmda-AL',
     ['MoneyExit'] = 'https://discord.com/api/webhooks/1128494403573522562/ZZM_O74r_rApzHdNfFzBCTTxVS2rLXty0SHPK-ImeH23Px42f0qRxvspdyAwLX8TWJBC',
+    ['Multar'] = 'https://discord.com/api/webhooks/1128493236277743706/pgOrxmFuM5Y1iAPRD83yXw4ZAn8onGCYRQVpELDzjJmr_HIYB6oAkpApv--JByv--wis',
 
     ['Namorar'] = 'https://discord.com/api/webhooks/1140106765422317648/wOWeq3An-GwQABK-LrMWoybUPLEmjrHR1Ev-Si6fpDYndAg3LGEq8oZs8wRDtYkL3XM3',
     ['Casar'] = 'https://discord.com/api/webhooks/1140106902722842736/QhlJXVFG322DDyLToohsu7UNT2wbXu7ruuPYZRM27-_ON6NAku0OzBt0BvqVhY98D9AR',
@@ -115,5 +116,10 @@ config.webhooks = {
     ['Rotas'] = 'https://discord.com/api/webhooks/1142972664235970640/CY1SU5Xs03txQc4TLuOa-JKx7-E9Yz_Pz40u_IStdWXdpf6qrUBJKli58UwoJcPAv_eS',
     ['RotasDenuncia'] = 'https://discord.com/api/webhooks/1142972875259781251/NbOHNkysuoRe_ffs42EfADvcev1AJQW4XvW92UKXcMPUdnOauEf0KaqcwtdvlNdwyboo',
 
-    ['KillSystem'] = 'https://discord.com/api/webhooks/1143916116540915792/tEXCS-y3PS1yhc-BEsOBgtv26LKcCjuSXjqWYXG_h3f6x0_4OjjlukEryOKUT4HAMbVB'
+    ['KillSystem'] = 'https://discord.com/api/webhooks/1143916116540915792/tEXCS-y3PS1yhc-BEsOBgtv26LKcCjuSXjqWYXG_h3f6x0_4OjjlukEryOKUT4HAMbVB',
+
+    ['Prender'] = 'https://discord.com/api/webhooks/1143995226994790530/Ko-OvTwASU5eUF3bO9yy-gTrRIXXDwJKZo1PJD8QaQPmh1GCv1DWwYZDUM_1KkijKWda',
+    ['RetirarPrisao'] = 'https://discord.com/api/webhooks/1143995302613876736/sqzUWhV7aIz6r6owiwcoj2vY5SR1ZO5_p0Y8_2ZHMr1K3oiFReKpe116SfHhxaS6IHsf',
+
+    ['Manicomio'] = 'https://discord.com/api/webhooks/1144044944831553588/oqvjEt9sktNZHibU-GwDuXD2_wdNpeNfxlLHDWcrDqgI5XJ8BxR-_sX7n3DkX0Ne98Wx'
 }
