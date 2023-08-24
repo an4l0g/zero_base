@@ -95,11 +95,74 @@ RegisterCommand('godarea', function(source)
         end
     end
 end)
+
+---------------------------------------
+-- FREEZE
+---------------------------------------
+RegisterCommand('freeze', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (nSource) then
+                local ped = GetPlayerPed(nSource)
+                TriggerClientEvent('notify', source, 'Freeze', 'Você <b>freezou</b> o jogador!')
+                TriggerClientEvent('notify', nSource, 'Freeze', 'Você foi <b>freezado</b> por um staff!')
+                FreezeEntityPosition(ped, true)
+            end
+        else
+            local ped = GetPlayerPed(source)
+            TriggerClientEvent('notify', source, 'Freeze', 'Você se <b>freezou</b>!')
+            FreezeEntityPosition(ped, true)
+        end
+    end
+end)
+
+RegisterCommand('unfreeze', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (nSource) then
+                local ped = GetPlayerPed(nSource)
+                TriggerClientEvent('notify', source, 'Freeze', 'Você <b>desfreezou</b> o jogador!')
+                TriggerClientEvent('notify', nSource, 'Freeze', 'Você foi <b>desfreezado</b> por um staff!')
+                FreezeEntityPosition(ped, false)
+            end
+        else
+            local ped = GetPlayerPed(source)
+            TriggerClientEvent('notify', source, 'Freeze', 'Você se <b>desfreezou</b>!')
+            FreezeEntityPosition(ped, false)
+        end
+    end
+end)
+
+---------------------------------------
+-- NEYMAR
+---------------------------------------
+RegisterCommand('ney', function(source, args)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+        if (args[1]) then
+            local nSource = zero.getUserSource(parseInt(args[1]))
+            if (nSource) then
+                TriggerClientEvent('ney', nSource)
+                TriggerClientEvent('notify', source, 'Neymar', 'Você <b>derrubou</b> o jogador!')
+            end
+        end
+    end
+end)
+
 ---------------------------------------
 -- WALL
 ---------------------------------------
 srv.getWallId = function(sourceplayer)
-    return zero.getUserId(sourceplayer), Player(sourceplayer).state.Cam
+    if (sourceplayer ~= nil and parseInt(sourceplayer) > 0) then
+        return zero.getUserId(sourceplayer), Player(sourceplayer).state.Cam
+    end
 end
 
 RegisterCommand('ids', function(source)

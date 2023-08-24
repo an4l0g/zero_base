@@ -16,6 +16,7 @@ LocalPlayer.state:set('Armed', false, true)
 LocalPlayer.state:set('Prison', false, true)
 LocalPlayer.state:set('Asylum', false, true)
 LocalPlayer.state:set('GPS', false, true)
+LocalPlayer.state:set('Revistar', false, true)
 
 local disableActions = function(ply)
     BlockWeaponWheelThisFrame()

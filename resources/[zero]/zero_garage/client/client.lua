@@ -46,6 +46,7 @@ local markerThread = function()
 end
 
 Citizen.CreateThread(function()
+	CreateBlip()
     while (true) do
         local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)
@@ -568,4 +569,21 @@ Text2D = function(font, x, y, text, scale)
 	SetTextEntry("STRING")
 	AddTextComponentString(text)
 	DrawText(x, y)
+end
+
+CreateBlip = function()
+	for k, v in pairs(config.garages) do
+		if (v.showBlip) then
+			local _config = config.blips[v.rule]
+
+			local blip = AddBlipForCoord(v.coords.x,v.coords.y,v.coords.z)
+			SetBlipSprite(blip,_config.sprite)
+			SetBlipAsShortRange(blip,true)
+			SetBlipColour(blip,_config.color)
+			SetBlipScale(blip,_config.scale)
+			BeginTextCommandSetBlipName('STRING')
+			AddTextComponentString('Garagem')
+			EndTextCommandSetBlipName(blip)
+		end
+	end
 end

@@ -96,8 +96,9 @@ startJob = function(work)
             if (distance <= 10.0) then
                 DrawMarker(1, _config.coords.start.x, _config.coords.start.y, _config.coords.start.z-0.97, 0, 0, 0, 0, 0, 0, 0.6, 0.6, 0.4, 0, 153, 255, 155, 0, 0, 0, 1)
                 if (distance <= 1.2 and not IsPedInAnyVehicle(ped)) then 
+                    RemoveBlip(blips)
                     PlaySoundFrontend(-1, 'CONFIRM_BEEP', 'HUD_MINI_GAME_SOUNDSET', 1)
-                    _stage = 2
+                    _stage = 0
                     secondStage()
                 end
             end
@@ -154,7 +155,7 @@ startJob = function(work)
 
         if (productions[work]) then
             Citizen.CreateThread(function()
-                while (_stage == 2) do
+                while (inWork) do
                     ped = PlayerPedId()
                     pCoord = GetEntityCoords(ped)
                     for k, v in pairs(productions[work]) do
@@ -170,7 +171,7 @@ startJob = function(work)
         end
 
         Citizen.CreateThread(function()
-            while (_stage == 2) do
+            while (inWork) do
                 if (not productions[work]) then
                     ped = PlayerPedId()
                     pCoord = GetEntityCoords(ped)
@@ -248,9 +249,11 @@ startJob = function(work)
                             end)
                         else
                             TriggerEvent('notify', 'Emprego', lang[work]['backBusiness'](_config.name))
+                            task = false
                         end
                     else
                         TriggerEvent('notify', 'Emprego', lang[work]['noVehicleBusiness'](_config.name))
+                        task = false
                     end
                 end
             end

@@ -587,10 +587,19 @@ config.vehicles = {
     ['wrvolito'] = { name = 'Volito', maker = 'Hospital', price = 1000, trunk = 200, glove = 0, type = 'work', class = 'emergency', banned = true },
 }
 
+config.blips = {
+    ['carOnly'] = {
+        sprite = 357,
+        color = 3,
+        scale = 0.6,
+    }
+}
+
 config.garages = {
-      {
+    {
         coords = vector3(55.54286, -876.1714, 30.6615), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(50.5055, -873.7319, 30.42566, 155.9055),
             vector4(47.38022, -872.2681, 30.4425, 155.9055),
@@ -610,6 +619,7 @@ config.garages = {
     {
         coords = vector3(-281.3011, -888.8439, 31.30188), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-285.5736, -887.1429, 31.06592, 167.2441),
             vector4(-289.2396, -886.4044, 31.06592, 167.2441),
@@ -630,6 +640,7 @@ config.garages = {
     {
         coords = vector3(214.0088, -808.4835, 30.99854), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(219.5604, -808.9055, 30.67834, 249.4488),
             vector4(220.8264, -806.5582, 30.67834, 246.6142),
@@ -640,6 +651,7 @@ config.garages = {
     {
         coords = vector3(101.2484, -1073.552, 29.36414), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(104.4396, -1078.431, 29.17871, 340.1575),
             vector4(107.8813, -1079.947, 29.17871, 342.9921),
@@ -650,6 +662,7 @@ config.garages = {
     {
         coords = vector3(85.18681, -1192.391, 29.54944), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(88.04836, -1200.369, 29.27991, 274.9606),
             vector4(90.51429, -1204.22, 29.27991, 272.126),
@@ -660,6 +673,7 @@ config.garages = {
     {
         coords = vector3(-1159.596, -739.5428, 19.87769), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-1141.081, -740.4, 20.04614, 291.9685),
             vector4(-1146.527, -745.9648, 19.60803, 104.8819),
@@ -670,6 +684,7 @@ config.garages = {
     {
         coords = vector3(-609.8769, -2238.303, 6.246094), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-1141.081, -740.4, 20.04614, 291.9685),
             vector4(-604.1934, -2221.332, 5.976562, 187.0866),
@@ -680,6 +695,7 @@ config.garages = {
     {
         coords = vector3(-340.6022, 266.0703, 85.67615), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-329.6703, 274.2857, 86.28284, 90.70866),
             vector4(-329.222, 277.9253, 86.31653, 96.37794),
@@ -690,6 +706,7 @@ config.garages = {
     {
         coords = vector3(362.1231, 297.8242, 103.874), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(361.3187, 293.4725, 103.5033, 252.2835),
             vector4(359.8813, 289.8593, 103.4865, 252.2835),
@@ -700,6 +717,7 @@ config.garages = {
     {
         coords = vector3(596.5846, 90.68571, 93.12378), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(599.6308, 98.10989, 92.90479, 249.4488),
             vector4(600.2637, 101.9868, 92.90479, 252.2835),
@@ -710,6 +728,7 @@ config.garages = {
     {
         coords = vector3(983.6044, -206.8088, 71.06738), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(983.0374, -211.8857, 70.78101, 240.9449),
             vector4(993.3362, -211.9385, 70.41028, 59.52755),
@@ -720,6 +739,7 @@ config.garages = {
     {
         coords = vector3(1156.101, -453.7451, 66.9729), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(1151.354, -462.3033, 66.7876, 161.5748),
             vector4(1155.204, -462.4352, 66.82129, 164.4095),
@@ -730,6 +750,7 @@ config.garages = {
     {
         coords = vector3(-73.33186, -2004.936, 18.26013), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-77.48571, -2004.527, 18.00732, 351.4961),
             vector4(-81.27032, -2003.683, 18.00732, 351.4961),
@@ -740,6 +761,7 @@ config.garages = {
     {
         coords = vector3(-2030.031, -465.8769, 11.58752), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-2024.295, -472.378, 11.38538, 138.8976),
             vector4(-2022.277, -474.5011, 11.38538, 138.8976),
@@ -750,6 +772,7 @@ config.garages = {
     {
         coords = vector3(317.3539, 2623.108, 44.46155), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(336.1582, 2620.127, 44.47839, 31.1811),
             vector4(342.356, 2623.345, 44.49524, 19.84252),
@@ -760,6 +783,7 @@ config.garages = {
     {
         coords = vector3(1408.655, 3621.204, 34.89087), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(1416.554, 3622.246, 34.85718, 198.4252),
             vector4(1420.589, 3623.512, 34.85718, 204.0945),
@@ -770,6 +794,7 @@ config.garages = {
     {
         coords = vector3(-102.3824, 6344.004, 31.57141), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-95.12967, 6344.018, 31.48718, 223.937),
             vector4(-92.16264, 6346.562, 31.48718, 223.937),
@@ -780,6 +805,7 @@ config.garages = {
     {
         coords = vector3(-772.6945, 5597.499, 33.59338), 
         rule = 'carOnly',
+        showBlip = true,
         points = {
             vector4(-773.789, 5578.338, 33.47546, 87.87402),
             vector4(-773.9868, 5575.345, 33.47546, 90.70866),

@@ -44,12 +44,12 @@ AddEventHandler("vRP:playerSpawn",function(user_id, source)
         blacklist.expires = parseInt(blacklist.expires)
         if (os.time() > blacklist.expires) then
             vRP.execute("members/delBlacklist",{ user_id = user_id })
-            TriggerClientEvent("Notify",source,"importante","Seu tempo de Blacklist terminou! Você já pode se candidatar á uma nova <b>Organização</b>!",30000)
+            TriggerClientEvent("notify",source,"Blacklist","Seu tempo de Blacklist terminou! Você já pode se candidatar á uma nova <b>Organização</b>!",30000)
             local identity = vRP.getUserIdentity(user_id)
-            vRP._webhook(webhook_exitBlack,"```prolog\n[ID]: "..user_id.." "..identity.firstname.." "..identity.lastname.."\n[FAC]: "..blacklist.org.."\n[SAIU BLACKLIST]\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
+            vRP.webhook(webhook_exitBlack,"```prolog\n[ID]: "..user_id.." "..identity.firstname.." "..identity.lastname.."\n[FAC]: "..blacklist.org.."\n[SAIU BLACKLIST]\n"..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S ```'))
         else
             local exp_date = os.date("%d/%m/%Y às %H:%M", blacklist.expires)
-            TriggerClientEvent("Notify",source,"importante","Você está na Blacklist! Aguarde até <b>"..exp_date.."</b> ou compre a remoção na Loja!",30000)
+            TriggerClientEvent("notify",source,"Blacklist","Você está na Blacklist! Aguarde até <b>"..exp_date.."</b> ou compre a remoção na Loja!",30000)
         end
     end
 end)

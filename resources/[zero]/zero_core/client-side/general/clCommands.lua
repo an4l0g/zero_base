@@ -5,6 +5,15 @@ local vSERVER = Tunnel.getInterface('Commands')
 local CommandsData = {}
 
 ---------------------------------------
+-- NEYMAR
+---------------------------------------
+RegisterNetEvent('ney')
+AddEventHandler('ney',function()
+	local ped = PlayerPedId()
+	SetPedToRagdollWithFall(ped, 1500, 2000, 0, GetEntityForwardVector(ped), 1.0, 0, 0, 0, 0, 0, 0)
+end)
+
+---------------------------------------
 -- WALL
 ---------------------------------------
 LocalPlayer.state:set('Wall', false, true)

@@ -11,6 +11,7 @@ cInventory.openInventory = function(action, chestType, lootId)
     if action == 'open' then
         SetNuiFocus(true,true)
     end
+
     SendNUIMessage({
         action = action, 
         item_types = config.itemTypes,
@@ -35,5 +36,7 @@ cInventory.closeInventory = function(data)
     SendNUIMessage({
         action = 'close'
     })
+
+    if (LocalPlayer.state.Revistar) then TriggerServerEvent('zero_inventory:closeRevistar'); end;
 end
 exports('closeInventory', cInventory.closeInventory)
