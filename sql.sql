@@ -200,3 +200,13 @@ create table pets(
     user_id int unsigned not null,
     primary key(pet_type, user_id)
 )
+
+create table banned_records(
+    id int unsigned auto_increment not null,
+    user_id int not null,
+    staff_id int not null,
+    ban_type varchar(50) not null,
+    ban_date current_timestamp() not null,
+    ban_reason varchar(50) not null,
+    primary key(id)
+)

@@ -229,10 +229,14 @@ RegisterCommand('ban', function(source, args)
         local nUser = parseInt(args[1])
         local nPlayer = zero.getUserSource(nUser)
         if (nUser > 0) then
+            if (zero.isBanned(nUser)) then TriggerClientEvent('notify', source, 'Desbanimento', 'Este <b>jogador</b> já está banido seu noia!') return; end;
+
             local prompt = zero.prompt(source, { 'Motivo' })
-            if (prompt[1]:gsub(' ','') == '') then return; end;
-            if (prompt[1]) then
+            if (prompt) then
+                prompt = prompt[1]
+
                 exports[GetCurrentResourceName()]:setBanned(nUser, true)
+                exports.zero_core:insertBanRecord(nUser, true, user_id, '[BAN] '..prompt[1]..'!')
                 DropPlayer(nPlayer, 'Você foi banido da nossa cidade.\nSeu passaporte: #'..nUser..'\n Motivo: '..prompt[1]..'\nAutor: '..identity.firstname..' '..identity.lastname)
                 TriggerClientEvent('notify', source, 'Banimento', 'Você baniu o passaporte <b>'..nUser..'</b> da cidade.')
                 zero.webhook('Ban', '```prolog\n[/BAN]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[BANIU]: '..nUser..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -248,10 +252,14 @@ RegisterCommand('unban', function(source, args)
     if (user_id) and zero.hasPermission(user_id, '+Staff.Manager') and args[1] then
         local nUser = parseInt(args[1])
         if (nUser > 0) then
+            if (not zero.isBanned(nUser)) then TriggerClientEvent('notify', source, 'Desbanimento', 'Este <b>jogador</b> não está banido seu noia!') return; end;
+
             local prompt = zero.prompt(source, { 'Motivo' })
-            if (prompt[1]:gsub(' ','') == '') then return; end;
-            if (prompt[1]) then
+            if (prompt) then
+                prompt = prompt[1]
+                
                 exports[GetCurrentResourceName()]:setBanned(nUser, false)
+                exports.zero_core:insertBanRecord(nUser, false, user_id, '[UNBAN] desbanido!')
                 TriggerClientEvent('notify', source, 'Desbanimento', 'Você desbaniu o passaporte <b>'..nUser..'</b> da cidade.')
                 zero.webhook('Ban', '```prolog\n[/UNBAN]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[DESBANIU]: '..nUser..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
@@ -1095,9 +1103,12 @@ RegisterCommand('bansrc', function(source, args)
                     local nUser = zero.getUserIdByIdentifiers(GetPlayerIdentifiers(nSource))
                     if (nUser ~= -1) then
                         local prompt = zero.prompt(source, { 'Motivo' })
-                        if (prompt[1]:gsub(' ','') == '') then return; end;
-                        if (prompt[1]) then
+
+                        if (prompt) then
+                            prompt[1] = prompt[1]
+                            
                             exports[GetCurrentResourceName()]:setBanned(nUser, true)
+                            exports.zero_core:insertBanRecord(nUser, true, user_id, '[BANSRC] source banida!')
                             DropPlayer(nSource, 'Você foi banido da nossa cidade.\nSeu passaporte: #'..nUser..'\n Motivo: '..prompt[1]..'\nAutor: '..identity.firstname..' '..identity.lastname)
                             TriggerClientEvent('notify', source, 'Banimento', 'Você baniu a source <b>'..nSource..'</b> da cidade.')
                             zero.webhook('BanSource', '```prolog\n[/BANSRC]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[BANIU SOURCE]: '..nSource..' \n[ID RELACIONADO]: '..nUser..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -1436,6 +1447,18 @@ RegisterCommand('listrhp', function(source)
         end
         local text = (paramedics >= 1 and 'Paramédicos em patrulha: <br><br>'..list or 'Não possuem <b>paramédicos</b> em patrulha no momento.')
         TriggerClientEvent('notify', source, 'Prefeitura', text)
+    end
+end)
+
+RegisterNetEvent('zero_hospital:CitizenDeath', function()
+    local hospital = zero.getUsersByPermission('hospital.permissao')
+    for k, v in pairs(hospital) do
+        local nSource = zero.getUserSource(parseInt(v))
+        if (Player(nSource).state.patrolHospital) then
+            async(function()
+                TriggerClientEvent('notify', nSource, 'Prefeitura', 'Um <b>cidadão</b> acabou de desmaiar!')
+            end)
+        end
     end
 end)
 

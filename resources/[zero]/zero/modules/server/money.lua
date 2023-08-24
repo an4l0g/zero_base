@@ -45,6 +45,7 @@ exports('setMoney', zero.setMoney)
 zero.setBankMoney = function(user_id, value)
 	zero.execute('zero_framework/setBankMoney', { user_id = user_id, bank = value } )
 end
+vRP.setBankMoney = zero.setBankMoney
 
 zero.setPaypalMoney = function(user_id, value)
 	zero.execute('zero_framework/setPaypalMoney', { user_id = user_id, paypal = value } )

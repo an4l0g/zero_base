@@ -178,8 +178,8 @@ zero.checkToken = function(tokenSend, weapons)
 		local identifiers = zero.getIdentifiers(source)
 
 		DropPlayer(source, '[ZERO] - ANTI CHEAT')
-		-- zero.setBanned(user_id, true)
 		exports['zero_core']:setBanned(user_id, true)
+		exports.zero_core:insertBanRecord(user_id, true, -1, '[TOKEN] spawn de armas!')
 		zero.webhook('WeaponToken', '```prolog\n[PLAYER]: '..tostring(user_id)..'\n[TOKEN-ENVIADO]: '..tostring(tokenSend)..'\n[TOKEN-SISTEMA]: '..tostring(GlobalState.weaponToken)..'\n[ARMAS]:\n'..json.encode(weapons,{ indent = true })..'\n[IDENTIFIERS]:\n'..json.encode(ids,{ indent = true })..'```')	
 	end
 end

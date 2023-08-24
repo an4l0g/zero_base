@@ -35,7 +35,7 @@ RegisterCommand('ec', function(source, args)
                         TriggerClientEvent('notify', source, 'Animação', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para fazer animação novamente.')
                         return
                     end
-                    exports.zero_core:CreateCooldown(cooldown, 10)
+                    exports.zero_core:CreateCooldown(cooldown, 5)
 
                     TriggerClientEvent('zero_animations:setAnimShared', _source, args[1], nSource)
                     TriggerClientEvent('zero_animations:setAnimShared2', nSource, animation.otherAnim, _source)

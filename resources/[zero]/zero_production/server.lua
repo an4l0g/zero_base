@@ -70,6 +70,7 @@ sProduction.moneyLaundry = function(production)
                             else
                                 DropPlayer(_source, 'Transação ilegal! Abra ticket.')
                                 exports.zero_core:setBanned(user_id, true)
+                                exports.zero_core:insertBanRecord(user_id, true, -1, '[PRODUCTION] Transação ilegal!')
                             end
                         else
                             TriggerClientEvent('notify', _source, 'Lavagem de Dinheiro', 'Você não possui <b>notas fiscais</b> suficientes!', 10000);

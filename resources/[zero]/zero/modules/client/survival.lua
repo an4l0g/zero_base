@@ -112,6 +112,7 @@ local mainSurvival = function()
 	if (_isDied) then return; end;
 	_isDied = true
     cooldownSurvival(30)
+    TriggerServerEvent('zero_hospital:CitizenDeath')
 	Citizen.CreateThread(function()
         SetEntityHealth(PlayerPedId(), 0)
 		zeroServer._updateHealth(0)

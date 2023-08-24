@@ -18,6 +18,30 @@ local setUserBanned = function(user_id, banned)
 end
 exports('setBanned', setUserBanned)
 
+zero._prepare('zero_bans/insertRecord', 'insert into banned_records (user_id, staff_id, ban_type, ban_date, ban_reason) values (@user_id, @staff_id, @ban_type, @ban_date, @ban_reason)')
+zero._prepare('zero_bans/getRecord', 'select * from banned_records where user_id = @user_id')
+
+local insertBanRecord = function(user_id, banned, admin_id, reason)
+    if (user_id) then
+        local action = ((banned and 'ban') or 'unban')
+        zero.execute('zero_bans/insertRecord', { user_id = user_id, staff_id = admin_id, ban_type = action, ban_reason = reason })
+    end
+end
+exports('insertBanRecord', insertBanRecord)
+
+local getBanRecord = function(user_id)
+    local query = zero.query('zero_bans/getRecord', { user_id = user_id })
+    if (query) then
+        for k, v in pairs(query) do
+            if (v.ban_type == 'ban') then
+                return v.ban_reason, v.ban_date, v.staff_id
+            end
+        end
+    end
+    return 'Desconhecido', 'Desconhecido', 'Desconhecido'
+end
+exports('getBanRecord', getBanRecord)
+
 AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
     local userTokens = GetNumPlayerTokens(source)
     local identifiers = zero.getIdentifiers(source)
