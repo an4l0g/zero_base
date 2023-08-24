@@ -22,6 +22,20 @@ const interactions = [
     value: "animations",
   },
   {
+    title: "Compartilhadas",
+    icon: <IoIosBody />,
+    type: "category",
+    category: "animations",
+    value: "animShared",
+  },
+  {
+    title: "Individuais",
+    icon: <IoIosBody />,
+    type: "category",
+    category: "animations",
+    value: "animIndiv",
+  },
+  {
     title: "Roupas",
     icon: <FaTshirt />,
     type: "category",

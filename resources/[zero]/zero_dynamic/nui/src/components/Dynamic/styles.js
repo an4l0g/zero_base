@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const Container = styled.div`
   ${({ theme }) => css`
@@ -157,6 +157,34 @@ export const FavButton = styled.button`
 
     &:hover {
       color: ${theme.colors.primary()};
+    }
+  `}
+`;
+
+const rotateAnimation = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+`;
+
+export const Loading = styled.div`
+  ${({ theme }) => css`
+    color: ${theme.colors.shape()};
+    font-size: 1rem;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+
+    & > svg {
+      animation: ${rotateAnimation} 1s linear infinite;
+      color: ${theme.colors.primary()};
+      font-size: 1.6rem;
     }
   `}
 `;

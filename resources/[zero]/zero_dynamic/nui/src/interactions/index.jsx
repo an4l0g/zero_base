@@ -56,6 +56,20 @@ export const AllInteractions = () => {
     }));
   }, [dynamic]);
 
+  const renderAnimations = useMemo(() => {
+    return dynamic.animations.map((item) => {
+      return {
+        title: item.value[1],
+        icon: <RiPlayFill />,
+        type: "action",
+        action: "execAnimation",
+        category: item.value[0] === "animations" ? "animIndiv" : "animShared",
+        value: item.value,
+        closeLater: true,
+      };
+    });
+  }, [dynamic]);
+
   const renderAllInteractions = useCallback(() => {
     return [
       {
@@ -65,17 +79,19 @@ export const AllInteractions = () => {
         value: "favorites",
         category: "main",
       },
-      ...[...interactionsList, ...renderClothesPreset].map((item) => {
-        if (isFavorite(item.action, item.value)) {
-          return {
-            ...item,
-            category: item.category + `,favorites`,
-          };
+      ...[...interactionsList, ...renderClothesPreset, ...renderAnimations].map(
+        (item) => {
+          if (isFavorite(item.action, item.value)) {
+            return {
+              ...item,
+              category: item.category + `,favorites`,
+            };
+          }
+          return item;
         }
-        return item;
-      }),
+      ),
     ];
-  }, [interactionsList, isFavorite, renderClothesPreset]);
+  }, [interactionsList, isFavorite, renderClothesPreset, renderAnimations]);
 
   return {
     renderAllInteractions,
