@@ -54,7 +54,7 @@ function Item({
         <S.ItemTitle>Retirar</S.ItemTitle>
       )}
       {index !== -1 && <S.ItemWrapIcon>{index}</S.ItemWrapIcon>}
-      <S.ItemWrapMoney>R$ 5000</S.ItemWrapMoney>
+      <S.ItemWrapMoney>R$ 500</S.ItemWrapMoney>
     </S.OptionItem>
   );
 }

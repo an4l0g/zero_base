@@ -1,11 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import useInteractions from "../../hooks/useInteractions";
+import useRequest from "../../hooks/useRequest";
 import * as S from "./styles";
 import { BiChevronLeft } from "react-icons/bi";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import useRequest from "../../hooks/useRequest";
+import { AiFillStar, AiOutlineStar, AiOutlineLoading } from "react-icons/ai";
 
-function Dynamic() {
+const Dynamic = () => {
   const searchRef = useRef();
   const {
     search,
@@ -16,44 +22,44 @@ function Dynamic() {
     handleClickInteraction,
     isFavorite,
   } = useInteractions();
+
   const { request } = useRequest();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     searchRef.current.focus();
+    setLoading(false); // Supondo que você deseja definir o carregamento como false após o componente ser montado.
   }, []);
 
   const filteredInteractions = useMemo(() => {
-    console.log("interactions", interactions);
-    return interactions.filter((item) => {
-      if (search !== "") {
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      } else {
-        return item.category.includes(
-          category.length > 0 ? category[category.length - 1] : "main"
-        );
-      }
-    });
+    if (search) {
+      return interactions.filter((item) =>
+        item.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    const currentCategory =
+      category.length > 0 ? category[category.length - 1] : "main";
+    return interactions.filter((item) =>
+      item.category.includes(currentCategory)
+    );
   }, [interactions, search, category]);
 
   const handleBackButton = useCallback(() => {
-    setCategory((old) => {
-      let newCategory = [...old];
+    setCategory((prev) => {
+      const newCategory = [...prev];
       newCategory.pop();
-
       return newCategory;
     });
-  }, [setCategory]);
+  }, []);
 
   const handleToggleFavorite = (action, value) => {
-    let favoriteAction = action;
-    if (value) {
-      favoriteAction = favoriteAction + ":" + value;
-    }
+    const actionStr = value ? `${action}:${value}` : action;
 
     if (isFavorite(action, value)) {
-      request("deleteFavorite", { action: favoriteAction });
+      request("deleteFavorite", { action: actionStr });
     } else {
-      request("setFavorite", { action: favoriteAction });
+      request("setFavorite", { action: actionStr });
     }
   };
 
@@ -76,41 +82,50 @@ function Dynamic() {
         />
       </S.Header>
       <S.ActionList>
-        {filteredInteractions.length > 0 ? (
+        {loading && (
+          <S.Loading>
+            <AiOutlineLoading /> <small>Carregando...</small>
+          </S.Loading>
+        )}
+        {!loading && (
           <>
-            {filteredInteractions.map((interaction) => (
-              <S.Item key={interaction.title}>
-                <S.ItemDescription
-                  onClick={() => handleClickInteraction(interaction)}
-                >
-                  {interaction.icon}
-                  {interaction.title}
-                </S.ItemDescription>
-                {interaction.type !== "category" && (
-                  <S.FavButton
-                    onClick={() =>
-                      handleToggleFavorite(
-                        interaction.action,
-                        interaction.value
-                      )
-                    }
-                  >
-                    {isFavorite(interaction.action, interaction.value) ? (
-                      <AiFillStar />
-                    ) : (
-                      <AiOutlineStar />
+            {filteredInteractions.length > 0 ? (
+              <>
+                {filteredInteractions.map((interaction) => (
+                  <S.Item key={interaction.title}>
+                    <S.ItemDescription
+                      onClick={() => handleClickInteraction(interaction)}
+                    >
+                      {interaction.icon}
+                      {interaction.title}
+                    </S.ItemDescription>
+                    {interaction.type !== "category" && (
+                      <S.FavButton
+                        onClick={() =>
+                          handleToggleFavorite(
+                            interaction.action,
+                            interaction.value
+                          )
+                        }
+                      >
+                        {isFavorite(interaction.action, interaction.value) ? (
+                          <AiFillStar />
+                        ) : (
+                          <AiOutlineStar />
+                        )}
+                      </S.FavButton>
                     )}
-                  </S.FavButton>
-                )}
-              </S.Item>
-            ))}
+                  </S.Item>
+                ))}
+              </>
+            ) : (
+              <S.EmptyFeedback>Nada foi encontrado!</S.EmptyFeedback>
+            )}
           </>
-        ) : (
-          <S.EmptyFeedback>Nada foi encontrado!</S.EmptyFeedback>
         )}
       </S.ActionList>
     </S.Container>
   );
-}
+};
 
-export default Dynamic;
+export default React.memo(Dynamic);

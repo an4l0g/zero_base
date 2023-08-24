@@ -171,8 +171,6 @@ generateAnimations = function()
     local sharedList = {}
     for index, value in pairs(configAnimations.shared) do
         sharedList = {
-            title = value.title,
-            category = value.category,
             type = 'action',
             value = { 'shared', index }
         }
@@ -182,13 +180,12 @@ generateAnimations = function()
     local animList = {}
     for index, value in pairs(configAnimations.animations) do
         animList = {
-            title = value.title,
-            category = value.category,
             type = 'action',
             value = { 'animations', index }
         }
-        table.insert(animations, sharedList)
+        table.insert(animations, animList)
     end
+
 end
 
 getAllAnimations = function()

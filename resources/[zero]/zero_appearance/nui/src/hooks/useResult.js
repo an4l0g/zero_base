@@ -176,7 +176,10 @@ function useResult() {
             });
 
             result.default[index].map((dItem) => {
-              if (!result.current[index].includes(dItem)) {
+              if (
+                !result.current[index].includes(dItem) &&
+                !result.default[index].includes(dItem)
+              ) {
                 total -= currentPrice();
               }
             });

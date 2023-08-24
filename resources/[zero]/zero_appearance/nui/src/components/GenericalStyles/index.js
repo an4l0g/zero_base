@@ -4,13 +4,12 @@ export const Container = styled.div`
   ${({ theme }) => css`
     background-image: linear-gradient(
       to bottom right,
-      ${theme.colors.primary(0.5)},
-      ${theme.colors.dark(0.5)}
+      ${theme.colors.primary(0.3)},
+      ${theme.colors.dark(0.3)}
     );
-    background-color: ${theme.colors.dark(0.7)};
-    width: 550px;
-    border-radius: 10px;
-    height: 70%;
+    background-color: ${theme.colors.dark(0.95)};
+    width: 700px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,6 +33,9 @@ export const Content = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5rem 2rem;
   gap: 1.5rem;
 `;
 
@@ -162,6 +164,9 @@ export const PovButton = styled.button`
 
 export const Shop = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: space-between;
   gap: 1rem;
   height: calc(100% - 150px - 1rem);
 `;
@@ -232,8 +237,8 @@ export const OptionsListWrap = styled.div`
 export const OptionsList = styled.ul`
   list-style: none;
   display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 1rem;
   flex-wrap: wrap;
   max-height: 100%;
   overflow-x: hidden;
@@ -244,8 +249,8 @@ export const OptionItem = styled.li`
   ${({ theme }) => css`
     background-color: ${theme.colors.dark(0.3)};
     border: 1px solid ${theme.colors.primary(0.2)};
-    width: 130px;
-    height: 130px;
+    width: 150px;
+    height: 150px;
     border-radius: 5px;
     overflow: hidden;
     padding: 5px;

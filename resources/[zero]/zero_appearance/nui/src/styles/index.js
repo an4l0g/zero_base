@@ -124,5 +124,4 @@ export const Wrap = styled.section`
   justify-content: flex-start;
   align-items: center;
   gap: 2rem;
-  padding-left: 2rem;
 `;
