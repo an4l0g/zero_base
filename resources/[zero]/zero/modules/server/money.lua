@@ -75,6 +75,7 @@ zero.giveBankMoney = function(user_id, value)
 		zero.setBankMoney(user_id, parseInt(money + value))
 	end
 end
+vRP.giveBankMoney = zero.giveBankMoney
 exports('giveBankMoney', zero.giveBankMoney)
 
 zero.givePaypalMoney = function(user_id, value)

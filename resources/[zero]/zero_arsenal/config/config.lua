@@ -6,7 +6,7 @@ zeroClient = Tunnel.getInterface('zero')
 config = {}
 
 config.permissions = {
-    ['vippm.permissao'] = 'VipPolicia'
+    ['vippm.permissao'] = 'Vip Policia'
 }
 
 config.attachs = {
@@ -57,7 +57,7 @@ config.arsenal = {
         ['name'] = 'Arsenal Policia', ['description'] = 'Departamento de Polícia principal',
         ['weapons'] = {
             ['cooldownWeapons'] = { ['time'] = 30, ['noCooldown'] = 'vippm.permissao' },
-            { ['spawn'] = 'weapon_pistol_mk2', ['name'] = 'Five-SeveN', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
+            { ['spawn'] = 'weapon_pistol_mk2', ['name'] = 'Five-SeveN', ['ammo'] = 250, ['perm'] = 'vippm.permissao' },
             { ['spawn'] = 'weapon_combatpistol', ['name'] = 'Glock', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_smg_mk2', ['name'] = 'MP9', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_combatpdw', ['name'] = 'MPX', ['ammo'] = 250, ['perm'] = nil, price = 50 },
@@ -73,8 +73,8 @@ config.arsenal = {
             ['cooldownUtilitarys']  = { ['time'] = 30, ['noCooldown'] = 'vippm.permissao', price = 50 },
             { ['spawn'] = 'radio', ['name'] = 'Rádio', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'spike', ['name'] = 'Spike', ['quantity'] = 1, ['perm'] = nil, price = 50 },
-            { ['spawn'] = 'barreira', ['name'] = 'barreira', ['quantity'] = 1, ['perm'] = nil, price = 50 },
-            { ['spawn'] = 'cone', ['name'] = 'cone', ['quantity'] = 1, ['perm'] = nil, price = 50 },
+            { ['spawn'] = 'barreira', ['name'] = 'Barreira', ['quantity'] = 1, ['perm'] = nil, price = 50 },
+            { ['spawn'] = 'cone', ['name'] = 'Cone', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'colete-militar', ['name'] = 'Colete Militar', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'gadget_parachute', ['name'] = 'Paraquedas', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['type'] = 'arma', ['spawn'] = 'WEAPON_NIGHTSTICK', ['name'] = 'Cassetete', ['ammo'] = 0, ['perm'] = nil, price = 50 },

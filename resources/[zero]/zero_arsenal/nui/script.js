@@ -65,7 +65,7 @@ $(document).ready(() => {
           <span>${weapon.name}</span>
           ${
             weapon.perm[0]
-              ? "<small class='hl'>R$50</small>"
+              ? `<small class='hl'>R$${weapon.price}</small>`
               : `<small>${weapon.perm[1]} <i class="fas fa-lock"></i></small>`
           }
         </button>
@@ -88,7 +88,7 @@ $(document).ready(() => {
           <span>${utilitary.name}</span>
           ${
             utilitary.perm[0]
-              ? "<small class='hl'>R$50</small>"
+              ? `<small class='hl'>R$${utilitary.price}</small>`
               : `<small>${utilitary.perm[1]} <i class="fas fa-lock"></i></small>`
           }
         </button>
@@ -109,7 +109,7 @@ $(document).ready(() => {
       <span>${kit.name}</span>
       ${
         kit.perm[0]
-          ? "<small class='hl'>R$50</small>"
+          ? `<small class='hl'>R$${kit.price}</small>`
           : `<small>${kit.perm[1]} <i class="fas fa-lock"></i></small>`
       }
           </button>

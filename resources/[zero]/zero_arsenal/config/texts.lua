@@ -1,8 +1,8 @@
 config.texts = {
     ['setAttachs'] = '<b>Attachs</b> aplicado nos armamentos do arsenal com sucesso.',
     ['clearWeapons'] = 'Você efetuou uma <b>limpeza!</b>',
-    ['giveWeapon'] = function(weapon)
-        return weapon..' <b>equipado</b> com sucesso.'
+    ['giveWeapon'] = function(weapon, price)
+        return weapon..' <b>equipado</b> com sucesso. Você gastou <b>R$'..zero.format(price)..'</b>!'
     end,
     ['haveWeapon'] = 'Você já possui esse <b>armamento</b> em seu inventário.',
     ['haveItem'] = function(item)

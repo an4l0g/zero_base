@@ -147,6 +147,7 @@ zero.addUserGroup = function(user_id, group, grade)
 		end
 	end
 end
+vRP.addUserGroup = zero.addUserGroup
 ------------------------------------------------------------------
 
 ------------------------------------------------------------------
@@ -159,6 +160,7 @@ zero.removeUserGroup = function(user_id, group)
 		return true
 	end
 end
+vRP.removeUserGroup = zero.removeUserGroup
 ------------------------------------------------------------------
 
 ------------------------------------------------------------------

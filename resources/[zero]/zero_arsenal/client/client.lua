@@ -137,7 +137,8 @@ local renderWeapons = function(config)
             name = value['name'],
             infos = GetWeaponHudStats(GetHashKey(value['spawn'])),
             ammo = value['ammo'],
-            perm = permEntry.perm
+            perm = permEntry.perm,
+            price = value['price']
         }
         table.insert(gunList[configuration], weaponEntry)
     end
@@ -157,7 +158,8 @@ local renderWeapons = function(config)
             name = value['name'],
             quantity = value['quantity'],
             ammo = value['ammo'],
-            perm = permEntry.perm
+            perm = permEntry.perm,
+            price = value['price']
         }
         table.insert(utilitaryList[configuration], utilitaryEntry)
     end
@@ -175,7 +177,8 @@ local renderWeapons = function(config)
             index = index,
             name = value['name'],
             itens = value['itens'],
-            perm = permEntry.perm
+            perm = permEntry.perm,
+            price = value['price']
         }
         table.insert(kitList[configuration], kitsEntry)
     end

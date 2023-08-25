@@ -33,7 +33,7 @@
   "instagram_accounts": {
     "*": 1,
     "+Staff.Manager": 2,
-    "@Vip.Zero": 2
+    "@Vips.Zero": 2
   },
   "moderator": "staff.permissao",
   "item": "celular",

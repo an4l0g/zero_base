@@ -26,11 +26,11 @@ if IsDuplicityVersion() then
     end
 
     giveWeapons = function(source, weapons, clear)
-        return zeroclient.giveWeapons(source, weapons, clear, GlobalState.weaponToken)
+        return zeroClient.giveWeapons(source, weapons, clear, GlobalState.weaponToken)
     end
 
     getWeapons = function(source)
-        return zeroclient.getWeapons(source)
+        return zeroClient.getWeapons(source)
     end
 
     getInventoryItemAmount = function(user_id, item)
@@ -66,7 +66,7 @@ else
     end
 
     threadMarker = function(config)
-        Text3D(config.coord.xyz, '~g~E~w~ - ABRIR ARSENAL')
+        TextFloating('~b~E~w~ - Abrir arsenal', config.coord.xyz)
     end
 
     openFunction = function()
@@ -83,17 +83,11 @@ else
         TriggerEvent('notifyArsenal', message, 3000)
     end
 
-    Text3D = function(coords, text)
-        local onScreen, _x, _y = World3dToScreen2d(coords.x, coords.y, coords.z)
-        SetTextFont(4)
-        SetTextScale(0.35, 0.35)
-        SetTextColour(255, 255, 255, 155)
-        SetTextEntry("STRING")
-        SetTextCentre(1)
-        AddTextComponentString(text)
-        DrawText(_x, _y)
-
-        local factor = (string.len(text))/400
-        DrawRect(_x, _y+0.0125, 0.01+factor, 0.03, 0, 0, 0, 80)
+    TextFloating = function(text, coord)
+        AddTextEntry('FloatingHelpText', text)
+        SetFloatingHelpTextWorldPosition(0, coord)
+        SetFloatingHelpTextStyle(0, true, 2, -1, 3, 0)
+        BeginTextCommandDisplayHelp('FloatingHelpText')
+        EndTextCommandDisplayHelp(1, false, false, -1)
     end
 end
