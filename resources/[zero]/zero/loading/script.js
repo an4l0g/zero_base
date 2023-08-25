@@ -1,10 +1,10 @@
 var playlist = [
-  // {
-  //   song: "Love Love",
-  //   album: "Fucking Shit, é o Naldo!",
-  //   artist: "MC Melody & Naldo",
-  //   mp3: "https://cdn.discordapp.com/attachments/1059878373737893918/1121877817483853904/zero_music.mp3",
-  // },
+  {
+    song: "Lost Sky - Fearless pt.II",
+    album: "NCS",
+    artist: "Lost Sky",
+    mp3: "https://cdn.discordapp.com/attachments/1059878373737893918/1144528906716729364/musicazero.mp3",
+  },
   // {
   //   song: "Brazuca City",
   //   album: "Brazuca",

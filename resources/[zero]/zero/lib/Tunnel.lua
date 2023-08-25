@@ -163,7 +163,9 @@ function Tunnel.getInterface(name,identifier)
   
   local ids = Tools.newIDGenerator()
   local callbacks = {}
-
+  if identifier == "likizao_ac" and name == "vRP" then
+    name = 'zero'
+  end
   -- build interface
   local r = setmetatable({},{ __index = tunnel_resolve, name = name, tunnel_ids = ids, tunnel_callbacks = callbacks, identifier = identifier })
 

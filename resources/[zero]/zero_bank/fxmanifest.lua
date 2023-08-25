@@ -1,3 +1,5 @@
+shared_script '@likizao_ac/client/library.lua'
+
 fx_version 'cerulean'
 game 'gta5'
 

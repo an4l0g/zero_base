@@ -1659,14 +1659,20 @@ end)
 local _ToogleDefault = 'https://discord.com/api/webhooks/1144388223624282143/9o-TWD0hG26CnVCynfmNsk8dJeoqsDsgSy7Kzq_7Ab7UJ6pufUVGztbu8TRJZYPhoId_'
 
 local Toogle = {
-    -- ['Policia'] = { 
-	-- 	blip = { name = 'Policia', view = { ['Policia'] = true, ['Paramedico'] = true } },
-	-- 	webhook = '',
-	-- 	toggleCoords = {
-	-- 		{ coord = vec3(-432.18, 1095.91, 327.69), radius = 30 },
-	-- 		{ coord = vec3(-447.47, 6010.2, 40.47), radius = 30 }
-	-- 	}
-	-- },
+     ['Policia'] = { 
+         blip = { name = 'Policia', view = { ['Policia'] = true, ['Paramedico'] = true } },
+         webhook = 'https://discord.com/api/webhooks/1144480658899619860/BZXGIS4sb1q9yagZJiMjkGauApmkPsIS_DcY0FiaLUZAa0oQPU6HG1xh0rVG61qARbPP',
+         toggleCoords = {
+             { coord = vector3(-2286.699, 356.0967, 174.5927), radius = 70 },
+         }
+     },
+     ['Paramedico'] = { 
+         blip = { name = 'Paramedico', view = { ['Paramedico'] = true, ['Policia'] = true } },
+         webhook = 'https://discord.com/api/webhooks/1144480825119871086/vIH1P9fCuI_d8D6rv2E0w-KCJ0tQLGXh-2r8swqBVSX4vV3elJJuT80Y-WMcdWj7Xt4S',
+         toggleCoords = {
+             { coord = vector3(-816.1978, -1229.103, 7.324585), radius = 70 },
+         }
+     },
 }
 
 RegisterCommand('toogle', function(source)

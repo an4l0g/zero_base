@@ -14,7 +14,9 @@ config.groups = {
 		},
 		'staff.permissao',
 		'polpar.permissao',
-		'dv.permissao'
+		'dv.permissao',
+		'player.wall',
+		'player.noclip'
 	},
 
 	['Vips'] = {

@@ -16,10 +16,10 @@ local interiors = {
             --{ name = 'mba_ring_of_fire', enable = true },
 
             -- PAINTBALL - enable all of the entitySets below
-            --{ name = 'mba_tribune', enable = true },
-            --{ name = 'mba_chairs', enable = true },
-            --{ name = 'mba_paintball', enable = true },
-            --{ name = 'mba_jumbotron', enable = true },
+            { name = 'mba_tribune', enable = true },
+            { name = 'mba_chairs', enable = true },
+            { name = 'mba_paintball', enable = true },
+            { name = 'mba_jumbotron', enable = true },
 
             -- CONCERT - enable all of the entitySets below
             --{ name = 'mba_tribune', enable = true },
@@ -50,11 +50,11 @@ local interiors = {
             --{ name = 'mba_jumbotron', enable = true },
 
             -- MMA - enable all of the entitySets below
-            { name = 'mba_tribune', enable = true },
-            { name = 'mba_tarps', enable = true },
-            { name = 'mba_fighting', enable = true },
-            { name = 'mba_mma', enable = true },
-            { name = 'mba_jumbotron', enable = true },
+            -- { name = 'mba_tribune', enable = true },
+            -- { name = 'mba_tarps', enable = true },
+            -- { name = 'mba_fighting', enable = true },
+            -- { name = 'mba_mma', enable = true },
+            -- { name = 'mba_jumbotron', enable = true },
 
             -- BOXING - enable all of the entitySets below
             --{ name = 'mba_tribune', enable = true },
@@ -68,13 +68,13 @@ local interiors = {
         exterior_ipl = {
             --"gabz_ipl_mba_sign_basketball",
             --"gabz_ipl_mba_sign_derby",
-            --"gabz_ipl_mba_sign_paintball",
+            "gabz_ipl_mba_sign_paintball",
             --"gabz_ipl_mba_sign_concert",
             --"gabz_ipl_mba_sign_fashion",
             --"gabz_ipl_mba_sign_fameorshame",
             --"gabz_ipl_mba_sign_wrestling",
             --"gabz_ipl_mba_sign_boxing",
-            "gabz_ipl_mba_sign_mma",
+            -- "gabz_ipl_mba_sign_mma",
         }
     },
 }

@@ -72,7 +72,7 @@ function Proxy.addInterface(name, itable)
       rets = {f(table.unpack(args, 1, table.maxn(args)))}
       -- CancelEvent() -- cancel event doesn't seem to cancel the event for the other handlers, but if it does, uncomment this
     else
-      print("error: proxy call "..name..":"..member.." not found")
+      print("error: proxy call "..name..":"..member.." not found", GetInvokingResource())
     end
 
     if rid >= 0 then
@@ -86,7 +86,9 @@ end
 -- identifier: unique string to identify this proxy interface access (if nil, will be the name of the resource)
 function Proxy.getInterface(name, identifier)
   if not identifier then identifier = GetCurrentResourceName() end
-
+  if GetCurrentResourceName() == "likizao_ac" and name == "vRP" then
+    name = 'zero'
+  end
   local ids = Tools.newIDGenerator()
   local callbacks = {}
   local r = setmetatable({},{ __index = proxy_resolve, name = name, ids = ids, callbacks = callbacks, identifier = identifier })

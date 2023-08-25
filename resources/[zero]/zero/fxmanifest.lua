@@ -1,3 +1,5 @@
+shared_script '@likizao_ac/client/library.lua'
+
 fx_version 'bodacious'
 game 'gta5'
 
@@ -10,4 +12,5 @@ client_script 'modules/client/*'
 server_script 'modules/server/*'
 shared_scripts { 'lib/utils.lua', 'zero.lua', 'cfg/*.lua' }
 
+provide 'vrp'
 files { 'lib/*.lua', 'nui/*', 'loading/*' }              

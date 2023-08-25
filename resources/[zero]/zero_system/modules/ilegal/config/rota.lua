@@ -244,7 +244,7 @@ Routes = {
     },
 
     locations = {
-        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Maconha', cooldown = 900 },
+        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Aviaozinho', cooldown = 900 },
         { coord = vector3(-1855.332, -1204.009, 13.00293), config = 'ZeroFome', cooldown = 900 },
         { coord = vector3(28.45715, -2669.842, 12.04248), config = 'Arma', cooldown = 900 },
         { coord = vector3(-317.0769, -2778.752, 4.999268), config = 'Municao', cooldown = 900 },
