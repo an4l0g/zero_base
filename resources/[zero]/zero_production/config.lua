@@ -265,6 +265,16 @@ configs.products = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 7350 },
             }
         },
+        ['weapon_crowbar'] = {
+            order = 5,
+            name = 'Pé de cabra',
+            min_amount = 1,
+            max_amount = 1,
+            delay = 1000,
+            materials = {
+                ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1250 },
+            }
+        },
     },
     ['cook'] = {
         ['combo-camarao'] = {
@@ -331,14 +341,14 @@ configs.products = {
 }
 
 configs.productions = {
-    ['espanha'] = { 
-        type = 'production',
-        coords = vector3(412.167, 3.718682, 84.91797), 
-        products = configs.products.guns, 
-        label = 'Produção de Armas', 
-        permission = 'espanha.permissao',
-        webhook = '' 
-    },
+    -- ['espanha'] = { 
+    --     type = 'production',
+    --     coords = vector3(412.167, 3.718682, 84.91797), 
+    --     products = configs.products.guns, 
+    --     label = 'Produção de Armas', 
+    --     permission = 'espanha.permissao',
+    --     webhook = '' 
+    -- },
     ['colombia'] = { 
         type = 'production',
         coords = vector3(-1486.299, 835.8461, 176.9854), 
