@@ -21,18 +21,7 @@ srv.checkPermissions = function(permission)
     local _source = source
     local _userId = getUserId(_source)
     if (_userId) then
-        if (permission) then
-            if (type(permission) == 'table') then
-                for _, perm in pairs(permission) do
-                    if (hasPermission(_userId, perm)) then
-                        return true
-                    end
-                end
-                return false
-            end
-            return hasPermission(_userId, permission)
-        end
-        return true
+        return zero.checkPermissions(_userId, permission)
     end
 end
 
@@ -62,14 +51,18 @@ srv.giveWeapon = function(weapons, _config)
         end
 
         if (not cooldownWeapons[_userId][_spawn]) then
-            if (not exports['bn_arsenal']:checkPermissions(_config['weapons']['cooldownWeapons']['noCooldown'])) then 
+            if (not exports['zero_arsenal']:checkPermissions(_config['weapons']['cooldownWeapons']['noCooldown'])) then 
                 cooldownWeaponsThread(_userId, _spawn, _config['weapons']['cooldownWeapons']['time']) 
             end
 
             if (not _weapons[_spawn]) then
-                giveWeapons(_source, { [_spawn] = { ['ammo'] = weapons['ammo'] } }, false)
-                serverNotify(_source, textsConfig['giveWeapon'](weapons['name']))
-                webhookConfig['weapons'](_source, _config['webhooks']['weapons'], _config['name'], _userId, _spawn, weapons['name'], weapons['ammo'])
+                if (zero.tryFullPayment(_userId, weapons['price'])) then
+                    giveWeapons(_source, { [_spawn] = { ['ammo'] = weapons['ammo'] } }, false)
+                    serverNotify(_source, textsConfig['giveWeapon'](weapons['name'], weapons['price']))
+                    webhookConfig['weapons'](_source, _config['webhooks']['weapons'], _config['name'], _userId, _spawn, weapons['name'], weapons['ammo'])
+                else
+                    TriggerClientEvent('notifyArsenal', _source, 'Você não possui <b>R$'..zero.format(weapons['price'])..'</b>!')
+                end
             else
                 serverNotify(_source, textsConfig['haveWeapon'])
             end
@@ -103,23 +96,31 @@ srv.giveUtilitary = function(utilitarys, _config)
         end
 
         if (not cooldownUtilitarys[_userId][_spawn]) then
-            if (not exports['bn_arsenal']:checkPermissions(_config['utilitarys']['cooldownUtilitarys']['noCooldown'])) then 
+            if (not exports['zero_arsenal']:checkPermissions(_config['utilitarys']['cooldownUtilitarys']['noCooldown'])) then 
                 cooldownUtilitaryThread(_userId, _spawn, _config['utilitarys']['cooldownUtilitarys']['time']) 
             end
             
             if (utilitarys['type'] == 'arma') then
                 local _weapons = getWeapons(_source)
                 if (not _weapons[_spawn]) then
-                    giveWeapons(_source, { [_spawn] = { ['ammo'] = utilitarys['ammo'] } }, false)
-                    serverNotify(_source, textsConfig['giveWeapon'](utilitarys['name']))
-                    webhookConfig['utilitaryWeapon'](_source, _config['webhooks']['utilitarys'], _config['name'], _userId, _spawn, utilitarys['name'], utilitarys['ammo'])
+                    if (zero.tryFullPayment(_userId, utilitarys.price)) then
+                        giveWeapons(_source, { [_spawn] = { ['ammo'] = utilitarys['ammo'] } }, false)
+                        serverNotify(_source, textsConfig['giveWeapon'](utilitarys['name']))
+                        webhookConfig['utilitaryWeapon'](_source, _config['webhooks']['utilitarys'], _config['name'], _userId, _spawn, utilitarys['name'], utilitarys['ammo'])
+                    else
+                        TriggerClientEvent('notifyArsenal', _source, 'Você não possui <b>R$'..zero.format(utilitarys.price)..'</b>!')
+                    end
                 else
                     TriggerClientEvent('notifyArsenal', _source, 'Você já possui esse <b>armamento</b> em seu inventário.')
                 end
             else
                 if (getInventoryItemAmount(_userId, _spawn) < utilitarys['quantity']) then 
-                    giveInventoryItem(_userId, _spawn, utilitarys['quantity'])
-                    webhookConfig['utilitaryItem'](_source, _config['webhooks']['utilitarys'], _config['name'], _userId, _spawn, utilitarys['name'], utilitarys['quantity'])
+                    if (zero.tryFullPayment(_userId, utilitarys.price)) then
+                        giveInventoryItem(_userId, _spawn, utilitarys['quantity'])
+                        webhookConfig['utilitaryItem'](_source, _config['webhooks']['utilitarys'], _config['name'], _userId, _spawn, utilitarys['name'], utilitarys['quantity'])
+                    else
+                        TriggerClientEvent('notifyArsenal', _source, 'Você não possui <b>R$'..zero.format(utilitarys.price)..'</b>!')
+                    end
                 else
                     serverNotify(_source, textsConfig['haveItem'](utilitarys['name']))
                 end
@@ -154,13 +155,17 @@ srv.giveKits = function(kits, _config)
         end
 
         if (not cooldownKits[_userId][_name]) then
-            if (not exports['bn_arsenal']:checkPermissions(_config['kits']['cooldownKits']['noCooldown'])) then 
+            if (not exports['zero_arsenal']:checkPermissions(_config['kits']['cooldownKits']['noCooldown'])) then 
                 cooldownKitThread(_userId, _name, _config['kits']['cooldownKits']['time']) 
             end
             
             for index, value in pairs(kits['itens']) do
                 if (getInventoryItemAmount(_userId, index) < value['quantity']) then
-                    giveInventoryItem(_userId, index, value['quantity'])
+                    if (zero.tryFullPayment(_userId, value.price)) then
+                        giveInventoryItem(_userId, index, value['quantity'])
+                    else
+                        TriggerClientEvent('notifyArsenal', _source, 'Você não possui <b>R$'..zero.format(value.price)..'</b>!')
+                    end
                 else
                     serverNotify(_source, textsConfig['haveKit'](kits['name']))
                     return
