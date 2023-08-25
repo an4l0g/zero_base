@@ -2,7 +2,7 @@ Proxy = module("zero","lib/Proxy")
 zero = Proxy.getInterface("zero")
 
 configs = {}
-configs.token = 'ZeroToken'
+configs.token = 'ZeroLocal'
 configs.generals = {
     openCommand = 'pets',
     dbTable = 'pets', -- Nome da tabela do banco de dados
