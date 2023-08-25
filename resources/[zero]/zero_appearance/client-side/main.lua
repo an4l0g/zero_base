@@ -33,8 +33,10 @@ end
 
 tempCam = nil
 Cam = function(offset, bone)
+    local ped = PlayerPedId()
+    SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'))
+    Citizen.Wait(500)
     if (not DoesCamExist(tempCam)) then
-        local ped = PlayerPedId()
         local coordsCam = GetOffsetFromEntityInWorldCoords(ped, offset.x, offset.y, offset.z)
         
         tempCam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
@@ -90,6 +92,7 @@ addBlips = function(locs)
 end
 
 RegisterNuiCallback('close', function()
+    LocalPlayer.state.Appearance = false
     closeNui()
     setPedCustom()
 end)
@@ -147,6 +150,7 @@ local markerThread = function()
                     local config = locsConfig[index]
                     createMarkers(config.coord)
                     if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                        LocalPlayer.state.Appearance = true
                         openAppearance[config.type](index)
                     end
                 end

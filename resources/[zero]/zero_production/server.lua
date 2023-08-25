@@ -38,7 +38,7 @@ sProduction.hasPermission = function(perm)
     local _source = source
     local user_id = zero.getUserId(_source)
 
-    return zero.hasPermission(user_id, perm)
+    return zero.checkPermissions(user_id, perm)
 end
 
 sProduction.moneyLaundry = function(production)

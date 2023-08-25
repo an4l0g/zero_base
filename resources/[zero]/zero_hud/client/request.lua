@@ -1,6 +1,8 @@
 requests = {}
 
 cli.createRequest = function(id, title, time)
+    if (time < 1000) then time = (time * 1000); end;
+
     table.insert(requests, id)
     SendNUIMessage({
         method = 'request',

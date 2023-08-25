@@ -1659,25 +1659,33 @@ end)
 local _ToogleDefault = 'https://discord.com/api/webhooks/1144388223624282143/9o-TWD0hG26CnVCynfmNsk8dJeoqsDsgSy7Kzq_7Ab7UJ6pufUVGztbu8TRJZYPhoId_'
 
 local Toogle = {
-     ['Policia'] = { 
-         blip = { name = 'Policia', view = { ['Policia'] = true, ['Paramedico'] = true } },
-         webhook = 'https://discord.com/api/webhooks/1144480658899619860/BZXGIS4sb1q9yagZJiMjkGauApmkPsIS_DcY0FiaLUZAa0oQPU6HG1xh0rVG61qARbPP',
-         toggleCoords = {
-             { coord = vector3(-2286.699, 356.0967, 174.5927), radius = 70 },
-         }
-     },
-     ['Paramedico'] = { 
-         blip = { name = 'Paramedico', view = { ['Paramedico'] = true, ['Policia'] = true } },
-         webhook = 'https://discord.com/api/webhooks/1144480825119871086/vIH1P9fCuI_d8D6rv2E0w-KCJ0tQLGXh-2r8swqBVSX4vV3elJJuT80Y-WMcdWj7Xt4S',
-         toggleCoords = {
-             { coord = vector3(-816.1978, -1229.103, 7.324585), radius = 70 },
-         }
-     },
+    ['Policia'] = { 
+        blip = { name = 'Policia', view = { ['Policia'] = true, ['Paramedico'] = true } },
+        webhook = 'https://discord.com/api/webhooks/1144480658899619860/BZXGIS4sb1q9yagZJiMjkGauApmkPsIS_DcY0FiaLUZAa0oQPU6HG1xh0rVG61qARbPP',
+        toggleCoords = {
+            { coord = vector3(-2286.699, 356.0967, 174.5927), radius = 70 },
+        }
+    },
+    ['Hospital'] = { 
+        blip = { name = 'Paramedico', view = { ['Paramedico'] = true, ['Policia'] = true } },
+        webhook = 'https://discord.com/api/webhooks/1144480825119871086/vIH1P9fCuI_d8D6rv2E0w-KCJ0tQLGXh-2r8swqBVSX4vV3elJJuT80Y-WMcdWj7Xt4S',
+        toggleCoords = {
+            { coord = vector3(-816.1978, -1229.103, 7.324585), radius = 70 },
+        }
+    },
+    ['Deic'] = { 
+        blip = { name = 'DEIC', view = { ['Paramedico'] = true, ['Policia'] = true, ['Deic'] = true } },
+        webhook = 'https://discord.com/api/webhooks/1141426122660261988/Qr_S_oy9DTpjdTPjeMAB7VRdmLtCnvzKnU09Js4sXW7gW9L_asrkqxA3K2C8wedVoUX1',
+        toggleCoords = {
+            { coord = vector3(535.3187, -2767.648, 6.448364), radius = 70 },
+        }
+    },
 }
 
 RegisterCommand('toogle', function(source)
     local user_id = zero.getUserId(source)
-    
+    local identity = zero.getUserIdentity(user_id)
+
     for k, v in pairs(Toogle) do
         local inGroup, inGrade = zero.hasGroup(user_id, k)
 		if (inGroup) then
@@ -1709,12 +1717,23 @@ RegisterCommand('toogle', function(source)
 					if (v.blip) then TriggerEvent('sw-blips:unTracePlayer', source); end;
 				end
 
-                zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..'\n'..logsmg..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..'# '..identity.firstname..' '..identity.lastname..'\n'..logmsg..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
             else
                 TriggerClientEvent('notify', source, 'Toogle', 'Você só pode usar <b>/toogle</b> nos locais de Trabalho!')
             end
         end	
     end
+end)
+
+AddEventHandler('zero:playerLeave', function(user_id, source)
+    local identity = zero.getUserIdentity(user_id)
+	for k, v in pairs(Toogle) do
+		local inGroup, inGrade = zero.hasGroup(user_id,k)
+		if (inGroup) and zero.hasGroupActive(user_id,k) then		
+			zero.setGroupActive(user_id, k, false)
+			zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..' '..identity.firstname..' '..identity.lastname..'\n[STATUS]: LEAVE'..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+		end
+	end
 end)
 
 local prefeituraCoord = vector3(-550.9846, -193.2, 38.21021)
@@ -1741,4 +1760,116 @@ RegisterCommand('staff',function(source)
             TriggerClientEvent('notify', source, 'Toogle', 'Você não está na <b>prefeitura</b>!')
         end   
     end
+end)
+
+---------------------------------------
+-- PTR
+---------------------------------------
+RegisterCommand('ptr', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local count = 0
+        local name = ''
+        for k, v in pairs(zero.getUsersByPermission('policia.permissao')) do
+            local identity = zero.getUserIdentity(v)
+            if (identity) then
+                name = name..'<b>'..v..'</b>: '..identity.firstname..' '..identity.lastname.. '<br>'
+            end
+            count = (count + 1)
+        end
+
+        TriggerClientEvent('notify', source, 'Prefeitura', 'Atualmente <b>'..count..' Oficiais</b> em serviço.')
+        if (zero.checkPermissions(user_id, { 'staff.permissao', 'policia.permissao' }) and count > 0) then
+            TriggerClientEvent('notify', source, 'Prefeitura', name)
+        end
+    end
+end)
+
+---------------------------------------
+-- EMS
+---------------------------------------
+RegisterCommand('ems', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local count = 0
+        local name = ''
+        for k, v in pairs(zero.getUsersByPermission('hospital.permissao')) do
+            local identity = zero.getUserIdentity(v)
+            if (identity) then
+                name = name..'<b>'..v..'</b>: '..identity.firstname..' '..identity.lastname.. '<br>'
+            end
+            count = (count + 1)
+        end
+
+        TriggerClientEvent('notify', source, 'Prefeitura', 'Atualmente <b>'..count..' Paramédicos</b> em serviço.')
+        if (zero.checkPermissions(user_id, { 'staff.permissao', 'hospital.permissao' }) and count > 0) then
+            TriggerClientEvent('notify', source, 'Prefeitura', name)
+        end
+    end
+end)
+
+---------------------------------------
+-- STATUS
+---------------------------------------
+RegisterCommand('status', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local onlinePlayers = GetNumPlayerIndices()
+        local staff = zero.getUsersByPermission('staff.permissao')
+        local policias = zero.getUsersByPermission('policia.permissao')
+        local ems = zero.getUsersByPermission('hospital.permissao')
+        local mec = zero.getUsersByPermission('mecanico.permissao')
+
+        TriggerClientEvent('notify', source, 'Prefeitura', '<b>Status dos serviços da nossa cidade</b>: <br> <br> <b>Prefeitura</b>: '..#staff..' <br> <b>Policia</b>: '..#policias..' <br> <b>Paramédico</b>: '..#ems..' <br> <b>Mecânico</b>: '..#mec..' <br> <b>Cidadãos</b>: '..onlinePlayers)
+    end
+end)
+
+---------------------------------------
+-- ADMON
+---------------------------------------
+RegisterCommand('admon', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id and zero.checkPermissions(user_id, { '+Staff.Manager' })) then
+        local count = 0
+        local name = ''
+        for k, v in pairs(zero.getUsersByPermission('staff.permissao')) do
+            local identity = zero.getUserIdentity(v)
+            if (identity) then
+                name = name..'<b>'..v..'</b>: '..identity.firstname..' '..identity.lastname.. '<br>'
+            end
+            count = (count + 1)
+        end
+
+        TriggerClientEvent('notify', source, 'Prefeitura', 'Atualmente <b>'..count..' Staffs</b> em serviço.')
+        if (count > 0) then
+            TriggerClientEvent('notify', source, 'Prefeitura', name)
+        end
+    end
+end)
+
+---------------------------------------
+-- SEQUESTRO
+---------------------------------------
+RegisterCommand('sequestro', function(source)
+    local nPlayer = zeroClient.getNearestPlayer(source, 5)
+	if (nPlayer) then
+        if (vCLIENT.checkSequestro(source) == -1) then TriggerClientEvent('notify', source, 'Drumond', 'Este <b>veículo</b> não tem porta-malas.') return; end;
+        if (GetEntityHealth(GetPlayerPed(source)) <= 100) then return; end;
+        if (zeroClient.isHandcuffed(source)) then return; end;
+		if (zeroClient.isHandcuffed(nPlayer)) then
+			if (not zeroClient.getNoCarro(source)) then
+				local vehicle = zeroClient.getNearestVehicle(source,7)
+				if (vehicle) then
+                    
+					if zeroClient.getCarroClass(source,vehicle) then
+						zeroClient.setMalas(nPlayer)
+					end
+				end
+			elseif (zeroClient.isMalas(nPlayer)) then
+				zeroClient.setMalas(nPlayer)
+			end
+		else
+			TriggerClientEvent('notify', source, 'Drumond', 'A pessoa precisa estar algemada para colocar ou retirar do <b>porta-malas</b>.')
+		end
+	end
 end)

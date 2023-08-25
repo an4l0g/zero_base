@@ -16,14 +16,16 @@ local markerThread = function()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
                 local _config = Robberys.locations[index]
-                if (not inRobbery) then
-                    TextFloating('~b~E~w~ - Roubar', _config.coord.xyz)
-                else
-                    local text = (seconds > 1 and 'Aguarde ~b~'..seconds..'~w~ segundos\n\nPressione ~b~M~w~ para cancelar' or 'Finalizando o ~b~roubo~w~...')
-                    TextFloating(text, _config.coord.xyz)
-                end
-                if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                    vSERVER.checkRobbery(index)
+                if (dist < (_config.distance or 2.0)) then
+                    if (not inRobbery) then
+                        TextFloating('~b~E~w~ - Roubar', _config.coord.xyz)
+                    else
+                        local text = (seconds > 1 and 'Aguarde ~b~'..seconds..'~w~ segundos\n\nPressione ~b~M~w~ para cancelar' or 'Finalizando o ~b~roubo~w~...')
+                        TextFloating(text, _config.coord.xyz)
+                    end
+                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                        vSERVER.checkRobbery(index)
+                    end
                 end
             end
             Citizen.Wait(1)

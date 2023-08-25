@@ -46,7 +46,7 @@ RegisterNetEvent('zero_interactions:handcuff', function()
                         TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
                         TriggerClientEvent('zero_interactions:algemas', nPlayer)
 
-                        zero.giveInventoryItem(user_id, 'algema', 1)
+                        if (not zero.hasPermission(user_id, 'staff.permissao')) then zero.giveInventoryItem(user_id, 'algema', 1); end;
                     end)
                 elseif (zero.tryGetInventoryItem(user_id, 'lockpick', 1)) then
                     if (exports['zero_system']:Task(source, 3, 8000)) then
@@ -78,7 +78,7 @@ RegisterNetEvent('zero_interactions:handcuff', function()
                             TriggerClientEvent('zero_sound:source', nPlayer, 'uncuff', 0.1)
                             TriggerClientEvent('zero_interactions:algemas', nPlayer)
 
-                            zero.giveInventoryItem(user_id, 'algema', 1)
+                            if (not zero.hasPermission(user_id, 'staff.permissao')) then zero.giveInventoryItem(user_id, 'algema', 1); end;
                         end)
                     end
                 else

@@ -29,33 +29,13 @@
   },
   "call_mode": "mumble-voip",
   "webhookURL": "https://discord.com/api/webhooks/1140437829822971924/fwcth6U7dbMhavvHThW67iU-x_sZ42H8GYE3X-K-_i-ilHJRDha4qOKWmVQju1_41JRp",
-  "instagram_verify": "staff.permissao",
+  "instagram_verify": "instagram.permissao",
   "instagram_accounts": {
     "*": 1,
-    "manager.permissao": 2
+    "+Staff.Manager": 2,
+    "@Vip.Zero": 2
   },
   "moderator": "staff.permissao",
   "item": "celular",
-  "services": [
-    {
-      "name": "Policia",
-      "number": "190",
-      "permission": "policia.permissao"
-    },
-    {
-      "name": "Paramédico",
-      "number": "192",
-      "permission": "paramedico.permissao"
-    },
-    {
-      "name": "Mecânico",
-      "number": "0800 042",
-      "permission": "mecanico.permissao"
-    },
-    {
-      "name": "Taxi",
-      "number": "0800 075",
-      "permission": "taxi.permissao"
-    }
-  ]
+  "services": []
 }

@@ -2,10 +2,102 @@ local srv = {}
 Tunnel.bindInterface('Dealership', srv)
 local vCLIENT = Tunnel.getInterface('Dealership')
 
-zero._prepare('zero_dealership/setStock', 'insert ignore into dealership (car, stock) values (@car, @stock)')
+zero._prepare('zero_dealership/createStock', 'insert ignore into dealership (car, stock) values (@car, @stock)')
 zero._prepare('zero_dealership/getAll', 'select * from dealership')
 zero._prepare('zero_dealership/getVehStock', 'select stock from dealership where car = @car')
 zero._prepare('zero_dealership/updateVehStock', 'update dealership set stock = @stock where car = @car')
+
+local addVehicles = {
+    'bf400',
+    'akuma',
+    'hakuchou',
+    'shotaro',
+    'faggio',
+    'manchez',
+    'sanchez2',
+    'gauntlet4',
+    'deviant',
+    'moonbeam2',
+    'vigero',
+    'slamvan3',
+    'gauntlet',
+    'dominator3',
+    'buccaneer2',
+    'everon',
+    'sandking2',
+    'dubsta3',
+    'caracara2',
+    'kamacho',
+    'baller4',
+    'baller6',
+    'novak',
+    'rebla',
+    'toros',
+    'xls2',
+    'contender',
+    'cognoscenti2',
+    'glendale2',
+    'tailgater2',
+    'superd',
+    'primo2',
+    'coquette4',
+    'drafter',
+    'elegy',
+    'jugular',
+    'neon',
+    'paragon2',
+    'lynx',
+    'penumbra2',
+    'sultan2',
+    'sugoi',
+    'jester4',
+    'euros',
+    'futo2',
+    'vectre',
+    'comet6',
+    'growler',
+    'cypher',
+    'rt3000',
+    'remus',
+    'zr350',
+    'turismo2',
+    'cheburek',
+    'savestra',
+    'infernus2',
+    'autarch',
+    'italigtb',
+    'xa21',
+    'sultanrs',
+    't20',
+    'osiris',
+    'nero2',
+    'entity3',
+    'prototipo',
+    'emerus',
+    'visione',
+    'zentorno',
+    'sadler',
+    'schlagen',
+    'komoda',
+    'diablous2',
+    'previon',
+    'windsor',
+    'f620',
+    'weevil',
+    'asbo',
+    'brioso',
+    'kanjo'
+}
+
+-- Citizen.CreateThread(function()
+--     for k, v in pairs(addVehicles) do
+--         zero.execute('zero_dealership/createStock', {
+--             car = v,
+--             stock = 100
+--         })
+--         print('^5[Zero Dealership]^7 add '..v..' / stock 100')
+--     end
+-- end)
 
 local allVehicles = false
 

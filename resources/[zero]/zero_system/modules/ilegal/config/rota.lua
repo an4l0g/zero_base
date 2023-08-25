@@ -7,7 +7,7 @@ Routes = {
                 vector3(-1811.156, -1225.569, 13.01978),
                 vector3(-1453.306, 417.2703, 109.8557),
                 vector3(190.0088, 309.1516, 105.3737),
-                vector3(-740.9275, 5571.93, 36.69373),
+                vector3(143.9604, -689.2879, 33.12158),
                 vector3(1154.532, -785.3538, 57.58752),
                 vector3(869.7231, -2326.932, 30.59412),
                 vector3(-517.4374, -2904.277, 5.993408),
@@ -56,7 +56,7 @@ Routes = {
                 vector3(-3109.081, 751.8726, 24.69666),
                 vector3(-2521.081, 2310.369, 33.20581),
                 vector3(-2311.714, 4385.42, 8.453491),
-                vector3(-740.9275, 5571.93, 36.69373),
+                vector3(143.9604, -689.2879, 33.12158),
                 vector3(1089.165, 6511.886, 21.07397),
                 vector3(2195.512, 5593.53, 53.7627),
                 vector3(2660.888, 3927.283, 42.15308),
@@ -244,11 +244,12 @@ Routes = {
     },
 
     locations = {
-        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Aviaozinho', cooldown = 900 },
-        { coord = vector3(-1855.332, -1204.009, 13.00293), config = 'ZeroFome', cooldown = 900 },
-        { coord = vector3(28.45715, -2669.842, 12.04248), config = 'Arma', cooldown = 900 },
-        { coord = vector3(-317.0769, -2778.752, 4.999268), config = 'Municao', cooldown = 900 },
-        { coord = vector3(-352.0615, -172.2198, 39.0022), config = 'Mecanica', cooldown = 900 },
-        { coord = vector3(-1086.646, -247.8461, 37.75537), config = 'Lavagem', cooldown = 900 },
+        { coord = vector3(313.5297, -174.778, 58.05933), config = 'Droga', cooldown = 0 },
+        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Aviaozinho', cooldown = 0 },
+        { coord = vector3(-1855.332, -1204.009, 13.00293), config = 'ZeroFome', cooldown = 0 },
+        { coord = vector3(28.45715, -2669.842, 12.04248), config = 'Arma', cooldown = 0 },
+        { coord = vector3(-317.0769, -2778.752, 4.999268), config = 'Municao', cooldown = 0 },
+        { coord = vector3(-352.0615, -172.2198, 39.0022), config = 'Mecanica', cooldown = 0 },
+        { coord = vector3(-1086.646, -247.8461, 37.75537), config = 'Lavagem', cooldown = 0 },
     }
 }

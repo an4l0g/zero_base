@@ -134,3 +134,21 @@ prisonLock = function(source, user_id)
         zeroClient.killGod(source)
     end)
 end
+
+AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
+    local tempo = (json.decode(zero.getUData(parseInt(user_id),'zero:prison')) or -1)
+    if (tempo == -1) then return; end;
+
+    if (tempo > 0) then
+        local prisonCoord = vector4(1753.358, 2470.998, 47.39343, 28.34646)
+        SetEntityHeading(GetPlayerPed(source), prisonCoord.w)
+        zeroClient.teleport(source, prisonCoord.x, prisonCoord.y, prisonCoord.z)
+        TriggerClientEvent('zero_animations:setAnim', source, 'deitar3')
+
+        Citizen.SetTimeout(5000, function()    
+            TriggerClientEvent('zero_prison:setClothes', source)
+            prisonLock(source, user_id)
+            Player(source).state.Prison = true
+        end)
+    end
+end)

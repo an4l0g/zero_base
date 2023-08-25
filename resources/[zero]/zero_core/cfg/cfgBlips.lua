@@ -17,7 +17,7 @@ config.blips = {
     { coords = vector3(-341.8154, -108.5275, 39.0022), sprite = 402, color = 0, nome = 'Mecânica', scale = 0.9 },
 
     -- [ Concessionaria ] -- 
-    { coords = vector3(-57.46813, -1097.459, 26.41541), sprite = 811, color = 72, nome = 'Concessionária', scale = 0.9 },
+    { coords = vector3(-57.46813, -1097.459, 26.41541), sprite = 326, color = 0, nome = 'Concessionária', scale = 0.7 },
 
     -- [ Policia ] -- 
     { coords =vector3(-2303.71, 394.6813, 176.0923), sprite = 60, color = 0, nome = 'Polícia', scale = 0.9 }
