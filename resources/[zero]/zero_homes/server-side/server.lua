@@ -56,9 +56,17 @@ local _home = {
                     local request = zero.request(source, 'Esta propriedade '..index..' se encontra à venda. Deseja adquiri-lá por R$'..zero.format(price[2])..'?', 30000)
                     if (request) then
                         local allow = false
+
+                        local key = tostring('key-'..homes.type)
+                        local homeCredit = exports['hydrus.gg']:getCredit(user_id, key)
+                        if (homeCredit > 0) then
+                            if (zero.request(source, 'Você deseja comprar a residência '..index..' por 1 crédito ('..key:upper()..')?', 30000)) then
+                                allow = true
+                            end
+                        end
+
                         if (not allow) then
-                            -- allow = zero.tryFullPayment(user_id, price)
-                            allow = true
+                            allow = zero.tryFullPayment(user_id, price[2])
                         end
 
                         if (allow) then
@@ -131,9 +139,17 @@ local _home = {
                     local request = zero.request(source, 'Esta propriedade '..index..' se encontra à venda. Deseja adquiri-lá por R$'..zero.format(price[2])..'?', 30000)
                     if (request) then
                         local allow = false
+
+                        local key = tostring('key-'..homes.type)
+                        local homeCredit = exports['hydrus.gg']:getCredit(user_id, key)
+                        if (homeCredit > 0) then
+                            if (zero.request(source, 'Você deseja comprar a residência '..index..' por 1 crédito ('..key:upper()..')?', 30000)) then
+                                allow = true
+                            end
+                        end
+
                         if (not allow) then
-                            -- allow = zero.tryFullPayment(user_id, price)
-                            allow = true
+                            allow = zero.tryFullPayment(user_id, price[2])
                         end
 
                         if (allow) then

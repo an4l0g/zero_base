@@ -45,6 +45,7 @@ zero.getUserIdentity = function(user_id)
       	return identidades[user_id] 
     end
 end
+vRP.getUserIdentity = zero.getUserIdentity
 ------------------------------------------------------------------
 
 ------------------------------------------------------------------

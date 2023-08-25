@@ -12,6 +12,7 @@ end
 
 local modules = {}
 function module(rsc, path,reload)
+	if rsc == "vrp" then rsc = "zero" end
 	if type(path) ~= "string" then
 		if type(path) == "boolean" then
 			reload = path

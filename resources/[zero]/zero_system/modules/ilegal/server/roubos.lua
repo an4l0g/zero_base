@@ -24,7 +24,8 @@ srv.checkRobbery = function(index)
     if (user_id) then
         local _config = Robberys.general[Robberys.locations[index].config]
         
-        local cooldown = Robberys.locations[index].config
+        local id = Robberys.locations[index].id
+        local cooldown = (id and tostring(Robberys.locations[index].config..'-'..id) or Robberys.locations[index].config)
         if (robberyCooldown[cooldown]) then
             TriggerClientEvent('notify', source, 'Braga', 'Aguarde <b>'..robberyCooldown[cooldown]..' segundos</b> para roubar este cofre novamente!')
             return false

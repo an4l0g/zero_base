@@ -77,6 +77,9 @@ zero.format = function(n)
 end
 vRP.format = zero.format
 
+zero.getUsers = function() return {} end
+vRP.getUsers = zero.getUsers
+
 zero.isBanned = function(user_id)
 	return exports['zero_core']:isBanned(user_id)
 end
@@ -283,6 +286,11 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 	deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
 	if (zero.isBanned(user_id)) then
 		local reason, date, staff = exports.zero_core:getBanRecord(user_id)
+		if reason == "Cheating" then
+			deferrals.done('\nOlá '..name..', infelizmente você foi banido de nossa cidade!\n\nMotivo: '..reason..'\nData do ocorrido: '..os.date('%d/%m/%Y - %H:%M', math.floor(date/1000))..'\n\nVocê achou o seu banimento injusto? abra um ticket em nosso discord: discord.gg/zerocity ')
+			TriggerEvent("queue:playerConnectingRemoveQueues",ids)
+			return
+		end
 		local staffIdentity = zero.getUserIdentity(parseInt(staff))
 
 		deferrals.done('\nOlá '..name..', infelizmente você foi banido de nossa cidade!\n\nMotivo: '..reason..'\nPunição aplicada por: '..staff..'# '..staffIdentity.firstname..' '..staffIdentity.lastname..'\nData do ocorrido: '..os.date('%d/%m/%Y - %H:%M', math.floor(date/1000))..'\n\nVocê achou o seu banimento injusto? abra um ticket em nosso discord: discord.gg/zerocity ')

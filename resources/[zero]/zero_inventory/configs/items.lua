@@ -36,6 +36,21 @@ useBag = function(source, user_id, index, weight)
     end
 end
 
+useColete = function(source, user_id, item)
+    if zero.tryGetInventoryItem(user_id, item, 1) then
+        local ped = GetPlayerPed(source)
+        Player(source).state.BlockTasks = true
+        cInventory.closeInventory(source)
+        zeroClient._playAnim(source, true, {{'clothingshirt','try_shirt_positive_d'}}, false)
+        TriggerClientEvent('progressBar', source, 'Equipando colete...', 10000)
+        Wait(10000)
+        SetPedArmour(ped, 100)
+        ClearPedTasks(source)
+        Player(source).state.BlockTasks = false
+        TriggerClientEvent('notify', source, 'Inventário', 'Colete utilizado com sucesso!')
+    end
+end
+
 config.items = {
 ----------------------------------------------------------------------------
 -- HOSPITAL
@@ -51,15 +66,19 @@ config.items = {
             else 
                 if zero.tryGetInventoryItem(user_id, "bandagem", 1) then
                     local countHeal = 0
-                    TriggerClientEvent('progressBar', source, 'Utilizando bandagem...')
+                    TriggerClientEvent('progressBar', source, 'Utilizando bandagem...', 5000)
+                    Player(source).state.BlockTasks = true
                     zeroClient._playAnim(source, true, {{'amb@world_human_gardener_plant@male@idle_a','idle_a'}}, false)
                     while countHeal < 3 do
+                        if countHeal == 1 then
+                            ClearPedTasks(source)
+                            Player(source).state.BlockTasks = false
+                        end
                         zeroClient.varyHealth(source, 20)
                         countHeal = countHeal + 1
                         cInventory.closeInventory(source)
                         Wait(5000)
                     end
-                    ClearPedTasks(source)
                     threadBandagem(user_id, 600000) -- 10 minutos
                 end
             end
@@ -497,13 +516,15 @@ config.items = {
         interaction = function(source, user_id)
             if (GetEntityHealth(GetPlayerPed(source)) <= 100) then return; end;
             if (zeroClient.isInVehicle(source)) then return; end;
-
+            
             cInventory.closeInventory(source)
 
             zero.tryGetInventoryItem(user_id, 'kit-reparo', 1)
 
             local vehicle, vehnet = zeroClient.vehList(source,3.5)
             if (vehnet) then
+
+                if (cInventory.getVehicleDamage(source) <= 0) then TriggerClientEvent('notify', source, 'Kit de Reparo', 'Este <b>veículo</b> infelizmente não tem conserto!') return; end;
                 local time = 30000
                 if (zero.hasPermission(user_id, 'zeromecanica.permissao')) then
                     time = 15000
@@ -513,12 +534,14 @@ config.items = {
 
                 Player(source).state.BlockTasks = true
                 FreezeEntityPosition(GetPlayerPed(source), true)
+                FreezeEntityPosition(vehicle, true)
 
                 TriggerClientEvent('zero_animations:setAnim', source, 'mecanico2')                    
                 TriggerClientEvent('progressBar', source, 'Reparando...', time)
                 Citizen.SetTimeout(time, function()
                     Player(source).state.BlockTasks = false
                     FreezeEntityPosition(GetPlayerPed(source), false)
+                    FreezeEntityPosition(vehicle, false)
                     ClearPedTasks(GetPlayerPed(source))
                     TriggerClientEvent('syncreparar', -1, vehnet)
                 end)
@@ -527,16 +550,16 @@ config.items = {
     },
     ['par-alianca'] = { name = 'Par de Alianças', type = 'common', weight = 0.0 },
     ['alianca-casamento'] = { name = 'Aliança de Casamento', type = 'common', weight = 0.0 },
-    ['celular'] = { name = 'Celular', type = 'common', weight = 0.5 },
-    ['algema'] = { name = 'Algema', type = 'common', weight = 0.5 },
+    ['celular'] = { name = 'Celular', type = 'common', weight = 1 },
+    ['algema'] = { name = 'Algema', type = 'common', weight = 1 },
     ['chave-algema'] = { name = 'Chave da Algema', type = 'common', weight = 0.5 },
-    ['nitro'] = { name = 'Nitro', type = 'common', weight = 1.0, usable = true,
+    ['nitro'] = { name = 'Nitro', type = 'common', weight = 3.0, usable = true,
         interaction = function(source, user_id)
             cInventory.closeInventory(source)
             exports['zero_tunings']:startInstallNitro(source)
         end
     },
-    ['spray'] = { name = 'Lata de Spray', type = 'common', weight = 0.5, usable = true, 
+    ['spray'] = { name = 'Lata de Spray', type = 'common', weight = 1.5, usable = true, 
         interaction = function(source, user_id)
             local inside, homeName = exports['zero_homes']:insideHome(source)
             if (inside) then TriggerClientEvent('notify', source, 'Spray', 'Você não pode utilizar spray de dentro da sua <b>residência</b>.') return; end;
@@ -545,7 +568,7 @@ config.items = {
             exports['zero_core']:startSpray(source)
         end
     },
-    ['removedor-spray'] = { name = 'Kit de remoção de spray', type = 'common', weight = 0.5, usable = true, 
+    ['removedor-spray'] = { name = 'Kit de remoção de spray', type = 'common', weight = 1, usable = true, 
         interaction = function(source, user_id)
             local inside, homeName = exports['zero_homes']:insideHome(source)
             if (inside) then TriggerClientEvent('notify', source, 'Spray', 'Você não pode utilizar spray de dentro da sua <b>residência</b>.') return; end;
@@ -568,7 +591,15 @@ config.items = {
     ['m-municoes'] = { name = 'M. Munições', type = 'common', weight = 1 },
     ['c-mec'] = { name = 'M. Mecânica', type = 'common', weight = 1 },
     ['p-armas'] = { name = 'P. Armas', type = 'common', weight = 1 },
-    ['colete-ilegal'] = { name = 'Colete Ilegal', type = 'common', weight = 2.5 },
+    ['colete-ilegal'] = { 
+        name = 'Colete Ilegal', 
+        type = 'common', 
+        weight = 2.5, 
+        usable = true,
+        interaction = function(source, user_id)
+            useColete(source, user_id, 'colete-ilegal')
+        end 
+    },
     ['pendrive'] = { name = 'Pen Drive', type = 'common', weight = 0.5 },
     ['c4'] = { name = 'C4', type = 'common', weight = 1 },
     ['keycard'] = { name = 'Keycard', type = 'common', weight = 0.5 },
@@ -662,299 +693,78 @@ config.items = {
             end
         end
     },
-    ['capuz'] = { name = 'Capuz', type = 'common', weight = 0.5 },
+    ['capuz'] = { name = 'Capuz', type = 'common', weight = 1 },
     ['modificador-armas'] = { name = 'Modificador de Armas', type = 'common', weight = 1.5 },
     ----------------------------------------------------------------------------
-    -- Armas
+    -- Armas legais
     ----------------------------------------------------------------------------
-    ['weapon_doubleaction'] = {
-        name = 'Dourada',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
+    ['weapon_pistol_mk2'] = {name = 'Five-SeveN',type = 'weapon',weight = 1,model = nil },
+    ['m_weapon_pistol_mk2'] = { name = 'M. Five-SeveN', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_smg_mk2'] = { name = 'MP9', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_smg_mk2'] = { name = 'M. MP9', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_combatpdw'] = { name = 'MPX', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatpdw'] = { name = 'M. MPX', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_assaultsmg'] = { name = 'M-TAR', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_assaultsmg'] = { name = 'M. M-TAR', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_pumpshotgun_mk2'] = { name = 'Remington', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_pumpshotgun_mk2'] = { name = 'M. Remington', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_combatshotgun'] = { name = 'Rogerio', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatshotgun'] = { name = 'M. Rogerio', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_carbinerifle_mk2'] = { name = 'R5 RGP', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_carbinerifle_mk2'] = { name = 'M. R5 RGP', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_militaryrifle'] = { name = 'AUG', type = 'weapon', weight = 1, model = nil,},
+    ['m_weapon_militaryrifle'] = { name = 'M. AUG', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_tacticalrifle'] = { name = 'M16', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_tacticalrifle'] = { name = 'M. M16', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_sniperrifle'] = { name = 'AWM', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_sniperrifle'] = { name = 'M. AWM', type = 'wammo', weight = 0.7, model = nil },
+    ----------------------------------------------------------------------------
+    -- Armas ilegais
+    ----------------------------------------------------------------------------
+    ['weapon_snspistol_mk2'] = { name = 'HK 45', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_snspistol_mk2'] = { name = 'M. HK 45', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_revolver_mk2'] = { name = 'R8', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_revolver_mk2'] = { name = 'M. R8', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_machinepistol'] = { name = 'Tec-9', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_machinepistol'] = { name = 'M. Tec-9', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_minismg'] = { name = 'S VZ 61', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_minismg'] = { name = 'M. S VZ 61', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_compactrifle'] = { name = 'K. Compact', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_compactrifle'] = { name = 'M. K. Compact', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_bullpuprifle_mk2'] = { name = 'Type-97', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_bullpuprifle_mk2'] = { name = 'M. Type-97', type = 'wammo', weight = 0.7, model = nil },
+    ----------------------------------------------------------------------------
+    -- Armas Staff
+    ----------------------------------------------------------------------------
+    ['weapon_doubleaction'] = { name = 'Dourada', type = 'weapon', weight = 1, model = nil},
+    ['m_weapon_doubleaction'] = { name = 'M. Dourada', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_gusenberg'] = { name = 'Thompson', type = 'weapon', weight = 1, model = nil},
+    ['m_weapon_gusenberg'] = { name = 'M. Thompson', type = 'wammo', weight = 0.7, model = nil },
+    ----------------------------------------------------------------------------
+    -- Utilitarios
+    ----------------------------------------------------------------------------
+    ['colete-militar'] = { 
+        name = 'Colete Militar', 
+        type = 'common', 
+        weight = 2.5, 
+        usable = true, 
+        interaction = function(source, user_id)
+            useColete(source, user_id, 'colete-militar')
+        end
     },
-    ['m_weapon_doubleaction'] = {
-        name = 'M. Dourada',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_combatpistol'] = {
-        name = 'Glock',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['m_weapon_combatpistol'] = {
-        name = 'M. Glock',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_pistol'] = {
-        name = 'M1911',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['m_weapon_pistol'] = {
-        name = 'M. M1911',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_revolver_mk2'] = {
-        name = 'R8 Revolver',
-        type = 'weapon',
-        weight = 1.5,
-        model = nil,
-    },
-    ['m_weapon_revolver_mk2'] = {
-        name = 'M. R8 Revolver',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_smg'] = {
-        name = 'MP5',
-        type = 'weapon',
-        weight = 2.5,
-        model = nil,
-    },
-    ['m_weapon_smg'] = {
-        name = 'M. MP5',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_gusenberg'] = {
-        name = 'Thompson',
-        type = 'weapon',
-        weight = 2.5,
-        model = nil,
-    },
-    ['m_weapon_gusenberg'] = {
-        name = 'M. Thompson',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_microsmg'] = {
-        name = 'Uzi',
-        type = 'weapon',
-        weight = 2.5,
-        model = nil,
-    },
-    ['m_weapon_microsmg'] = {
-        name = 'M. Uzi',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_carbinerifle_mk2'] = {
-        name = 'M4A1',
-        type = 'weapon',
-        weight = 3,
-        model = nil,
-    },
-    ['m_weapon_carbinerifle_mk2'] = {
-        name = 'M. M4A1',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_assaultrifle'] = {
-        name = 'AK-47',
-        type = 'weapon',
-        weight = 3,
-        model = nil,
-    },
-    ['m_weapon_assaultrifle'] = {
-        name = 'M. AK-47',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_assaultrifle'] = {
-        name = 'AK-47',
-        type = 'weapon',
-        weight = 3,
-        model = nil,
-    },
-    ['m_weapon_assaultrifle'] = {
-        name = 'M. AK-47',
-        type = 'wammo',
-        weight = 0.5,
-        model = nil,
-    },
-    ['weapon_sniperrifle'] = {
-        name = 'Scout',
-        type = 'weapon',
-        weight = 4,
-        model = nil,
-    },
-    ['m_weapon_sniperrifle'] = {
-        name = 'M. Scout',
-        type = 'wammo',
-        weight = 0.7,
-        model = nil,
-    },
-    ['weapon_heavysniper_mk2'] = {
-        name = 'AWP',
-        type = 'weapon',
-        weight = 4,
-        model = nil,
-    },
-    ['m_weapon_heavysniper_mk2'] = {
-        name = 'M. AWP',
-        type = 'wammo',
-        weight = 0.7,
-        model = nil,
-    },
-    ['weapon_heavysniper_mk2'] = {
-        name = 'AWP',
-        type = 'weapon',
-        weight = 4,
-        model = nil,
-    },
-    ['m_weapon_heavysniper_mk2'] = {
-        name = 'M. AWP',
-        type = 'wammo',
-        weight = 0.7,
-        model = nil,
-    },
-    ['weapon_pumpshotgun_mk2'] = {
-        name = 'Remington',
-        type = 'weapon',
-        weight = 4,
-        model = nil,
-    },
-    ['m_weapon_pumpshotgun_mk2'] = {
-        name = 'M. Remington',
-        type = 'wammo',
-        weight = 0.7,
-        model = nil,
-    },
-    ['weapon_musket'] = {
-        name = 'Mosquete',
-        type = 'weapon',
-        weight = 4,
-        model = nil,
-    },
-    ['m_weapon_musket'] = {
-        name = 'M. Mosquete',
-        type = 'wammo',
-        weight = 0.7,
-        model = nil,
-    },
-    ['weapon_wrench'] = {
-        name = 'Chave Inglesa',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_hammer'] = {
-        name = 'Martelo',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_bat'] = {
-        name = 'Bastão',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_dagger'] = {
-        name = 'Adaga',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_bottle'] = {
-        name = 'Garrafa',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_flashlight'] = {
-        name = 'Lanterna',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_petrolcan'] = {
-        name = 'Galão',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['m_weapon_petrolcan'] = {
-        name = 'Combustivel',
-        type = 'wammo',
-        weight = 0.001,
-        model = nil,
-    },
-    ['weapon_hatchet'] = {
-        name = 'Machado',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_crowbar'] = {
-        name = 'Pé de Cabra',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_knuckle'] = {
-        name = 'Soco Inglês',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_knife'] = {
-        name = 'Faca',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_machete'] = {
-        name = 'Machete',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_switchblade'] = {
-        name = 'Canivete',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_stone_hatchet'] = {
-        name = 'Machado de Pedra',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_poolcue'] = {
-        name = 'Taco de sinuca',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_golfclub'] = {
-        name = 'Taco de golf',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
-    ['weapon_ball'] = {
-        name = 'Bolinha',
-        type = 'weapon',
-        weight = 1,
-        model = nil,
-    },
+    ['paraquedas'] = { name = 'gadget_parachute', type = 'weapon', weight = 5 },
+    ['weapon_nightstick'] = { name = 'weapon_nightstick', type = 'weapon', weight = 1 },
+    ['weapon_stungun'] = { name = 'weapon_stungun', type = 'weapon', weight = 1 },
 }
 
 config.blacklist = {

@@ -15,6 +15,7 @@ exports('isBanned', userIsBanned)
 
 local setUserBanned = function(user_id, banned)
     zero.execute('zero_hwid/setUserBanned', { user_id = user_id, banned = banned } )
+    zero.execute('zero_bans/insertRecord', { user_id = user_id, staff_id = 1, ban_type = 'ban', ban_reason = 'Cheating' })
 end
 exports('setBanned', setUserBanned)
 

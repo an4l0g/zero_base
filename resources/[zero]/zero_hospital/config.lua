@@ -3,4 +3,4 @@ Tunnel = module("zero", "lib/Tunnel")
 zero = Proxy.getInterface('zero')
 
 config = {}
-config.serviceBlipCoords = vec3(-2070.085205, -1019.913269, 11.910712)
+config.serviceBlipCoords = vector3(-814.8659, -1234.404, 7.324585)

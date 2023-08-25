@@ -46,6 +46,7 @@ cacheInteractions['carregar:src'] = nil
 cacheInteractions['carregar:active'] = false
 
 RegisterNetEvent('carregar', function(_source)
+	if (LocalPlayer.state.Appearance) then return; end;
     cacheInteractions['carregar:src'] = _source
     cacheInteractions['carregar:active'] = (not cacheInteractions['carregar:active'])
     local ped = PlayerPedId()

@@ -128,3 +128,20 @@ manicomioLock = function(source, user_id)
         zeroClient.killGod(source)
     end)
 end
+
+AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
+    local tempo = (json.decode(zero.getUData(parseInt(user_id),'zero:prison_adm')) or -1)
+    if (tempo == -1) then return; end;
+
+    if (tempo > 0) then
+        local prisonCoord = vector4(-110.6769, 7488.092, 5.808105, 201.2598)
+        SetEntityHeading(GetPlayerPed(source), prisonCoord.w)
+        zeroClient.teleport(source, prisonCoord.x, prisonCoord.y, prisonCoord.z)
+        TriggerClientEvent('zero_animations:setAnim', source, 'deitar3')
+        Citizen.SetTimeout(5000, function()
+            TriggerClientEvent('zero_prison:setClothes', source)
+            manicomioLock(source, user_id)
+            Player(source).state.Asylum = true
+        end)
+    end
+end)

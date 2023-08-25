@@ -1,3 +1,5 @@
+shared_script '@likizao_ac/client/library.lua'
+
 --shared_script "@vrp/lib/lib.lua" 
 lua54 'yes'
 fx_version "bodacious"

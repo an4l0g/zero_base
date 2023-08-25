@@ -44,40 +44,57 @@ openMoneyLaundry = function()
     sProduction.moneyLaundry()
 end
 
-Citizen.CreateThread(function()
-    while true do
-        local idle = 100
-        local ped = PlayerPedId()
-        local pedCoords = GetEntityCoords(ped)
-        for k, v in pairs(configs.productions) do
-            local distance = #(pedCoords - v.coords)
-            if (distance <= configs.blipDistance) then
-                if v.coords then
-                    idle = 1
-                    if v.type == 'shop' then
-                        TextFloating('~b~[E]~w~ - Negociar', v.coords)
-                    else
-                        TextFloating('~b~[E]~w~ - Produzir', v.coords)
-                    end
-                    if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                        if v.permission == nil or sProduction.hasPermission(v.permission) then
-                            if v.type == 'moneyLaundry' then
-                                openMoneyLaundry(v)
-                            else
-                                openProduction(v.products, v.label, k)
-                            end
+local nearestBlips = {}
+
+local _markerThread = false
+local markerThread = function()
+    if (_markerThread) then return; end;
+    _markerThread = true
+    Citizen.CreateThread(function()
+        while (countTable(nearestBlips) > 0) do
+            local ped = PlayerPedId()
+            local _cache = nearestBlips
+            for index, dist in pairs(_cache) do
+                local _config = configs.productions[index]
+                if _config.type == 'shop' then
+                    TextFloating('~b~[E]~w~ - Negociar', _config.coords)
+                else
+                    TextFloating('~b~[E]~w~ - Produzir', _config.coords)
+                end
+                if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                    if (sProduction.hasPermission(_config.permission)) then
+                        if (_config.type == 'moneyLaundry') then
+                            openMoneyLaundry(_config)
                         else
-                            if v.type == 'shop' then
-                                TriggerEvent('notify', 'Negociação', 'Você não pode negociar aqui!')
-                            else
-                                TriggerEvent('notify', 'Produção', 'Você não pode produzir aqui!')
-                            end
+                            openProduction(_config.products, _config.label, k)
+                        end
+                    else
+                        if _config.type == 'shop' then
+                            TriggerEvent('notify', 'Negociação', 'Você não pode negociar aqui!')
+                        else
+                            TriggerEvent('notify', 'Produção', 'Você não pode produzir aqui!')
                         end
                     end
                 end
             end
+            Citizen.Wait(1)
         end
-        Citizen.Wait(idle)
+        _markerThread = false
+    end)
+end
+
+Citizen.CreateThread(function()
+    while (true) do
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        nearestBlips = {}
+        for k, v in pairs(configs.productions) do
+            local distance = #(pCoord - v.coords)
+            if (distance <= configs.blipDistance) then
+                nearestBlips[k] = distance
+            end
+        end
+        if (countTable(nearestBlips) > 0) then markerThread(); end;
+        Citizen.Wait(1000)
     end
 end)
-

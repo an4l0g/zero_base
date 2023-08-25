@@ -48,7 +48,7 @@ AddStateBagChangeHandler('Wall', nil, function(bagName, key, value)
 		Citizen.CreateThread(function()
             while (LocalPlayer.state.Wall) do
                 for _, id in ipairs(GetActivePlayers()) do
-					if id == -1 or id == nil then return end
+					if id == -1 or id == nil or id == 0 then return end
 					local pid, cam = vSERVER.getWallId(GetPlayerServerId(id))
 					if pid == -1 then
 						return
@@ -762,6 +762,11 @@ RegisterCommand('bvida', function()
 	local ped = PlayerPedId()
 	if (LocalPlayer.state.BlockTasks) then return; end;
 
+	if (zero.isMalas()) then
+		TriggerEvent('notify', 'Bvida', 'Você não pode executar este <b>comando</b> dentro de um veículo')
+		return
+	end
+
 	if (IsPedFalling(ped)) then
 		TriggerEvent('notify', 'Bvida', 'Você não pode executar este comando em <b>queda livre</b>. <br><br>Boa queda amigão, tenha uma boa morte! ;)</b>')
 		return
@@ -780,3 +785,14 @@ RegisterCommand('bvida', function()
 		end
 	end
 end)
+
+---------------------------------------
+-- SEQUESTRO
+---------------------------------------
+cli.checkSequestro = function()
+	local pVehicle = GetClosestVehicle(GetEntityCoords(PlayerPedId()), 10.0, 0, 71)
+    if (DoesEntityExist(pVehicle)) then
+        local trunkBone = GetEntityBoneIndexByName(pVehicle, 'boot')
+		return trunkBone
+	end
+end
