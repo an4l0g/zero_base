@@ -27,7 +27,7 @@
     "backgroundURL": "https://cdn.discordapp.com/attachments/922885255386517535/1140494871602397224/Design_sem_nome_3.png",
     "disabledApps": []
   },
-  "call_mode": "mumble-voip",
+  "call_mode": "pma-voice",
   "webhookURL": "https://discord.com/api/webhooks/1140437829822971924/fwcth6U7dbMhavvHThW67iU-x_sZ42H8GYE3X-K-_i-ilHJRDha4qOKWmVQju1_41JRp",
   "instagram_verify": "instagram.permissao",
   "instagram_accounts": {
