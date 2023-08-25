@@ -42,6 +42,7 @@ config.webhooks = {
     ['Freeze'] = 'https://discord.com/api/webhooks/1144343898043469874/35foarMGqrM5DkGOC19VQUKxXUBYECHr3XRjBYU9xzIsIzR1vy0G_wUDpbgg8FE01UI5',
     ['Neymar'] = 'https://discord.com/api/webhooks/1144343818297147512/5poHNoQeLiX49SMDzWWJqs5KHAMG5xP5SzuEQy-61KVh5--AfHqvCGyZOQFM7K86cswF',
     ['Detido'] = 'https://discord.com/api/webhooks/1144342947215712417/i8M2-wOBl5c3Jmesr8XaIiRMNoIzlmM7vhJBKe70CMjBaaOpKIesc3GZjWusWwk-brxL',
+    ['Chamados'] = 'https://discord.com/api/webhooks/1144676567633641493/O12GTb9reCN_ZcOYCtoO8yOPfixDjUx-o6LAqTlN36SEDySi3XAuHDg29MwHl7tM93EC',
     
     ['buyVehicle'] = 'https://discord.com/api/webhooks/1139623371785654313/0fDge4Ks2uHt9edjx2BVGF-2nukEsHRbCOYjn90_1nYDx-DLoXXIdP6rJj7r40GAQqEl',
     ['DeleteVehicle'] = 'https://discord.com/api/webhooks/1119095962812559370/qkEqSfOScED9MnYoTvFEvWwTYLvmKMEnt473zKfsvw2Oe0NuXza2OKSYaWlopZ2W4rJF',

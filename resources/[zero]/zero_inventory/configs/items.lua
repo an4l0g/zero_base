@@ -516,13 +516,15 @@ config.items = {
         interaction = function(source, user_id)
             if (GetEntityHealth(GetPlayerPed(source)) <= 100) then return; end;
             if (zeroClient.isInVehicle(source)) then return; end;
-
+            
             cInventory.closeInventory(source)
 
             zero.tryGetInventoryItem(user_id, 'kit-reparo', 1)
 
             local vehicle, vehnet = zeroClient.vehList(source,3.5)
             if (vehnet) then
+
+                if (cInventory.getVehicleDamage(source) <= 0) then TriggerClientEvent('notify', source, 'Kit de Reparo', 'Este <b>veículo</b> infelizmente não tem conserto!') return; end;
                 local time = 30000
                 if (zero.hasPermission(user_id, 'zeromecanica.permissao')) then
                     time = 15000
@@ -532,12 +534,14 @@ config.items = {
 
                 Player(source).state.BlockTasks = true
                 FreezeEntityPosition(GetPlayerPed(source), true)
+                FreezeEntityPosition(vehicle, true)
 
                 TriggerClientEvent('zero_animations:setAnim', source, 'mecanico2')                    
                 TriggerClientEvent('progressBar', source, 'Reparando...', time)
                 Citizen.SetTimeout(time, function()
                     Player(source).state.BlockTasks = false
                     FreezeEntityPosition(GetPlayerPed(source), false)
+                    FreezeEntityPosition(vehicle, false)
                     ClearPedTasks(GetPlayerPed(source))
                     TriggerClientEvent('syncreparar', -1, vehnet)
                 end)

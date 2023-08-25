@@ -81,7 +81,7 @@ HandleDoorState = function(door, lock, heading)
         FreezeEntityPosition(door, lock)
         NetworkRequestControlOfEntity(door)
     else
-        if (heading > -0.02 and heading < 0.02) then
+        if (heading > -0.05 and heading < 0.2) then
             FreezeEntityPosition(door, lock)
             NetworkRequestControlOfEntity(door)
         end

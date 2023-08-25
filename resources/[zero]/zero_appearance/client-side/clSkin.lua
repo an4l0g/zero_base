@@ -3,11 +3,6 @@ local vSERVER = Tunnel.getInterface('skinShop')
 local locsConfig = config.locs
 local generalConfig = config.general['skinshop']
 
-local checkVariation = function(value)
-    if (value >= 0) then return value; end;
-    return 0
-end
-
 local getDrawables = function()
     local ped = PlayerPedId()
     local pedDrawables = {
@@ -20,11 +15,11 @@ local getDrawables = function()
         { amount = GetNumberOfPedDrawableVariations(ped, 8), type = '8', model = GetPedDrawableVariation(ped, 8), var = GetPedTextureVariation(ped, 8) },
         { amount = GetNumberOfPedDrawableVariations(ped, 9), type = '9', model = GetPedDrawableVariation(ped, 9), var = GetPedTextureVariation(ped, 9) },
         { amount = GetNumberOfPedDrawableVariations(ped, 11), type = '11', model = GetPedDrawableVariation(ped, 11), var = GetPedTextureVariation(ped, 11) },
-        { amount = GetNumberOfPedPropDrawableVariations(ped, 0), type = 'p0', model = GetPedPropIndex(ped, 0), var = checkVariation(GetPedPropTextureIndex(ped, 0)) },
-        { amount = GetNumberOfPedPropDrawableVariations(ped, 1), type = 'p1', model = GetPedPropIndex(ped, 1), var = checkVariation(GetPedPropTextureIndex(ped, 1)) },
-        { amount = GetNumberOfPedPropDrawableVariations(ped, 2), type = 'p2', model = GetPedPropIndex(ped, 2), var = checkVariation(GetPedPropTextureIndex(ped, 2)) },
-        { amount = GetNumberOfPedPropDrawableVariations(ped, 6), type = 'p6', model = GetPedPropIndex(ped, 6), var = checkVariation(GetPedPropTextureIndex(ped, 6)) },
-        { amount = GetNumberOfPedPropDrawableVariations(ped, 7), type = 'p7', model = GetPedPropIndex(ped, 7), var = checkVariation(GetPedPropTextureIndex(ped, 7)) }
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 0), type = 'p0', model = GetPedPropIndex(ped, 0), var = GetPedPropTextureIndex(ped, 0) },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 1), type = 'p1', model = GetPedPropIndex(ped, 1), var = GetPedPropTextureIndex(ped, 1) },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 2), type = 'p2', model = GetPedPropIndex(ped, 2), var = GetPedPropTextureIndex(ped, 2) },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 6), type = 'p6', model = GetPedPropIndex(ped, 6), var = GetPedPropTextureIndex(ped, 6) },
+        { amount = GetNumberOfPedPropDrawableVariations(ped, 7), type = 'p7', model = GetPedPropIndex(ped, 7), var = GetPedPropTextureIndex(ped, 7) }
     }
     return pedDrawables
 end
@@ -121,24 +116,44 @@ RegisterNuiCallback('changeSkinshopDemo', function(data)
         variations['11'] = GetNumberOfPedTextureVariations(ped, 11, draw['11'].model)
 
         -- Chapeu
-        SetPedPropIndex(ped, 0, draw['p0'].model, draw['p0'].var)
-        variations['p0'] = GetNumberOfPedPropTextureVariations(ped, 0, draw['p0'].model)
+        if (draw['p0'].model < 0) then 
+            ClearPedProp(ped, 0)
+        else
+            SetPedPropIndex(ped, 0, draw['p0'].model, draw['p0'].var)
+            variations['p0'] = GetNumberOfPedPropTextureVariations(ped, 0, draw['p0'].model)
+        end
 
         -- Oculos
-        SetPedPropIndex(ped, 1, draw['p1'].model, draw['p1'].var)
-        variations['p1'] = GetNumberOfPedPropTextureVariations(ped, 1, draw['p1'].model)
+        if (draw['p1'].model < 0) then 
+            ClearPedProp(ped, 1)
+        else
+            SetPedPropIndex(ped, 1, draw['p1'].model, draw['p1'].var)
+            variations['p1'] = GetNumberOfPedPropTextureVariations(ped, 1, draw['p1'].model)
+        end
         
         -- Brincos
-        SetPedPropIndex(ped, 2, draw['p2'].model, draw['p2'].var)
-        variations['p2'] = GetNumberOfPedPropTextureVariations(ped, 2, draw['p2'].model)
+        if (draw['p2'].model < 0) then 
+            ClearPedProp(ped, 2)
+        else
+            SetPedPropIndex(ped, 2, draw['p2'].model, draw['p2'].var)
+            variations['p2'] = GetNumberOfPedPropTextureVariations(ped, 2, draw['p2'].model)
+        end
 
         -- Relogio
-        SetPedPropIndex(ped, 6, draw['p6'].model, draw['p6'].var)
-        variations['p6'] = GetNumberOfPedPropTextureVariations(ped, 6, draw['p6'].model)
+        if (draw['p6'].model < 0) then 
+            ClearPedProp(ped, 6)
+        else
+            SetPedPropIndex(ped, 6, draw['p6'].model, draw['p6'].var)
+            variations['p6'] = GetNumberOfPedPropTextureVariations(ped, 6, draw['p6'].model)
+        end
 
         -- Bracelete
-        SetPedPropIndex(ped, 7, draw['p7'].model, draw['p7'].var)
-        variations['p7'] = GetNumberOfPedPropTextureVariations(ped, 7, draw['p7'].model)
+        if (draw['p7'].model < 0) then 
+            ClearPedProp(ped, 7)
+        else
+            SetPedPropIndex(ped, 7, draw['p7'].model, draw['p7'].var)
+            variations['p7'] = GetNumberOfPedPropTextureVariations(ped, 7, draw['p7'].model)
+        end
 
         SendNUIMessage({
             action = 'setVariations',

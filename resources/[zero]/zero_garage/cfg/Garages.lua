@@ -81,8 +81,16 @@ config.vehicles = {
 ------------------------------------------------------------------------------------------------------------------------
 -- CARS
 ------------------------------------------------------------------------------------------------------------------------
+    ['asbo'] = { name = 'Asbo', maker = 'Maxwell', price, 100000, trunk = 50, glove = 15, type = 'car', class = 'compacts', banned = false },
+    ['drafter'] = { name = 'Drafter', maker = 'Obey', price = 150000, trunk = 30, glove = 15, type  = 'car', class = 'sports', banned = false },
+    ['emerus'] = { name = 'Emerus', maker = 'Progen', price = 300000, trunk = 20, glove = 15, type = 'car', class = 'sports', banned = false },
+    ['glendale2'] = { name = 'Glendale 2', maker = 'Benefactor', price = 200000, trunk = 30, glove = 15, type = 'car', class = 'compacts', banned = false },
+    ['remus'] = { name = 'Remus', maker = 'Annis', price = 150000, trunk = 30, glove = 15, type = 'car', class = 'compacts', banned = false },
+    ['savestra'] = { name = 'Savestra', maker = 'Annis', price = 150000, trunk = 30, glove = 15, type = 'car', class = 'compacts', banned = false },
+    ['entity3'] = { name = 'Entity 3', maker = 'MT', price = 400000, trunk = 20, glove = 15, type = 'car', class = 'sports', banned = false },
     ['rcbandito'] = { name = 'RC Bandito', maker = 'Rockstar', price = 1000000, trunk = 1000, glove = 15, type = 'rental', class = 'offroad', banned = false },
     ['kuruma'] = { name = 'Kuruma', maker = 'Karin', price = 375000, trunk = 50, glove = 15, type = 'car', class = 'sports', banned = false },
+    ['sultan2'] = { name = 'Sultan 2', maker = 'Karin', price = 500000, trunk = 20, glove = 15, type = 'car', class = 'sports', banned = false },
     ['trophytruck2'] = { name = 'Trophytruck2', maker = 'Vapid', price = 400000, trunk = 20, glove = 15, type = 'car', class = 'offroad', banned = false },
     ['rhapsody'] = { name = 'Rhapsody', maker = 'Declasse', price = 10000, trunk = 30, glove = 15, type = 'car', class = 'compacts', banned = false },
     ['vacca'] = { name = 'Vacca', maker = 'Pegassi', price = 350000, trunk = 30, glove = 15, type = 'car', class = 'super', banned = false },
@@ -350,8 +358,7 @@ config.vehicles = {
     ['surano'] = { name = 'Surano', maker = 'Benefactor', price = 310000, trunk = 30, glove = 15, type = 'car', class = 'sports', banned = false },
     ['zentorno'] = { name = 'Zentorno', maker = 'Pegassi', price = 920000, trunk = 20, glove = 15, type = 'car', class = 'super', banned = false },
     ['schafter5'] = { name = 'Schafter5', maker = 'Benefactor', price = 275000, trunk = 50, glove = 15, type = 'car', class = 'sedans', banned = false },
-    ['youga'] = { name = 'Youga', maker = 'Bravado', price = 260000, trunk = 120, glove = 15, type = 'car', class = 'vans', banned = false },
-    ['shotaro'] = { name = 'Shotaro', maker = 'Nagasaki', price = 1000000, trunk = 20, glove = 15, type = 'car', class = 'super', banned = false },
+    ['youga'] = { name = 'Youga', maker = 'Bravado', price = 260000, trunk = 120, glove = 15, type = 'car', class = 'vans', banned = false },    
     ['tempesta'] = { name = 'Tempesta', maker = 'Pegassi', price = 600000, trunk = 20, glove = 15, type = 'car', class = 'super', banned = false },
     ['peyote'] = { name = 'Peyote', maker = 'Vapid', price = 150000, trunk = 50, glove = 15, type = 'car', class = 'sportsclassics', banned = false },
     ['faction'] = { name = 'Faction', maker = 'Willard', price = 150000, trunk = 50, glove = 15, type = 'car', class = 'muscle', banned = false },
@@ -435,6 +442,7 @@ config.vehicles = {
 ------------------------------------------------------------------------------------------------------------------------
 -- MOTOS
 ------------------------------------------------------------------------------------------------------------------------
+    ['shotaro'] = { name = 'Shotaro', maker = 'Nagasaki', price = 1000000, trunk = 20, glove = 15, type = 'motocycle', class = 'motocycle', banned = false },
     ['cliffhanger'] = { name = 'Cliffhanger', maker = 'WMC', price = 310000, trunk = 20, glove = 15, type = 'motocycle', class = 'motocycle', banned = false },
     ['bati'] = { name = 'Bati', maker = 'Pegassi', price = 370000, trunk = 20, glove = 15, type = 'motocycle', class = 'motocycle', banned = false },
     ['double'] = { name = 'Double', maker = 'Dinka', price = 350000, trunk = 20, glove = 15, type = 'motocycle', class = 'motocycle', banned = false },

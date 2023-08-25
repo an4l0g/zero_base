@@ -3,6 +3,8 @@ vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 local cam = nil
 
 Citizen.CreateThread(function()
+    SetNuiFocus(false, false)
+    TriggerScreenblurFadeOut(0)
 	if (not LocalPlayer.state.spawned) then
 		local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)
@@ -65,7 +67,7 @@ RegisterNetEvent('zero_spawn:selector', function(bool)
         SetCamActive(cam, true)
         RenderScriptCams(true, true, 500, true, true)
     end
-    
+
     if (bool) then
         SetNuiFocus(true, true)
         SendNUIMessage({
@@ -73,15 +75,6 @@ RegisterNetEvent('zero_spawn:selector', function(bool)
             listSpawns = config.spawns
         })
     else
-        -- DoScreenFadeOut(500)
-		-- Citizen.Wait(1500)
-        
-        local coord = vSERVER.getLastPosition()
-        zero.teleport(coord.x, coord.y, coord.z)
-
-        -- Citizen.Wait(1000)
-        -- DoScreenFadeIn(500)
-
         if (DoesCamExist(cam)) then
             SetCamActive(cam, false)
             RenderScriptCams(false, true, 5000, true, true)
@@ -134,14 +127,14 @@ RegisterNuiCallback('close', function()
 
     local ped = PlayerPedId()
 
-    DoScreenFadeOut(500)
-    Citizen.Wait(1500)
+    -- DoScreenFadeOut(500)
+    -- Citizen.Wait(1500)
 
     local coord = vSERVER.getLastPosition()
     SetEntityCoords(ped, coord)
 
-    Citizen.Wait(1000)
-    DoScreenFadeIn(500)
+    -- Citizen.Wait(1000)
+    -- DoScreenFadeIn(500)
 
     if (DoesCamExist(cam)) then
         SetCamActive(cam, false)

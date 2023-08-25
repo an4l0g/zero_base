@@ -10,6 +10,14 @@ cInventory.animation = function(dict, anim, loop)
     zero.playAnim(true,{{dict,anim}},loop)
 end
 
+cInventory.getVehicleDamage = function()
+    local pVehicle = GetClosestVehicle(GetEntityCoords(PlayerPedId()), 10.0, 0, 71)
+    if (DoesEntityExist(vehicle)) then
+        return GetVehicleEngineHealth(pVehicle)
+    end
+    return 0.0
+end
+
 RegisterNetEvent('zero_inventory:LockpickAnim', function(vehicle)
 	SetVehicleNeedsToBeHotwired(vehicle, true)
 	IsVehicleNeedsToBeHotwired(vehicle)

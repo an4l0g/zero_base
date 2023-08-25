@@ -230,6 +230,7 @@ zero.getUsersByPermission = function(perm)
 	end
 	return users
 end
+vRP.getUsersByPermission = zero.getUsersByPermission
 ------------------------------------------------------------------
 
 ------------------------------------------------------------------

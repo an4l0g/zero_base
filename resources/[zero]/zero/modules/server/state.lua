@@ -39,6 +39,11 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	end
 	----------------------------------
 
+	-- [ Teleport ] --
+	if (data.position) then
+		zeroClient.teleport(source, data.position.x, data.position.y, data.position.z)
+	end
+
 	exports.zero_appearance:setCustomization(source, user_id)
 	zeroClient._setFriendlyFire(source, true)
 	zeroClient._playerStateReady(source, true)
