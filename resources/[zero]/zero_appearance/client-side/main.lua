@@ -18,10 +18,10 @@ exports('setClothes', setClothes)
 
 local povCam = {
     ['body'] = function()
-       Cam({ x = 0, y = 1.5, z = 0.65 }, { x = 0.0, y = 0.0, z = -0.5 })
+       Cam({ x = 0, y = 1.5, z = 0.65 }, { x = 0.2, y = 0.0, z = -0.5 })
     end,
     ['head'] = function()
-        Cam({ x = 0, y = 0.5, z = 0.65 }, { x = 0.0, y = 0.0, z = 0.0 })
+        Cam({ x = 0, y = 0.5, z = 0.65 }, { x = 0.2, y = 0.0, z = 0.0 })
     end
 }
 
@@ -34,8 +34,6 @@ end
 tempCam = nil
 Cam = function(offset, bone)
     local ped = PlayerPedId()
-    SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'))
-    Citizen.Wait(500)
     if (not DoesCamExist(tempCam)) then
         local coordsCam = GetOffsetFromEntityInWorldCoords(ped, offset.x, offset.y, offset.z)
         
@@ -118,6 +116,7 @@ closeNui = function()
     local ped = PlayerPedId()
     FreezeEntityPosition(ped, false)
     ClearPedTasks(ped)
+    print(json.encode(oldCustom))
     if (oldCustom) then zero.setCustomization(oldCustom); end;
 end
 

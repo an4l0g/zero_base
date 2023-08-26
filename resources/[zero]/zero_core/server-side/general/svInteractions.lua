@@ -415,8 +415,9 @@ RegisterNetEvent('zero_interactions:enviar', function()
         local nUser = zero.getUserId(nPlayer)
         local nIdentity = zero.getUserIdentity(nUser)
         if (nPlayer) then
-            local amount = parseInt(args[1])
-            if (amount > 0) then
+            local amount = zero.prompt(source, { 'Quantidade de dinheiro' })
+            if (amount) then
+                amount = parseInt(amount[1])
                 if (zero.tryPayment(user_id, amount)) then
                     zero.giveMoney(nUser, amount)
                     exports.zero_bank:extrato(user_id, 'Transferência', -amount)
@@ -425,7 +426,7 @@ RegisterNetEvent('zero_interactions:enviar', function()
 			        zeroClient._playAnim(nPlayer, true, {{ 'mp_common', 'givetake1_a' }}, false)
                     TriggerClientEvent('notify', source, 'Interação Enviar', 'Você enviou <b>R$'..zero.format(amount)..'</b>.')
                     TriggerClientEvent('notify', nPlayer, 'Interação Enviar', 'Você recebeu <b>R$'..zero.format(amount)..'</b>.')
-                    zero.webhook('Enviar', '```prolog\n[/ENVIAR]\n[ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[ENVIOU]: R$'..vRP.format(amount)..' \n[PARA O ID]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('Enviar', '```prolog\n[/ENVIAR]\n[ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[ENVIOU]: R$'..zero.format(amount)..' \n[PARA O ID]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 else
                     TriggerClientEvent('notify', source, 'Interação Enviar', 'Você não possui essa quantia de <b>dinheiro</b> em mãos.')
                 end

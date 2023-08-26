@@ -117,9 +117,11 @@ srv.updatePhoto = function(image)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
-        zero.execute('zero_identity/updatePhoto', { user_id = user_id, url = image })
-        zero.webhook('updatePhoto', '```prolog\n[ZERO IDENTITY]\n[ACTION]: (UPDATE PHOTO)\n[USER]: '..user_id..'\n[PHOTO]: '..image..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..image)
-        return
+        if (image) then
+            zero.execute('zero_identity/updatePhoto', { user_id = user_id, url = image })
+            zero.webhook('updatePhoto', '```prolog\n[ZERO IDENTITY]\n[ACTION]: (UPDATE PHOTO)\n[USER]: '..user_id..'\n[PHOTO]: '..image..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```'..image)
+            return
+        end
     end
     return TriggerClientEvent('notify', source, 'Identidade', 'Não foi possível atualizar a sua <b>identidade</b>.')
 end

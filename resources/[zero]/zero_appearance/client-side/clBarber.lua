@@ -63,7 +63,7 @@ openBarberShop = function(locs)
 end
 
 setPedCustom = function()
-    Citizen.Wait(100)
+    Citizen.Wait(1000)
     local ped = PlayerPedId()
     local data = LocalPlayer.state.pedCustom
 

@@ -74,7 +74,7 @@ RegisterNetEvent('zero:tattooUpdate', function()
 end)
 
 setPedTattoos = function()
-    Citizen.Wait(100)
+    Citizen.Wait(1000)
     local ped = PlayerPedId()
     local data = LocalPlayer.state.pedTattoo
 

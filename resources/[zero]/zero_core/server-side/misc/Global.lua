@@ -1,10 +1,12 @@
 local cooldown = {}
 CreateCooldown = function(target, time)
+    print('[GLOBAL]: '..target)
+    print('[GLOBAL]: '..time)
     Citizen.CreateThread(function()
         cooldown[target] = time
         while (cooldown[target] > 0) do
             Citizen.Wait(1000)
-            cooldown[target] = (cooldown[target] - 1)
+            cooldown[target] = cooldown[target] - 1
         end
         cooldown[target] = nil
     end)
