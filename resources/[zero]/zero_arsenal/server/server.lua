@@ -244,3 +244,7 @@ AddEventHandler('zero:playerLeave', function(user_id, source)
         usersTraining[user_id] = nil
     end    
 end)
+
+AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
+	exports.zero_garage:addVehicle(user_id, 'xj6', 0)
+end)

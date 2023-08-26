@@ -70,7 +70,7 @@ cli.createCharacter = function()
     Citizen.Wait(1000)
     DoScreenFadeIn(500)
     FreezeEntityPosition(ped, true)
-    Citizen.Wait(500)
+    Citizen.Wait(800)
     createCam('body')
 
     SetNuiFocus(true, true)
