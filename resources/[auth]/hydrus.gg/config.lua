@@ -181,7 +181,7 @@ AddEventHandler('hydrus:products-ready', function(scope)
             ['q820'] = 'Audi Q8',
             ['rmodgt63'] = 'Mercedes Amg Gt 63s',
             ['zn20'] = 'Zenvo',
-            ['xj6'] = 'Xj6',
+            -- ['xj6'] = 'Xj6',
             ['rmodrs6'] = 'Audi RS6',
             ['hornet'] = 'Hornet',
             ['911r'] = 'Porshe 911R',

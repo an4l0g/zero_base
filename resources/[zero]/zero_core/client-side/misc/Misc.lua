@@ -46,6 +46,9 @@ Citizen.CreateThread(function()
 			SetRadarAsExteriorThisFrame()
 			SetRadarAsInteriorThisFrame('h4_fake_islandx', vec(4700.0, -5145.0), 0, 0)
 		end
+
+		local coords = GetEntityCoords(PlayerPedId())
+		RemoveVehiclesFromGeneratorsInArea(coords.x-9999.0,coords.y-9999.0,coords.z-9999.0,coords.x+9999.0,coords.y+9999.0,coords.z+9999.0)
 		Citizen.Wait(_idle)
 	end
 end)
