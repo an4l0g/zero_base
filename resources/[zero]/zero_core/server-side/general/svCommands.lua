@@ -297,16 +297,17 @@ RegisterCommand('ban', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') and args[1] then
         local nUser = parseInt(args[1])
         local nPlayer = zero.getUserSource(nUser)
-        if (nUser > 0) then
+        if (nPlayer) then
             if (zero.isBanned(nUser)) then TriggerClientEvent('notify', source, 'Desbanimento', 'Este <b>jogador</b> já está banido seu noia!') return; end;
 
             local prompt = zero.prompt(source, { 'Motivo' })
             if (prompt) then
                 prompt = prompt[1]
 
+
+                DropPlayer(nPlayer, 'Você foi banido da nossa cidade.\nSeu passaporte: #'..nUser..'\n Motivo: '..prompt..'\nAutor: '..identity.firstname..' '..identity.lastname)
                 exports[GetCurrentResourceName()]:setBanned(nUser, true)
-                exports.zero_core:insertBanRecord(nUser, true, user_id, '[BAN] '..prompt[1]..'!')
-                DropPlayer(nPlayer, 'Você foi banido da nossa cidade.\nSeu passaporte: #'..nUser..'\n Motivo: '..prompt[1]..'\nAutor: '..identity.firstname..' '..identity.lastname)
+                exports[GetCurrentResourceName()]:insertBanRecord(nUser, true, user_id, '[BAN] '..prompt..'!')
                 TriggerClientEvent('notify', source, 'Banimento', 'Você baniu o passaporte <b>'..nUser..'</b> da cidade.')
                 zero.webhook('Ban', '```prolog\n[/BAN]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[BANIU]: '..nUser..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end

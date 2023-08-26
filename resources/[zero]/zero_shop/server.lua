@@ -129,8 +129,6 @@ srv.shopTransaction = function(cart, method, index)
             local itemMethod = itemConfig.method
             if (method == 'buy') then
                 if (paymentMethod[itemMethod](user_id, k, v.amount, itemConfig, 'buy')) then
-                    print(json.encode(k))
-                    print(zero.itemNameList(k))
                     table.insert(paidOut, v.amount..'x '..zero.itemNameList(k))
                 end
             else

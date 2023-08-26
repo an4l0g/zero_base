@@ -30,7 +30,6 @@ Text3D = function(x,y,z,text,size)
 end
 
 RegisterNUICallback('close', function(data)
-    print('oi')
 	TriggerEvent('GrupoBrazuca:stopTabletAnim')
     SetNuiFocus(false, false)
 end)            

@@ -1,6 +1,6 @@
 shared_script '@likizao_ac/client/library.lua'
 
-shared_script "@vrp/lib/lib.lua" --Para remover esta pendencia de todos scripts, execute no console o comando "uninstall"
+-- shared_script "@vrp/lib/lib.lua" --Para remover esta pendencia de todos scripts, execute no console o comando "uninstall"
 
 game 'common'
 

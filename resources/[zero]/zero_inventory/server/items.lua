@@ -260,7 +260,6 @@ itemsMoveLog = function(cItem, nItem, amount)
     local url = nil
     local title = 'Movimentar Itens'
     if config.chests[cItem.bagType] ~= nil then
-        print(config.chests[cItem.bagType].log)
         url = config.chests[cItem.bagType].log
         title = 'Retirar Item'
     elseif config.chests[nItem.bagType] ~= nil then 

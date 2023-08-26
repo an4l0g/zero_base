@@ -31,11 +31,15 @@ end
 
 RegisterCommand('group', function(source, args)
     local user_id = zero.getUserId(source)
-    local prompt = zero.prompt(source, { 'Passaporte' })[1]
-    if (prompt) and zero.hasPermission(user_id, '+Staff.COO') then
-        local usergroups = painelUserGroups(prompt)
-        local identity = (zero.getUserIdentity(prompt) or 'Indivíduo Indigente')
-        vCLIENT.openNui(source, identity, usergroups, baseGroups)
+    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
+        local prompt = zero.prompt(source, { 'Passaporte' })
+        if (prompt) then
+            prompt = prompt[1]
+            
+            local usergroups = painelUserGroups(prompt)
+            local identity = (zero.getUserIdentity(prompt) or 'Indivíduo Indigente')
+            vCLIENT.openNui(source, identity, usergroups, baseGroups)
+        end
     end
 end)
 

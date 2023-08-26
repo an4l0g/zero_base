@@ -188,7 +188,7 @@ create table clothes(
     preset json not null,
     user_id int not null,
     primary key(title, user_id)
-)
+);
 
 create table pets(
 	pet_type varchar(50) not null,
@@ -199,7 +199,7 @@ create table pets(
     is_dead boolean not null,
     user_id int unsigned not null,
     primary key(pet_type, user_id)
-)
+);
 
 create table banned_records(
     id int unsigned auto_increment not null,
@@ -209,11 +209,11 @@ create table banned_records(
     ban_date timestamp default current_timestamp not null,
     ban_reason varchar(50) not null,
     primary key(id)
-)
+);
 
 create table facs_blacklist(
     user_id int not null,
     org varchar(50) not null,
     expires varchar(50) not null,
     primary key(user_id)
-)
+);

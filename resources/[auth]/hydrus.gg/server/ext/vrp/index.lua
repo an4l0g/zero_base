@@ -118,7 +118,6 @@ create_extension('vrp', function()
             return 'OK (Online)'
         else
             -- Save for later execution, since the player is offline
-            print(user_id, item, amount)
             export.zero_inventory:giveBagItem('bag:'..user_id, item, amount)
             -- Scheduler.new(user_id, 'additem', user_id, item, amount or 1)
             return 'Scheduled'
