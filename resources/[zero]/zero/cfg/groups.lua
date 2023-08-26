@@ -53,7 +53,7 @@ config.groups = {
 				['Enfermeiro'] = { title = 'Enfermeiro', level = 2 },
 				['Medico'] = { title = 'Médico', level = 3 },
 				['Cirurgiao'] = { title = 'Cirurgião', level = 4 },
-				['ViceDiretor'] = { title = 'Médico', level = 5 },
+				['ViceDiretor'] = { title = 'Vice-Diretor', level = 5 },
 				['Diretor'] = { title = 'Diretor', level = 6 },
 			},
 			grades_default = 'Paramedico',
@@ -273,7 +273,7 @@ config.groups = {
 				['Graduado'] = { title = 'Graduado', level = 2 },
 				['Oficial'] = { title = 'Oficial', level = 3 },
 				['AltoEscalao'] = { title = 'Alto Escalão', level = 4 },
-				['Subcomandante'] = { title = 'Sub-Comandante', level = 5 },
+				['SubComandante'] = { title = 'Sub-Comandante', level = 5 },
 				['Comandante'] = { title = 'Comandante', level = 6 }
 			},
 			grades_default = 'Policia',
