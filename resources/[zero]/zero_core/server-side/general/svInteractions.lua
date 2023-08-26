@@ -412,9 +412,9 @@ RegisterNetEvent('zero_interactions:enviar', function()
     local identity = zero.getUserIdentity(user_id)
     if (user_id) then
         local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
-        local nUser = zero.getUserId(nPlayer)
-        local nIdentity = zero.getUserIdentity(nUser)
         if (nPlayer) then
+            local nUser = zero.getUserId(nPlayer)
+            local nIdentity = zero.getUserIdentity(nUser)
             local amount = zero.prompt(source, { 'Quantidade de dinheiro' })
             if (amount) then
                 amount = parseInt(amount[1])

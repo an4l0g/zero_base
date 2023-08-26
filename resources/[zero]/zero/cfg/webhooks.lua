@@ -4,8 +4,9 @@ config.webhooks = {
     ['Join'] = 'https://discord.com/api/webhooks/1134350140300329090/5o-86yZHgDcpx2URSaDuDBJDMoXThNYz-ajQCxMq1N_1jLGJUVIvCKstWcVfaGMcqmJu',
     ['Exit'] = 'https://discord.com/api/webhooks/1134350166678323272/AqsznuKDjohWNvnLTOR_PIWJ13nMhqM6CMD8MaSfhAi0ilS6M61rnBoxBMZkuNXICnYd',
     ['BugSource'] = 'https://discord.com/api/webhooks/1134546955457003520/f8lfFRci2fr2IwgDc9QmlPE2ASA_MBo6OW0a_EJ8nedWoxwGk9v4AFYiCaIky9uUuwrh',
-    ['WeaponToken'] = '',
+    ['WeaponToken'] = 'https://discord.com/api/webhooks/1145025047703060520/xeiz6hoQi-rnRKFHX6idymdIuRbemXREwq_-bOeYXVYYCuJtFMMN1hvu-APyz6LItjVf',
     ['AntiFlood'] = 'https://discord.com/api/webhooks/1122335314397122671/gCJlPjrzaz8UhZ39UTbxKkZJz1FAKVJYNjW_zWI4rk1B1dtHUDX_ARHZpe8qweqE4LOI',
+    ['AntiDump'] = 'https://discord.com/api/webhooks/1145024922700234892/ZWsWlOX6rTZJuTlHqTa2noDWvpreTzTADaamQ_iS1rwmCSzIX5QiwSDfp5IFqpYVcMzq',
 
     ['God'] = 'https://discord.com/api/webhooks/1115098567506399242/8jmMBWIUG1JIayWuLKdC48Ju5Q5JQCifyTcL02NG2H9fxcs_62qcX0C385eEO0GChbsV',
     ['NoClip'] = 'https://discord.com/api/webhooks/1115098631662469200/cCxdwg9nUpiVdXhCelyJ0rJaHOgpzmWeRQ_pqsErVx4lvK2Cgp4wWQgt2rshEK2EbRZT',

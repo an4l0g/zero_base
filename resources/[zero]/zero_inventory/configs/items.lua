@@ -519,8 +519,6 @@ config.items = {
             
             cInventory.closeInventory(source)
 
-            zero.tryGetInventoryItem(user_id, 'kit-reparo', 1)
-
             local vehicle, vehnet = zeroClient.vehList(source,3.5)
             if (vehnet) then
 
@@ -529,8 +527,6 @@ config.items = {
                 if (zero.hasPermission(user_id, 'zeromecanica.permissao')) then
                     time = 15000
                 end
-
-                print(time)
 
                 Player(source).state.BlockTasks = true
                 FreezeEntityPosition(GetPlayerPed(source), true)
@@ -544,6 +540,7 @@ config.items = {
                     FreezeEntityPosition(vehicle, false)
                     ClearPedTasks(GetPlayerPed(source))
                     TriggerClientEvent('syncreparar', -1, vehnet)
+                    zero.tryGetInventoryItem(user_id, 'kit-reparo', 1)
                 end)
             end
         end

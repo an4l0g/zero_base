@@ -392,7 +392,7 @@ RegisterNuiCallback('saveVeh', function(data)
 end)
 
 RegisterNuiCallback('useVeh', function(data)
-    vSERVER.spawnVehicle(data.spawn, nearestGarageId)
+    vSERVER.spawnVehicle(data.spawn, nearestGarageId, GlobalState.vehicleToken)
 end)
 
 RegisterNuiCallback('close', function()

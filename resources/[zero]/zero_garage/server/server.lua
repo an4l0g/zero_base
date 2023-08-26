@@ -275,109 +275,120 @@ local vehicleDetained = {
     end
 }
 
-srv.spawnVehicle = function(vehicle, id)
+GlobalState.vehicleToken = {}
+Citizen.SetTimeout(2000,function()
+	math.randomseed(GetGameTimer())
+	GlobalState.vehicleToken = { math.random(50000,70000) }
+end)
+
+srv.spawnVehicle = function(vehicle, id, token)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if vehicle and (not spawnTasks[source]) then
-        spawnTasks[source] = true
-        if (user_id) then
-            if (not findVehicle(user_id, vehicle)) then
-                local veh = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = vehicle })[1]
-                if (not veh) then
-                    addVehicle(user_id, vehicle, 1)
-                    veh = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = vehicle })[1]
-                end
-
-                if (veh.service == 0) then
-                    if (exports['zero_bank']:verifyMultas(user_id) > 0) then
-                        TriggerClientEvent('notify', source, 'Garagem', 'Você não pode retirar um veículo da garagem tendo multas em sua conta.')
-                        return
+    if (token and GlobalState.vehicleToken[1] == token[1]) then
+        if vehicle and (not spawnTasks[source]) then
+            spawnTasks[source] = true
+            if (user_id) then
+                if (not findVehicle(user_id, vehicle)) then
+                    local veh = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = vehicle })[1]
+                    if (not veh) then
+                        addVehicle(user_id, vehicle, 1)
+                        veh = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = vehicle })[1]
                     end
 
-                    local detained = vehicleDetained[(veh.detained)](source, user_id, vehicle)
-                    if (not detained) then return; end;
-
-                    if (os.time() >= parseInt(veh.ipva + (config.ipvaDays * 24 * 60 * 60))) then
-                        local priceTax = parseInt(vehiclePrice(vehicle) * config.taxIPVA)
-                        local request = zero.request(source, 'Deseja pagar o Vehicle Tax do veículo '..vehicleName(vehicle)..' por R$'..zero.format(priceTax)..'?', 60000)
-                        if (request) then
-                            if (zero.tryFullPayment(user_id, priceTax)) then
-                                exports.zero_bank:extrato(user_id, 'IPVA', -priceTax)
-                                zero.execute('zero_garage/setIPVA', { user_id = user_id, vehicle = vehicle, ipva = os.time() })
-                                TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
-                            end
-                            TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
+                    if (veh.service == 0) then
+                        if (exports['zero_bank']:verifyMultas(user_id) > 0) then
+                            TriggerClientEvent('notify', source, 'Garagem', 'Você não pode retirar um veículo da garagem tendo multas em sua conta.')
+                            return
                         end
-                        return
+
+                        local detained = vehicleDetained[(veh.detained)](source, user_id, vehicle)
+                        if (not detained) then return; end;
+
+                        if (os.time() >= parseInt(veh.ipva + (config.ipvaDays * 24 * 60 * 60))) then
+                            local priceTax = parseInt(vehiclePrice(vehicle) * config.taxIPVA)
+                            local request = zero.request(source, 'Deseja pagar o Vehicle Tax do veículo '..vehicleName(vehicle)..' por R$'..zero.format(priceTax)..'?', 60000)
+                            if (request) then
+                                if (zero.tryFullPayment(user_id, priceTax)) then
+                                    exports.zero_bank:extrato(user_id, 'IPVA', -priceTax)
+                                    zero.execute('zero_garage/setIPVA', { user_id = user_id, vehicle = vehicle, ipva = os.time() })
+                                    TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
+                                end
+                                TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
+                            end
+                            return
+                        end
                     end
-                end
 
-                local vehicleFuel = 100.0
-                local state = srv.processState(json.decode(veh.state))
-                if (state.data.fuel) then vehicleFuel = state.data.fuel; end;
+                    local vehicleFuel = 100.0
+                    local state = srv.processState(json.decode(veh.state))
+                    if (state.data.fuel) then vehicleFuel = parseInt(state.data.fuel); end;
 
-                local loadModel = vCLIENT.loadModel(source, vehicle, 30000, 60000)
-                if (loadModel) then
-                    local slot, coords, heading = vCLIENT.getFreeSlot(source, id)
-                    if (slot) then
-                        local vehHandle;
-                        if (garagesConfig.clientSpawn or garagesConfig.clientSpawnForced) then
-                            local vehNet = vCLIENT.clientSpawn(source, GetHashKey(vehicle), vector3(coords.x, coords.y, coords.z - 0.5), heading, veh.plate)
-                            vehHandle = NetworkGetEntityFromNetworkId(vehNet)
-                            while (vehHandle == 0) do 
-                                vehHandle = NetworkGetEntityFromNetworkId(vehNet) 
-                                Citizen.Wait(1) 
-                            end;
+                    local loadModel = vCLIENT.loadModel(source, vehicle, 30000, 60000)
+                    if (loadModel) then
+                        local slot, coords, heading = vCLIENT.getFreeSlot(source, id)
+                        if (slot) then
+                            local vehHandle;
+                            if (garagesConfig.clientSpawn or garagesConfig.clientSpawnForced) then
+                                local vehNet = vCLIENT.clientSpawn(source, GetHashKey(vehicle), vector3(coords.x, coords.y, coords.z - 0.5), heading, veh.plate)
+                                vehHandle = NetworkGetEntityFromNetworkId(vehNet)
+                                while (vehHandle == 0) do 
+                                    vehHandle = NetworkGetEntityFromNetworkId(vehNet) 
+                                    Citizen.Wait(1) 
+                                end;
+                            else
+                                vehHandle = Citizen.InvokeNative(`CREATE_AUTOMOBILE`, GetHashKey(vehicle), vector3(coords.x, coords.y, coords.z - 0.3), heading)
+                            end
+
+                            if vehHandle and (vehHandle > 0) then
+                                if _Regis then _Regis(vehHandle) end
+
+                                local owner = NetworkGetEntityOwner(vehHandle)
+                                while (owner == -1) do
+                                    owner = (DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle))
+                                    Citizen.Wait(1)
+                                end
+                                if (not owner) then return; end;
+
+                                Citizen.Wait(700)
+
+                                SetVehicleNumberPlateText(vehHandle, veh.plate)
+                                SetVehicleDoorsLocked(vehHandle, 2)
+
+                                local netHandle;
+                                local timeOut = (GetGameTimer() + 2000)
+                                while (DoesEntityExist(vehHandle) and not netHandle and GetGameTimer() < timeOut) do
+                                    netHandle = DoesEntityExist(vehHandle) and NetworkGetNetworkIdFromEntity(vehHandle)
+                                    Citizen.Wait(1)
+                                end
+                                if (not netHandle) then return; end;
+                                
+                                Entity(vehHandle).state['veh:plate'] = veh.plate
+                                Entity(vehHandle).state['veh:chassis'] = veh.chassis
+                                Entity(vehHandle).state['veh:user_id'] = user_id
+                                Entity(vehHandle).state['veh:model'] = vehicle
+                                Entity(vehHandle).state['veh:service'] = (veh.service == 1)
+                                Entity(vehHandle).state['veh:fuel'] = vehicleFuel
+                                Entity(vehHandle).state['veh:spawning'] = true
+
+                                TriggerClientEvent('notify', source, 'Garagem', 'O <b>veículo</b> foi liberado com sucesso.')
+                                vCLIENT.syncBlips(source, netHandle, vehicle)
+                                vCLIENT.settingVehicle(source, netHandle, state, veh.plate, json.decode(veh.custom))
+                            end
                         else
-                            vehHandle = Citizen.InvokeNative(`CREATE_AUTOMOBILE`, GetHashKey(vehicle), vector3(coords.x, coords.y, coords.z - 0.3), heading)
-                        end
-
-                        if vehHandle and (vehHandle > 0) then
-                            if _Regis then _Regis(vehHandle) end
-
-                            local owner = NetworkGetEntityOwner(vehHandle)
-                            while (owner == -1) do
-                                owner = (DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle))
-                                Citizen.Wait(1)
-                            end
-                            if (not owner) then return; end;
-
-                            Citizen.Wait(700)
-
-                            SetVehicleNumberPlateText(vehHandle, veh.plate)
-                            SetVehicleDoorsLocked(vehHandle, 2)
-
-                            local netHandle;
-                            local timeOut = (GetGameTimer() + 2000)
-                            while (DoesEntityExist(vehHandle) and not netHandle and GetGameTimer() < timeOut) do
-                                netHandle = DoesEntityExist(vehHandle) and NetworkGetNetworkIdFromEntity(vehHandle)
-                                Citizen.Wait(1)
-                            end
-                            if (not netHandle) then return; end;
-                            
-                            Entity(vehHandle).state['veh:plate'] = veh.plate
-                            Entity(vehHandle).state['veh:chassis'] = veh.chassis
-                            Entity(vehHandle).state['veh:user_id'] = user_id
-                            Entity(vehHandle).state['veh:model'] = vehicle
-                            Entity(vehHandle).state['veh:service'] = (veh.service == 1)
-                            Entity(vehHandle).state['veh:fuel'] = vehicleFuel
-                            Entity(vehHandle).state['veh:spawning'] = true
-
-                            TriggerClientEvent('notify', source, 'Garagem', 'O <b>veículo</b> foi liberado com sucesso.')
-                            vCLIENT.syncBlips(source, netHandle, vehicle)
-                            vCLIENT.settingVehicle(source, netHandle, state, veh.plate, json.decode(veh.custom))
+                            TriggerClientEvent('notify', source, 'Garagem', 'Todas as <b>vagas</b> se encontram ocupadas no momento.')
                         end
                     else
-                        TriggerClientEvent('notify', source, 'Garagem', 'Todas as <b>vagas</b> se encontram ocupadas no momento.')
+                        TriggerClientEvent('notify', source, 'Garagem', 'O <b>veículo</b> se encontra indisponível no momento.')
                     end
                 else
-                    TriggerClientEvent('notify', source, 'Garagem', 'O <b>veículo</b> se encontra indisponível no momento.')
+                    TriggerClientEvent('notify', source, 'Garagem', 'Você já possui um <b>veículo</b> deste modelo fora da garagem.')
                 end
-            else
-                TriggerClientEvent('notify', source, 'Garagem', 'Você já possui um <b>veículo</b> deste modelo fora da garagem.')
             end
         end
+    else
+        zero.webhook('AntiDump', '```prolog\n[ANTI DUMP]\n[USER]: '..user_id..'\n[SCRIPT]: '..GetCurrentResourceName()..'\n[ALERT]: provavelmente este jogador está tentando dumpar em um dos nossos sistemas!'..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```'..'@everyone')
+        print('^5[Zero Anti]^7 o usuário '..user_id..' está provavelmente tentando dumpar!')
     end
     spawnTasks[source] = nil
 end

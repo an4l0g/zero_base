@@ -155,7 +155,6 @@ RegisterCommand('ney', function(source, args)
             if (nSource) then
                 TriggerClientEvent('ney', nSource)
                 TriggerClientEvent('notify', source, 'Neymar', 'Você <b>derrubou</b> o jogador!')
-
                 zero.webhook('Neymar', '```prolog\n[/FREEZE]\n[USER]: '..user_id..'\n[TARGET]: '..(args[1] and args[1] or user_id)..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
             end
         end

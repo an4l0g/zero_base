@@ -53,6 +53,7 @@ startRoute = function(index)
 
     inRoute = true
     selected = 1
+    vSERVER.startUpdateRoute()
 
     CreateBlip(_config.coords, selected)
     TriggerEvent('notify', 'Rotas', 'Você iniciou a sua rota de <b>'.._config.name..'</b>.<br>Todas as localizações já se encontram em seu <b>GPS</b>.')
@@ -82,7 +83,7 @@ startRoute = function(index)
                             LocalPlayer.state.BlockTasks = false
                             FreezeEntityPosition(ped, false)
                             ClearPedTasks(ped)
-                            vSERVER.routePayment(coords, _config.itens, _config.extras.drug, _config.name)
+                            vSERVER.routePayment(_config.coords, _config, _config.extras.drug, _config.name)
 
                             selected = (selected + 1)
                             if (selected > #_config.coords) then selected = 1; end;
@@ -115,6 +116,7 @@ startRoute = function(index)
             if (IsControlJustPressed(0, 168)) then
                 inRoute = false
                 RemoveBlip(blip)
+                vSERVER.resetUpdateRoute()
                 TriggerEvent('notify', 'Rotas', 'Você finalizou a sua rota de <b>'.._config.name..'</b>. Todas as localizações marcadas foram retiradas de seu <b>GPS</b>.')
             end
             Citizen.Wait(1)

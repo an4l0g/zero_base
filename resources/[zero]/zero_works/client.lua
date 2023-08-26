@@ -86,6 +86,7 @@ startJob = function(work)
     local pCoord = GetEntityCoords(ped)
     Citizen.CreateThread(function()
         _stage = 1
+        vSERVER.startUpdateRoute()
         createBlip(_config.coords.start)
         while (_stage == 1) do
             ped = PlayerPedId()
@@ -109,6 +110,7 @@ startJob = function(work)
     Citizen.CreateThread(function()
         while (inWork) do
             if (IsControlJustPressed(0, 168)) then
+                vSERVER.resetUpdateRoute()
                 stopWork(lang[work]['stopWork'](_config.name))
             end
             Citizen.Wait(1)
@@ -126,7 +128,7 @@ startJob = function(work)
                 local _cache = nearestBlips
                 for index, dist in pairs(_cache) do
                     local configProductions = productions[work][index]
-                    if (dist <= 2.0) then
+                    if (dist <= 1.5) then
                         local _coord = vector3(configProductions.coord.x, configProductions.coord.y, configProductions.coord.z)
                         TextFloating('Pressione ~b~E~w~ para '..product[configProductions.config].blipText, _coord)
                         if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped) and not task) then
@@ -205,55 +207,50 @@ startJob = function(work)
             if (distance <= 5.0) then
                 _idle = 1
                 TextFloating('Pressione ~b~E~w~ para '.._config.text, _config.routes[selection])
-                if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and checkVehicleFunctions(ped, config) and not task) then
-                    RemoveBlip(blips)
-                    task = true
+                if (distance <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and checkVehicleFunctions(ped, config) and not task) then   
                     if (lastVehicleModel(GetPlayersLastVehicle(), _config.vehicle)) then
-                        if (vSERVER.checkItem(_config.requireItem)) then
-                            LocalPlayer.state.BlockTasks = true
+                        RemoveBlip(blips)
+                        task = true
 
-                            if (_config.anim) then ExecuteCommand('e '.._config.anim); end;
+                        LocalPlayer.state.BlockTasks = true
 
+                        if (_config.anim) then ExecuteCommand('e '.._config.anim); end;
+
+                        if (_config.blipWithCar) then
+                            SetEntityCoords(GetVehiclePedIsIn(ped), _config.routes[selection])
+                            Wait(1000)
+                            FreezeEntityPosition(GetVehiclePedIsIn(ped), true)
+                        else
+                            SetEntityCoords(ped, _config.routes[selection])
+                            Wait(1000)
+                            FreezeEntityPosition(ped, true)
+                        end
+
+                        TriggerEvent('progressBar', lang[work]['progressBar'], _config.setTimeOut)
+                        Citizen.SetTimeout(_config.setTimeOut, function()
+                            LocalPlayer.state.BlockTasks = false
                             if (_config.blipWithCar) then
-                                SetEntityCoords(GetVehiclePedIsIn(ped), _config.routes[selection])
-                                Wait(1000)
-                                FreezeEntityPosition(GetVehiclePedIsIn(ped), true)
+                                FreezeEntityPosition(GetVehiclePedIsIn(ped), false)
                             else
-                                SetEntityCoords(ped, _config.routes[selection])
-                                Wait(1000)
-                                FreezeEntityPosition(ped, true)
+                                FreezeEntityPosition(ped, false)
                             end
 
-                            TriggerEvent('progressBar', lang[work]['progressBar'], _config.setTimeOut)
-                            Citizen.SetTimeout(_config.setTimeOut, function()
-                                LocalPlayer.state.BlockTasks = false
-                                if (_config.blipWithCar) then
-                                    FreezeEntityPosition(GetVehiclePedIsIn(ped), false)
-                                else
-                                    FreezeEntityPosition(ped, false)
-                                end
+                            vSERVER.givePayment(_config.routes, _config.payment, _config.name)
+                            zero.DeletarObjeto()
+                            ClearPedTasks(ped)
 
-                                vSERVER.givePayment(_config.routes[selection], _config.payment, _config.name, selection)
-                                zero.DeletarObjeto()
-                                ClearPedTasks(ped)
-
-                                selection = selection + 1
-                                if (selection > #_config.routes) then
-                                    selection = 1 
-                                    TriggerEvent('notify', 'Emprego', lang[work]['resetRoutes'])
-                                end
-                                Citizen.Wait(500)
-                                task = false
-                                TriggerEvent('notify', 'Emprego', lang[work]['newRoute'], 8000)
-                                createBlip(_config.routes, selection, true)
-                            end)
-                        else
-                            TriggerEvent('notify', 'Emprego', lang[work]['backBusiness'](_config.name))
+                            selection = selection + 1
+                            if (selection > #_config.routes) then
+                                selection = 1 
+                                TriggerEvent('notify', 'Emprego', lang[work]['resetRoutes'])
+                            end
+                            Citizen.Wait(500)
                             task = false
-                        end
+                            TriggerEvent('notify', 'Emprego', lang[work]['newRoute'], 8000)
+                            createBlip(_config.routes, selection, true)
+                        end)
                     else
                         TriggerEvent('notify', 'Emprego', lang[work]['noVehicleBusiness'](_config.name))
-                        task = false
                     end
                 end
             end
@@ -279,7 +276,7 @@ startJob = function(work)
                 task = false
                 LocalPlayer.state.BlockTasks = false
                 FreezeEntityPosition(ped, false)
-                vSERVER.giveItem(product[_production['config']]['receiveItems'])
+                vSERVER.giveItem(_production['config'], GetEntityCoords(ped))
                 ClearPedTasks(ped)
             end)
         else

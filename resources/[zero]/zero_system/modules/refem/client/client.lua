@@ -78,7 +78,7 @@ cli.takeHostage = function(targetSrc)
     foundWeapon = GetHashKey(Weapons[GetSelectedPedWeapon(ply)])
 
     SetCurrentPedWeapon(ply, foundWeapon, true)
-    TriggerServerEvent('zero_prefem:sync', targetSrc, 'anim@gangops@hostage@', 'anim@gangops@hostage@', 'perp_idle', 'victim_idle', 0.11, -0.24, 0.0, 100000, 0.0, 49, 49, 50, true)    
+    vSERVER.prefemSync(targetSrc, 'anim@gangops@hostage@', 'anim@gangops@hostage@', 'perp_idle', 'victim_idle', 0.11, -0.24, 0.0, 100000, 0.0, 49, 49, 50, true)
     return true
 end
 

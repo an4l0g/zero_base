@@ -60,7 +60,7 @@ Config.DefaultDamages = {
 
 Config.NotifyAdmins = true
 
-Config.FooterBanText = "\nPara recorrer entre em nosso Discord!"
+Config.FooterBanText = "\nPara recorrer entre em nosso Discord! discord.gg/zerpco"
 
 Config.ImageCDN = "https://discord.com/api/webhooks/1144460681605828788/pVc2ykz_y9pPeabMb-Gp2iEoLdDwG-Ibpi0zTBalIhlbC2evOvA0IPHqFqvePA7JZFfC"
 

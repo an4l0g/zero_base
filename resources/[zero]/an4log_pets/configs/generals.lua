@@ -29,7 +29,7 @@ configs.funcs = {
         zero.giveInventoryItem(user_id, item, amount)
     end,
     giveWeapon = function(weapon, ammo)
-        zero.giveWeapons({ [weapon] = { ammo = ammo }},false)
+        zero.giveWeapons({ [weapon] = { ammo = ammo }},false, GlobalState.weaponToken)
     end,
     tryGetItem = function(source, item, amount)
         local user_id = zero.getUserId(source)

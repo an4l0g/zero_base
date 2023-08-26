@@ -3,6 +3,27 @@ Tunnel.bindInterface('Routes', srv)
 
 local routeTime = {}
 
+local selection = {}
+
+srv.startUpdateRoute = function()
+    local source = source
+    selection[zero.getUserId(source)] = 1
+end
+
+srv.resetUpdateRoute = function()
+    local source = source
+    selection[zero.getUserId(source)] = nil
+end
+
+local updateRoute = function(source, routes)
+    local user_id = zero.getUserId(source)
+    
+    selection[user_id] = selection[user_id] + 1
+    if (selection[user_id] > #routes) then
+        selection[user_id] = 1 
+    end
+end
+
 srv.checkRoutes = function(index)
     local _config = Routes.locations[index]
     local source = source
@@ -65,12 +86,13 @@ srv.checkBackpack = function(itens, drug)
     return false
 end
 
-srv.routePayment = function(coords, itens, drug, name)
+srv.routePayment = function(coords, _config, drug, name)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
-        local distance = #(GetEntityCoords(GetPlayerPed(source)) - coords)
+        local distance = #(GetEntityCoords(GetPlayerPed(source)) - coords[selection[user_id]])
         if (distance <= 8.0) then
+            local itens = _config.itens
             if (drug) then
                 for k, v in pairs(itens) do
                     if (CheckWeight(user_id, v.item, v.quantity, v.receive, v.payment)) then
@@ -78,6 +100,7 @@ srv.routePayment = function(coords, itens, drug, name)
                             zero.giveInventoryItem(user_id, v.receive, v.payment)
                             TriggerClientEvent('notify', source, 'Rotas', 'Você vendeu <b>'..v.quantity..'x</b> de <b>'..zero.itemNameList(v.item)..'</b> e recebeu <b>R$'..zero.format(v.payment)..'</b> de dinheiro sujo pela sua venda!')
                             zero.webhook('Rotas', '```prolog\n[ROUTES]\n[NAME]: '..name..'\n[USER]: '..user_id..'\n[TYPE]: DRUG\n[ITEM SELL]: '..zero.itemNameList(v.item)..'\n[QUANTITY SELL]: '..v.quantity..'\n[ITEM RECEIVED]: '..zero.itemNameList(v.receive)..'\n[VALUE RECEIVED]: R$'..zero.format(v.payment)..' dinheiro sujo\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                            updateRoute(source, coords)
                             return true
                         end
                         TriggerClientEvent('notify', source, 'Rotas', 'Você não possui <b>'..v.quantity..'x</b> de <b>'..zero.itemNameList(v.item)..'</b> em sua mochila!')
@@ -88,11 +111,13 @@ srv.routePayment = function(coords, itens, drug, name)
                     zero.giveInventoryItem(user_id, itens.item, itens.quantity)
                     TriggerClientEvent('notify', source, 'Rotas', 'Você recebeu <b>'..itens.quantity..'x</b> de <b>'..zero.itemNameList(itens.item)..'</b>!')
                     zero.webhook('Rotas', '```prolog\n[ROUTES]\n[NAME]: '..name..'\n[USER]: '..user_id..'\n[ITEM RECEIVED]: '..zero.itemNameList(itens.item)..'\n[QUANTITY RECEIVED]: '..itens.quantity..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    updateRoute(source, coords)
                     return true
                 end
             end
         else
-            DropPlayer('Você foi pego tentando dumpar na rota. (Esta mensagem é um aviso, você não foi banido!)')
+            zero.webhook('AntiDump', '```prolog\n[ANTI DUMP]\n[USER]: '..user_id..'\n[SCRIPT]: '..GetCurrentResourceName()..'\n[ALERT]: provavelmente este jogador está tentando dumpar em um dos nossos sistemas!'..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```'..'@everyone')
+            print('^5[Zero Anti]^7 o usuário '..user_id..' está provavelmente tentando dumpar!')
         end
     end
     return false

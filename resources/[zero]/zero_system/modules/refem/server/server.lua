@@ -37,14 +37,15 @@ AddEventHandler('zero_prefem:killHostage', function()
         zeroClient.setArmour(nPlayer, 0)
     end
 end)
-
-RegisterServerEvent('zero_prefem:sync')
-AddEventHandler('zero_prefem:sync', function(targetSrc, animationLib,animationLib2, animation, animation2, distans, distans2, height,length,spin,controlFlagSrc,controlFlagTarget,animFlagTarget,attachFlag)
+-- RegisterServerEvent('zero_prefem:sync')
+-- AddEventHandler('zero_prefem:sync', function()
+srv.prefemSync = function(targetSrc, animationLib,animationLib2, animation, animation2, distans, distans2, height,length,spin,controlFlagSrc,controlFlagTarget,animFlagTarget,attachFlag)
+    local source = source
     Player(source).state.BlockTasks = true
     Player(targetSrc).state.BlockTasks = true
     TriggerClientEvent('zero_prefem:syncTarget', targetSrc, source, animationLib2, animation2, distans, distans2, height, length,spin,controlFlagTarget,animFlagTarget,attachFlag)
     TriggerClientEvent('zero_prefem:syncMe', source, animationLib, animation,length,controlFlagSrc,animFlagTarget)
-end)
+end
 
 RegisterServerEvent('zero_prefem:stop')
 AddEventHandler('zero_prefem:stop', function(targetSrc)

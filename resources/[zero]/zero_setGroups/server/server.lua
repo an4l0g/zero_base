@@ -31,7 +31,7 @@ end
 
 RegisterCommand('group', function(source, args)
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Manager') then
         local prompt = zero.prompt(source, { 'Passaporte' })
         if (prompt) then
             prompt = prompt[1]

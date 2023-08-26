@@ -761,6 +761,7 @@ end
 RegisterCommand('bvida', function()
 	local ped = PlayerPedId()
 	if (LocalPlayer.state.BlockTasks) then return; end;
+	if (zero.isHandcuffed()) then return; end;
 
 	if (zero.isMalas()) then
 		TriggerEvent('notify', 'Bvida', 'Você não pode executar este <b>comando</b> dentro de um veículo')

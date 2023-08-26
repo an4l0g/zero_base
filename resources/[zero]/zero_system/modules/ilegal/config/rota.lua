@@ -109,7 +109,6 @@ Routes = {
             },
             extras = {
                 anim = 'mexer',
-                police = 0,
                 timeout = 5000,
             }
         },

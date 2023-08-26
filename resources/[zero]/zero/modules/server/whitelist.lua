@@ -6,9 +6,11 @@ zero.checkWhitelist = function(target)
 end
 
 zero.isWhitelisted = function(user_id)
-	local rows = zero.query('zero_framework/getWhitelist', { user_id = user_id })[1]
-	if (rows.whitelist == 1) then
-		return true
+	if (user_id) then
+		local rows = zero.query('zero_framework/getWhitelist', { user_id = user_id })[1]
+		if (rows) and rows.whitelist == 1 then
+			return true
+		end
 	end
 	return false
 end

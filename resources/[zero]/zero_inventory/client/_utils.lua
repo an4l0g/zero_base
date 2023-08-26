@@ -12,7 +12,7 @@ end
 
 cInventory.getVehicleDamage = function()
     local pVehicle = GetClosestVehicle(GetEntityCoords(PlayerPedId()), 10.0, 0, 71)
-    if (DoesEntityExist(vehicle)) then
+    if (DoesEntityExist(pVehicle)) then
         return GetVehicleEngineHealth(pVehicle)
     end
     return 0.0

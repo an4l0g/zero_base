@@ -30,6 +30,7 @@ srv.playerDeath = function(weapon, killerSource, headShot)
                 for l,w in pairs(admin) do
                     local player = zero.getUserSource(parseInt(w))
                     if player then
+                        TriggerClientEvent('chatMessage', player, '[KILLSYSTEM]', {0, 153, 255}, '[ID]: '..killer_id..' [MATOU O ID]: '..user_id..' [ARMA]: '..weaponName)
                         TriggerClientEvent('notify', player, 'Kill System', '[ID]: '..killer_id..' [MATOU O ID]: '..user_id..' [ARMA]: '..weaponName, 10000)
                     end
                 end
