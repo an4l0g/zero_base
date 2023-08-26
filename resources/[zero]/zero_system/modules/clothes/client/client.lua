@@ -3,9 +3,9 @@ Tunnel.bindInterface('Clothes', cli)
 local vSERVER = Tunnel.getInterface('Clothes')
 
 local checkValues = function(value, prop)
-    f numero < 0 then
-   ClearPedProp(ped, 7) -- 7 é o index do prop
-end
+    if numero < 0 then
+        ClearPedProp(ped, 7) -- 7 é o index do prop
+    end
 end
 
 cli.getCurrentPreset = function()

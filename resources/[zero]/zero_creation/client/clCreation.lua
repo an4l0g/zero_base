@@ -70,7 +70,6 @@ cli.createCharacter = function()
     Citizen.Wait(1000)
     DoScreenFadeIn(500)
     FreezeEntityPosition(ped, true)
-    Citizen.Wait(800)
     createCam('body')
 
     SetNuiFocus(true, true)
@@ -402,6 +401,7 @@ Cam = function(offset, bone)
         
         tempCam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
         SetCamCoord(tempCam, coordsCam)
+        Citizen.SetTimeout(1000, callbafck)
         PointCamAtPedBone(tempCam, ped, 31086, bone.x, bone.y, bone.z, false)
 
         SetCamActive(tempCam, true)

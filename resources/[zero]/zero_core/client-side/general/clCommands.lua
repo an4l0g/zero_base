@@ -636,8 +636,8 @@ RegisterNetEvent('zero_core:discord', function(status)
 	SetDiscordRichPresenceAssetSmall('logo')
 	SetDiscordRichPresenceAssetSmallText('Zero City')
     SetRichPresence(status)
-    SetDiscordRichPresenceAction(0, 'S9 | An4l0g', 'https://ryandrumond.com/')
-    SetDiscordRichPresenceAction(1, 'S9 | Bluen', 'https://www.instagram.com/danielbrsouza/')
+    SetDiscordRichPresenceAction(0, 'Conectar', 'https://cfx.re/join/la77xo')
+    SetDiscordRichPresenceAction(1, 'Loja', 'http://zerocity.shop')
 end)
 
 ---------------------------------------
