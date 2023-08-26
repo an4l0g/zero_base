@@ -29,19 +29,21 @@ RegisterCommand('ec', function(source, args)
         if (animation) then
             if (zero.checkPermissions(_userId, animation.perm)) then
                 local nSource = zeroClient.getNearestPlayer(source, 2)
-                if (GetEntityHealth(GetPlayerPed(nSource)) > 100) then 
-                    local identity = zero.getUserIdentity(_userId)
-                    local request = exports.zero_hud:request(nSource, 'Você deseja aceitar a animação '..args[1]:upper()..' de '..identity.firstname..' '..identity.lastname..'?', 30000)
-                    if (request) then
-                        local cooldown = 'anim:'.._userId
-                        if (exports.zero_core:GetCooldown(cooldown)) then
-                            TriggerClientEvent('notify', source, 'Animação', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para fazer animação novamente.')
-                            return
-                        end
-                        exports.zero_core:CreateCooldown(cooldown, 5)
+                if (nSource) then
+                    if (GetEntityHealth(GetPlayerPed(nSource)) > 100) then 
+                        local identity = zero.getUserIdentity(_userId)
+                        local request = exports.zero_hud:request(nSource, 'Você deseja aceitar a animação '..args[1]:upper()..' de '..identity.firstname..' '..identity.lastname..'?', 30000)
+                        if (request) then
+                            local cooldown = 'anim:'.._userId
+                            if (exports.zero_core:GetCooldown(cooldown)) then
+                                TriggerClientEvent('notify', source, 'Animação', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para fazer animação novamente.')
+                                return
+                            end
+                            exports.zero_core:CreateCooldown(cooldown, 5)
 
-                        TriggerClientEvent('zero_animations:setAnimShared', _source, args[1], nSource)
-                        TriggerClientEvent('zero_animations:setAnimShared2', nSource, animation.otherAnim, _source)
+                            TriggerClientEvent('zero_animations:setAnimShared', _source, args[1], nSource)
+                            TriggerClientEvent('zero_animations:setAnimShared2', nSource, animation.otherAnim, _source)
+                        end
                     end
                 end
             end
@@ -62,19 +64,21 @@ RegisterNetEvent('zero_interactions:execAnimation', function(value)
             if (animation) then
                 if (zero.checkPermissions(_userId, animation.perm)) then
                     local nSource = zeroClient.getNearestPlayer(source, 2)
-                    if (GetEntityHealth(GetPlayerPed(nSource)) > 100) then 
-                        local identity = zero.getUserIdentity(_userId)
-                        local request = exports.zero_hud:request(nSource, 'Você deseja aceitar a animação '..value[2]:upper()..' de '..identity.firstname..' '..identity.lastname..'?', 30000)
-                        if (request) then
-                            local cooldown = 'anim:'.._userId
-                            if (exports.zero_core:GetCooldown(cooldown)) then
-                                TriggerClientEvent('notify', source, 'Animação', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para fazer animação novamente.')
-                                return
-                            end
-                            exports.zero_core:CreateCooldown(cooldown, 5)
+                    if (nSource) then
+                        if (GetEntityHealth(GetPlayerPed(nSource)) > 100) then 
+                            local identity = zero.getUserIdentity(_userId)
+                            local request = exports.zero_hud:request(nSource, 'Você deseja aceitar a animação '..value[2]:upper()..' de '..identity.firstname..' '..identity.lastname..'?', 30000)
+                            if (request) then
+                                local cooldown = 'anim:'.._userId
+                                if (exports.zero_core:GetCooldown(cooldown)) then
+                                    TriggerClientEvent('notify', source, 'Animação', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para fazer animação novamente.')
+                                    return
+                                end
+                                exports.zero_core:CreateCooldown(cooldown, 5)
 
-                            TriggerClientEvent('zero_animations:setAnimShared', _source, value[2], nSource)
-                            TriggerClientEvent('zero_animations:setAnimShared2', nSource, animation.otherAnim, _source)
+                                TriggerClientEvent('zero_animations:setAnimShared', _source, value[2], nSource)
+                                TriggerClientEvent('zero_animations:setAnimShared2', nSource, animation.otherAnim, _source)
+                            end
                         end
                     end
                 end

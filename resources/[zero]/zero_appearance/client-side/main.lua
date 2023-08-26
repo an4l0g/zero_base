@@ -116,7 +116,6 @@ closeNui = function()
     local ped = PlayerPedId()
     FreezeEntityPosition(ped, false)
     ClearPedTasks(ped)
-    print(json.encode(oldCustom))
     if (oldCustom) then zero.setCustomization(oldCustom); end;
 end
 

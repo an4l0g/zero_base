@@ -1,25 +1,25 @@
-local localSussurando = {
-	{ ['cds'] = vector3(-680.56, 328.46, 83.78), ['dist'] = 50.0 },
-}
+-- local localSussurando = {
+-- 	{ ['cds'] = vector3(-680.56, 328.46, 83.78), ['dist'] = 50.0 },
+-- }
 
-Citizen.CreateThread(function()
-	while true do
-		local idle = 1000
-			for _ ,v in pairs(localSussurando) do
-				local distance = #(GetEntityCoords(PlayerPedId()) - v.cds)
-				if distance <= v.dist then
-					idle = 100
-					if mode ~= 1 then
-						mode = 1
-						setProximityState(Cfg.voiceModes[mode][1], false)
-						TriggerEvent('pma-voice:setTalkingMode', mode)
-						TriggerEvent("hud:talkingState",mode)
-					end
-				end
-			end
-		Wait(idle)
-	end
-end)
+-- Citizen.CreateThread(function()
+-- 	while true do
+-- 		local idle = 1000
+-- 			for _ ,v in pairs(localSussurando) do
+-- 				local distance = #(GetEntityCoords(PlayerPedId()) - v.cds)
+-- 				if distance <= v.dist then
+-- 					idle = 100
+-- 					if mode ~= 1 then
+-- 						mode = 1
+-- 						setProximityState(Cfg.voiceModes[mode][1], false)
+-- 						TriggerEvent('pma-voice:setTalkingMode', mode)
+-- 						TriggerEvent("hud:talkingState",mode)
+-- 					end
+-- 				end
+-- 			end
+-- 		Wait(idle)
+-- 	end
+-- end)
 
 
 local wasProximityDisabledFromOverride = false
@@ -78,7 +78,9 @@ exports("clearProximityOverride", function()
 	end
 end)
 
-RegisterCommand('cycleproximity', function()
+RegisterKeyMapping('cycleproximity2', 'Alterar Voz', 'keyboard', 'HOME')
+RegisterCommand('cycleproximity2', function()
+	print('oiii')
 	-- Proximity is either disabled, or manually overwritten.
 	if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
 	local newMode = mode + 1
@@ -90,11 +92,9 @@ RegisterCommand('cycleproximity', function()
 		mode = 1
 	end
 
+	print('aquiii')
 	setProximityState(Cfg.voiceModes[mode][1], false)
-	TriggerEvent('pma-voice:setTalkingMode', mode)
+	TriggerEvent('pma-voice:setTalkingMode', Cfg.voiceModes[mode][2])
 	TriggerEvent("hud:talkingState",mode)
 
 end, false)
-if gameVersion == 'fivem' then
-	RegisterKeyMapping('cycleproximity', 'Cycle Proximity', 'keyboard', GetConvar('voice_defaultCycle', 'home'))
-end

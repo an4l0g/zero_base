@@ -17,15 +17,25 @@ config.grades = {
         'Gerente',
         'Membro'
     },
+    deic = {
+        'Diretor',
+        'Delegado',
+        'Comissario',
+        'Superintendente',
+        'Intendente',
+        'Inspetor',
+        'Especialista',
+        'Perito',
+        'Agente',
+        'Acadepol'
+    },
     policia = {
-        'Navy',
-        'Comando',     
-        'SubComando',
-        'Capitao',
-        'Tenente',
-        'Sargento',
-        'Cabo',
-        'Soldado',
+        'Comandante',
+        'SubComandante',
+        'AltoEscalao',
+        'Oficial',
+        'Graduado',
+        'Policia'
     },
     hospital = {
         'Diretor',

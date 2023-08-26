@@ -15,22 +15,7 @@ end
 srv.checkPermission = function(permissions)
     local source = source
     local user_id = getUserId(source)
-    --if auth then
-        if user_id then
-            if permissions then
-                if type(permissions) == 'table' then
-                    for i, perm in pairs(permissions) do
-                        if hasPermission(user_id, perm) then
-                            return true
-                        end
-                    end
-                    return false
-                end
-                return hasPermission(user_id, permissions)
-            end
-            return true
-        end
-    --end
+    return zero.checkPermissions(user_id, permissions)
 end
 
 srv.getUserIdentity = function()
@@ -126,15 +111,19 @@ srv.shopTransaction = function(cart, method, index)
         local paidOut = {}
         for k, v in pairs(cart) do
             local itemConfig = configGeneral[configShops[index].config][k] 
-            local itemMethod = itemConfig.method
-            if (method == 'buy') then
-                if (paymentMethod[itemMethod](user_id, k, v.amount, itemConfig, 'buy')) then
-                    table.insert(paidOut, v.amount..'x '..zero.itemNameList(k))
+            if (zero.checkPermissions(user_id, itemConfig.perm)) then
+                local itemMethod = itemConfig.method
+                if (method == 'buy') then
+                    if (paymentMethod[itemMethod](user_id, k, v.amount, itemConfig, 'buy')) then
+                        table.insert(paidOut, v.amount..'x '..zero.itemNameList(k))
+                    end
+                else
+                    if (paymentMethod[itemMethod](user_id, k, v.amount, itemConfig, 'sell')) then
+                        table.insert(paidOut, v.amount..'x '..zero.itemNameList(k))
+                    end
                 end
             else
-                if (paymentMethod[itemMethod](user_id, k, v.amount, itemConfig, 'sell')) then
-                    table.insert(paidOut, v.amount..'x '..zero.itemNameList(k))
-                end
+                TriggerClientEvent('notify', source, 'Loja', 'Você não tem <b>permissão</b> para comprar este item!')
             end
         end
         _finish[method](source, paidOut, configShops[index].name)

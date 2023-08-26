@@ -9,6 +9,7 @@ RegisterNetEvent('zero_core:shoting', function(coord)
         for k, v in pairs(police) do
             local nSource = zero.getUserSource(k)
             if (nSource) then
+                TriggerClientEvent('announcement', nSource, 'Disparos de arma de fogo', 'Atenção <b>unidades</b> foram avistados disparos de arma de fogo próximo as suas regiões, tomem cuidado!', 'Delegacia Zero', true, 10000)
                 TriggerClientEvent('zero_core:shotingBlip', nSource, coord, user_id)
             end
         end

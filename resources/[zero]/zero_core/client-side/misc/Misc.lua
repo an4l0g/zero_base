@@ -332,7 +332,6 @@ local shot = {}
 RegisterNetEvent('zero_core:shotingBlip', function(coord, user_id)
 	if (not DoesBlipExist(shot[user_id])) then
 		PlaySoundFrontend(-1, 'Enter_1st', 'GTAO_FM_Events_Soundset', false)
-		TriggerEvent('announcement', 'Disparos de arma de fogo', 'Atenção <b>unidades</b> foram avistados disparos de arma de fogo próximo as suas regiões, tomem cuidado!', 'Delegacia Zero', true, 10000)
 
 		shot[user_id] = AddBlipForCoord(coord)
 		SetBlipScale(shot[user_id], 0.5)

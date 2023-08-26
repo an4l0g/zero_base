@@ -29,8 +29,8 @@ local markerThread = function()
                             end
                         elseif (IsControlJustPressed(0, 75)) then
                             if (not vSERVER.verifyMaca(index)) then
-                                vSERVER.saveMaca(index)
                                 if (GetEntityHealth(ped) < 200) then 
+                                    vSERVER.saveMaca(index)
                                     vSERVER.startTratamento(index)
                                 else
                                     TriggerEvent('notify', 'Hospital', 'Você não pode iniciar um <b>tratamento</b> com a vida cheia!')

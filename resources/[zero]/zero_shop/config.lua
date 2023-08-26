@@ -112,7 +112,7 @@ config.general = {
             method = 'legal'
         },
     },
-     ['ammu'] = {
+    ['ammu'] = {
         ['algema'] = {
             name = 'Algema', index = 'algema',
             price = {
@@ -132,14 +132,16 @@ config.general = {
             price = {
                 buy = 25000,
             },
-            method = 'legal'
+            method = 'legal',
+            perm = 'porte.permissao'
         },
         ['m_weapon_ceramicpistol'] = {
             name = 'M. Pistola', index = 'm_weapon_ceramicpistol',
             price = {
                 buy = 500,
             },
-            method = 'legal'
+            method = 'legal',
+            perm = 'porte.permissao'
         },
     },
     ['bebidas'] = {

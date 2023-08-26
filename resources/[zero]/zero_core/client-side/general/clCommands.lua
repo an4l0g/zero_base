@@ -636,8 +636,8 @@ RegisterNetEvent('zero_core:discord', function(status)
 	SetDiscordRichPresenceAssetSmall('logo')
 	SetDiscordRichPresenceAssetSmallText('Zero City')
     SetRichPresence(status)
-    SetDiscordRichPresenceAction(0, 'Conectar', 'https://cfx.re/join/la77xo')
-    SetDiscordRichPresenceAction(1, 'Loja', 'http://zerocity.shop')
+    SetDiscordRichPresenceAction(0, 'JOGAR', 'https://cfx.re/join/la77xo')
+    SetDiscordRichPresenceAction(1, 'DISCORD', 'https://discord.gg/zerocity')
 end)
 
 ---------------------------------------
