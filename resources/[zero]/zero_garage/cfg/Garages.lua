@@ -79,6 +79,12 @@ config.vehicles = {
     ['nissanr33tbk'] = { name = 'skyline r33', maker = 'Nissan', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'super', banned = false },
     ['718b'] = { name = '718B', maker = 'Porsche', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'super', banned = false },
     ['tiger1200'] = { name = 'Tiger 1200', maker = 'Tiger', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'super', banned = false },
+    ['silvia'] = { name = 'Silvia', maker = 'Nissan', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['x6mf962'] = { name = 'Bmw X6', maker = 'Bmw', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['lwgtr'] = { name = 'Gtr', maker = 'Nissan', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['jetta'] = { name = 'Jetta Rebaixado', maker = 'Volkswagen', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['gtz34'] = { name = 'Skyline R34', maker = 'Nissan', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['gtrstitch'] = { name = 'Gtr', maker = 'Nissan', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
     ------------------------------------------------------------------------------------------------------------------------
     -- CARS
     ------------------------------------------------------------------------------------------------------------------------

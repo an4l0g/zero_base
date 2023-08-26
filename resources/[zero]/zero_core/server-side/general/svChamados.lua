@@ -267,10 +267,10 @@ RegisterCommand('call', function(source, args)
 
                 callType[call](source, user_id, cooldown, pCoord, identity)
             else
-                TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm')
+                TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm<br>- /call mec<br>- /call hp<br>- /call pm')
             end
         else
-            TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm')
+            TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm<br>- /call mec<br>- /call hp<br>- /call pm')
         end
     end
 end)

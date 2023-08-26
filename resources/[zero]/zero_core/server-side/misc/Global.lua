@@ -1,5 +1,6 @@
 local cooldown = {}
 CreateCooldown = function(target, time)
+    target = tostring(target)
     print('[GLOBAL]: '..target)
     print('[GLOBAL]: '..time)
     Citizen.CreateThread(function()
