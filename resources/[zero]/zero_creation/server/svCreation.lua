@@ -96,6 +96,6 @@ playerSpawn = function(source, user_id, firstSpawn)
     else
         TriggerClientEvent('zero_spawn:selector', source, false)
     end
-    -- TriggerEvent('zero_whitelist:server', source)
+    TriggerEvent('zero_whitelist:server', source)
     TriggerEvent('zero_appearance_barbershop:init', user_id)
 end

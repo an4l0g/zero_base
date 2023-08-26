@@ -1,5 +1,6 @@
 RegisterNetEvent('zero_whitelist:open', function(user_id)
     SetNuiFocus(true, true)
+    FreezeEntityPosition(PlayerPedId(), true)
     SendNUIMessage({ action = 'login', user_id = user_id })
 end)
 
@@ -9,5 +10,6 @@ end)
 
 RegisterNUICallback('closeLogin', function(data, cb)
     SetNuiFocus(false, false)
+    FreezeEntityPosition(PlayerPedId(), false)
     SendNUIMessage({ action = 'hideMenu' })
 end)
