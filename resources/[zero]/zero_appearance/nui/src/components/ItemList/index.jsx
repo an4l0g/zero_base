@@ -18,21 +18,24 @@ function ItemList({ shop, limit, indexType, labelType }) {
   const { handleSetResult } = useResult();
   const [currentSelect, setCurrentSelect] = useState(0);
   const itemRefs = useRef({});
+  const labelTypeRef = useRef(null);
 
-  const scrollTo = useCallback(() => {
-    const item = itemRefs.current[`item${currentSelect}`];
+  const scrollTo = (select) => {
+    const item = itemRefs.current[`item${select}`];
     if (item) {
       item.scrollIntoView({
         behavior: "smooth",
       });
     }
+  };
+
+  useEffect(() => {
+    scrollTo(currentSelect);
   }, [currentSelect]);
 
   useEffect(() => {
-    scrollTo();
-    if (!appearance.tattooshop)
-      handleClick(renderItems[currentSelect], currentSelect);
-  }, [currentSelect]);
+    setCurrentSelect(result.current[labelType].model);
+  }, [labelType]);
 
   useEffect(() => {
     if (appearance.tattooshop) {
@@ -51,58 +54,8 @@ function ItemList({ shop, limit, indexType, labelType }) {
     return new Array(limit).fill(0);
   }, [limit]);
 
-  const interactions = {
-    ArrowLeft: () => {
-      setCurrentSelect((old) => {
-        if (old > -1) {
-          return old - 1;
-        }
-        return old;
-      });
-    },
-    ArrowRight: () => {
-      setCurrentSelect((old) => {
-        if (old !== renderItems.length - 1) return old + 1;
-        return old;
-      });
-    },
-    ArrowUp: () => {
-      setCurrentSelect((old) => {
-        if (old - 3 > -1) {
-          return old - 3;
-        }
-        return old;
-      });
-    },
-    ArrowDown: () => {
-      setCurrentSelect((old) => {
-        if (old + 3 !== renderItems.length - 1) return old + 3;
-        return old;
-      });
-    },
-    Enter: useCallback(() => {
-      handleClick(renderItems[currentSelect], currentSelect);
-    }, [renderItems, currentSelect]),
-  };
-
-  const handleKeyDown = useCallback(
-    (event) => {
-      interactions[event.key] && interactions[event.key]();
-    },
-    [interactions]
-  );
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [handleKeyDown]);
-
   const handleClick = useCallback(
     (item, index) => {
-      setCurrentSelect(index);
       handleSetResult(labelType, {
         model: appearance.tattooshop ? item : index,
         var: 0,
@@ -113,10 +66,10 @@ function ItemList({ shop, limit, indexType, labelType }) {
 
   const renderClassName = useCallback(
     (index, active) => {
-      if (currentSelect === index) return "current " + active;
+      if (result.current[labelType].model === index) return "current " + active;
       return active;
     },
-    [currentSelect]
+    [result]
   );
 
   const verifyActiveItem = useCallback(

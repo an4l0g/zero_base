@@ -8,7 +8,7 @@ export const Container = styled.div`
       ${theme.colors.dark(0.3)}
     );
     background-color: ${theme.colors.dark(0.95)};
-    width: 700px;
+    width: 575px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -35,8 +35,8 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 5rem 2rem;
-  gap: 1.5rem;
+  padding: 5rem 1rem;
+  gap: 0rem;
 `;
 
 export const Header = styled.div`
@@ -167,7 +167,7 @@ export const Shop = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: space-between;
-  gap: 1rem;
+  gap: 0rem;
   height: calc(100% - 150px - 1rem);
 `;
 
@@ -238,7 +238,7 @@ export const OptionsList = styled.ul`
   list-style: none;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
   max-height: 100%;
   overflow-x: hidden;
@@ -249,8 +249,8 @@ export const OptionItem = styled.li`
   ${({ theme }) => css`
     background-color: ${theme.colors.dark(0.3)};
     border: 1px solid ${theme.colors.primary(0.2)};
-    width: 150px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
     border-radius: 5px;
     overflow: hidden;
     padding: 5px;
@@ -262,10 +262,7 @@ export const OptionItem = styled.li`
 
     &.active {
       background-color: ${theme.colors.primary(0.3)};
-    }
-
-    &.current {
-      border-color: ${theme.colors.shape()};
+      border: 1px solid ${theme.colors.primary()};
     }
 
     &:hover {

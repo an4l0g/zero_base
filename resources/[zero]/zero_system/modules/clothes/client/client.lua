@@ -3,8 +3,8 @@ Tunnel.bindInterface('Clothes', cli)
 local vSERVER = Tunnel.getInterface('Clothes')
 
 local checkValues = function(value, prop)
-    if numero < 0 then
-        ClearPedProp(ped, 7) -- 7 é o index do prop
+    if tonumber(value) < 0 then
+        ClearPedProp(ped, prop) -- 7 é o index do prop
     end
 end
 

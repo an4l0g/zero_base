@@ -53,7 +53,7 @@ function Production({ data }) {
             .map((item) => (
               <S.Product key={item} onClick={() => handleSelectProduct(item)}>
                 <S.ProductImage
-                  src={`http://189.0.88.222/zero_inventory/${item}.png`}
+                  src={`http://104.234.189.131/zero_inventory/${item}.png`}
                 />
                 <S.ProductTitle>{data.products[item].name}</S.ProductTitle>
               </S.Product>
@@ -65,7 +65,7 @@ function Production({ data }) {
               <S.Title>{data.title}</S.Title>
               <S.HeaderProduction className="p-item">
                 <S.ProductionImage
-                  src={`http://189.0.88.222/zero_inventory/${productIndex}.png`}
+                  src={`http://104.234.189.131/zero_inventory/${productIndex}.png`}
                 />
                 <S.Description>
                   <S.ProductionTitle>{product.name}</S.ProductionTitle>
@@ -76,7 +76,7 @@ function Production({ data }) {
                 {Object.keys(product.materials).map((item) => (
                   <S.HeaderProduction key={item}>
                     <S.ProductionImage
-                      src={`http://189.0.88.222/zero_inventory/${item}.png`}
+                      src={`http://104.234.189.131/zero_inventory/${item}.png`}
                     />
                     <S.Description>
                       <S.ProductionTitle>

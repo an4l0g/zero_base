@@ -15,7 +15,7 @@ function TypeList({ indexType, handleChangeType, types, shop }) {
           onClick={() => handleChangeType(index, item)}
         >
           <S.TypeImage
-            src={`http://189.0.88.222/zero_appearance/${shop}/${index}.png`}
+            src={`http://104.234.189.131/zero_appearance/${shop}/${index}.png`}
           />
           <S.TypeTitle>{types[index].title}</S.TypeTitle>
         </S.TypeItem>
