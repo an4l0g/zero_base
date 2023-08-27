@@ -75,10 +75,13 @@ openSkinShop = function(locs)
 end
 
 RegisterNuiCallback('changeSkinshopDemo', function(data)
+    print('MEXEU SKINSHOP')
     local ped = PlayerPedId()
     local draw = data.drawables
-    local variations = {}
     if (draw) then
+        print(json.encode(draw))
+        local variations = {}
+
         -- Mascara
         SetPedComponentVariation(ped, 1, draw['1'].model, draw['1'].var)
         variations['1'] = GetNumberOfPedTextureVariations(ped, 1, draw['1'].model)

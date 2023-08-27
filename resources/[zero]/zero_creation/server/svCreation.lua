@@ -44,7 +44,7 @@ srv.verifyIdentity = function(identity)
     local user_id = zero.getUserId(source)
     if (user_id) then
         zero.execute('vRP/update_user_first_spawn', { user_id = user_id, firstname = identity.firstname, lastname = identity.lastname, age = identity.age  } )
-        zero.execute('zero_framework/money_init_user', { user_id = user_id, wallet = 2000, bank = 15000 })
+        zero.execute('zero_framework/money_init_user', { user_id = user_id, wallet = 2500, bank = 5000 })
         zero.resetIdentity(user_id)
         return true
     end

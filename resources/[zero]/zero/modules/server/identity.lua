@@ -41,8 +41,12 @@ end
 local identidades = {}
 zero.getUserIdentity = function(user_id)
     if (user_id) then
-      	if (not identidades[user_id]) then identidades[user_id] = zero.query('vRP/get_user_identity', { user_id = user_id })[1] end
-      	return identidades[user_id] 
+      	if (not identidades[user_id]) then 
+			identidades[user_id] = zero.query('vRP/get_user_identity', { user_id = user_id })[1] 
+		else
+			identidades[user_id].name = identidades[user_id].firstname
+		end
+		return identidades[user_id] 
     end
 end
 vRP.getUserIdentity = zero.getUserIdentity

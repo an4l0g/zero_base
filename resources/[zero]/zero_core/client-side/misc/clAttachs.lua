@@ -54,6 +54,9 @@ local weapons = {
 		['WEAPON_CARBINERIFLE'] = {
 			components = { 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_AR_AFGRIP', 'COMPONENT_AT_SCOPE_MEDIUM' }
 		},
+		['WEAPON_MILITARYRIFLE'] = {
+			components = { 'COMPONENT_MILITARYRIFLE_CLIP_01', 'COMPONENT_AT_SCOPE_SMALL', 'COMPONENT_AT_AR_FLSH' }
+		},
 		['WEAPON_CARBINERIFLE_MK2'] = {
 			components = { 'COMPONENT_AT_MUZZLE_04', 'COMPONENT_AT_AR_AFGRIP_02', 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_SCOPE_MEDIUM_MK2' }
 		},
@@ -76,7 +79,7 @@ local weapons = {
 			components = { 'COMPONENT_HEAVYRIFLE_CLIP_01', 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_SCOPE_MEDIUM', 'COMPONENT_AT_AR_AFGRIP' }
 		},
         ['WEAPON_TACTICALRIFLE'] = {
-			components = { 'COMPONENT_TACTICALRIFLE_CLIP_01', 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_AR_AFGRIP' }
+			components = { 'COMPONENT_AT_AR_FLSH' }
 		},
         ['WEAPON_COMPACTRIFLE'] = {
 			components = { 'COMPONENT_COMPACTRIFLE_CLIP_02' }
@@ -146,6 +149,9 @@ local weapons = {
 		['WEAPON_CARBINERIFLE_MK2'] = {
 			components = { 'COMPONENT_AT_AR_SUPP', 'COMPONENT_CARBINERIFLE_MK2_CLIP_02', 'COMPONENT_AT_AR_AFGRIP_02', 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_SCOPE_MEDIUM_MK2' }
 		},
+		['WEAPON_MILITARYRIFLE'] = {
+			components = { 'COMPONENT_MILITARYRIFLE_CLIP_02', 'COMPONENT_AT_SCOPE_SMALL', 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_AR_SUPP'}
+		},
 		['WEAPON_ASSAULTRIFLE'] = {
 			components = { 'COMPONENT_AT_AR_SUPP_02', 'COMPONENT_ASSAULTRIFLE_CLIP_02', 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_SCOPE_MACRO', 'COMPONENT_AT_AR_AFGRIP' }
 		},
@@ -169,7 +175,7 @@ local weapons = {
 			components = { 'COMPONENT_AT_SCOPE_MAX', 'COMPONENT_AT_AR_SUPP_02', 'COMPONENT_SNIPERRIFLE_VARMOD_LUXE' }
 		},
 		['WEAPON_TACTICALRIFLE'] = {
-			components = { 'COMPONENT_TACTICALRIFLE_CLIP_02', 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_AR_AFGRIP', 'COMPONENT_AT_AR_SUPP_02' }
+			components = { 'COMPONENT_AT_AR_FLSH', 'COMPONENT_AT_AR_SUPP_02' }
 		},
         ['WEAPON_COMPACTRIFLE'] = {
 			components = { 'COMPONENT_COMPACTRIFLE_CLIP_02' }
@@ -191,7 +197,7 @@ end)
 
 RegisterCommand('attachs2',function(source, args)
 	local ped = PlayerPedId()
-	if (vSERVER.checkAttachs({ 'attachs2.permissao' })) then
+	if (vSERVER.checkAttachs({ 'attachs2.permissao' }, true)) then
 		if not (args[1]) then
 			TriggerEvent('notify', 'Attachs', 'Utilize o <b>comando</b> listado abaixo: <br> <br><b>/attachs2 colocar;</b> <br><b>/attachs2 retirar.</b>')
 		else

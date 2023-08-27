@@ -80,7 +80,6 @@ end)
 
 RegisterKeyMapping('cycleproximity2', 'Alterar Voz', 'keyboard', 'HOME')
 RegisterCommand('cycleproximity2', function()
-	print('oiii')
 	-- Proximity is either disabled, or manually overwritten.
 	if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
 	local newMode = mode + 1
@@ -92,9 +91,8 @@ RegisterCommand('cycleproximity2', function()
 		mode = 1
 	end
 
-	print('aquiii')
 	setProximityState(Cfg.voiceModes[mode][1], false)
 	TriggerEvent('pma-voice:setTalkingMode', Cfg.voiceModes[mode][2])
-	TriggerEvent("hud:talkingState",mode)
+	-- TriggerEvent("hud:talkingState",mode)
 
 end, false)

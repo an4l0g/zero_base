@@ -30,26 +30,46 @@ local configLocs = config.locs
 local dataVehicle2, dataVnetId2, dataVPlaca2, dataVName2
 DecorRegister(configFuelI.FuelDecor, 1)
 
+local inVehicle = false
+AddEventHandler('gameEventTriggered', function(event, args)
+    if (event == 'CEventNetworkPlayerEnteredVehicle') then
+        local id = args[1]
+        local vehicle = args[2]
+        if (id == PlayerId()) then            
+            if (inVehicle) then return; end;
+
+            inVehicle = true
+            StartFuelThread()
+        end
+    end
+end)
+
+StartFuelThread = function()
+    Citizen.CreateThread(function()
+        while (inVehicle) do
+            local ped = PlayerPedId()   
+            local idle = 1000
+            inVehicle = IsPedInAnyVehicle(ped)
+
+            local vehicle = GetVehiclePedIsIn(ped)
+            if (vehicle ~= 0) then
+                fuelUsage(vehicle)
+                local fuel = GetVehicleFuelLevel(vehicle)
+                if (fuel <= 0.0) then
+                    idle = 1
+                    SetVehicleUndriveable(vehicle, true)
+                end
+            end
+            Citizen.Wait(idle)
+        end
+    end)
+end
+
 AddStateBagChangeHandler('inVehicle', nil, function(bagName, key, value) 
     local entity = GetPlayerFromStateBagName(bagName)
     if (entity == 0) then return; end;
     if (value) then
-        Citizen.CreateThread(function()
-            while (LocalPlayer.state.inVehicle) do
-                local ped = PlayerPedId()
-                local vehicle = GetVehiclePedIsIn(ped)
-                local idle = 1000
-                if (vehicle ~= 0) then
-                    fuelUsage(vehicle)
-                    local fuel = GetVehicleFuelLevel(vehicle)
-                    if (fuel <= 0.0) then
-                        idle = 1
-                        SetVehicleUndriveable(vehicle, true)
-                    end
-                end
-                Citizen.Wait(idle)
-            end
-        end)
+        
     end
 end)
 

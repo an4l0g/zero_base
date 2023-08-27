@@ -8,29 +8,40 @@ local setGender = function(gender)
     local model = 'mp_m_freemode_01'
     if (gender == 'female') then model = 'mp_f_freemode_01' end
 
+    print('1')
     local modelHash = GetHashKey(model)
+     print('2')
     RequestModel(modelHash) 
+     print('3')
     while (not HasModelLoaded(modelHash)) do 
         RequestModel(modelHash) 
         Citizen.Wait(10) 
     end
+     print('4')
     SetPlayerModel(PlayerId(), modelHash)
+     print('5')
     SetModelAsNoLongerNeeded(modelHash)
 
     if (HasModelLoaded(modelHash)) then
+         print('6')
         ped = PlayerPedId()
-        
+         print('7')
         local currentHealth, currentArmour = GetEntityHealth(ped), GetPedArmour(ped)
+         print('8')
         SetPedMaxHealth(ped, 200)
+         print('9')
         SetEntityHealth(ped, currentHealth)
+         print('10')
         SetPedArmour(ped, currentArmour)
+         print('11')
     end
 
     local weapons = (zero.getWeapons() or {})
+     print('12')
     zero.giveWeapons(weapons, true, GlobalState.weaponToken)
-
+ print('13')
     resetClothes()
-
+ print('14')
     SetPedHeadBlendData(ped, 0, 21, 0, 0, 0, 0, 0.6, 0.0, 0.0, false)
 end
 
@@ -52,7 +63,6 @@ end
 cli.createCharacter = function()
     cli.loadingPlayer(true)
     vSERVER.changeSession(GetPlayerServerId(PlayerId()))
-    local ped = PlayerPedId()
 
     TriggerEvent('zero_hud:toggleHud', false)
     TriggerEvent('zero_weather:staticTime', { 
@@ -63,10 +73,14 @@ cli.createCharacter = function()
 
     Citizen.Wait(1000)
     DoScreenFadeOut(500)
+    setGender('male') 
+
+    local ped = PlayerPedId()
+
     zero.teleport(generalConfig.creatorLocation.xyz)
     SetEntityHeading(ped, generalConfig.creatorLocation.w)
-    setGender('male') 
     SetEntityHealth(ped, 200)
+
     Citizen.Wait(1000)
     DoScreenFadeIn(500)
     FreezeEntityPosition(ped, true)
@@ -399,7 +413,6 @@ Cam = function(offset, bone)
         
         tempCam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
         SetCamCoord(tempCam, coordsCam)
-        Citizen.SetTimeout(1000, callbafck)
         PointCamAtPedBone(tempCam, ped, 31086, bone.x, bone.y, bone.z, false)
 
         SetCamActive(tempCam, true)

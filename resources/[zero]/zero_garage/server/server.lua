@@ -350,8 +350,6 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 end
                                 if (not owner) then return; end;
 
-                                Citizen.Wait(700)
-
                                 SetVehicleNumberPlateText(vehHandle, veh.plate)
                                 SetVehicleDoorsLocked(vehHandle, 2)
 
@@ -446,6 +444,7 @@ end
 exports('vehicleLock', lockVehicle)
 
 RegisterCommand('dv', function(source)
+    local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
@@ -500,7 +499,7 @@ RegisterCommand('dvall', function(source)
                 deleteCount = deleteCount + 1
             end
         end
-        TriggerClientEvent('announcement', -1, 'Garagem', 'Foram deletados <b>'..deleteCount..'</b> veículos.')
+        TriggerClientEvent('announcement', -1, 'Garagem', 'Foram deletados <b>'..deleteCount..'</b> veículos.', 'Prefeitura', true, 10000)
         zero.webhook('DVAll', '```prolog\n[/DVALL]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[DELETOU]: '..deleteCount..' veículos\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
 end)
@@ -587,7 +586,7 @@ RegisterCommand('car', function(source, args)
                         Citizen.Wait(1)
                     end
                     if (not owner) then return; end;
-                    
+
                     SetVehicleNumberPlateText(vehHandle, plate)
                     SetVehicleDoorsLocked(vehHandle, 2)
                     

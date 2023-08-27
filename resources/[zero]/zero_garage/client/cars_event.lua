@@ -38,9 +38,7 @@ AddEventHandler('gameEventTriggered', function(event, args)
     if (event == 'CEventNetworkPlayerEnteredVehicle') then
         local id = args[1]
         local vehicle = args[2]
-        if (id == PlayerId()) then
-            LocalPlayer.state.inVehicle = true
-            
+        if (id == PlayerId()) then            
             if (inVehicle) then return; end;
             TriggerEvent('zero_core:spikeThread')
 
@@ -153,7 +151,6 @@ drivingVehicle = function(model)
             end
             Citizen.Wait(idle)
         end
-        LocalPlayer.state.inVehicle = false
         SetPlayerCanDoDriveBy(PlayerId(), true)
     end)
 end

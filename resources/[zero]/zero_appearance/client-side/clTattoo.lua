@@ -74,7 +74,7 @@ RegisterNetEvent('zero:tattooUpdate', function()
 end)
 
 setPedTattoos = function()
-    Citizen.Wait(1000)
+    Citizen.Wait(100)
     local ped = PlayerPedId()
     local data = LocalPlayer.state.pedTattoo
 
@@ -89,6 +89,7 @@ setPedTattoos = function()
 end
 
 RegisterNuiCallback('changeTattooDemo', function(data)
+    print('MEXEU TATTOO')
     local ped = PlayerPedId()
     if (data.drawables) then
         ClearPedDecorations(ped)

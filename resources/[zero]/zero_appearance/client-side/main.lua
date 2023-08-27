@@ -92,7 +92,6 @@ end
 RegisterNuiCallback('close', function()
     LocalPlayer.state.Appearance = false
     closeNui()
-    setPedCustom()
 end)
 
 RegisterNuiCallback('changeCam', function(data)

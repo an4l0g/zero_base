@@ -13,7 +13,7 @@ RegisterCommand('item', function(source, args)
                 { 'Item', item },
                 { 'Qtd', amount },
             })
-            configs.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_receive_item(amount, item))
+            config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_receive_item(amount, item))
         else
             config.functions.serverNotify(_source, config.texts.notify_title, config.texts.notify_non_existent_item)
         end

@@ -198,8 +198,11 @@ RegisterNetEvent('vrp_hud:updateBasics',function(hunger, thirst)
 end)
 
 RegisterNetEvent('pma-voice:setTalkingMode',function(mode)
-    print(mode)
     SendNUIMessage({ method = 'updateVoice', data = mode })
+end)
+
+RegisterNetEvent('pma-voice:playerTalking', function(talking)
+    SendNUIMessage({ method = "updateTalking", data = talking })
 end)
 
 RegisterNetEvent('pma-listners:setFrequency',function(radio)

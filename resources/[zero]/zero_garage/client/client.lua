@@ -201,7 +201,6 @@ cli.setVehicleState = function(vnet, state, others)
 			SetVehicleBodyHealth(vehicle, state.data.bodyHealth)
 			SetVehicleLivery(vehicle, state.data.livery)
 			if (others) then
-				SetVehicleDoorsLocked(vehicle, state.data.locked)
 				SetVehicleEngineOn(vehicle, state.data.running, true, false)
 				if (state.data.indicators == 3) or (state.data.lights[2] == 1) or (state.data.lights[3] == 1) then
 					SetVehicleIndicatorLights(vehicle, 0, true)
@@ -238,6 +237,9 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 			if (GetGameTimer() > timeOut) then return; end;
 		end
 
+		local vehicle = NetToVeh(vnet)
+		SetVehicleDoorsLocked(vehicle, 2)
+		SetVehicleDoorsLockedForAllPlayers(vehicle, false)
         SetVehicleIsConsideredByPlayer(nveh, true)
         SetVehicleHasBeenOwnedByPlayer(nveh, true)
 		SetVehicleIsStolen(nveh,false)

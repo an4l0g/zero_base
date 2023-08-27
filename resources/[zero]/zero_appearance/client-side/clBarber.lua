@@ -63,88 +63,90 @@ openBarberShop = function(locs)
 end
 
 setPedCustom = function()
-    Citizen.Wait(1000)
+    Citizen.Wait(100)
     local ped = PlayerPedId()
     local data = LocalPlayer.state.pedCustom
 
-    -- PARENTES
-    SetPedHeadBlendData(ped, data.fatherId , data.motherId, 0, data.colorMother, data.colorFather, 0, data.shapeMix, data.skinMix, 0, false)
+    if (data) then
+        -- PARENTES
+        SetPedHeadBlendData(ped, data.fatherId , data.motherId, 0, data.colorMother, data.colorFather, 0, data.shapeMix, data.skinMix, 0, false)
 
-    -- OLHOS
-    SetPedEyeColor(ped, data.eyesColor)
-    SetPedFaceFeature(ped, 11, data.eyesOpening)
-    SetPedFaceFeature(ped, 6, data.eyebrowsHeight)
-	SetPedFaceFeature(ped, 7, data.eyebrowsWidth)
-    SetPedHeadOverlay(ped, 2, data.eyebrowsModel, (data.eyebrowsOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 2, 1, data.eyebrowsColor, data.eyebrowsColor)
+        -- OLHOS
+        SetPedEyeColor(ped, data.eyesColor)
+        SetPedFaceFeature(ped, 11, data.eyesOpening)
+        SetPedFaceFeature(ped, 6, data.eyebrowsHeight)
+        SetPedFaceFeature(ped, 7, data.eyebrowsWidth)
+        SetPedHeadOverlay(ped, 2, data.eyebrowsModel, (data.eyebrowsOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 2, 1, data.eyebrowsColor, data.eyebrowsColor)
 
-    -- Nariz
-    SetPedFaceFeature(ped, 0, data.noseWidth)
-    SetPedFaceFeature(ped, 1, data.noseHeight)
-    SetPedFaceFeature(ped, 2, data.noseLength)
-    SetPedFaceFeature(ped, 3, data.noseBridge)
-    SetPedFaceFeature(ped, 4, data.noseTip)
-    SetPedFaceFeature(ped, 5, data.noseShift)
+        -- Nariz
+        SetPedFaceFeature(ped, 0, data.noseWidth)
+        SetPedFaceFeature(ped, 1, data.noseHeight)
+        SetPedFaceFeature(ped, 2, data.noseLength)
+        SetPedFaceFeature(ped, 3, data.noseBridge)
+        SetPedFaceFeature(ped, 4, data.noseTip)
+        SetPedFaceFeature(ped, 5, data.noseShift)
 
-    -- BOCHECHAS
-    SetPedFaceFeature(ped, 8, data.cheekboneHeight)
-    SetPedFaceFeature(ped, 9, data.cheekboneWidth)
-    SetPedFaceFeature(ped, 10, data.cheeksWidth)
+        -- BOCHECHAS
+        SetPedFaceFeature(ped, 8, data.cheekboneHeight)
+        SetPedFaceFeature(ped, 9, data.cheekboneWidth)
+        SetPedFaceFeature(ped, 10, data.cheeksWidth)
 
-    -- BOCA/MANDIBULA
-    SetPedFaceFeature(ped, 12, data.lips)
-    SetPedFaceFeature(ped, 13, data.jawWidth)
-    SetPedFaceFeature(ped, 14, data.jawHeight)
+        -- BOCA/MANDIBULA
+        SetPedFaceFeature(ped, 12, data.lips)
+        SetPedFaceFeature(ped, 13, data.jawWidth)
+        SetPedFaceFeature(ped, 14, data.jawHeight)
 
-    -- QUEIXO
-    SetPedFaceFeature(ped, 15, data.chinLength)
-    SetPedFaceFeature(ped, 16, data.chinPosition)
-    SetPedFaceFeature(ped, 17, data.chinWidth)
-    SetPedFaceFeature(ped, 18, data.chinShape)
+        -- QUEIXO
+        SetPedFaceFeature(ped, 15, data.chinLength)
+        SetPedFaceFeature(ped, 16, data.chinPosition)
+        SetPedFaceFeature(ped, 17, data.chinWidth)
+        SetPedFaceFeature(ped, 18, data.chinShape)
 
-    -- CABELO
-    SetPedComponentVariation(ped, 2, data.hairModel, 0, 0)
-    SetPedHairColor(ped, data.firstHairColor, data.secondHairColor)
-    
-    -- BARBA
-    SetPedHeadOverlay(ped, 1, data.beardModel, (data.beardOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 1, 1, data.beardColor, data.beardColor)
+        -- CABELO
+        SetPedComponentVariation(ped, 2, data.hairModel, 0, 0)
+        SetPedHairColor(ped, data.firstHairColor, data.secondHairColor)
+        
+        -- BARBA
+        SetPedHeadOverlay(ped, 1, data.beardModel, (data.beardOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 1, 1, data.beardColor, data.beardColor)
 
-    -- PELO CORPORAL
-    SetPedHeadOverlay(ped, 10, data.chestModel, (data.chestOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 10, 1, data.chestColor, data.chestColor)
+        -- PELO CORPORAL
+        SetPedHeadOverlay(ped, 10, data.chestModel, (data.chestOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 10, 1, data.chestColor, data.chestColor)
 
-    -- BLUSH
-    SetPedHeadOverlay(ped, 5, data.blushModel, (data.blushOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 5, 1, data.blushColor, data.blushColor)
+        -- BLUSH
+        SetPedHeadOverlay(ped, 5, data.blushModel, (data.blushOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 5, 1, data.blushColor, data.blushColor)
 
-    -- BATTOM
-    SetPedHeadOverlay(ped, 8, data.lipstickModel, (data.lipstickOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 8, 1, data.lipstickColor, data.lipstickColor)
+        -- BATTOM
+        SetPedHeadOverlay(ped, 8, data.lipstickModel, (data.lipstickOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 8, 1, data.lipstickColor, data.lipstickColor)
 
-    -- MANCHAS
-    SetPedHeadOverlay(ped, 0, data.blemishesModel, (data.blemishesOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 0, 0, 0, 0)
+        -- MANCHAS
+        SetPedHeadOverlay(ped, 0, data.blemishesModel, (data.blemishesOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 0, 0, 0, 0)
 
-    -- ENVELHECIMENTO
-    SetPedHeadOverlay(ped, 3, data.ageingModel, (data.ageingOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 3, 0, 0, 0)
+        -- ENVELHECIMENTO
+        SetPedHeadOverlay(ped, 3, data.ageingModel, (data.ageingOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 3, 0, 0, 0)
 
-    -- ASPECTO
-    SetPedHeadOverlay(ped, 6, data.complexionModel, (data.complexionOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 6, 0, 0, 0)
+        -- ASPECTO
+        SetPedHeadOverlay(ped, 6, data.complexionModel, (data.complexionOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 6, 0, 0, 0)
 
-    -- PELE
-    SetPedHeadOverlay(ped, 7, data.sundamageModel, (data.sundamageOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 7, 0, 0, 0)
+        -- PELE
+        SetPedHeadOverlay(ped, 7, data.sundamageModel, (data.sundamageOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 7, 0, 0, 0)
 
-    -- SARDAS
-    SetPedHeadOverlay(ped, 9, data.frecklesModel, (data.frecklesOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 9, 0, 0, 0)
+        -- SARDAS
+        SetPedHeadOverlay(ped, 9, data.frecklesModel, (data.frecklesOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 9, 0, 0, 0)
 
-    -- MAQUIAGEM
-    SetPedHeadOverlay(ped, 4, data.makeupModel, (data.makeupOpacity or 0.99))
-    SetPedHeadOverlayColor(ped, 4, 0, 10, 15)
+        -- MAQUIAGEM
+        SetPedHeadOverlay(ped, 4, data.makeupModel, (data.makeupOpacity or 0.99))
+        SetPedHeadOverlayColor(ped, 4, 0, 10, 15)
+    end
 end
 
 RegisterNetEvent('zero:barberUpdate', function()
@@ -222,6 +224,7 @@ RegisterNuiCallback('changeBarbershopDemo', function(data)
 end)
 
 RegisterNuiCallback('buyBarbershopCustomizations', function(data)
+    print('MEXEU BARBER')
     local ped = PlayerPedId()
     local oldCustom = LocalPlayer.state.pedCustom
     if (data.drawables and data.total > 0) then

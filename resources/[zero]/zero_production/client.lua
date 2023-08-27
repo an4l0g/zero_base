@@ -66,7 +66,7 @@ local markerThread = function()
                         if (_config.type == 'moneyLaundry') then
                             openMoneyLaundry(_config)
                         else
-                            openProduction(_config.products, _config.label, k)
+                            openProduction(_config.products, _config.label, index)
                         end
                     else
                         if _config.type == 'shop' then

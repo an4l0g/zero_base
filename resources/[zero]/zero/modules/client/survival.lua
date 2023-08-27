@@ -113,6 +113,8 @@ local mainSurvival = function()
 	_isDied = true
     cooldownSurvival(30)
     TriggerServerEvent('zero_hospital:CitizenDeath')
+    TriggerEvent('vRP:onPlayerDied')
+	TriggerServerEvent('vRP:onPlayerDied')
     if (LocalPlayer.state.GPS) then LocalPlayer.state.GPS = false; DisplayRadar(false); TriggerServerEvent('zero_system:gps_server') end;
 	Citizen.CreateThread(function()
         SetEntityHealth(PlayerPedId(), 0)
@@ -193,7 +195,7 @@ Text2D = function(font, x, y, text, scale)
     SetTextColour(255, 255, 255, 255)
     SetTextDropShadow(0, 0, 0, 0,255)
     SetTextEdge(4, 0, 0, 0, 255)
-    SetTextEntry("STRING")
+    SetTextEntry('STRING')
     AddTextComponentString(text)
     DrawText(x, y)
 end

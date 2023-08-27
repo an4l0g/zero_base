@@ -93,7 +93,8 @@ RegisterCommand('rg', function(source, args)
             getUserRG(source, parseInt(args[1]), true)
         else
             local nearestPlayer = zeroClient.getNearestPlayer(source, 2.0)
-
+            if (not nearestPlayer) then return; end;
+            
             local request
             if (zeroClient.isHandcuffed(nearestPlayer) or zero.hasPermission(user_id, configGeneral.staffPermission)) then
                 request = true

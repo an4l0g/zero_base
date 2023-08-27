@@ -117,7 +117,7 @@ Citizen.CreateThread(function()
 				setSpectatorMode(false)
 			end
 		end
-		TriggerEvent("hud:talknow",NetworkIsPlayerTalking(PlayerId()) == 1)
+		TriggerEvent("pma-voice:playerTalking",NetworkIsPlayerTalking(PlayerId()) == 1)
 		Wait(GetConvarInt('voice_refreshRate', 200))
 	end
 end)

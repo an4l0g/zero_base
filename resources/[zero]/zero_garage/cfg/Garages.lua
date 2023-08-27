@@ -85,6 +85,7 @@ config.vehicles = {
     ['jetta'] = { name = 'Jetta Rebaixado', maker = 'Volkswagen', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
     ['gtz34'] = { name = 'Skyline R34', maker = 'Nissan', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
     ['gtrstitch'] = { name = 'Gtr', maker = 'Nissan', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['p1lbwk'] = { name = 'P1', maker = 'Mclaren', price = 1000000, trunk = 35, glove = 15, type = 'vip', class = 'sports', banned = false },
     ------------------------------------------------------------------------------------------------------------------------
     -- CARS
     ------------------------------------------------------------------------------------------------------------------------
@@ -628,6 +629,16 @@ config.garages = {
             vector4(50.5055, -873.7319, 30.42566, 155.9055),
             vector4(47.38022, -872.2681, 30.4425, 155.9055),
             vector4(44.09671, -870.9231, 30.45935, 155.9055)
+        }
+    },
+    {
+        coords = vector3(4980.699, -5728.589, 19.87769), 
+        rule = 'carOnly',
+        showBlip = true,
+        points = {
+            vector4(4976.202, -5731.477, 19.87769, 240.9449),
+            vector4(4972.141, -5739.297, 19.87769, 238.1102),
+            vector4(4968.079, -5746.892, 19.87769, 249.4488)
         }
     },
     {

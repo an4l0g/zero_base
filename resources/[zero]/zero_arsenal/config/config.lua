@@ -63,7 +63,7 @@ config.arsenal = {
             { ['spawn'] = 'weapon_combatpdw', ['name'] = 'MPX', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_assaultsmg', ['name'] = 'M-TAR', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
             { ['spawn'] = 'weapon_pumpshotgun_mk2', ['name'] = 'Remington', ['ammo'] = 250, ['perm'] = nil, price = 50 },
-            { ['spawn'] = 'weapon_combatshotgun', ['name'] = 'Rogerio', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
+            { ['spawn'] = 'weapon_combatshotgun', ['name'] = 'SPAS-12', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
             { ['spawn'] = 'weapon_carbinerifle_mk2', ['name'] = 'M4A4', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_militaryrifle', ['name'] = 'AUG', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_tacticalrifle', ['name'] = 'M16', ['ammo'] = 250, ['perm'] = nil, price = 50 },
