@@ -27,7 +27,7 @@ end
 ------------------------------------------------------------------
 zero.varyHunger = function(user_id, variation)
 	local data = zero.getUserDataTable(user_id)
-	if (data) then
+	if (data and user_id) then
 		if (not data.hunger) then data.hunger = 0; end;
 		data.hunger = data.hunger + variation
 		local overflow = (data.hunger - 100)
@@ -50,7 +50,7 @@ end
 ------------------------------------------------------------------
 zero.varyThirst = function(user_id, variation)
 	local data = zero.getUserDataTable(user_id)
-	if (data) then
+	if (data and user_id) then
 		if (not data.thirst) then data.thirst = 0; end;
 		data.thirst = data.thirst + variation
 		local overflow = data.thirst-100

@@ -105,7 +105,7 @@ srv.giveUtilitary = function(utilitarys, _config)
                 if (not _weapons[_spawn]) then
                     if (zero.tryFullPayment(_userId, utilitarys.price)) then
                         giveWeapons(_source, { [_spawn] = { ['ammo'] = utilitarys['ammo'] } }, false)
-                        serverNotify(_source, textsConfig['giveWeapon'](utilitarys['name']))
+                        serverNotify(_source, textsConfig['giveWeapon'](utilitarys.name, utilitarys.price))
                         webhookConfig['utilitaryWeapon'](_source, _config['webhooks']['utilitarys'], _config['name'], _userId, _spawn, utilitarys['name'], utilitarys['ammo'])
                     else
                         TriggerClientEvent('notifyArsenal', _source, 'Você não possui <b>R$'..zero.format(utilitarys.price)..'</b>!')

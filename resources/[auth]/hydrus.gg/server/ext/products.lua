@@ -102,8 +102,8 @@ create_extension('products', function()
     vehicle_execute = callable(function(self, source, form)
         local user_id = Proxy.getId(source)
 
-        local webhook_resgate = "https://discord.com/api/webhooks/1108454512236171418/5NmRVGWS38CXJp8LGdFsoCJr-FfcnNNNqPggQsJesmYU0ap1rSII-acfx9KrDzii98ga"
-        exports['vrp']:webhook(webhook_resgate,"```prolog\n[ID]: "..user_id.."\n[RESGATOU]: "..form.vehicle.."\n[TIPO DO CREDITO]: "..self.consume[1].."\n"..os.date("[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").."\n```")
+        local webhook_resgate = "https://discord.com/api/webhooks/1145541102569529414/8Cqf6fVk-YpNkYDhDwGHy6XnP-tAY_yRMw1bFGAsO5mH1LN2lkvXk-4bgXM48Irz9HXE"
+        exports['zero']:webhook(webhook_resgate,"```prolog\n[ID]: "..user_id.."\n[RESGATOU]: "..form.vehicle.."\n[TIPO DO CREDITO]: "..self.consume[1].."\n"..os.date("[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").."\n```")
 
         local owned = Commands.addvehicle(user_id, form.vehicle)
 

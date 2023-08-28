@@ -48,7 +48,7 @@ end
 RegisterCommand('addfuel', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then 
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then 
         local dataVehicle, dataVnetId, dataVPlaca, dataVName = zeroClient.vehList(source, 5)
         if (dataVehicle) then 
             local fuel = 20.00

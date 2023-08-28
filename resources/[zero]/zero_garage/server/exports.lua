@@ -1,45 +1,45 @@
 vehiclesConfig = config.vehicles
 
 vehicleName = function(vehicle)
-	if (vehiclesConfig[vehicle].name) then return vehiclesConfig[vehicle].name; end;
+	if (vehiclesConfig[vehicle]) then return vehiclesConfig[vehicle].name; end;
 	print('^5[Zero Garage] Vehicle ['..tostring(vehicle)..'] not found.^0')
 end
 exports('vehicleName', vehicleName)
 
 vehicleMaker = function(vehicle)
-	if (vehiclesConfig[vehicle].maker) then return vehiclesConfig[vehicle].maker; end;
+	if (vehiclesConfig[vehicle]) then return vehiclesConfig[vehicle].maker; end;
 	print('^5[Zero Garage] Vehicle ['..tostring(vehicle)..'] not found.^0')
 end
 exports('vehicleMaker', vehicleMaker)
 
 vehicleType = function(vehicle)
-	if (vehiclesConfig[vehicle].type) then return vehiclesConfig[vehicle].type; end;
+	if (vehiclesConfig[vehicle]) then return vehiclesConfig[vehicle].type; end;
 	print('^5[Zero Garage] Vehicle ['..tostring(vehicle)..'] not found.^0')
 end
 exports('vehicleType', vehicleType)
 
 vehicleSize = function(vehicle)
-	if (vehiclesConfig[vehicle].trunk) then return vehiclesConfig[vehicle].trunk; end;
+	if (vehiclesConfig[vehicle]) then return vehiclesConfig[vehicle].trunk; end;
 	print('^5[Zero Garage] Vehicle ['..tostring(vehicle)..'] not found.^0')
     return 0
 end
 exports('vehicleSize', vehicleSize)
 
 vehicleClass = function(vehicle)
-	if (vehiclesConfig[vehicle].class) then return vehiclesConfig[vehicle].class; end;
+	if (vehiclesConfig[vehicle]) then return vehiclesConfig[vehicle].class; end;
 	print('^5[Zero Garage] Vehicle ['..tostring(vehicle)..'] not found.^0')
 end
 exports('vehicleClass', vehicleClass)
 
 vehicleGlove = function(vehicle)
-	if (vehiclesConfig[vehicle].glove) then return vehiclesConfig[vehicle].glove; end;
+	if (vehiclesConfig[vehicle]) then return vehiclesConfig[vehicle].glove; end;
 	print('^5[Zero Garage] Vehicle ['..tostring(vehicle)..'] not found.^0')
 	return 0
 end
 exports('vehicleGlove', vehicleGlove)
 
 vehiclePrice = function(vehicle)
-	if (vehiclesConfig[vehicle].price) then return vehiclesConfig[vehicle].price; end;
+	if (vehiclesConfig[vehicle]) then return vehiclesConfig[vehicle].price; end;
 	print('^5[Zero Garage] Vehicle ['..tostring(vehicle)..'] not found.^0')
 end
 exports('vehiclePrice', vehiclePrice)

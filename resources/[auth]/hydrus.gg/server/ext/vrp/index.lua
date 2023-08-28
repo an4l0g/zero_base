@@ -148,20 +148,21 @@ create_extension('vrp', function()
 
     ensure_command('addvehicle', function(user_id, vehicle)
         user_id = parseInt(user_id)
-        local old = SQL('SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?', { user_id, vehicle })
+        exports.zero_garage:addVehicle(user_id, vehicle, 0)
+        -- local old = SQL('SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?', { user_id, vehicle })
 
-        if #old > 0 then
-            return _('already.owned.self')
-        end
+        -- if #old > 0 then
+        --     return _('already.owned.self')
+        -- end
 
-        local data = { user_id = user_id, vehicle = vehicle } 
-        local tax = SQL.first_column('user_vehicles', 'tax', 'ipva')
+        -- local data = { user_id = user_id, vehicle = vehicle } 
+        -- local tax = SQL.first_column('user_vehicles', 'tax', 'ipva')
 
-        if tax then
-            data[tax] = os.time()
-        end
+        -- if tax then
+        --     data[tax] = os.time()
+        -- end
 
-        SQL.insert('user_vehicles', data)
+        -- SQL.insert('user_vehicles', data)
     end)
 
     ensure_command('addvehicles', function(user_id, ...)

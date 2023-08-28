@@ -18,7 +18,7 @@ end
 
 zero.setFriendlyFire = function(flag)
 	NetworkSetFriendlyFireOption(flag)
-	SetCanAttackFriendly(PlayerPedId(),flag,flag)
+	SetCanAttackFriendly(PlayerPedId(), flag, flag)
 end
 
 zero.isInComa = function()

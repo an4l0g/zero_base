@@ -1724,6 +1724,11 @@ config.locs = {
     { blip = true, coord = vector4(-3169.53, 1075.859, 20.82129-0.97, 158.7402), config = 'all', type = 'tattooshop' },
     { blip = true, coord = vector4(1863.917, 3747.428, 33.02051-0.97, 357.1653), config = 'all', type = 'tattooshop' },
     { blip = true, coord = vector4(-293.1165, 6200.558, 31.48718-0.97, 161.5748), config = 'all', type = 'tattooshop' },
+
+    -- [ Deic ] --
+    { coord = vector4(567.3231, -2779.464, 6.077637-0.97, 51.02362), config = 'all', type = 'skinshop' },
+    { coord = vector4(555.5341, -2773.279, 6.077637-0.97, 51.02362), config = 'all', type = 'tattooshop' },
+    { coord = vector4(554.5055, -2770.563, 6.077637-0.97, 141.7323), config = 'all', type = 'barbershop' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

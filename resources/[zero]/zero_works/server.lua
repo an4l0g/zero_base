@@ -58,7 +58,7 @@ local updateRoute = function(source, work, routes)
     selection[user_id] = selection[user_id] + 1
     if (selection[user_id] > #routes) then
         selection[user_id] = 1 
-        TriggerClientEvent('notify', source, 'Emprego', lang[work]['resetRoutes'])
+        if (lang[work]) then TriggerClientEvent('notify', source, 'Emprego', lang[work]['resetRoutes']); end;
     end
 end
 

@@ -548,6 +548,7 @@ config.items = {
     ['par-alianca'] = { name = 'Par de Alianças', type = 'common', weight = 0.0 },
     ['alianca-casamento'] = { name = 'Aliança de Casamento', type = 'common', weight = 0.0 },
     ['celular'] = { name = 'Celular', type = 'common', weight = 1 },
+    ['key-apartament'] = { name = 'Chave Ap.', type = 'common', weight = 1 },
     ['algema'] = { name = 'Algema', type = 'common', weight = 1 },
     ['chave-algema'] = { name = 'Chave da Algema', type = 'common', weight = 0.5 },
     ['nitro'] = { name = 'Nitro', type = 'common', weight = 3.0, usable = true,
@@ -762,7 +763,7 @@ config.items = {
         end
     },
     ['paraquedas'] = { name = 'gadget_parachute', type = 'weapon', weight = 5 },
-    ['weapon_nightstick'] = { name = 'weapon_nightstick', type = 'weapon', weight = 1 },
+    ['weapon_nightstick'] = { name = 'Cassetete', type = 'weapon', weight = 1 },
     ['weapon_stungun'] = { name = 'weapon_stungun', type = 'weapon', weight = 1 },
 }
 
@@ -866,7 +867,7 @@ if (isServer) then
                     zero.giveInventoryItem(user_id, cItem.afterItem, 1)
                 end
 
-                TriggerClientEvent('Notify', source, 'sucesso', 'Inventário', 'Você consumiu '..zero.itemNameList(index)..'.', 5000)
+                TriggerClientEvent('notify', source, 'Inventário', 'Você consumiu '..zero.itemNameList(index)..'.', 5000)
                 Player(source).state.BlockTasks = false
 
                 ClearPedTasks(GetPlayerPed(source))

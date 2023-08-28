@@ -103,7 +103,6 @@ srv.deleteMaca = function()
 end
 
 AddEventHandler('zero:playerLeave', function(user_id, source)
-	local source = source
 	if (saveMaca[tempIndex[user_id]]) then
 		saveMaca[tempIndex[user_id]] = nil
         tempIndex[user_id] = nil
@@ -166,7 +165,7 @@ RegisterCommand('re', function(source)
         if (nPlayer) then
             local nUser = zero.getUserId(nPlayer)
             if (GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then
-                local cooldown = 'reanimar:'..nPlayer
+                local cooldown = 'reanimar-'..nPlayer
                 if (exports.zero_core:GetCooldown(cooldown)) then
                     TriggerClientEvent('notify', source, 'Hospital', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para reanimar novamente.')
                     return
@@ -207,7 +206,7 @@ RegisterNetEvent('zero_interactions:reanimar', function()
         if (nPlayer) then
             local nUser = zero.getUserId(nPlayer)
             if (GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then
-                local cooldown = 'reanimar:'..nPlayer
+                local cooldown = 'reanimar-'..nPlayer
                 if (exports.zero_core:GetCooldown(cooldown)) then
                     TriggerClientEvent('notify', source, 'Hospital', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para reanimar novamente.')
                     return

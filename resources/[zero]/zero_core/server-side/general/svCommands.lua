@@ -295,21 +295,19 @@ RegisterCommand('ban', function(source, args)
     local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') and args[1] then
         local nUser = parseInt(args[1])
-        local nPlayer = zero.getUserSource(nUser)
-        if (nPlayer) then
-            if (zero.isBanned(nUser)) then TriggerClientEvent('notify', source, 'Desbanimento', 'Este <b>jogador</b> já está banido seu noia!') return; end;
+        if (zero.isBanned(nUser)) then TriggerClientEvent('notify', source, 'Desbanimento', 'Este <b>jogador</b> já está banido seu noia!') return; end;
+        local prompt = zero.prompt(source, { 'Motivo' })
+        if (prompt) then
+            prompt = prompt[1]
 
-            local prompt = zero.prompt(source, { 'Motivo' })
-            if (prompt) then
-                prompt = prompt[1]
-
-
+            local nPlayer = zero.getUserSource(nUser)
+            if (nPlayer) then
                 DropPlayer(nPlayer, 'Você foi banido da nossa cidade.\nSeu passaporte: #'..nUser..'\n Motivo: '..prompt..'\nAutor: '..identity.firstname..' '..identity.lastname)
-                exports[GetCurrentResourceName()]:setBanned(nUser, true)
-                exports[GetCurrentResourceName()]:insertBanRecord(nUser, true, user_id, '[BAN] '..prompt..'!')
-                TriggerClientEvent('notify', source, 'Banimento', 'Você baniu o passaporte <b>'..nUser..'</b> da cidade.')
-                zero.webhook('Ban', '```prolog\n[/BAN]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[BANIU]: '..nUser..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
+            exports[GetCurrentResourceName()]:setBanned(nUser, true)
+            exports[GetCurrentResourceName()]:insertBanRecord(nUser, true, user_id, '[BAN] '..prompt..'!')
+            TriggerClientEvent('notify', source, 'Banimento', 'Você baniu o passaporte <b>'..nUser..'</b> da cidade.')
+            zero.webhook('Ban', '```prolog\n[/BAN]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[BANIU]: '..nUser..'\n[MOTIVO]: '..prompt..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
     end
 end)
@@ -330,7 +328,7 @@ RegisterCommand('unban', function(source, args)
                 exports[GetCurrentResourceName()]:setBanned(nUser, false)
                 exports.zero_core:insertBanRecord(nUser, false, user_id, '[UNBAN] desbanido!')
                 TriggerClientEvent('notify', source, 'Desbanimento', 'Você desbaniu o passaporte <b>'..nUser..'</b> da cidade.')
-                zero.webhook('Ban', '```prolog\n[/UNBAN]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[DESBANIU]: '..nUser..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                zero.webhook('Ban', '```prolog\n[/UNBAN]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[DESBANIU]: '..nUser..'\n[MOTIVO]: '..prompt..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
             end
         end
     end
@@ -571,6 +569,7 @@ RegisterCommand('tpto', function(source, args)
             if (nPlayer) then
                 local nUser = zero.getUserId(nPlayer)
                 local nIdentity = zero.getUserIdentity(nUser)
+                if (not nIdentity) then return; end;
                 local nCoords = GetEntityCoords(GetPlayerPed(nPlayer))
                 zero.webhook('TeleportTo', '```prolog\n[/TPTO]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[FOI ATÉ]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[COORDENADA]: '..tostring(nCoords)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')    
                 SetEntityCoords(source, nCoords)
@@ -766,7 +765,7 @@ RegisterCommand('pc', function(source, args, raw)
                 local nSource = zero.getUserSource(parseInt(v))
                 if (nSource) then
                     async(function()
-                        TriggerClientEvent('chatMessage', -1, '[CENTRAL PREFEITURA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+                        TriggerClientEvent('chatMessage', nSource, '[CENTRAL PREFEITURA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
                         zero.webhook('ChatCore', '```prolog\n[CHATS ORG]\n[PREFEITURA CENTRAL]\n[JOGADOR]: '..user_id..' | '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     end)
                 end
@@ -881,9 +880,11 @@ RegisterCommand('adm', function(source)
     local identity =  zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         local message = zero.prompt(source, { 'Mensagem' })
-        if (message[1]) then
-            TriggerClientEvent('announcement', -1, 'Prefeitura', message[1], identity.firstname, true, 30000)
-            zero.webhook('Anuncios', '```prolog\n[/ADM]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..message[1]..' \n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        if (message) then
+            message = message[1]
+
+            TriggerClientEvent('announcement', -1, 'Prefeitura', message, identity.firstname, true, 30000)
+            zero.webhook('Anuncios', '```prolog\n[/ADM]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..message..' \n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
     end
 end)
@@ -1607,7 +1608,7 @@ srv.Bvida = function()
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
-        local cooldown = 'bvida:'..user_id
+        local cooldown = 'bvida-'..user_id
         if (exports[GetCurrentResourceName()]:GetCooldown(cooldown)) then
             TriggerClientEvent('notify', source, 'Bvida', 'Aguarde <b>'..exports[GetCurrentResourceName()]:GetCooldown(cooldown)..' segundos</b> para utilizar este comando novamente.')
             return
@@ -1657,6 +1658,7 @@ end)
 -- TOOGLE
 ---------------------------------------
 local _ToogleDefault = 'https://discord.com/api/webhooks/1144388223624282143/9o-TWD0hG26CnVCynfmNsk8dJeoqsDsgSy7Kzq_7Ab7UJ6pufUVGztbu8TRJZYPhoId_'
+local _ToogleStaff = 'https://discord.com/api/webhooks/1144381802459447496/XE3lTagQ1PNW1e8_S8RVS2jBeKna_PCuvziPZKxwRxv7If8rru-HngXp1tuPAXzsIvAh'
 
 local Toogle = {
     ['Policia'] = { 
@@ -1678,6 +1680,12 @@ local Toogle = {
         webhook = 'https://discord.com/api/webhooks/1141426122660261988/Qr_S_oy9DTpjdTPjeMAB7VRdmLtCnvzKnU09Js4sXW7gW9L_asrkqxA3K2C8wedVoUX1',
         toggleCoords = {
             { coord = vector3(535.3187, -2767.648, 6.448364), radius = 70 },
+        }
+    },
+    ['ZeroMecanica'] = { 
+        -- webhook = 'https://discord.com/api/webhooks/1141426122660261988/Qr_S_oy9DTpjdTPjeMAB7VRdmLtCnvzKnU09Js4sXW7gW9L_asrkqxA3K2C8wedVoUX1',
+        toggleCoords = {
+            { coord = vector3(-337.4769, -106.5758, 39.32239), radius = 70 },
         }
     },
 }
@@ -1734,11 +1742,18 @@ AddEventHandler('zero:playerLeave', function(user_id, source)
 			zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..' '..identity.firstname..' '..identity.lastname..'\n[STATUS]: LEAVE'..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
 		end
 	end
+
+    local groupName, groupInfo = zero.getUserGroupByType(user_id, 'staff')
+    if (groupName) and user_id ~= 1 and user_id ~= 2 and user_id ~= 3 then
+        zero.setGroupActive(user_id, groupName, false)
+        zero.webhook(_ToogleStaff, '```prolog\n[/STAFF]\n[JOB]: '..string.upper(groupName)..'\n[USER]: '..user_id..' '..identity.firstname..' '..identity.lastname..'\n[STATUS]: LEAVE'..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+    end
 end)
 
 local prefeituraCoord = vector3(-550.9846, -193.2, 38.21021)
 RegisterCommand('staff',function(source)
 	local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
 	local groupName, groupInfo = zero.getUserGroupByType(user_id, 'staff')
     if (groupName) then
         if (#(GetEntityCoords(GetPlayerPed(source)) - prefeituraCoord) <= 50) then
@@ -1753,9 +1768,7 @@ RegisterCommand('staff',function(source)
                 logmsg = '[STATUS]: LEAVE'
             end
 
-            -- zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..'\n'..logsmg..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
-            -- local identity = zero.getUserIdentity(user_id)
-            -- zero.webhook(webhooks['staff'],"```prolog\n["..groupName.."]: "..user_id.." "..identity.name.." "..identity.firstname.." \n"..logsmg..os.date("\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S").." \r```")
+            zero.webhook(_ToogleStaff, '```prolog\n[/STAFF]\n[JOB]: '..string.upper(groupName)..'\n[USER]: '..user_id..' '..identity.firstname..' '..identity.lastname..'\n'..logmsg..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
         else
             TriggerClientEvent('notify', source, 'Toogle', 'Você não está na <b>prefeitura</b>!')
         end   

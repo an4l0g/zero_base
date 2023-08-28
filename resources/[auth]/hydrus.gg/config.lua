@@ -162,7 +162,7 @@ AddEventHandler('hydrus:products-ready', function(scope)
     scope.addVehicleProduct({
         name = 'Veículos Premium',
         credit = 'vehicle_premium',
-        image = 'https://storage.hydrus.gg/production/packages/G1dNjKNE2erfMKY4cPUxq6gAtam8zIe0fD5HULI5.jpg',
+        image = 'https://storage.hydrus.gg/production/packages/cFZ4vK6IB7P0ZDBK0iwGOYwoZHhnnMhM7xGdLNgH.png',
         vehicles = {
             ['nissanskyliner34'] = 'Skyline R34',
             ['lancerevolution9'] = 'Lancer Evo 9',
@@ -205,8 +205,8 @@ AddEventHandler('hydrus:products-ready', function(scope)
     })
     scope.addVehicleProduct({
         name = 'Veículos Hyper',
-        credit = 'vehicle_hypercar ',
-        image = 'https://storage.hydrus.gg/production/packages/G1dNjKNE2erfMKY4cPUxq6gAtam8zIe0fD5HULI5.jpg',
+        credit = 'vehicle_hypercar',
+        image = 'https://storage.hydrus.gg/production/packages/cFZ4vK6IB7P0ZDBK0iwGOYwoZHhnnMhM7xGdLNgH.png',
         vehicles = {
             ['rmodskyline34'] = 'Skyline R34',
             ['silvia'] = 'Silvia',

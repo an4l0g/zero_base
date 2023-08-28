@@ -131,23 +131,17 @@ end
 exports('tryDeposit', zero.tryDeposit)
 
 zero.tryFullPayment = function(user_id, value)
-	if (zero.getMoney(user_id) >= value) then
-		return zero.tryPayment(user_id, value)
-	elseif (zero.getBankMoney(user_id) >= value) then
-		return zero.tryBankPayment(user_id, value)
-	else
-		if (zero.getPaypalMoney(user_id) >= value) then
-			return zero.tryPaypalPayment(user_id, value)
+	if (user_id and value >= 0) then
+		if (zero.getMoney(user_id) >= value) then
+			return zero.tryPayment(user_id, value)
+		elseif (zero.getBankMoney(user_id) >= value) then
+			return zero.tryBankPayment(user_id, value)
+		else
+			if (zero.getPaypalMoney(user_id) >= value) then
+				return zero.tryPaypalPayment(user_id, value)
+			end
 		end
 	end
 	return false
 end
 exports('tryFullPayment', zero.tryFullPayment)
-
-AddEventHandler('zero:playerJoin', function(source, user_id)
-	zero.execute('zero_framework/money_init_user', {
-		user_id = user_id,
-		wallet = 5000,
-		bank = 25000
-	})
-end)

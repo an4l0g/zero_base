@@ -6,11 +6,11 @@ function Commands.addvehicle(user_id, model)
 
     local data = { user_id = user_id, vehicle = model } 
     
-    data.ipva = os.time()
-    data.plate = exports["garages"]:generatePlate()
-    data.chassis = exports["garages"]:generateChassis()
-
-    SQL.insert('user_vehicles', data)
+    -- data.ipva = os.time()
+    -- data.plate = exports["zero_garage"]:generatePlate()
+    -- data.chassis = exports["zero_garage"]:generateChassis()
+    exports.zero_garage:addVehicle(user_id, model)
+    -- SQL.insert('user_vehicles', data)
 end
 
 function Commands.completegamepass(user_id)

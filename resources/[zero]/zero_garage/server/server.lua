@@ -322,7 +322,7 @@ srv.spawnVehicle = function(vehicle, id, token)
 
                     local vehicleFuel = 100.0
                     local state = srv.processState(json.decode(veh.state))
-                    if (state.data.fuel) then vehicleFuel = parseInt(state.data.fuel); end;
+                    if (state.data.fuel) then vehicleFuel = state.data.fuel; end;
 
                     local loadModel = vCLIENT.loadModel(source, vehicle, 30000, 60000)
                     if (loadModel) then

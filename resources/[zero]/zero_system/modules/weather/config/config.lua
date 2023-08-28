@@ -5,11 +5,11 @@ config.weathers = {
     { name = 'CLEARING', active = true, blacklist = true }, -- CHUVA COM CEÚ LIMPO
     { name = 'CLOUDS', active = true }, -- CEÚ CHEIO DE NUVENS
     { name = 'EXTRASUNNY', active = true }, -- SOL FORTE
-    { name = 'FOGGY', active = true }, -- NEBLINA
-    { name = 'NEUTRAL', active = true, blacklist = true }, -- CHUVA COM NUVE + SOL
+    { name = 'FOGGY', active = false }, -- NEBLINA
+    { name = 'NEUTRAL', active = false }, -- CHUVA COM NUVE + SOL
     { name = 'OVERCAST', active = true }, -- NUBLADO
     { name = 'RAIN', active = true, blacklist = true }, -- CHUVA
-    { name = 'SMOG', active = true }, -- POLUIÇÃO
+    { name = 'SMOG', active = false }, -- POLUIÇÃO
     { name = 'THUNDER', active = true, blacklist = true }, -- CHUVA FORTE
     { name = 'HALLOWEEN', active = false }, -- HALLOWEEN
     { name = 'SNOW', active = false }, -- NEVE

@@ -41,26 +41,6 @@ local safeZones = {
     
 }
 
---Name: Hospital | Fri Aug 25 2023
-PolyZone:Create({
- vector2(-860.98, -1196.59),
- vector2(-882.20, -1207.20),
- vector2(-867.42, -1232.58),
- vector2(-870.45, -1237.88),
- vector2(-834.85, -1266.67),
- vector2(-827.27, -1257.95),
- vector2(-819.32, -1265.53),
- vector2(-811.36, -1257.20),
- vector2(-794.32, -1271.59),
- vector2(-757.58, -1279.55),
- vector2(-720.83, -1239.39),
- vector2(-717.42, -1230.30),
- vector2(-796.21, -1162.50)
-}, {
- --minZ=0,
- --maxZ=800
-})
-
 local inSafe = false
 local _threadSafe = false
 

@@ -61,6 +61,7 @@ local _home = {
                         local homeCredit = exports['hydrus.gg']:getCredit(user_id, key)
                         if (homeCredit > 0) then
                             if (zero.request(source, 'Você deseja comprar a residência '..index..' por 1 crédito ('..key:upper()..')?', 30000)) then
+                                exports['hydrus.gg']:consumeCredit(user_id, key, 1)
                                 allow = true
                             end
                         end
@@ -144,6 +145,7 @@ local _home = {
                         local homeCredit = exports['hydrus.gg']:getCredit(user_id, key)
                         if (homeCredit > 0) then
                             if (zero.request(source, 'Você deseja comprar a residência '..index..' por 1 crédito ('..key:upper()..')?', 30000)) then
+                                exports['hydrus.gg']:consumeCredit(user_id, key, 1)
                                 allow = true
                             end
                         end

@@ -12,11 +12,11 @@ Citizen.CreateThread(function()
 	ForceAmbientSiren(false)
 	DisableVehicleDistantlights(true)
 	StopAudioScenes()
+	SetPlayerTargetingMode(3)
 	SetMaxWantedLevel(0)
 	SetRandomBoats(false)
 	SetRandomTrains(false)
 	SetGarbageTrucks(false)
-	SetPlayerTargetingMode(0)
 	SetRandomEventFlag(false)
 	SetPoliceRadarBlips(false)
 	DistantCopCarSirens(false)
@@ -46,10 +46,15 @@ Citizen.CreateThread(function()
 			SetRadarAsExteriorThisFrame()
 			SetRadarAsInteriorThisFrame('h4_fake_islandx', vec(4700.0, -5145.0), 0, 0)
 		end
+		Citizen.Wait(_idle)
+	end
+end)
 
+Citizen.CreateThread(function()
+	while (true) do
 		local coords = GetEntityCoords(PlayerPedId())
 		RemoveVehiclesFromGeneratorsInArea(coords.x-9999.0,coords.y-9999.0,coords.z-9999.0,coords.x+9999.0,coords.y+9999.0,coords.z+9999.0)
-		Citizen.Wait(_idle)
+		Citizen.Wait(5)
 	end
 end)
 

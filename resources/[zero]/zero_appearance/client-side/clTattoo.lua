@@ -89,7 +89,6 @@ setPedTattoos = function()
 end
 
 RegisterNuiCallback('changeTattooDemo', function(data)
-    print('MEXEU TATTOO')
     local ped = PlayerPedId()
     if (data.drawables) then
         ClearPedDecorations(ped)

@@ -2,7 +2,8 @@ config = {}
 
 config.roles = {
     ilegal = { full_permissions = {'Lider', 'ViceLider'}, half_permissions = 'Gerente' },
-    policia = { full_permissions = { 'Navy', 'Comando' }, half_permissions = { 'SubComando', 'Capitao' }  },    
+    policia = { full_permissions = { 'Comandante' }, half_permissions = { 'SubComandante' }  },    
+    deic = { full_permissions = { 'Diretor' }, half_permissions = { 'Diretor' }  },    
     hospital = { full_permissions = 'Diretor', half_permissions = 'Supervisor' },
     mecanica = { full_permissions = { 'Lider', 'ViceLider' }, half_permissions = 'Gerente' },
     restaurante = { full_permissions = { 'Dono', 'Socio' }, half_permissions = 'Gerente' },
@@ -80,6 +81,12 @@ config.facs = {
         serviceCheck = 'active',
         grades = config.grades.policia,
         roles = config.roles.policia
+    },
+    ['Deic'] = {
+        vagas = 500,
+        serviceCheck = 'active',
+        grades = config.grades.deic,
+        roles = config.roles.deic
     },
     ['Hospital'] = {
         vagas = 500,

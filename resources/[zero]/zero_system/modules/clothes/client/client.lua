@@ -20,13 +20,22 @@ cli.getCurrentPreset = function()
         ['8'] = { model = GetPedDrawableVariation(ped, 8), var = GetPedTextureVariation(ped, 8) },
         ['9'] = { model = GetPedDrawableVariation(ped, 9), var = GetPedTextureVariation(ped, 9) },
         ['11'] = { model = GetPedDrawableVariation(ped, 11), var = GetPedTextureVariation(ped, 11) },
-        ['p0'] = { model = checkValues(GetPedPropIndex(ped, 0)), var = GetPedPropTextureIndex(ped, 0) },
-        ['p1'] = { model = checkValues(GetPedPropIndex(ped, 1)), var = GetPedPropTextureIndex(ped, 1) },
-        ['p2'] = { model = checkValues(GetPedPropIndex(ped, 2)), var = GetPedPropTextureIndex(ped, 2) },
-        ['p6'] = { model = checkValues(GetPedPropIndex(ped, 6)), var = GetPedPropTextureIndex(ped, 6) },
-        ['p7'] = { model = checkValues(GetPedPropIndex(ped, 7)), var = GetPedPropTextureIndex(ped, 7) },
+        ['p0'] = { model = GetPedPropIndex(ped, 0), var = GetPedPropTextureIndex(ped, 0) },
+        ['p1'] = { model = GetPedPropIndex(ped, 1), var = GetPedPropTextureIndex(ped, 1) },
+        ['p2'] = { model = GetPedPropIndex(ped, 2), var = GetPedPropTextureIndex(ped, 2) },
+        ['p6'] = { model = GetPedPropIndex(ped, 6), var = GetPedPropTextureIndex(ped, 6) },
+        ['p7'] = { model = GetPedPropIndex(ped, 7), var = GetPedPropTextureIndex(ped, 7) },
     }
     return currentPreset
+end
+
+cli.clearProps = function()
+    local ped = PlayerPedId()
+    ClearPedProp(ped, 0)
+    ClearPedProp(ped, 1)
+    ClearPedProp(ped, 2)
+    ClearPedProp(ped, 6)
+    ClearPedProp(ped, 7)
 end
 
 cli.setClothes = function(clothes)
@@ -34,6 +43,7 @@ cli.setClothes = function(clothes)
     zero._playAnim(true, {{'clothingshirt','try_shirt_positive_d'}}, false)
     Wait(2000)
     ClearPedTasks(ped)
+    cli.clearProps()
     for k, v in pairs(clothes) do
         local isProp, index = exports.zero:parsePart(k)
         if (isProp) then

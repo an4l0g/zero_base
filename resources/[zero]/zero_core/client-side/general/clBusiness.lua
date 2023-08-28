@@ -1,0 +1,83 @@
+-- local vSERVER = Tunnel.getInterface('Business')
+-- local config = module('zero_core', 'cfg/cfgBusiness')
+
+-- local inBusiness = false
+
+-- Citizen.CreateThread(function()
+-- 	while true do
+-- 		local idle = 1000
+-- 		local ped = PlayerPedId()
+-- 		if not inBusiness then
+-- 			for k, v in pairs(config) do
+-- 				local enter = v['coords']['enter']
+-- 				local distance = #(GetEntityCoords(ped) - enter.xyz)
+-- 				if distance <= 2.5 then
+-- 					idle = 5
+-- 					Text3D(enter.x, enter.y, enter.z, '~g~E~w~ - ENTRAR', 400)
+-- 					if distance <= 1.2 and IsControlJustPressed(0, 38) then
+-- 						if vSERVER.checkBusiness(k) then
+-- 							DoScreenFadeOut(1000)
+-- 							Citizen.Wait(1000)
+-- 							vSERVER.setBucket(ped)					
+-- 							RequestCollisionAtCoord(v['coords']['exit'].xyz)
+-- 							while not HasCollisionLoadedAroundEntity(ped) do
+-- 								RequestCollisionAtCoord(v['coords']['exit'].xyz)
+-- 								Citizen.Wait(1)
+-- 							end
+-- 							SetEntityCoords(ped, v['coords']['exit'].xyz)
+-- 							SetEntityHeading(ped, v['coords']['exit'].w)
+-- 							Citizen.Wait(1000)
+--     						DoScreenFadeIn(1000)
+-- 							inBusiness = true
+-- 							enterBusiness(k)
+-- 						end
+-- 					end
+-- 				end
+-- 			end
+-- 		end
+-- 		Citizen.Wait(idle)
+-- 	end
+-- end)
+
+-- enterBusiness = function(business)
+-- 	Citizen.CreateThread(function()
+-- 		while (inBusiness) do
+-- 			local idle = 1000
+-- 			local ped = PlayerPedId()
+-- 			local exit = config[business]['coords']['exit']
+-- 			local distance = #(GetEntityCoords(ped) - exit.xyz)
+-- 			if distance <= 2.5 then
+-- 				idle = 5
+-- 				Text3D(exit.x, exit.y, exit.z, '~g~E~w~ - SAIR', 400)
+-- 				if distance <= 1.2 and IsControlJustPressed(0, 38) then
+-- 					DoScreenFadeOut(1000)
+-- 					Citizen.Wait(1000)
+-- 					vSERVER.setBucket(0)
+-- 					SetEntityCoords(ped, config[business]['coords']['enter'].xyz)
+-- 					SetEntityHeading(ped, config[business]['coords']['enter'].w)
+-- 					Citizen.Wait(1000)
+-- 					DoScreenFadeIn(1000)
+-- 					inBusiness = false
+-- 				end 
+-- 			end
+-- 			Citizen.Wait(idle)
+-- 		end
+-- 	end)
+
+-- 	Citizen.CreateThread(function()
+-- 		while (inBusiness) do
+-- 			local idle = 1000
+-- 			local ped = PlayerPedId()
+-- 			local safe = config[business]['coords']['safe']
+-- 			local distance = #(GetEntityCoords(ped) - safe.xyz)
+-- 			if distance <= 2.5 then
+-- 				idle = 5
+-- 				Text3D(safe.x, safe.y, safe.z, '~g~E~w~ - COFRE', 400)
+-- 				if distance <= 1.2 and IsControlJustPressed(0, 38) then
+-- 					vSERVER.getMoney(business)
+-- 				end 
+-- 			end
+-- 			Citizen.Wait(idle)
+-- 		end
+-- 	end)
+-- end

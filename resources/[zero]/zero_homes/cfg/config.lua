@@ -8,8 +8,8 @@ config.general = {
     percentageSell = 0.8, -- PORCENTAGEM DE VENDA
     taxPrice = 0.05, -- VALOR DA TAXA
     percentageUpgrade = 0.8, -- PORCENTAGEM DE VENDA DOS UPGRADE (INTERIOR NÃO CONTA)
-    openVaultPermission = '+DEIC.Soldado', -- PERMISSÃO DA POLÍCIA PARA ABRIR O BAÚ DA CASA
-    invadePermission = '+Staff.COO'
+    openVaultPermission = '+Deic.Superintendente', -- PERMISSÃO DA POLÍCIA PARA ABRIR O BAÚ DA CASA
+    invadePermission = '+Deic.Intendente'
 }
 
 config.homes = {

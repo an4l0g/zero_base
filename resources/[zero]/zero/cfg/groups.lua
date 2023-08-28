@@ -261,6 +261,7 @@ config.groups = {
 			},
 			grades_default = 'Membro',
 		},
+		'mecanico.permissao',
 		'zeromecanica.permissao'
 	},
 
@@ -269,7 +270,7 @@ config.groups = {
 			title = 'Polícia', 
 			groupType = 'job', 
 			grades = {
-				['Policia'] = { title = 'Soldado', level = 1 },
+				['Soldado'] = { title = 'Soldado', level = 1 },
 				['Graduado'] = { title = 'Graduado', level = 2 },
 				['Oficial'] = { title = 'Oficial', level = 3 },
 				['AltoEscalao'] = { title = 'Alto Escalão', level = 4 },

@@ -14,9 +14,9 @@ function useResult() {
   const { setVariations } = useContext(VariationsContext);
 
   const prices = {
-    barber: 500,
-    tattoo: 500,
-    skin: 500,
+    barber: 250,
+    tattoo: 250,
+    skin: 250,
   };
 
   const currentPrice = useCallback(() => {

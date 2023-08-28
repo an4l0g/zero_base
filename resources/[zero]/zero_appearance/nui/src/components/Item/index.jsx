@@ -51,7 +51,7 @@ const Item = React.forwardRef(
           <S.ItemTitle>Retirar</S.ItemTitle>
         )}
         {index !== -1 && <S.ItemWrapIcon>{index}</S.ItemWrapIcon>}
-        <S.ItemWrapMoney>R$ 500</S.ItemWrapMoney>
+        <S.ItemWrapMoney>R$ 250</S.ItemWrapMoney>
       </S.OptionItem>
     );
   }

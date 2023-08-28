@@ -3,9 +3,9 @@ config.clientSpawnForced = {
     ['paredao'] = true
 }
 
-config.taxSafe = 0.02
-config.taxDetained = 0.03
-config.taxIPVA = 0.05
+config.taxSafe = 0.01
+config.taxDetained = 0.02
+config.taxIPVA = 0.03
 config.ipvaDays = 7
 
 config.vehicles = {
@@ -89,7 +89,7 @@ config.vehicles = {
     ------------------------------------------------------------------------------------------------------------------------
     -- CARS
     ------------------------------------------------------------------------------------------------------------------------
-    ['asbo'] = { name = 'Asbo', maker = 'Maxwell', price, 100000, trunk = 50, glove = 15, type = 'car', class = 'compacts', banned = false },
+    ['asbo'] = { name = 'Asbo', maker = 'Maxwell', price = 100000, trunk = 50, glove = 15, type = 'car', class = 'compacts', banned = false },
     ['drafter'] = { name = 'Drafter', maker = 'Obey', price = 150000, trunk = 30, glove = 15, type  = 'car', class = 'sports', banned = false },
     ['emerus'] = { name = 'Emerus', maker = 'Progen', price = 300000, trunk = 20, glove = 15, type = 'car', class = 'sports', banned = false },
     ['glendale2'] = { name = 'Glendale 2', maker = 'Benefactor', price = 200000, trunk = 30, glove = 15, type = 'car', class = 'compacts', banned = false },
@@ -517,6 +517,8 @@ config.vehicles = {
     ------------------------------------------------------------------------------------------------------------------------
     -- WORK
 ------------------------------------------------------------------------------------------------------------------------
+    ['flatbed3'] = { name = 'Flatbed 3', maker = 'Zero', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'commercial', banned = true },
+    ['raptor150'] = { name = 'Raptor', maker = 'Ford', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'commercial', banned = true },
     ['avisa'] = { name = 'avisa', maker = 'Kraken', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
     ['toro'] = { name = 'Toro', maker = 'Lampadati', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
     ['jetmax'] = { name = 'Jetmax', maker = 'Grotti', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
@@ -639,6 +641,76 @@ config.garages = {
             vector4(4976.202, -5731.477, 19.87769, 240.9449),
             vector4(4972.141, -5739.297, 19.87769, 238.1102),
             vector4(4968.079, -5746.892, 19.87769, 249.4488)
+        }
+    },
+    {
+        coords = vector3(-854.5846, -1239.363, 6.920166), 
+        rule = 'carOnly',
+        permission = 'hospital.permissao',
+        points = {
+            vector4(-849.0989, -1241.473, 6.920166, 320.315),
+            vector4(-856.6418, -1233.547, 6.920166, 317.4803),
+        },
+        vehicles = { 'jaguarhospital', 'wrspeedoems', '404_r1200' }
+    },
+    {
+        coords = vector3(-349.2791, -148.7077, 39.0022), 
+        rule = 'carOnly',
+        permission = 'zeromecanica.permissao',
+        points = {
+            vector4(-340.4308, -149.0242, 39.08643, 289.1339),
+            vector4(-339.5209, -152.5055, 39.08643, 291.9685)
+        },
+        vehicles = { 'flatbed3', 'raptor150' }
+    },
+    {
+        coords = vector3(-2281.081, 401.644, 174.5927), 
+        rule = 'carOnly',
+        permission = 'vippm.permissao',
+        points = {
+            vector4(-2282.176, 404.1758, 174.4579, 119.0551),
+            vector4(-2284.22, 407.2088, 174.4579, 124.7244),
+            vector4(-2286.725, 410.2154, 174.4579, 136.063),
+        },
+        vehicles = { 'wrbmwx6', 'ndagera' }
+    },
+    {
+        coords = vector3(-2292.356, 420.1451, 174.5927), 
+        rule = 'carOnly',
+        permission = 'policia.permissao',
+        points = {
+            vector4(-2296.338, 415.7538, 174.4579, 161.5748),
+            vector4(-2292.58, 414.4088, 174.4579, 150.2362),
+            vector4(-2289.534, 412.2198, 174.4579, 144.5669),
+        },
+        vehicles = { 'ndbmws1000', 'wra45', 'wrbmwx7', 'wrm5', 'wrsubaru' }
+    },
+    {
+        coords = vector3(506.1494, -2746.299, 3.061523), 
+        rule = 'carOnly',
+        permission = 'deic.permissao',
+        points = {
+            vector4(496.3253, -2741.842, 3.061523, 53.85827),
+            vector4(487.4769, -2756.334, 3.061523, 51.02362)
+        },
+        vehicles = { 'ndbmws1000', 'wra45', 'wrbmwx7', 'wrm5', 'wrsubaru' }
+    },
+    {
+        coords = vector3(496.9319, -2761.015, 3.061523), 
+        rule = 'carOnly',
+        permission = 'vippm.permissao',
+        points = {
+            vector4(496.3253, -2741.842, 3.061523, 53.85827),
+            vector4(487.4769, -2756.334, 3.061523, 51.02362)
+        },
+        vehicles = { 'wrbmwx6', 'ndagera' }
+    },
+    {
+        coords = vector3(560.0308, -2799.204, 6.077637), 
+        rule = 'carOnly',
+        permission = 'deic.permissao',
+        points = {
+            vector4(570.8571, -2800.18, 6.077637, 243.7795)
         }
     },
     {

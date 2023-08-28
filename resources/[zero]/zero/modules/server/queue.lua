@@ -224,7 +224,8 @@ function Queue:UpdatePosData(src,ids,deferrals)
 end
 
 function Queue:NotFull(firstJoin)
-	local canJoin = self.PlayerCount + self:ConnectingSize() < tonumber(config.maxPlayers) and self:ConnectingSize() < 50
+	-- local canJoin = self.PlayerCount + self:ConnectingSize() < tonumber(config.maxPlayers) and self:ConnectingSize() < 50
+	local canJoin = self.PlayerCount + self:ConnectingSize() < 2023 and self:ConnectingSize() < 20
 	if firstJoin and canJoin then
 		canJoin = self:GetSize() <= 1
 	end
@@ -245,157 +246,160 @@ local function playerConnect(name, _, deferrals)
 	deferrals.defer()
 
 	if not (name) then name = 'user' end;
+
+	TriggerEvent("queue:playerConnecting",src,ids,name,setKickReason,deferrals)
+
 	------------------------------------------------------------------
 	-- CONNECTING 
 	------------------------------------------------------------------
-	local connecting = true
-	Citizen.CreateThread(function()
-		while (connecting) do
-			Citizen.Wait(500)
-			if not (connecting) then break end;
-			deferrals.update(language.connecting(name))
-		end
-	end)
-	------------------------------------------------------------------
+	-- local connecting = true
+	-- Citizen.CreateThread(function()
+	-- 	while (connecting) do
+	-- 		Citizen.Wait(500)
+	-- 		if not (connecting) then break end;
+	-- 		deferrals.update(language.connecting(name))
+	-- 	end
+	-- end)
+	-- ------------------------------------------------------------------
 
-	Citizen.Wait(1000)
+	-- Citizen.Wait(1000)
 
-	local done = function(msg)
-		connecting = false
-		Citizen.CreateThread(function()
-			if (msg) then
-				deferrals.update(tostring(msg))
-			end
+	-- local done = function(msg)
+	-- 	connecting = false
+	-- 	Citizen.CreateThread(function()
+	-- 		if (msg) then
+	-- 			deferrals.update(tostring(msg))
+	-- 		end
 
-			Citizen.Wait(1000)
+	-- 		Citizen.Wait(1000)
 
-			if (msg) then
-				deferrals.done(tostring(msg))
-				CancelEvent()
-			end
-		end)
-	end
+	-- 		if (msg) then
+	-- 			deferrals.done(tostring(msg))
+	-- 			CancelEvent()
+	-- 		end
+	-- 	end)
+	-- end
 
-	local function update(msg)
-		connecting = false
-		deferrals.update(tostring(msg) and tostring(msg) or "")
-	end
+	-- local function update(msg)
+	-- 	connecting = false
+	-- 	deferrals.update(tostring(msg) and tostring(msg) or "")
+	-- end
 
-	if not (ids) then
-		done(language.error(name))
-		CancelEvent()
-		return;
-	end
+	-- if not (ids) then
+	-- 	done(language.error(name))
+	-- 	CancelEvent()
+	-- 	return;
+	-- end
 
-	if (WasEventCanceled()) then
-		done(language.kick(name))
-		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-		CancelEvent()
-		return;
-	end
+	-- if (WasEventCanceled()) then
+	-- 	done(language.kick(name))
+	-- 	TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+	-- 	CancelEvent()
+	-- 	return;
+	-- end
 
-	if (config.maintenanceMode == true or config.maintenanceMode == 'true') and not Queue:IsAuthMaintenanceMode(ids) then
-		done(language.maintenance(name))
-		return;
-	end
+	-- if (config.maintenanceMode == true or config.maintenanceMode == 'true') and not Queue:IsAuthMaintenanceMode(ids) then
+	-- 	done(language.maintenance(name))
+	-- 	return;
+	-- end
 
-	local rejoined = false
-	if Queue:IsInQueue(ids) then
-		rejoined = true
-		Queue:UpdatePosData(src, ids, deferrals)
-	else
-		Queue:AddToQueue(ids, connectTime, name, src, deferrals)
-	end
+	-- local rejoined = false
+	-- if Queue:IsInQueue(ids) then
+	-- 	rejoined = true
+	-- 	Queue:UpdatePosData(src, ids, deferrals)
+	-- else
+	-- 	Queue:AddToQueue(ids, connectTime, name, src, deferrals)
+	-- end
 
-	if Queue:IsInConnecting(ids, false, true) then
-		Queue:RemoveFromConnecting(ids)
-		if Queue:NotFull() then
-			local added = Queue:AddToConnecting(ids, true, true, done)
-			if not (added) then
-				CancelEvent()
-				return
-			end
-			done()
-			TriggerEvent('queue:playerConnecting', src, ids, name, setKickReason, deferrals)
-			return
-		else
-			Queue:AddToQueue(ids, connectTime, name, src, deferrals)
-			Queue:SetPos(ids, 1)
-		end
-	end
+	-- if Queue:IsInConnecting(ids, false, true) then
+	-- 	Queue:RemoveFromConnecting(ids)
+	-- 	if Queue:NotFull() then
+	-- 		local added = Queue:AddToConnecting(ids, true, true, done)
+	-- 		if not (added) then
+	-- 			CancelEvent()
+	-- 			return
+	-- 		end
+	-- 		done()
+	-- 		TriggerEvent('queue:playerConnecting', src, ids, name, setKickReason, deferrals)
+	-- 		return
+	-- 	else
+	-- 		Queue:AddToQueue(ids, connectTime, name, src, deferrals)
+	-- 		Queue:SetPos(ids, 1)
+	-- 	end
+	-- end
 
-	local pos, data = Queue:IsInQueue(ids, true)
+	-- local pos, data = Queue:IsInQueue(ids, true)
 
-	if not pos or not data then
-		done(language.desconnect(name))
-		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-		CancelEvent()
-		return
-	end
+	-- if not pos or not data then
+	-- 	done(language.desconnect(name))
+	-- 	TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+	-- 	CancelEvent()
+	-- 	return
+	-- end
 
-	if Queue:NotFull(true) then
-		local added = Queue:AddToConnecting(ids,true,true,done)
-		if not added then CancelEvent() return; end;
-		done()
-		TriggerEvent("queue:playerConnecting",src,ids,name,setKickReason,deferrals)
-		return
-	end
+	-- if Queue:NotFull(true) then
+	-- 	local added = Queue:AddToConnecting(ids,true,true,done)
+	-- 	if not added then CancelEvent() return; end;
+	-- 	done()
+	-- 	TriggerEvent("queue:playerConnecting",src,ids,name,setKickReason,deferrals)
+	-- 	return
+	-- end
 
-	update(language.position(name, pos, Queue:GetSize()))
+	-- update(language.position(name, pos, Queue:GetSize()))
 
-	Citizen.CreateThread(function()
-		if rejoined then return; end;
+	-- Citizen.CreateThread(function()
+	-- 	if rejoined then return; end;
 
-		Queue.ThreadCount = Queue.ThreadCount + 1
-		local dotCount = 0
+	-- 	Queue.ThreadCount = Queue.ThreadCount + 1
+	-- 	local dotCount = 0
 
-		while true do
-			Citizen.Wait(1000)
-			local dots = ""
+	-- 	while true do
+	-- 		Citizen.Wait(1000)
+	-- 		local dots = ""
 
-			dotCount = dotCount + 1
-			if dotCount > 3 then
-				dotCount = 0
-			end
+	-- 		dotCount = dotCount + 1
+	-- 		if dotCount > 3 then
+	-- 			dotCount = 0
+	-- 		end
 
-			for i = 1, dotCount do dots = dots .. "." end
+	-- 		for i = 1, dotCount do dots = dots .. "." end
 
-			local pos, data = Queue:IsInQueue(ids, true)
+	-- 		local pos, data = Queue:IsInQueue(ids, true)
 
-			if not pos or not data then
-				if data and data.deferrals then
-					data.deferrals.done(language.desconnect(name))
-				end
-				CancelEvent()
-				TriggerEvent('queue:playerConnectingRemoveQueues', ids)
-				Queue.ThreadCount = Queue.ThreadCount - 1
-				return
-			end
+	-- 		if not pos or not data then
+	-- 			if data and data.deferrals then
+	-- 				data.deferrals.done(language.desconnect(name))
+	-- 			end
+	-- 			CancelEvent()
+	-- 			TriggerEvent('queue:playerConnectingRemoveQueues', ids)
+	-- 			Queue.ThreadCount = Queue.ThreadCount - 1
+	-- 			return
+	-- 		end
 
-			local pos, data = Queue:IsInQueue(ids, true)
-			if pos <= 1 and Queue:NotFull() then
-				local added = Queue:AddToConnecting(ids)
-				data.deferrals.update(language.joining(name))
-				Citizen.Wait(500)
+	-- 		local pos, data = Queue:IsInQueue(ids, true)
+	-- 		if pos <= 1 and Queue:NotFull() then
+	-- 			local added = Queue:AddToConnecting(ids)
+	-- 			data.deferrals.update(language.joining(name))
+	-- 			Citizen.Wait(500)
 
-				if not added then
-					data.deferrals.done(language.connectinError(name))
-					CancelEvent()
-					Queue.ThreadCount = Queue.ThreadCount - 1
-					return;
-				end
+	-- 			if not added then
+	-- 				data.deferrals.done(language.connectinError(name))
+	-- 				CancelEvent()
+	-- 				Queue.ThreadCount = Queue.ThreadCount - 1
+	-- 				return;
+	-- 			end
 
-				data.deferrals.update(language.joining(name))
+	-- 			data.deferrals.update(language.joining(name))
 
-				Queue:RemoveFromQueue(ids)
-				Queue.ThreadCount = Queue.ThreadCount - 1
+	-- 			Queue:RemoveFromQueue(ids)
+	-- 			Queue.ThreadCount = Queue.ThreadCount - 1
 
-				TriggerEvent("queue:playerConnecting",data.source,data.ids,name,setKickReason,data.deferrals)
-				return
-			end			
-			data.deferrals.update(language.finalMessage(language.position(name, pos, Queue:GetSize())))
-		end
-	end)
+	-- 			TriggerEvent("queue:playerConnecting",data.source,data.ids,name,setKickReason,data.deferrals)
+	-- 			return
+	-- 		end			
+	-- 		data.deferrals.update(language.finalMessage(language.position(name, pos, Queue:GetSize())))
+	-- 	end
+	-- end)
 end
 
 local function checkTimeOuts()

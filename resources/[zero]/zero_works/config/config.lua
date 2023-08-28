@@ -20,7 +20,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 50, ['max'] = 70 },
             ['bonus'] = { ['after'] = 100, ['multiply'] = 1.5 }
         },
         ['anim'] = 'caixa',
@@ -60,7 +60,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 50, ['max'] = 70 },
             ['bonus'] = { ['after'] = 100, ['multiply'] = 1.0 }
         },
         ['anim'] = 'caixa',
@@ -98,7 +98,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 50, ['max'] = 70 },
             ['bonus'] = { ['after'] = 100, ['multiply'] = 1.5 }
         },
         ['anim'] = 'enviar',
@@ -134,7 +134,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 50, ['max'] = 70 },
             ['bonus'] = { ['after'] = 3, ['multiply'] = 1.5 }
         },
         ['anim'] = 'caixa',
@@ -165,7 +165,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 50, ['max'] = 70 },
             ['bonus'] = { ['after'] = 6, ['multiply'] = 1.5 }
         },
         ['anim'] = 'arrumar',
@@ -199,7 +199,7 @@ config.works = {
         ['description'] = 'Subir laje',
         ['text'] = 'Consertar', ['blipWithCar'] = false,
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 20, ['max'] = 40 },
             ['bonus'] = { ['after'] = 5, ['multiply'] = 1.5 }
         },
         ['anim'] = 'martelo',
@@ -234,7 +234,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 100, ['max'] = 120 },
             ['bonus'] = { ['after'] = 5, ['multiply'] = 1.5 }
         },
         ['vehicle'] = 'utillitruck',
@@ -266,10 +266,10 @@ config.works = {
         ['description'] = 'Reciclagem',
         ['text'] = 'Varrer', ['blipWithCar'] = false,
         ['payment'] = { 
-            ['money'] = { ['min'] = 240, ['max'] = 255 },
+            ['money'] = { ['min'] = 100, ['max'] = 120 },
             ['bonus'] = { ['after'] = 6, ['multiply'] = 1.5 }
         },
-        ['vehicle'] = 'caddy2',
+        ['vehicle'] = 'caddy',
         ['anim'] = 'varrer',
         ['routes'] = {
             vector3(-539.31, -1215.97, 18.46),

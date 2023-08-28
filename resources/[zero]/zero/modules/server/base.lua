@@ -150,9 +150,7 @@ end
 vRP.getUserDataTable = zero.getUserDataTable
 
 zero.setKeyDataTable = function(user_id, key, value)
-	print(user_id, key, value)
 	if (cacheUsers.user_tables[user_id]) then
-		print('passou')
 		cacheUsers.user_tables[user_id][key] = value
 	end
 end
@@ -165,7 +163,6 @@ zero.getUserId = function(source)
 			return cacheUsers.users[ids[1]]
 		end
 	end
-	print('^2[WARNING]^7 Não foi possivel encontrar o user_id do source ^2'..source..'^7.')
 	return nil
 end
 vRP.getUserId = zero.getUserId

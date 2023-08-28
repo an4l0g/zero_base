@@ -12,6 +12,6 @@ config.webhooks = {
         webhook(link, '```prolog\n[BN ARSENAL]\n[ARSENAL]: '..arsenalName..'\n[POLICIAL]: '..user_id..' | '..getIdentity(getUserIdentity(user_id))..'\n[PEGOU KIT]\n[INFORMAÇÕES]\n[KIT RETIRADO]: '..name..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y - [HORA]: %H:%M:%S')..' \r```')
     end,
     ['ammo'] = function(source, link, arsenalName, user_id, spawn, ammoExtra)
-        webhook(link, '```prolog\n[BN ARSENAL]\n[ARSENAL]: '..arsenalName..'\n[POLICIAL]: '..user_id..' | '..getIdentity(getUserIdentity(user_id))..'\n[PEGOU MUNIÇÃO EXTRA]\n[INFORMAÇÕES]\n[MUNIÇÃO RETIRADA]: '..spawn..'\n[NOME]: '..itemNameList('wammo|'..spawn)..'\n[QUANTIDADE]: '..ammoExtra..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y - [HORA]: %H:%M:%S')..' \r```')
+        webhook(link, '```prolog\n[BN ARSENAL]\n[ARSENAL]: '..arsenalName..'\n[POLICIAL]: '..user_id..' | '..getIdentity(getUserIdentity(user_id))..'\n[PEGOU MUNIÇÃO EXTRA]\n[INFORMAÇÕES]\n[MUNIÇÃO RETIRADA]: '..spawn..'\n[NOME]: '..spawn..'\n[QUANTIDADE]: '..ammoExtra..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y - [HORA]: %H:%M:%S')..' \r```')
     end
 }

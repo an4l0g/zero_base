@@ -1,3 +1,4 @@
+tempOpen = nil
 inMenu = false
 oldCustom = {}
 
@@ -15,6 +16,25 @@ setClothes = function(clothes)
     zero.setCustomization(idleCopy)
 end
 exports('setClothes', setClothes)
+
+local setCustomization = function(custom, mode)
+    local ped = PlayerPedId()
+    for k, v in pairs(custom) do
+        if (k ~= 'pedModel') then
+            local isProp, index = exports.zero:parsePart(k)
+            if (isProp) then
+                SetPedPropIndex(ped, index, v.model, v.var, (v.palette or 0))
+            else
+                SetPedComponentVariation(ped, parseInt(k), v.model, v.var, (v.palette or 0))
+            end
+        end
+    end
+
+    if (mode == 'barbershop' or mode == 'tattooshop') then
+        TriggerEvent('zero:barberUpdate')
+        TriggerEvent('zero:tattooUpdate')
+    end
+end 
 
 local povCam = {
     ['body'] = function()
@@ -91,6 +111,7 @@ end
 
 RegisterNuiCallback('close', function()
     LocalPlayer.state.Appearance = false
+    if (tempOpen == 'barbershop') then setPedCustom(); end;
     closeNui()
 end)
 
@@ -115,19 +136,23 @@ closeNui = function()
     local ped = PlayerPedId()
     FreezeEntityPosition(ped, false)
     ClearPedTasks(ped)
-    if (oldCustom) then zero.setCustomization(oldCustom); end;
+    if (oldCustom) then setCustomization(oldCustom, tempOpen); end;
+    tempOpen  = nil
 end
 
 local locsConfig = config.locs
 
 local openAppearance = {
     ['barbershop'] = function(index)
+        tempOpen = 'barbershop'
         openBarberShop(index) 
     end,
     ['skinshop'] = function(index)
+        tempOpen = 'skinshop'
         openSkinShop(index)
     end,
     ['tattooshop'] = function(index)
+        tempOpen = 'tattooshop'
         openTattooShop(index)
     end
 }
