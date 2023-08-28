@@ -80,6 +80,21 @@ config.groups = {
 		'zerofome.permissao'
 	},
 	
+	['Russia'] = {
+		information = { 
+			title = 'Rússia', 
+			groupType = 'fac', 
+			grades = {
+				['Membro'] = { title = 'Membro', level = 1 },
+				['Gerente'] = { title = 'Gerente', level = 2 },
+				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
+				['Lider'] = { title = 'Líder', level = 4 },
+			},
+			grades_default = 'Membro',
+		},
+		'russia.permissao'
+	},
+
 	['Holanda'] = {
 		information = { 
 			title = 'Holanda', 

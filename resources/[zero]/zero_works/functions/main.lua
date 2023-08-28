@@ -46,16 +46,14 @@ else
     end
 
     stopWork = function(text)
+        if (DoesBlipExist(blips)) then 
+            RemoveBlip(blips) 
+        end
+        selection = 0
+        inWork = false
+        task = false
+        _stage = 0
         TriggerEvent('notify', 'Emprego', text) 
-        Citizen.SetTimeout(500, function()
-            if (DoesBlipExist(blips)) then 
-                RemoveBlip(blips) 
-            end
-            selection = 0
-            inWork = false
-            task = false
-            _stage = 0
-        end)
     end
 
     TextFloating = function(text, coord)

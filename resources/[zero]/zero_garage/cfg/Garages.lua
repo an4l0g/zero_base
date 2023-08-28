@@ -769,7 +769,6 @@ config.garages = {
     {
         coords = vector3(85.18681, -1192.391, 29.54944), 
         rule = 'carOnly',
-        showBlip = true,
         points = {
             vector4(88.04836, -1200.369, 29.27991, 274.9606),
             vector4(90.51429, -1204.22, 29.27991, 272.126),

@@ -79,36 +79,6 @@ RegisterNetEvent('zero_interactions:tratamento', function()
     end
 end)
 
-local saveMaca = {}
-local tempIndex = {}
-
-srv.verifyMaca = function(index)
-    if (saveMaca[index]) then
-        return true
-    end
-    return false
-end
-
-srv.saveMaca = function(index)
-    local source = source
-    tempIndex[zero.getUserId(source)] = index
-    saveMaca[index] = true
-end
-
-srv.deleteMaca = function()
-    local source = source
-    local user_id = zero.getUserId(source)
-    saveMaca[tempIndex[user_id]] = nil
-    tempIndex[user_id] = nil
-end
-
-AddEventHandler('zero:playerLeave', function(user_id, source)
-	if (saveMaca[tempIndex[user_id]]) then
-		saveMaca[tempIndex[user_id]] = nil
-        tempIndex[user_id] = nil
-	end
-end)
-
 RegisterCommand('anestesia', function(source)
     local user_id = zero.getUserId(source)
     if (user_id) and zero.hasPermission(user_id, 'hospital.permissao') then

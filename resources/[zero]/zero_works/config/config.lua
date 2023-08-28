@@ -20,7 +20,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 50, ['max'] = 70 },
+            ['money'] = { ['min'] = 150, ['max'] = 170 },
             ['bonus'] = { ['after'] = 100, ['multiply'] = 1.5 }
         },
         ['anim'] = 'caixa',
@@ -60,7 +60,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 50, ['max'] = 70 },
+            ['money'] = { ['min'] = 150, ['max'] = 170 },
             ['bonus'] = { ['after'] = 100, ['multiply'] = 1.0 }
         },
         ['anim'] = 'caixa',
@@ -98,7 +98,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 50, ['max'] = 70 },
+            ['money'] = { ['min'] = 150, ['max'] = 170 },
             ['bonus'] = { ['after'] = 100, ['multiply'] = 1.5 }
         },
         ['anim'] = 'enviar',
@@ -134,7 +134,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 50, ['max'] = 70 },
+            ['money'] = { ['min'] = 250, ['max'] = 270 },
             ['bonus'] = { ['after'] = 3, ['multiply'] = 1.5 }
         },
         ['anim'] = 'caixa',
@@ -165,7 +165,7 @@ config.works = {
             ['quantity'] = 1
         },
         ['payment'] = { 
-            ['money'] = { ['min'] = 50, ['max'] = 70 },
+            ['money'] = { ['min'] = 250, ['max'] = 270 },
             ['bonus'] = { ['after'] = 6, ['multiply'] = 1.5 }
         },
         ['anim'] = 'arrumar',
@@ -256,7 +256,7 @@ config.works = {
     ['Gari'] = {
         ['coords'] = {
             start = vector3(-304.0483, -1524.976, 27.64539),
-            route = vector3(-363.178, -1525.306, 27.71277)
+            route = vector3(-355.2, -1513.424, 27.71277)
         },
         ['cams'] = {
             { vector3(-368.8088, -1534.747, 27.52747+6.0), -20.0, 0.0, -30.0 },
@@ -266,7 +266,7 @@ config.works = {
         ['description'] = 'Reciclagem',
         ['text'] = 'Varrer', ['blipWithCar'] = false,
         ['payment'] = { 
-            ['money'] = { ['min'] = 100, ['max'] = 120 },
+            ['money'] = { ['min'] = 80, ['max'] = 100 },
             ['bonus'] = { ['after'] = 6, ['multiply'] = 1.5 }
         },
         ['vehicle'] = 'caddy',

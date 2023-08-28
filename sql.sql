@@ -217,3 +217,10 @@ create table facs_blacklist(
     expires varchar(50) not null,
     primary key(user_id)
 );
+
+create table business(
+    business_name varchar(50) not null,
+    business_owner int not null,
+    business_safe int not null,
+    primary key(business_name)
+);

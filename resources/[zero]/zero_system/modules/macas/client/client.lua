@@ -3,8 +3,6 @@ Tunnel.bindInterface('Macas', cli)
 local vSERVER = Tunnel.getInterface('Macas')
 
 local inMaca = false
-local usageMaca = {}
-local tempIndex = nil
 local nearestBlips = {}
 
 local _markerThread = false
@@ -21,22 +19,12 @@ local markerThread = function()
                     TextFloating('~b~E~w~ - Deitar\n~b~F~w~ - Tratamento', coord)
                     if (dist <= 1.2 and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                         if (IsControlJustPressed(0, 38)) then
-                            if (not vSERVER.verifyMaca(index)) then
-                                vSERVER.saveMaca(index)
-                                SetPlayerInMaca(index)
-                            else
-                                TriggerEvent('notify', 'Hospital', 'A <b>maca</b> já está em uso!')
-                            end
+                            SetPlayerInMaca(index)
                         elseif (IsControlJustPressed(0, 75)) then
-                            if (not vSERVER.verifyMaca(index)) then
-                                if (GetEntityHealth(ped) < 200) then 
-                                    vSERVER.saveMaca(index)
-                                    vSERVER.startTratamento(index)
-                                else
-                                    TriggerEvent('notify', 'Hospital', 'Você não pode iniciar um <b>tratamento</b> com a vida cheia!')
-                                end
+                            if (GetEntityHealth(ped) < 200) then 
+                                vSERVER.startTratamento(index)
                             else
-                                TriggerEvent('notify', 'Hospital', 'A <b>maca</b> já está em uso!')
+                                TriggerEvent('notify', 'Hospital', 'Você não pode iniciar um <b>tratamento</b> com a vida cheia!')
                             end
                         end
                     end
@@ -88,7 +76,6 @@ AddEventHandler('zero:CancelAnimations',function()
 		local ped = PlayerPedId()	
 		FreezeEntityPosition(ped, false)
 		ClearPedTasks(ped)			
-        vSERVER.deleteMaca()
 	end
 end)
 

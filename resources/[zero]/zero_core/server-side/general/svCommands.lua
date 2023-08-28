@@ -220,12 +220,13 @@ RegisterCommand('kick', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         if (args[1]) then
             local prompt = zero.prompt(source, { 'Motivo' })
-            if (prompt[1]) then
+            if (prompt) then
+                prompt = prompt[1]
                 local nPlayer = zero.getUserSource(parseInt(args[1]))
                 if (nPlayer) then
-                    DropPlayer(nPlayer, 'Você foi kikado da nossa cidade.\nSeu passaporte: #'..args[1]..'\n Motivo: '..prompt[1]..'\nAutor: '..identity.firstname..' '..identity.lastname)
+                    DropPlayer(nPlayer, 'Você foi kikado da nossa cidade.\nSeu passaporte: #'..args[1]..'\n Motivo: '..prompt..'\nAutor: '..identity.firstname..' '..identity.lastname)
                     TriggerClientEvent('notify', source, 'Kick', 'Voce kickou o passaporte <b>'..args[1]..'</b> da cidade.')
-                    zero.webhook('Kick', '```prolog\n[/KICK]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[KICKOU]: '..args[1]..'\n[MOTIVO]: '..prompt[1]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('Kick', '```prolog\n[/KICK]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[KICKOU]: '..args[1]..'\n[MOTIVO]: '..prompt..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                 end
             end
         end
@@ -492,15 +493,14 @@ end)
 RegisterCommand('myid', function(source)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) then
         TriggerClientEvent('clipboard', source, 'Seu ID', user_id)
     end
 end)
 
 RegisterCommand('mysource', function(source)
     local source = source
-    local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (source) then
         TriggerClientEvent('clipboard', source, 'Sua Source', source)
     end
 end)

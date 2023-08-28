@@ -1,83 +1,98 @@
--- local vSERVER = Tunnel.getInterface('Business')
--- local config = module('zero_core', 'cfg/cfgBusiness')
+local vSERVER = Tunnel.getInterface('Business')
+local config = module('zero_core', 'cfg/cfgBusiness')
 
--- local inBusiness = false
+local inBusiness = false
+local nearestBlips = {}
 
--- Citizen.CreateThread(function()
--- 	while true do
--- 		local idle = 1000
--- 		local ped = PlayerPedId()
--- 		if not inBusiness then
--- 			for k, v in pairs(config) do
--- 				local enter = v['coords']['enter']
--- 				local distance = #(GetEntityCoords(ped) - enter.xyz)
--- 				if distance <= 2.5 then
--- 					idle = 5
--- 					Text3D(enter.x, enter.y, enter.z, '~g~E~w~ - ENTRAR', 400)
--- 					if distance <= 1.2 and IsControlJustPressed(0, 38) then
--- 						if vSERVER.checkBusiness(k) then
--- 							DoScreenFadeOut(1000)
--- 							Citizen.Wait(1000)
--- 							vSERVER.setBucket(ped)					
--- 							RequestCollisionAtCoord(v['coords']['exit'].xyz)
--- 							while not HasCollisionLoadedAroundEntity(ped) do
--- 								RequestCollisionAtCoord(v['coords']['exit'].xyz)
--- 								Citizen.Wait(1)
--- 							end
--- 							SetEntityCoords(ped, v['coords']['exit'].xyz)
--- 							SetEntityHeading(ped, v['coords']['exit'].w)
--- 							Citizen.Wait(1000)
---     						DoScreenFadeIn(1000)
--- 							inBusiness = true
--- 							enterBusiness(k)
--- 						end
--- 					end
--- 				end
--- 			end
--- 		end
--- 		Citizen.Wait(idle)
--- 	end
--- end)
+local _markerThread = false
+local markerThread = function()
+    if (_markerThread) then return; end;
+    _markerThread = true
+    Citizen.CreateThread(function()
+        while (countTable(nearestBlips) > 0) do
+            local ped = PlayerPedId()
+            local _cache = nearestBlips
+            for index, dist in pairs(_cache) do
+                local _config = config.empresa[index]
+                TextFloating('~b~E~w~ - Entrar na empresa', _config.coords.enter.xyz)
+                if (dist <= 1.2 and IsControlJustReleased(0, 38)) then
+                    if (vSERVER.checkBusiness(index)) then
+                        DoScreenFadeOut(500)
+						Citizen.Wait(500)
 
--- enterBusiness = function(business)
--- 	Citizen.CreateThread(function()
--- 		while (inBusiness) do
--- 			local idle = 1000
--- 			local ped = PlayerPedId()
--- 			local exit = config[business]['coords']['exit']
--- 			local distance = #(GetEntityCoords(ped) - exit.xyz)
--- 			if distance <= 2.5 then
--- 				idle = 5
--- 				Text3D(exit.x, exit.y, exit.z, '~g~E~w~ - SAIR', 400)
--- 				if distance <= 1.2 and IsControlJustPressed(0, 38) then
--- 					DoScreenFadeOut(1000)
--- 					Citizen.Wait(1000)
--- 					vSERVER.setBucket(0)
--- 					SetEntityCoords(ped, config[business]['coords']['enter'].xyz)
--- 					SetEntityHeading(ped, config[business]['coords']['enter'].w)
--- 					Citizen.Wait(1000)
--- 					DoScreenFadeIn(1000)
--- 					inBusiness = false
--- 				end 
--- 			end
--- 			Citizen.Wait(idle)
--- 		end
--- 	end)
+                        vSERVER.setBucket(ped)
+                        zero.teleport(_config.coords.exit.x, _config.coords.exit.y, _config.coords.exit.z)			
+                        SetEntityHeading(ped, _config.coords.exit.w)
 
--- 	Citizen.CreateThread(function()
--- 		while (inBusiness) do
--- 			local idle = 1000
--- 			local ped = PlayerPedId()
--- 			local safe = config[business]['coords']['safe']
--- 			local distance = #(GetEntityCoords(ped) - safe.xyz)
--- 			if distance <= 2.5 then
--- 				idle = 5
--- 				Text3D(safe.x, safe.y, safe.z, '~g~E~w~ - COFRE', 400)
--- 				if distance <= 1.2 and IsControlJustPressed(0, 38) then
--- 					vSERVER.getMoney(business)
--- 				end 
--- 			end
--- 			Citizen.Wait(idle)
--- 		end
--- 	end)
--- end
+                        Citizen.Wait(500)
+                        DoScreenFadeIn(500)
+
+                        inBusiness = true
+						enterBusiness(index)
+                    end
+                end
+            end
+            Citizen.Wait(1)
+        end
+        _markerThread = false
+    end)
+end
+
+Citizen.CreateThread(function()
+    while (true) do
+        local ped = PlayerPedId()
+        local pCoord = GetEntityCoords(ped)
+        nearestBlips = {}
+        for k, v in pairs(config.empresa) do
+            local distance = #(pCoord - v.coords.enter.xyz)
+            if (distance <= 2) then
+                nearestBlips[k] = distance
+            end
+        end
+        if (countTable(nearestBlips) > 0) then markerThread(); end;
+        Citizen.Wait(1000)
+    end
+end)
+
+enterBusiness = function(business)
+	Citizen.CreateThread(function()
+		while (inBusiness) do
+			local idle = 1000
+			local ped = PlayerPedId()
+			local exit = config.empresa[business]['coords']['exit']
+			local distance = #(GetEntityCoords(ped) - exit.xyz)
+			if distance <= 2.5 then
+				idle = 5
+				TextFloating('~b~E~w~ - Sair da empresa', exit.xyz)
+				if distance <= 1.2 and IsControlJustPressed(0, 38) then
+					DoScreenFadeOut(1000)
+					Citizen.Wait(1000)
+					vSERVER.setBucket(0)
+					SetEntityCoords(ped, config.empresa[business]['coords']['enter'].xyz)
+					SetEntityHeading(ped, config.empresa[business]['coords']['enter'].w)
+					Citizen.Wait(1000)
+					DoScreenFadeIn(1000)
+					inBusiness = false
+				end 
+			end
+			Citizen.Wait(idle)
+		end
+	end)
+
+	Citizen.CreateThread(function()
+		while (inBusiness) do
+			local idle = 1000
+			local ped = PlayerPedId()
+			local safe = config.empresa[business]['coords']['safe']
+			local distance = #(GetEntityCoords(ped) - safe.xyz)
+			if distance <= 2.5 then
+				idle = 5
+				TextFloating('~b~E~w~ - Cofre', safe.xyz)
+				if distance <= 1.2 and IsControlJustPressed(0, 38) then
+					vSERVER.getMoney(business)
+				end 
+			end
+			Citizen.Wait(idle)
+		end
+	end)
+end
