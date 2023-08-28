@@ -103,8 +103,8 @@ config.facs = {
     ['ZeroMecanica'] = {
         vagas = 500,
         serviceCheck = 'active',
-        grades = config.grades.hospital,
-        roles = config.roles.hospital
+        grades = config.grades.mecanica,
+        roles = config.roles.mecanica
     },
     ['Alemanha'] = {
         vagas = 30,
