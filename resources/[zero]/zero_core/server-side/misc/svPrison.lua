@@ -31,7 +31,6 @@ local typePrender = {
                         SetEntityHeading(GetPlayerPed(nSource), prisonCoord.w)
                         zeroClient.teleport(nSource, prisonCoord.x, prisonCoord.y, prisonCoord.z)
                         TriggerClientEvent('zero_animations:setAnim', nSource, 'deitar3')
-                        TriggerClientEvent('zero_prison:setClothes', nSource)
 
                         prisonLock(nSource, nUser)
                         exports.zero_inventory:clearInventory(nUser)
@@ -154,7 +153,6 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
         TriggerClientEvent('zero_animations:setAnim', source, 'deitar3')
 
         Citizen.SetTimeout(5000, function()    
-            TriggerClientEvent('zero_prison:setClothes', source)
             prisonLock(source, user_id)
             Player(source).state.Prison = true
         end)

@@ -27,7 +27,6 @@ local typeManicomio = {
                     SetEntityHeading(GetPlayerPed(nSource), prisonCoord.w)
                     zeroClient.teleport(nSource, prisonCoord.x, prisonCoord.y, prisonCoord.z)
                     TriggerClientEvent('zero_animations:setAnim', nSource, 'deitar3')
-                    TriggerClientEvent('zero_prison:setClothes', nSource)
 
                     manicomioLock(nSource, nUser)
                     
@@ -139,7 +138,6 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
         zeroClient.teleport(source, prisonCoord.x, prisonCoord.y, prisonCoord.z)
         TriggerClientEvent('zero_animations:setAnim', source, 'deitar3')
         Citizen.SetTimeout(5000, function()
-            TriggerClientEvent('zero_prison:setClothes', source)
             manicomioLock(source, user_id)
             Player(source).state.Asylum = true
         end)

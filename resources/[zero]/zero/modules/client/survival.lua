@@ -126,16 +126,22 @@ local mainSurvival = function()
 		zeroServer._updateHealth(0)
         TransitionToBlurred(1000)
 		while (_isDied) do
-			local ped = PlayerPedId()
-            SetEntityInvincible(ped, true)
-            _disableActions() 
-            if (deathTimer > 0) then
-                Text2D(0, 0.39, 0.9, 'NOCAUTEADO, AGUARDE ~b~'..deathTimer..' SEGUNDOS', 0.4)
-            else
-                Text2D(0, 0.43, 0.9, 'PRESSIONE ~b~E~w~ PARA DESISTIR', 0.4)
-                if (IsControlJustPressed(0, 38)) then
-                    reviveSurvival(ped)
+            local ped = PlayerPedId()
+            if (GetEntityHealth(ped) > 100) then
+                
+                SetEntityInvincible(ped, true)
+                _disableActions() 
+                if (deathTimer > 0) then
+                    Text2D(0, 0.39, 0.9, 'NOCAUTEADO, AGUARDE ~b~'..deathTimer..' SEGUNDOS', 0.4)
+                else
+                    Text2D(0, 0.43, 0.9, 'PRESSIONE ~b~E~w~ PARA DESISTIR', 0.4)
+                    if (IsControlJustPressed(0, 38)) then
+                        reviveSurvival(ped)
+                    end
                 end
+            else
+                _isDied = false
+                SetEntityInvincible(ped, false)
             end
 			Citizen.Wait(1)
 		end

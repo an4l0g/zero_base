@@ -36,7 +36,7 @@ config.grades = {
         'AltoEscalao',
         'Oficial',
         'Graduado',
-        'Policia'
+        'Soldado'
     },
     hospital = {
         'Diretor',

@@ -293,7 +293,7 @@ AddEventHandler('hydrus:products-ready', function(scope)
             ['silvia'] = 'Silvia',
             ['rmodbolide'] = 'Bugatti Bolide',
             ['718b'] = 'Porshe 718B',
-            ['rmodgtr50'] = 'Nissan Gtr 50',
+            ['gtr502'] = 'Nissan Gtr 50',
             ['sennagtr'] = 'Mclaren senna',
             ['458spider'] = 'Ferrari 458 Spider',
             ['720s18'] = 'Mclaren 720s',

@@ -29,6 +29,13 @@ srv.checkRoutes = function(index)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) and zero.checkPermissions(user_id, _config.perm) then
+        if _config.notPerm then
+            if zero.checkPermissions(user_id, _config.notPerm) then
+                TriggerClientEvent('notify', source, 'Rotas', 'Você não pode fazer esta rota.')
+                return false
+            end
+        end 
+        
         if (GetPlayerRoutingBucket(source) ~= 0) then
             TriggerClientEvent('notify', source, 'Rotas', 'Você não pode iniciar uma rota em outro <b>mundo</b>.')
             return false

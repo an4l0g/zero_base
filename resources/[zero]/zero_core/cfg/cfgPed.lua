@@ -73,6 +73,15 @@ config.peds = {
             'single_team_loop_boss'
         }
     },
+    -- [ Tráfico ] --
+    {
+        coord = vector4(206.5451, -1851.521, 27.47693, 136.063),
+        hash = 'ig_wade',
+        anim = {
+            'anim@heists@heist_corona@single_team',
+            'single_team_loop_boss'
+        }
+    },
     -- [ Hospital ] --
     {
         coord = vector4(-814.8132, -1234.919, 7.324585, 0),

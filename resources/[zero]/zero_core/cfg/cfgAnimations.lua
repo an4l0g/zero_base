@@ -1819,7 +1819,7 @@ config.animations = {
                     loop = false,
                     andar = false, 
                     extra = function()
-                        vRP._CarregarObjeto("", "", "genesisxmasgift", 49, 57005, 0.10, 0.0, -0.02, 180.0, 0.0, 0.0)
+                        zero._CarregarObjeto("", "", "genesisxmasgift", 49, 57005, 0.10, 0.0, -0.02, 180.0, 0.0, 0.0)
                     end
                 },
                 ["gift2"] = { 
@@ -1828,7 +1828,7 @@ config.animations = {
                     loop = false,
                     andar = false, 
                     extra = function()
-                        vRP._CarregarObjeto("", "", "genesisxmasgift2", 49, 57005, 0.10, 0.0, -0.02, 180.0, 0.0, 0.0)
+                        zero._CarregarObjeto("", "", "genesisxmasgift2", 49, 57005, 0.10, 0.0, -0.02, 180.0, 0.0, 0.0)
                     end
                 },
                 ["prancheta"] = { 
@@ -6767,13 +6767,13 @@ config.animations = {
                         if not IsPedInAnyVehicle(PlayerPedId()) then
                             TriggerEvent('cancelando',true)
                             TriggerEvent('progress',9,'Fumando...')
-                            TriggerEvent('vrp_sound:source','bong',0.5)
+                            TriggerEvent('zero_sound:source','bong',0.5)
                             SetTimeout(8700,function()
-                                vRP._DeletarObjeto()
+                                zero._DeletarObjeto()
                                 ShakeGameplayCam('SMALL_EXPLOSION_SHAKE',0.5)
                             end)
                             SetTimeout(9000,function()
-                                vRP.loadAnimSet('MOVE_M@DRUNK@VERYDRUNK')
+                                zero.loadAnimSet('MOVE_M@DRUNK@VERYDRUNK')
                                 SetTimecycleModifier('REDMIST_blend')
                                 ShakeGameplayCam('FAMILY5_DRUG_TRIP_SHAKE',1.0)
                                 StartScreenEffect('DMT_flight',120000,false)
@@ -6814,13 +6814,13 @@ config.animations = {
                     flag = 49,
                     hand = 28422,
                     extra = function()
-                        local vehicle = vRP.getNearestVehicle(7)
+                        local vehicle = zero.getNearestVehicle(7)
                         if IsEntityAVehicle(vehicle) then
                             TriggerEvent("progress",15,"Limpando...")
                             SetTimeout(15000,function()
                                 SetVehicleDirtLevel(vehicle,0.0)
                                 SetVehicleUndriveable(vehicle,false)
-                                vRP.DeletarObjeto()
+                                zero.DeletarObjeto()
                             end)
                         end
                     end
@@ -6833,11 +6833,11 @@ config.animations = {
                     flag = 49, 
                     hand = 28422,
                     extra = function()
-                        local vehicle = vRP.getNearestVehicle(7)
+                        local vehicle = zero.getNearestVehicle(7)
                         if IsEntityAVehicle(vehicle) then
                             SetVehicleDirtLevel(vehicle,0.0)
                             SetVehicleUndriveable(vehicle,false)
-                            vRP.DeletarObjeto()
+                            zero.DeletarObjeto()
                         end
                     end
                 },

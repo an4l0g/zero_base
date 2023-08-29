@@ -680,6 +680,7 @@ RegisterNUICallback('pagar',function(data)
 			end
 			vSERVER.saveVehicle(vehplate, myVehicle)
 			TriggerEvent('notify', 'Zero Mecânica', 'Modificações aplicadas com sucesso. Você pagou <b>R$'..cart['total']..'<b>.')
+			Citizen.Wait(500)
 			closeNui()
 		end)
 	end

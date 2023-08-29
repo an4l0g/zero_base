@@ -369,6 +369,7 @@ DecorRegister('Target', 3)
 
 local allowHeli = {
 	[GetHashKey('polmav')] = true,
+    [GetHashKey('bmheli')] = true,
 }
 
 local getHeliWithCam = function()

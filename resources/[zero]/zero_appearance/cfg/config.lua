@@ -1729,6 +1729,12 @@ config.locs = {
     { coord = vector4(567.3231, -2779.464, 6.077637-0.97, 51.02362), config = 'all', type = 'skinshop' },
     { coord = vector4(555.5341, -2773.279, 6.077637-0.97, 51.02362), config = 'all', type = 'tattooshop' },
     { coord = vector4(554.5055, -2770.563, 6.077637-0.97, 141.7323), config = 'all', type = 'barbershop' },
+    
+    -- [Helipa] -- 
+    { coord = vector4(297.1385, 1862.545, 209.6403, 93.5433), config = 'all', type = 'barbershop' },
+    { coord = vector4(298.8264, 1859.13, 209.6403, 45.35433), config = 'all', type = 'skinshop' },
+    { coord = vector4(295.8462, 1864.629, 209.6403, 232.4409), config = 'all', type = 'tattooshop' },
+    
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

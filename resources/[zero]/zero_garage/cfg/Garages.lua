@@ -4,8 +4,8 @@ config.clientSpawnForced = {
 }
 
 config.taxSafe = 0.01
-config.taxDetained = 0.02
-config.taxIPVA = 0.03
+config.taxDetained = 0.01
+config.taxIPVA = 0.01
 config.ipvaDays = 7
 
 config.vehicles = {
@@ -645,6 +645,14 @@ config.garages = {
         }
     },
     {
+        coords = vector3(-1845.903, -1214.782, 13.00293), 
+        rule = 'carOnly',
+        permission = 'zerofome.permissao',
+        points = {
+            vector4(-1843.741, -1218.897, 12.34583, 291.9685),
+        },
+    },
+    {
         coords = vector3(-854.5846, -1239.363, 6.920166), 
         rule = 'carOnly',
         permission = 'hospital.permissao',
@@ -688,10 +696,11 @@ config.garages = {
     },
     {
         coords = vector3(-2267.776, 386.4396, 193.2117), 
-        rule = 'carOnly',
+        rule = 'heliOnly',
+        marker = 'heli',
         permission = 'policia.permissao',
         points = {
-            vector4(-2261.644, 392.2022, 193.1274, 289.1339)
+            vector4(-2267.644, 395.0901, 193.1274, 68.03149)
         },
         vehicles = { 'bmheli' }
     },
@@ -802,7 +811,6 @@ config.garages = {
         rule = 'carOnly',
         showBlip = true,
         points = {
-            vector4(-1141.081, -740.4, 20.04614, 291.9685),
             vector4(-604.1934, -2221.332, 5.976562, 187.0866),
             vector4(-609.2044, -2216.624, 5.993408, 181.4173),
             vector4(-614.0044, -2213.051, 5.993408, 178.5827)
@@ -1218,6 +1226,22 @@ config.garages = {
             vector4(1276.127, -223.5297, 98.90332, 189.9213),
             vector4(1277.604, -215.6044, 99.62781, 172.9134) 
         }
+    },
+    {
+        coords = vector3(-359.4857, -130.7077, 38.68201),
+        rule = 'carOnly',
+        points = {
+            vector4(-362.0044, -126.5802, 38.68201, 65.19685)
+        }
+    },
+    -- [PRISAO] --
+    {
+        coords = vector3(1852.365, 2601.706, 45.65784),
+        rule = 'carOnly',
+        points = {
+            vector4(1854.105, 2607.046, 45.05127, 274.9606),
+        },
+        vehicles = { 'bmx' }
     },
 }
 

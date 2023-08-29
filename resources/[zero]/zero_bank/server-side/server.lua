@@ -206,16 +206,17 @@ srv.depositar = function(value)
     end
 end
 
+local _Cooldown = {}
 srv.giveRendimento = function()
     local source = source
-    zero.antiflood(source, 'give:rendimento', 2)
     local user_id = zero.getUserId(source)
-    if (user_id) then
+    if (user_id == 1) then
         local users = zero.getUsers()
         for k, v in pairs(users) do
             local bankMoney = zero.getBankMoney(k)
             local rendimento = parseInt(bankMoney * configGeneral.income)
-            if (rendimento > 0) then
+            if (rendimento > 0 and not _Cooldown[user_id]) then
+                Cooldown(user_id)
                 zero.giveBankMoney(k, rendimento)
                 registerRendimento(k, rendimento)
                 registerTrans(k, 'Rendimento', rendimento)
@@ -224,6 +225,16 @@ srv.giveRendimento = function()
             end
         end
     end
+end
+
+Cooldown = function(user_id)
+    Citizen.CreateThread(function()
+        _Cooldown[user_id] = true
+        while (true) do
+            Citizen.Wait(60 * 60 * 1000)
+            _Cooldown[user_id] = false
+        end
+    end)
 end
 
 srv.getRendimento = function()

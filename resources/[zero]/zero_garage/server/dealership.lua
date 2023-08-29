@@ -261,7 +261,7 @@ AddEventHandler('onResourceStop', function(resourceName)
             if (user_id) then
                 TriggerEvent('zero_garage:CacheExecute', _source, k)
                 TriggerClientEvent('notify', _source, 'Concessionária', 'O sistema de <b>garagem</b> da nossa cidade foi reiniciado.')
-                print('^5[Zero Homes]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro do test drive.')
+                print('^5[Zero Dealership]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro do test drive.')
                 inTest[user_id] = nil
             end
         end
@@ -271,7 +271,7 @@ end)
 AddEventHandler('zero:playerLeave', function(user_id, source)
 	if (inTest[user_id]) then
         TriggerEvent('zero_garage:CacheExecute', source, user_id, true)
-        print('^5[Zero Homes]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro do test drive.')
+        print('^5[Zero Dealership]^7 o user_id ^5('..user_id..')^7 foi retirado de dentro do test drive.')
         inTest[user_id] = nil
     end
 end)
