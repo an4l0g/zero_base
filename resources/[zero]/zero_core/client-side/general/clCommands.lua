@@ -256,7 +256,7 @@ local BlacklistHash = {
 
 RegisterNetEvent('vTow',function()
 	local vehicle = GetPlayersLastVehicle()
-	if IsVehicleModel(vehicle,GetHashKey('flatbed')) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
+	if IsVehicleModel(vehicle,GetHashKey('flatbed3')) and not IsPedInAnyVehicle(GetPlayerPed(-1)) then
 		CommandsData['mec:towed'] = zero.getNearestVehicle(7)
 		if (not CommandsData['mec:tow']) then
 			if (GetPedInVehicleSeat(CommandsData['mec:towed'], -1) ~= 0) then 

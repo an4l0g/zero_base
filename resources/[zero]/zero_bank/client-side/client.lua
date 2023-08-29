@@ -156,7 +156,7 @@ end)
 
 Citizen.CreateThread(function()
     while (true) do
-        Citizen.Wait(configGeneral.incomeTime)
+        Citizen.Wait(60 * 60 * 1000)
         vSERVER.giveRendimento()
     end
 end)

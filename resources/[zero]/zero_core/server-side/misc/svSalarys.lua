@@ -8,7 +8,7 @@ local salarys = {
     { name = '[Zero] CEO', value = 300000, perm = '@Staff.CEO' },
     { name = '[Zero] COO', value = 25000, perm = '@Staff.COO' },
     { name = '[Zero] Manager', value = 10000, perm = '@Staff.Manager' },
-    { name = '[Zero] Adm', value = 10000, perm = '@Staff.Manager' },
+    { name = '[Zero] Adm', value = 5000, perm = '@Staff.Administrador' },
     ----------------------------------
     -- VIPS
     ----------------------------------
@@ -23,7 +23,7 @@ local salarys = {
     ----------------------------------
     -- Policia
     ----------------------------------
-    { name = '[Policia] Soldado', value = 3250, perm = '@Policia.Soldado' },
+    { name = '[Policia] Soldado', value = 3250, perm = '@Policia.Policia' },
     { name = '[Policia] Graduado', value = 5000, perm = '@Policia.Graduado' },
     { name = '[Policia] Oficial', value = 6250, perm = '@Policia.Oficial' },
     { name = '[Policia] A. Escalão', value = 7500, perm = '@Policia.AltoEscalao' },
@@ -45,12 +45,12 @@ local salarys = {
     ----------------------------------
     -- Hospital
     ----------------------------------
-    { name = '[CMZ] Paramedico', value = 7000, perm = '@Hospital.Paramedico' },
-    { name = '[CMZ] Enfermeiro', value = 10000, perm = '@Hospital.Enfermeiro' },
-    { name = '[CMZ] Medico', value = 12000, perm = '@Hospital.Medico' },
-    { name = '[CMZ] Cirurgiao', value = 15000, perm = '@Hospital.Cirurgiao' },
-    { name = '[CMZ] Vice-Diretor', value = 17000, perm = '@Hospital.ViceDiretor' },
-    { name = '[CMZ] Diretora', value = 50000, perm = '@Hospital.Diretor' },
+    { name = '[CMZ] Paramedico', value = 3500, perm = '@Hospital.Paramedico' },
+    { name = '[CMZ] Enfermeiro', value = 5000, perm = '@Hospital.Enfermeiro' },
+    { name = '[CMZ] Medico', value = 6000, perm = '@Hospital.Medico' },
+    { name = '[CMZ] Cirurgiao', value = 7500, perm = '@Hospital.Cirurgiao' },
+    { name = '[CMZ] Vice-Diretor', value = 8500, perm = '@Hospital.ViceDiretor' },
+    { name = '[CMZ] Diretora', value = 25000, perm = '@Hospital.Diretor' },
 }
 
 srv.giveSalary = function()

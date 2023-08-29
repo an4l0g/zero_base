@@ -1831,7 +1831,7 @@ RegisterCommand('status', function(source)
         local staff = zero.getUsersByPermission('staff.permissao')
         local policias = zero.getUsersByPermission('policia.permissao')
         local ems = zero.getUsersByPermission('hospital.permissao')
-        local mec = zero.getUsersByPermission('mecanico.permissao')
+        local mec = zero.getUsersByPermission('zeromecanica.permissao')
 
         TriggerClientEvent('notify', source, 'Prefeitura', '<b>Status dos serviços da nossa cidade</b>: <br> <br> <b>Prefeitura</b>: '..#staff..' <br> <b>Policia</b>: '..#policias..' <br> <b>Paramédico</b>: '..#ems..' <br> <b>Mecânico</b>: '..#mec..' <br> <b>Cidadãos</b>: '..onlinePlayers)
     end

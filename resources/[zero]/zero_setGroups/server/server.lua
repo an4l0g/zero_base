@@ -4,9 +4,14 @@ vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
 local baseGroups = {}
 
+GetGroups = function()
+    return config.groups
+end
+exports('GetGroups', GetGroups)
+
 painelSysGroups = function()
     baseGroups = {}
-    for group, groupData in pairs(zero.getGroups()) do
+    for group, groupData in pairs(config.groups) do
         if groupData.information and groupData.information.grades then
             local grades = {}
             for k,_ in pairs(groupData.information.grades) do
@@ -19,7 +24,6 @@ painelSysGroups = function()
     end
 end
 Citizen.CreateThread(painelSysGroups)
-AddEventHandler('zero:groupsRefresh',painelSysGroups)
 
 painelUserGroups = function(user_id)
     local cb = {}

@@ -1651,7 +1651,7 @@ config.typeHomes = {
     },
     ['modern'] = {
         ['garage'] = { true, 50000 },
-        ['price'] = { true, 300000 },
+        ['price'] = { true, 600000 },
         ['tax'] = { true, 10 },
         ['residents'] = { true, 2 },
         ['chest'] = {
@@ -1674,7 +1674,7 @@ config.typeHomes = {
     },
     ['high'] = {
         ['garage'] = { true, 50000 },
-        ['price'] = { true, 300000 },
+        ['price'] = { true, 900000 },
         ['tax'] = { true, 10 },
         ['residents'] = { true, 2 },
         ['chest'] = {
@@ -1696,7 +1696,7 @@ config.typeHomes = {
     },
     ['apartament'] = {
         ['garage'] = { false },
-        ['price'] = { true, 300000 },
+        ['price'] = { true, 1200000 },
         ['tax'] = { true, 10 },
         ['residents'] = { true, 2 },
         ['chest'] = {

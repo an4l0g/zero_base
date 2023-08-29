@@ -40,7 +40,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	----------------------------------
 
 	exports.zero_appearance:setCustomization(source, user_id)
-	zeroClient.setFriendlyFire(source, true)
+	-- zeroClient.setFriendlyFire(source, true)
 	zeroClient.playerStateReady(source, true)
 
 	-- [ Teleport ] --

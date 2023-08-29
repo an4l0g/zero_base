@@ -106,6 +106,12 @@ config.facs = {
         grades = config.grades.mecanica,
         roles = config.roles.mecanica
     },
+    ['Russia'] = {
+        vagas = 36,
+        serviceCheck = 'online',
+        grades = config.grades.ilegal,
+        roles = config.roles.ilegal
+    },
     ['Alemanha'] = {
         vagas = 30,
         serviceCheck = 'online',
@@ -131,13 +137,25 @@ config.facs = {
         roles = config.roles.ilegal
     },
     ['Egito'] = {
-        vagas = 30,
+        vagas = 50,
+        serviceCheck = 'online',
+        grades = config.grades.ilegal,
+        roles = config.roles.ilegal
+    },
+    ['Tropa'] = {
+        vagas = 25,
+        serviceCheck = 'online',
+        grades = config.grades.ilegal,
+        roles = config.roles.ilegal
+    },
+    ['Inglaterra'] = {
+        vagas = 25,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
     },
     ['Espanha'] = {
-        vagas = 30,
+        vagas = 50,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
@@ -154,7 +172,13 @@ config.facs = {
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
     },
-    ['LosZeta'] = {
+    ['Helipa'] = {
+        vagas = 40,
+        serviceCheck = 'online',
+        grades = config.grades.ilegal,
+        roles = config.roles.ilegal
+    },
+    ['Yakuza'] = {
         vagas = 30,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
@@ -172,8 +196,9 @@ config.facs = {
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
     },
-    ['PCC'] = {
-        vagas = 30,
+
+    ['Cosanostra'] = {
+        vagas = 20,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
         roles = config.roles.ilegal

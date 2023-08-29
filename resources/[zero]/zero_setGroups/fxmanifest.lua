@@ -7,6 +7,6 @@ ui_page'html/index.html'
 
 client_script 'client/*'
 server_script 'server/*'
-shared_scripts { '@zero/lib/utils.lua', 'main.lua' }
+shared_scripts { '@zero/lib/utils.lua', 'config/*' }
 
 files { 'html/*' }                            

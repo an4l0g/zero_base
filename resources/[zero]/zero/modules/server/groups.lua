@@ -1,4 +1,11 @@
-local groups = config.groups
+local groups = {}
+AddEventHandler('onResourceStart', function(resourceName)
+  	if ('zero_setGroups' == resourceName) then 
+		groups = exports.zero_setGroups:GetGroups()
+		print('^5[Zero Groups]^7 Grupos criados!')
+	end
+end)
+
 local users = config.users
 ------------------------------------------------------------------
 -- GET GROUPS
@@ -263,13 +270,4 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 			end
 		end
 	end
-end)
-
-RegisterCommand('reloadgroups', function(source)
-    if (source == 0) then
-		groups = config.groups
-		users = config.users
-		TriggerEvent('zero:groupsRefresh')
-        print('^5[Zero Groups]^7 Groups Reloaded')		
-    end
 end)

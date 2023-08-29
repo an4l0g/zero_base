@@ -210,14 +210,12 @@ end
 vRP.kick = zero.kick
 
 zero.getUserIdByIdentifiers = function(ids)
-	if (#ids) then
+	if (#ids > 0) then
 		for i = 1, #ids do
 			local _ids = ids[i]
 			if (string.find(_ids, 'ip:') == nil) then
 				local rows = zero.query('zero_framework/getIdentifier', { identifier = _ids })
-				if (#rows > 0) then 
-					return rows[1].user_id
-				end
+				if (#rows > 0) then return rows[1].user_id; end;
 			end
 		end
 
@@ -259,9 +257,11 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 
 	deferrals.defer()
 	deferrals.update('Olá '..name..', estamos carregando as identidades do servidor...')
+
+	if (not ids) then ids = GetPlayerIdentifiers(source); end;
 		
 	local user_id = zero.getUserIdByIdentifiers(ids)
-	if (not user_id or user_id <= 0) then
+	if (not user_id) then
 		deferrals.done('Olá '..name..', ocorreu um problema de identificação, tente logar novamente.')
 		TriggerEvent('queue:playerConnectingRemoveQueues', ids)
 		return
@@ -272,7 +272,6 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 			deferrals.done('Olá '..name..', verificamos que o seu passaporte se encontra com problemas, tente logar novamente.')
 			TriggerEvent('queue:playerConnectingRemoveQueues', ids)
 			DropPlayer(cacheUsers.user_source[user_id], '[ZERO]: Você foi kikado, tente logar novamente!')
-			cacheUsers.user_source[user_id] = nil
 			return
 		end
 	end

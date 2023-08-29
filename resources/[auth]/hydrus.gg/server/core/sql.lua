@@ -3,7 +3,6 @@ setmetatable(SQL, SQL)
 
 SQL.drivers = {
     {'oxmysql', function(promise, sql, params)
-        print(json.encode(promises))
         promise:resolve(exports.oxmysql:query_async(sql, params))
     end},
     {'ghmattimysql', function(promise, sql, params)

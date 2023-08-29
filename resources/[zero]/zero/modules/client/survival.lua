@@ -1,3 +1,8 @@
+Citizen.CreateThread(function()
+    NetworkSetFriendlyFireOption(true)
+	SetCanAttackFriendly(PlayerPedId(), true, true)
+end)
+
 local _isDied = false
 local deathTimer = 0
 local _spawn = vector4(-784.4176, -1262.123, 5.690063, 235.2756)

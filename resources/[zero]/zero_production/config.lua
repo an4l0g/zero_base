@@ -338,38 +338,41 @@ configs.products = {
             }
         },
     },
+    ['drugs'] = {
+        ['maconha'] = {
+            order = 1,
+            name = 'Maconha',
+            min_amount = 1,
+            max_amount = 1,
+            delay = 5000,
+            materials = {
+                ['m-droga'] = { name = 'M. Droga', amount = 1 },
+            }
+        },
+        ['metanfetamina'] = {
+            order = 1,
+            name = 'Metanfetamina',
+            min_amount = 1,
+            max_amount = 1,
+            delay = 5000,
+            materials = {
+                ['m-droga'] = { name = 'M. Droga', amount = 1 },
+            }
+        },
+        ['cocaina'] = {
+            order = 1,
+            name = 'Cocaína',
+            min_amount = 1,
+            max_amount = 1,
+            delay = 5000,
+            materials = {
+                ['m-droga'] = { name = 'M. Droga', amount = 1 },
+            }
+        },
+    }
 }
 
 configs.productions = {
-    -- ['espanha'] = { 
-    --     type = 'production',
-    --     coords = vector3(412.167, 3.718682, 84.91797), 
-    --     products = configs.products.guns, 
-    --     label = 'Produção de Armas', 
-    --     permission = 'espanha.permissao',
-    --     webhook = '' 
-    -- },
-    ['colombia'] = { 
-        type = 'production',
-        coords = vector3(-1486.299, 835.8461, 176.9854), 
-        products = configs.products.guns, 
-        label = 'Produção de Armas', 
-        webhook = '' 
-    },
-    ['canada'] = { 
-        type = 'production',
-        coords = vector3(-1834.497, 425.1693, 118.3649), 
-        label = 'Produção de Munições', 
-        products = configs.products.wammos, 
-        webhook = '' 
-    },
-    ['fac2'] = { 
-        type = 'production',
-        coords = vec3(732.9363, 1276.444, 360.2944), 
-        label = 'Lavagem de dinheiro', 
-        type = 'moneyLaundry',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
-    },
     ['zerofome1'] = { 
         type = 'production',
         coords = vector3(-1843.661, -1186.18, 14.30042), 
@@ -405,6 +408,118 @@ configs.productions = {
         coords = vector3(1273.358, -1708.391, 54.75684), 
         label = 'Negociações com Contrabandista', 
         products = configs.products.smuggling, 
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+
+    ['Russia'] = { 
+        type = 'production',
+        coords = vector3(1368.026, -707.5121, 68.20288), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'russia.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Espanha'] = { 
+        type = 'production',
+        coords = vector3(412.022, 3.679121, 84.91797), 
+        label = 'Produção de Armas', 
+        products = configs.products.guns, 
+        permission = 'espanha.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Yakuza'] = { 
+        type = 'production',
+        coords = vector3(572.334, -3127.213, 18.76563), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'yakuza.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Cosanostra'] = { 
+        type = 'production',
+        coords = vector3(1645.411, -2119.45, 102.2227), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'cosanostra.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Finish'] = { 
+        type = 'production',
+        coords = vector3(1281.059, -1016.743, 51.30261), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'finish.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Colombia'] = { 
+        type = 'production',
+        coords = vector3(-1486.299, 835.8461, 176.9854), 
+        products = configs.products.guns, 
+        label = 'Produção de Armas', 
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Canada'] = { 
+        type = 'production',
+        coords = vector3(-1834.497, 425.1693, 118.3649), 
+        label = 'Produção de Munições', 
+        products = configs.products.wammos, 
+        permission = 'canada.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Tropa'] = { 
+        type = 'production',
+        coords = vector3(1335.429, -2541.758, 48.25281), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'tropa.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Inglaterra'] = { 
+        type = 'production',
+        coords = vector3(-282.3956, 1564.246, 361.5247), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'inglaterra.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Mafia'] = { 
+        type = 'production',
+        coords = vector3(-221.8286, -284.0308, 29.24609), 
+        label = 'Lavagem de dinheiro', 
+        type = 'moneyLaundry',
+        permission = 'mafia.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Alemanha'] = { 
+        type = 'production',
+        coords = vector3(-1834.497, 425.1693, 118.3649), 
+        label = 'Produção de Munições', 
+        products = configs.products.wammos, 
+        permission = 'alemanha.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Holanda'] = { 
+        type = 'production',
+        coords = vector3(1793.578, 447.4154, 172.537), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'holanda.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Helipa'] = { 
+        type = 'production',
+        coords = vector3(1793.578, 447.4154, 172.537), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'helipa.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
+    ['Egito'] = { 
+        type = 'production',
+        coords = vector3(1278.396, -197.1297, 105.0703), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'egito.permissao',
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
 }

@@ -77,7 +77,7 @@ Routes = {
             },
             extras = {
                 anim = 'mexer',
-                police = 70,
+                police = 30,
                 timeout = 5000,
             }
         },
@@ -140,7 +140,6 @@ Routes = {
             },
             extras = {
                 anim = 'mexer',
-                police = 0,
                 timeout = 5000,
             }
         },
@@ -172,7 +171,6 @@ Routes = {
             },
             extras = {
                 anim = 'mexer',
-                police = 0,
                 timeout = 5000,
             }
         },
@@ -204,7 +202,6 @@ Routes = {
             },
             extras = {
                 anim = 'mexer',
-                police = 0,
                 timeout = 5000,
             }
         },
@@ -236,19 +233,18 @@ Routes = {
             },
             extras = {
                 anim = 'mexer',
-                police = 0,
                 timeout = 5000,
             }
         }
     },
 
     locations = {
-        -- { coord = vector3(313.5297, -174.778, 58.05933), config = 'Droga', cooldown = 0 },
-        -- { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Aviaozinho', cooldown = 0 },
+        { coord = vector3(-1857.007, -1234.985, 8.605103), config = 'Droga', cooldown = 300, perm = 'droga.permissao' },
+        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Aviaozinho', cooldown = 300 },
         { coord = vector3(-1855.332, -1204.009, 13.00293), config = 'ZeroFome', cooldown = 300, perm = 'zerofome.permissao' },
-        -- { coord = vector3(28.45715, -2669.842, 12.04248), config = 'Arma', cooldown = 0 },
-        -- { coord = vector3(-317.0769, -2778.752, 4.999268), config = 'Municao', cooldown = 0 },
-        -- { coord = vector3(-352.0615, -172.2198, 39.0022), config = 'Mecanica', cooldown = 0 },
-        -- { coord = vector3(-1086.646, -247.8461, 37.75537), config = 'Lavagem', cooldown = 0 },
+        { coord = vector3(28.45715, -2669.842, 12.04248), config = 'Arma', cooldown = 300, perm = 'arma.permissao' },
+        { coord = vector3(-317.0769, -2778.752, 4.999268), config = 'Municao', cooldown = 300, perm = 'municao.permissao' },
+        { coord = vector3(-352.0615, -172.2198, 39.0022), config = 'Mecanica', cooldown = 300, perm = 'zeromecanica.permissao' },
+        { coord = vector3(-1086.646, -247.8461, 37.75537), config = 'Lavagem', cooldown = 300, perm = 'lavagem.permissao' },
     }
 }

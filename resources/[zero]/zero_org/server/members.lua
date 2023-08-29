@@ -123,7 +123,7 @@ gbMembers.admit = function(fac, user_id)
             return { result = 'error', message = 'Cidadão já pertence a uma organização!' }
         else
             if (not gbMembers.inBlacklist(user_id)) then
-                local response = vRP.request(user_source,'Você foi convidado para a organização <b>'..fac..'</b>. Deseja aceitar?',120)
+                local response = vRP.request(user_source,'Você foi convidado para a organização '..fac..'. Deseja aceitar?',30000)
                 if response then
                     local grades = config.facs[fac].grades
                     vRP.addUserGroup(user_id,fac, grades[#grades] )
