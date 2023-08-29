@@ -1,6 +1,13 @@
 config = {}
 
 config.general = {
+    ['pm'] = {
+        name = 'Elevador Polícia',
+        locations = {
+            { coord = vector4(-2276.242, 346.7077, 174.5927, 22.67716), text = 'Andar 1°' },
+            { coord = vector4(-2268.343, 378.567, 188.7466, 25.51181), text = 'H' },
+        }
+    },
     ['hospital'] = {
         name = 'Elevador Hospital',
         locations = {
@@ -55,6 +62,10 @@ config.location = {
 
     { coord = vector3(-305.0242, -721.1605, 28.01611-0.97), config = 'cobertura', }, -- perm = { 'staff.permissao' } },
     { coord = vector3(-288.2769, -722.4264, 125.4586-0.97), config = 'cobertura', }, -- perm = { 'staff.permissao' } },
+
+    { coord = vector3(-2268.356, 378.5934, 188.7466-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },
+    { coord = vector3(-2276.308, 346.8396, 174.5927-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },
+    { coord = vector3(-2279.815, 345.2703, 174.5927-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

@@ -337,6 +337,8 @@ config.groups = {
 			},
 			grades_default = 'Membro',
 		},
+		'mecanica.permissao',
+		'mecanico.permissao',
 		'zeromecanica.permissao'
 	},
 

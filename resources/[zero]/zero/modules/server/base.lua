@@ -364,6 +364,10 @@ RegisterNetEvent('zeroClient:playerSpawned', function()
 		cacheUsers.user_source[user_id] = source
 		TriggerEvent('vRP:playerSpawn', user_id, source, firstSpawn)
 	else
+		local user_id = zero.getUserIdByIdentifiers(GetPlayerIdentifiers(source))
+		cacheUsers.rusers[user_id] = nil
+		DropPlayer(source, 'Você está com o ID bugado! Reloga e tente novamente.')
+		print('[BUG SOURCE]', 'USER_ID: '..user_id, 'SOURCE: '..source)
 		zero.webhook('BugSource', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (Invalid Source)\n[SOURCE]: '..tostring(source)..'\n[IDS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'```')	
 	end
 end)

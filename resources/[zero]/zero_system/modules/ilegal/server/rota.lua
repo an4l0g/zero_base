@@ -116,6 +116,8 @@ srv.routePayment = function(coords, _config, drug, name)
                 end
             end
         else
+            TriggerClientEvent('notify', source, 'Rotas', 'Você caiu no nosso sistema de <b>anti-dump</b> e não recebeu os itens da rota. Por gentileza, na próxima rota não saia de perto do blip!')
+            updateRoute(source, coords)
             zero.webhook('AntiDump', '```prolog\n[ANTI DUMP]\n[USER]: '..user_id..'\n[SCRIPT]: '..GetCurrentResourceName()..'\n[ALERT]: provavelmente este jogador está tentando dumpar em um dos nossos sistemas!'..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```'..'@everyone')
             print('^5[Zero Anti]^7 o usuário '..user_id..' está provavelmente tentando dumpar!')
         end

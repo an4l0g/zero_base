@@ -110,7 +110,6 @@ addBlips = function(locs)
 end
 
 RegisterNuiCallback('close', function()
-    LocalPlayer.state.Appearance = false
     if (tempOpen == 'barbershop') then setPedCustom(); end;
     closeNui()
 end)
@@ -172,7 +171,6 @@ local markerThread = function()
                     local config = locsConfig[index]
                     createMarkers(config.coord)
                     if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                        LocalPlayer.state.Appearance = true
                         openAppearance[config.type](index)
                     end
                 end

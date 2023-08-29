@@ -507,7 +507,7 @@ end)
 RegisterCommand('addcar', function(source)
     local source = source
     local user_id = zero.getUserId(source)
-    local identity = zero.getUserIdentity(source)
+    local identity = zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
         local prompt = zero.prompt(source, { 'Passaporte', 'Veículo' })
         if (prompt) then
@@ -694,67 +694,69 @@ RegisterNetEvent('zero_interactions:carVehs', function()
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
-        local prompt = zero.prompt(source, { 'Veículo que você deseja vender', 'Valor do veículo', 'Passaporte do jogador que irá receber o veículo' })
-        if (prompt) then
-            if (prompt[1] and prompt[2] and prompt[3]) then
-                prompt[2] = parseInt(prompt[2])
-                prompt[3] = parseInt(prompt[3])
+        TriggerClientEvent('notify', source, 'Venda de Veículos', 'Sistema offline no momento!')
+        return
+        -- local prompt = zero.prompt(source, { 'Veículo que você deseja vender', 'Valor do veículo', 'Passaporte do jogador que irá receber o veículo' })
+        -- if (prompt) then
+        --     if (prompt[1] and prompt[2] and prompt[3]) then
+        --         prompt[2] = parseInt(prompt[2])
+        --         prompt[3] = parseInt(prompt[3])
 
-                local model = prompt[1]
-                local vname = vehicleName(model)
-                local myVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = model })[1]
-                if (myVehicle) then
-                    if ((vehicleType(model) == 'exclusive') or (vehicleType(model) == 'vip') or (myVehicle.rented ~= '')) then
-                        TriggerClientEvent('notify', source, 'Garagem', 'Este <b>veículo</b> não pode ser vendido.')
-                    else
-                        local nUser = prompt[3]
-                        local price = prompt[2]
-                        local nSource = zero.getUserSource(nUser)
-                        local identity = zero.getUserIdentity(user_id)
-                        local nIdentity = zero.getUserIdentity(nUser)
-                        if (price > 0) then
-                            if (zero.request(source, 'Deseja vender um '..vname..' para '..nIdentity.firstname..' '..nIdentity.lastname..' por R$'..zero.format(price)..' ?', 60000)) then
-                                if (zero.request(nSource, 'Aceita comprar um '..vname..' de '..identity.firstname..' '..identity.lastname..' por R$'..zero.format(price)..'?', 60000)) then
-                                    local userVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = nUser, vehicle = model })[1]
-                                    if (userVehicle) then
-                                        TriggerClientEvent('notify', source, 'Garagem', 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já possui este modelo de veículo')
-                                    else
-                                        local vqtd = 0
-                                        local vehicles = zero.query('zero_garage/getVehicleOwn', { user_id = nUser })
-                                        for _, v in ipairs(vehicles) do
-                                            local vtype = vehicleType(v.vehicle)
-                                            if (vtype == 'vip' or vtype == 'work') then return; end;
-                                            if (zero.tryFullPayment(nUser, price)) then
-                                                exports.zero_bank:extrato(nUser, 'Compra de veículo', -price)
-                                                addVehicle(nUser, model, 0)
-                                                delVehicle(user_id, model)
+        --         local model = prompt[1]
+        --         local vname = vehicleName(model)
+        --         local myVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = user_id, vehicle = model })[1]
+        --         if (myVehicle) then
+        --             if ((vehicleType(model) == 'exclusive') or (vehicleType(model) == 'vip') or (myVehicle.rented ~= '')) then
+        --                 TriggerClientEvent('notify', source, 'Garagem', 'Este <b>veículo</b> não pode ser vendido.')
+        --             else
+        --                 local nUser = prompt[3]
+        --                 local price = prompt[2]
+        --                 local nSource = zero.getUserSource(nUser)
+        --                 local identity = zero.getUserIdentity(user_id)
+        --                 local nIdentity = zero.getUserIdentity(nUser)
+        --                 if (price > 0) then
+        --                     if (zero.request(source, 'Deseja vender um '..vname..' para '..nIdentity.firstname..' '..nIdentity.lastname..' por R$'..zero.format(price)..' ?', 60000)) then
+        --                         if (zero.request(nSource, 'Aceita comprar um '..vname..' de '..identity.firstname..' '..identity.lastname..' por R$'..zero.format(price)..'?', 60000)) then
+        --                             local userVehicle = zero.query('zero_garage/getVehiclesWithVeh', { user_id = nUser, vehicle = model })[1]
+        --                             if (userVehicle) then
+        --                                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> já possui este modelo de veículo')
+        --                             else
+        --                                 local vqtd = 0
+        --                                 local vehicles = zero.query('zero_garage/getVehicleOwn', { user_id = nUser })
+        --                                 for _, v in ipairs(vehicles) do
+        --                                     local vtype = vehicleType(v.vehicle)
+        --                                     if (vtype == 'vip' or vtype == 'work') then return; end;
+        --                                     if (zero.tryFullPayment(nUser, price)) then
+        --                                         exports.zero_bank:extrato(nUser, 'Compra de veículo', -price)
+        --                                         addVehicle(nUser, model, 0)
+        --                                         delVehicle(user_id, model)
 
-                                                TriggerClientEvent('notify', source, 'Garagem', 'Você vendeu <b>'..vname..'</b> e recebeu <b>R$'..zero.format(price)..'</b>.')
-                                                TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu as chaves do veículo <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> e pagou <b>R$'..zero.format(price)..'</b>.')
+        --                                         TriggerClientEvent('notify', source, 'Garagem', 'Você vendeu <b>'..vname..'</b> e recebeu <b>R$'..zero.format(price)..'</b>.')
+        --                                         TriggerClientEvent('notify', nSource, 'Garagem', 'Você recebeu as chaves do veículo <b>'..vname..'</b> de <b>'..identity.firstname..' '..identity.lastname..'</b> e pagou <b>R$'..zero.format(price)..'</b>.')
                                                 
-                                                zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
-                                                zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+        --                                         zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+        --                                         zeroClient.playSound(nSource, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
                                                 
-                                                zero.giveBankMoney(user_id, price)
-                                                exports.zero_bank:extrato(user_id, 'Venda de veículo', price)
-                                                zero.webhook('Vehs', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-                                                local vehEntity = findVehicle(user_id, model)
-                                                if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
-                                            else
-                                                TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>dinheiro</b> o suficiente.')
-                                                TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não possui <b>dinheiro</b> o suficiente.')
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end 
-                    end
-                else
-                    TriggerClientEvent('notify', source, 'Garagem', 'Você não possui esse <b>veículo</b> em sua garagem.')
-                end
-            end
-        end
+        --                                         zero.giveBankMoney(user_id, price)
+        --                                         exports.zero_bank:extrato(user_id, 'Venda de veículo', price)
+        --                                         zero.webhook('Vehs', '```prolog\n[JOGADOR]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[VENDEU]: '..vehicleName(vname)..' \n[PARA]: #'..nuserId..' '..nIdentity.firstname..' '..nIdentity.lastname..'\n[POR]: '..zero.format(price)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+        --                                         local vehEntity = findVehicle(user_id, model)
+        --                                         if (vehEntity) then srv.tryDelete(NetworkGetNetworkIdFromEntity(vehEntity), false); end;
+        --                                     else
+        --                                         TriggerClientEvent('notify', nSource, 'Garagem', 'Você não possui <b>dinheiro</b> o suficiente.')
+        --                                         TriggerClientEvent('notify', source, 'Garagem', 'O mesmo não possui <b>dinheiro</b> o suficiente.')
+        --                                     end
+        --                                 end
+        --                             end
+        --                         end
+        --                     end
+        --                 end 
+        --             end
+        --         else
+        --             TriggerClientEvent('notify', source, 'Garagem', 'Você não possui esse <b>veículo</b> em sua garagem.')
+        --         end
+        --     end
+        -- end
     end
 end)
 

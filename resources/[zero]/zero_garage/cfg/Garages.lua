@@ -687,6 +687,15 @@ config.garages = {
         vehicles = { 'ndbmws1000', 'wra45', 'wrbmwx7', 'wrm5', 'wrsubaru' }
     },
     {
+        coords = vector3(-2267.776, 386.4396, 193.2117), 
+        rule = 'carOnly',
+        permission = 'policia.permissao',
+        points = {
+            vector4(-2261.644, 392.2022, 193.1274, 289.1339)
+        },
+        vehicles = { 'bmheli' }
+    },
+    {
         coords = vector3(506.1494, -2746.299, 3.061523), 
         rule = 'carOnly',
         permission = 'deic.permissao',

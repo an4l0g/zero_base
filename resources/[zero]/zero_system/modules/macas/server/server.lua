@@ -131,8 +131,8 @@ RegisterCommand('re', function(source)
         local ped = GetPlayerPed(source)
         if (GetSelectedPedWeapon(ped) ~= GetHashKey('WEAPON_UNARMED')) then TriggerClientEvent('notify', source, 'Hospital', 'Sua <b>mão</b> está ocupada.') return; end;
         local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
-        if (zeroClient.getNoCarro(nPlayer) and zeroClient.getNoCarro(source)) then return; end;
         if (nPlayer) then
+            if (zeroClient.getNoCarro(nPlayer) and zeroClient.getNoCarro(source)) then return; end;
             local nUser = zero.getUserId(nPlayer)
             if (GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then
                 local cooldown = 'reanimar-'..nPlayer

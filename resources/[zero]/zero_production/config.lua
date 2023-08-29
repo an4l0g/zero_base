@@ -508,7 +508,7 @@ configs.productions = {
     },
     ['Helipa'] = { 
         type = 'production',
-        coords = vector3(1793.578, 447.4154, 172.537), 
+        coords = vector3(284.7297, 1863.442, 212.825), 
         label = 'Produção de Drogas', 
         products = configs.products.drugs, 
         permission = 'helipa.permissao',

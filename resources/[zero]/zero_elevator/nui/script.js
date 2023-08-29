@@ -24,8 +24,8 @@ window.addEventListener("message", function (event) {
     for (i = 0; i < locs.length; i++) {
       var newI = i + 1;
 
-      if (locs[i].name != undefined) {
-        andarName = locs[i].name;
+      if (locs[i].text != undefined) {
+        andarName = locs[i].text;
       } else {
         andarName = `Andar ${newI}`;
       }

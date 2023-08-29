@@ -27,7 +27,8 @@ end
 
 srv.saveVehicle = function(plate, custom)
     local user_id = zero.getUserByPlate(plate)
-    if (user_id) then
+    if (user_id and plate and custom) then
+        print('^5[Zero Bennys]^7 salvou o tuning do id '..user_id..' placa '..plate)
         zero.execute('zero_bennys/setCustom', { user_id = user_id, plate = plate, custom = json.encode(custom) })
         return true
     end

@@ -797,7 +797,7 @@ RegisterCommand('pd', function(source, args, raw)
                 local nSource = zero.getUserSource(parseInt(v))
                 if (nSource) then
                     async(function()
-                        TriggerClientEvent('chatMessage', -1, '[CENTRAL POLÍCIA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
+                        TriggerClientEvent('chatMessage', nSource, '[CENTRAL POLÍCIA] '..identity.firstname..' '..identity.lastname, { 0, 153, 255 }, raw:sub(4))
                         zero.webhook('ChatCore', '```prolog\n[CHATS ORG]\n[POLÍCIA CENTRAL]\n[JOGADOR]: '..user_id..' | '..identity.firstname..' '..identity.lastname..'\n[MENSAGEM]: '..raw:sub(4)..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     end)
                 end
@@ -1146,12 +1146,14 @@ RegisterCommand('umsg', function(source, args)
     if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
         if (args[1]) then
             local message = zero.prompt(source, { 'Mensagem' })
-            if (message[1]) then
+            if (message) then
+                message = message[1]
+
                 local nPlayer = zero.getUserSource(parseInt(args[1]))
                 if (nPlayer) then
                     local nUser = zero.getUserId(nPlayer)
                     local nIdentity = zero.getUserIdentity(nUser)
-                    TriggerClientEvent('notify', nPlayer, 'Mensagem Privada', 'O staff <b>'..identity.firstname..' '..identity.lastname..'</b> te enviou uma mensagem: <br /><br />'..message[1], 10000)
+                    TriggerClientEvent('notify', nPlayer, 'Mensagem Privada', 'O staff <b>'..identity.firstname..' '..identity.lastname..'</b> te enviou uma mensagem: <br /><br />'..message, 10000)
                     TriggerClientEvent('notify', source, 'Mensagem Privada', 'A mensagem foi enviada com <b>sucesso</b>.')
                     zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
 					zeroClient.playSound(nPlayer, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
@@ -1159,7 +1161,7 @@ RegisterCommand('umsg', function(source, args)
 					zeroClient.playSound(nPlayer, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
 					Citizen.Wait(100)
 					zeroClient.playSound(nPlayer, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
-                    zero.webhook('Umsg', '```prolog\n[/UMSG]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[FALOU COM]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' \n[MENSAGEM]: '..message[1]..os.date('\n[DATA]: %d/%m/%Y - [HORA]: %H:%M:%S')..' \r```')
+                    zero.webhook('Umsg', '```prolog\n[/UMSG]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[FALOU COM]: #'..nUser..' '..nIdentity.firstname..' '..nIdentity.lastname..' \n[MENSAGEM]: '..message..os.date('\n[DATA]: %d/%m/%Y - [HORA]: %H:%M:%S')..' \r```')
                 end
             end
         end
@@ -1458,11 +1460,13 @@ end)
 RegisterCommand('id', function(source)
     local source = source
     local user_id = zero.getUserId(source)
-    local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
-    if (nPlayer) then
-        local nUser = zero.getUserId(nPlayer)
-        TriggerClientEvent('notify', nPlayer, 'Passaporte', 'O cidadão <b>'..user_id..'</b> está verificando o seu passaporte.')
-        TriggerClientEvent('notify', source, 'Passaporte', 'Passaporte: <b>('..nUser..')</b>', 10000)
+    if (user_id) then
+        local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+        if (nPlayer) then
+            local nUser = zero.getUserId(nPlayer)
+            TriggerClientEvent('notify', nPlayer, 'Passaporte', 'O cidadão <b>'..user_id..'</b> está verificando o seu passaporte.')
+            TriggerClientEvent('notify', source, 'Passaporte', 'Passaporte: <b>('..nUser..')</b>', 10000)
+        end
     end
 end)
 

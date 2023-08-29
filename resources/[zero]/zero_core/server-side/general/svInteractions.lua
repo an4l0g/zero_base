@@ -283,7 +283,7 @@ RegisterNetEvent('zero_interactions:carregar', function()
     local user_id = zero.getUserId(source)
     local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
     if (user_id) and nPlayer then
-        if (zero.hasPermission(user_id, 'staff.permissao') and zero.hasPermission(user_id, 'polpar.permissao')) then
+        if (zero.hasPermission(user_id, 'staff.permissao') or zero.hasPermission(user_id, 'polpar.permissao')) then
             if (not zeroClient.isHandcuffed(source)) then
                 TriggerClientEvent('carregar', nPlayer, source)
             end
@@ -299,7 +299,7 @@ RegisterNetEvent('zero_interactions:vestimenta', function(value)
         local nplayer = zeroClient.getNearestPlayer(source, 2)
         if (nplayer) then
             local nUser = zero.getUserId(nplayer)
-            local nIdentity = zero.getUserIdentity(nUser)
+            local nidentity = zero.getUserIdentity(nUser)
             if (value == 'rmascara') then
                 TriggerClientEvent('zero_commands_police:clothes', nplayer, 'rmascara')
                 zero.webhook('PoliceCommands', '```prolog\n[/RMASCARA]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[RETIROU A MASCARA DO]\n[JOGADOR]: #'..nUser..' '..nidentity.firstname..' '..nIdentity.lastname..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
@@ -400,7 +400,7 @@ end)
 RegisterNetEvent('zero_interactions:tow', function()
     local source = source
 	local user_id = zero.getUserId(source)
-	if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+	if (user_id) and zero.hasPermission(user_id, 'zeromecanica.permissao') then
         if (Player(source).state.Handcuff) then return; end;
 		TriggerClientEvent('vTow', source)
 	end

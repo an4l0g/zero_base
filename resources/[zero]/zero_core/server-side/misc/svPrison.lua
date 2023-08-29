@@ -13,42 +13,46 @@ local typePrender = {
             if (user_id == nUser) then TriggerClientEvent('notify', source, 'Prisão', 'Você não pode se <b>prender</b>!') return; end;
 
             local nIdentity = zero.getUserIdentity(nUser)
-            local request = exports.zero_hud:request(source, 'Você tem certeza que deseja prender o '..nIdentity.firstname..' '..nIdentity.lastname..' por '..Time..' meses?', 60000)
-            if (request) then
-                local nSource = zero.getUserSource(nUser)
-                if (nSource) then
-                    zero.setUData(nUser, 'zero:prison', json.encode(Time))
-                    zero.setUData(nUser, 'zero:ficha_suja', json.encode(1))
+            if (nIdentity) then
+                local request = exports.zero_hud:request(source, 'Você tem certeza que deseja prender o '..nIdentity.firstname..' '..nIdentity.lastname..' por '..Time..' meses?', 60000)
+                if (request) then
+                    local nSource = zero.getUserSource(nUser)
+                    if (nSource) then
+                        zero.setUData(nUser, 'zero:prison', json.encode(Time))
+                        zero.setUData(nUser, 'zero:ficha_suja', json.encode(1))
 
-                    if (zeroClient.isHandcuffed(nSource)) then
-                        Player(nSource).state.Handcuff = false
-                        zeroClient.setHandcuffed(nSource, false)
-                        TriggerClientEvent('zero_core:uncuff', nSource)
+                        if (zeroClient.isHandcuffed(nSource)) then
+                            Player(nSource).state.Handcuff = false
+                            zeroClient.setHandcuffed(nSource, false)
+                            TriggerClientEvent('zero_core:uncuff', nSource)
+                        end
+                        
+                        local prisonCoord = vector4(1753.358, 2470.998, 47.39343, 28.34646)
+                        SetEntityHeading(GetPlayerPed(nSource), prisonCoord.w)
+                        zeroClient.teleport(nSource, prisonCoord.x, prisonCoord.y, prisonCoord.z)
+                        TriggerClientEvent('zero_animations:setAnim', nSource, 'deitar3')
+                        TriggerClientEvent('zero_prison:setClothes', nSource)
+
+                        prisonLock(nSource, nUser)
+                        exports.zero_inventory:clearInventory(nUser)
+                        
+                        TriggerClientEvent('zero_sound:source', nSource, 'jaildoor', 0.3)
+                        TriggerClientEvent('zero_sound:source', source, 'jaildoor', 0.3)
+
+                        TriggerClientEvent('notify', source, 'Prisão', 'Você prendeu o <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> por <b>'..Time..' meses</b>.')
+                        TriggerClientEvent('notify', nSource, 'Prisão', 'Você foi preso por <b>'..Time..' meses</b>.')
+
+                        Player(nSource).state.Prison = true
+
+                        zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+
+                        zero.webhook('Prender', '```prolog\n[PRISON]\n[ACTION]: (LEARN)\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[REASON]: '..Reason..'\n[ITENS]: '..Itens..'\n[TIME]: '..Time..' months'..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    else
+                        TriggerClientEvent('notify', source, 'Prisão', 'O mesmo se encontra <b>offline</b>!')
                     end
-                    
-                    local prisonCoord = vector4(1753.358, 2470.998, 47.39343, 28.34646)
-                    SetEntityHeading(GetPlayerPed(nSource), prisonCoord.w)
-                    zeroClient.teleport(nSource, prisonCoord.x, prisonCoord.y, prisonCoord.z)
-                    TriggerClientEvent('zero_animations:setAnim', nSource, 'deitar3')
-                    TriggerClientEvent('zero_prison:setClothes', nSource)
-
-                    prisonLock(nSource, nUser)
-                    exports.zero_inventory:clearInventory(nUser)
-                    
-                    TriggerClientEvent('zero_sound:source', nSource, 'jaildoor', 0.3)
-					TriggerClientEvent('zero_sound:source', source, 'jaildoor', 0.3)
-
-                    TriggerClientEvent('notify', source, 'Prisão', 'Você prendeu o <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b> por <b>'..Time..' meses</b>.')
-                    TriggerClientEvent('notify', nSource, 'Prisão', 'Você foi preso por <b>'..Time..' meses</b>.')
-
-                    Player(nSource).state.Prison = true
-
-                    zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
-
-                    zero.webhook('Prender', '```prolog\n[PRISON]\n[ACTION]: (LEARN)\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[REASON]: '..Reason..'\n[ITENS]: '..Itens..'\n[TIME]: '..Time..' months'..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
-                else
-                    TriggerClientEvent('notify', source, 'Prisão', 'O mesmo se encontra <b>offline</b>!')
                 end
+            else
+                TriggerClientEvent('notify', source, 'Prisão', 'Este id não possui <b>identidade</b>.')
             end
         end
     end,
@@ -64,22 +68,26 @@ local typePrender = {
             if (user_id == nUser) then TriggerClientEvent('notify', source, 'Prisão', 'Você não pode se retirar da <b>prisão</b>!') return; end;
 
             local nIdentity = zero.getUserIdentity(nUser)
-            local request = exports.zero_hud:request(source, 'Você tem certeza que deseja soltar o '..nIdentity.firstname..' '..nIdentity.lastname..'?', 60000)
-            if (request) then
-                local nSource = zero.getUserSource(nUser)
-                if (nSource) then
-                    Player(nSource).state.Prison = false
-                    zero.setUData(nUser, 'zero:prison', json.encode(-1))
-                    SetEntityHeading(GetPlayerPed(nSource), 266.45669555664)
-                    zeroClient.teleport(nSource, 1853.604, 2608.272, 45.65784)
+            if (nIdentity) then
+                local request = exports.zero_hud:request(source, 'Você tem certeza que deseja soltar o '..nIdentity.firstname..' '..nIdentity.lastname..'?', 60000)
+                if (request) then
+                    local nSource = zero.getUserSource(nUser)
+                    if (nSource) then
+                        Player(nSource).state.Prison = false
+                        zero.setUData(nUser, 'zero:prison', json.encode(-1))
+                        SetEntityHeading(GetPlayerPed(nSource), 266.45669555664)
+                        zeroClient.teleport(nSource, 1853.604, 2608.272, 45.65784)
 
-                    TriggerClientEvent('notify', nSource, 'Prisão', 'Você foi <b>solto</b>!')
-                    TriggerClientEvent('notify', source, 'Prisão', 'Você soltou o <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
+                        TriggerClientEvent('notify', nSource, 'Prisão', 'Você foi <b>solto</b>!')
+                        TriggerClientEvent('notify', source, 'Prisão', 'Você soltou o <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>.')
 
-                    zero.webhook('RetirarPrisao', '```prolog\n[PRISON]\n[ACTION]: (UNFASTEN)\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[REASON]: '..Reasonos.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
-                else
-                    TriggerClientEvent('notify', source, 'Prisão', 'O mesmo se encontra <b>offline</b>!')
+                        zero.webhook('RetirarPrisao', '```prolog\n[PRISON]\n[ACTION]: (UNFASTEN)\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[REASON]: '..Reasonos.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    else
+                        TriggerClientEvent('notify', source, 'Prisão', 'O mesmo se encontra <b>offline</b>!')
+                    end
                 end
+            else
+                TriggerClientEvent('notify', source, 'Prisão', 'Este id não possui <b>identidade</b>.')
             end
         end        
     end
