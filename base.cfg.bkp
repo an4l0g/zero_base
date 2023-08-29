@@ -1,0 +1,69 @@
+#=======================================================================================================================
+# [FX SERVER CONFIG] ===================================================================================================
+#=======================================================================================================================
+endpoint_add_tcp "0.0.0.0:30120"
+endpoint_add_udp "0.0.0.0:30120"
+
+#[SERVER]=======================================================================
+sv_hostname "Zero - Desenvolvimento"
+sets sv_projectName "Zero - Desenvolvimento"
+sets sv_projectDesc "Zero - Desenvolvimento"
+
+sv_master1 "off"
+sv_maxclients 48
+sv_endpointprivacy true
+sv_scriptHookAllowed 0
+setr sv_requestParanoia 3
+
+load_server_icon server.png
+sets banner_detail "https://cdn.discordapp.com/attachments/1098816084917891092/1121951642099646464/Banner_Detail.gif" 
+sets banner_connecting "https://cdn.discordapp.com/attachments/1098816084917891092/1121951641445339267/Banner_Connect.gif"
+
+#[SET]========================================================================
+set mysql_connection_string "mysql://root@localhost/zero_roleplay?charset=utf8mb4"
+set mysql_slow_query_warning 1500
+# set mysql_debug true
+
+set sv_enforceGameBuild 2699
+set svgui_disable true
+set gametype "Roleplay"
+set mapname "Los Santos"
+
+#[SETS]=========================================================================
+sets locale "pt-BR"
+sets tags "zero"
+
+setr game_enableFlyThroughWindscreen true
+
+# setr voice_externalAddress 189.127.164.170
+# setr voice_externalPort 30120
+# setr voice_useSendingRangeOnly true
+# setr voice_useNativeAudio true
+# setr voice_enableUi 0
+# setr voice_enableRadios 1
+# setr voice_enablePhones 1
+# setr voice_enableSubmix 1
+# setr voice_enableRadioAnim 1
+# setr voice_hideEndpoints 1
+# setr voice_defaultRadio CAPITAL
+# setr voice_defaultCycle HOME
+# setr voice_syncData 1
+# setr voice_allowSetIntent 1
+# setr voice_refreshRate 200
+
+#[ONE-SYNC]=====================================================================
+## [txAdmin CFG validator]: onesync MUST only be set in the txAdmin settings page.
+# set onesync on
+set onesync_population false
+onesync_distanceCullVehicles true
+onesync_forceMigration true
+
+#[ACE PERMISSIONS]==============================================================
+add_ace group.admin command allow
+add_ace group.admin command.quit deny
+
+add_principal identifier.steam:11000010d0fbf53 group.admin #An4l0g
+add_principal identifier.steam:11000014860f071 group.admin #Bluenzzz
+#[EXEC]=========================================================================
+exec keys.cfg
+exec resources/resources.cfg
