@@ -9,22 +9,12 @@ function Production({ data }) {
   const [product, setProduct] = useState({});
   const [productIndex, setProductIndex] = useState("");
   const [amount, setAmount] = useState(0);
-  const [blockProduction, setBlockProduction] = useState(false);
+  const [blockProduction] = useState(false);
   const { request } = useRequest();
 
   useEffect(() => {
-    setAmount(product.min_amount);
+    setAmount(product.amount);
   }, [product]);
-
-  useEffect(() => {
-    if (amount !== "") {
-      if (amount < product.min_amount) setAmount(product.min_amount);
-      if (amount > product.max_amount) setAmount(product.max_amount);
-      setBlockProduction(false);
-    } else {
-      setBlockProduction(true);
-    }
-  }, [amount, setAmount, product]);
 
   const handleProduction = useCallback(() => {
     request("production", {
@@ -34,7 +24,7 @@ function Production({ data }) {
     });
     request("close");
     setProduction({});
-  }, [request, productIndex, amount, data]);
+  }, [request, productIndex, amount, data, setProduction]);
 
   const handleSelectProduct = (product) => {
     setProduct(data.products[product]);

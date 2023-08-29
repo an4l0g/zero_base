@@ -43,7 +43,7 @@ Routes = {
                 progress = 'Entregando droga...'
             },
             extras = {
-                anim = 'mexer',
+                anim = 'pegar',
                 drug = true, -- Deixar true somente quando for rota de venda de droga.
                 police = 70,
                 timeout = 5000,
@@ -52,20 +52,20 @@ Routes = {
         ['Droga'] = {
             name = 'Droga',
             coords = {
-                vector3(-2002.339, -556.8791, 12.88501),
-                vector3(-3109.081, 751.8726, 24.69666),
-                vector3(-2521.081, 2310.369, 33.20581),
-                vector3(-2311.714, 4385.42, 8.453491),
-                vector3(143.9604, -689.2879, 33.12158),
-                vector3(1089.165, 6511.886, 21.07397),
-                vector3(2195.512, 5593.53, 53.7627),
-                vector3(2660.888, 3927.283, 42.15308),
-                vector3(2327.934, 2569.728, 46.66882),
-                vector3(2589.64, 482.8747, 108.6593),
-                vector3(2484.264, -417.4418, 93.73047),
-                vector3(1021.675, -1694.809, 33.55969),
-                vector3(-200.5582, -1708.127, 32.64978),
-                vector3(-876.2901, -1074.87, 2.151611),
+                vector3(-2002.18, -556.8132, 12.88501),
+                vector3(-503.5385, 32.75605, 44.69739),
+                vector3(900.4879, -1152.778, 26.06152),
+                vector3(-598.7473, 147.033, 61.66516),
+                vector3(-1177.688, -1185.112, 5.622681),
+                vector3(-1245.376, 376.4572, 74.87549),
+                vector3(-1380.857, 733.7802, 182.7817),
+                vector3(-1380.857, 733.7802, 182.7817),
+                vector3(-936.4088, 403.0681, 78.70032),
+                vector3(-1471.187, -920.5055, 9.565552),
+                vector3(368.7033, -1108.312, 28.92603),
+                vector3(-1378.892, -499.5824, 32.68347),
+                vector3(372.8571, -738.422, 28.79126),
+                vector3(-1455.297, -691.1868, 25.85938) 
             },
             itens = {
                 item = 'm-droga',
@@ -76,7 +76,7 @@ Routes = {
                 progress = 'Pegando material para drogas...'
             },
             extras = {
-                anim = 'mexer',
+                anim = 'pegar',
                 police = 30,
                 timeout = 5000,
             }
@@ -108,27 +108,27 @@ Routes = {
                 progress = 'Coletando ingredientes...'
             },
             extras = {
-                anim = 'mexer',
+                anim = 'pegar',
                 timeout = 5000,
             }
         },
         ['Arma'] = {
             name = 'Arma',
             coords = {
-                vector3(1239.64, -3173.499, 7.088623),
-                vector3(-458.8352, -2274.765, 8.504028),
-                vector3(-1324.589, -1515.745, 4.426392),
-                vector3(-2223.125, -365.5912, 13.30627),
-                vector3(-3418.47, 971.3406, 11.92456),
-                vector3(-1121.103, 2712.145, 18.8667),
-                vector3(-1146.567, 4940.888, 222.2609),
-                vector3(125.7231, 6644.044, 31.79053),
-                vector3(1538.941, 6321.917, 25.06738),
-                vector3(3309.798, 5189.815, 19.70911),
-                vector3(2854.866, 1501.991, 24.7135),
-                vector3(2503.807, -340.378, 92.98901),
-                vector3(1743.93, -1622.809, 116.1912),
-                vector3(900.4879, -2534.123, 28.28577),
+                vector3(939.7714, -1866.725, 32.46448),
+                vector3(-295.4373, -827.9473, 32.41394),
+                vector3(-2223.231, -365.9077, 13.30627),
+                vector3(-3147.561, 1121.512, 20.87183),
+                vector3(-2521.108, 2310.369, 33.20581),
+                vector3(-1120.985, 2712.237, 18.8667),
+                vector3(634.866, 2775.152, 42.00146),
+                vector3(2352.923, 3136.971, 48.20215),
+                vector3(1572.29, 857.8945, 77.48718),
+                vector3(222.567, -21.28351, 69.88794),
+                vector3(376.5363, -1506.884, 29.27991),
+                vector3(1051.912, -2399.525, 30.02124),
+                vector3(-234.4352, -1490.505, 32.95313),
+                vector3(456.2374, -2059.2, 23.92163)
             },
             itens = {
                 item = 'p-armas',
@@ -139,27 +139,27 @@ Routes = {
                 progress = 'Coletando peças de arma...'
             },
             extras = {
-                anim = 'mexer',
+                anim = 'pegar',
                 timeout = 5000,
             }
         },
         ['Municao'] = {
             name = 'Municao',
             coords = {
-                vector3(-1175.13, -2468.901, 15.44617),
-                vector3(-1183.042, -1557.152, 4.915039),
-                vector3(-2040.132, -358.7604, 22.48938),
-                vector3(-2958.884, 426.8967, 18.79932),
-                vector3(-2550.316, 2302.193, 33.20581),
-                vector3(-1600.629, 5204.255, 4.308472),
-                vector3(-425.4857, 6356.453, 13.32312),
-                vector3(1417.398, 6339.205, 24.39343),
-                vector3(3808.035, 4478.637, 6.364136),
-                vector3(2461.2, 1575.6, 33.10474),
-                vector3(2460.25, -384.0659, 93.3092),
-                vector3(1075.49, -2330.651, 30.29089),
-                vector3(1236.949, -2948.545, 9.312866),
-                vector3(-98.30769, -2358.013, 9.363403),
+                vector3(520.1934, -1652.598, 29.56628),
+                vector3(-812.4923, -980.6506, 14.24988),
+                vector3(-1579.147, 184.9187, 58.85132),
+                vector3(-396.6198, 877.7011, 230.7869),
+                vector3(435.811, 215.3011, 103.1494),
+                vector3(980.0571, -1396.813, 31.67249),
+                vector3(2560.932, -599.1824, 65.052),
+                vector3(1432.048, -1682.703, 64.79932),
+                vector3(-75.53406, -1423.727, 29.61682),
+                vector3(-69.19121, 63.74506, 71.87622),
+                vector3(-1393.134, -733.3846, 24.7135),
+                vector3(382.2593, -1076.308, 29.41467),
+                vector3(-528.4879, -1784.585, 21.57947),
+                vector3(488.822, -801.4418, 24.98315),
             },
             itens = {
                 item = 'm-municoes',
@@ -170,7 +170,7 @@ Routes = {
                 progress = 'Coletando materiais para munições...'
             },
             extras = {
-                anim = 'mexer',
+                anim = 'pegar',
                 timeout = 5000,
             }
         },
@@ -201,11 +201,11 @@ Routes = {
                 progress = 'Coletando materiais para mecânica...'
             },
             extras = {
-                anim = 'mexer',
+                anim = 'pegar',
                 timeout = 5000,
             }
         },
-        ['Lavagem'] = {
+        ['Lavagem'] = { 
             name = 'Lavagem',
             coords = {
                 vector3(425.5253, -806.8088, 29.48206),
@@ -232,7 +232,7 @@ Routes = {
                 progress = 'Coletando nota-fiscal...'
             },
             extras = {
-                anim = 'mexer',
+                anim = 'pegar',
                 timeout = 5000,
             }
         }
@@ -240,7 +240,7 @@ Routes = {
 
     locations = {
         { coord = vector3(-1857.007, -1234.985, 8.605103), config = 'Droga', cooldown = 300, perm = 'droga.permissao' },
-        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Aviaozinho', cooldown = 300 },
+        { coord = vector3(2.69011, -1215.073, 26.88721), config = 'Aviaozinho', cooldown = 300, notPerm = 'droga.permissao' },
         { coord = vector3(-1855.332, -1204.009, 13.00293), config = 'ZeroFome', cooldown = 300, perm = 'zerofome.permissao' },
         { coord = vector3(28.45715, -2669.842, 12.04248), config = 'Arma', cooldown = 300, perm = 'arma.permissao' },
         { coord = vector3(-317.0769, -2778.752, 4.999268), config = 'Municao', cooldown = 300, perm = 'municao.permissao' },

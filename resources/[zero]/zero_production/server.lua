@@ -8,7 +8,7 @@ sProduction.validateProduction = function(index, amount, org)
     local validatedProduction = true
     local materials = configs.productions[org].products[index].materials
     for k,v in pairs(materials) do
-        if zero.getInventoryItemAmount(user_id, k) < (v.amount * amount) then
+        if zero.getInventoryItemAmount(user_id, k) < v.amount then
             validatedProduction = false
             break;
         end
@@ -16,7 +16,7 @@ sProduction.validateProduction = function(index, amount, org)
 
     if validatedProduction then 
         for k,v in pairs(materials) do
-            zero.tryGetInventoryItem(user_id, k, v.amount * amount)
+            zero.tryGetInventoryItem(user_id, k, v.amount)
         end
         return true
     else
@@ -84,6 +84,44 @@ sProduction.moneyLaundry = function(production)
             end
         else 
             TriggerClientEvent('notify', _source, 'Lavagem de Dinheiro', 'O valor inserido precisa ser multiplo de 1000. Exemplos: 1000, 10000, 20000...', 20000);
+        end
+    end
+end
+
+sProduction.openSellDrugs = function()
+    local drugs = {'maconha', 'metanfetamina', 'cocaina'}
+    local _source = source
+    local user_id = zero.getUserId(_source)
+
+    local response = exports.zero_hud:prompt(_source, {
+        'Quantidade de droga: (min: 10/max: 125)'
+    })
+
+    if response then
+        response = tonumber(response[1])
+        if response ~= nil then
+            if response >= 10 and response < 126 then
+                if exports.zero_hud:request(_source, 'Você deseja vender '..response..' droga?', 15000) then
+                    local hasDrugs = false
+                    for k,v in pairs(drugs) do
+                        if zero.tryGetInventoryItem(user_id, v, response) then
+                            hasDrugs = true
+                            break
+                        end
+                    end 
+
+                    if hasDrugs then
+                        zero.giveInventoryItem(user_id, 'dinheirosujo', response * 750)
+                        TriggerClientEvent('notify', _source, 'Tráfico', 'Você vendeu uns produtinhos!')
+                    else    
+                        TriggerClientEvent('notify', _source, 'Tráfico', 'Você não possui essa quantidade de droga!')
+                    end
+                end
+            else
+                TriggerClientEvent('notify', _source, 'Tráfico', 'Você precisa digitar um número inteiro entre 10 e 126!')
+            end
+        else
+            TriggerClientEvent('notify', _source, 'Tráfico', 'Você precisa digitar um número inteiro entre 10 e 126!')
         end
     end
 end

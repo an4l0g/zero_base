@@ -145,7 +145,7 @@ config.items = {
         anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
         prop = 'prop_food_bs_juice02', 
         weight = 1, 
-        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        consumable = { hunger = 0, thirst = -75, timeout = 5000 }, 
         usable = true,
     },
     ['suco-abacaxi'] = { 
@@ -154,7 +154,7 @@ config.items = {
         anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
         prop = 'prop_food_bs_juice02', 
         weight = 1, 
-        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        consumable = { hunger = 0, thirst = -75, timeout = 5000 }, 
         usable = true,
     },
     ['suco-kiwi'] = { 
@@ -163,7 +163,7 @@ config.items = {
         anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
         prop = 'prop_food_bs_juice02', 
         weight = 1, 
-        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        consumable = { hunger = 0, thirst = -75, timeout = 5000 }, 
         usable = true,
     },
     ['suco-caju'] = { 
@@ -172,7 +172,7 @@ config.items = {
         anim = { 'mp_player_intdrink', 'loop_bottle', 49, 60309 }, 
         prop = 'prop_food_bs_juice02', 
         weight = 1, 
-        consumable = { hunger = 0, thirst = -25, timeout = 5000 }, 
+        consumable = { hunger = 0, thirst = -75, timeout = 5000 }, 
         usable = true,
     },
     ['sanduiche'] = { 

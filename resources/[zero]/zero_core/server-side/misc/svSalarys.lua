@@ -23,7 +23,7 @@ local salarys = {
     ----------------------------------
     -- Policia
     ----------------------------------
-    { name = '[Policia] Soldado', value = 3250, perm = '@Policia.Policia' },
+    { name = '[Policia] Soldado', value = 3250, perm = '@Policia.Soldado' },
     { name = '[Policia] Graduado', value = 5000, perm = '@Policia.Graduado' },
     { name = '[Policia] Oficial', value = 6250, perm = '@Policia.Oficial' },
     { name = '[Policia] A. Escalão', value = 7500, perm = '@Policia.AltoEscalao' },

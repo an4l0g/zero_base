@@ -18,15 +18,24 @@ end)
 
 RegisterNuiCallback('production', function(data)
     if sProduction.validateProduction(data.index, data.amount, data.org) then 
+        local cfg = configs.productions[data.org]
         local product = configs.productions[data.org].products[data.index]
-        local delay = product.delay * data.amount
+        local delay = product.delay
+        local amount = data.amount
+
+        print(json.encode(cfg), cfg.buff)
+
+        if cfg.buff then
+            amount = amount * 2
+        end
+
         TriggerEvent('blockPed', true)
         zero.playAnim(false, {{'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female'}}, true)
         TriggerEvent('progressBar', 'Produzindo/comprando...', delay)
         Wait(delay)
         TriggerEvent('blockPed', false)
         ClearPedTasks(PlayerPedId())
-        sProduction.giveItem(data.index, data.amount, data.org)
+        sProduction.giveItem(data.index, amount, data.org)
     else
         TriggerEvent("notify", 'Produção', 'Você não possui material suficiente!')
     end
@@ -38,10 +47,6 @@ TextFloating = function(text, coord)
     SetFloatingHelpTextStyle(0, true, 2, -1, 3, 0)
     BeginTextCommandDisplayHelp('FloatingHelpText')
     EndTextCommandDisplayHelp(1, false, false, -1)
-end
-
-openMoneyLaundry = function()
-    sProduction.moneyLaundry()
 end
 
 local nearestBlips = {}
@@ -56,7 +61,7 @@ local markerThread = function()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
                 local _config = configs.productions[index]
-                if _config.type == 'shop' then
+                if _config.type == 'shop' or _config.type == 'sellDrugs' then
                     TextFloating('~b~[E]~w~ - Negociar', _config.coords)
                 else
                     TextFloating('~b~[E]~w~ - Produzir', _config.coords)
@@ -64,9 +69,15 @@ local markerThread = function()
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                     if (sProduction.hasPermission(_config.permission)) then
                         if (_config.type == 'moneyLaundry') then
-                            openMoneyLaundry(_config)
-                        else
+                            sProduction.moneyLaundry()
+                        end
+
+                        if (_config.type == 'production') then
                             openProduction(_config.products, _config.label, index)
+                        end
+
+                        if (_config.type == 'sellDrugs') then
+                            sProduction.openSellDrugs()
                         end
                     else
                         if _config.type == 'shop' then

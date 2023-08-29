@@ -46,6 +46,13 @@ config.groups = {
 		'attachs2.permissao'
 	},
 
+	['Spotify'] = {
+		information = {
+			title = 'Spotify',
+		},
+		'spotify.permissao'
+	},
+
 	['Hospital'] = {
 		information = { 
 			title = 'Centro Médico', 
@@ -347,7 +354,7 @@ config.groups = {
 			title = 'Polícia', 
 			groupType = 'job', 
 			grades = {
-				['Policia'] = { title = 'Soldado', level = 1 },
+				['Soldado'] = { title = 'Soldado', level = 1 },
 				['Graduado'] = { title = 'Graduado', level = 2 },
 				['Oficial'] = { title = 'Oficial', level = 3 },
 				['AltoEscalao'] = { title = 'Alto Escalão', level = 4 },
