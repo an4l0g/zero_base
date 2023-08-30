@@ -141,6 +141,13 @@ config.general = {
         },
     },
     ['ammu'] = {
+        ['modificador-armas'] = {
+            name = 'Modificador de Armas', index = 'modificador-armas',
+            price = {
+                buy = 15000
+            },
+            method = 'legal'
+        },
         ['algema'] = {
             name = 'Algema', index = 'algema',
             price = {
