@@ -2,6 +2,7 @@ node_modules
 /cache
 /cache/*
 /keys.cfg
+/base.cfg
 /pm2.bat
 .vite
 nui/dist
