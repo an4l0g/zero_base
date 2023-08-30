@@ -644,14 +644,27 @@ config.garages = {
             vector4(4968.079, -5746.892, 19.87769, 249.4488)
         }
     },
+    -- [Zero Fome] --
     {
         coords = vector3(-1845.903, -1214.782, 13.00293), 
         rule = 'carOnly',
-        permission = 'zerofome.permissao',
+        showBlip = true,
         points = {
             vector4(-1843.741, -1218.897, 12.34583, 291.9685),
         },
     },
+    -- --
+    -- [Hospital] --
+    {
+        coords = vector3(-861.666, -1226.189, 6.195557), 
+        rule = 'carOnly',
+        showBlip = true,
+        points = {
+            vector4(-864.1187, -1217.697, 5.150879, 303.3071),
+            vector4(-859.3582, -1221.218, 5.487915, 323.1496)
+        },
+    },
+    -- --
     {
         coords = vector3(-854.5846, -1239.363, 6.920166), 
         rule = 'carOnly',
@@ -704,6 +717,17 @@ config.garages = {
         },
         vehicles = { 'bmheli' }
     },
+    -- [Helipa] --
+    {
+        coords = vector3(291.7582, 1881.059, 206.5905), 
+        rule = 'heliOnly',
+        marker = 'heli',
+        permission = 'helipa.permissao',
+        points = {
+            vector4(281.7626, 1885.015, 207.2476, 102.0472)
+        },
+    },
+    -- --
     {
         coords = vector3(506.1494, -2746.299, 3.061523), 
         rule = 'carOnly',
