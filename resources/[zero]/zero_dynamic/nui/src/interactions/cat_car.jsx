@@ -94,6 +94,13 @@ export default [
     category: "vehicle",
   },
   {
+    title: "Meus veículos",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "vehs",
+    category: "vehicle",
+  },
+  {
     title: "Abrir portas",
     icon: <RiPlayFill />,
     type: "action",

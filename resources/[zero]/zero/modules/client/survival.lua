@@ -50,7 +50,7 @@ zero.killGod = function()
     TransitionFromBlurred(1000)
     
     SetEntityHealth(ped, 200)
-    SetPedArmour(ped, 0)
+    -- SetPedArmour(ped, 0)
     zeroServer._updateHealth(200)
     zeroServer._updateArmour(0)
 

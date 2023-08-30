@@ -118,6 +118,27 @@ config.general = {
             },
             method = 'legal'
         },
+        ['racao'] = {
+            name = 'Ração', index = 'racao',
+            price = {
+                buy = 100,
+            },
+            method = 'legal'
+        },
+        ['agua-animal'] = {
+            name = 'Água para pets', index = 'agua-animal',
+            price = {
+                buy = 100,
+            },
+            method = 'legal'
+        },
+        ['petkit'] = {
+            name = 'Kit veterinário', index = 'petkit',
+            price = {
+                buy = 100,
+            },
+            method = 'legal'
+        },
     },
     ['ammu'] = {
         ['algema'] = {

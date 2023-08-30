@@ -225,7 +225,7 @@ end
 
 RegisterCommand('wcolor',function(source, args)
 	local tinta = parseInt(args[1])
-	if (tinta >= 0) and vSERVER.checkColor({ 'cor.permissao' }) then
+	if (tinta >= 0) and vSERVER.checkColor({ 'attachs2.permissao', '@Vips.Zero' }) then
 		local ped = PlayerPedId()
 		SetPedWeaponTintIndex(ped, GetSelectedPedWeapon(ped), tinta)
 	end

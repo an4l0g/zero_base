@@ -30,13 +30,23 @@ srv.saveVehicle = function(plate, custom)
     local source = source
     local mechanicId = zero.getUserId(source)
     local user_id = zero.getUserByPlate(plate)
-    if (plate and custom) then
-        print('^5[Zero Bennys]^7 salvou o tuning do id '..user_id..' placa '..plate)
+    if (user_id and plate and custom) then
+        print('^5[Zero Bennys]^7 salvou o tuning do id '..(user_id or 'Não identificado')..' placa '..plate)
         zero.execute('zero_bennys/setCustom', { plate = plate, custom = json.encode(custom) })
-        zero.webhook(webhookTuning, '```prolog\n[ZERO BENNYS]\n[ACTION]: (TUNING)\n[MECHANIC]: '..mechanicId..'\n[VEHICLE OWNER]: '..user_id..'\n[VEHICLE PLATE]: '..plate..'\n[CUSTOM]: '..json.encode(custom)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```' )
+        zero.webhook(webhookTuning, '```prolog\n[ZERO BENNYS]\n[ACTION]: (TUNING)\n[MECHANIC]: '..mechanicId..'\n[VEHICLE OWNER]: '..(user_id or 'Não identificado!')..'\n[VEHICLE PLATE]: '..plate..'\n[CUSTOM]: '..json.encode(custom)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```' )
         return true
     end
     return false
+end
+
+srv.givePayment = function(price)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        zero.giveBankMoney(user_id, price)
+        exports.zero_bank:extrato(user_id, 'Reembolso Bennys', price)
+        TriggerClientEvent('notify', source, 'Zero Mecânica', 'Você foi reembolsado num valor de <b>R$'..zero.format(price)..'</b>.')
+    end
 end
 
 local usingBennys = {}

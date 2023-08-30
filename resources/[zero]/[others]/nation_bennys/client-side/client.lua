@@ -682,6 +682,10 @@ RegisterNUICallback('pagar',function(data)
 			if (vSERVER.saveVehicle(vehplate, myVehicle)) then
 				TriggerEvent('notify', 'Zero Mecânica', 'Modificações aplicadas com sucesso. Você pagou <b>R$'..cart['total']..'<b>.')
 				closeNui()
+			else
+				vSERVER.givePayment(cart['total'])
+				TriggerEvent('notify', 'Zero Mecânica', 'A placa deste <b>veículo</b> não existe, tente puxa-lô novamente mais tarde. O carro não terá o tuning salvo na garagem.')
+				closeNui()
 			end
 		end)
 	end

@@ -617,7 +617,7 @@ config.items = {
             cInventory.closeInventory(source)
             
             local Police = zero.getUsersByPermission('policia.permissao')
-            if (#Police < 2) then
+            if (#Police < -1) then
                 TriggerClientEvent('notify', source, 'Prefeitura', 'O número de <b>políciais</b> no momento é insuficiente para efetuar o roubo.')
                 return
             end
@@ -651,7 +651,7 @@ config.items = {
                             local PedCoords = GetEntityCoords(Ped)
                             local text = ''
                             
-                            LocalPlayer.state.BlockTasks = true
+                            Player(source).state.BlockTasks = true
 
                             zeroClient._playAnim(source, false, {
                                 { 'amb@prop_human_parking_meter@female@idle_a', 'idle_a_female' }
@@ -682,7 +682,7 @@ config.items = {
                                 }
                             )
                             
-                            LocalPlayer.state.BlockTasks = false
+                            Player(source).state.BlockTasks = false
                         end
                     else
                         TriggerClientEvent('notify', source, 'Drumond', 'Você não está próxima da porta do <b>veículo</b>.')

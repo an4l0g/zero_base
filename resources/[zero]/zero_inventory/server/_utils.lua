@@ -26,11 +26,22 @@ sInventory.getVehOwnerId = function(vnetid)
     if data then return data.user_id; end;
 end
 
-sInventory.hasPermission = function(permission)
-    local _source = source
-    local user_id = zero.getUserId(_source)
+local permission = {
+    ['perm'] = function(user_id, perm, home)
+        return zero.checkPermissions(user_id, perm)
+    end,
+    ['home'] = function(user_id, perm, home)
+        return exports['zero_homes']:checkHomePermission(user_id, home)
+    end
+}
 
-    return zero.hasPermission(user_id, permission)
+sInventory.hasPermission = function(perm, home)
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local isHome = (home and 'home' or 'perm')
+        return permission[isHome](user_id, perm, home)
+    end
 end
 
 sInventory.extract = function(string, method)

@@ -51,15 +51,11 @@ renderChests = function()
                     currentType = k
                 end 
                 if not zero.getNearestPlayer(config.marker_dropped_item_distance) or isPrivate then
-                    if v.permission == nil then
+                    local hasPermission = sInventory.hasPermission(v.permission, v.home)
+                    if hasPermission then 
                         cInventory.openInventory('open', currentType)
-                    else
-                        local hasPermission = sInventory.hasPermission(v.permission)
-                        if hasPermission then 
-                            cInventory.openInventory('open', currentType)
-                        else 
-                            config.functions.clientNotify(config.texts.notify_title, config.texts.notify_no_has_permission, 5000)
-                        end
+                    else 
+                        config.functions.clientNotify(config.texts.notify_title, config.texts.notify_no_has_permission, 5000)
                     end
                 else 
                     config.functions.clientNotify(config.texts.notify_title, config.texts.notify_nearest_player, 5000)

@@ -44,6 +44,14 @@ config.general = {
             { coord = vector4(-288.2637, -722.4264, 125.4586, 249.4488), text = 'Andar 2°' },
         }
     },
+
+    ['mecanica'] = {
+        name = 'Elevador Mecânica',
+        locations = {
+            { coord = vector4(-317.0505, -92.75604, 39.03589, 155.9055), text = 'Andar 1°' },
+            { coord = vector4(-325.7011, -143.367, 60.46887, 31.1811), text = 'H' }
+        }
+    }
 }
 
 config.location = {
@@ -66,6 +74,9 @@ config.location = {
     { coord = vector3(-2268.356, 378.5934, 188.7466-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },
     { coord = vector3(-2276.308, 346.8396, 174.5927-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },
     { coord = vector3(-2279.815, 345.2703, 174.5927-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },
+
+    { coord = vector3(-316.9583, -92.66373, 39.03589-0.97), config = 'mecanica' }, -- perm = { 'staff.permissao' } },
+    { coord = vector3(-325.8198, -143.3934, 60.46887-0.97), config = 'mecanica' }, -- perm = { 'staff.permissao' } },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

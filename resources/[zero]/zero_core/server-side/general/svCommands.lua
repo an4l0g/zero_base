@@ -37,8 +37,8 @@ RegisterCommand('god', function(source, args)
     if (_userId) and zero.hasPermission(_userId, 'staff.permissao') then
         local _identity = zero.getUserIdentity(_userId)
         if (args[1]) then
-            args[1] = parseInt(args[1])
-            local nPlayer = zero.getUserSource(args[1])
+            local other_id = parseInt(args[1])
+            local nPlayer = zero.getUserSource(other_id)
             if (nPlayer) then
                 zeroClient.killGod(nPlayer)
                 zeroClient.setHealth(nPlayer, 200) 
@@ -1746,12 +1746,6 @@ AddEventHandler('zero:playerLeave', function(user_id, source)
 			zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..' '..identity.firstname..' '..identity.lastname..'\n[STATUS]: LEAVE'..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
 		end
 	end
-
-    local groupName, groupInfo = zero.getUserGroupByType(user_id, 'staff')
-    if (groupName) and user_id ~= 1 and user_id ~= 2 and user_id ~= 3 then
-        zero.setGroupActive(user_id, groupName, false)
-        zero.webhook(_ToogleStaff, '```prolog\n[/STAFF]\n[JOB]: '..string.upper(groupName)..'\n[USER]: '..user_id..' '..identity.firstname..' '..identity.lastname..'\n[STATUS]: LEAVE'..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
-    end
 end)
 
 local prefeituraCoord = vector3(-550.9846, -193.2, 38.21021)

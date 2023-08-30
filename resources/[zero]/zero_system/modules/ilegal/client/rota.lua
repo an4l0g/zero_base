@@ -93,15 +93,15 @@ startRoute = function(index)
                             action = false
                         end)
                     else
-                        RemoveBlip(blip)
+                        -- RemoveBlip(blip)
                         
                         if (_config.extras.police) then vSERVER.callPolice(_config.extras.police, _config.name) end;
 
-                        selected = (selected + 1)
-                        if (selected > #_config.coords) then selected = 1; end;
+                        -- selected = (selected + 1)
+                        -- if (selected > #_config.coords) then selected = 1; end;
                         
-                        TriggerEvent('notify', 'Rotas', 'Olá, foi adicionada uma nova <b>localização</b> em seu <b>GPS</b>.')
-                        CreateBlip(_config.coords, selected)
+                        -- TriggerEvent('notify', 'Rotas', 'Olá, foi adicionada uma nova <b>localização</b> em seu <b>GPS</b>.')
+                        -- CreateBlip(_config.coords, selected)
                         action = false
                     end
                 end
@@ -111,9 +111,9 @@ startRoute = function(index)
     end)
 
     Citizen.CreateThread(function()
-        while (inRoute and GetEntityHealth(PlayerPedId()) > 100) do
+        while (inRoute) do
             Text2D(0, 0.42, 0.95, '~b~F7~w~ PARA CANCELAR A ~b~ROTA~w~', 0.4)
-            if (IsControlJustPressed(0, 168)) then
+            if (IsControlJustPressed(0, 168) or GetEntityHealth(PlayerPedId()) < 100) then
                 inRoute = false
                 RemoveBlip(blip)
                 vSERVER.resetUpdateRoute()
@@ -140,15 +140,18 @@ end
 
 local blips = {}
 RegisterNetEvent('zero_routes:Blip', function(coord, id)
-    blips[id] = AddBlipForCoord(coord)
-    SetBlipSprite(blips[id], 161)
-    SetBlipAsShortRange(blips[id], true)
-    SetBlipColour(blips[id], 1)
-    SetBlipScale(blips[id], 0.3)
-    BeginTextCommandSetBlipName('STRING')
-    AddTextComponentString('Tráfico avistado')
-    EndTextCommandSetBlipName(blips[id])
-    Citizen.SetTimeout(60000, function()
+    if (not DoesBlipExist(blips[id])) then
+        blips[id] = AddBlipForCoord(coord)
+        SetBlipSprite(blips[id], 161)
+        SetBlipAsShortRange(blips[id], true)
+        SetBlipColour(blips[id], 1)
+        SetBlipScale(blips[id], 0.3)
+        BeginTextCommandSetBlipName('STRING')
+        AddTextComponentString('Tráfico avistado')
+        EndTextCommandSetBlipName(blips[id])
+    end
+
+    Citizen.SetTimeout(30000, function()
         if (DoesBlipExist(blips[id])) then
             RemoveBlip(blips[id])
             blips[id] = nil

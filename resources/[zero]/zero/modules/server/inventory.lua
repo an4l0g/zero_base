@@ -69,9 +69,11 @@ zero.varyInventoryMaxWeight = function(user_id,vary)
 end
 vRP.varyInventoryMaxWeight = zero.varyInventoryMaxWeight
 
+local clearInventory = 'https://discord.com/api/webhooks/1146465984111202354/cQ6KQ9z8eFjy9Sn6oCYCJLF4pM-RpgIRbQjgas__fhzSGhBYMi2D9A8-oX3vWMq1p7DE'
 zero.clearInventory = function(user_id)
 	local source = zero.getUserSource(user_id)
 	if source then
+		local items = exports.zero_inventory:getBag('bag:'..user_id)
 		local Alianca = (zero.getInventoryItemAmount(user_id, 'alianca-casamento') > 0)
 
 		exports.zero_inventory:clearInventory(user_id)
@@ -81,6 +83,8 @@ zero.clearInventory = function(user_id)
 		if not zero.hasPermission(user_id,'mochila.permissao') then
 			zero.setInventoryMaxWeight(user_id, 6)
 		end		
+
+		zero.webhook(clearInventory, '```prolog\n[CLEAR INVENTORY]\n[USER_ID]: '..user_id..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
 	end
 end
 vRP.clearInventory = zero.clearInventory
