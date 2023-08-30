@@ -69,7 +69,7 @@ local markerThread = function()
                 if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                     if (sProduction.hasPermission(_config.permission)) then
                         if (_config.type == 'moneyLaundry') then
-                            sProduction.moneyLaundry()
+                            sProduction.moneyLaundry(_config)
                         end
 
                         if (_config.type == 'production') then
@@ -77,7 +77,11 @@ local markerThread = function()
                         end
 
                         if (_config.type == 'sellDrugs') then
-                            sProduction.openSellDrugs()
+                            sProduction.openSellDrugs(_config)
+                        end
+
+                        if _config.type == 'shop' then
+                            openProduction(_config.products, _config.label, index)
                         end
                     else
                         if _config.type == 'shop' then

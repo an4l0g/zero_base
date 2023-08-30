@@ -26,7 +26,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	if (data.weapons == nil) then
 		data.weapons = {}
 	end
-	-- zeroClient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken)
+	zeroClient.giveWeapons(source, data.weapons, true, GlobalState.weaponToken)
 	----------------------------------
 
 	-- [ Fome ] --

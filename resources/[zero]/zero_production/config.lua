@@ -4,7 +4,9 @@ zero = Proxy.getInterface('zero')
 
 configs = {}
 
-configs.moneyLaundryMax = 50000
+configs.moneyPerFiscal = 10000
+configs.governTax = 0.35
+configs.governTaxWithBuff = 0.30
 configs.blipDistance = 3
 
 configs.products = {
@@ -95,7 +97,7 @@ configs.products = {
         ['m_weapon_pistol_mk2'] = { 
             order = 1,
             name = 'M. Five-SeveN',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 14 },
@@ -104,7 +106,7 @@ configs.products = {
         ['m_weapon_snspistol_mk2'] = { 
             order = 2,
             name = 'M. HK 45',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 14 },
@@ -113,7 +115,7 @@ configs.products = {
         ['m_weapon_revolver_mk2'] = { 
             order = 3,
             name = 'M. R8',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 14 },
@@ -122,7 +124,7 @@ configs.products = {
         ['m_weapon_tecpistol'] = { 
             order = 4,
             name = 'M. Uzi',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 28 },
@@ -131,7 +133,7 @@ configs.products = {
         ['m_weapon_machinepistol'] = { 
             order = 5,
             name = 'M. Tec-9',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 28 },
@@ -140,7 +142,7 @@ configs.products = {
         ['m_weapon_minismg'] = { 
             order = 6,
             name = 'M. S VZ 61',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 28 },
@@ -149,7 +151,7 @@ configs.products = {
         ['m_weapon_compactrifle'] = { 
             order = 7,
             name = 'M. K. Compact',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 42 },
@@ -158,7 +160,7 @@ configs.products = {
         ['m_weapon_heavyrifle'] = { 
             order = 7,
             name = 'M. FN Scar',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 42 },
@@ -167,7 +169,7 @@ configs.products = {
         ['m_weapon_bullpuprifle_mk2'] = { 
             order = 7,
             name = 'M. Type-97',
-            amount = 25,
+            amount = 50,
             delay = 5000,
             materials = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 42 },
@@ -360,7 +362,7 @@ configs.productions = {
         label = 'Produção de Mecânica', 
         permission = 'zeromecanica.permissao',
         products = configs.products.mec, 
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146571244938985542/dgCac6qJ_DUVvMx6BzuR3q0w7bzGjs_SRy45TqiHy9bJkvETqsLbFwOEGKCZTMoFSS1Q' 
     },
     ['zeromec2'] = { 
         type = 'production',
@@ -368,7 +370,7 @@ configs.productions = {
         label = 'Produção de Mecânica', 
         permission = 'zeromecanica.permissao',
         products = configs.products.mec, 
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146571244938985542/dgCac6qJ_DUVvMx6BzuR3q0w7bzGjs_SRy45TqiHy9bJkvETqsLbFwOEGKCZTMoFSS1Q' 
     },
     ['smuggling'] = { 
         type = 'shop',
@@ -384,7 +386,7 @@ configs.productions = {
         label = 'Produção de Drogas', 
         products = configs.products.drugs, 
         permission = 'russia.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146572562705432637/JKZuwm-jQS8onvAfxpBzKMF9fDFDRHsmfRbiUx3XpUAMoUktbRqqh65_r0Nt7chbsP8J' 
     },
     ['Espanha'] = { 
         type = 'production',
@@ -392,7 +394,7 @@ configs.productions = {
         label = 'Produção de Armas', 
         products = configs.products.guns, 
         permission = 'espanha.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146573704155910305/5AeOVpXX7ujnX4t_T-nj4kpsTUP2ZaU_Pg8zr6mzRlzGfnUJIe7QYxhBob9S8hmk_TXN' 
     },
     ['Yakuza'] = { 
         type = 'production',
@@ -400,7 +402,7 @@ configs.productions = {
         label = 'Produção de Drogas', 
         products = configs.products.drugs, 
         permission = 'yakuza.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146572334614974565/q9HxlTNB73FF8ftNp6k6kkU6q_L7C1seHUBzTO0XgPluyuvbbp3TsMumJcoKynATWTdz' 
     },
     ['Cosanostra'] = { 
         type = 'production',
@@ -408,7 +410,7 @@ configs.productions = {
         label = 'Produção de Drogas', 
         products = configs.products.drugs, 
         permission = 'cosanostra.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146573156627267655/SJ_mOs8jRRs6zIVjn0RE1lorWEWwW39LQ1SMzxPrRHCeQPjzsiGfOLh_HXgYPHdC3Bge' 
     },
     ['Finish'] = { 
         type = 'production',
@@ -416,14 +418,14 @@ configs.productions = {
         label = 'Produção de Drogas', 
         products = configs.products.drugs, 
         permission = 'finish.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146572015977910282/MxhXmTxGFsYtr48UE5NHS9eZcBlLmRCLjmFY5A-cXNdic3Dl62_BFpJ-LuS42vFNcds7' 
     },
     ['Colombia'] = { 
         type = 'production',
         coords = vector3(-1486.299, 835.8461, 176.9854), 
         products = configs.products.guns, 
         label = 'Produção de Armas', 
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146573638867365940/gSWhlBz5xsvN88rh2nX9uwX44vmbWarvprny4YiaBsixlCC247KyqAwfSJGl4WffqpcQ' 
     },
     ['Canada'] = { 
         type = 'production',
@@ -431,7 +433,7 @@ configs.productions = {
         label = 'Produção de Munições', 
         products = configs.products.wammos, 
         permission = 'canada.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146574251390947430/e69PlgY1Z5c0PXBEUVPxHY7HwTy9knAwlPnj8CgLblsJdJoX8_21bB-rQdogUFq10535' 
     },
     ['Alemanha'] = { 
         type = 'production',
@@ -439,7 +441,7 @@ configs.productions = {
         label = 'Produção de Munições', 
         products = configs.products.wammos, 
         permission = 'alemanha.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146573767565377566/5ka63zdQECzyoLT4ixGl1HA9JWjm3UmYhCcPts6c0utiwZo_09TTYRhF4SZHs6nsSni7' 
     },
     ['Inglaterra'] = { 
         type = 'production',
@@ -448,7 +450,7 @@ configs.productions = {
         buff = true,
         products = configs.products.drugs, 
         permission = 'inglaterra.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146572784181452871/09uB5rzjOEl9VDME0SWjBF0A5yTi_K0DJifX6jBYQI2ac2p4GMMWf4U3HIUj3_djU2Ib' 
     },
     ['Tropa'] = { 
         type = 'production',
@@ -456,7 +458,7 @@ configs.productions = {
         label = 'Lavagem de dinheiro', 
         type = 'moneyLaundry',
         permission = 'tropa.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146573268162191491/hZMZIybnTjkfQnn25p9ig0g8_sDqpCaw4fAd0770Al5mREV4qdMO6dLZIkRJwEoM-PGl' 
     },
     ['Holanda'] = { 
         type = 'production',
@@ -464,7 +466,7 @@ configs.productions = {
         label = 'Produção de Drogas', 
         products = configs.products.drugs, 
         permission = 'holanda.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146571754756653096/Ymap_XGACoPMm5HcgFog-pm4qdy_iK10bPds6m_nz6NuRn1kuJwdorWPBG6Y7nqeJOgB' 
     },
     ['Helipa'] = { 
         type = 'production',
@@ -473,7 +475,7 @@ configs.productions = {
         buff = true,
         products = configs.products.drugs, 
         permission = 'helipa.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146572659921010709/-dqTAYOSMBkJrhJvOGua6HBajiQavdSX5zTbPWO8spQexuwb4Q-kDQsQ5oHup5nqFuAM' 
     },
     ['Egito'] = { 
         type = 'production',
@@ -481,7 +483,7 @@ configs.productions = {
         label = 'Produção de Drogas', 
         products = configs.products.drugs, 
         permission = 'egito.permissao',
-        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+        webhook = 'https://discord.com/api/webhooks/1146571905713844374/6F6Iv4FP9nzLX9d2jZUOewDtDX2fCQMaiUNISu-MAhWZKMKT0-3EDNSN4Gmv0C9G3Td7' 
     },
     ['sellDrugs'] = { 
         type = 'sellDrugs',

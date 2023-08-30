@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            html, body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            body.flag-ratio {
+                transform: scale(2.5, 1.5);
+            }
+
+            #youtube-controller, #twitch-controller, #frame-controller, #idle {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            #idle {
+                background-color: black;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: 50% 50%;
+                z-index: 1;
+            }
+
+            #youtube-controller, #twitch-controller, #frame-controller {
+                z-index: 3;
+                background: black;
+            }
+
+            #spinner {
+                position: absolute;
+                top: 0;
+                left: 0;
+                color: white;
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: rgba(29, 29, 29, 0.70);
+                z-index: 2;
+                display: none;
+            }
+
+            #spin:before {
+                content: '';
+                box-sizing: border-box;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 5vw;
+                height: 5vw;
+                margin-top: -1vw;
+                margin-left: -1vw;
+                border-radius: 50%;
+                border: 0.1vw solid #ccc;
+                border-top-color: #000;
+                animation: spinner .6s linear infinite;
+            }
+
+            @keyframes spinner {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+
+        <link rel="shortcut icon" href="images/favicon.png" />
+        <title>Critical Scripts</title>
+    </head>
+
+    <body>
+        <div id="idle"></div>
+
+        <div id="spinner">
+            <div id="spin"></div>
+        </div>
+
+        <script>
+            YT = undefined
+            Twitch = undefined
+        </script>
+
+        <script src="https://www.youtube.com/iframe_api"></script>
+        <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+        <script src="javascript/libraries/vibrant.min.js"></script>
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search)
+            const debug = urlParams.get('debug')
+            const version = urlParams.get('v')
+
+            const loadScript = src => {
+                const script = document.createElement('script')
+            
+                script.src = `${src}?v=${version}&c=${debug ? new Date().getTime() : 'on'}`
+                script.type = 'text/javascript'
+                script.async = false
+            
+                document.getElementsByTagName('body')[0].appendChild(script)
+            }
+
+            loadScript('javascript/controllers/dummy.js')
+            loadScript('javascript/controllers/youtube.js')
+            loadScript('javascript/controllers/twitch.js')
+            loadScript('javascript/controllers/frame.js')
+            loadScript('javascript/script.js')
+        </script>
+    </body>
+</html>

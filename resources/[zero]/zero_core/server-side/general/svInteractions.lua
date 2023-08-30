@@ -268,7 +268,7 @@ RegisterNetEvent('zero_interactions:terminar', function()
         local identity = zero.getUserIdentity(couple)
         if (zero.request(source, 'Você tem certeza que deseja terminar o seu '..text..' com o(a) '..identity.firstname..' '..identity.lastname..'?', 30000)) then
             TriggerClientEvent('notify', source, 'Terminar relacionamento', 'Parabéns parceiro(a)! Agora você está na <b>pista</b>.')
-            TriggerClientEvent('notify', zero.getUserSource(couple), 'Terminar relacionamento', 'Parabéns parceiro(a)! Agora você está na <b>pista</b>.')
+            if (zero.getUserSource(couple)) then TriggerClientEvent('notify', zero.getUserSource(couple), 'Terminar relacionamento', 'Parabéns parceiro(a)! Agora você está na <b>pista</b>.'); end;
 
             zero.execute('zero_relationship/deleteRelation', { user = user_id })
             zero.execute('zero_relationship/deleteRelation', { user = couple })

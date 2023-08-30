@@ -2,10 +2,6 @@ tempOpen = nil
 inMenu = false
 oldCustom = {}
 
-createMarkers = function(coords)
-    DrawMarker(27, coords.x, coords.y, coords.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
-end
-
 setClothes = function(clothes)
     local ped = PlayerPedId()
     local model = GetEntityModel(ped)
@@ -109,36 +105,6 @@ addBlips = function(locs)
     end
 end
 
-RegisterNuiCallback('close', function()
-    if (tempOpen == 'barbershop') then setPedCustom(); end;
-    closeNui()
-end)
-
-RegisterNuiCallback('changeCam', function(data)
-    if (inMenu) then
-        local newPov = data.type
-        local newHeading = (data.rotation + 0.00)
-        SetEntityHeading(PlayerPedId(), newHeading)
-        if (atualCam ~= newPov) then 
-            DeleteCam()
-            createCam(newPov)
-        end
-    end
-end)
-
-closeNui = function()
-    TriggerEvent('zero_hud:toggleHud', true)
-    setPlayersVisible(true)
-    SetNuiFocus(false, false)
-    DeleteCam(true)
-    inMenu = false
-    local ped = PlayerPedId()
-    FreezeEntityPosition(ped, false)
-    ClearPedTasks(ped)
-    if (oldCustom) then setCustomization(oldCustom, tempOpen); end;
-    tempOpen  = nil
-end
-
 local locsConfig = config.locs
 
 local openAppearance = {
@@ -167,12 +133,10 @@ local markerThread = function()
             local ped = PlayerPedId()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
-                if (dist <= 5) then
-                    local config = locsConfig[index]
-                    createMarkers(config.coord)
-                    if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
-                        openAppearance[config.type](index)
-                    end
+                local config = locsConfig[index]
+                DrawMarker(27, config.coord.x, config.coord.y, config.coord.z, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 1.0, 0, 153, 255, 155, 0, 0, 0, 1)
+                if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                    openAppearance[config.type](index)
                 end
             end
             Citizen.Wait(1)
@@ -189,7 +153,7 @@ Citizen.CreateThread(function()
         nearestBlips = {}
         for k, v in ipairs(locsConfig) do
             local distance = #(pCoord - v.coord.xyz)
-            if (distance <= 5) then
+            if (distance <= 5) and not inMenu then
                 nearestBlips[k] = distance
             end
         end
@@ -197,3 +161,34 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
     end
 end)
+
+RegisterNuiCallback('close', function()
+    if (tempOpen == 'barbershop') then setPedCustom(); end;
+    closeNui()
+    _markerThread = false
+end)
+
+RegisterNuiCallback('changeCam', function(data)
+    if (inMenu) then
+        local newPov = data.type
+        local newHeading = (data.rotation + 0.00)
+        SetEntityHeading(PlayerPedId(), newHeading)
+        if (atualCam ~= newPov) then 
+            DeleteCam()
+            createCam(newPov)
+        end
+    end
+end)
+
+closeNui = function()
+    TriggerEvent('zero_hud:toggleHud', true)
+    setPlayersVisible(true)
+    SetNuiFocus(false, false)
+    DeleteCam(true)
+    inMenu = false
+    local ped = PlayerPedId()
+    FreezeEntityPosition(ped, false)
+    ClearPedTasks(ped)
+    if (oldCustom) then setCustomization(oldCustom, tempOpen); end;
+    tempOpen  = nil
+end

@@ -2,6 +2,8 @@ Citizen.CreateThread(function()
 	local Pid = PlayerId()
 	local ped = PlayerPedId()
 
+	NetworkSetFriendlyFireOption(true)
+	SetCanAttackFriendly(ped, true, true)
 	SetWeaponDamageModifier(GetHashKey('WEAPON_UNARMED'), 0.2)
 	ReplaceHudColour(116, 9)
     AddTextEntry('FE_THDR_GTAO', 'ZERO')

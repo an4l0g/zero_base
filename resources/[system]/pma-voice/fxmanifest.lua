@@ -1,3 +1,5 @@
+shared_script '@likizao_ac/client/library.lua'
+
 game 'common'
 
 fx_version 'cerulean'
