@@ -10,8 +10,6 @@ exports('hasPermission', function(source, permission)
     if user_id then
       return (
         vRP.hasPermission(user_id, permission)
-        or
-        vRP.HasPermission(user_id, permission)
       )
     end
   elseif GetResourceState('nyo_modules') == 'started' then
