@@ -329,6 +329,7 @@ zero.dropPlayer = function(source, reason)
 			
 			local ped = GetPlayerPed(source)
 			
+			print(GetEntityCoords(ped))
 			userTable.health = GetEntityHealth(ped)
 			userTable.armour = GetPedArmour(ped)
 			userTable.Handcuff = Player(source).state.Handcuff

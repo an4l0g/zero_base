@@ -350,7 +350,7 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 end
                                 if (not owner) then return; end;
 
-                                SetVehicleNumberPlateText(vehHandle, veh.plate)
+                                -- SetVehicleNumberPlateText(vehHandle, veh.plate)
                                 SetVehicleDoorsLocked(vehHandle, 2)
 
                                 local netHandle;
@@ -370,7 +370,7 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 Entity(vehHandle).state['veh:spawning'] = true
 
                                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>veículo</b> foi liberado com sucesso.')
-                                vCLIENT.syncBlips(source, netHandle, vehicle)
+                                vCLIENT.syncBlips(source, netHandle, vehicle, veh.plate)
                                 vCLIENT.settingVehicle(source, netHandle, state, veh.plate, json.decode(veh.custom))
                             end
                         else

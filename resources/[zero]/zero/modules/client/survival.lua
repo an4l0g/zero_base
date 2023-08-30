@@ -127,8 +127,7 @@ local mainSurvival = function()
         TransitionToBlurred(1000)
 		while (_isDied) do
             local ped = PlayerPedId()
-            if (GetEntityHealth(ped) > 100) then
-                
+            if (GetEntityHealth(ped) <= 100) then
                 SetEntityInvincible(ped, true)
                 _disableActions() 
                 if (deathTimer > 0) then
@@ -142,6 +141,7 @@ local mainSurvival = function()
             else
                 _isDied = false
                 SetEntityInvincible(ped, false)
+                TransitionFromBlurred(1000)
             end
 			Citizen.Wait(1)
 		end

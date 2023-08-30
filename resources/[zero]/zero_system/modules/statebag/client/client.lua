@@ -163,6 +163,10 @@ AddStateBagChangeHandler('Energetico', nil, function(bagName, key, value)
     end
 end)
 
+local isFueling = false
+local totalFuel = 0
+local currentFuel = 0
+
 AddStateBagChangeHandler('Armed', nil, function(bagName, key, value) 
     local entity = GetPlayerFromStateBagName(bagName)
     if (entity == 0) then return; end;
@@ -170,10 +174,66 @@ AddStateBagChangeHandler('Armed', nil, function(bagName, key, value)
     if (value) then
         Citizen.CreateThread(function()
             while (LocalPlayer.state.Armed) do
-				SetPedSuffersCriticalHits(PlayerPedId(-1), true)
+                local ped = PlayerPedId()
+
+				SetPedSuffersCriticalHits(ped, true)
 				DisableControlAction(0,140,true)
 				DisableControlAction(0,141,true)
 				DisableControlAction(0,142,true)
+
+                if (GetSelectedPedWeapon(ped) == GetHashKey('WEAPON_PETROLCAN')) then
+                    local vehicle = GetPlayersLastVehicle()
+					if (DoesEntityExist(vehicle)) then
+                        local vehicleFuel = GetVehicleFuelLevel(vehicle)
+                        local vehCoords = GetEntityCoords(vehicle)
+                        if  not DoesEntityExist(GetPedInVehicleSeat(vehicle,-1)) and (#(vehCoords - GetEntityCoords(ped)) < 2.0) then
+                            if (vehicleFuel >= 100) then
+                                DrawText3D(vehCoords, 'Tanque ~b~Cheio~w~')    
+                            elseif (not isFueling) then
+                                DrawText3D(vehCoords, '~b~E~w~ - Abastecer')
+                            else
+                                DrawText3D(vehCoords, '~b~'..math.floor(currentFuel)..'.0%~w~ - Abastecendo')
+                            end
+							if (IsControlJustPressed(0, 38) and not isFueling and vehicleFuel < 100) then
+                                TaskTurnPedToFaceEntity(ped, vehicle, 5000)
+                                isFueling = true
+                                LocalPlayer.state.BlockTasks = true
+                                FreezeEntityPosition(ped, true)
+                                FreezeEntityPosition(vehicle, true)
+                                Citizen.CreateThread(function()
+                                    if (not HasAnimDictLoaded("timetable@gardener@filling_can")) then
+                                        RequestAnimDict("timetable@gardener@filling_can")
+                                        while (not HasAnimDictLoaded("timetable@gardener@filling_can")) do
+                                            Citizen.Wait(10)
+                                        end
+                                    end
+                                    TaskPlayAnim(ped, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
+                                    while (isFueling) do
+
+                                        local fuelAdd = math.random(20, 20) / 100.0
+                                        totalFuel = (totalFuel + fuelAdd)
+                                        currentFuel = (vehicleFuel + totalFuel) + 0.0000001
+                                        if (currentFuel >= 100) then
+                                            exports.zero_fuel:SetFuel(VehToNet(vehicle), 100.0)
+                                            SetVehicleFuelLevel(vehicle, 100.0)
+
+                                            print(GetVehicleFuelLevel(vehicle))
+                                            LocalPlayer.state.BlockTasks = false
+                                            FreezeEntityPosition(ped, false)
+                                            FreezeEntityPosition(vehicle, false)
+                                            ClearPedTasks(ped)
+                                            RemoveAnimDict("timetable@gardener@filling_can")
+                                            TriggerEvent('notify', 'Combustível', 'Você encheu o <b>tanque</b>!')
+                                            RemoveWeaponFromPed(ped, GetHashKey('WEAPON_PETROLCAN'))
+                                            isFueling = false
+                                        end
+                                        Citizen.Wait(100)
+                                    end
+                                end)
+                            end
+						end
+                    end
+                end
                 Citizen.Wait(1)
             end
         end)

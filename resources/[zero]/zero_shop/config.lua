@@ -6,6 +6,13 @@ config = {}
 
 config.general = {
     ['departament'] = {
+        ['weapon_petrolcan'] = {
+            name = 'Combustível', index = 'weapon_petrolcan',
+            price = {
+                buy = 300,
+            },
+            method = 'legal'
+        },
         ['sanduiche'] = {
             name = 'Sanduiche', index = 'sanduiche',
             price = {

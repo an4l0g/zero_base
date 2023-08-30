@@ -299,8 +299,8 @@ config.animations = {
             otherAnim = 'otoscopio3',
         },
         ['cadeiraderodas'] = {
-            dict = 'gndempurrandomacasospackhospital@animationss',
-            anim = 'gndempurrandomacasospackhospital_clip',
+            dict = 'gndempurrandochairwhell@animations',
+            anim = 'gndempurrandochairwhell_clip',
             prop = 'gnd_cadeira_de_rodas_prop',
             flag = 50,
             hand = 28422,
@@ -309,9 +309,9 @@ config.animations = {
             loop = true,
             extra = function()
                 cancelKeyMapping = true
-                RequestAnimDict('gndempurrandomacasospackhospital@animationss')
-                while (not HasAnimDictLoaded('gndempurrandomacasospackhospital@animationss')) do Citizen.Wait(0); end;
-                TaskPlayAnim(PlayerPedId(), 'gndempurrandomacasospackhospital@animationss', 'gndempurrandomacasospackhospital_clip', 4.0, 4.0, -1, 50, 0.0)
+                RequestAnimDict('gndempurrandochairwhell@animations')
+                while (not HasAnimDictLoaded('gndempurrandochairwhell@animations')) do Citizen.Wait(0); end;
+                TaskPlayAnim(PlayerPedId(), 'gndempurrandochairwhell@animations', 'gndempurrandochairwhell_clip', 4.0, 4.0, -1, 50, 0.0)
                 disableActions(true)
             end,
             syncOption = {
