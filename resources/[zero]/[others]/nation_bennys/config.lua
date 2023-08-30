@@ -311,6 +311,7 @@ config.mechanics = {
 	{ coord = vector3(-342.8571, -113.789, 38.63147), perm = 'zeromecanica.permissao' },
 	{ coord = vector3(-346.9978, -124.3912, 38.63147), perm = 'zeromecanica.permissao' },
 	{ coord = vector3(-349.4242, -131.3802, 38.63147), perm = 'zeromecanica.permissao' },
+	{ coord = vector3(-342.5275, -142.589, 60.60364), perm = 'zeromecanica.permissao' }
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

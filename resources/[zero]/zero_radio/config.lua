@@ -6,6 +6,8 @@ radios = {
 	-- STAFF
 	{ name = 'Staff', permissions = { 'staff.permissao' } },
 	{ name = 'Policia', permissions = { 'policia.permissao' } },
+	{ name = 'CMZ', permissions = { 'hospital.permissao' } },
+	{ name = 'CMZ Ronda', permissions = { 'hospital.permissao' } },
 
 	-- FACS
 	{ name = 'Rússia', permissions = { 'russia.permissao' } },

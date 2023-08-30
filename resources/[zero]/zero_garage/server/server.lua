@@ -350,8 +350,8 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 end
                                 if (not owner) then return; end;
 
-                                -- SetVehicleNumberPlateText(vehHandle, veh.plate)
-                                SetVehicleDoorsLocked(vehHandle, 2)
+                                -- 
+                                
 
                                 local netHandle;
                                 local timeOut = (GetGameTimer() + 2000)
@@ -361,6 +361,9 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 end
                                 if (not netHandle) then return; end;
                                 
+                                SetVehicleNumberPlateText(vehHandle, veh.plate)
+                                SetVehicleDoorsLocked(vehHandle, 2)
+
                                 Entity(vehHandle).state['veh:plate'] = veh.plate
                                 Entity(vehHandle).state['veh:chassis'] = veh.chassis
                                 Entity(vehHandle).state['veh:user_id'] = user_id

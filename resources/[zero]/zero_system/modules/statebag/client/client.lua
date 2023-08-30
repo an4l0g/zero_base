@@ -217,7 +217,6 @@ AddStateBagChangeHandler('Armed', nil, function(bagName, key, value)
                                             exports.zero_fuel:SetFuel(VehToNet(vehicle), 100.0)
                                             SetVehicleFuelLevel(vehicle, 100.0)
 
-                                            print(GetVehicleFuelLevel(vehicle))
                                             LocalPlayer.state.BlockTasks = false
                                             FreezeEntityPosition(ped, false)
                                             FreezeEntityPosition(vehicle, false)
