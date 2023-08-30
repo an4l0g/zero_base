@@ -1,98 +1,81 @@
--- local localSussurando = {
--- 	{ ['cds'] = vector3(-680.56, 328.46, 83.78), ['dist'] = 50.0 },
--- }
-
--- Citizen.CreateThread(function()
--- 	while true do
--- 		local idle = 1000
--- 			for _ ,v in pairs(localSussurando) do
--- 				local distance = #(GetEntityCoords(PlayerPedId()) - v.cds)
--- 				if distance <= v.dist then
--- 					idle = 100
--- 					if mode ~= 1 then
--- 						mode = 1
--- 						setProximityState(Cfg.voiceModes[mode][1], false)
--- 						TriggerEvent('pma-voice:setTalkingMode', mode)
--- 						TriggerEvent("hud:talkingState",mode)
--- 					end
--- 				end
--- 			end
--- 		Wait(idle)
--- 	end
--- end)
-
-
 local wasProximityDisabledFromOverride = false
 disableProximityCycle = false
 RegisterCommand('setvoiceintent', function(source, args)
-	if GetConvarInt('voice_allowSetIntent', 1) == 1 then
-		local intent = args[1]
-		if intent == 'speech' then
-			MumbleSetAudioInputIntent(`speech`)
-		elseif intent == 'music' then
-			MumbleSetAudioInputIntent(`music`)
-		end
-		LocalPlayer.state:set('voiceIntent', intent, true)
-	end
+    if GetConvarInt('voice_allowSetIntent', 1) == 1 then
+        local intent = args[1]
+        if intent == 'speech' then
+            MumbleSetAudioInputIntent(`speech`)
+        elseif intent == 'music' then
+            MumbleSetAudioInputIntent(`music`)
+        end
+        LocalPlayer.state:set('voiceIntent', intent, true)
+    end
 end)
+TriggerEvent('chat:addSuggestion', '/setvoiceintent', 'Sets the players voice intent', {
+    { name = "intent",
+        help = "speech is default and enables noise suppression & high pass filter, music disables both of these." },
+})
 
 -- TODO: Better implementation of this?
-RegisterCommand('volume', function(_, args)
-	if not args[1] then return end
-	setVolume(tonumber(args[1]))
+RegisterCommand('vol', function(_, args)
+    if not args[1] then return end
+    setVolume(tonumber(args[1]))
 end)
+TriggerEvent('chat:addSuggestion', '/vol', 'Sets the radio/phone volume', {
+    { name = "volume", help = "A range between 1-100 on how loud you want them to be" },
+})
 
 exports('setAllowProximityCycleState', function(state)
-	type_check({state, "boolean"})
-	disableProximityCycle = state
+    type_check({ state, "boolean" })
+    disableProximityCycle = state
 end)
 
 function setProximityState(proximityRange, isCustom)
-	local voiceModeData = Cfg.voiceModes[mode]
-	MumbleSetTalkerProximity(proximityRange + 0.0)
-	LocalPlayer.state:set('proximity', {
-		index = mode,
-		distance = proximityRange,
-		mode = isCustom and "Custom" or voiceModeData[2],
-	}, true)
-	sendUIMessage({
-		-- JS expects this value to be - 1, "custom" voice is on the last index
-		voiceMode = isCustom and #Cfg.voiceModes or mode - 1
-	})
+    local voiceModeData = Cfg.voiceModes[mode]
+    MumbleSetTalkerProximity(proximityRange + 0.0)
+    LocalPlayer.state:set('proximity', {
+        index = mode,
+        distance = proximityRange,
+        mode = isCustom and "Custom" or voiceModeData[2],
+    }, true)
+    sendUIMessage({
+        -- JS expects this value to be - 1, "custom" voice is on the last index
+        voiceMode = isCustom and #Cfg.voiceModes or mode - 1
+    })
 end
 
 exports("overrideProximityRange", function(range, disableCycle)
-	type_check({range, "number"})
-	setProximityState(range, true)
-	if disableCycle then
-		disableProximityCycle = true
-		wasProximityDisabledFromOverride = true
-	end
+    type_check({ range, "number" })
+    setProximityState(range, true)
+    if disableCycle then
+        disableProximityCycle = true
+        wasProximityDisabledFromOverride = true
+    end
 end)
 
 exports("clearProximityOverride", function()
-	local voiceModeData = Cfg.voiceModes[mode]
-	setProximityState(voiceModeData[1], false)
-	if wasProximityDisabledFromOverride then
-		disableProximityCycle = false
-	end
+    local voiceModeData = Cfg.voiceModes[mode]
+    setProximityState(voiceModeData[1], false)
+    if wasProximityDisabledFromOverride then
+        disableProximityCycle = false
+    end
 end)
 
-RegisterKeyMapping('cycleproximity2', 'Alterar Voz', 'keyboard', 'HOME')
-RegisterCommand('cycleproximity2', function()
-	-- Proximity is either disabled, or manually overwritten.
-	if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
-	local newMode = mode + 1
+RegisterCommand('cycleproximity', function()
+    -- Proximity is either disabled, or manually overwritten.
+    if GetConvarInt('voice_enableProximityCycle', 1) ~= 1 or disableProximityCycle then return end
+    local newMode = mode + 1
 
-	-- If we're within the range of our voice modes, allow the increase, otherwise reset to the first state
-	if newMode <= #Cfg.voiceModes then
-		mode = newMode
-	else
-		mode = 1
-	end
+    -- If we're within the range of our voice modes, allow the increase, otherwise reset to the first state
+    if newMode <= #Cfg.voiceModes then
+        mode = newMode
+    else
+        mode = 1
+    end
 
-	setProximityState(Cfg.voiceModes[mode][1], false)
-	TriggerEvent('pma-voice:setTalkingMode', Cfg.voiceModes[mode][2])
-	-- TriggerEvent("hud:talkingState",mode)
-
+    setProximityState(Cfg.voiceModes[mode][1], false)
+    TriggerEvent('pma-voice:setTalkingMode', Cfg.voiceModes[mode][2])
 end, false)
+if gameVersion == 'fivem' then
+    RegisterKeyMapping('cycleproximity', 'Cycle Proximity', 'keyboard', GetConvar('voice_defaultCycle', 'HOME'))
+end
