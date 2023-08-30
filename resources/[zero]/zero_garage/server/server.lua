@@ -350,7 +350,7 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 end
                                 if (not owner) then return; end;
 
-                                SetVehicleNumberPlateText(vehHandle, veh.plate)
+                                -- SetVehicleNumberPlateText(vehHandle, veh.plate)
                                 SetVehicleDoorsLocked(vehHandle, 2)
 
                                 local netHandle;

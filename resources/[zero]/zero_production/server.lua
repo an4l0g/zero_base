@@ -64,7 +64,7 @@ sProduction.moneyLaundry = function(production)
                                 Wait(response)    
                                 FreezeEntityPosition(ped, false)
                                 ClearPedTasks(ped)
-                                zero.givePaypalMoney(user_id, response)
+                                zero.giveBankMoney(user_id, response)
                                 Player(_source).state.BlockTasks = false
                                 TriggerClientEvent('notify', _source, 'Lavagem de Dinheiro', 'Foram adicionados R$'..zero.format(response)..' na sua conta do Paypal! Não se esqueça de entregar 60% do valor ao cliente.', 10000);
                             else
