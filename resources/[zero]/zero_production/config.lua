@@ -433,6 +433,14 @@ configs.productions = {
         permission = 'canada.permissao',
         webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
     },
+    ['Alemanha'] = { 
+        type = 'production',
+        coords = vector3(978.8571, -94.37802, 74.85864), 
+        label = 'Produção de Munições', 
+        products = configs.products.wammos, 
+        permission = 'alemanha.permissao',
+        webhook = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' 
+    },
     ['Inglaterra'] = { 
         type = 'production',
         coords = vector3(-282.3956, 1564.246, 361.5247), 
