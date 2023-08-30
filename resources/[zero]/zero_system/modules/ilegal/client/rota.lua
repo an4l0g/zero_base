@@ -111,9 +111,9 @@ startRoute = function(index)
     end)
 
     Citizen.CreateThread(function()
-        while (inRoute and GetEntityHealth(PlayerPedId()) > 100) do
+        while (inRoute) do
             Text2D(0, 0.42, 0.95, '~b~F7~w~ PARA CANCELAR A ~b~ROTA~w~', 0.4)
-            if (IsControlJustPressed(0, 168)) then
+            if (IsControlJustPressed(0, 168) or GetEntityHealth(PlayerPedId()) < 100) then
                 inRoute = false
                 RemoveBlip(blip)
                 vSERVER.resetUpdateRoute()

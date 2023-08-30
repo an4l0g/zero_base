@@ -238,7 +238,8 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 		end
 
 		TriggerEvent('zero_bennys:applymods', vnet, custom)
-
+		SetVehicleNumberPlateText(nveh, plate)
+		
 		local vehicle = NetToVeh(vnet)
 		SetVehicleDoorsLocked(vehicle, 2)
 		SetVehicleDoorsLockedForAllPlayers(vehicle, false)
@@ -260,8 +261,6 @@ cli.settingVehicle = function(vnet, state, plate, custom)
         if (DecorIsRegisteredAsType('Player_Vehicle', 3)) then DecorSetInt(nveh, 'Player_Vehicle', -1); end;
         
         Entity(nveh).state:set('veh:spawning', nil, true)
-		print(plate)
-        SetVehicleNumberPlateText(nveh, plate)
         return true
     end
 end

@@ -6536,3 +6536,195 @@
 [30 Aug 04:01:08] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [344,1693378868]
 [30 Aug 04:02:50] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [394,1693378970]
 [30 Aug 04:03:46] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [137,1693379026]
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"group 151 Vips Rubi","scope":"plugin","id":5483673}
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"additem 151 mochila-pequena 2","scope":"plugin","id":5483674}
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"additem 151 celular 2","scope":"plugin","id":5483675}
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"additem 151 combo-milho 6","scope":"plugin","id":5483676}
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"additem 151 radio 1","scope":"plugin","id":5483677}
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"addcredit 151 vehicle_premium 2","scope":"plugin","id":5483678}
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"addmoney 151 7000","scope":"plugin","id":5483679}
+[30 Aug 04:06:28] Received event EXECUTE_COMMAND with {"command":"system-notify eyJkaXNjb3JkIjoiMjc0MDIzNzMxNDk4NTgyMDE3IiwidXNlcl9pZCI6MTUxLCJvcmRlcl9pZCI6MTEyMTM2OH0=","scope":"plugin","id":5483681}
+[30 Aug 04:06:28] Command 5483674 [done] -> OK (Online)
+[30 Aug 04:06:28] Command 5483673 [done] -> OK (Online)
+[30 Aug 04:06:28] SQL: [            INSERT INTO hydrus_credits (player_id, name, amount) VALUES (?,?,?)
+            ON DUPLICATE KEY UPDATE amount=amount+?
+        ] -> [151,"vehicle_premium",2,2]
+[30 Aug 04:06:29] Command 5483675 [done] -> OK (Online)
+[30 Aug 04:06:29] Command 5483677 [done] -> OK (Online)
+[30 Aug 04:06:29] Command 5483676 [done] -> OK (Online)
+[30 Aug 04:06:29] Command 5483679 [done] -> OK (Online)
+[30 Aug 04:06:29] Command 5483678 [done] -> OK
+[30 Aug 04:06:29] Command 5483681 [pending] -> nil
+[30 Aug 04:06:54] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [650,1693379214]
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"group 137 Spotify Spotify","scope":"plugin","id":5483729}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"additem 137 mochila-pequena 3","scope":"plugin","id":5483731}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"additem 137 celular 3","scope":"plugin","id":5483732}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"additem 137 combo-milho 6","scope":"plugin","id":5483733}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"additem 137 radio 1","scope":"plugin","id":5483734}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"addcredit 137 vehicle_hypercar 1","scope":"plugin","id":5483735}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"addcredit 137 vehicle_premium 4","scope":"plugin","id":5483736}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"addmoney 137 15000","scope":"plugin","id":5483737}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"addcredit 137 key-apartament 1","scope":"plugin","id":5483738}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"addcredit 137 pet_premium 1","scope":"plugin","id":5483739}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"group 137 Vips Diamante","scope":"plugin","id":5483740}
+[30 Aug 04:08:23] Received event EXECUTE_COMMAND with {"command":"system-notify eyJkaXNjb3JkIjoiODExMDYzOTE3Mzg4MTAzNzIwIiwidXNlcl9pZCI6MTM3LCJvcmRlcl9pZCI6MTEyMTM2OX0=","scope":"plugin","id":5483743}
+[30 Aug 04:08:24] Command 5483729 [done] -> OK (Online)
+[30 Aug 04:08:24] Command 5483731 [done] -> OK (Online)
+[30 Aug 04:08:24] SQL: [            INSERT INTO hydrus_credits (player_id, name, amount) VALUES (?,?,?)
+            ON DUPLICATE KEY UPDATE amount=amount+?
+        ] -> [137,"vehicle_hypercar",1,1]
+[30 Aug 04:08:24] Command 5483732 [done] -> OK (Online)
+[30 Aug 04:08:24] SQL: [            INSERT INTO hydrus_credits (player_id, name, amount) VALUES (?,?,?)
+            ON DUPLICATE KEY UPDATE amount=amount+?
+        ] -> [137,"vehicle_premium",4,4]
+[30 Aug 04:08:24] Command 5483733 [done] -> OK (Online)
+[30 Aug 04:08:24] Command 5483734 [done] -> OK (Online)
+[30 Aug 04:08:24] SQL: [            INSERT INTO hydrus_credits (player_id, name, amount) VALUES (?,?,?)
+            ON DUPLICATE KEY UPDATE amount=amount+?
+        ] -> [137,"key-apartament",1,1]
+[30 Aug 04:08:24] Command 5483735 [done] -> OK
+[30 Aug 04:08:24] SQL: [            INSERT INTO hydrus_credits (player_id, name, amount) VALUES (?,?,?)
+            ON DUPLICATE KEY UPDATE amount=amount+?
+        ] -> [137,"pet_premium",1,1]
+[30 Aug 04:08:24] Command 5483736 [done] -> OK
+[30 Aug 04:08:24] Command 5483737 [done] -> OK (Online)
+[30 Aug 04:08:24] Command 5483738 [done] -> OK
+[30 Aug 04:08:24] Command 5483739 [done] -> OK
+[30 Aug 04:08:24] Command 5483740 [done] -> OK (Online)
+[30 Aug 04:08:24] Command 5483743 [pending] -> nil
+[30 Aug 04:08:28] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [282,1693379308]
+[30 Aug 04:10:09] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"tiger1200"]
+[30 Aug 04:10:09] SQL: [UPDATE hydrus_credits SET amount=amount-? WHERE player_id=? AND name=?] -> [1,137,"vehicle_premium"]
+[30 Aug 04:10:09] 137 reedemed credit "Veículos Premium" Balance: 4 -> 3 [vehicle_premium]
+[30 Aug 04:10:09] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"tiger1200"]
+[30 Aug 04:10:47] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"urus"]
+[30 Aug 04:10:47] SQL: [UPDATE hydrus_credits SET amount=amount-? WHERE player_id=? AND name=?] -> [1,137,"vehicle_premium"]
+[30 Aug 04:10:47] 137 reedemed credit "Veículos Premium" Balance: 3 -> 2 [vehicle_premium]
+[30 Aug 04:10:47] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"urus"]
+[30 Aug 04:11:10] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"19raptor"]
+[30 Aug 04:11:10] SQL: [UPDATE hydrus_credits SET amount=amount-? WHERE player_id=? AND name=?] -> [1,137,"vehicle_premium"]
+[30 Aug 04:11:10] 137 reedemed credit "Veículos Premium" Balance: 2 -> 1 [vehicle_premium]
+[30 Aug 04:11:10] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"19raptor"]
+[30 Aug 04:12:15] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"nissanskyliner34"]
+[30 Aug 04:12:15] SQL: [UPDATE hydrus_credits SET amount=amount-? WHERE player_id=? AND name=?] -> [1,137,"vehicle_premium"]
+[30 Aug 04:12:15] 137 reedemed credit "Veículos Premium" Balance: 1 -> 0 [vehicle_premium]
+[30 Aug 04:12:15] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"nissanskyliner34"]
+[30 Aug 04:12:30] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [494,1693379550]
+[30 Aug 04:13:44] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [644,1693379624]
+[30 Aug 04:14:17] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"718b"]
+[30 Aug 04:14:17] SQL: [UPDATE hydrus_credits SET amount=amount-? WHERE player_id=? AND name=?] -> [1,137,"vehicle_hypercar"]
+[30 Aug 04:14:17] 137 reedemed credit "Veículos Hyper" Balance: 1 -> 0 [vehicle_hypercar]
+[30 Aug 04:14:17] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"718b"]
+[30 Aug 04:18:07] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [494,1693379887]
+[30 Aug 04:19:31] Received event EXECUTE_COMMAND with {"command":"addvehicle 137 rmodgt63","scope":"plugin","id":5483931}
+[30 Aug 04:19:31] Received event EXECUTE_COMMAND with {"command":"system-notify eyJkaXNjb3JkIjoiODExMDYzOTE3Mzg4MTAzNzIwIiwidXNlcl9pZCI6MTM3LCJvcmRlcl9pZCI6MTEyMTM3MH0=","scope":"plugin","id":5483933}
+[30 Aug 04:19:31] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [137,"rmodgt63"]
+[30 Aug 04:19:32] Command 5483931 [done] -> OK
+[30 Aug 04:19:32] Command 5483933 [pending] -> nil
+[30 Aug 04:37:24] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [3,1693381044]
+[30 Aug 04:41:41] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [344,1693381301]
+[30 Aug 04:43:41] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [100,1693381421]
+[30 Aug 04:44:08] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [139,1693381448]
+[30 Aug 04:45:57] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [385,1693381557]
+[30 Aug 04:59:19] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [151,"h2carb"]
+[30 Aug 04:59:19] SQL: [UPDATE hydrus_credits SET amount=amount-? WHERE player_id=? AND name=?] -> [1,151,"vehicle_premium"]
+[30 Aug 04:59:19] 151 reedemed credit "Veículos Premium" Balance: 2 -> 1 [vehicle_premium]
+[30 Aug 04:59:19] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [151,"h2carb"]
+[30 Aug 05:04:27] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [127,1693382667]
+[30 Aug 05:04:46] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [548,1693382686]
+[30 Aug 05:05:16] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [151,"ram1500"]
+[30 Aug 05:05:16] SQL: [UPDATE hydrus_credits SET amount=amount-? WHERE player_id=? AND name=?] -> [1,151,"vehicle_premium"]
+[30 Aug 05:05:16] 151 reedemed credit "Veículos Premium" Balance: 1 -> 0 [vehicle_premium]
+[30 Aug 05:05:16] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [151,"ram1500"]
+[30 Aug 05:09:38] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [650,1693382978]
+[30 Aug 05:13:54] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [644,1693383234]
+[30 Aug 05:24:50] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [548,1693383890]
+[30 Aug 06:20:39] Received event EXECUTE_COMMAND with {"command":"group 295 Vips Prata","scope":"plugin","id":5484915}
+[30 Aug 06:20:39] Received event EXECUTE_COMMAND with {"command":"additem 295 mochila-pequena 1","scope":"plugin","id":5484916}
+[30 Aug 06:20:39] Received event EXECUTE_COMMAND with {"command":"additem 295 celular 1","scope":"plugin","id":5484917}
+[30 Aug 06:20:39] Received event EXECUTE_COMMAND with {"command":"additem 295 combo-milho 3","scope":"plugin","id":5484918}
+[30 Aug 06:20:39] Received event EXECUTE_COMMAND with {"command":"addmoney 295 4000","scope":"plugin","id":5484919}
+[30 Aug 06:20:39] Received event EXECUTE_COMMAND with {"command":"addcredit 295 vehicle_conce 1","scope":"plugin","id":5484920}
+[30 Aug 06:20:39] Received event EXECUTE_COMMAND with {"command":"system-notify eyJkaXNjb3JkIjoiMTAzMDIyNDM3ODk0MTY4MTcxNCIsInVzZXJfaWQiOjI5NSwib3JkZXJfaWQiOjExMjEzOTF9","scope":"plugin","id":5484922}
+[30 Aug 06:20:39] Command 5484918 [failed] -> @hydrus.gg/server/ext/vrp/index.lua:121: attempt to index a nil value (global 'export')
+[30 Aug 06:20:39] SQL: [UPDATE user_moneys SET bank=bank+? WHERE user_id=?] -> [4000,295]
+[30 Aug 06:20:39] Command 5484916 [failed] -> @hydrus.gg/server/ext/vrp/index.lua:121: attempt to index a nil value (global 'export')
+[30 Aug 06:20:39] SQL: [            INSERT INTO hydrus_credits (player_id, name, amount) VALUES (?,?,?)
+            ON DUPLICATE KEY UPDATE amount=amount+?
+        ] -> [295,"vehicle_conce",1,1]
+[30 Aug 06:20:39] Command 5484917 [failed] -> @hydrus.gg/server/ext/vrp/index.lua:121: attempt to index a nil value (global 'export')
+[30 Aug 06:20:39] SQL: [INSERT INTO `hydrus_scheduler` (`command`,`player_id`,`args`) VALUES (?,?,?)] -> ["system-notify",295,"[\"eyJkaXNjb3JkIjoiMTAzMDIyNDM3ODk0MTY4MTcxNCIsInVzZXJfaWQiOjI5NSwib3JkZXJfaWQiOjExMjEzOTF9\"]"]
+[30 Aug 06:20:40] Command 5484919 [done] -> OK (Offline)
+[30 Aug 06:20:40] Command 5484922 [pending] -> nil
+[30 Aug 06:20:40] Command 5484920 [done] -> OK
+[30 Aug 06:20:40] Command 5484915 [done] -> OK (Offline)
+[30 Aug 06:25:11] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [10,1693387511]
+[30 Aug 06:35:17] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [8,1693388117]
+[30 Aug 06:37:21] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [8,1693388241]
+[30 Aug 06:37:37] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [370,1693388257]
+[30 Aug 06:53:29] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [644,1693389209]
+[30 Aug 06:58:19] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [8,1693389499]
+[30 Aug 06:59:27] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [281,1693389567]
+[30 Aug 07:01:25] Received event EXECUTE_COMMAND with {"command":"addvehicle 295 zn20","scope":"plugin","id":5484976}
+[30 Aug 07:01:25] Received event EXECUTE_COMMAND with {"command":"system-notify eyJkaXNjb3JkIjoiMTAzMDIyNDM3ODk0MTY4MTcxNCIsInVzZXJfaWQiOjI5NSwib3JkZXJfaWQiOjExMjE0MDR9","scope":"plugin","id":5484978}
+[30 Aug 07:01:25] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [295,"zn20"]
+[30 Aug 07:01:25] SQL: [INSERT INTO `hydrus_scheduler` (`command`,`player_id`,`args`) VALUES (?,?,?)] -> ["system-notify",295,"[\"eyJkaXNjb3JkIjoiMTAzMDIyNDM3ODk0MTY4MTcxNCIsInVzZXJfaWQiOjI5NSwib3JkZXJfaWQiOjExMjE0MDR9\"]"]
+[30 Aug 07:01:25] Command 5484976 [done] -> OK
+[30 Aug 07:01:26] Command 5484978 [pending] -> nil
+[30 Aug 07:06:03] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [161,1693389963]
+[30 Aug 07:11:55] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [281,1693390315]
+[30 Aug 07:25:53] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [488,1693391153]
+[30 Aug 07:26:17] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [370,1693391177]
+[30 Aug 07:29:41] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [8,1693391381]
+[30 Aug 07:37:28] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [147,1693391848]
+[30 Aug 07:46:17] Received event EXECUTE_COMMAND with {"command":"addvehicle 574 nissanskyliner34","scope":"plugin","id":5485052}
+[30 Aug 07:46:17] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [574,"nissanskyliner34"]
+[30 Aug 07:46:17] Received event EXECUTE_COMMAND with {"command":"system-notify eyJkaXNjb3JkIjoiNzI4NjMzNDcxNzE0NDU5Njg4IiwidXNlcl9pZCI6NTc0LCJvcmRlcl9pZCI6MTEyMTQxNX0=","scope":"plugin","id":5485054}
+[30 Aug 07:46:17] SQL: [INSERT INTO `hydrus_scheduler` (`command`,`player_id`,`args`) VALUES (?,?,?)] -> ["system-notify",574,"[\"eyJkaXNjb3JkIjoiNzI4NjMzNDcxNzE0NDU5Njg4IiwidXNlcl9pZCI6NTc0LCJvcmRlcl9pZCI6MTEyMTQxNX0=\"]"]
+[30 Aug 07:46:17] Command 5485052 [done] -> OK
+[30 Aug 07:46:17] Command 5485054 [pending] -> nil
+[30 Aug 07:49:30] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [115,1693392570]
+[30 Aug 07:51:08] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [574,1693392668]
+[30 Aug 07:51:09] SQL: [DELETE FROM hydrus_scheduler WHERE id=?] -> [17]
+[30 Aug 07:52:23] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [69,1693392743]
+[30 Aug 07:55:28] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [488,1693392928]
+[30 Aug 07:57:17] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [315,1693393037]
+[30 Aug 08:00:04] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [580,1693393204]
+[30 Aug 08:13:51] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [281,1693394031]
+[30 Aug 08:16:37] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [26,1693394197]
+[30 Aug 08:16:41] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [406,1693394201]
+[30 Aug 08:17:59] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [653,1693394279]
+[30 Aug 08:24:34] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [304,1693394674]
+[30 Aug 08:29:14] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [653,1693394954]
+[30 Aug 08:34:14] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [327,1693395254]
+[30 Aug 08:34:39] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [147,1693395279]
+[30 Aug 08:35:13] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [488,1693395313]
+[30 Aug 08:35:30] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [315,1693395330]
+[30 Aug 08:39:06] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [315,1693395546]
+[30 Aug 08:42:53] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [115,1693395773]
+[30 Aug 08:50:35] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [327,1693396235]
+[30 Aug 08:50:43] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [159,1693396243]
+[30 Aug 08:52:34] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [654,1693396354]
+[30 Aug 08:54:41] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [256,1693396481]
+[30 Aug 09:11:05] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [281,1693397465]
+[30 Aug 09:14:14] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [19,1693397654]
+[30 Aug 09:15:32] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [147,1693397732]
+[30 Aug 09:22:28] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [628,1693398148]
+[30 Aug 09:34:35] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [268,1693398875]
+[30 Aug 09:34:39] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [565,1693398879]
+[30 Aug 09:43:25] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [179,1693399405]
+[30 Aug 09:46:43] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [315,1693399603]
+[30 Aug 09:48:59] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [2,1693399739]
+[30 Aug 09:54:13] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [579,1693400053]
+[30 Aug 09:59:13] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [654,1693400353]
+[30 Aug 10:05:04] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [580,1693400704]
+[30 Aug 10:05:19] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [654,1693400719]
+[30 Aug 10:07:10] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [654,1693400830]
+[30 Aug 10:07:18] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [171,1693400838]
+[30 Aug 10:08:35] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [628,1693400915]
+[30 Aug 10:14:33] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [19,1693401273]
+[30 Aug 10:23:15] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [250,1693401795]
+[30 Aug 10:26:12] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [424,1693401972]
+[30 Aug 10:38:05] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [103,1693402685]
+[30 Aug 10:38:10] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [268,1693402690]
+[30 Aug 10:48:12] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [407,1693403292]
