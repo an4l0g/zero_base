@@ -11,7 +11,6 @@ local toggleSeatbelt = function()
         seatbeltOn = not seatbeltOn
         updateSeatbelt(seatbeltOn)
         if not (LocalPlayer.state.GPS) then checkRadar(seatbeltOn) end
-        SetPedConfigFlag(ped, 32, not seatbeltOn)
         if seatbeltOn then TriggerEvent('zero_sound:source','belt',0.5) else TriggerEvent('zero_sound:source','unbelt',0.5) end
     end
 end
@@ -79,7 +78,6 @@ startVehicle = function()
     CreateThread(startUpdateVehicleSpeed) 
     hasSeatbelt = doesVehicleHasSeatbelt(vehicle)
     SetFlyThroughWindscreenParams(25.0, 2.0, 15.0, 15.0)
-    SetPedConfigFlag(ped, 32, hasSeatbelt)
 end
 
 statusVehicle = function(bool,veh)

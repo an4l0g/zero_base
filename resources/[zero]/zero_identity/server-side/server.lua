@@ -158,11 +158,16 @@ getUserStaff = function(user_id)
 end
 
 getUserVip = function(user_id)
+    local staff, staffinfo = zero.getUserGroupByType(user_id, 'vips')
+    if (staff) then
+        return zero.getGroupTitle(staff, staffinfo.grade)
+    end
     return nil
 end
 
 getUserRelationship = function(user_id)
-    return nil
+    local relation, couple, status = exports.zero_core:CheckUser(user_id)
+    return (status or 'Solteiro(a)')
 end
 
 getUserDrivelicense = function(user_id)

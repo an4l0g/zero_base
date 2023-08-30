@@ -5,12 +5,12 @@ endpoint_add_tcp "0.0.0.0:30125"
 endpoint_add_udp "0.0.0.0:30125"
 
 #[SERVER]=======================================================================
-sv_hostname "Zero - Dev"
-sets sv_projectName "Zero - Dev"
-sets sv_projectDesc "Cidade de desenvolvimento da zero"
+sv_hostname "^5Zero City - discord.gg/zerocity^7"
+sets sv_projectName "^5ZERO CITY ABRIU HOJE^7"
+sets sv_projectDesc "FACÇÕES E ORGANIZAÇÕES LIVRES, ENTRE E RECEBA UMA XJ6"
 
-sv_master1 "off"
-sv_maxclients 10
+# sv_master1 "off"
+sv_maxclients 2023
 sv_endpointprivacy true
 sv_scriptHookAllowed 0
 setr sv_requestParanoia 3
@@ -37,26 +37,26 @@ sets activitypubFeed zerocity@mastodon.social
 sets locale "pt-BR"
 sets tags "vrp, vrpex, zero, zerocity, zerorp, zero roleplay, zero city, an4log, analog, bluen, bluenzzz"
 
-# set sv_pureLevel 1
+set sv_pureLevel 1
 
 setr game_enableFlyThroughWindscreen true
 
-# setr voice_externalAddress "pma.hadeslab.com.br"
-# setr voice_externalPort 32424
-# setr voice_useSendingRangeOnly true
-# setr voice_useNativeAudio true
-# setr voice_enableUi 0
-# setr voice_enableRadios 1
-# setr voice_enablePhones 1
-# setr voice_enableSubmix 1
-# setr voice_enableRadioAnim 1
-# setr voice_hideEndpoints 1
-# setr voice_defaultRadio CAPITAL
-# setr voice_defaultCycle HOME
-# setr voice_syncData 1
-# setr voice_allowSetIntent 1
-# setr voice_refreshRate 200
-# setr voice_use3dAudio false
+setr voice_externalAddress "pma.hadeslab.com.br"
+setr voice_externalPort 32424
+setr voice_useSendingRangeOnly true
+setr voice_useNativeAudio true
+setr voice_enableUi 0
+setr voice_enableRadios 1
+setr voice_enablePhones 1
+setr voice_enableSubmix 1
+setr voice_enableRadioAnim 1
+setr voice_hideEndpoints 1
+setr voice_defaultRadio CAPITAL
+setr voice_defaultCycle HOME
+setr voice_syncData 1
+setr voice_allowSetIntent 1
+setr voice_refreshRate 200
+setr voice_use3dAudio false
 
 #[ONE-SYNC]=====================================================================
 ## [txAdmin CFG validator]: onesync MUST only be set in the txAdmin settings page.

@@ -3,7 +3,7 @@ local configAnimations = config.animations
 
 for index, value in pairs(configAnimations.keyMapping) do
     RegisterKeyMapping('+'..index, value.text, 'keyboard', value.key)
-    RegisterCommand('+'..index, function() if (not LocalPlayer.state.BlockTasks and not LocalPlayer.state.Cam and not LocalPlayer.state.Handcuff and not IsPedReloading(PlayerPedId()) and not IsPedFalling(PlayerPedId())) then value.action() end; end)
+    RegisterCommand('+'..index, function() if (not IsPauseMenuActive() and not LocalPlayer.state.BlockTasks and not LocalPlayer.state.Cam and not LocalPlayer.state.Handcuff and not IsPedReloading(PlayerPedId()) and not IsPedFalling(PlayerPedId())) then value.action() end; end)
 end
 
 RegisterNetEvent('zero_animations:setAnim', function(anim)

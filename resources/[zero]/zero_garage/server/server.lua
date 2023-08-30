@@ -350,9 +350,6 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 end
                                 if (not owner) then return; end;
 
-                                -- 
-                                
-
                                 local netHandle;
                                 local timeOut = (GetGameTimer() + 2000)
                                 while (DoesEntityExist(vehHandle) and not netHandle and GetGameTimer() < timeOut) do
@@ -430,7 +427,7 @@ srv.vehicleLock = function()
             if (user_id == vehState.user_id) or (user_id == carKeys[vnetid]) then
                 vCLIENT.vehicleClientLock(-1, vnetid, lock)
                 if (not zeroClient.isInVehicle(source)) then zeroClient._playAnim(source, true, {{ 'anim@mp_player_intmenu@key_fob@', 'fob_click' }}, false); end;
-                TriggerClientEvent('zero_sound:vehicle', -1, vnetid, 15.0, 'lock', 0.1)
+                TriggerClientEvent('zero_sound:vehicle', -1, vnetid, 15.0, 'lock', 0.01)
                 if (lock == 1) then
                     TriggerClientEvent('notify', source, 'Garagem', 'O veículo foi <b>trancado</b> com sucesso.', 1000)
                 else
@@ -956,7 +953,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, first_spawn)
 	end
 end)
 
-RegisterNetEvent('homes:addGarage', function(source, homeName, blip, spawn)
+RegisterNetEvent('zero_homes:addGarage', function(source, homeName, blip, spawn)
     local homes = zero.query('zero_homes/permissions', { home = homeName })
     for _, v in ipairs(homes) do
         local source = zero.getUserSource(v.user_id)
@@ -988,4 +985,39 @@ AddEventHandler('onResourceStart', function(resourceName)
         end
         print('^5[Zero Garage]^7 foram deletados '..count..' veiculos alugado.')
 	end
+end)
+
+RegisterCommand('vehs', function(source)
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local vehicle = zero.query('zero_garage/getVehicleOwn', { user_id = user_id })
+        if (#vehicle > 0) then
+            local car_names = {}
+            for k, v in pairs(vehicle) do
+                table.insert(car_names, '<b>'..vehicleMaker(v.vehicle)..' '..vehicleName(v.vehicle)..'</b> ('..v.vehicle..')')
+            end
+            car_names = table.concat(car_names, '<br>')
+            TriggerClientEvent('notify', source, 'Garagem', 'Seus veículos:<br><br>' .. car_names, 30000)
+        else
+            TriggerClientEvent('notify', source, 'Garagem', 'Você não possui nenhum <b>veículo</b>.',10000)
+        end
+    end
+end)
+
+RegisterNetEvent('zero_interactions:vehs', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local vehicle = zero.query('zero_garage/getVehicleOwn', { user_id = user_id })
+        if (#vehicle > 0) then
+            local car_names = {}
+            for k, v in pairs(vehicle) do
+                table.insert(car_names, '<b>'..vehicleMaker(v.vehicle)..' '..vehicleName(v.vehicle)..'</b> ('..v.vehicle..')')
+            end
+            car_names = table.concat(car_names, '<br>')
+            TriggerClientEvent('notify', source, 'Garagem', 'Seus veículos:<br><br>' .. car_names, 30000)
+        else
+            TriggerClientEvent('notify', source, 'Garagem', 'Você não possui nenhum <b>veículo</b>.',10000)
+        end
+    end
 end)

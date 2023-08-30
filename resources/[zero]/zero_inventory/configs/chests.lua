@@ -1,8 +1,8 @@
 config.chests = {
-    armazem = { title = 'Armazem', type = 'priv:', permission = nil, weight = 100, cds = { vec3(-455.28,1138.73,325.91) } },
-    armazemVip = { title = 'Armazem VIP', type = 'priv:vip:', permission = 'vipchest.permissao', weight = 500, cds = { vec3(-444.83,1123.1,325.86) } },
+    -- armazem = { title = 'Armazem', type = 'priv:', permission = nil, weight = 100, cds = { vec3(-455.28,1138.73,325.91) } },
+    -- armazemVip = { title = 'Armazem VIP', type = 'priv:vip:', permission = 'vipchest.permissao', weight = 500, cds = { vec3(-444.83,1123.1,325.86) } },
 
-    ['cla:CPX'] = { title = 'Baú', type = 'cla', permission = nil, weight = 10, cds = { vec3(-78.32, -819.44, 326.18) }, log = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' },
+    -- ['cla:CPX'] = { title = 'Baú', type = 'cla', permission = nil, weight = 10, cds = { vec3(-78.32, -819.44, 326.18) }, log = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' },
     ['cla:ZeroFome'] = { title = 'Geladeira', type = 'cla', permission = 'zerofome.permissao', weight = 10000, cds = { vector3(-1844.321, -1190.083, 14.30042) }, log = 'https://discord.com/api/webhooks/1121532883631345834/5G3EmWD3QFjdVtE728_dKZT9wB3Av40XDkuIfUbsooWh1Hql8UrznHgkLomjuIRZ-Qzq' },
     ['cla:MecanicaIlegal'] = { title = 'Baú', type = 'cla', permission = '+ZeroMecanica.Funileiro', weight = 1000, cds = { vector3(-340.5099, -160.4044, 44.57947) }, log = 'https://discord.com/api/webhooks/1146110774348107898/WEG-SSO_NgQgs9llEt-oVTDTu63XLnnRmyrQdvyBUoR7sUde8nsG1wN2h8dxnz45LLk6' },
     ['cla:Mecanica'] = { title = 'Baú', type = 'cla', permission = 'zeromecanica.permissao', weight = 1000, cds = { vector3(-316.7473, -129.8242, 39.0022) }, log = 'https://discord.com/api/webhooks/1146110774348107898/WEG-SSO_NgQgs9llEt-oVTDTu63XLnnRmyrQdvyBUoR7sUde8nsG1wN2h8dxnz45LLk6' },
@@ -21,5 +21,7 @@ config.chests = {
     ['cla:Helipa'] = { title = 'Baú', type = 'cla', permission = 'helipa.permissao', weight = 3000, cds = { vector3(283.3714, 1857.547, 212.825) }, log = 'https://discord.com/api/webhooks/1145859753394831360/U71yqXMaKyhE9tFAfaw0ZFPz9NK3BgFcKYDTu1CFvMPZm6Lp_1WAMUKvLkFya5fWqkX-' },
     ['cla:Egito'] = { title = 'Baú', type = 'cla', permission = 'egito.permissao', weight = 1000, cds = { vector3(1296.672, -169.7143, 100.0491) }, log = 'https://discord.com/api/webhooks/1145903706810884146/iTo3Q-cF-jXmpAR45QpHVu48OT6pYqyPrjyevHeNbRvi6etqtuSQFHQReL0FC_vE9r_h' },
 
+    -- [ CASAS ] --
+    ['cla:Malibu'] = { title = 'Baú', type = 'cla', home = 'Malibu', weight = 1000, cds = { vector3(-3217.754, 783.5209, 14.09814) }, log = 'https://discord.com/api/webhooks/1146460866523443210/gGm5evE26lMxMJNNOBaCFWdLKLUVsqPt2ranT-DpRFh61fF4nufatE0iVG-FjHemND3w' },
 }
 
