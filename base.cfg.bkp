@@ -1,42 +1,48 @@
 #=======================================================================================================================
 # [FX SERVER CONFIG] ===================================================================================================
 #=======================================================================================================================
-endpoint_add_tcp "0.0.0.0:30120"
-endpoint_add_udp "0.0.0.0:30120"
+endpoint_add_tcp "0.0.0.0:30125"
+endpoint_add_udp "0.0.0.0:30125"
 
 #[SERVER]=======================================================================
-sv_hostname "Zero - Desenvolvimento"
-sets sv_projectName "Zero - Desenvolvimento"
-sets sv_projectDesc "Zero - Desenvolvimento"
+sv_hostname "Zero - Dev"
+sets sv_projectName "Zero - Dev"
+sets sv_projectDesc "Cidade de desenvolvimento da zero"
 
 sv_master1 "off"
-sv_maxclients 48
+sv_maxclients 10
 sv_endpointprivacy true
 sv_scriptHookAllowed 0
 setr sv_requestParanoia 3
 
 load_server_icon server.png
-sets banner_detail "https://cdn.discordapp.com/attachments/1098816084917891092/1121951642099646464/Banner_Detail.gif" 
-sets banner_connecting "https://cdn.discordapp.com/attachments/1098816084917891092/1121951641445339267/Banner_Connect.gif"
+sets banner_detail "https://i.imgur.com/kolawxg.gif" 
+sets banner_connecting "https://i.imgur.com/GrxjM4R.gif"
 
 #[SET]========================================================================
-set mysql_connection_string "mysql://root@localhost/zero_roleplay?charset=utf8mb4"
+set mysql_connection_string "mysql://root:54&PzuS64MLC@localhost/zero_roleplay?charset=utf8mb4"
 set mysql_slow_query_warning 1500
 # set mysql_debug true
 
-set sv_enforceGameBuild 2699
+set sv_enforceGameBuild 2944
 set svgui_disable true
-set gametype "Roleplay"
-set mapname "Los Santos"
 
-#[SETS]=========================================================================
+set gametype "Zero City"
+set mapname "Zero City"
+sets instagram "instagram.com/zerocity.gg"
+sets dev "S9 Team"
+sets site "zerocity.shop"
+sets discord "discord.gg/zerocity"
+sets activitypubFeed zerocity@mastodon.social
 sets locale "pt-BR"
-sets tags "zero"
+sets tags "vrp, vrpex, zero, zerocity, zerorp, zero roleplay, zero city, an4log, analog, bluen, bluenzzz"
+
+# set sv_pureLevel 1
 
 setr game_enableFlyThroughWindscreen true
 
-# setr voice_externalAddress 189.127.164.170
-# setr voice_externalPort 30120
+# setr voice_externalAddress "pma.hadeslab.com.br"
+# setr voice_externalPort 32424
 # setr voice_useSendingRangeOnly true
 # setr voice_useNativeAudio true
 # setr voice_enableUi 0
@@ -50,10 +56,11 @@ setr game_enableFlyThroughWindscreen true
 # setr voice_syncData 1
 # setr voice_allowSetIntent 1
 # setr voice_refreshRate 200
+# setr voice_use3dAudio false
 
 #[ONE-SYNC]=====================================================================
 ## [txAdmin CFG validator]: onesync MUST only be set in the txAdmin settings page.
-# set onesync on
+set onesync on
 set onesync_population false
 onesync_distanceCullVehicles true
 onesync_forceMigration true

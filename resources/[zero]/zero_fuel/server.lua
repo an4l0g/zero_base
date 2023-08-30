@@ -1,6 +1,21 @@
 local srv = {}
 Tunnel.bindInterface('Fuel', srv)
 
+srv.payFuel = function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        if (zero.tryFullPayment(user_id, 300)) then
+            zeroClient.giveWeapons(source, {
+                ['WEAPON_PETROLCAN'] = { ammo = 4000 }
+            }, false, GlobalState.weaponToken)
+            return true
+        end
+    end
+    TriggerClientEvent('notify', source, 'Posto de Gasolina', 'Você não possui <b>dinheiro</b> suficiente!')
+    return false
+end
+
 local vehicleGlobal = {}
 
 srv.getVehicleSyncFuel = function(vehicle)

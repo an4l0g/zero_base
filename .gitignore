@@ -1,6 +1,7 @@
 node_modules
 /cache
 /cache/*
+/base.cfg
 /keys.cfg
 /pm2.bat
 .vite

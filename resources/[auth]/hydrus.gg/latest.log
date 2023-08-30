@@ -6478,3 +6478,13 @@
 [30 Aug 02:15:18] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [342,1693372518]
 [30 Aug 02:17:05] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [297,1693372625]
 [30 Aug 02:19:39] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [137,1693372779]
+[30 Aug 02:29:16] Received event EXECUTE_COMMAND with {"id":5482891,"command":"addvehicle 411 r1200","scope":"plugin"}
+[30 Aug 02:29:16] Received event EXECUTE_COMMAND with {"id":5482893,"command":"addvehicle 411 h2carb","scope":"plugin"}
+[30 Aug 02:29:16] Received event EXECUTE_COMMAND with {"id":5482895,"command":"system-notify eyJkaXNjb3JkIjoiNTEyNzkxNjM0MTMyNDY3NzE0IiwidXNlcl9pZCI6NDExLCJvcmRlcl9pZCI6MTEyMTMxMX0=","scope":"plugin"}
+[30 Aug 02:29:16] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [411,"r1200"]
+[30 Aug 02:29:16] SQL: [SELECT 1 FROM user_vehicles WHERE user_id=? AND vehicle=?] -> [411,"h2carb"]
+[30 Aug 02:29:16] SQL: [INSERT INTO `hydrus_scheduler` (`command`,`player_id`,`args`) VALUES (?,?,?)] -> ["system-notify",411,"[\"eyJkaXNjb3JkIjoiNTEyNzkxNjM0MTMyNDY3NzE0IiwidXNlcl9pZCI6NDExLCJvcmRlcl9pZCI6MTEyMTMxMX0=\"]"]
+[30 Aug 02:29:17] Command 5482893 [done] -> OK
+[30 Aug 02:29:17] Command 5482891 [done] -> OK
+[30 Aug 02:29:17] Command 5482895 [pending] -> nil
+[30 Aug 02:29:23] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [650,1693373363]
