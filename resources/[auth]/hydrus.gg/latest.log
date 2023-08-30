@@ -6064,6 +6064,7 @@
 [29 Aug 21:21:34] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [494,1693354894]
 [29 Aug 21:22:03] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [514,1693354923]
 [29 Aug 21:22:27] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [329,1693354947]
+<<<<<<< HEAD
 [30 Aug 10:48:16] Using driver oxmysql
 [30 Aug 10:48:16] You are 1 patch behind 
 [30 Aug 10:48:16] The lastest version is 1.8.1, current version: 1.8.0
@@ -6072,3 +6073,8 @@
 [30 Aug 10:48:16] Received event $open with []
 [30 Aug 10:48:16] Received event HANDSHAKE with {"error":"Store already connected"}
 [30 Aug 10:48:17] Received event $close with []
+=======
+[30 Aug 10:48:45] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [179,1693403325]
+[30 Aug 10:49:58] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [655,1693403398]
+[30 Aug 10:51:48] SQL: [SELECT * FROM hydrus_scheduler WHERE player_id=? AND execute_at<=?] -> [656,1693403508]
+>>>>>>> ce846c3510977b6f7f67af753acc484d7f4bf30f
