@@ -2,7 +2,7 @@ srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
-zero._prepare('zero_bennys/setCustom', 'update user_vehicles set custom = @custom where user_id = @user_id and plate = @plate')
+zero._prepare('zero_bennys/setCustom', 'update user_vehicles set custom = @custom where plate = @plate')
 
 srv.checkPermission = function(perm)
     local source = source
@@ -30,9 +30,9 @@ srv.saveVehicle = function(plate, custom)
     local source = source
     local mechanicId = zero.getUserId(source)
     local user_id = zero.getUserByPlate(plate)
-    if (user_id and plate and custom) then
+    if (plate and custom) then
         print('^5[Zero Bennys]^7 salvou o tuning do id '..user_id..' placa '..plate)
-        zero.execute('zero_bennys/setCustom', { user_id = user_id, plate = plate, custom = json.encode(custom) })
+        zero.execute('zero_bennys/setCustom', { plate = plate, custom = json.encode(custom) })
         zero.webhook(webhookTuning, '```prolog\n[ZERO BENNYS]\n[ACTION]: (TUNING)\n[MECHANIC]: '..mechanicId..'\n[VEHICLE OWNER]: '..user_id..'\n[VEHICLE PLATE]: '..plate..'\n[CUSTOM]: '..json.encode(custom)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```' )
         return true
     end

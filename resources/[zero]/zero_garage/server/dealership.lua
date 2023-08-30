@@ -242,7 +242,7 @@ RegisterNetEvent('zero_garage:CacheExecute', function(source, user_id, quit)
     local coord = inTest[user_id].origin
     if (inTest[user_id]) then
         if (quit) then
-            zero.updatePos(coord.x, coord.y, coord.z)
+            zero.setKeyDataTable(user_id, 'position', { x = coord.x, y = coord.y, z = coord.z })
             zero.updateHealth(health)
         else
             zeroClient.teleport(source, coord.x, coord.y, coord.z)

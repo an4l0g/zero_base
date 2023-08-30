@@ -36,10 +36,10 @@ zero.prepare('zero_framework/money_init_user','INSERT IGNORE INTO user_moneys(us
 zero.prepare('zero_framework/getAllMoney', 'select wallet, bank, paypal from user_moneys where user_id = @user_id')
 zero.prepare('zero_framework/getWalletMoney', 'select wallet from user_moneys where user_id = @user_id')
 zero.prepare('zero_framework/getBankMoney', 'select bank from user_moneys where user_id = @user_id')
-zero.prepare('zero_framework/getPaypalMoney', 'select paypal from user_moneys where user_id = @user_id')
+zero.prepare('zero_framework/getPaypalMoney', 'select paypal from users where id = @user_id')
 zero.prepare('zero_framework/setMoney', 'update user_moneys set wallet = @wallet where user_id = @user_id')
 zero.prepare('zero_framework/setBankMoney', 'update user_moneys set bank = @bank where user_id = @user_id')
-zero.prepare('zero_framework/setPaypalMoney', 'update user_moneys set paypal = @paypal where user_id = @user_id')
+zero.prepare('zero_framework/setPaypalMoney', 'update users set paypal = @paypal where id = @user_id')
 ---------------------------------------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------------------------------------

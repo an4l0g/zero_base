@@ -587,7 +587,7 @@ config.items = {
 ----------------------------------------------------------------------------
     ['m-droga'] = { name = 'M. Droga', type = 'common', weight = 1 },
     ['m-municoes'] = { name = 'M. Munições', type = 'common', weight = 1 },
-    ['c-mec'] = { name = 'M. Mecânica', type = 'common', weight = 1 },
+    ['m-mec'] = { name = 'M. Mecânica', type = 'common', weight = 1 },
     ['p-armas'] = { name = 'P. Armas', type = 'common', weight = 1 },
     ['colete-ilegal'] = { 
         name = 'Colete Ilegal', 
@@ -696,6 +696,7 @@ config.items = {
     ----------------------------------------------------------------------------
     -- Armas legais
     ----------------------------------------------------------------------------
+    ['weapon_petrolcan'] = { name = 'Combustível',type = 'weapon',weight = 1, model = nil },
     ['weapon_ceramicpistol'] = { name = 'Ceramic Pistol',type = 'weapon',weight = 1, model = nil },
     ['m_weapon_ceramicpistol'] = { name = 'M. Ceramic Pistol', type = 'wammo', weight = 0.7, model = nil },
     ['weapon_pistol_mk2'] = { name = 'Five-SeveN',type = 'weapon',weight = 1, model = nil },

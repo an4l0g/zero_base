@@ -65,14 +65,6 @@ StartFuelThread = function()
     end)
 end
 
-AddStateBagChangeHandler('inVehicle', nil, function(bagName, key, value) 
-    local entity = GetPlayerFromStateBagName(bagName)
-    if (entity == 0) then return; end;
-    if (value) then
-        
-    end
-end)
-
 local nearestBlips = {}
 
 local _markerThread = false
@@ -123,35 +115,37 @@ local markerThread = function(k, v)
                     local pumpType = v[5]
                     local abType = 0
                     local pumpDist = 3.0
-                    if (dataVehicle ~= nil) then
-                        if (IsPedInAnyVehicle(ped)) then dataVName2 = vehicleNow end
-                        if (pumpType == 'eletrical' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
-                           if (configFuelI.vehicleEletrical[dataVName2]) then
+                    if (dataVehicle ~= nil and dataVehicle ~= 0) then
+                        if (DoesEntityExist(dataVehicle)) then
+                            if (IsPedInAnyVehicle(ped)) then dataVName2 = vehicleNow end
+                            if (pumpType == 'eletrical' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
+                            if (configFuelI.vehicleEletrical[dataVName2]) then
+                                    fuelConfig.abastecer = true
+                                    pumpDist = 3.0
+                                    abType = 1
+                                end
+                            elseif (pumpType == 'car' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
+                                if (not configFuelI.vehicleEletrical[dataVName2]) then
+                                    fuelConfig.abastecer = true
+                                    pumpDist = 3.0
+                                    abType = 1
+                                end
+                            elseif (pumpType == 'heli' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
                                 fuelConfig.abastecer = true
-                                pumpDist = 3.0
+                                pumpDist = 8.0
+                                abType = 1
+                            elseif (pumpType == 'plane' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
+                                fuelConfig.abastecer = true
+                                pumpDist = 8.0
+                                abType = 1
+                            elseif (pumpType == 'boat' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
+                                fuelConfig.abastecer = true
+                                pumpDist = 8.0
                                 abType = 1
                             end
-                        elseif (pumpType == 'car' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
-                            if (not configFuelI.vehicleEletrical[dataVName2]) then
-                                fuelConfig.abastecer = true
-                                pumpDist = 3.0
-                                abType = 1
-                            end
-                        elseif (pumpType == 'heli' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
-                            fuelConfig.abastecer = true
-                            pumpDist = 8.0
-                            abType = 1
-                        elseif (pumpType == 'plane' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
-                            fuelConfig.abastecer = true
-                            pumpDist = 8.0
-                            abType = 1
-                        elseif (pumpType == 'boat' and checkVehicleClass(GetVehicleClass(dataVehicle), pumpType)) then
-                            fuelConfig.abastecer = true
-                            pumpDist = 8.0
-                            abType = 1
                         end
                     end
-
+                    
                     local distance = #(pCoord - v[3])
                     if (distance <= pumpDist) then
                         if (fuelConfig.abastecer) then
@@ -176,6 +170,7 @@ local markerThread = function(k, v)
                                                 DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), 'PRESSIONE ~b~E ~w~PARA ABASTECER')
                                             end
                                             if (IsControlJustPressed(0, 38)) then
+                                                fuelConfig.totalPrice = 0
                                                 fuelConfig.pumpId = v[4]
                                                 fuelConfig.canFuel = true
                                                 fuelConfig.pumpPrice = v[6]
@@ -201,6 +196,16 @@ local markerThread = function(k, v)
                                     end
                                 end
                             end
+                        else
+                            if (not IsPedInAnyVehicle(ped)) then
+                                DrawText3Ds(vector3(v[3].x, v[3].y, v[3].z + 1.2), '~b~E~w~ - COMPRAR GALÃO')
+                                if (IsControlJustPressed(0, 38) and not HasPedGotWeapon(ped, GetHashKey('WEAPON_PETROLCAN'))) then
+                                    if (vSERVER.payFuel()) then
+                                        SetCurrentPedWeapon(ped, GetHashKey('WEAPON_PETROLCAN'))
+                                        TriggerEvent('notify', 'Posto de Gasolina', 'Você comprou um <b>Galão de Combustível</b>')
+                                    end
+                                end
+                            end
                         end
                     end
                 end
@@ -217,7 +222,7 @@ Citizen.CreateThread(function()
         local pCoord = GetEntityCoords(ped)
         for k, v in pairs(configLocs) do
             local distance = #(pCoord - v.coord)
-            if (distance <= v.markerDistance) and IsPedInAnyVehicle(ped) then
+            if (distance <= v.markerDistance) then
                 markerThread(k, v)
             end
         end
@@ -333,6 +338,11 @@ stopFuel = function()
     end
     fuelConfig.totalFuel = 0
 end
+
+setFuel = function(vehicle, fuel)
+    vSERVER.syncCombustivel(vehicle, fuel)
+end
+exports('SetFuel', setFuel)
 
 local class = {
     ['car'] = function(vehicle, valid)

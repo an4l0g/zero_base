@@ -185,7 +185,7 @@ local weapons = {
 
 RegisterCommand('attachs',function(source, args)
 	local ped = PlayerPedId()
-	if (vSERVER.checkAttachs({ 'attachs.permissao', 'attachs2.permissao' })) then
+	if (vSERVER.checkAttachs({ 'attachs.permissao', 'attachs2.permissao', '@Vips.Zero' })) then
 		if not (args[1]) then
 			TriggerEvent('notify', 'Attachs', 'Utilize o <b>comando</b> listado abaixo: <br> <br><b>/attachs colocar;</b> <br><b>/attachs retirar.</b>')
 		else
@@ -197,7 +197,7 @@ end)
 
 RegisterCommand('attachs2',function(source, args)
 	local ped = PlayerPedId()
-	if (vSERVER.checkAttachs({ 'attachs2.permissao' }, true)) then
+	if (vSERVER.checkAttachs({ 'attachs2.permissao', '@Vips.Zero' }, true)) then
 		if not (args[1]) then
 			TriggerEvent('notify', 'Attachs', 'Utilize o <b>comando</b> listado abaixo: <br> <br><b>/attachs2 colocar;</b> <br><b>/attachs2 retirar.</b>')
 		else

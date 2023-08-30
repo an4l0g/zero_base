@@ -56,4 +56,19 @@ else
             -- DrawRect(_x, _y + 0.0125, 0.015 + factor, 0.03, 41, 11, 41, 68)
         end
     end
+
+    DrawText3D = function(coords, text)
+        SetDrawOrigin(coords.x, coords.y, coords.z+0.5, 0); 
+        SetTextFont(4)     
+        SetTextProportional(0)     
+        SetTextScale(0.35,0.35)    
+        SetTextColour(255,255,255,155)   
+        SetTextDropshadow(0, 0, 0, 0, 255)     
+        SetTextEdge(2, 0, 0, 0, 150)     
+        SetTextDropShadow()     SetTextOutline()     
+        SetTextEntry("STRING")     SetTextCentre(1)     
+        AddTextComponentString(text) 
+        DrawText(0.0, 0.0)     
+        ClearDrawOrigin() 
+    end
 end
