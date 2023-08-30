@@ -237,6 +237,8 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 			if (GetGameTimer() > timeOut) then return; end;
 		end
 
+		TriggerEvent('zero_bennys:applymods', vnet, custom)
+
 		local vehicle = NetToVeh(vnet)
 		SetVehicleDoorsLocked(vehicle, 2)
 		SetVehicleDoorsLockedForAllPlayers(vehicle, false)
@@ -248,14 +250,18 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 		SetEntityAsMissionEntity(nveh, true, true)
 		SetVehRadioStation(nveh, 'OFF')
 		SetVehicleEngineOn(nveh, false, true, true)
+		
+        if (state.data.fuel) then 
+			cli.setVehicleState(vnet, state, false) 
+		else
+			SetVehicleFuelLevel(vehicle, 100.0)
+		end
 
-        if (state.data.fuel) then cli.setVehicleState(vnet, state, false) end
         if (DecorIsRegisteredAsType('Player_Vehicle', 3)) then DecorSetInt(nveh, 'Player_Vehicle', -1); end;
         
         Entity(nveh).state:set('veh:spawning', nil, true)
+		print(plate)
         SetVehicleNumberPlateText(nveh, plate)
-        
-		TriggerEvent('zero_bennys:applymods', vnet, custom)
         return true
     end
 end
@@ -277,7 +283,7 @@ exports('deleteVehicle', cli.tryDeleteVehicle)
 local gps = {}
 local vehBlips = {}
 
-cli.syncBlips = function(vnet, vname)
+cli.syncBlips = function(vnet, vname, plate)
     gps[vname] = true
     Citizen.CreateThread(function()
         while (gps[vname]) do
@@ -285,12 +291,12 @@ cli.syncBlips = function(vnet, vname)
                 local nveh = NetToVeh(vnet)
                 if (GetBlipFromEntity(nveh) == 0) then
                     vehBlips[vname] = AddBlipForEntity(nveh)
-                    SetBlipSprite(vehBlips[vname], 225)
+                    SetBlipSprite(vehBlips[vname], 161)
 					SetBlipAsShortRange(vehBlips[vname], false)
-					SetBlipColour(vehBlips[vname], 1)
+					SetBlipColour(vehBlips[vname], 3)
 					SetBlipScale(vehBlips[vname], 0.4)
 					BeginTextCommandSetBlipName('STRING')
-					AddTextComponentString('~b~Rastreador: ~g~'..vname)
+					AddTextComponentString('Rastreador: ~b~'..plate)
 					EndTextCommandSetBlipName(vehBlips[vname])
                 end
             end

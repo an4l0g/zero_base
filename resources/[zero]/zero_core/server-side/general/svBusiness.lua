@@ -14,13 +14,14 @@ local webhooks = {
     ['add'] = 'https://discord.com/api/webhooks/1145784942241005759/BfA7hskNPdaxn99buFg1ZrjnaoOs9EdUphFKueSXpv2Gx7f40m8zaervDbMACGPhbiKY'
 }
 
+local  tempBusiness = {}
+
 srv.checkBusiness = function(business)
     local source = source
     local user_id = zero.getUserId(source)
     if (user_id) then
         local query = zero.query('getBusiness', { user_id = user_id, name = business })[1]
         if (query) then
-
             if (business == query['business_name']) and (user_id == query['business_owner']) then
                 return true
             end           
@@ -30,10 +31,33 @@ srv.checkBusiness = function(business)
     end
 end
 
-srv.setBucket = function(amount)
+srv.saveTemp = function()
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) then SetPlayerRoutingBucket(source, parseInt(amount)) end
+    if (user_id) then 
+        if (not tempBusiness[user_id]) then
+            tempBusiness[user_id] = {
+                oldCoords = GetEntityCoords(GetPlayerPed(source))
+            }
+        end
+    end
+end
+
+srv.deleteTemp = function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then 
+        if (not tempBusiness[user_id]) then
+            tempBusiness[user_id] = {
+                oldCoords = GetEntityCoords(GetPlayerPed(source))
+            }
+        end
+    end
+end
+
+srv.setBucket = function(amount)
+    local source = source
+    SetPlayerRoutingBucket(source, parseInt(amount))
 end
 
 local businessCooldown = {}
@@ -82,3 +106,38 @@ busCooldown = function(business, time)
         businessCooldown[business] = nil
     end)
 end
+
+RegisterNetEvent('zero_business:CacheExecute', function(source, user_id, quit)
+    SetPlayerRoutingBucket(source, 0)
+    local coord = tempBusiness[user_id].oldCoords
+    if (tempBusiness[user_id]) then
+        if (quit) then
+            zero.setKeyDataTable(user_id, 'position', { x = coord.x, y = coord.y, z = coord.z })
+        else
+            zeroClient.teleport(source, coord.x, coord.y, coord.z)
+        end
+        tempBusiness[user_id] = nil
+    end
+end)
+
+AddEventHandler('onResourceStop', function(resourceName)
+  	if (GetCurrentResourceName() == resourceName) then 
+		print('^5[Zero Business]^7 sistema stopado/reiniciado.')
+        for k, _ in pairs(tempBusiness) do
+            local user_id = k
+            local _source = zero.getUserSource(user_id)
+            if (user_id) then
+                TriggerEvent('zero_business:CacheExecute', _source, k)
+                TriggerClientEvent('notify', _source, 'Empresa', 'O sistema de <b>empresa</b> da nossa cidade foi reiniciado.')
+                print('^5[Zero Business]^7 o user_id ^5('..user_id..')^7 foi retirado da empresa.')
+            end
+        end
+	end
+end)
+
+AddEventHandler('zero:playerLeave', function(user_id, source)
+	if (tempBusiness[user_id]) then
+        TriggerEvent('zero_business:CacheExecute', source, user_id, true)
+        print('^5[Zero Business]^7 o user_id ^5('..user_id..')^7 foi retirado da empresa.')
+    end
+end)

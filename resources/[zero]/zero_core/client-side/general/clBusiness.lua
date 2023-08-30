@@ -17,6 +17,7 @@ local markerThread = function()
                 TextFloating('~b~E~w~ - Entrar na empresa', _config.coords.enter.xyz)
                 if (dist <= 1.2 and IsControlJustReleased(0, 38)) then
                     if (vSERVER.checkBusiness(index)) then
+						vSERVER.saveTemp()
                         DoScreenFadeOut(500)
 						Citizen.Wait(500)
 
@@ -72,6 +73,7 @@ enterBusiness = function(business)
 					SetEntityHeading(ped, config.empresa[business]['coords']['enter'].w)
 					Citizen.Wait(1000)
 					DoScreenFadeIn(1000)
+					vSERVER.deleteTemp()
 					inBusiness = false
 				end 
 			end

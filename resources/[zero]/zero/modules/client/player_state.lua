@@ -155,47 +155,51 @@ zero.getCustomization = function()
 end
 
 zero.setCustomization = function(clothes)
-	if (clothes) then
-		local ped = PlayerPedId()
+	local r = async()
+	Citizen.CreateThread(function()
+		if (clothes) then
+			local ped = PlayerPedId()
 
-		local modelHash = clothes.pedModel
-		if (modelHash) then
-			local i = 0
-			while not HasModelLoaded(modelHash) and i < 10000 do
-				i = i + 1
-				RequestModel(modelHash)
-				Citizen.Wait(10)
+			local modelHash = clothes.pedModel
+			if (modelHash) then
+				local i = 0
+				while not HasModelLoaded(modelHash) and i < 10000 do
+					i = i + 1
+					RequestModel(modelHash)
+					Citizen.Wait(10)
+				end
+
+				if (HasModelLoaded(modelHash)) then
+					local weapons = zero.getWeapons()
+					local armour = zero.getArmour()
+					local health = zero.getHealth()
+
+					SetPlayerModel(PlayerId(), modelHash)
+					zero.setHealth(health)
+					zero.giveWeapons(weapons, true, GlobalState.weaponToken)
+					zero.setArmour(armour)
+					SetModelAsNoLongerNeeded(modelHash)
+				end 
 			end
 
-			if (HasModelLoaded(modelHash)) then
-				local weapons = zero.getWeapons()
-				local armour = zero.getArmour()
-				local health = zero.getHealth()
+			ped = PlayerPedId()
+			SetPedMaxHealth(ped, 200)
 
-				SetPlayerModel(PlayerId(), modelHash)
-				zero.setHealth(health)
-				zero.giveWeapons(weapons, true, GlobalState.weaponToken)
-				zero.setArmour(armour)
-				SetModelAsNoLongerNeeded(modelHash)
-			end 
-		end
-
-		ped = PlayerPedId()
-		SetPedMaxHealth(ped, 200)
-
-		for k, v in pairs(clothes) do
-			if (k ~= 'pedModel') then
-				local isProp, index = parsePart(k)
-				if (isProp) then
-					SetPedPropIndex(ped, index, v.model, v.var, (v.palette or 0))
-				else
-					SetPedComponentVariation(ped, parseInt(k), v.model, v.var, (v.palette or 0))
+			for k, v in pairs(clothes) do
+				if (k ~= 'pedModel') then
+					local isProp, index = parsePart(k)
+					if (isProp) then
+						SetPedPropIndex(ped, index, v.model, v.var, (v.palette or 0))
+					else
+						SetPedComponentVariation(ped, parseInt(k), v.model, v.var, (v.palette or 0))
+					end
 				end
 			end
+			TriggerEvent('zero:barberUpdate')
+			TriggerEvent('zero:tattooUpdate')
 		end
-		TriggerEvent('zero:barberUpdate')
-		TriggerEvent('zero:tattooUpdate')
-	end
+	end)
+	return r:wait()
 end
 
 local tab = nil
