@@ -349,8 +349,7 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 if (not owner) then return; end;
                                 
                                 local netHandle;
-                                local timeOut = (GetGameTimer() + 2000)
-                                while (DoesEntityExist(vehHandle) and not netHandle and GetGameTimer() < timeOut) do
+                                while (DoesEntityExist(vehHandle) and not netHandle) do
                                     netHandle = DoesEntityExist(vehHandle) and NetworkGetNetworkIdFromEntity(vehHandle)
                                     Citizen.Wait(1)
                                 end
