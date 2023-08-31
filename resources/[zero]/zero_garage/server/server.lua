@@ -349,6 +349,13 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 end
                                 if (not owner) then return; end;
                                 
+                                local netHandle;
+                                while (DoesEntityExist(vehHandle) and not netHandle) do
+                                    netHandle = DoesEntityExist(vehHandle) and NetworkGetNetworkIdFromEntity(vehHandle)
+                                    Citizen.Wait(1)
+                                end
+                                if (not netHandle) then return; end;
+                                
                                 SetVehicleNumberPlateText(vehHandle, veh.plate)
                                 SetVehicleDoorsLocked(vehHandle, 2)
 

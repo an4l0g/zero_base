@@ -122,10 +122,15 @@ zero.replaceWeapons = function(weapons, token)
 end
 
 zero.giveWeapons = function(weapons, clear_before, token)
+	print('1')
 	zeroServer._checkToken(token, weapons)
+	print('2')
 	local player = PlayerPedId()
 	if (clear_before) then RemoveAllPedWeapons(player, true); end;
+	print('3')
+	print(json.encode(weapons))
 	for weapon, value in pairs(weapons) do
+		print(weapon, json.encode(value))
 		local ammo = (value.ammo or 0)
 		GiveWeaponToPed(player, GetHashKey(weapon), ammo, false)
 	end
@@ -198,6 +203,7 @@ zero.setCustomization = function(clothes)
 			TriggerEvent('zero:barberUpdate')
 			TriggerEvent('zero:tattooUpdate')
 		end
+		r()
 	end)
 	return r:wait()
 end
