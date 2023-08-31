@@ -571,12 +571,10 @@ RegisterCommand('car', function(source, args)
                         Citizen.Wait(1)
                     end
                 else
-                    vehHandle = Citizen.InvokeNative(`CREATE_AUTOMOBILE`, GetHashKey(spawn), vector3(pCoord.x, pCoord.y, pCoord.z - 0.3), heading)
+                    vehHandle = Citizen.InvokeNative(GetHashKey('CREATE_AUTOMOBILE'), GetHashKey(spawn), pCoord.x, pCoord.y, pCoord.z - 0.3, heading, true, true, true)
                 end
                 
-                if vehHandle and (vehHandle > 0) then
-                    if _Regis then _Regis(vehHandle) end
-                    
+                CreateThread(function()
                     local owner = NetworkGetEntityOwner(vehHandle)
                     while (owner == 1) do
                         owner = DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle)
@@ -600,7 +598,7 @@ RegisterCommand('car', function(source, args)
                     SetPedIntoVehicle(ped, vehHandle, -1)
                     
                     zero.webhook('Car', '```prolog\n[/CAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SPAWNOU]: '..spawn..'\n[COORDS]: '..pCoord..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-                end
+                end)
             end
         end
     end
