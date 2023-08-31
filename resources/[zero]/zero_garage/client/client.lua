@@ -221,26 +221,28 @@ cli.setVehicleState = function(vnet, state, others)
 end
 
 cli.settingVehicle = function(vnet, state, plate, custom)
-    local timeOut = (GetGameTimer() + 4000)
+    -- local timeOut = (GetGameTimer() + 4000)
     while (not NetworkDoesEntityExistWithNetworkId(vnet)) do
-        Citizen.Wait(10)
-        if (GetGameTimer() > timeOut) then return; end;
+        Citizen.Wait(100)
+        -- if (GetGameTimer() > timeOut) then return; end;
     end
+
+	local vehicle = NetToVeh(vnet)
+	while (not DoesEntityExist(vehicle)) do Citizen.Wait(100) end
 
     local nveh = NetworkGetEntityFromNetworkId(vnet)
     if (nveh) then
-        local timeOut = (GetGameTimer() + 4000)
-        NetworkRequestControlOfEntity(nveh)
-		while (not NetworkHasControlOfEntity(nveh)) do
-			NetworkRequestControlOfEntity(nveh)
-			Citizen.Wait(10)
-			if (GetGameTimer() > timeOut) then return; end;
-		end
+        -- local timeOut = (GetGameTimer() + 4000)
+        -- NetworkRequestControlOfEntity(nveh)
+		-- while (not NetworkHasControlOfEntity(nveh)) do
+		-- 	NetworkRequestControlOfEntity(nveh)
+		-- 	Citizen.Wait(10)
+		-- 	if (GetGameTimer() > timeOut) then return; end;
+		-- end
 
 		TriggerEvent('zero_bennys:applymods', vnet, custom)
 		SetVehicleNumberPlateText(nveh, plate)
 		
-		local vehicle = NetToVeh(vnet)
 		SetVehicleDoorsLocked(vehicle, 2)
 		SetVehicleDoorsLockedForAllPlayers(vehicle, false)
         SetVehicleIsConsideredByPlayer(nveh, true)
