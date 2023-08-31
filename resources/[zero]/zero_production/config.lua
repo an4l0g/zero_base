@@ -100,7 +100,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 7 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 7 },
             }
         },
         ['m_weapon_snspistol_mk2'] = { 
@@ -109,7 +109,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 7 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 7 },
             }
         },
         ['m_weapon_revolver_mk2'] = { 
@@ -118,7 +118,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 7 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 7 },
             }
         },
         ['m_weapon_tecpistol'] = { 
@@ -127,7 +127,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 14 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 14 },
             }
         },
         ['m_weapon_machinepistol'] = { 
@@ -136,7 +136,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 14 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 14 },
             }
         },
         ['m_weapon_minismg'] = { 
@@ -145,7 +145,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 14 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 14 },
             }
         },
         ['m_weapon_compactrifle'] = { 
@@ -154,7 +154,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 21 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 21 },
             }
         },
         ['m_weapon_heavyrifle'] = { 
@@ -163,7 +163,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 21 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 21 },
             }
         },
         ['m_weapon_bullpuprifle_mk2'] = { 
@@ -172,7 +172,7 @@ configs.products = {
             amount = 50,
             delay = 10000,
             materials = {
-                ['c-muni'] = { name = 'C. Munição', amount = 21 },
+                ['m-municoes'] = { name = 'M. Munições', amount = 21 },
             }
         },
     },
