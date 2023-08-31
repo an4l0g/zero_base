@@ -14,16 +14,16 @@ Citizen.CreateThread(function()
         FreezeEntityPosition(ped, true)
         SetPlayerInvincible(PlayerId(), true)
 
-        local model = GetHashKey('mp_m_freemode_01')
-		RequestModel(model)
-		while not HasModelLoaded(model) do
-			RequestModel(model)
-			Citizen.Wait(0)
-		end
-		SetPlayerModel(PlayerId(), model)
-		SetModelAsNoLongerNeeded(model)
+        -- local model = GetHashKey('mp_m_freemode_01')
+		-- RequestModel(model)
+		-- while not HasModelLoaded(model) do
+		-- 	RequestModel(model)
+		-- 	Citizen.Wait(0)
+		-- end
+		-- SetPlayerModel(PlayerId(), model)
+		-- SetModelAsNoLongerNeeded(model)
         
-        ped = PlayerPedId()
+        -- ped = PlayerPedId()
 
 		RequestCollisionAtCoord(pCoord.x, pCoord.y, pCoord.z)
         SetEntityCoordsNoOffset(ped, pCoord.x, pCoord.y, pCoord.z, false, false, false, true)
@@ -31,7 +31,7 @@ Citizen.CreateThread(function()
 
 		SetPedDefaultComponentVariation(ped)
         ClearPedTasksImmediately(ped)
-        RemoveAllPedWeapons(ped)
+        -- RemoveAllPedWeapons(ped)
 
         local time = GetGameTimer()
         while (not HasCollisionLoadedAroundEntity(ped) and (GetGameTimer() - time) < 5000) do

@@ -1,6 +1,13 @@
 AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	local data = zero.getUserDataTable(user_id)
 	
+	-- [ Teleport ] --
+	if (data.position) then
+		zeroClient.teleport(source, data.position.x, data.position.y, data.position.z)
+	end
+
+	exports.zero_appearance:setCustomization(source, user_id)
+
 	-- [ Health ] --
 	if (data.health == nil) then
 		data.health = 400
@@ -39,14 +46,8 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source, firstSpawn)
 	end
 	----------------------------------
 
-	-- [ Teleport ] --
-	if (data.position) then
-		zeroClient.teleport(source, data.position.x, data.position.y, data.position.z)
-	end
-
 	zeroClient.setFriendlyFire(source, true)
 	zeroClient.playerStateReady(source, true)
-	exports.zero_appearance:setCustomization(source, user_id)
 end)
 
 zero.updatePos = function(x, y, z)

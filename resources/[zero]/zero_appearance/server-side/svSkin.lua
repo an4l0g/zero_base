@@ -26,7 +26,9 @@ setCustomization = function(source, user_id)
         local clothes = json.decode(query.user_clothes)
         if (clothes) then
             zeroClient.setCustomization(source, clothes)
+            return true
         end
     end
+    return false
 end
 exports('setCustomization', setCustomization)
