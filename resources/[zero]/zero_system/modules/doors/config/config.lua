@@ -144,9 +144,9 @@ Doors = {
     { text = true, hash = 634017584, coord = vector3(-1745.552, 368.1231, 89.72009), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
 
     -- [ MOUNT HAAN ] --
-    { text = true, hash = 1901183774, coord = vector3(177.6791, 1700.677, 227.3832), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 2052512905, coord = vector3(169.4505, 1694.532, 227.3832), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 702880916, coord = vector3(179.1429, 1677.982, 230.1296), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 1901183774, coord = vector3(177.6791, 1700.677, 227.3832), lock = true, distance = 5.0, autoLock = 20000, home = 'Mount haan', perm = { 'staff.permissao'} },
+    { text = true, hash = 2052512905, coord = vector3(169.4505, 1694.532, 227.3832), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, home = 'Mount haan', perm = { 'staff.permissao'} },
+    { text = true, hash = 702880916, coord = vector3(179.1429, 1677.982, 230.1296), lock = true, distance = 10.0, open = 5.0, autoLock = 20000, home = 'Mount haan', perm = { 'staff.permissao'} },
 
     -- [ CAESARS ] --
     { text = false, hash = 362837712, coord = vector3(-888.6329, 42.85715, 49.14575), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },

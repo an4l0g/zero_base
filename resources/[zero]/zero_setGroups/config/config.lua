@@ -46,6 +46,13 @@ config.groups = {
 		'attachs2.permissao'
 	},
 
+	['Cam'] = {
+		information = {
+			title = 'Cam',
+		},
+		'cam.permissao'
+	},
+
 	['Spotify'] = {
 		information = {
 			title = 'Spotify',

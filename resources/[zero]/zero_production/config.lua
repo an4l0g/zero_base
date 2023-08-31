@@ -4,9 +4,9 @@ zero = Proxy.getInterface('zero')
 
 configs = {}
 
-configs.moneyPerFiscal = 10000
-configs.governTax = 0.35
-configs.governTaxWithBuff = 0.30
+configs.moneyPerFiscal = 20000
+configs.governTax = 0.30
+configs.governTaxWithBuff = 0.20
 configs.blipDistance = 3
 
 configs.products = {
@@ -17,7 +17,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 42 },
+                ['p-armas'] = { name = 'P. Armas', amount = 21 },
             }
         },
         ['weapon_snspistol_mk2'] = { 
@@ -26,7 +26,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 42 },
+                ['p-armas'] = { name = 'P. Armas', amount = 21 },
             }
         },
         ['weapon_revolver_mk2'] = { 
@@ -35,7 +35,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 42 },
+                ['p-armas'] = { name = 'P. Armas', amount = 21 },
             }
         },
         ['weapon_tecpistol'] = { 
@@ -44,7 +44,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 70 },
+                ['p-armas'] = { name = 'P. Armas', amount = 35 },
             }
         },
         ['weapon_machinepistol'] = { 
@@ -53,7 +53,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 70 },
+                ['p-armas'] = { name = 'P. Armas', amount = 35 },
             }
         },
         ['weapon_minismg'] = { 
@@ -62,7 +62,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 70 },
+                ['p-armas'] = { name = 'P. Armas', amount = 35 },
             }
         },
         ['weapon_compactrifle'] = { 
@@ -71,7 +71,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 98 },
+                ['p-armas'] = { name = 'P. Armas', amount = 49 },
             }
         },
         ['weapon_heavyrifle'] = { 
@@ -80,7 +80,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 98 },
+                ['p-armas'] = { name = 'P. Armas', amount = 49 },
             }
         },
         ['weapon_bullpuprifle_mk2'] = { 
@@ -89,7 +89,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['p-armas'] = { name = 'P. Armas', amount = 98 },
+                ['p-armas'] = { name = 'P. Armas', amount = 49 },
             }
         },
     },
@@ -98,81 +98,81 @@ configs.products = {
             order = 1,
             name = 'M. Five-SeveN',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 14 },
+                ['c-muni'] = { name = 'C. Munição', amount = 7 },
             }
         },
         ['m_weapon_snspistol_mk2'] = { 
             order = 2,
             name = 'M. HK 45',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 14 },
+                ['c-muni'] = { name = 'C. Munição', amount = 7 },
             }
         },
         ['m_weapon_revolver_mk2'] = { 
             order = 3,
             name = 'M. R8',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 14 },
+                ['c-muni'] = { name = 'C. Munição', amount = 7 },
             }
         },
         ['m_weapon_tecpistol'] = { 
             order = 4,
             name = 'M. Uzi',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 28 },
+                ['c-muni'] = { name = 'C. Munição', amount = 14 },
             }
         },
         ['m_weapon_machinepistol'] = { 
             order = 5,
             name = 'M. Tec-9',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 28 },
+                ['c-muni'] = { name = 'C. Munição', amount = 14 },
             }
         },
         ['m_weapon_minismg'] = { 
             order = 6,
             name = 'M. S VZ 61',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 28 },
+                ['c-muni'] = { name = 'C. Munição', amount = 14 },
             }
         },
         ['m_weapon_compactrifle'] = { 
             order = 7,
             name = 'M. K. Compact',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 42 },
+                ['c-muni'] = { name = 'C. Munição', amount = 21 },
             }
         },
         ['m_weapon_heavyrifle'] = { 
             order = 7,
             name = 'M. FN Scar',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 42 },
+                ['c-muni'] = { name = 'C. Munição', amount = 21 },
             }
         },
         ['m_weapon_bullpuprifle_mk2'] = { 
             order = 7,
             name = 'M. Type-97',
             amount = 50,
-            delay = 5000,
+            delay = 10000,
             materials = {
-                ['m-municoes'] = { name = 'M. Munições', amount = 42 },
+                ['c-muni'] = { name = 'C. Munição', amount = 21 },
             }
         },
     },
@@ -180,10 +180,10 @@ configs.products = {
         ['nitro'] = {
             order = 1,
             name = 'Nitro',
-            amount = 7,
+            amount = 4,
             delay = 10000,
             materials = {
-                ['m-mec'] = { name = 'M. Mecânica', amount = 14 },
+                ['c-mec'] = { name = 'C. Mecânica', amount = 14 },
             }
         },
         ['kit-reparo'] = {
@@ -200,7 +200,8 @@ configs.products = {
         ['lockpick'] = {
             order = 1,
             name = 'Lockpick',
-            amount = 1,
+            min_amount = 1,
+            max_amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 2100 },
@@ -209,7 +210,8 @@ configs.products = {
         ['keycard'] = {
             order = 2,
             name = 'Keycard',
-            amount = 1,
+            min_amount = 1,
+            max_amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
@@ -218,7 +220,8 @@ configs.products = {
         ['pendrive'] = {
             order = 3,
             name = 'Pendrive',
-            amount = 1,
+            min_amount = 1,
+            max_amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
@@ -227,7 +230,8 @@ configs.products = {
         ['c4'] = {
             order = 3,
             name = 'C4',
-            amount = 1,
+            min_amount = 1,
+            max_amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
@@ -236,7 +240,8 @@ configs.products = {
         ['colete-ilegal'] = {
             order = 5,
             name = 'Colete Ilegal',
-            amount = 1,
+            min_amount = 1,
+            max_amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 7350 },
@@ -245,7 +250,8 @@ configs.products = {
         ['weapon_crowbar'] = {
             order = 5,
             name = 'Pé de cabra',
-            amount = 1,
+            min_amount = 1,
+            max_amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1250 },
@@ -256,7 +262,7 @@ configs.products = {
         ['combo-camarao'] = {
             order = 1,
             name = 'Camarão de Laurinha',
-            amount = 2,
+            amount = 4,
             delay = 10000,
             materials = {
                 ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
@@ -265,7 +271,7 @@ configs.products = {
         ['combo-milho'] = {
             order = 2,
             name = 'Larissa Manuela',
-            amount = 2,
+            amount = 4,
             delay = 10000,
             materials = {
                 ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
@@ -274,7 +280,7 @@ configs.products = {
         ['combo-chocolate'] = {
             order = 3,
             name = 'Tudo isso, aceito o desafio',
-            amount = 2,
+            amount = 4,
             delay = 10000,
             materials = {
                 ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
@@ -283,7 +289,7 @@ configs.products = {
         ['combo-caviar'] = {
             order = 4,
             name = 'Pra aralho',
-            amount = 2,
+            amount = 4,
             delay = 10000,
             materials = {
                 ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
@@ -292,7 +298,7 @@ configs.products = {
         ['energetico'] = {
             order = 5,
             name = 'Energético',
-            amount = 1,
+            amount = 2,
             delay = 10000,
             materials = {
                 ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
@@ -301,7 +307,7 @@ configs.products = {
         ['cafe'] = {
             order = 5,
             name = 'Café',
-            amount = 1,
+            amount = 2,
             delay = 10000,
             materials = {
                 ['c-ingredientes'] = { name = 'C. Ingredientes', amount = 1 },
@@ -312,31 +318,31 @@ configs.products = {
         ['maconha'] = {
             order = 1,
             name = 'Maconha',
-            amount = 14,
+            amount = 28,
             delay = 10000,
             materials = {
-                ['m-droga'] = { name = 'M. Droga', amount = 14 },
-            }
-        },
-        ['metanfetamina'] = {
-            order = 1,
-            name = 'Metanfetamina',
-            amount = 14,
-            delay = 10000,
-            materials = {
-                ['m-droga'] = { name = 'M. Droga', amount = 14 },
+                ['m-droga'] = { name = 'Material para Drogas', amount = 14 },
             }
         },
         ['cocaina'] = {
             order = 1,
             name = 'Cocaína',
-            amount = 14,
+            amount = 28,
             delay = 10000,
             materials = {
-                ['m-droga'] = { name = 'M. Droga', amount = 14 },
+                ['m-droga'] = { name = 'Material para Drogas', amount = 14 },
             }
         },
-    }
+        ['metanfetamina'] = {
+            order = 1,
+            name = 'Metanfetamina',
+            amount = 28,
+            delay = 10000,
+            materials = {
+                ['m-droga'] = { name = 'Material para Drogas', amount = 14 },
+            }
+        },
+    },
 }
 
 configs.productions = {

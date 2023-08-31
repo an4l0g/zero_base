@@ -49,6 +49,7 @@ config.vehicles = {
     ['6x6ev'] = { name = '6x6 EV', maker = 'Hummer', price = 1000000, trunk = 150, glove = 15, type = 'vip', class = 'offroad', banned = false },
     ['rmodskyline34'] = { name = 'SkyLineR34 G2', maker = 'Nissan', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'sports', banned = false },
     ['nissanskyliner34'] = { name = 'Skyline R34', maker = 'Nissan', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['370zRubyTiger'] = { name = 'Nissan 370z', maker = 'Nissan', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'sports', banned = false },
     ['auditt'] = { name = 'Audi TT', maker = 'Audi', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'super', banned = false },
     ['911r'] = { name = '911R', maker = 'Porsche', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'super', banned = false },
     ['bmws'] = { name = 'S1000rr', maker = 'Bmw', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'motocycle', banned = false },
@@ -1281,6 +1282,14 @@ config.garages = {
             vector4(-2296.602, 414.3165, 174.4579, 158.7402),
             vector4(-2293.543, 412.5627, 174.4579, 155.9055),
             vector4(-2290.642, 410.3736, 174.4579, 141.7323)
+        }
+    },
+    -- [Mount Hann] --
+    {
+        coords = vector3(165.0989, 1693.912, 227.3832),
+        rule = 'carOnly',
+        points = {
+            vector4(174.8176, 1683.982, 228.9333, 215.4331)
         }
     },
 }

@@ -1610,6 +1610,10 @@ config.homes = {
         coord = vector3(-1887.059, 2050.642, 140.9773), 
         type = 'mlo'
     },
+    ['Mount haan'] = { 
+        coord = vector3(184.022, 1710.29, 227.3832), 
+        type = 'mlo'
+    },
 }
 
 config.typeHomes = {
