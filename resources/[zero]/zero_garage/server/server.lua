@@ -343,21 +343,21 @@ srv.spawnVehicle = function(vehicle, id, token)
                             CreateThread(function()
                                 local owner = NetworkGetEntityOwner(vehHandle)
                                 while (owner == -1) do
+                                    Citizen.Wait(1000)
                                     owner = (DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle))
-                                    Citizen.Wait(1)
+                                    -- Citizen.Wait(1)
                                 end
                                 if (not owner) then return; end;
                                 
-                                local netHandle;
-                                local timeOut = (GetGameTimer() + 2000)
-                                while (DoesEntityExist(vehHandle) and not netHandle and GetGameTimer() < timeOut) do
-                                    netHandle = DoesEntityExist(vehHandle) and NetworkGetNetworkIdFromEntity(vehHandle)
-                                    Citizen.Wait(1)
-                                end
-                                if (not netHandle) then return; end;
-                                
                                 SetVehicleNumberPlateText(vehHandle, veh.plate)
                                 SetVehicleDoorsLocked(vehHandle, 2)
+
+                                local netHandle = NetworkGetNetworkIdFromEntity(vehHandle)
+                                -- while (DoesEntityExist(vehHandle) and not netHandle) do
+                                --     netHandle = DoesEntityExist(vehHandle) and NetworkGetNetworkIdFromEntity(vehHandle)
+                                --     Citizen.Wait(1)
+                                -- end
+                                -- if (not netHandle) then return; end;
 
                                 Entity(vehHandle).state['veh:plate'] = veh.plate
                                 Entity(vehHandle).state['veh:chassis'] = veh.chassis
@@ -572,16 +572,14 @@ RegisterCommand('car', function(source, args)
                         Citizen.Wait(1)
                     end
                 else
-                    vehHandle = Citizen.InvokeNative(`CREATE_AUTOMOBILE`, GetHashKey(spawn), vector3(pCoord.x, pCoord.y, pCoord.z - 0.3), heading)
+                    vehHandle = Citizen.InvokeNative(GetHashKey('CREATE_AUTOMOBILE'), GetHashKey(spawn), pCoord.x, pCoord.y, pCoord.z - 0.3, heading, true, true, true)
                 end
                 
-                if vehHandle and (vehHandle > 0) then
-                    if _Regis then _Regis(vehHandle) end
-                    
+                CreateThread(function()
                     local owner = NetworkGetEntityOwner(vehHandle)
                     while (owner == 1) do
+                        Citizen.Wait(1000)
                         owner = DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle)
-                        Citizen.Wait(1)
                     end
                     if (not owner) then return; end;
 
@@ -601,7 +599,7 @@ RegisterCommand('car', function(source, args)
                     SetPedIntoVehicle(ped, vehHandle, -1)
                     
                     zero.webhook('Car', '```prolog\n[/CAR]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[SPAWNOU]: '..spawn..'\n[COORDS]: '..pCoord..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-                end
+                end)
             end
         end
     end
