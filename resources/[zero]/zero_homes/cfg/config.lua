@@ -1606,6 +1606,10 @@ config.homes = {
         vault = vector3(-737.2747, 501.4154, 109.5692),
         type = 'mlo'
     },
+    ['Vinhedo'] = { 
+        coord = vector3(-1887.059, 2050.642, 140.9773), 
+        type = 'mlo'
+    },
 }
 
 config.typeHomes = {

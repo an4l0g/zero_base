@@ -337,19 +337,17 @@ srv.spawnVehicle = function(vehicle, id, token)
                                     Citizen.Wait(1) 
                                 end;
                             else
-                                vehHandle = Citizen.InvokeNative(`CREATE_AUTOMOBILE`, GetHashKey(vehicle), vector3(coords.x, coords.y, coords.z - 0.3), heading)
+                                vehHandle = Citizen.InvokeNative(GetHashKey('CREATE_AUTOMOBILE'), GetHashKey(vehicle), coords.x, coords.y, coords.z - 0.3, heading, true, true, true)
                             end
 
-                            if vehHandle and (vehHandle > 0) then
-                                if _Regis then _Regis(vehHandle) end
-
+                            CreateThread(function()
                                 local owner = NetworkGetEntityOwner(vehHandle)
                                 while (owner == -1) do
                                     owner = (DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle))
                                     Citizen.Wait(1)
                                 end
                                 if (not owner) then return; end;
-
+                                
                                 local netHandle;
                                 local timeOut = (GetGameTimer() + 2000)
                                 while (DoesEntityExist(vehHandle) and not netHandle and GetGameTimer() < timeOut) do
@@ -372,7 +370,7 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>veículo</b> foi liberado com sucesso.')
                                 vCLIENT.syncBlips(source, netHandle, vehicle, veh.plate)
                                 vCLIENT.settingVehicle(source, netHandle, state, veh.plate, json.decode(veh.custom))
-                            end
+                            end)
                         else
                             TriggerClientEvent('notify', source, 'Garagem', 'Todas as <b>vagas</b> se encontram ocupadas no momento.')
                         end

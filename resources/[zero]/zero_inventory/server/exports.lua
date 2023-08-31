@@ -271,7 +271,7 @@ exports('getItemInfo', sInventory.getItemInfo)
 AddEventHandler('vRP:playerSpawn', function(user_id, source)    
     local bag = zero.query('zero_inventory:getBag', { bag_type = 'bag:'..user_id })[1]
     if (not bag) then
-        zero.execute('zero_inventory:insertBag', { slots = json.encode({}), bag_type = 'bag:'..user_id, weight = config.bag_max_weight })
+        zero.execute('zero_inventory:insertBag', { slots = json.encode({}), bag_type = 'bag:'..user_id, weight = 6 })
         zero.execute('zero_inventory:insertBag', { slots = json.encode({}), bag_type = 'hotbar:'..user_id, weight = 0 })
     end
 end)

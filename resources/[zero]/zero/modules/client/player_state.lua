@@ -144,12 +144,14 @@ zero.getCustomization = function()
 	local custom = {}
 	custom.pedModel = GetEntityModel(ped)
 
-	for i = 0, 20 do
+	for i = 0, 12 do
 		custom[i] = { model = GetPedDrawableVariation(ped, i), var = GetPedTextureVariation(ped, i), palette = GetPedPaletteVariation(ped, i) }
 	end
 
-	for i = 0, 10 do
-		custom['p'..i] = { model = GetPedPropIndex(ped, i), var = math.max(GetPedPropTextureIndex(ped, i)), palette = 0 }
+	for i = 0, 7 do
+		if (i ~= 3 and i ~= 4 and i ~= 5) then
+ 			custom['p'..i] = { model = GetPedPropIndex(ped, i), var = math.max(GetPedPropTextureIndex(ped, i)), palette = 0 }
+		end
 	end
 	return custom
 end
@@ -162,24 +164,22 @@ zero.setCustomization = function(clothes)
 
 			local modelHash = clothes.pedModel
 			if (modelHash) then
-				local i = 0
-				while not HasModelLoaded(modelHash) and i < 10000 do
-					i = i + 1
+				RequestModel(modelHash)
+				while not HasModelLoaded(modelHash) do
 					RequestModel(modelHash)
-					Citizen.Wait(10)
+					Citizen.Wait(0)
 				end
 
-				if (HasModelLoaded(modelHash)) then
-					local weapons = zero.getWeapons()
-					local armour = zero.getArmour()
-					local health = zero.getHealth()
+				SetPlayerModel(PlayerId(), modelHash)
+				SetModelAsNoLongerNeeded(modelHash)
 
-					SetPlayerModel(PlayerId(), modelHash)
-					zero.setHealth(health)
-					zero.giveWeapons(weapons, true, GlobalState.weaponToken)
-					zero.setArmour(armour)
-					SetModelAsNoLongerNeeded(modelHash)
-				end 
+				local weapons = zero.getWeapons()
+				local armour = zero.getArmour()
+				local health = zero.getHealth()
+
+				zero.setHealth(health)
+				zero.giveWeapons(weapons, true, GlobalState.weaponToken)
+				zero.setArmour(armour)
 			end
 
 			ped = PlayerPedId()
