@@ -343,8 +343,9 @@ srv.spawnVehicle = function(vehicle, id, token)
                             CreateThread(function()
                                 local owner = NetworkGetEntityOwner(vehHandle)
                                 while (owner == -1) do
+                                    Citizen.Wait(1000)
                                     owner = (DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle))
-                                    Citizen.Wait(1)
+                                    -- Citizen.Wait(1)
                                 end
                                 if (not owner) then return; end;
                                 
@@ -357,6 +358,13 @@ srv.spawnVehicle = function(vehicle, id, token)
                                 
                                 SetVehicleNumberPlateText(vehHandle, veh.plate)
                                 SetVehicleDoorsLocked(vehHandle, 2)
+
+                                local netHandle = NetworkGetNetworkIdFromEntity(vehHandle)
+                                -- while (DoesEntityExist(vehHandle) and not netHandle) do
+                                --     netHandle = DoesEntityExist(vehHandle) and NetworkGetNetworkIdFromEntity(vehHandle)
+                                --     Citizen.Wait(1)
+                                -- end
+                                -- if (not netHandle) then return; end;
 
                                 Entity(vehHandle).state['veh:plate'] = veh.plate
                                 Entity(vehHandle).state['veh:chassis'] = veh.chassis
@@ -577,8 +585,8 @@ RegisterCommand('car', function(source, args)
                 CreateThread(function()
                     local owner = NetworkGetEntityOwner(vehHandle)
                     while (owner == 1) do
+                        Citizen.Wait(1000)
                         owner = DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle)
-                        Citizen.Wait(1)
                     end
                     if (not owner) then return; end;
 

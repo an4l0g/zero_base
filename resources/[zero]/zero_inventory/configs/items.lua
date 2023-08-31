@@ -508,6 +508,15 @@ config.items = {
             useBag(source, user_id, 'mochila-grande', 125)
         end
     },
+    ['mochila-zerofome'] = { 
+        name = 'Mochila Zero Fome', 
+        type = 'common', 
+        weight = 2, 
+        usable = true, 
+        interaction = function(source, user_id)
+            useBag(source, user_id, 'mochila-zerofome', 200)
+        end
+    },
     ['kit-reparo'] = { 
         name = 'Kit Reparo', 
         type = 'common', 

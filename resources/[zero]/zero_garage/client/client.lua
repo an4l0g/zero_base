@@ -230,8 +230,8 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 	local vehicle = NetToVeh(vnet)
 	while (not DoesEntityExist(vehicle)) do Citizen.Wait(100) end
 
-    local nveh = NetworkGetEntityFromNetworkId(vnet)
-    if (nveh) then
+    -- local nveh = NetworkGetEntityFromNetworkId(vnet)
+    -- if (nveh) then
         -- local timeOut = (GetGameTimer() + 4000)
         -- NetworkRequestControlOfEntity(nveh)
 		-- while (not NetworkHasControlOfEntity(nveh)) do
@@ -240,31 +240,36 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 		-- 	if (GetGameTimer() > timeOut) then return; end;
 		-- end
 
-		TriggerEvent('zero_bennys:applymods', vnet, custom)
-		SetVehicleNumberPlateText(nveh, plate)
-		
+		SetVehicleNumberPlateText(vehicle, plate)
+
+		print(GetVehicleNumberPlateText(vehicle))
+		SetVehicleModKit(vehicle,0)
+        SetVehicleColours(vehicle, 0, 0)
+        SetVehicleModColor_1(vehicle, 0, 0, 0)
+
 		SetVehicleDoorsLocked(vehicle, 2)
 		SetVehicleDoorsLockedForAllPlayers(vehicle, false)
-        SetVehicleIsConsideredByPlayer(nveh, true)
-        SetVehicleHasBeenOwnedByPlayer(nveh, true)
-		SetVehicleIsStolen(nveh,false)
-		SetVehicleNeedsToBeHotwired(nveh, false)
-		SetVehicleOnGroundProperly(nveh)
-		SetEntityAsMissionEntity(nveh, true, true)
-		SetVehRadioStation(nveh, 'OFF')
-		SetVehicleEngineOn(nveh, false, true, true)
+        SetVehicleIsConsideredByPlayer(vehicle, true)
+        SetVehicleHasBeenOwnedByPlayer(vehicle, true)
+		SetVehicleIsStolen(vehicle,false)
+		SetVehicleNeedsToBeHotwired(vehicle, false)
+		SetVehicleOnGroundProperly(vehicle)
+		SetEntityAsMissionEntity(vehicle, true, true)
+		SetVehRadioStation(vehicle, 'OFF')
+		SetVehicleEngineOn(vehicle, false, true, true)
 		
         if (state.data.fuel) then 
-			cli.setVehicleState(vnet, state, false) 
+			cli.setVehicleState(vehicle, state, false) 
 		else
 			SetVehicleFuelLevel(vehicle, 100.0)
 		end
 
-        if (DecorIsRegisteredAsType('Player_Vehicle', 3)) then DecorSetInt(nveh, 'Player_Vehicle', -1); end;
+        if (DecorIsRegisteredAsType('Player_Vehicle', 3)) then DecorSetInt(vehicle, 'Player_Vehicle', -1); end;
         
-        Entity(nveh).state:set('veh:spawning', nil, true)
+        Entity(vehicle).state:set('veh:spawning', nil, true)
+		TriggerEvent('zero_bennys:applymods', vnet, custom)
         return true
-    end
+    -- end
 end
 
 cli.returnToNet = function(vehicle)
