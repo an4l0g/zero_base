@@ -96,35 +96,37 @@ AddStateBagChangeHandler('Handcuff', nil, function(bagName, key, value)
     if (entity == 0) then return; end;
 
     if (value) then
-        local ped = PlayerPedId()
-        Citizen.CreateThread(function()
-            SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
-            while (LocalPlayer.state.Handcuff) do
-                if (GetEntityHealth(ped) > 100) then
-                    if (not IsEntityPlayingAnim(ped, "mp_arresting", "idle",3 )) then
-                        if (LoadAnim('mp_arresting')) then
-                            TaskPlayAnim(ped, 'mp_arresting', 'idle', 8.0, 8.0, -1, 49, 0, 0, 0, 0)
-                        end          
+        if (LocalPlayer.state.Handcuff) then
+            local ped = PlayerPedId()
+            Citizen.CreateThread(function()
+                SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
+                while (LocalPlayer.state.Handcuff) do
+                    if (GetEntityHealth(ped) > 100) then
+                        if (not IsEntityPlayingAnim(ped, "mp_arresting", "idle",3 )) then
+                            if (LoadAnim('mp_arresting')) then
+                                TaskPlayAnim(ped, 'mp_arresting', 'idle', 8.0, 8.0, -1, 49, 0, 0, 0, 0)
+                            end          
+                        end
+                        disableActions(ped)
                     end
-                    disableActions(ped)
+                    Citizen.Wait(1)
                 end
-                Citizen.Wait(1)
-            end
-            ClearPedTasks(ped)
-        end)
+                ClearPedTasks(ped)
+            end)
 
-        Citizen.CreateThread(function()
-            local lastRagdoll = IsPedRunningRagdollTask(ped)
-            while (LocalPlayer.state.Handcuff) do
-                if (not IsPedRunningRagdollTask(ped)) then 
-                    if (lastRagdoll ~= IsPedRunningRagdollTask(ped)) then
-                        ClearPedTasks(ped)
+            Citizen.CreateThread(function()
+                local lastRagdoll = IsPedRunningRagdollTask(ped)
+                while (LocalPlayer.state.Handcuff) do
+                    if (not IsPedRunningRagdollTask(ped)) then 
+                        if (lastRagdoll ~= IsPedRunningRagdollTask(ped)) then
+                            ClearPedTasks(ped)
+                        end
                     end
+                    lastRagdoll = IsPedRunningRagdollTask(ped)
+                    Citizen.Wait(1000)
                 end
-                lastRagdoll = IsPedRunningRagdollTask(ped)
-                Citizen.Wait(1000)
-            end
-        end)
+            end)
+        end
     end
 end)
 
