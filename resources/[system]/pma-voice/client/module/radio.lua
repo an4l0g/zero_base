@@ -153,7 +153,7 @@ end)
 function isDead()
     if LocalPlayer.state.isDead then
         return true
-    elseif IsPlayerDead(PlayerId()) then
+    elseif GetEntityHealth(PlayerPedId()) <= 100 then
         return true
     end
     return false
@@ -163,6 +163,8 @@ local radioOBJ = nil
 RegisterCommand('+radiotalk', function()
     if GetConvarInt('voice_enableRadios', 1) ~= 1 then return end
     if isDead() or LocalPlayer.state.disableRadio then return end
+    if (LocalPlayer.state.Handcuff) then return end
+    
     if not radioPressed and radioEnabled then
         if radioChannel > 0 then
             logger.info('[radio] Start broadcasting, update targets and notify server.')

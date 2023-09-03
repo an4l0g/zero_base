@@ -337,7 +337,7 @@ zero.dropPlayer = function(source, reason)
 			userTable.GPS = Player(source).state.GPS
 
 			local pCoord = GetEntityCoords(ped)
-			userTable.position = { x = pCoord.x, y = pCoord.y, z = pCoord.z }
+			-- userTable.position = { x = pCoord.x, y = pCoord.y, z = pCoord.z }
 
 			-- local customization = zeroClient.getCustomization(source)
 			-- if (customization) then

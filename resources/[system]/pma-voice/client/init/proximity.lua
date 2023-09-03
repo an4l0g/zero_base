@@ -29,6 +29,7 @@ function addNearbyPlayers()
     proximity = MumbleGetTalkerProximity()
     currentTargets = {}
     MumbleClearVoiceTargetChannels(voiceTarget)
+    if (GetEntityHealth(PlayerPedId()) <= 100) then return; end;
     if LocalPlayer.state.disableProximity then return end
     MumbleAddVoiceChannelListen(LocalPlayer.state.assignedChannel)
     MumbleAddVoiceTargetChannel(voiceTarget, LocalPlayer.state.assignedChannel)
