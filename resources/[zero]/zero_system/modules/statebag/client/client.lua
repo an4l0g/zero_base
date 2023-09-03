@@ -62,6 +62,7 @@ AddStateBagChangeHandler('BlockTasks', nil, function(bagName, key, value)
             while (LocalPlayer.state.BlockTasks) do
                 BlockWeaponWheelThisFrame()
                 DisableControlAction(0, 29, true)
+                DisableControlAction(0, 22, true)
                 DisableControlAction(0, 47, true)
                 DisableControlAction(0, 56, true)
                 DisableControlAction(0, 57, true)
