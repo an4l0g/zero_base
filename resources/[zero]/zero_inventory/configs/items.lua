@@ -707,6 +707,7 @@ config.items = {
     ----------------------------------------------------------------------------
     -- Armas legais
     ----------------------------------------------------------------------------
+<<<<<<< HEAD
     ['weapon_petrolcan'] = { name = 'Combustível',type = 'weapon',weight = 1, arrest = true },
     ['weapon_ceramicpistol'] = { name = 'Ceramic Pistol',type = 'weapon',weight = 1, arrest = true },
     ['m_weapon_ceramicpistol'] = { name = 'M. Ceramic Pistol', type = 'wammo', weight = 0.7, arrest = true },
@@ -762,6 +763,63 @@ config.items = {
     ['m_weapon_doubleaction'] = { name = 'M. Dourada', type = 'wammo', weight = 0.7, arrest = true },
     ['weapon_gusenberg'] = { name = 'Thompson', type = 'weapon', weight = 1, arrest = true},
     ['m_weapon_gusenberg'] = { name = 'M. Thompson', type = 'wammo', weight = 0.7, arrest = true },
+=======
+    ['weapon_petrolcan'] = { name = 'Combustível',type = 'weapon',weight = 1, model = nil },
+    ['weapon_ceramicpistol'] = { name = 'Ceramic Pistol',type = 'weapon',weight = 1, model = nil },
+    ['m_weapon_ceramicpistol'] = { name = 'M. Ceramic Pistol', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_pistol_mk2'] = { name = 'Five-SeveN',type = 'weapon',weight = 1, model = nil },
+    ['m_weapon_pistol_mk2'] = { name = 'M. Five-SeveN', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_smg_mk2'] = { name = 'MP9', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_smg_mk2'] = { name = 'M. MP9', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_combatpdw'] = { name = 'MPX', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatpdw'] = { name = 'M. MPX', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_assaultsmg'] = { name = 'M-TAR', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_assaultsmg'] = { name = 'M. M-TAR', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_pumpshotgun_mk2'] = { name = 'Remington', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_pumpshotgun_mk2'] = { name = 'M. Remington', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_combatshotgun'] = { name = 'SPAS-12', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_combatshotgun'] = { name = 'M. SPAS-12', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_carbinerifle_mk2'] = { name = 'R5 RGP', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_carbinerifle_mk2'] = { name = 'M. R5 RGP', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_militaryrifle'] = { name = 'AUG', type = 'weapon', weight = 1, model = nil,},
+    ['m_weapon_militaryrifle'] = { name = 'M. AUG', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_tacticalrifle'] = { name = 'M16', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_tacticalrifle'] = { name = 'M. M16', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_sniperrifle'] = { name = 'AWM', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_sniperrifle'] = { name = 'M. AWM', type = 'wammo', weight = 0.2, model = nil },
+    ----------------------------------------------------------------------------
+    -- Armas ilegais
+    ----------------------------------------------------------------------------
+    ['weapon_snspistol_mk2'] = { name = 'HK 45', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_snspistol_mk2'] = { name = 'M. HK 45', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_revolver_mk2'] = { name = 'R8', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_revolver_mk2'] = { name = 'M. R8', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_machinepistol'] = { name = 'Tec-9', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_machinepistol'] = { name = 'M. Tec-9', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_minismg'] = { name = 'S VZ 61', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_minismg'] = { name = 'M. S VZ 61', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_compactrifle'] = { name = 'K. Compact', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_compactrifle'] = { name = 'M. K. Compact', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.2, model = nil },
+    ['weapon_bullpuprifle_mk2'] = { name = 'Type-97', type = 'weapon', weight = 1, model = nil },
+    ['m_weapon_bullpuprifle_mk2'] = { name = 'M. Type-97', type = 'wammo', weight = 0.2, model = nil },
+    ----------------------------------------------------------------------------
+    -- Armas Staff
+    ----------------------------------------------------------------------------
+    ['weapon_doubleaction'] = { name = 'Dourada', type = 'weapon', weight = 1, model = nil},
+    ['m_weapon_doubleaction'] = { name = 'M. Dourada', type = 'wammo', weight = 0, model = nil },
+    ['weapon_gusenberg'] = { name = 'Thompson', type = 'weapon', weight = 1, model = nil},
+    ['m_weapon_gusenberg'] = { name = 'M. Thompson', type = 'wammo', weight = 0, model = nil },
+>>>>>>> b4824543479e2276f9126b4d8d285cfeca1053fa
     ----------------------------------------------------------------------------
     -- Utilitarios
     ----------------------------------------------------------------------------

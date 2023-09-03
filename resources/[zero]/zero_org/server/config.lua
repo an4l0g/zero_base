@@ -112,6 +112,12 @@ config.facs = {
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
     },
+    ['Polonia'] = {
+        vagas = 60,
+        serviceCheck = 'online',
+        grades = config.grades.ilegal,
+        roles = config.roles.ilegal
+    },
     ['Alemanha'] = {
         vagas = 30,
         serviceCheck = 'online',

@@ -70,7 +70,7 @@ RegisterNetEvent('zero_interactions:execAnimation', function(value)
             local animation = configAnimations.shared[value[2]]
             if (animation) then
                 if (zero.checkPermissions(_userId, animation.perm)) then
-                    local nSource = zeroClient.getNearestPlayer(source, 2)
+                    local nSource = zeroClient.getNearestPlayer(_source, 2)
                     if (nSource) then
                         if (GetEntityHealth(GetPlayerPed(nSource)) > 100) then 
                             local identity = zero.getUserIdentity(_userId)

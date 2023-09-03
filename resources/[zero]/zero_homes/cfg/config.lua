@@ -1653,8 +1653,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'simple',
-            ['simple'] = { value = 10000, perm = '+Staff.COO' },
-            ['motel'] = { value = 10000, perm = '+Staff.COO' }
+            ['simple'] = { value = 10000 },
+            ['motel'] = { value = 10000 }
         },
     },
     ['modern'] = {
@@ -1675,9 +1675,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'single',
-            ['single'] = { value = 10000, perm = '+Staff.COO' },
-            ['high_01'] = { value = 10000, perm = '+Staff.COO' },
-            ['high_02'] = { value = 10000, perm = '+Staff.COO' }
+            ['single'] = { value = 10000 },
+            ['high_01'] = { value = 10000 },
+            ['high_02'] = { value = 10000 }
         },
     },
     ['high'] = {
@@ -1698,8 +1698,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'high_01',
-            ['high_01'] = { value = 10000, perm = '+Staff.COO' },
-            ['high_02'] = { value = 10000, perm = '+Staff.COO' }
+            ['high_01'] = { value = 10000 },
+            ['high_02'] = { value = 10000 }
         },
     },
     ['apartament'] = {
@@ -1711,7 +1711,7 @@ config.typeHomes = {
             min = 100,
             max = 1000,
             value = 100,
-            perm = '+Staff.COO'
+    
         },
         ['security'] = {
             min = 0,
@@ -1721,9 +1721,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'apartment_01',
-            ['apartment_01'] = { value = 10000, perm = '+Staff.COO' },
-            ['apartment_02'] = { value = 10000, perm = '+Staff.COO' },
-            ['eclip_penthouse'] = { decoration = true, value = 10000, perm = '+Staff.COO' },
+            ['apartment_01'] = { value = 10000 },
+            ['apartment_02'] = { value = 10000 },
+            ['eclip_penthouse'] = { decoration = true, value = 10000 },
         },
     },
 }
@@ -1785,7 +1785,6 @@ config.interior = {
         interiorId = 146945,
         decorations = {
             _default = 'executive',
-            _perm = '+Staff.COO', 
             executive = {
                 name = 'Executivo',
                 interiorId = 228097,

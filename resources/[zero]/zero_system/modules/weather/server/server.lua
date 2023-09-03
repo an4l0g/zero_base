@@ -23,14 +23,16 @@ end
 local generateWeather = function()
     ::generateWeatherAgain::
     local weatherRandom = math.random(10)
-    if (weathersConfig[weatherRandom].blacklist) then
-        local blacklistRandom = math.random(100)
-        if (blacklistRandom >= 50) then 
-            goto generateWeatherAgain
-        end  
+    if (weathersConfig[weatherRandom].active) then
+        if (weathersConfig[weatherRandom].blacklist) then
+            local blacklistRandom = math.random(100)
+            if (blacklistRandom >= 50) then 
+                goto generateWeatherAgain
+            end  
+        end
+        GlobalState.weather = weathersConfig[weatherRandom].name
+        print('Clima da cidade ^5Zero City^7 alterado para ^5'..GlobalState.weather..'^7.')
     end
-    GlobalState.weather = weathersConfig[weatherRandom].name
-    print('Clima da cidade ^5Zero City^7 alterado para ^5'..GlobalState.weather..'^7.')
 end
 
 RegisterCommand('time', function(source, args)

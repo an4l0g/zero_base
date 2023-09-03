@@ -2,6 +2,8 @@ vSERVER = Tunnel.getInterface(GetCurrentResourceName())
 
 local cam = nil
 
+local model = GetHashKey('mp_m_freemode_01')
+
 Citizen.CreateThread(function()
     SetNuiFocus(false, false)
     TriggerScreenblurFadeOut(0)
@@ -14,16 +16,15 @@ Citizen.CreateThread(function()
         FreezeEntityPosition(ped, true)
         SetPlayerInvincible(PlayerId(), true)
 
-        -- local model = GetHashKey('mp_m_freemode_01')
-		-- RequestModel(model)
-		-- while not HasModelLoaded(model) do
-		-- 	RequestModel(model)
-		-- 	Citizen.Wait(0)
-		-- end
-		-- SetPlayerModel(PlayerId(), model)
-		-- SetModelAsNoLongerNeeded(model)
+		RequestModel(model)
+		while not HasModelLoaded(model) do
+			RequestModel(model)
+			Citizen.Wait(0)
+		end
+		SetPlayerModel(PlayerId(), model)
+		SetModelAsNoLongerNeeded(model)
         
-        -- ped = PlayerPedId()
+        ped = PlayerPedId()
 
 		RequestCollisionAtCoord(pCoord.x, pCoord.y, pCoord.z)
         SetEntityCoordsNoOffset(ped, pCoord.x, pCoord.y, pCoord.z, false, false, false, true)

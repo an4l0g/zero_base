@@ -169,6 +169,10 @@ zero.setCustomization = function(clothes)
 
 			local modelHash = clothes.pedModel
 			if (modelHash) then
+				local weapons = zero.getWeapons()
+				local armour = zero.getArmour()
+				local health = zero.getHealth()
+
 				RequestModel(modelHash)
 				while not HasModelLoaded(modelHash) do
 					RequestModel(modelHash)
@@ -177,10 +181,6 @@ zero.setCustomization = function(clothes)
 
 				SetPlayerModel(PlayerId(), modelHash)
 				SetModelAsNoLongerNeeded(modelHash)
-
-				local weapons = zero.getWeapons()
-				local armour = zero.getArmour()
-				local health = zero.getHealth()
 
 				zero.setHealth(health)
 				zero.giveWeapons(weapons, true, GlobalState.weaponToken)

@@ -32,7 +32,7 @@ zero.varyHunger = function(user_id, variation)
 		data.hunger = data.hunger + variation
 		local overflow = (data.hunger - 100)
 		if (overflow > 0) then
-			zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * config.overflow_damage_factor))
+			-- zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * config.overflow_damage_factor))
 		end
 
 		if (data.hunger < 0) then 
@@ -55,7 +55,7 @@ zero.varyThirst = function(user_id, variation)
 		data.thirst = data.thirst + variation
 		local overflow = data.thirst-100
 		if (overflow > 0) then
-			zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * config.overflow_damage_factor))
+			-- zeroClient._varyHealth(zero.getUserSource(user_id), (-overflow * config.overflow_damage_factor))
 		end
 
 		if (data.thirst < 0) then 

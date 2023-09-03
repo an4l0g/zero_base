@@ -342,9 +342,9 @@ srv.spawnVehicle = function(vehicle, id, token)
 
                             CreateThread(function()
                                 local owner = NetworkGetEntityOwner(vehHandle)
-                                while (owner == -1) do
-                                    Citizen.Wait(1000)
+                                while (owner == -1) do                                    
                                     owner = (DoesEntityExist(vehHandle) and NetworkGetEntityOwner(vehHandle))
+                                    Citizen.Wait(1000)
                                     -- Citizen.Wait(1)
                                 end
                                 if (not owner) then return; end;

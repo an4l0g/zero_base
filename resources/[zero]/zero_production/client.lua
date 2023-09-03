@@ -23,6 +23,8 @@ RegisterNuiCallback('production', function(data)
         local delay = product.delay
         local amount = data.amount
 
+        print(amount)
+
         print(json.encode(cfg), cfg.buff)
 
         if cfg.buff then
@@ -66,7 +68,7 @@ local markerThread = function()
                 else
                     TextFloating('~b~[E]~w~ - Produzir', _config.coords)
                 end
-                if (IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
+                if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                     if (sProduction.hasPermission(_config.permission)) then
                         if (_config.type == 'moneyLaundry') then
                             sProduction.moneyLaundry(_config)

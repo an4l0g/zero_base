@@ -29,8 +29,7 @@ sProduction.giveItem = function(index, amount, org)
     local user_id = zero.getUserId(_source)
 
     zero.giveInventoryItem(user_id, index, amount)
-
-    zero.formatWebhook(configs.productions[org].webhook, 'Produção', {
+    zero.formatWebhook('teste', 'Enviar item', {
         { 'item', zero.itemNameList(index) },
         { 'id', user_id },
         { 'qtd', amount }

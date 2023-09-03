@@ -3,6 +3,25 @@ Tunnel.bindInterface('Commands', srv)
 local vCLIENT = Tunnel.getInterface('Commands')
 
 ---------------------------------------
+-- ME
+---------------------------------------
+srv.checkPermission = function(perm)
+    local source = source
+    local user_id = zero.getUserId(source)
+    return zero.checkPermissions(user_id, perm)
+end
+
+---------------------------------------
+-- ME
+---------------------------------------
+RegisterNetEvent('ChatMe', function(text)
+    local user_id = zero.getUserId(source)
+    if user_id then
+        TriggerClientEvent('DisplayMe',-1,text,source)
+    end
+end)
+
+---------------------------------------
 -- GIVE INVENTORY ITEM
 ---------------------------------------
 srv.giveInventoryItem = function(item)

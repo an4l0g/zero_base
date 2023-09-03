@@ -17,6 +17,7 @@ config.vehicles = {
 ------------------------------------------------------------------------------------------------------------------------
 -- VIP
 ------------------------------------------------------------------------------------------------------------------------
+    ['foxevo'] = { name = 'Lamborghini Evo', maker = 'Lamborghini', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'sports', banned = false }, 
     ['gtr502'] = { name = 'GTR 50', maker = 'Nissan', price = 1000000, trunk = 40, glove = 15, type = 'vip', class = 'super', banned = false },
     ['h2carb'] = { name = 'Ninja H2 Carb.', maker = 'Kawasaki', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'motocycle', banned = false },
     ['r34bluedragon'] = { name = 'Skyline Dragon', maker = 'Nissan', price = 1000000, trunk = 40, glove = 15, type = 'vip', class = 'super', banned = false },
@@ -514,6 +515,7 @@ config.vehicles = {
     ------------------------------------------------------------------------------------------------------------------------
     -- PLANES
     ------------------------------------------------------------------------------------------------------------------------
+    ['maverick'] = { name = 'Maverick', maker = 'Western company', price = 100000, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopter', banned = true },
     ['swift2'] = { name = 'Swift 2', maker = 'Buckingham', price = 0, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopter', banned = false },
     ['swift'] = { name = 'Swift', maker = 'Buckingham', price = 0, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopter', banned = false },
     ['frogger'] = { name = 'Frogger', maker = 'Maibatsu', price = 1000000, trunk = 0, glove = 15, type = 'helicopter', class = 'helicopters', banned = true },
@@ -569,7 +571,6 @@ config.vehicles = {
     ['tvtrailer'] = { name = 'Show', maker = 'Brute', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'utility', banned = true },
     ['tanker2'] = { name = 'Gas', maker = 'Brute', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'utility', banned = true },
     ['toro2'] = { name = 'Toro2', maker = 'Lampadati', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
-    ['maverick'] = { name = 'Maverick', maker = 'Western company', price = 100000, trunk = 1000, glove = 15, type = 'work', class = 'helicopters', banned = true },
     ['tiptruck'] = { name = 'Tiptruck', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'industrial', banned = false },
     ['trash2'] = { name = 'Caminhão Lixo', maker = 'Brute', price = 1000, trunk = 80, glove = 15, type = 'work', class = 'utility', banned = false },
     ['towtruck'] = { name = 'Towtruck', maker = 'Vapid', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'utility', banned = true },
@@ -731,6 +732,17 @@ config.garages = {
         permission = 'helipa.permissao',
         points = {
             vector4(281.7626, 1885.015, 207.2476, 102.0472)
+        },
+    },
+    -- --
+    -- [Polonia] --
+    {
+        coords = vector3(2886.936, 2745.204, 70.00586), 
+        rule = 'carOnly',
+        marker = 'car',
+        permission = 'polonia.permissao',
+        points = {
+            vector4(2884.154, 2742.989, 69.88794, 42.51968)
         },
     },
     -- --
