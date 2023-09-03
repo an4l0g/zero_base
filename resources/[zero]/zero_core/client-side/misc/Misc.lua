@@ -235,11 +235,11 @@ end
 
 CrouchPlayer = function()
     local Player = PlayerPedId()
-    SetPedUsingActionMode(Player, false, -1, "DEFAULT_ACTION")
+    SetPedUsingActionMode(Player, false, -1, 'DEFAULT_ACTION')
     SetPedMovementClipset(Player, 'move_ped_crouched', actionTime)
-    SetPedMovementClipset(Player,"move_ped_crouched",1.50) -- moovespeed
+    SetPedMovementClipset(Player,'move_ped_crouched',1.50) -- moovespeed
     SetPedStrafeClipset(Player, 'move_ped_crouched_strafing') -- it force be on third person if not player will freeze but this func make player can shoot with good anim on crouch if someone know how to fix this make request :D
-    SetWeaponAnimationOverride(Player, "Ballistic")
+    SetWeaponAnimationOverride(Player, 'Ballistic')
     Crouched = true
     Aimed = false
 end
@@ -313,7 +313,37 @@ end, false)
 IsCrouched = function()
     return Crouched
 end
-exports("IsCrouched", IsCrouched)
+exports('IsCrouched', IsCrouched)
+
+local BlacklistDispatch = {
+	[GetHashKey('WEAPON_UNARMED')] = true,
+	[GetHashKey('WEAPON_DAGGER')] = true,
+	[GetHashKey('WEAPON_BAT')] = true,
+	[GetHashKey('WEAPON_BOTTLE')] = true,
+	[GetHashKey('WEAPON_CROWBAR')] = true,
+	[GetHashKey('WEAPON_FLASHLIGHT')] = true,
+	[GetHashKey('WEAPON_GOLFCLUB')] = true,
+	[GetHashKey('WEAPON_HAMMER')] = true,
+	[GetHashKey('WEAPON_HATCHET')] = true,
+	[GetHashKey('WEAPON_KNUCKLE')] = true,
+	[GetHashKey('WEAPON_KNIFE')] = true,
+	[GetHashKey('WEAPON_MACHETE')] = true,
+	[GetHashKey('WEAPON_SWITCHBLADE')] = true,
+	[GetHashKey('WEAPON_NIGHTSTICK')] = true,
+	[GetHashKey('WEAPON_WRENCH')] = true,
+	[GetHashKey('WEAPON_BATTLEAXE')] = true,
+	[GetHashKey('WEAPON_POOLCUE')] = true,
+	[GetHashKey('WEAPON_STONE_HATCHET')] = true,
+	[GetHashKey('WEAPON_STUNGUN')] = true,
+	[GetHashKey('WEAPON_FLARE')] = true,
+	[GetHashKey('GADGET_PARACHUTE')] = true,
+	[GetHashKey('WEAPON_FIREEXTINGUISHER')] = true,
+	[GetHashKey('WEAPON_PETROLCAN')] = true,
+	[GetHashKey('WEAPON_FIREWORK')] = true,
+	[GetHashKey('WEAPON_SNOWBALL')] = true,
+	[GetHashKey('WEAPON_BZGAS')] = true,
+	[GetHashKey('WEAPON_MUSKET')] = true
+}
 
 local Dispatch = false
 
@@ -323,7 +353,7 @@ Citizen.CreateThread(function()
 		local ped = PlayerPedId()
 		if (not Dispatch and IsPedArmed(ped, 4)) then
 			idle = 1
-			if (IsPedShooting(ped)) then
+			if (IsPedShooting(ped)) and not (BlacklistDispatch[GetSelectedPedWeapon(ped)]) then
 				Dispatch = true
 				TriggerServerEvent('zero_core:shoting', GetEntityCoords(ped))
 				Citizen.SetTimeout(40000, function()

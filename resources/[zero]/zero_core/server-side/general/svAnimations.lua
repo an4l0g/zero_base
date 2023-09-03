@@ -37,6 +37,27 @@ RegisterCommand('ec', function(source, args)
     end
 end)
 
+RegisterCommand('andar', function(source, args)
+    local user_id = zero.getUserId(source)
+    if (user_id and args[1]) then
+        local anim = configAnimations.walkAnim[parseInt(args[1])]
+        if (anim) and zero.checkPermissions(user_id, anim.perm) then
+            TriggerClientEvent('anim-setWalking', source, anim.anim)
+        end
+    end
+end)
+
+RegisterCommand('ex', function(source, args)
+    local user_id = zero.getUserId(source)
+    if (user_id and args[1]) then
+        local anim = configAnimations.expression[args[1]]
+        if (anim) and zero.checkPermissions(user_id, anim.perm) then
+            TriggerClientEvent('anim-setExpression', source, anim.anim)
+        end
+    end
+end)
+
+
 RegisterNetEvent('zero_animation:sharedServer', function(target)
     TriggerClientEvent('zero_animation:sharedClearAnimation', target)
 end)

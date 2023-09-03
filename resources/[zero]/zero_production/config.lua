@@ -183,7 +183,7 @@ configs.products = {
             amount = 4,
             delay = 10000,
             materials = {
-                ['c-mec'] = { name = 'C. Mecânica', amount = 14 },
+                ['m-mec'] = { name = 'M. Mecânica', amount = 14 },
             }
         },
         ['kit-reparo'] = {
@@ -192,7 +192,7 @@ configs.products = {
             amount = 1,
             delay = 10000,
             materials = {
-                ['c-mec'] = { name = 'C. Mecânica', amount = 0 },
+                ['m-mec'] = { name = 'M. Mecânica', amount = 0 },
             }
         }
     },

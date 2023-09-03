@@ -137,10 +137,9 @@ getUserPhoto = function(user_id)
 end
 
 getUserJob = function(user_id)
-    local job, jobinfo = zero.getUserGroupByType(user_id, 'fac')
-    if (not job) then job, jobinfo = zero.getUserGroupByType(user_id, 'job'); end;
+    local job, jobinfo = zero.getUserGroupByType(user_id, 'job')
     if (job) then
-        return zero.getGroupTitle(job, jobinfo.grade)..((jobinfo.active and ' (ativo)') or '')
+        return '['..job..'] '..zero.getGroupTitle(job, jobinfo.grade)..((jobinfo.active and ' (ativo)') or '')
     end
     return 'Desempregado'
 end

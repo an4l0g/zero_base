@@ -477,7 +477,7 @@ config.items = {
 ----------------------------------------------------------------------------
 -- LEGAL
 ----------------------------------------------------------------------------
-    ['radio'] = { name = 'Rádio', type = 'common', weight = 0.5 },
+    ['radio'] = { name = 'Rádio', type = 'common', weight = 0.5, arrest = true },
     ['gps'] = { name = 'GPS', type = 'common', weight = 2.5, usable = true, 
         interaction = function(source, user_id)
             cInventory.closeInventory(source)
@@ -566,7 +566,7 @@ config.items = {
             exports['zero_tunings']:startInstallNitro(source)
         end
     },
-    ['spray'] = { name = 'Lata de Spray', type = 'common', weight = 1.5, usable = true, 
+    ['spray'] = { name = 'Lata de Spray', type = 'common', weight = 1.5, usable = true, arrest = true, 
         interaction = function(source, user_id)
             local inside, homeName = exports['zero_homes']:insideHome(source)
             if (inside) then TriggerClientEvent('notify', source, 'Spray', 'Você não pode utilizar spray de dentro da sua <b>residência</b>.') return; end;
@@ -575,7 +575,7 @@ config.items = {
             exports['zero_core']:startSpray(source)
         end
     },
-    ['removedor-spray'] = { name = 'Kit de remoção de spray', type = 'common', weight = 1, usable = true, 
+    ['removedor-spray'] = { name = 'Kit de remoção de spray', type = 'common', weight = 1, usable = true, arrest = true,
         interaction = function(source, user_id)
             local inside, homeName = exports['zero_homes']:insideHome(source)
             if (inside) then TriggerClientEvent('notify', source, 'Spray', 'Você não pode utilizar spray de dentro da sua <b>residência</b>.') return; end;
@@ -594,32 +594,34 @@ config.items = {
 ----------------------------------------------------------------------------
 -- ILEGAL
 ----------------------------------------------------------------------------
-    ['m-droga'] = { name = 'M. Droga', type = 'common', weight = 1 },
-    ['m-municoes'] = { name = 'M. Munições', type = 'common', weight = 1 },
-    ['m-mec'] = { name = 'M. Mecânica', type = 'common', weight = 1 },
-    ['p-armas'] = { name = 'P. Armas', type = 'common', weight = 1 },
+    ['m-droga'] = { name = 'M. Droga', type = 'common', weight = 1, arrest = true },
+    ['m-municoes'] = { name = 'M. Munições', type = 'common', weight = 1, arrest = true },
+    ['m-mec'] = { name = 'M. Mecânica', type = 'common', weight = 1, arrest = true },
+    ['p-armas'] = { name = 'P. Armas', type = 'common', weight = 1, arrest = true },
     ['colete-ilegal'] = { 
         name = 'Colete Ilegal', 
         type = 'common', 
         weight = 2.5, 
         usable = true,
+        arrest = true,
         interaction = function(source, user_id)
             useColete(source, user_id, 'colete-ilegal')
         end 
     },
-    ['pendrive'] = { name = 'Pen Drive', type = 'common', weight = 0.5 },
-    ['c4'] = { name = 'C4', type = 'common', weight = 1 },
-    ['keycard'] = { name = 'Keycard', type = 'common', weight = 0.5 },
-    ['maconha'] = { name = 'Maconha', type = 'common', weight = 1 },
-    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1 },
-    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1 },
-    ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0 },
-    ['nota-fiscal'] = { name = 'Nota fiscal', type = 'common', weight = 1 },
+    ['pendrive'] = { name = 'Pen Drive', type = 'common', weight = 0.5, arrest = true },
+    ['c4'] = { name = 'C4', type = 'common', weight = 1, arrest = true },
+    ['keycard'] = { name = 'Keycard', type = 'common', weight = 0.5, arrest = true },
+    ['maconha'] = { name = 'Maconha', type = 'common', weight = 1, arrest = true },
+    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1, arrest = true },
+    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1, arrest = true },
+    ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0, arrest = true },
+    ['nota-fiscal'] = { name = 'Nota fiscal', type = 'common', weight = 1, arrest = true },
     ['lockpick'] = { 
         name = 'Lockpick', 
         type = 'common', 
         weight = 1.5, 
-        usable = true, 
+        usable = true,
+        arrest = true,
         interaction = function(source, user_id)
             local identity = zero.getUserIdentity(user_id)
             
@@ -700,66 +702,66 @@ config.items = {
             end
         end
     },
-    ['capuz'] = { name = 'Capuz', type = 'common', weight = 1 },
-    ['modificador-armas'] = { name = 'Modificador de Armas', type = 'common', weight = 1.5 },
+    ['capuz'] = { name = 'Capuz', type = 'common', weight = 1, arrest = true },
+    ['modificador-armas'] = { name = 'Modificador de Armas', type = 'common', weight = 1.5, arrest = true },
     ----------------------------------------------------------------------------
     -- Armas legais
     ----------------------------------------------------------------------------
-    ['weapon_petrolcan'] = { name = 'Combustível',type = 'weapon',weight = 1, model = nil },
-    ['weapon_ceramicpistol'] = { name = 'Ceramic Pistol',type = 'weapon',weight = 1, model = nil },
-    ['m_weapon_ceramicpistol'] = { name = 'M. Ceramic Pistol', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_pistol_mk2'] = { name = 'Five-SeveN',type = 'weapon',weight = 1, model = nil },
-    ['m_weapon_pistol_mk2'] = { name = 'M. Five-SeveN', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_smg_mk2'] = { name = 'MP9', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_smg_mk2'] = { name = 'M. MP9', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_combatpdw'] = { name = 'MPX', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_combatpdw'] = { name = 'M. MPX', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_assaultsmg'] = { name = 'M-TAR', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_assaultsmg'] = { name = 'M. M-TAR', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_pumpshotgun_mk2'] = { name = 'Remington', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_pumpshotgun_mk2'] = { name = 'M. Remington', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_combatshotgun'] = { name = 'SPAS-12', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_combatshotgun'] = { name = 'M. SPAS-12', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_carbinerifle_mk2'] = { name = 'R5 RGP', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_carbinerifle_mk2'] = { name = 'M. R5 RGP', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_militaryrifle'] = { name = 'AUG', type = 'weapon', weight = 1, model = nil,},
-    ['m_weapon_militaryrifle'] = { name = 'M. AUG', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_tacticalrifle'] = { name = 'M16', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_tacticalrifle'] = { name = 'M. M16', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_sniperrifle'] = { name = 'AWM', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_sniperrifle'] = { name = 'M. AWM', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_petrolcan'] = { name = 'Combustível',type = 'weapon',weight = 1, arrest = true },
+    ['weapon_ceramicpistol'] = { name = 'Ceramic Pistol',type = 'weapon',weight = 1, arrest = true },
+    ['m_weapon_ceramicpistol'] = { name = 'M. Ceramic Pistol', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_pistol_mk2'] = { name = 'Five-SeveN',type = 'weapon',weight = 1, arrest = true },
+    ['m_weapon_pistol_mk2'] = { name = 'M. Five-SeveN', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_combatpistol'] = { name = 'Glock', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_combatpistol'] = { name = 'M. Glock', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_smg_mk2'] = { name = 'MP9', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_smg_mk2'] = { name = 'M. MP9', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_combatpdw'] = { name = 'MPX', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_combatpdw'] = { name = 'M. MPX', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_assaultsmg'] = { name = 'M-TAR', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_assaultsmg'] = { name = 'M. M-TAR', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_pumpshotgun_mk2'] = { name = 'Remington', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_pumpshotgun_mk2'] = { name = 'M. Remington', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_combatshotgun'] = { name = 'SPAS-12', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_combatshotgun'] = { name = 'M. SPAS-12', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_carbinerifle_mk2'] = { name = 'R5 RGP', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_carbinerifle_mk2'] = { name = 'M. R5 RGP', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_militaryrifle'] = { name = 'AUG', type = 'weapon', weight = 1, arrest = true,},
+    ['m_weapon_militaryrifle'] = { name = 'M. AUG', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_tacticalrifle'] = { name = 'M16', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_tacticalrifle'] = { name = 'M. M16', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_sniperrifle'] = { name = 'AWM', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_sniperrifle'] = { name = 'M. AWM', type = 'wammo', weight = 0.7, arrest = true },
     ----------------------------------------------------------------------------
     -- Armas ilegais
     ----------------------------------------------------------------------------
-    ['weapon_snspistol_mk2'] = { name = 'HK 45', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_snspistol_mk2'] = { name = 'M. HK 45', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_revolver_mk2'] = { name = 'R8', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_revolver_mk2'] = { name = 'M. R8', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_machinepistol'] = { name = 'Tec-9', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_machinepistol'] = { name = 'M. Tec-9', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_minismg'] = { name = 'S VZ 61', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_minismg'] = { name = 'M. S VZ 61', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_compactrifle'] = { name = 'K. Compact', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_compactrifle'] = { name = 'M. K. Compact', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_bullpuprifle_mk2'] = { name = 'Type-97', type = 'weapon', weight = 1, model = nil },
-    ['m_weapon_bullpuprifle_mk2'] = { name = 'M. Type-97', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_snspistol_mk2'] = { name = 'HK 45', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_snspistol_mk2'] = { name = 'M. HK 45', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_revolver_mk2'] = { name = 'R8', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_revolver_mk2'] = { name = 'M. R8', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_tecpistol'] = { name = 'Uzi', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_tecpistol'] = { name = 'M. Uzi', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_machinepistol'] = { name = 'Tec-9', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_machinepistol'] = { name = 'M. Tec-9', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_minismg'] = { name = 'S VZ 61', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_minismg'] = { name = 'M. S VZ 61', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_compactrifle'] = { name = 'K. Compact', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_compactrifle'] = { name = 'M. K. Compact', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_bullpuprifle_mk2'] = { name = 'Type-97', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_bullpuprifle_mk2'] = { name = 'M. Type-97', type = 'wammo', weight = 0.7, arrest = true },
     ----------------------------------------------------------------------------
     -- Armas Staff
     ----------------------------------------------------------------------------
-    ['weapon_doubleaction'] = { name = 'Dourada', type = 'weapon', weight = 1, model = nil},
-    ['m_weapon_doubleaction'] = { name = 'M. Dourada', type = 'wammo', weight = 0.7, model = nil },
-    ['weapon_gusenberg'] = { name = 'Thompson', type = 'weapon', weight = 1, model = nil},
-    ['m_weapon_gusenberg'] = { name = 'M. Thompson', type = 'wammo', weight = 0.7, model = nil },
+    ['weapon_doubleaction'] = { name = 'Dourada', type = 'weapon', weight = 1, arrest = true},
+    ['m_weapon_doubleaction'] = { name = 'M. Dourada', type = 'wammo', weight = 0.7, arrest = true },
+    ['weapon_gusenberg'] = { name = 'Thompson', type = 'weapon', weight = 1, arrest = true},
+    ['m_weapon_gusenberg'] = { name = 'M. Thompson', type = 'wammo', weight = 0.7, arrest = true },
     ----------------------------------------------------------------------------
     -- Utilitarios
     ----------------------------------------------------------------------------
@@ -768,13 +770,14 @@ config.items = {
         type = 'common', 
         weight = 2.5, 
         usable = true, 
+        arrest = true,
         interaction = function(source, user_id)
             useColete(source, user_id, 'colete-militar')
         end
     },
-    ['paraquedas'] = { name = 'gadget_parachute', type = 'weapon', weight = 5 },
-    ['weapon_nightstick'] = { name = 'Cassetete', type = 'weapon', weight = 1 },
-    ['weapon_stungun'] = { name = 'weapon_stungun', type = 'weapon', weight = 1 },
+    ['paraquedas'] = { name = 'gadget_parachute', type = 'weapon', weight = 5, arrest = true },
+    ['weapon_nightstick'] = { name = 'Cassetete', type = 'weapon', weight = 1, arrest = true },
+    ['weapon_stungun'] = { name = 'weapon_stungun', type = 'weapon', weight = 1, arrest = true },
 }
 
 config.blacklist = {

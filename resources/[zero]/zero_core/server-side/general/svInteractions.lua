@@ -1,19 +1,21 @@
 RegisterNetEvent('zero_interactions:handcuff', function()
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) then
+    if (user_id) then  
         if (zeroClient.isHandcuffed(source)) then return; end;
         if (GetSelectedPedWeapon(GetPlayerPed(source)) ~= GetHashKey('WEAPON_UNARMED')) then TriggerClientEvent('notify', source, 'Interação Algemar', 'Sua <b>mão</b> está ocupada.') return; end;
+        
         local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
         if (nPlayer) then
+            if (GetEntityHealth(GetPlayerPed(source)) <= 100 and GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then return end;
+            if (zeroClient.getNoCarro(nPlayer)) then return; end;
+
             local cooldown = 'algemar:'..nPlayer
             if (exports[GetCurrentResourceName()]:GetCooldown(cooldown)) then
                 TriggerClientEvent('notify', source, 'Interação Algemar', 'Aguarde <b>'..exports[GetCurrentResourceName()]:GetCooldown(cooldown)..' segundos</b> para algemar novamente.')
                 return
             end
             exports[GetCurrentResourceName()]:CreateCooldown(cooldown, 10)
-
-            if (zeroClient.getNoCarro(nPlayer)) then return; end;
             
             local ply = GetPlayerPed(nPlayer)
             if (zeroClient.isHandcuffed(nPlayer)) then

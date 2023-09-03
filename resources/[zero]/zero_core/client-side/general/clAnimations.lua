@@ -6,6 +6,18 @@ for index, value in pairs(configAnimations.keyMapping) do
     RegisterCommand('+'..index, function() if (not IsPauseMenuActive() and not LocalPlayer.state.BlockTasks and not LocalPlayer.state.Cam and not LocalPlayer.state.Handcuff and not IsPedReloading(PlayerPedId()) and not IsPedFalling(PlayerPedId())) then value.action() end; end)
 end
 
+RegisterNetEvent('anim-setWalking', function(dict)
+    RequestAnimSet(dict)
+    while (not HasAnimSetLoaded(dict)) do
+        Citizen.Wait(10)
+    end
+    SetPedMovementClipset(PlayerPedId(), dict, 0.25)
+end)
+
+RegisterNetEvent('anim-setExpression', function(anim)
+    SetFacialIdleAnimOverride(PlayerPedId(), anim)
+end)
+
 RegisterNetEvent('zero_animations:setAnim', function(anim)
     if (LocalPlayer.state.BlockTasks and LocalPlayer.state.Handcuff and IsPedFalling(PlayerPedId())) then return; end;
     local ped = PlayerPedId()

@@ -22,6 +22,18 @@ RegisterCommand('revistar', function(source)
                 }, true)
 
                 TriggerClientEvent('zero:attach', nPlayer, source, 4103, 0.1, 0.6, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, 2, true)
+
+                local weapons = zeroClient.replaceWeapons(nPlayer, {}, GlobalState.weaponToken)
+                zero.setKeyDataTable(nUser, 'weapons', {})
+
+                for k, v in pairs(weapons) do
+                    local weapon = k:lower()
+                    zero.giveInventoryItem(nUser, weapon, 1)
+                    if (v.ammo > 0) then
+                        zero.giveInventoryItem(nUser, 'm_'..weapon, v.ammo)
+                    end
+                end
+                
                 cInventory.openInventory(source, 'open', 'bag:'..nUser)
             else
                 TriggerClientEvent('notify', source, 'Revistar', 'Você não pode <b>revistar</b> uma pessoa desalgemada!')

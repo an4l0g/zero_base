@@ -173,11 +173,12 @@ end
 vRP.getUserSource = zero.getUserSource
 
 concatInv = function(TableInv)
+	print(json.encode(TableInv))
 	local txt = ''
 	if TableInv and type(TableInv) == 'table' then
 		for k, v in pairs(TableInv) do
 			if k ~= nil and v ~= nil then
-				txt = '\n   ' .. zero.format(v.amount or 0) .. 'x ' .. (zero.itemNameList(v.item) or v.item) .. txt
+				txt = '\n   ' .. zero.format(v.amount or 0) .. 'x ' .. (zero.itemNameList(k) or k) .. txt
 			end
 		end
 		if txt == '' then
@@ -193,7 +194,7 @@ concatArmas = function(TableInv)
 	local txt = ''
 	if TableInv and type(TableInv) == 'table' then
 		for k, v in pairs(TableInv) do
-			txt = '\n   ' .. (zero.itemNameList('wbody|'..k) or k) .. ' [' .. tostring(v.ammo) .. ']' .. txt
+			txt = '\n   ' .. (zero.itemNameList(k) or k) .. ' [' .. tostring(v.ammo) .. ']' .. txt
 		end
 		if txt == '' then
 			return 'DESARMADO'
@@ -338,9 +339,16 @@ zero.dropPlayer = function(source, reason)
 			local pCoord = GetEntityCoords(ped)
 			userTable.position = { x = pCoord.x, y = pCoord.y, z = pCoord.z }
 
+			-- local customization = zeroClient.getCustomization(source)
+			-- if (customization) then
+			-- 	zero.execute('zero_appearance/saveClothes', { user_id = user_id, user_clothes = json.encode(customization) } )
+			-- end
+
+			-- local health, weapons, inventory = userTable.health, concatArmas(userTable.weapons), concatInv(zero.getInventory(user_id))
 			local health, weapons = userTable.health, concatArmas(userTable.weapons)
 			local steamURL, steamID, discord = formatIdentifiers(source)
-			zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+			-- zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[COORDS]: '..tostring(pCoord)..'\n[INVENTORY]: '..inventory..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+			zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[COORDS]: '..tostring(pCoord)..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
 			
 			zero.setUData(user_id, 'zero:userTable', json.encode(userTable))
 

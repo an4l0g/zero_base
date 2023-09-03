@@ -99,7 +99,7 @@ config.groups = {
 	['Holanda'] = {
 		information = { 
 			title = 'Holanda', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -115,7 +115,7 @@ config.groups = {
 	['Russia'] = {
 		information = { 
 			title = 'Rússia', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -131,7 +131,7 @@ config.groups = {
 	['Cosanostra'] = {
 		information = { 
 			title = 'Cosanostra', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -147,7 +147,7 @@ config.groups = {
 	['Inglaterra'] = {
 		information = { 
 			title = 'Inglaterra', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -163,7 +163,7 @@ config.groups = {
 	['Tropa'] = {
 		information = { 
 			title = 'Tropa +5511', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -179,7 +179,7 @@ config.groups = {
 	['Helipa'] = {
 		information = { 
 			title = 'Helipa', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -195,7 +195,7 @@ config.groups = {
 	['Egito'] = {
 		information = { 
 			title = 'Egito', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -211,7 +211,7 @@ config.groups = {
 	['Finish'] = {
 		information = { 
 			title = 'Finish', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -227,7 +227,7 @@ config.groups = {
 	['Yakuza'] = {
 		information = { 
 			title = 'Yakuza', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -243,7 +243,7 @@ config.groups = {
 	['Mafia'] = {
 		information = { 
 			title = 'Máfia', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -259,7 +259,7 @@ config.groups = {
 	['DuKaraio'] = {
 		information = { 
 			title = 'DuKaraio', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -274,7 +274,7 @@ config.groups = {
 	['Colombia'] = {
 		information = { 
 			title = 'Colômbia', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -290,7 +290,7 @@ config.groups = {
 	['Espanha'] = {
 		information = { 
 			title = 'Espanha', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -306,7 +306,7 @@ config.groups = {
 	['Canada'] = {
 		information = { 
 			title = 'Canadá', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -322,7 +322,7 @@ config.groups = {
 	['Alemanha'] = {
 		information = { 
 			title = 'Alemanha', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -338,7 +338,7 @@ config.groups = {
 	['ZeroMecanica'] = {
 		information = { 
 			title = 'Zero Mecanica', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['AuxMecanico'] = { title = 'Auxiliar de mecânico', level = 1 },
 				['Mecanico'] = { title = 'Mecânico', level = 2 },
