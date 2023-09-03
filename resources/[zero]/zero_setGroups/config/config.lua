@@ -46,6 +46,13 @@ config.groups = {
 		'attachs2.permissao'
 	},
 
+	['Instagram'] = {
+		information = {
+			title = 'Verificado',
+		},
+		'instagram.permissao'
+	},
+
 	['Cam'] = {
 		information = {
 			title = 'Cam',
@@ -109,6 +116,22 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'holanda.permissao',
+		'droga.permissao'
+	},
+
+	['Polonia'] = {
+		information = { 
+			title = 'Polônia', 
+			groupType = 'fac', 
+			grades = {
+				['Membro'] = { title = 'Membro', level = 1 },
+				['Gerente'] = { title = 'Gerente', level = 2 },
+				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
+				['Lider'] = { title = 'Líder', level = 4 },
+			},
+			grades_default = 'Membro',
+		},
+		'polonia.permissao',
 		'droga.permissao'
 	},
 

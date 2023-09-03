@@ -277,7 +277,8 @@ config.shops = {
     { name = 'Supermarket', type = 'buy', coord = vector3(1392.462, 3604.945, 34.9751), config = 'departament', blip = true },
     { name = 'Supermarket', type = 'buy', coord = vector3(-3040.101, 585.4418, 7.897461), config = 'departament', blip = true },
     -- [Helipa] --
-    { name = 'Supermarket', type = 'buy', coord = vector3(240.7253, 1870.787, 189.8923), config = 'departament', blip = true },
+    { name = 'Supermarket', type = 'buy', coord = vector3(240.7253, 1870.787, 189.8923), config = 'departament', blip = false },
+    { name = 'Supermarket', type = 'buy', coord = vector3(3019.767, 2709.415, 74.42053), config = 'departament', blip = false },
 
     { name = 'Ammunation', type = 'buy', coord = vector3(1692.62, 3759.481, 34.6886), config = 'ammu', blip = true },
     { name = 'Ammunation', type = 'buy', coord = vector3(252.8703, -49.25275, 69.92163), config = 'ammu', blip = true },

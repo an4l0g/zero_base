@@ -5,6 +5,54 @@ local vSERVER = Tunnel.getInterface('Commands')
 local CommandsData = {}
 
 ---------------------------------------
+-- ME
+---------------------------------------
+-- RegisterCommand('me', function(source, args)
+--     local text = args[1]
+--     local ped = PlayerPedId()
+--     if GetEntityHealth(ped) > 101 then
+--         TriggerServerEvent('ChatMe', text)
+--     end
+-- end)
+
+local DisplayMe = false
+
+RegisterNetEvent('DisplayMe',function(text, source)
+	if (DisplayMe) then return; end;
+    DisplayMe = true
+
+	local id = GetPlayerFromServerId(source)
+    if id == -1 then return end
+    Citizen.CreateThread(function()
+        while (DisplayMe) do
+            local ped = PlayerPedId()
+            local coordsMe = GetEntityCoords(GetPlayerPed(id),false)
+            local coords = GetEntityCoords(ped,false)
+            local distance = #(coordsMe - coords)
+            if distance <= 30 then
+                MeText(coordsMe['x'],coordsMe['y'],coordsMe['z']+0.90,text)
+            end
+			Citizen.Wait(5)
+        end
+    end)
+    Citizen.Wait(7000)
+    DisplayMe = false
+end)
+
+MeText = function(x,y,z,text)
+	local onScreen,_x,_y = World3dToScreen2d(x,y,z)
+	SetTextFont(0)
+	SetTextScale(0.50,0.50)
+	SetTextColour(255,255,255,255)
+	SetTextEntry("STRING")
+	SetTextCentre(1)
+	AddTextComponentString(text)
+	DrawText(_x,_y)
+	local factor = (string.len(text))/300
+	--DrawRect(_x,_y+0.0125,0.01+factor,0.1,0,0,0,80)
+end
+
+---------------------------------------
 -- NEYMAR
 ---------------------------------------
 RegisterNetEvent('ney')

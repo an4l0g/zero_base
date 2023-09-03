@@ -24,4 +24,5 @@ radios = {
 	{ name = 'Holanda', permissions = { 'holanda.permissao' } },
 	{ name = 'Helipa', permissions = { 'helipa.permissao' } },
 	{ name = 'Egito', permissions = { 'egito.permissao' } },
+	{ name = 'Polonia', permissions = { 'polonia.permissao' } },
 }

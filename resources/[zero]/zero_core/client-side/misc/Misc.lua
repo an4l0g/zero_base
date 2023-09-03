@@ -347,7 +347,7 @@ RegisterNetEvent('zero_core:shotingBlip', function(coord, user_id)
 		BeginTextCommandSetBlipName('STRING')
 		AddTextComponentString('Disparos de arma de fogo')
 		EndTextCommandSetBlipName(shot[user_id])
-		SetBlipAsShortRange(shot[user_id], false)
+		SetBlipAsShortRange(shot[user_id], true)
 
 		Citizen.SetTimeout(35000,function()
 			if (DoesBlipExist(shot[user_id])) then

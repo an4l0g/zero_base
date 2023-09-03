@@ -200,8 +200,7 @@ configs.products = {
         ['lockpick'] = {
             order = 1,
             name = 'Lockpick',
-            min_amount = 1,
-            max_amount = 1,
+            amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 2100 },
@@ -210,8 +209,7 @@ configs.products = {
         ['keycard'] = {
             order = 2,
             name = 'Keycard',
-            min_amount = 1,
-            max_amount = 1,
+            amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
@@ -220,8 +218,7 @@ configs.products = {
         ['pendrive'] = {
             order = 3,
             name = 'Pendrive',
-            min_amount = 1,
-            max_amount = 1,
+            amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
@@ -230,8 +227,7 @@ configs.products = {
         ['c4'] = {
             order = 3,
             name = 'C4',
-            min_amount = 1,
-            max_amount = 1,
+            amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1050 },
@@ -240,8 +236,7 @@ configs.products = {
         ['colete-ilegal'] = {
             order = 5,
             name = 'Colete Ilegal',
-            min_amount = 1,
-            max_amount = 1,
+            amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 7350 },
@@ -250,8 +245,7 @@ configs.products = {
         ['weapon_crowbar'] = {
             order = 5,
             name = 'Pé de cabra',
-            min_amount = 1,
-            max_amount = 1,
+            amount = 1,
             delay = 1000,
             materials = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 1250 },
@@ -490,6 +484,14 @@ configs.productions = {
         products = configs.products.drugs, 
         permission = 'egito.permissao',
         webhook = 'https://discord.com/api/webhooks/1146571905713844374/6F6Iv4FP9nzLX9d2jZUOewDtDX2fCQMaiUNISu-MAhWZKMKT0-3EDNSN4Gmv0C9G3Td7' 
+    },
+    ['Polonia'] = { 
+        type = 'production',
+        coords = vector3(3028.299, 2705.987, 73.91504), 
+        label = 'Produção de Drogas', 
+        products = configs.products.drugs, 
+        permission = 'polonia.permissao',
+        webhook = 'https://discord.com/api/webhooks/1146573369270079638/fQXruk51nszSAMwRErXjW0L2pYtcOBq6NwbGByudJYd9L7TgyhTzj2R1x-fcYNo2CA-k' 
     },
     ['sellDrugs'] = { 
         type = 'sellDrugs',

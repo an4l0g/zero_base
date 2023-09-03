@@ -1734,6 +1734,10 @@ config.locs = {
     { coord = vector4(297.1385, 1862.545, 209.6403, 93.5433), config = 'all', type = 'barbershop' },
     { coord = vector4(298.8264, 1859.13, 209.6403, 45.35433), config = 'all', type = 'skinshop' },
     { coord = vector4(295.8462, 1864.629, 209.6403, 232.4409), config = 'all', type = 'tattooshop' },
+    -- [Polonia] -- 
+    { coord = vector4(2861.842, 2682.092, 98.83594, 28.34646), config = 'all', type = 'barbershop' },
+    { coord = vector4(2992.998, 2675.13, 75.56628, 42.51968), config = 'all', type = 'skinshop' },
+    { coord = vector4(2859.653, 2687.222, 98.83594, 246.6142), config = 'all', type = 'tattooshop' },
     
 }
 

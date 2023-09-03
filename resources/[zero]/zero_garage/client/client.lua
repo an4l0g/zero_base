@@ -230,6 +230,7 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 	local vehicle = NetToVeh(vnet)
 	while (not DoesEntityExist(vehicle)) do Citizen.Wait(100) end
 
+	if (DoesEntityExist(vehicle)) then
     -- local nveh = NetworkGetEntityFromNetworkId(vnet)
     -- if (nveh) then
         -- local timeOut = (GetGameTimer() + 4000)
@@ -262,6 +263,7 @@ cli.settingVehicle = function(vnet, state, plate, custom)
 		end
         return true
     -- end
+	end
 end
 
 cli.returnToNet = function(vehicle)

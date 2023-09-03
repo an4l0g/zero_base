@@ -46,6 +46,8 @@ cacheInteractions['carregar:src'] = nil
 cacheInteractions['carregar:active'] = false
 
 RegisterNetEvent('carregar', function(_source)
+	print('oi')
+	LocalPlayer.state.BlockTasks = true
     cacheInteractions['carregar:src'] = _source
     cacheInteractions['carregar:active'] = (not cacheInteractions['carregar:active'])
     local ped = PlayerPedId()
@@ -55,6 +57,7 @@ RegisterNetEvent('carregar', function(_source)
 			AttachEntityToEntity(ped, GetPlayerPed(player), 4103, -0.65816, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
 		end
 	else
+		LocalPlayer.state.BlockTasks = false
 		DetachEntity(ped, true, false)
 	end
 end)
