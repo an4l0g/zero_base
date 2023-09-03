@@ -46,10 +46,6 @@ cacheInteractions['carregar:src'] = nil
 cacheInteractions['carregar:active'] = false
 
 RegisterNetEvent('carregar', function(_source)
-<<<<<<< HEAD
-=======
-	print('oi')
->>>>>>> b4824543479e2276f9126b4d8d285cfeca1053fa
 	LocalPlayer.state.BlockTasks = true
     cacheInteractions['carregar:src'] = _source
     cacheInteractions['carregar:active'] = (not cacheInteractions['carregar:active'])
