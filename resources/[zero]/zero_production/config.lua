@@ -384,6 +384,7 @@ configs.productions = {
         type = 'production',
         coords = vector3(1368.026, -707.5121, 68.20288), 
         label = 'Produção de Drogas', 
+        buff = true,
         products = configs.products.drugs, 
         permission = 'russia.permissao',
         webhook = 'https://discord.com/api/webhooks/1146572562705432637/JKZuwm-jQS8onvAfxpBzKMF9fDFDRHsmfRbiUx3XpUAMoUktbRqqh65_r0Nt7chbsP8J' 
