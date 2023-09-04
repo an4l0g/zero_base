@@ -184,7 +184,7 @@ config.facs = {
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
     },
-    ['Yakuza'] = {
+    ['Camorra'] = {
         vagas = 30,
         serviceCheck = 'online',
         grades = config.grades.ilegal,

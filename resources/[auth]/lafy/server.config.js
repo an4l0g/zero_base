@@ -18,7 +18,7 @@ module.exports = {
       speaker: [112.71, -1287.38, 28.46],
       range: 50,
       volume: 100,
-      permission: "staff.permissao",
+      permission: "camorra.permissao",
     },
   ],
 

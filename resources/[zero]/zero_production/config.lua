@@ -180,7 +180,7 @@ configs.products = {
         ['nitro'] = {
             order = 1,
             name = 'Nitro',
-            amount = 4,
+            amount = 14,
             delay = 10000,
             materials = {
                 ['m-mec'] = { name = 'M. Mecânica', amount = 14 },
@@ -397,12 +397,12 @@ configs.productions = {
         permission = 'espanha.permissao',
         webhook = 'https://discord.com/api/webhooks/1146573704155910305/5AeOVpXX7ujnX4t_T-nj4kpsTUP2ZaU_Pg8zr6mzRlzGfnUJIe7QYxhBob9S8hmk_TXN' 
     },
-    ['Yakuza'] = { 
-        type = 'production',
-        coords = vector3(572.334, -3127.213, 18.76563), 
-        label = 'Produção de Drogas', 
+    ['Camorra'] = { 
+        type = 'moneyLaundry',
+        coords = vector3(95.4066, -1293.257, 29.75171), 
+        label = 'Lavagem de dinheiro', 
         products = configs.products.drugs, 
-        permission = 'yakuza.permissao',
+        permission = 'camorra.permissao',
         webhook = 'https://discord.com/api/webhooks/1146572334614974565/q9HxlTNB73FF8ftNp6k6kkU6q_L7C1seHUBzTO0XgPluyuvbbp3TsMumJcoKynATWTdz' 
     },
     ['Cosanostra'] = { 
@@ -454,7 +454,6 @@ configs.productions = {
         webhook = 'https://discord.com/api/webhooks/1146572784181452871/09uB5rzjOEl9VDME0SWjBF0A5yTi_K0DJifX6jBYQI2ac2p4GMMWf4U3HIUj3_djU2Ib' 
     },
     ['Tropa'] = { 
-        type = 'production',
         coords = vector3(-221.8286, -284.0308, 29.24609), 
         label = 'Lavagem de dinheiro', 
         type = 'moneyLaundry',
