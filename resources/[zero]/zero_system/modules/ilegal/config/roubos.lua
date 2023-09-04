@@ -5,10 +5,10 @@ Robberys = {
             --     ['nitro'] = 2,
             --     ['maconha'] = 1
             -- },
-            payment = 100000,
+            payment = 30000,
             cooldown = 3600,
             seconds = 60,
-            task = true
+            task = true,
             -- lspd = 2
         },
         ['ammu'] = {
@@ -19,7 +19,7 @@ Robberys = {
             payment = 100000,
             cooldown = 3600,
             seconds = 60,
-            task = true
+            task = true,
             -- lspd = 2
         },
         ['bebidas'] = {
@@ -30,7 +30,7 @@ Robberys = {
             payment = 100000,
             cooldown = 3600,
             seconds = 60,
-            task = true
+            task = true,
             -- lspd = 2
         },
         ['niobio'] = {
@@ -41,41 +41,38 @@ Robberys = {
             payment = 100000,
             cooldown = 3600,
             seconds = 60,
-            task = true
+            task = true,
             -- lspd = 2
         },
         ['anfi'] = {
-            -- requireItens = {
-            --     ['nitro'] = 2,
-            --     ['maconha'] = 1
-            -- },
+            requireItens = {
+                ['weapon_crowbar'] = 2,
+            },
             payment = 100000,
             cooldown = 3600,
             seconds = 60,
-            task = true
-            -- lspd = 2
+            task = true,
+            lspd = 9
         },
         ['acougue'] = {
-            -- requireItens = {
-            --     ['nitro'] = 2,
-            --     ['maconha'] = 1
-            -- },
+            requireItens = {
+                ['maconha'] = 1
+            },
             payment = 100000,
             cooldown = 3600,
             seconds = 60,
-            task = true
-            -- lspd = 2
+            task = true,
+            lspd = 2
         },
         ['registradora'] = {
-            -- requireItens = {
-            --     ['nitro'] = 2,
-            --     ['maconha'] = 1
-            -- },
-            payment = 100000,
+            requireItens = {
+                ['weapon_crowbar'] = 1
+            },
+            payment = 30000,
             cooldown = 3600,
             seconds = 60,
-            task = true
-            -- lspd = 2
+            task = true,
+            lspd = 2
         }
     },
 

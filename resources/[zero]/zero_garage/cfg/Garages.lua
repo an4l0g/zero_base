@@ -1315,6 +1315,14 @@ config.garages = {
             vector4(174.8176, 1683.982, 228.9333, 215.4331)
         }
     },
+    -- [Devil] --
+    {
+        coords = vector3(-2601.481, 1927.094, 167.2968),
+        rule = 'carOnly',
+        points = {
+            vector4(-2595.178, 1930.602, 166.9092, 277.7953)
+        }
+    },
 }
 
 config.rules = {

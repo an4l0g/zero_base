@@ -1614,6 +1614,10 @@ config.homes = {
         coord = vector3(184.022, 1710.29, 227.3832), 
         type = 'mlo'
     },
+    ['Devil'] = { 
+        coord = vector3(-2593.2, 1896.264, 167.2799), 
+        type = 'mlo'
+    },
 }
 
 config.typeHomes = {

@@ -34,7 +34,7 @@ RegisterCommand('revistar', function(source)
                     end
                 end
                 
-                cInventory.openInventory(source, 'open', 'bag:'..nUser)
+                cInventory.openInventory(source, 'open', 'bag:'..nUser, true)
             else
                 TriggerClientEvent('notify', source, 'Revistar', 'Você não pode <b>revistar</b> uma pessoa desalgemada!')
             end

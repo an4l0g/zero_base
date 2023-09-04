@@ -8,6 +8,13 @@ local checkValues = function(value, prop)
     end
 end
 
+local checkEmptyValue = function(value)
+    if value == -1 then
+        return 15
+    end
+    return value
+end
+
 cli.getCurrentPreset = function()
     local ped = PlayerPedId()
     local currentPreset = {
@@ -17,9 +24,9 @@ cli.getCurrentPreset = function()
         ['5'] = { model = GetPedDrawableVariation(ped, 5), var = GetPedTextureVariation(ped, 5) },
         ['6'] = { model = GetPedDrawableVariation(ped, 6), var = GetPedTextureVariation(ped, 6) },
         ['7'] = { model =  GetPedDrawableVariation(ped, 7), var = GetPedTextureVariation(ped, 7) },
-        ['8'] = { model = GetPedDrawableVariation(ped, 8), var = GetPedTextureVariation(ped, 8) },
+        ['8'] = { model = checkEmptyValue(GetPedDrawableVariation(ped, 8)), var = GetPedTextureVariation(ped, 8) },
         ['9'] = { model = GetPedDrawableVariation(ped, 9), var = GetPedTextureVariation(ped, 9) },
-        ['11'] = { model = GetPedDrawableVariation(ped, 11), var = GetPedTextureVariation(ped, 11) },
+        ['11'] = { model = checkEmptyValue(GetPedDrawableVariation(ped, 11)), var = GetPedTextureVariation(ped, 11) },
         ['p0'] = { model = GetPedPropIndex(ped, 0), var = GetPedPropTextureIndex(ped, 0) },
         ['p1'] = { model = GetPedPropIndex(ped, 1), var = GetPedPropTextureIndex(ped, 1) },
         ['p2'] = { model = GetPedPropIndex(ped, 2), var = GetPedPropTextureIndex(ped, 2) },
