@@ -176,3 +176,82 @@ end
 getUserGunlicense = function(user_id)
     return nil
 end
+--------------------------------------------------------------------------------------
+-- TROCAR ID
+--------------------------------------------------------------------------------------
+local changeIdQueries = {
+    { title = 'banned_records', query = 'update banned_records set user_id = :first_id where user_id = :second_id', },
+    { title = 'business', query = 'update business set business_owner = :first_id where business_owner = :second_id', },
+    { title = 'clothes', query = 'update clothes set user_id = :first_id where user_id = :second_id;', },
+    { title = 'creation', query = 'update creation set user_id = :first_id where user_id = :second_id', },
+    { title = 'dynamic', query = 'update dynamic set user_id = :first_id where user_id = :second_id', },
+    { title = 'facs_blacklist', query = 'update facs_blacklist set user_id = :first_id where user_id = :second_id', },
+    { title = 'fine', query = 'update fine set user_id = :first_id where user_id = :second_id', },
+    { title = 'homes', query = 'update homes set user_id = :first_id where user_id = :second_id', },
+    { title = 'hospitalPatient', query = 'update hospital set patient_id = :first_id where patient_id = :second_id', },
+    { title = 'hospitalDoctor', query = 'update hospital set doctor_id = :first_id where doctor_id = :second_id', },
+    { title = 'hwid', query = 'update hwid set user_id = :first_id where user_id = :second_id', },
+    { title = 'hydrus_credits', query = 'update hydrus_credits set player_id = :first_id where player_id = :second_id', },
+    { title = 'hydrus_scheduler', query = 'update hydrus_scheduler set player_id = :first_id where player_id = :second_id', },
+    { title = 'identity', query = 'update identity set user_id = :first_id where user_id = :second_id', },
+    { title = 'inventory', query = 'update inventory set bag_type = :first_id where bag_type = :second_id', },
+    { title = 'pets', query = 'update pets set user_id = :first_id where user_id = :second_id', },
+    { title = 'pix', query = 'update pix set user_id = :first_id where user_id = :second_id', },
+    { title = 'relationship1', query = 'update relationship set user_1 = :first_id where user_1 = :second_id', },
+    { title = 'relationship2', query = 'update relationship set user_2 = :first_id where user_2 = :second_id', },
+    { title = 'smartphone_bank_invoices1', query = 'update smartphone_bank_invoices set payer_id = :first_id where payer_id = :second_id', },
+    { title = 'smartphone_bank_invoices2', query = 'update smartphone_bank_invoices set payee_id = :first_id where payee_id = :second_id', },
+    { title = 'smartphone_blocks', query = 'update smartphone_blocks set user_id = :first_id where user_id = :second_id', },
+    { title = 'smartphone_gallery', query = 'update smartphone_gallery set user_id = :first_id where user_id = :second_id', },
+    { title = 'smartphone_instagram', query = 'update smartphone_instagram set user_id = :first_id where user_id = :second_id', },
+    { title = 'smartphone_olx', query = 'update smartphone_olx set user_id = :first_id where user_id = :second_id', },
+    { title = 'smartphone_paypal_transactions1', query = 'update smartphone_paypal_transactions set user_id = :first_id where user_id = :second_id', },
+    { title = 'smartphone_paypal_transactions2', query = 'update smartphone_paypal_transactions set target = :first_id where target = :second_id', },
+    { title = 'smartphone_tinder', query = 'update smartphone_tinder set user_id = :first_id where user_id = :second_id', },
+    { title = 'smartphone_twitter_profiles', query = 'update smartphone_twitter_profiles set user_id = :first_id where user_id = :second_id', },
+    { title = 'user_data', query = 'update user_data set user_id = :first_id where user_id = :second_id', },
+    { title = 'user_groups', query = 'update user_groups set user_id = :first_id where user_id = :second_id', },
+    { title = 'user_identities', query = 'update user_identities set user_id = :first_id where user_id = :second_id', },
+    { title = 'user_ids', query = 'update user_ids set user_id = :first_id where user_id = :second_id', },
+    { title = 'user_moneys', query = 'update user_moneys set user_id = :first_id where user_id = :second_id', },
+    { title = 'user_vehicles', query = 'update user_vehicles set user_id = :first_id where user_id = :second_id', },
+    { title = 'users', query = 'update users set id = :first_id where id = :second_id', },
+}
+
+RegisterCommand('changeid', function(source, args)
+    local user_id = zero.getUserId(source)
+    if zero.hasPermission(user_id, '+Staff.COO') then
+        local ids = zero.prompt(source, { 'ID atual', 'ID final' })
+        if #ids == 2 then
+            local auxId = 98
+            local firstId = parseInt(ids[1])
+            local secondId = parseInt(ids[2])
+            if firstId ~= secondId then
+                local firstIdSource = zero.getUserSource(firstId)
+                local secondIdSource = zero.getUserSource(secondId)
+                if firstIdSource ~= nil then DropPlayer(firstIdSource, 'Tranferência de ID') end
+                if secondIdSource ~= nil then DropPlayer(secondIdSource, 'Tranferência de ID') end
+                TriggerClientEvent('progressBar', source, 'Transferindo IDs...', #changeIdQueries * 1000)
+                for k,v in pairs(changeIdQueries) do
+                    zero.prepare('zero/changeId/'..v.title, v.query)
+                    Wait(500)
+                    if v.title ~= 'inventory' then
+                        zero.execute('zero/changeId/'..v.title, { first_id = auxId, second_id = firstId})
+                        zero.execute('zero/changeId/'..v.title, { first_id = firstId, second_id = secondId})
+                        zero.execute('zero/changeId/'..v.title, { first_id = secondId, second_id = auxId})
+                    else 
+                        zero.execute('zero/changeId/'..v.title, { first_id = 'bag:'..auxId, second_id = 'bag:'..firstId})
+                        zero.execute('zero/changeId/'..v.title, { first_id = 'bag:'..firstId, second_id = 'bag:'..secondId})
+                        zero.execute('zero/changeId/'..v.title, { first_id = 'bag:'..secondId, second_id = 'bag:'..auxId})
+                    end
+                    Wait(500)
+                end
+                TriggerClientEvent('notify', source, 'Transferência de ID', 'Transferência executada com sucesso!')
+            else
+                TriggerClientEvent('notify', source, 'Você é burro!', 'Você não pode informar o mesmo id duas vezes.')
+            end
+        else 
+            TriggerClientEvent('notify', source, 'Mds que burro!', 'Você precisa informar os 2 ids.')
+        end
+    end
+end)

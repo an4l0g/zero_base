@@ -1,50 +1,6 @@
 Robberys = {
     general = {
         ['departament'] = {
-            -- requireItens = {
-            --     ['nitro'] = 2,
-            --     ['maconha'] = 1
-            -- },
-            payment = 30000,
-            cooldown = 3600,
-            seconds = 60,
-            task = true,
-            -- lspd = 2
-        },
-        ['ammu'] = {
-            -- requireItens = {
-            --     ['nitro'] = 2,
-            --     ['maconha'] = 1
-            -- },
-            payment = 100000,
-            cooldown = 3600,
-            seconds = 60,
-            task = true,
-            -- lspd = 2
-        },
-        ['bebidas'] = {
-            -- requireItens = {
-            --     ['nitro'] = 2,
-            --     ['maconha'] = 1
-            -- },
-            payment = 100000,
-            cooldown = 3600,
-            seconds = 60,
-            task = true,
-            -- lspd = 2
-        },
-        ['niobio'] = {
-            -- requireItens = {
-            --     ['nitro'] = 2,
-            --     ['maconha'] = 1
-            -- },
-            payment = 100000,
-            cooldown = 3600,
-            seconds = 60,
-            task = true,
-            -- lspd = 2
-        },
-        ['anfi'] = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
@@ -52,56 +8,96 @@ Robberys = {
             cooldown = 3600,
             seconds = 60,
             task = true,
-            lspd = 9
+            lspd = 7
         },
-        ['acougue'] = {
+        ['ammu'] = {
             requireItens = {
-                ['maconha'] = 1
+                ['weapon_crowbar'] = 2,
             },
             payment = 100000,
             cooldown = 3600,
             seconds = 60,
             task = true,
-            lspd = 2
+            lspd = 6
         },
-        ['registradora'] = {
-            requireItens = {
-                ['weapon_crowbar'] = 1
-            },
-            payment = 30000,
-            cooldown = 3600,
-            seconds = 60,
-            task = true,
-            lspd = 2
-        }
+        -- ['bebidas'] = {
+        --     requireItens = {
+        --         ['weapon_crowbar'] = 1,
+        --     },
+        --     payment = 10000,
+        --     cooldown = 3600,
+        --     seconds = 60,
+        --     task = true
+        --     lspd = 5
+        -- },
+        -- ['niobio'] = {
+        --     requireItens = {
+        --         ['pendrive'] = 1,
+        --     },
+        --     payment = 30000,
+        --     cooldown = 3600,
+        --     seconds = 60,
+        --     task = true
+        --     lspd = 15
+        -- },
+        -- ['anfi'] = {
+        --     requireItens = {
+        --         ['weapon_crowbar'] = 1,
+        --     },
+        --     payment = 30000,
+        --     cooldown = 3600,
+        --     seconds = 60,
+        --     task = true
+        --     lspd = 10
+        -- },
+        -- ['acougue'] = {
+        --     requireItens = {
+        --         ['weapon_crowbar'] = 1,
+        --     },
+        --     payment = 30000,
+        --     cooldown = 3600,
+        --     seconds = 60,
+        --     task = true
+        --     lspd = 10
+        -- },
+        -- ['registradora'] = {
+        --     requireItens = {
+        --         ['weapon_crowbar'] = 1,
+        --     },
+        --     payment = 3000,
+        --     cooldown = 3600,
+        --     seconds = 60,
+        --     task = true
+        --     lspd = 5
+        -- }
     },
 
     locations = {
-        -- { name = 'Mercado 1/14 do Sul', coord = vec4(2549.26,384.94,108.63, 84.89), config = 'departament' },
-        -- { name = 'Mercado 2/14 do Sul', coord = vec4(1159.56,-314.06,69.21, 94.5), config = 'departament' },
-        -- { name = 'Mercado 3/14 do Sul', coord = vec4(-709.73,-904.1,19.22, 88.9), config = 'departament' },
-        -- { name = 'Mercado 4/14 do Sul', coord = vec4(-1829.11,798.75,138.2, 128.44), config = 'departament' },
-        -- { name = 'Mercado 5/14 do Sul', coord = vec4(378.23,333.33,103.57, 343.96), config = 'departament' },
-        -- { name = 'Mercado 6/14 do Sul', coord = vec4(-3250.09,1004.44,12.84, 81.77), config = 'departament' },
-        -- { name = 'Mercado 7/14 do Sul', coord = vec4(1734.84,6420.79,35.04, 328.03), config = 'departament' },
-        -- { name = 'Mercado 8/14 do Sul', coord = vec4(546.37,2662.73,42.16, 181.67), config = 'departament' },
-        -- { name = 'Mercado 9/14 do Sul', coord = vec4(1959.27,3748.93,32.35, 28.18), config = 'departament' },
-        -- { name = 'Mercado 10/14 do Sul', coord = vec4(2672.83,3286.66,55.25, 60.51), config = 'departament' },
-        -- { name = 'Mercado 11/14 do Sul', coord = vec4(1707.87,4920.39,42.07, 319.63), config = 'departament' },
-        -- { name = 'Mercado 12/14 do Sul', coord = vec4(-43.38,-1748.38,29.43, 45.3), config = 'departament' },
-        -- { name = 'Mercado 13/14 do Sul', coord = vec4(-3047.83,585.66,7.91, 103.54), config = 'departament' },
-        -- { name = 'Mercado 14/14 do Sul', coord = vec4(-3047.87,585.68,7.91, 107.26), config = 'departament' },
+        -- DEPARTAMENTO
+        { name = 'Mercado 2/15 do Sul', coord = vec4(2549.26,384.94,108.63, 84.89), config = 'departament' },
+        { name = 'Mercado 3/15 do Sul', coord = vec4(1159.56,-314.06,69.21, 94.5), config = 'departament' },
+        { name = 'Mercado 4/15 do Sul', coord = vec4(-709.73,-904.1,19.22, 88.9), config = 'departament' },
+        { name = 'Mercado 5/15 do Sul', coord = vec4(-1829.11,798.75,138.2, 128.44), config = 'departament' },
+        { name = 'Mercado 6/15 do Sul', coord = vec4(378.23,333.33,103.57, 343.96), config = 'departament' },
+        { name = 'Mercado 7/15 do Sul', coord = vec4(-3250.09,1004.44,12.84, 81.77), config = 'departament' },
+        { name = 'Mercado 8/15 do Sul', coord = vec4(1734.84,6420.79,35.04, 328.03), config = 'departament' },
+        { name = 'Mercado 9/15 do Sul', coord = vec4(546.37,2662.73,42.16, 181.67), config = 'departament' },
+        { name = 'Mercado 10/15 do Sul', coord = vec4(1959.27,3748.93,32.35, 28.18), config = 'departament' },
+        { name = 'Mercado 11/15 do Sul', coord = vec4(2672.83,3286.66,55.25, 60.51), config = 'departament' },
+        { name = 'Mercado 12/15 do Sul', coord = vec4(1707.87,4920.39,42.07, 319.63), config = 'departament' },
+        { name = 'Mercado 13/15 do Sul', coord = vec4(-43.38,-1748.38,29.43, 45.3), config = 'departament' },
+        { name = 'Mercado 15/15 do Sul', coord = vec4(-3047.83,585.66,7.91, 103.54), config = 'departament' },
 
-        -- -- AMMU NATION
-        -- { name = 'Ammunation Norte 1/9', coord = vec4(1690.37,3759.8,34.71, 46.93), config = 'ammu' },
-        -- { name = 'Ammunation Sul 2/9', coord = vec4(255.23,-48.66,69.95, 247.92), config = 'ammu' },
-        -- { name = 'Ammunation Sul 3/9', coord = vec4(-333.62,6083.82,31.46, 43.07), config = 'ammu' },
-        -- { name = 'Ammunation Sul 4/9', coord = vec4(-664.35,-933.01,21.83, 354.8), config = 'ammu' },
-        -- { name = 'Ammunation Sul 5/9', coord = vec4(-1303.01,-392.68,36.7, 253.22), config = 'ammu' },
-        -- { name = 'Ammunation Norte 6/9', coord = vec4(-1121.01,2698.8,18.56, 40.03), config = 'ammu' },
-        -- { name = 'Ammunation Sul 7/9', coord = vec4(2570.05,291.96,108.74, 174.54), config = 'ammu' },
-        -- { name = 'Ammunation Sul 8/9', coord = vec4(-3175.09,1086.53,20.84, 66.55), config = 'ammu' },
-        -- { name = 'Ammunation Sul 9/9', coord = vec4(812.54,-2159.65,29.62, 178.35), config = 'ammu' },
+        -- AMMU NATION
+        { name = 'Ammunation Norte 1/11', coord = vec4(1690.37,3759.8,34.71, 46.93), config = 'ammu' },
+        { name = 'Ammunation Sul 2/11', coord = vec4(255.23,-48.66,69.95, 247.92), config = 'ammu' },
+        { name = 'Ammunation Sul 4/11', coord = vec4(-333.62,6083.82,31.46, 43.07), config = 'ammu' },
+        { name = 'Ammunation Sul 5/11', coord = vec4(-664.35,-933.01,21.83, 354.8), config = 'ammu' },
+        { name = 'Ammunation Sul 6/11', coord = vec4(-1303.01,-392.68,36.7, 253.22), config = 'ammu' },
+        { name = 'Ammunation Norte 7/11', coord = vec4(-1121.01,2698.8,18.56, 40.03), config = 'ammu' },
+        { name = 'Ammunation Sul 8/11', coord = vec4(2570.05,291.96,108.74, 174.54), config = 'ammu' },
+        { name = 'Ammunation Sul 9/11', coord = vec4(-3175.09,1086.53,20.84, 66.55), config = 'ammu' },
+        { name = 'Ammunation Sul 11/11', coord = vec4(812.54,-2159.65,29.62, 178.35), config = 'ammu' },
         
         -- -- LOJA DE BEBIDAS
         -- { name = 'Loja de Bebidas 1/5 do Norte', coord = vec4(1169.25,2717.73,37.16, 267.5), config = 'bebidas' },

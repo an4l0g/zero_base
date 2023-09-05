@@ -7,13 +7,13 @@ local CommandsData = {}
 ---------------------------------------
 -- ME
 ---------------------------------------
--- RegisterCommand('me', function(source, args)
---     local text = args[1]
---     local ped = PlayerPedId()
---     if GetEntityHealth(ped) > 101 then
---         TriggerServerEvent('ChatMe', text)
---     end
--- end)
+RegisterCommand('me', function(source, args)
+    local text = args[1]
+    local ped = PlayerPedId()
+    if GetEntityHealth(ped) > 101 then
+        TriggerServerEvent('ChatMe', text)
+    end
+end)
 
 local DisplayMe = false
 

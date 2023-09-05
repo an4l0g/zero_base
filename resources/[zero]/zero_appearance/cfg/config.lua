@@ -1716,7 +1716,7 @@ config.locs = {
     { blip = true, coord = vector4(-33.85055, -152.2418, 57.08203-0.97, 255.1181), config = 'all', type = 'barbershop' },
     { blip = true, coord = vector4(-278.6637, 6227.842, 31.68933-0.97, 317.4803), config = 'all', type = 'barbershop' },
     { blip = true, coord = vector4(137.3934, -1708.457, 29.27991-0.97, 48.18897), config = 'all', type = 'barbershop' },
-
+    
     -- [ Tattoo Shop ] --
     { blip = true, coord = vector4(1322.98, -1652.532, 52.26306-0.97, 351.4961), config = 'all', type = 'tattooshop' },
     { blip = true, coord = vector4(-1154.163, -1425.785, 4.94873-0.97, 325.9843), config = 'all', type = 'tattooshop' },
@@ -1724,7 +1724,7 @@ config.locs = {
     { blip = true, coord = vector4(-3169.53, 1075.859, 20.82129-0.97, 158.7402), config = 'all', type = 'tattooshop' },
     { blip = true, coord = vector4(1863.917, 3747.428, 33.02051-0.97, 357.1653), config = 'all', type = 'tattooshop' },
     { blip = true, coord = vector4(-293.1165, 6200.558, 31.48718-0.97, 161.5748), config = 'all', type = 'tattooshop' },
-
+    
     -- [ Deic ] --
     { coord = vector4(567.3231, -2779.464, 6.077637-0.97, 51.02362), config = 'all', type = 'skinshop' },
     { coord = vector4(555.5341, -2773.279, 6.077637-0.97, 51.02362), config = 'all', type = 'tattooshop' },
@@ -1739,6 +1739,10 @@ config.locs = {
     { coord = vector4(2992.998, 2675.13, 75.56628, 42.51968), config = 'all', type = 'skinshop' },
     { coord = vector4(2859.653, 2687.222, 98.83594, 246.6142), config = 'all', type = 'tattooshop' },
     
+    -- [Russia] -- 
+    { coord = vector4(1314.448, -699.9033, 73.20728, 252.2835), config = 'all', type = 'barbershop' },
+    { coord = vector4(1332.237, -686.7165, 73.12305, 161.5748), config = 'all', type = 'skinshop' },
+    { coord = vector4(1334.743, -678.1318, 73.08936, 342.9921), config = 'all', type = 'tattooshop' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')
