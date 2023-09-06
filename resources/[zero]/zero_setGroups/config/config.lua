@@ -122,7 +122,7 @@ config.groups = {
 	['Polonia'] = {
 		information = { 
 			title = 'Polônia', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },

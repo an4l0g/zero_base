@@ -224,3 +224,12 @@ create table business(
     business_safe int not null,
     primary key(business_name)
 );
+
+create table reputations(
+    id int unsigned auto_increment not null,
+    org varchar(50) not null,
+    description varchar(250) not null,
+    points int not null,
+    createdAt datetime not null,
+    primary key(id)
+);
