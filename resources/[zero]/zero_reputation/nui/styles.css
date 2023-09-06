@@ -1,0 +1,192 @@
+:root {
+  --primary: rgb(0, 153, 255);
+  --primary-opacity: rgba(0, 153, 255, 0.2);
+  --dark: rgb(0, 0, 0);
+  --dark-opacity: rgba(0, 0, 0, 0.2);
+  --shape: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  border-radius: 30px;
+  background-color: rgba(22, 22, 22, 0.1);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 30px;
+  background-color: rgba(22, 22, 22, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 30px;
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+body,
+input,
+select,
+button,
+textarea {
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#reputation {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: none;
+}
+
+#reputation .container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+#reputation .container img {
+  width: 300px;
+  position: absolute;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+#reputation .container .wrap-list {
+  background-color: rgba(0, 0, 0, 0.9);
+  background-image: linear-gradient(
+    to bottom right,
+    var(--primary-opacity),
+    var(--dark-opacity)
+  );
+  width: 800px;
+  min-height: 500px;
+  padding: 1.5rem;
+  position: absolute;
+  z-index: 1;
+  border-radius: 10px;
+}
+
+#reputation .container .wrap-list header {
+  background-color: var(--dark-opacity);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+#reputation .container .wrap-list header h1 {
+  font-weight: normal;
+  color: var(--shape);
+  letter-spacing: 1px;
+}
+
+#reputation .container .wrap-list ul {
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#reputation .container .wrap-list ul li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 75px;
+  min-height: 50px;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid var(--primary-opacity);
+}
+
+#reputation .container .wrap-list ul li:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+#reputation .container .wrap-list ul li:last-child {
+  border-bottom: 0;
+}
+
+#reputation .container .wrap-list ul li .info {
+  flex: 2;
+  color: var(--shape);
+  font-weight: normal;
+  text-align: center;
+}
+
+#reputation .container .wrap-list ul li .info .pts {
+  background-color: var(--primary-opacity);
+  border-radius: 10px;
+  display: inline;
+  padding: 0.2rem 0.5rem;
+}
+
+#reputation .container .wrap-list ul li .info.f1 {
+  flex: 1;
+  color: var(--primary);
+  display: flex;
+  justify-content: flex-start;
+}
+
+#reputation .container .wrap-list ul li .info.left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+#reputation .container .wrap-list ul li .info.cta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#reputation .container .wrap-list ul li .info button {
+  background-color: transparent;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  height: 40px;
+  border: 1px solid var(--primary-opacity);
+  border-radius: 5px;
+  color: var(--shape);
+  transition: background-color 0.5s;
+}
+
+#reputation .container .wrap-list ul li .info button:hover {
+  background-color: rgba(0, 153, 255, 0.3);
+}
+
+#reputation .container .wrap-list header .close {
+  border: 1px solid var(--primary-opacity);
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: var(--shape);
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+#reputation .container .wrap-list header .close:hover {
+  background-color: rgba(0, 153, 255, 0.3);
+}
