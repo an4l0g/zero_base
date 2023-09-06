@@ -914,7 +914,7 @@ RegisterCommand('anuncio', function(source)
     local identity =  zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') or zero.hasPermission(user_id, 'mecanico.permissao') then
         local message = zero.prompt(source, { 'Título', 'Mensagem' })
-        if (message[1]) then
+        if (#message > 1) then
             TriggerClientEvent('announcement', -1, message[1], message[2], identity.firstname, true, 30000)
             zero.webhook('Anuncios', '```prolog\n[/ANUNCIO]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[TÍTULO]: '..message[1]..'\n[MENSAGEM]: '..message[2]..' \n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
@@ -1458,17 +1458,20 @@ RegisterCommand('rg2', function(source, args)
         if (args[1]) then
             local nUser = parseInt(args[1])
             local identity = zero.getUserIdentity(nUser)
+            if (identity) then
+                local bankMoney = zero.getBankMoney(nUser)
+                local paypalMoney = zero.getPaypalMoney(nUser)
+                local walletMoney = zero.getMoney(nUser)
 
-            local bankMoney = zero.getBankMoney(nUser)
-            local paypalMoney = zero.getPaypalMoney(nUser)
-            local walletMoney = zero.getMoney(nUser)
+                local groups = ''
+                for gp, i in pairs(zero.getUserGroups(nUser)) do
+                    groups = groups..'<br>'..gp..' ('..i.grade..')'
+                end
 
-            local groups = ''
-            for gp, i in pairs(zero.getUserGroups(nUser)) do
-                groups = groups..'<br>'..gp..' ('..i.grade..')'
+                TriggerClientEvent('notify', source, 'Registro', 'Passaporte: <b>#'..nUser..'</b><br>Registro: <b>'..identity.registration..'</b><br>Nome: <b>'..identity.firstname..' '..identity.lastname..'</b><br>Idade: <b>'..identity.age..'</b><br>Telefone: <b>'..identity.phone..'</b><br>Carteira: <b>'..zero.format(parseInt(walletMoney))..'</b><br>Banco: <b>'..zero.format(parseInt(bankMoney))..'</b><br>Paypal: <b>'..zero.format(parseInt(paypalMoney))..'</b><br>Sets: <b>'..groups..'</b>', 25000)
+            else
+                TriggerClientEvent('notify', source, 'Registro', 'Este <b>ID</b> não fez personagem em nossa cidade!')
             end
-
-            TriggerClientEvent('notify', source, 'Registro', 'Passaporte: <b>#'..nUser..'</b><br>Registro: <b>'..identity.registration..'</b><br>Nome: <b>'..identity.firstname..' '..identity.lastname..'</b><br>Idade: <b>'..identity.age..'</b><br>Telefone: <b>'..identity.phone..'</b><br>Carteira: <b>'..zero.format(parseInt(walletMoney))..'</b><br>Banco: <b>'..zero.format(parseInt(bankMoney))..'</b><br>Paypal: <b>'..zero.format(parseInt(paypalMoney))..'</b><br>Sets: <b>'..groups..'</b>', 25000)
         end
     end
 end)

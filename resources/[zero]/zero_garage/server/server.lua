@@ -254,8 +254,10 @@ local vehicleDetained = {
                 setDetained(user_id, vehicle, 0)
                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
                 return true
+            else
+                TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
+                return false
             end
-            TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
         end
         return false
     end,
@@ -268,8 +270,10 @@ local vehicleDetained = {
                 exports.zero_bank:extrato(user_id, 'Veículo retido', -value)
                 TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
                 return true
+            else
+                TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
+                return false
             end
-            TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
         end
         return false
     end
@@ -457,6 +461,7 @@ RegisterCommand('dv', function(source)
         if (vnetid) then
             local vehState = srv.getVehicleData(vnetid)
             vCLIENT.tryDeleteVehicle(source, vnetid)
+            if (not vehState.user_id) then return; end;
             zero.webhook('DeleteVehicle', '```prolog\n[PASSAPORTE]: #'..user_id..' '..identity.firstname..' '..identity.lastname..' \n[USOU]: /dv\n[EM]: '..vehState.model..' \n[DONO]: '..vehState.user_id..'\n[XYZ]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
     end

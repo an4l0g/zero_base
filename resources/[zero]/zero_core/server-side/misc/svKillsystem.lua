@@ -19,7 +19,7 @@ srv.playerDeath = function(weapon, killerSource, headShot)
 
                 local victimCoord = GetEntityCoords(sPed)
                 local killerCoord = GetEntityCoords(nPed)
-                local weaponName = config.weapons[weapon]['name'] or 'Desconhecido'
+                local weaponName = (config.weapons[weapon] and config.weapons[weapon]['name'] or 'Desconhecido')
                 local killer_identity = zero.getUserIdentity(killer_id)
                 local victim_identity = zero.getUserIdentity(user_id)
                 

@@ -10,7 +10,7 @@ RegisterNetEvent('zero_core:shoting', function(coord)
 
         local police = zero.getUsersByPermission('policia.permissao')
         for k, v in pairs(police) do
-            local nSource = zero.getUserSource(parseInt(k))
+            local nSource = zero.getUserSource(parseInt(v))
             if (nSource) then
                 async(function()
                     TriggerClientEvent('announcement', nSource, 'Disparos de arma de fogo', 'Atenção <b>unidades</b> foram avistados disparos de arma de fogo próximo as suas regiões, tomem cuidado!', 'Delegacia Zero', true, 10000)
