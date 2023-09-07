@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
 				state_cache.customs_tick = state_cache.customs_tick + 1
 			end
 			-- WEAPONS SAVE
-			if state_cache.weapons_tick >= 2 then
+			if state_cache.weapons_tick >= 1 then
 				local weapons = zero.getWeapons()
 				if (json.encode(weapons) ~= json.encode(state_cache.weapons)) then
 					state_cache.weapons = weapons
@@ -122,15 +122,11 @@ zero.replaceWeapons = function(weapons, token)
 end
 
 zero.giveWeapons = function(weapons, clear_before, token)
-	print('1')
 	zeroServer._checkToken(token, weapons)
-	print('2')
 	local player = PlayerPedId()
 	if (clear_before) then RemoveAllPedWeapons(player, true); end;
-	print('3')
-	print(json.encode(weapons))
+
 	for weapon, value in pairs(weapons) do
-		print(weapon, json.encode(value))
 		local ammo = (value.ammo or 0)
 		GiveWeaponToPed(player, GetHashKey(weapon), ammo, false)
 	end
@@ -162,50 +158,46 @@ zero.getCustomization = function()
 end
 
 zero.setCustomization = function(clothes)
-	local r = async()
-	Citizen.CreateThread(function()
-		if (clothes) then
-			local ped = PlayerPedId()
+	clothes = json.decode(clothes)
 
-			local modelHash = clothes.pedModel
-			if (modelHash) then
-				local weapons = zero.getWeapons()
-				local armour = zero.getArmour()
-				local health = zero.getHealth()
+	local ped = PlayerPedId()
 
-				RequestModel(modelHash)
-				while not HasModelLoaded(modelHash) do
-					RequestModel(modelHash)
-					Citizen.Wait(0)
-				end
+	local modelHash = clothes.pedModel
+	if (modelHash) then
+		local weapons = zero.getWeapons()
+		local armour = zero.getArmour()
+		local health = zero.getHealth()
 
-				SetPlayerModel(PlayerId(), modelHash)
-				SetModelAsNoLongerNeeded(modelHash)
-
-				zero.setHealth(health)
-				zero.giveWeapons(weapons, true, GlobalState.weaponToken)
-				zero.setArmour(armour)
-			end
-
-			ped = PlayerPedId()
-			SetPedMaxHealth(ped, 200)
-
-			for k, v in pairs(clothes) do
-				if (k ~= 'pedModel') then
-					local isProp, index = parsePart(k)
-					if (isProp) then
-						SetPedPropIndex(ped, index, v.model, v.var, (v.palette or 0))
-					else
-						SetPedComponentVariation(ped, parseInt(k), v.model, v.var, (v.palette or 0))
-					end
-				end
-			end
-			TriggerEvent('zero:barberUpdate')
-			TriggerEvent('zero:tattooUpdate')
+		RequestModel(modelHash)
+		while not HasModelLoaded(modelHash) do
+			RequestModel(modelHash)
+			Citizen.Wait(0)
 		end
-		r()
-	end)
-	return r:wait()
+
+		SetPlayerModel(PlayerId(), modelHash)
+		SetModelAsNoLongerNeeded(modelHash)
+
+		zero.setHealth(health)
+		zero.giveWeapons(weapons, true, GlobalState.weaponToken)
+		zero.setArmour(armour)
+	end
+
+	ped = PlayerPedId()
+	SetPedMaxHealth(ped, 200)
+
+	for k, v in pairs(clothes) do
+		if (k ~= 'pedModel') then
+			local isProp, index = parsePart(k)
+			if (isProp) then
+				SetPedPropIndex(ped, index, v.model, v.var, (v.palette or 0))
+			else
+				SetPedComponentVariation(ped, parseInt(k), v.model, v.var, (v.palette or 0))
+			end
+		end
+	end
+
+	TriggerEvent('zero:barberUpdate')
+	TriggerEvent('zero:tattooUpdate')
 end
 
 local tab = nil

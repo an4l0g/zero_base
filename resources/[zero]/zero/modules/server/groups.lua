@@ -163,7 +163,7 @@ vRP.addUserGroup = zero.addUserGroup
 zero.removeUserGroup = function(user_id, group)
 	local affected = zero.execute('vRP/rem_user_group',{ user_id = user_id, groupId = group })
 	if affected > 0 then
-		TriggerEvent('vRP:playerLeaveGroup', user_id, group, (groups[group]['information']['groupType'] or ''))
+		TriggerEvent('zero:playerLeaveGroup', user_id, group, (groups[group]['information']['groupType'] or ''))
 		return true
 	end
 end

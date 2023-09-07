@@ -31,7 +31,6 @@ srv.saveVehicle = function(plate, custom)
     local mechanicId = zero.getUserId(source)
     local user_id = zero.getUserByPlate(plate)
     if (user_id and plate and custom) then
-        print('^5[Zero Bennys]^7 salvou o tuning do id '..(user_id or 'Não identificado')..' placa '..plate)
         zero.execute('zero_bennys/setCustom', { plate = plate, custom = json.encode(custom) })
         zero.webhook(webhookTuning, '```prolog\n[ZERO BENNYS]\n[ACTION]: (TUNING)\n[MECHANIC]: '..mechanicId..'\n[VEHICLE OWNER]: '..(user_id or 'Não identificado!')..'\n[VEHICLE PLATE]: '..plate..'\n[CUSTOM]: '..json.encode(custom)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```' )
         return true

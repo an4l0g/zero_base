@@ -5,6 +5,38 @@ local vSERVER = Tunnel.getInterface('Commands')
 local CommandsData = {}
 
 ---------------------------------------
+-- ANTI CL
+---------------------------------------
+local pExitCDS = vector3(0.0,0.0,-100.0)
+Citizen.CreateThread(function()
+	while (true) do
+		pExitCDS = GetEntityCoords(PlayerPedId())
+		Citizen.Wait(1000)
+	end
+end)
+
+RegisterNetEvent('zero:playerExit', function(user_id, reason, drawCDS)
+	if (drawCDS) then
+		if reason and #(pExitCDS - drawCDS) <= 500 then
+			local draw = true
+			local str = '~b~[ZERO - QUIT]~w~\nPASSAPORTE: ~b~'..user_id..'~w~\nMOTIVO: ~b~'..reason..'~w~'
+			if (string.len(str) >= 94) then
+				str = string.sub(str,1,94)..'...'
+			end
+			Citizen.SetTimeout(15000, function() draw = false; end)	
+			while (draw) do
+				local _sleep = 500
+				if #(pExitCDS - drawCDS) <= 15 then
+					_sleep = 1
+					DrawText3Ds(drawCDS.x, drawCDS.y, drawCDS.z, str)
+				end
+				Citizen.Wait(_sleep)
+			end
+		end
+	end
+end)
+
+---------------------------------------
 -- ME
 ---------------------------------------
 RegisterCommand('me', function(source, args)
@@ -30,7 +62,7 @@ RegisterNetEvent('DisplayMe',function(text, source)
             local coords = GetEntityCoords(ped,false)
             local distance = #(coordsMe - coords)
             if distance <= 30 then
-                MeText(coordsMe['x'],coordsMe['y'],coordsMe['z']+0.90,text)
+                TextFloating(text, coordsMe)
             end
 			Citizen.Wait(5)
         end
@@ -44,7 +76,7 @@ MeText = function(x,y,z,text)
 	SetTextFont(0)
 	SetTextScale(0.50,0.50)
 	SetTextColour(255,255,255,255)
-	SetTextEntry("STRING")
+	SetTextEntry('STRING')
 	SetTextCentre(1)
 	AddTextComponentString(text)
 	DrawText(_x,_y)

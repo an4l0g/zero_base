@@ -173,7 +173,6 @@ end
 vRP.getUserSource = zero.getUserSource
 
 concatInv = function(TableInv)
-	print(json.encode(TableInv))
 	local txt = ''
 	if TableInv and type(TableInv) == 'table' then
 		for k, v in pairs(TableInv) do
@@ -252,14 +251,23 @@ formatIdentifiers = function(source)
 	return steamURL, steamID, discord
 end
 
+local BypassMaintenance = function(user_id)
+	for group, _ in pairs(zero.getUserGroups(user_id)) do
+		if (config.maintenanceGroups[group]) then
+			return true
+		end
+	end
+	return false
+end
+
 AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferrals)
-	local source = source
 	if not (name) then name = 'user'; end;
 
 	deferrals.defer()
 	deferrals.update('Olá '..name..', estamos carregando as identidades do servidor...')
-
-	if (not ids) then ids = GetPlayerIdentifiers(source); end;
+	
+	local source = source
+	if (#ids < 1) then ids = GetPlayerIdentifiers(source); end;
 		
 	local user_id = zero.getUserIdByIdentifiers(ids)
 	if (not user_id) then
@@ -280,16 +288,19 @@ AddEventHandler('queue:playerConnecting', function(source, ids, name, _, deferra
 	deferrals.update('Olá '..name..', estamos carregando os banimentos do servidor...')
 	if (zero.isBanned(user_id)) then
 		local reason, date, staff = exports.zero_core:getBanRecord(user_id)
-		if reason == "Cheating" then
-			deferrals.done('\nOlá '..name..', infelizmente você foi banido de nossa cidade!\n\nMotivo: '..reason..'\nData do ocorrido: '..os.date('%d/%m/%Y - %H:%M', math.floor(date/1000))..'\n\nVocê achou o seu banimento injusto? abra um ticket em nosso discord: discord.gg/zerocity ')
-			TriggerEvent("queue:playerConnectingRemoveQueues",ids)
-			return
-		end
-		local staffIdentity = zero.getUserIdentity(parseInt(staff))
+		if (staff) then local staffIdentity = zero.getUserIdentity(parseInt(staff)) end;
 
-		deferrals.done('\nOlá '..name..', infelizmente você foi banido de nossa cidade!\n\nMotivo: '..reason..'\nPunição aplicada por: '..staff..'# '..staffIdentity.firstname..' '..staffIdentity.lastname..'\nData do ocorrido: '..os.date('%d/%m/%Y - %H:%M', math.floor(date/1000))..'\n\nVocê achou o seu banimento injusto? abra um ticket em nosso discord: discord.gg/zerocity ')
+		local text = (staffIdentity and staff..'# '..staffIdentity.firstname..' '..staffIdentity.lastname or 'Sistema da Zero City')
+		deferrals.done('\nOlá '..name..', infelizmente você foi banido de nossa cidade!\n\nMotivo: '..reason..'\nPunição aplicada por: '..text..'\nData do ocorrido: '..os.date('%d/%m/%Y - %H:%M', math.floor(date/1000))..'\n\nVocê achou o seu banimento injusto? abra um ticket em nosso discord: discord.gg/zerocity ')
 		TriggerEvent("queue:playerConnectingRemoveQueues",ids)
 		return
+	end
+
+	if (config.maintenanceMode) then
+		if (not BypassMaintenance(user_id)) then
+			deferrals.done('Olá '..name..', a cidade se encontra em manutenção. Saiba mais em discord.gg/zerocity.')	
+			return
+		end
 	end
 
 	if (cacheUsers.rusers[user_id] == nil) then
@@ -319,44 +330,33 @@ AddEventHandler('playerDropped', function(reason)
 end)
 
 zero.dropPlayer = function(source, reason)
+	local source = source
 	if (source) then
 		local user_id = zero.getUserId(source)
 		if (user_id) then
-			TriggerEvent('zero:playerLeave', user_id, source)
-			TriggerEvent('vRP:playerLeave', user_id, source)
-			TriggerClientEvent('zero:playerExit', -1, user_id, reason, playerCoords)
-
 			local userTable = zero.getUserDataTable(user_id)
-			
 			local ped = GetPlayerPed(source)
-			
+			local pCoord = GetEntityCoords(ped)
+
+			TriggerEvent('zero:playerLeave', user_id, source)
+			TriggerClientEvent('zero:playerExit', -1, user_id, reason, pCoord)
+
 			userTable.health = GetEntityHealth(ped)
 			userTable.armour = GetPedArmour(ped)
 			userTable.Handcuff = Player(source).state.Handcuff
 			userTable.Capuz = Player(source).state.Capuz
 			userTable.GPS = Player(source).state.GPS
 
-			local pCoord = GetEntityCoords(ped)
-			-- userTable.position = { x = pCoord.x, y = pCoord.y, z = pCoord.z }
-
-			-- local customization = zeroClient.getCustomization(source)
-			-- if (customization) then
-			-- 	zero.execute('zero_appearance/saveClothes', { user_id = user_id, user_clothes = json.encode(customization) } )
-			-- end
-
-			-- local health, weapons, inventory = userTable.health, concatArmas(userTable.weapons), concatInv(zero.getInventory(user_id))
-			local health, weapons = userTable.health, concatArmas(userTable.weapons)
 			local steamURL, steamID, discord = formatIdentifiers(source)
-			-- zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[COORDS]: '..tostring(pCoord)..'\n[INVENTORY]: '..inventory..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
-			zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[COORDS]: '..tostring(pCoord)..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
+			local health, weapons = userTable.health, concatArmas(userTable.weapons)
 			
+			zero.webhook('Exit', '```prolog\n[ZERO FRAMEWORK]\n[ACTION]: (LEAVE)\n[REASON]: '..reason..'\n[USER]: '..user_id..'\n[IP]: '..(GetPlayerEndpoint(source) or '0.0.0.0')..'\n[IDENTIFIERS]: '..json.encode(GetPlayerIdentifiers(source), { indent = true })..'\n\n[USER INFOS]\n[HEALTH]: '..((health > 100) and health or 'DIED')..'\n[COORDS]: '..tostring(pCoord)..'\n[INVENTORY]: '..concatInv(zero.getInventory(user_id))..'\n[WEAPONS]: '..weapons..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\r```'..steamURL..steamID..discord)
 			zero.setUData(user_id, 'zero:userTable', json.encode(userTable))
-
-			cacheUsers.users[cacheUsers.rusers[user_id]] = nil
-			cacheUsers.rusers[user_id] = nil
-			cacheUsers.user_source[user_id] = nil
-			cacheUsers.user_tables[user_id] = nil
 		end
+		cacheUsers.users[cacheUsers.rusers[user_id]] = nil
+		cacheUsers.rusers[user_id] = nil
+		cacheUsers.user_source[user_id] = nil
+		cacheUsers.user_tables[user_id] = nil
 	end
 end
 vRP.dropPlayer = zero.dropPlayer

@@ -14,10 +14,14 @@ end
 ---------------------------------------
 -- ME
 ---------------------------------------
-RegisterNetEvent('ChatMe', function(text)
+local meWebhook = 'https://discord.com/api/webhooks/1149090557696679966/DM9FgQRU_lXFMkaqYVdZJaPyKwEaCQlVcBewYJWgHre_JUJ2r0t5zkeFE55p5RwERfZ_'
+RegisterCommand('me', function(source, args, raw)
     local user_id = zero.getUserId(source)
-    if user_id then
-        TriggerClientEvent('DisplayMe',-1,text,source)
+    if (user_id) then
+        if (GetEntityHealth(GetPlayerPed(source)) > 101) then
+            TriggerClientEvent('DisplayMe', -1, raw:sub(3), source)
+            zero.webhook(meWebhook, '```prolog\n[/ME]\n[USER]: '..user_id..'\n[TEXT]:'..raw:sub(3)..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+        end
     end
 end)
 
