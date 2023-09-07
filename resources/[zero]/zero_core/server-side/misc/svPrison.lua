@@ -33,7 +33,27 @@ local typePrender = {
                         TriggerClientEvent('zero_animations:setAnim', nSource, 'deitar3')
 
                         prisonLock(nSource, nUser)
-                        exports.zero_inventory:clearInventory(nUser)
+
+                        local weapons = zeroClient.replaceWeapons(nPlayer, {}, GlobalState.weaponToken)
+                        zero.setKeyDataTable(nUser, 'weapons', {})
+
+                        for k, v in pairs(weapons) do
+                            local weapon = k:lower()
+                            zero.giveInventoryItem(nUser, weapon, 1)
+                            if (v.ammo > 0) then
+                                zero.giveInventoryItem(nUser, 'm_'..weapon, v.ammo)
+                            end
+                        end
+
+                        local inventory = zero.getInventory(nUser)
+                        for k, v in pairs(inventory) do
+                            local itemConfig = exports.zero_inventory:getItemInfo(k)
+                            if (itemConfig.arrest) then
+                                if (zero.tryGetInventoryItem(nUser, k, v.amount)) then
+                                    zero.giveInventoryItem(user_id, k, v.amount)
+                                end
+                            end
+                        end
                         
                         TriggerClientEvent('zero_sound:source', nSource, 'jaildoor', 0.3)
                         TriggerClientEvent('zero_sound:source', source, 'jaildoor', 0.3)

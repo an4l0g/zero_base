@@ -32,7 +32,6 @@ Citizen.CreateThread(function()
 
 		SetPedDefaultComponentVariation(ped)
         ClearPedTasksImmediately(ped)
-        -- RemoveAllPedWeapons(ped)
 
         local time = GetGameTimer()
         while (not HasCollisionLoadedAroundEntity(ped) and (GetGameTimer() - time) < 5000) do
@@ -62,12 +61,18 @@ RegisterNetEvent('zero_spawn:selector', function(bool)
     local ped = PlayerPedId()
     local pCoord = GetEntityCoords(ped)
 
+    DoScreenFadeOut(500)
+	Citizen.Wait(600)
+
     if (not DoesCamExist(cam)) then
         cam = CreateCam('DEFAULT_SCRIPTED_CAMERA')
         SetCamCoord(cam, pCoord.x, pCoord.y, pCoord.z + 5000.0)
         SetCamActive(cam, true)
         RenderScriptCams(true, true, 500, true, true)
     end
+
+    Citizen.Wait(600)
+    DoScreenFadeIn(500)
 
     if (bool) then
         SetNuiFocus(true, true)

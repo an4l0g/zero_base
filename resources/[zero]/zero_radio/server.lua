@@ -105,7 +105,7 @@ function sRADIO.setPlayerName(f)
 		end
 	end
 end
-AddEventHandler('vRP:playerLeave',function(user_id,source)
+AddEventHandler('zero:playerLeave',function(user_id,source)
 	phonetic[source] = nil
 end)
 

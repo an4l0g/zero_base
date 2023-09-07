@@ -22,7 +22,6 @@ else
         AddTextComponentString(text)
         DrawText(x,y)
     end
-
     
     TextFloating = function(text, coord)
         AddTextEntry('FloatingHelpText', text)
