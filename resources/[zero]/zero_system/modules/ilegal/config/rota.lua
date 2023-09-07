@@ -22,19 +22,19 @@ Routes = {
                 {
                     item = 'maconha',
                     quantity = 1,
-                    payment = 1400,
+                    payment = 2800,
                     receive = 'dinheirosujo'
                 },
                 {
                     item = 'cocaina',
                     quantity = 1,
-                    payment = 1400,
+                    payment = 2800,
                     receive = 'dinheirosujo'
                 },
                 {
                     item = 'metanfetamina',
                     quantity = 1,
-                    payment = 1400,
+                    payment = 2800,
                     receive = 'dinheirosujo'
                 },
             },
@@ -51,6 +51,7 @@ Routes = {
         },
         ['Droga'] = {
             name = 'Droga',
+            points = 1,
             coords = {
                 vector3(-2002.18, -556.8132, 12.88501),
                 vector3(-503.5385, 32.75605, 44.69739),
@@ -69,7 +70,7 @@ Routes = {
             },
             itens = {
                 item = 'm-droga',
-                quantity = 1
+                quantity = 2
             },
             texts = {
                 text = '~b~E~w~ - Pegar',
@@ -101,7 +102,7 @@ Routes = {
             },
             itens = {
                 item = 'c-ingredientes',
-                quantity = 1
+                quantity = 2
             },
             texts = {
                 text = '~b~E~w~ - Pegar',
@@ -114,25 +115,26 @@ Routes = {
         },
         ['Arma'] = {
             name = 'Arma',
+            points = 1,
             coords = {
                 vector3(939.7714, -1866.725, 32.46448),
                 vector3(-295.4373, -827.9473, 32.41394),
                 vector3(-2223.231, -365.9077, 13.30627),
                 vector3(-3147.561, 1121.512, 20.87183),
                 vector3(-2521.108, 2310.369, 33.20581),
-                vector3(-1120.985, 2712.237, 18.8667),
-                vector3(634.866, 2775.152, 42.00146),
-                vector3(2352.923, 3136.971, 48.20215),
-                vector3(1572.29, 857.8945, 77.48718),
-                vector3(222.567, -21.28351, 69.88794),
-                vector3(376.5363, -1506.884, 29.27991),
-                vector3(1051.912, -2399.525, 30.02124),
-                vector3(-234.4352, -1490.505, 32.95313),
-                vector3(456.2374, -2059.2, 23.92163)
+                vector3(-2511.244, 3616.8, 13.64319),
+                vector3(-2976.897, 1586.44, 24.00586),
+                vector3(-2678.268, -28.65494, 15.7832),
+                vector3(-1327.543, -683.3934, 26.4491),
+                vector3(447.7451, -898.7077, 28.67322),
+                vector3(263.4198, -2507.156, 6.431519),
+                vector3(1349.908, -1571.789, 54.04907),
+                vector3(642.3428, 104.0835, 89.48425),
+                vector3(-342.5011, -1464.396, 30.61096)
             },
             itens = {
                 item = 'p-armas',
-                quantity = 1
+                quantity = 2
             },
             texts = {
                 text = '~b~E~w~ - Pegar',
@@ -140,11 +142,13 @@ Routes = {
             },
             extras = {
                 anim = 'pegar',
+                police = 50,
                 timeout = 5000,
             }
         },
         ['Municao'] = {
             name = 'Municao',
+            points = 1,
             coords = {
                 vector3(520.1934, -1652.598, 29.56628),
                 vector3(-812.4923, -980.6506, 14.24988),
@@ -163,7 +167,7 @@ Routes = {
             },
             itens = {
                 item = 'm-municoes',
-                quantity = 1
+                quantity = 2
             },
             texts = {
                 text = '~b~E~w~ - Pegar',
@@ -171,11 +175,13 @@ Routes = {
             },
             extras = {
                 anim = 'pegar',
+                police = 50,
                 timeout = 5000,
             }
         },
         ['Mecanica'] = {
             name = 'Mecanica',
+            points = 1,
             coords = {
                 vector3(818.0967, -1040.835, 26.73547),
                 vector3(-702.7912, -916.8659, 19.20361),
@@ -194,7 +200,7 @@ Routes = {
             },
             itens = {
                 item = 'm-mec',
-                quantity = 1
+                quantity = 2
             },
             texts = {
                 text = '~b~E~w~ - Pegar',
@@ -207,6 +213,7 @@ Routes = {
         },
         ['Lavagem'] = { 
             name = 'Lavagem',
+            points = 1,
             coords = {
                 vector3(425.5253, -806.8088, 29.48206),
                 vector3(-1216.352, -336, 37.77222),
@@ -225,7 +232,7 @@ Routes = {
             },
             itens = {
                 item = 'nota-fiscal',
-                quantity = 1
+                quantity = 2
             },
             texts = {
                 text = '~b~E~w~ - Pegar',
@@ -233,6 +240,7 @@ Routes = {
             },
             extras = {
                 anim = 'pegar',
+                police = 50,
                 timeout = 5000,
             }
         }

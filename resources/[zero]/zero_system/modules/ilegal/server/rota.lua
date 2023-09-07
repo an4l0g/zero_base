@@ -116,6 +116,9 @@ srv.routePayment = function(coords, _config, drug, name)
             else
                 if (CheckWeight(user_id, itens.item, itens.quantity)) then
                     zero.giveInventoryItem(user_id, itens.item, itens.quantity)
+                    if _config.points then
+                        exports.zero_reputation:addAutoRep(source, 'Rota de farm', _config.points)
+                    end
                     TriggerClientEvent('notify', source, 'Rotas', 'Você recebeu <b>'..itens.quantity..'x</b> de <b>'..zero.itemNameList(itens.item)..'</b>!')
                     zero.webhook('Rotas', '```prolog\n[ROUTES]\n[NAME]: '..name..'\n[USER]: '..user_id..'\n[ITEM RECEIVED]: '..zero.itemNameList(itens.item)..'\n[QUANTITY RECEIVED]: '..itens.quantity..'\n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                     updateRoute(source, coords)

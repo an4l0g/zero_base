@@ -712,7 +712,7 @@ config.garages = {
             vector4(-2292.58, 414.4088, 174.4579, 150.2362),
             vector4(-2289.534, 412.2198, 174.4579, 144.5669),
         },
-        vehicles = { 'ndbmws1000', 'wra45', 'wrbmwx7', 'wrm5', 'wrsubaru' }
+        vehicles = { 'ndbmws1000', 'wra45', 'wrm5', 'wrsubaru' }
     },
     {
         coords = vector3(-2267.776, 386.4396, 193.2117), 
@@ -765,7 +765,7 @@ config.garages = {
             vector4(496.3253, -2741.842, 3.061523, 53.85827),
             vector4(487.4769, -2756.334, 3.061523, 51.02362)
         },
-        vehicles = { 'ndbmws1000', 'wra45', 'wrbmwx7', 'wrm5', 'wrsubaru' }
+        vehicles = { 'ndbmws1000', 'wra45', 'wrm5', 'wrsubaru' }
     },
     {
         coords = vector3(496.9319, -2761.015, 3.061523), 
