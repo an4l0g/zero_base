@@ -3,6 +3,13 @@ local vSERVER = Tunnel.getInterface('skinShop')
 local locsConfig = config.locs
 local generalConfig = config.general['skinshop']
 
+local checkEmptyValue = function(value)
+    if value == -1 then
+        return 15
+    end
+    return value
+end
+
 local getDrawables = function()
     local ped = PlayerPedId()
     local pedDrawables = {
@@ -118,7 +125,7 @@ RegisterNuiCallback('changeSkinshopDemo', function(data)
 
         -- Camisa
         if (draw['8'].model ~= nil) then
-            SetPedComponentVariation(ped, 8, draw['8'].model, draw['8'].var)
+            SetPedComponentVariation(ped, 8, checkEmptyValue(draw['8'].model), draw['8'].var)
             variations['8'] = GetNumberOfPedTextureVariations(ped, 8, draw['8'].model)
         end
 
@@ -130,7 +137,7 @@ RegisterNuiCallback('changeSkinshopDemo', function(data)
 
         -- Jaqueta
         if (draw['11'].model ~= nil) then
-            SetPedComponentVariation(ped, 11, draw['11'].model, draw['11'].var)
+            SetPedComponentVariation(ped, 11, checkEmptyValue(draw['11'].model), draw['11'].var)
             variations['11'] = GetNumberOfPedTextureVariations(ped, 11, draw['11'].model)
         end
 

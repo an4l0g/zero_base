@@ -60,3 +60,13 @@ srv.delGroup = function(id, group, grade)
     vCLIENT.updateNui(source, painelUserGroups(id))
     zero.webhook('UnGroup', '```prolog\n[ZERO GROUPS]\n[ACTION]: (UNGROUP)\n[USER]: '..zero.getUserId(source)..'\n[TARGET]: '..id..'\n[GROUP]: '..group..'\n[GRADE]: '..grade..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
 end
+
+itsAJob = function(org)
+    for k,v in pairs(config.groups) do
+        if v.information.groupType == 'job' then
+            if k == org then return true end
+        end 
+    end
+    return false
+end
+exports('itsAJob', itsAJob)

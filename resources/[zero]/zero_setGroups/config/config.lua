@@ -122,7 +122,7 @@ config.groups = {
 	['Polonia'] = {
 		information = { 
 			title = 'Polônia', 
-			groupType = 'fac', 
+			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
 				['Gerente'] = { title = 'Gerente', level = 2 },
@@ -247,9 +247,9 @@ config.groups = {
 		'droga.permissao'
 	},
 
-	['Yakuza'] = {
+	['Camorra'] = {
 		information = { 
-			title = 'Yakuza', 
+			title = 'Camorra', 
 			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
@@ -259,8 +259,8 @@ config.groups = {
 			},
 			grades_default = 'Membro',
 		},
-		'yakuza.permissao',
-		'droga.permissao'
+		'camorra.permissao',
+		'lavagem.permissao'
 	},
 
 	['Mafia'] = {

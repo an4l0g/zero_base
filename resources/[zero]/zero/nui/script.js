@@ -11,13 +11,13 @@ $(document).ready(() => {
 
 const openNavigator = (button) => {
   if (button == "discord")
-    window.invokeNative("openUrl", "https://discord.gg/invasaoz");
+    window.invokeNative("openUrl", "https://discord.gg/zerocity");
 
   if (button == "instagram")
-    window.invokeNative("openUrl", "https://www.instagram.com/invasaozrp/");
+    window.invokeNative("openUrl", "https://www.instagram.com/zerocity.gg/");
 
   if (button == "tiktok")
-    window.invokeNative("openUrl", "https://www.tiktok.com/@invasaozrp");
+    window.invokeNative("openUrl", "https://www.tiktok.com/@zerocity.gg");
 };
 
 const confirm = () => {

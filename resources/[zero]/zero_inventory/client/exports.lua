@@ -1,4 +1,4 @@
-cInventory.openInventory = function(action, chestType, lootId)
+cInventory.openInventory = function(action, chestType, disabledBag)
     local ped = PlayerPedId() 
 
     local playerBagType = 'bag:'..sInventory.getUserId()
@@ -6,20 +6,31 @@ cInventory.openInventory = function(action, chestType, lootId)
 
     local player = sInventory.getBag(playerBagType)
     local hotbar = sInventory.getBag(playerHotbarType)
-    local chest = cInventory.getChestInfo(chestType, lootId)
+    local chest = cInventory.getChestInfo(chestType, nil)
 
     if action == 'open' then
         SetNuiFocus(true,true)
     end
 
-    SendNUIMessage({
-        action = action, 
-        item_types = config.itemTypes,
-        weapons = cInventory.getWeaponsBag(),
-        bag = { slots = player, max_weight = sInventory.getOwnMaxWeight(), title = 'Mochila', bag_type = playerBagType, drop_type = 'bag' },
-        hotbar = { slots = hotbar, bag_type = playerHotbarType, drop_type = 'hotbar' },
-        chest = chest,
-    })
+    if disabledBag then 
+        SendNUIMessage({
+            action = action, 
+            item_types = config.itemTypes,
+            weapons = cInventory.getWeaponsBag(),
+            bag = { slots = player, max_weight = 0, title = 'Mochila', bag_type = playerBagType, drop_type = 'bag' },
+            hotbar = { slots = hotbar, bag_type = playerHotbarType, drop_type = 'hotbar' },
+            chest = chest,
+        })
+    else 
+        SendNUIMessage({
+            action = action, 
+            item_types = config.itemTypes,
+            weapons = cInventory.getWeaponsBag(),
+            bag = { slots = player, max_weight = sInventory.getOwnMaxWeight(), title = 'Mochila', bag_type = playerBagType, drop_type = 'bag' },
+            hotbar = { slots = hotbar, bag_type = playerHotbarType, drop_type = 'hotbar' },
+            chest = chest,
+        })
+    end
     
 end
 exports('openInventory', cInventory.openInventory)

@@ -918,7 +918,7 @@ RegisterCommand('anuncio', function(source)
     local identity =  zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') or zero.hasPermission(user_id, 'mecanico.permissao') then
         local message = zero.prompt(source, { 'Título', 'Mensagem' })
-        if (message[1]) then
+        if (#message > 1) then
             TriggerClientEvent('announcement', -1, message[1], message[2], identity.firstname, true, 30000)
             zero.webhook('Anuncios', '```prolog\n[/ANUNCIO]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[TÍTULO]: '..message[1]..'\n[MENSAGEM]: '..message[2]..' \n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end
@@ -1462,17 +1462,20 @@ RegisterCommand('rg2', function(source, args)
         if (args[1]) then
             local nUser = parseInt(args[1])
             local identity = zero.getUserIdentity(nUser)
+            if (identity) then
+                local bankMoney = zero.getBankMoney(nUser)
+                local paypalMoney = zero.getPaypalMoney(nUser)
+                local walletMoney = zero.getMoney(nUser)
 
-            local bankMoney = zero.getBankMoney(nUser)
-            local paypalMoney = zero.getPaypalMoney(nUser)
-            local walletMoney = zero.getMoney(nUser)
+                local groups = ''
+                for gp, i in pairs(zero.getUserGroups(nUser)) do
+                    groups = groups..'<br>'..gp..' ('..i.grade..')'
+                end
 
-            local groups = ''
-            for gp, i in pairs(zero.getUserGroups(nUser)) do
-                groups = groups..'<br>'..gp..' ('..i.grade..')'
+                TriggerClientEvent('notify', source, 'Registro', 'Passaporte: <b>#'..nUser..'</b><br>Registro: <b>'..identity.registration..'</b><br>Nome: <b>'..identity.firstname..' '..identity.lastname..'</b><br>Idade: <b>'..identity.age..'</b><br>Telefone: <b>'..identity.phone..'</b><br>Carteira: <b>'..zero.format(parseInt(walletMoney))..'</b><br>Banco: <b>'..zero.format(parseInt(bankMoney))..'</b><br>Paypal: <b>'..zero.format(parseInt(paypalMoney))..'</b><br>Sets: <b>'..groups..'</b>', 25000)
+            else
+                TriggerClientEvent('notify', source, 'Registro', 'Este <b>ID</b> não fez personagem em nossa cidade!')
             end
-
-            TriggerClientEvent('notify', source, 'Registro', 'Passaporte: <b>#'..nUser..'</b><br>Registro: <b>'..identity.registration..'</b><br>Nome: <b>'..identity.firstname..' '..identity.lastname..'</b><br>Idade: <b>'..identity.age..'</b><br>Telefone: <b>'..identity.phone..'</b><br>Carteira: <b>'..zero.format(parseInt(walletMoney))..'</b><br>Banco: <b>'..zero.format(parseInt(bankMoney))..'</b><br>Paypal: <b>'..zero.format(parseInt(paypalMoney))..'</b><br>Sets: <b>'..groups..'</b>', 25000)
         end
     end
 end)
@@ -1918,44 +1921,51 @@ RegisterCommand('apreender', function(source)
     if (user_id) and zero.checkPermissions(user_id, { 'policia.permissao', 'staff.permissao' }) then
         local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
         if (nPlayer) then
-            if (not zeroClient.isHandcuffed(nPlayer)) then return TriggerClientEvent('notify', source, 'Apreensão', 'O mesmo não se encontra <b>algemado</b>!'); end;
-            if (GetEntityHealth(GetPlayerPed(source)) <= 100 and GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then return; end;
-
-            local nUser = zero.getUserId(nPlayer)
-            if (nUser) then
-                local nIdentity = zero.getUserIdentity(nUser)
-                
-                local request = exports.zero_hud:request(source, 'Você tem certeza que deseja apreender os itens ilegais do '..nIdentity.firstname..' '..nIdentity.lastname..'?', 30000)
-                if (request) then
-                    local itens = {}
-                    local weapons = zeroClient.replaceWeapons(nPlayer, {}, GlobalState.weaponToken)
-                    zero.setKeyDataTable(nUser, 'weapons', {})
-
-                    for k, v in pairs(weapons) do
-                        local weapon = k:lower()
-                        zero.giveInventoryItem(nUser, weapon, 1)
-                        if (v.ammo > 0) then
-                            zero.giveInventoryItem(nUser, 'm_'..weapon, v.ammo)
-                        end
-                    end
-
-                    local inventory = zero.getInventory(nUser)
-                    for k, v in pairs(inventory) do
-                        local itemConfig = exports.zero_inventory:getItemInfo(k)
-                        if (itemConfig.arrest) then
-                            if (zero.tryGetInventoryItem(nUser, k, v.amount)) then
-                                zero.giveInventoryItem(user_id, k, v.amount)
-                                table.insert(itens, v.amount..'x '..(zero.itemNameList(k) or k))		
+            if (GetEntityHealth(GetPlayerPed(nPlayer)) <= 100 or zeroClient.isHandcuffed(nPlayer)) then
+                if (GetEntityHealth(GetPlayerPed(source)) <= 100) then return end;
+                local nUser = zero.getUserId(nPlayer)
+                if (nUser) then
+                    local nIdentity = zero.getUserIdentity(nUser)
+                    local request = exports.zero_hud:request(source, 'Você tem certeza que deseja apreender os itens ilegais do '..nIdentity.firstname..' '..nIdentity.lastname..'?', 30000)
+                    if (request) then
+                        local itens = {}
+                        local weapons = zeroClient.replaceWeapons(nPlayer, {}, GlobalState.weaponToken)
+                        zero.setKeyDataTable(nUser, 'weapons', {})
+                        
+                        for k, v in pairs(weapons) do
+                            local weapon = k:lower()
+                            zero.giveInventoryItem(nUser, weapon, 1)
+                            if (v.ammo > 0) then
+                                zero.giveInventoryItem(nUser, 'm_'..weapon, v.ammo)
                             end
                         end
+                        
+                        zeroClient._playAnim(source, true, {
+                            { 'oddjobs@shop_robbery@rob_till', 'loop' }
+                        }, true)
+                        TriggerClientEvent('progressBar', source, 'Apreendendo...', 5000)
+                        Wait(5000)
+                        local inventory = zero.getInventory(nUser)
+                        for k, v in pairs(inventory) do
+                            local itemConfig = exports.zero_inventory:getItemInfo(k)
+                            if (itemConfig.arrest) then
+                                if (zero.tryGetInventoryItem(nUser, k, v.amount)) then
+                                    table.insert(itens, v.amount..'x '..(zero.itemNameList(k) or k))		
+                                end
+                            end
+                        end
+                        local ped = GetPlayerPed(source)
+                        ClearPedTasks(ped)
+
+                        TriggerClientEvent('notify', nPlayer, 'Apreensão', 'Todos os seus itens ilegais foram <b>apreendidos</b> e enviados à prefeitura!')
+                        TriggerClientEvent('notify', source, 'Apreensão', 'Você <b>apreendeu</b> todos os itens ilegais do cidadão!')
+                        TriggerClientEvent('radio:outServers', nPlayer)
+                        
+                        zero.webhook(apreenderWebhook, 'prolog\n[APREENSÃO]\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[ITENS]: '..json.encode(itens, { indent = true })..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r')
                     end
-
-                    TriggerClientEvent('notify', nPlayer, 'Apreensão', 'Todos os seus itens ilegais foram <b>apreendidos</b>!')
-                    TriggerClientEvent('notify', source, 'Apreensão', 'Você <b>apreendeu</b> todos os itens ilegais do mesmo!')
-                    TriggerClientEvent('radio:outServers', nPlayer)
-
-                    zero.webhook(apreenderWebhook, '```prolog\n[APREENSÃO]\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[ITENS]: '..json.encode(itens, { indent = true })..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                 end
+            else
+                TriggerClientEvent('notify', source, 'Apreensão', 'O cidadão precisa estar <b>algemado</b> ou <b>desmaiado</b>!');
             end
         end
     end

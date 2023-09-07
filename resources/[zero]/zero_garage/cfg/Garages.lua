@@ -735,6 +735,17 @@ config.garages = {
         },
     },
     -- --
+    -- [Camorra] --
+    {
+        coords = vector3(136.3385, -1278.818, 29.34729), 
+        rule = 'carOnly',
+        marker = 'car',
+        permission = 'camorra.permissao',
+        points = {
+            vector4(142.7077, -1277.341, 29.26306, 209.7638)
+        },
+    },
+    -- --
     -- [Polonia] --
     {
         coords = vector3(2886.936, 2745.204, 70.00586), 
@@ -1302,6 +1313,14 @@ config.garages = {
         rule = 'carOnly',
         points = {
             vector4(174.8176, 1683.982, 228.9333, 215.4331)
+        }
+    },
+    -- [Devil] --
+    {
+        coords = vector3(-2601.481, 1927.094, 167.2968),
+        rule = 'carOnly',
+        points = {
+            vector4(-2595.178, 1930.602, 166.9092, 277.7953)
         }
     },
 }

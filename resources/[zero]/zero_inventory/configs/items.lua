@@ -707,6 +707,7 @@ config.items = {
     ----------------------------------------------------------------------------
     -- Armas legais
     ----------------------------------------------------------------------------
+    ['weapon_crowbar'] = { name = 'Pé de Cabra',type = 'weapon', weight = 1, arrest = true },
     ['weapon_petrolcan'] = { name = 'Combustível',type = 'weapon',weight = 1, arrest = true },
     ['weapon_ceramicpistol'] = { name = 'Ceramic Pistol',type = 'weapon',weight = 1, arrest = true },
     ['m_weapon_ceramicpistol'] = { name = 'M. Ceramic Pistol', type = 'wammo', weight = 0.7, arrest = true },
