@@ -23,7 +23,7 @@ end
 setCustomization = function(source, user_id)
     local query = zero.query('zero_appearance/getClothes', { user_id = user_id })[1]
     if (query) and query.user_clothes then
-        zeroClient.setCustomization(source, query.user_clothes)
+        zeroClient.setCustomization(source, json.decode(query.user_clothes))
         return true
     end
     print('^5[Zero Appearance]^5 não foi encontrado o user_clothes do USER_ID ^5('..user_id..')^7')

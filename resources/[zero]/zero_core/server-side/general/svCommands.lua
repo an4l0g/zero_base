@@ -918,7 +918,7 @@ RegisterCommand('anuncio', function(source)
     local identity =  zero.getUserIdentity(user_id)
     if (user_id) and zero.hasPermission(user_id, 'polpar.permissao') or zero.hasPermission(user_id, 'mecanico.permissao') then
         local message = zero.prompt(source, { 'Título', 'Mensagem' })
-        if (#message > 1) then
+        if (message) then
             TriggerClientEvent('announcement', -1, message[1], message[2], identity.firstname, true, 30000)
             zero.webhook('Anuncios', '```prolog\n[/ANUNCIO]\n[USER_ID]: #'..user_id..' '..identity.firstname..' '..identity.lastname..'\n[TÍTULO]: '..message[1]..'\n[MENSAGEM]: '..message[2]..' \n[COORDENADA]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
         end

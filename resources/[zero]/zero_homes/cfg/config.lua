@@ -1715,7 +1715,6 @@ config.typeHomes = {
             min = 100,
             max = 1000,
             value = 100,
-    
         },
         ['security'] = {
             min = 0,

@@ -21,6 +21,6 @@ exports('request', srv.request)
 
 srv.resultRequest = function(id, response)
     local currentRequest = requests[id]
-    if (response) then currentRequest(response) end;
+    currentRequest(response)
     requests[id] = nil
 end

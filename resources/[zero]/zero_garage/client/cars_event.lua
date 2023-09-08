@@ -32,6 +32,7 @@ local blackVehicles = {
 	[GetHashKey('rhino')] = { 'Rhino', true },
 	[GetHashKey('hydra')] = { 'Hydra', true },
 	[GetHashKey('lazer')] = { 'Lazer', true },    
+    [GetHashKey('apc')] = { 'APC', true }
 }
 
 AddEventHandler('gameEventTriggered', function(event, args)

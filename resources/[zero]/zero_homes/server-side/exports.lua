@@ -524,7 +524,7 @@ homesBau = function(source)
         if (response) then
             local homes = configHomes[homeName]
             local chest = configType[homeType].chest
-            if (zero.checkPermissions(user_id, chest.perm) and homes) then
+            if (zero.checkPermissions(user_id, chest.perm)) then
                 local _upgrade = zero.prompt(source, { 'Aumentar o baú (Atual: '..homeConfig.chest..' | Min: '..chest.min..'kg/Máx: '..chest.max..'kg)' })[1]
                 if (_upgrade) then
                     _upgrade = tonumber(_upgrade)

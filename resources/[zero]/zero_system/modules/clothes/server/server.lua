@@ -65,13 +65,12 @@ RegisterNetEvent('zero_interactions:addPreset', srv.addPreset)
 srv.usePreset = function(presetTitle)
     local _source = source
     local user_id = zero.getUserId(_source)
-
-    local savedPreset = zero.query('zero_clothes:getPreset', { user_id = user_id, title = presetTitle })
-
-    if savedPreset then
-        savedPreset = savedPreset[1]
-        vCLIENT.setClothes(_source, json.decode(savedPreset.preset))
-        zero.execute('zero_appearance/saveClothes', { user_id = user_id, user_clothes = json.encode(savedPreset.preset) })
+    if (user_id) then
+        local savedPreset = zero.query('zero_clothes:getPreset', { user_id = user_id, title = presetTitle })[1]
+        if (savedPreset) and savedPreset.preset then
+            vCLIENT.setClothes(_source, json.decode(savedPreset.preset))
+            zero.execute('zero_appearance/saveClothes', { user_id = user_id, user_clothes = savedPreset.preset })
+        end
     end
 end
 RegisterNetEvent('zero_interactions:usePreset', srv.usePreset)
