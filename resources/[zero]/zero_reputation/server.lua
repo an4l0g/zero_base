@@ -17,7 +17,7 @@ sRep.getReps = function(org)
 end
 
 sRep.addRep = function(org, description, points)
-    zero.execute('rep/insertRep', { org = org, description = description, points = points, createdAt = os.date('%Y-%m-%d %H:%M:%S') })
+    zero.execute('rep/insertRep', { org = org, description = description, points = points * 2, createdAt = os.date('%Y-%m-%d %H:%M:%S') })
 end
 exports('addRep', sRep.addRep)
 
