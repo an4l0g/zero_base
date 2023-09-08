@@ -1,7 +1,7 @@
 Clothes = {
     vips = {
-        ['default'] = 1,
         ['Staff'] = 3,
+        ['default'] = 1,
         ['Bronze'] = 2,
         ['Prata'] = 3,
         ['Ouro'] = 4,

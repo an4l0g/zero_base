@@ -2,7 +2,6 @@ srv = {}
 Tunnel.bindInterface(GetCurrentResourceName(), srv)
 vCLIENT = Tunnel.getInterface(GetCurrentResourceName())
 
--- Habilitar opção de comprar a casa com Credits
 -- adicionar segurança. Alarme na porta e no bau
 
 local tempHome = {}
@@ -46,52 +45,59 @@ local _home = {
         else
             if (exports['zero_bank']:verifyMultas(user_id) > 0) then
                 serverNotify(source, 'Você não pode comprar uma <b>residência</b> tendo multas pendentes.')
-                homesActions[index] = nil
                 return
             end
 
             if (zero.checkPermissions(user_id, homes.perm)) then
-                local price = homesType.price 
-                if (price[1]) then
-                    local request = zero.request(source, 'Esta propriedade '..index..' se encontra à venda. Deseja adquiri-lá por R$'..zero.format(price[2])..'?', 30000)
-                    if (request) then
-                        local allow = false
+                if (not homesActions[index]) then
+                    homesActions[index] = true
 
-                        local key = tostring('key-'..homes.type)
-                        local homeCredit = exports['hydrus.gg']:getCredit(user_id, key)
-                        if (homeCredit > 0) then
-                            if (zero.request(source, 'Você deseja comprar a residência '..index..' por 1 crédito ('..key:upper()..')?', 30000)) then
-                                exports['hydrus.gg']:consumeCredit(user_id, key, 1)
-                                allow = true
+                    local price = homesType.price 
+                    if (price[1]) then
+                        local request = zero.request(source, 'Esta propriedade '..index..' se encontra à venda. Deseja adquiri-lá por R$'..zero.format(price[2])..'?', 30000)
+                        if (request) then
+                            local allow = false
+
+                            local key = tostring('key-'..homes.type)
+                            local homeCredit = exports['hydrus.gg']:getCredit(user_id, key)
+                            if (homeCredit > 0) then
+                                if (zero.request(source, 'Você deseja comprar a residência '..index..' por 1 crédito ('..key:upper()..')?', 30000)) then
+                                    exports['hydrus.gg']:consumeCredit(user_id, key, 1)
+                                    allow = true
+                                end
+                            end
+
+                            if (not allow) then
+                                allow = zero.tryFullPayment(user_id, price[2])
+                            end
+
+                            if (allow) then
+                                local tax = (homesType.tax[1] and os.time() or -1)
+                                local table = {
+                                    price = price[2],
+                                    residents = (homesType.residents[1] and homesType.residents[2] or 0),
+                                    chest = homesType.chest.min,
+                                    interior = homesType.interior._default,
+                                    type = homes.type,
+                                    decorations = 0
+                                }
+                                
+                                zero.execute('zero_homes/buyHome', { user_id = user_id, home = index, home_owner = 1, garages = 0, tax = tax, configs = json.encode(table), vip = 0 })
+                                zero.webhook('buyHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..index:upper()..'\n[TYPE]: '..homes.type..'\n[TAX IN]: '..(tax ~= -1 and tax..'('..os.date('%d/%m/%Y - %H:%M', tax)..')' or 'null')..'\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
+                                serverNotify(source, 'A residência <b>'..index..'</b> foi adquirida por R$'..zero.format(price[2])..'.')
+                                local coord = configHomes[index].coord
+                                TriggerEvent('zero_homes:registerOwnerBlips', source, false, { index, coord })
+                            else
+                                serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para adquirir esta residência.')
                             end
                         end
-
-                        if (not allow) then
-                            allow = zero.tryFullPayment(user_id, price[2])
-                        end
-
-                        if (allow) then
-                            local tax = (homesType.tax[1] and os.time() or -1)
-                            local table = {
-                                price = price[2],
-                                residents = (homesType.residents[1] and homesType.residents[2] or 0),
-                                chest = homesType.chest.min,
-                                interior = homesType.interior._default,
-                                type = homes.type,
-                                decorations = 0
-                            }
-                            
-                            zero.execute('zero_homes/buyHome', { user_id = user_id, home = index, home_owner = 1, garages = 0, tax = tax, configs = json.encode(table), vip = 0 })
-                            zero.webhook('buyHouse', '```prolog\n[ZERO HOMES]\n[ACTION]: (BUY HOUSE)\n[USER]: '..user_id..'\n[HOME]: '..index:upper()..'\n[TYPE]: '..homes.type..'\n[TAX IN]: '..(tax ~= -1 and tax..'('..os.date('%d/%m/%Y - %H:%M', tax)..')' or 'null')..'\n[TABLE]: '..json.encode(table)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
-                            serverNotify(source, 'A residência <b>'..index..'</b> foi adquirida por R$'..zero.format(price[2])..'.')
-                            local coord = configHomes[index].coord
-                            TriggerEvent('zero_homes:registerOwnerBlips', source, false, { index, coord })
-                        else
-                            serverNotify(source, 'Você não possui <b>dinheiro</b> o suficiente para adquirir esta residência.')
-                        end
+                    else
+                        serverNotify(source, 'Esta residência <b>'..index..'</b> não está disponível para venda.')
                     end
+
+                    homesActions[index] = nil
                 else
-                    serverNotify(source, 'Esta residência <b>'..index..'</b> não está disponível para venda.')
+                    serverNotify(source, 'Esta <b>propriedade</b> encontra-se em negociação.')
                 end
             else
                 serverNotify(source, 'Você não possui <b>permissão</b> para comprar esta residência.')
@@ -186,8 +192,9 @@ local _home = {
                 serverNotify(source, 'Você não possui <b>permissão</b> para comprar esta residência.')
             end
 
-            
             homesActions[index] = nil
+        else
+            serverNotify(source, 'Esta <b>propriedade</b> encontra-se em negociação.')
         end
     end,
     ['other-apartament'] = function(source, user_id)
@@ -267,8 +274,7 @@ local _home = {
 srv.tryEnterHome = function(index)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id and index) and not homesActions[index] then
-        homesActions[index] = true
+    if (user_id and index) then
         local homes = configHomes[index]
 
         if (tempHome[source]) then 
@@ -280,7 +286,6 @@ srv.tryEnterHome = function(index)
         
         local isApartament = (homes.type == 'apartament' and 'apartament' or 'home')
         _home[isApartament](source, user_id, index)
-        homesActions[index] = nil
     end
 end
 

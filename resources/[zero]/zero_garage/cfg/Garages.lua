@@ -619,6 +619,8 @@ config.vehicles = {
     ['wrbmwx7'] = { name = 'Bmw X6', maker = 'Bmw', price = 1000000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = false },
     ['wrm5'] = { name = 'Bmw M5', maker = 'Bmw', price = 1000000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = false },
     ['wrsubaru'] = { name = 'Subaru', maker = 'Subaru', price = 1000000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = false },
+    ['trdcoreamarok'] = { name = 'Amarok COE', maker = 'Volkswagen', price = 1000000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = false },
+    ['fpacehm'] = { name = 'GOT ', maker = 'Jaguar', price = 1000000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = false },
     ['bmheli'] = { name = 'Helicóptero', maker = 'Polícia', price = 1000, trunk = 100, glove = 0, type = 'work', class = 'helicopters', banned = true },
 }
 
@@ -712,7 +714,7 @@ config.garages = {
             vector4(-2292.58, 414.4088, 174.4579, 150.2362),
             vector4(-2289.534, 412.2198, 174.4579, 144.5669),
         },
-        vehicles = { 'ndbmws1000', 'wra45', 'wrbmwx7', 'wrm5', 'wrsubaru' }
+        vehicles = { 'ndbmws1000', 'wra45', 'wrm5', 'wrsubaru', 'fpacehm' }
     },
     {
         coords = vector3(-2267.776, 386.4396, 193.2117), 
@@ -723,6 +725,14 @@ config.garages = {
             vector4(-2267.644, 395.0901, 193.1274, 68.03149)
         },
         vehicles = { 'bmheli' }
+    },
+    {
+        coords = vector3(-724.0352, -1453.622, 4.999268), 
+        rule = 'heliOnly',
+        marker = 'heli',
+        points = {
+            vector4(-724.7868, -1444.167, 4.999268, 323.1496)
+        },
     },
     -- [Helipa] --
     {
@@ -765,7 +775,7 @@ config.garages = {
             vector4(496.3253, -2741.842, 3.061523, 53.85827),
             vector4(487.4769, -2756.334, 3.061523, 51.02362)
         },
-        vehicles = { 'ndbmws1000', 'wra45', 'wrbmwx7', 'wrm5', 'wrsubaru' }
+        vehicles = { 'ndbmws1000', 'wra45', 'wrm5', 'wrsubaru' }
     },
     {
         coords = vector3(496.9319, -2761.015, 3.061523), 

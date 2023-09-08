@@ -67,7 +67,9 @@ end)
 
 sRep.addAutoRep = function(source, description, points)
     local user_id = zero.getUserId(source)
+
     local job, jobInfo = zero.getUserGroupByType(user_id, 'job')
     sRep.addRep(job, description, points)
+    TriggerClientEvent('notify', source, 'Sistema de Reputação', 'Você ganhou 1 de reputação para sua organização.')
 end
 exports('addAutoRep', sRep.addAutoRep)

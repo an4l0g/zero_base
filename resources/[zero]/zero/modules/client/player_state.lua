@@ -158,8 +158,6 @@ zero.getCustomization = function()
 end
 
 zero.setCustomization = function(clothes)
-	clothes = json.decode(clothes)
-
 	local ped = PlayerPedId()
 
 	local modelHash = clothes.pedModel
