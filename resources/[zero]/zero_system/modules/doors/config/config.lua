@@ -261,4 +261,8 @@ Doors = {
     { home = 'Devil', text = true, hash = 308207762, coord = vector3(-2588.492, 1910.809, 167.4821), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { home = 'Devil', text = true, hash = 813813633, coord = vector3(-2600.189, 1900.484, 167.3136), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { home = 'Devil', text = true, hash = 813813633, coord = vector3(-2600.4, 1902.264, 163.7413), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+
+    -- [ COBERTURA VERMELHO ] --
+    { text = true, hash = -1240156945, coord = vector3(-305.4857, -722.5714, 28.01611), door_1 = vector3(-306.211, -722.6506, 28.01611), door_2 = vector3(-305.222, -722.8088, 28.01611), lock = true, distance = 5.0, autoLock = 20000, other = -1240156945, home = 'Cobertura'},
+    { text = true, hash = -1240156945, coord = vector3(-286.6154, -723.1121, 125.4586), door_1 = vector3(-286.6549, -723.5077, 125.4586), door_2 = vector3(-286.1934, -722.5846, 125.4586), lock = true, distance = 5.0, autoLock = 20000, other = -1240156945, home = 'Cobertura'},
 }

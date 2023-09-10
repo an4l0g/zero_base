@@ -63,7 +63,7 @@ const generateItemCard = (index, data, priceType) => {
     return `
       <li class="item-card">
         <div class="wrap-image">
-          <img src="http://104.234.189.131/zero_inventory/${data.index}.png" />
+          <img src="http://189.127.164.160/zero_inventory/${data.index}.png" />
           <span>${data.name}</span>
         </div>
         <div class="insert-amount">

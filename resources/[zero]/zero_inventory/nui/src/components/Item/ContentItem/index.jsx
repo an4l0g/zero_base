@@ -48,7 +48,7 @@ function ContentItem({
       {...rest}
     >
       <S.ItemImage
-        src={`http://104.234.189.131/zero_inventory/${item.index.toLowerCase()}.png`}
+        src={`http://189.127.164.160/zero_inventory/${item.index.toLowerCase()}.png`}
       />
       {bagType !== "weapons" && (
         <>

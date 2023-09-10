@@ -7,8 +7,8 @@ author 'bluenzzz#0001 & an4log#0001'
 description 'Zero Appearance'
 version '0.1'
 
-ui_page 'http://104.234.189.131:8509';
--- ui_page 'http://104.234.189.131:5173';
+ui_page 'http://189.127.164.160:8509';
+-- ui_page 'http://189.127.164.160:5173';
 
 client_scripts { 'client-side/main.lua', 'client-side/*.lua' }
 server_scripts { 'server-side/*.lua' }

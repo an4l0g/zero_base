@@ -63,7 +63,7 @@ const Fabrication = () => {
               >
                 <S.ImageProductWrap>
                   <img
-                    src={`http://104.234.189.131/zero_inventory/${product.index}.png`}
+                    src={`http://189.127.164.160/zero_inventory/${product.index}.png`}
                   />
                   <b>{product.name}</b>
                 </S.ImageProductWrap>

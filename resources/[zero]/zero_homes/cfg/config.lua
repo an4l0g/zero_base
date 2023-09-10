@@ -1618,6 +1618,10 @@ config.homes = {
         coord = vector3(-2593.2, 1896.264, 167.2799), 
         type = 'mlo'
     },
+    ['Cobertura'] = { 
+        coord = vector3(-305.0901, -721.134, 28.01611), 
+        type = 'mlo'
+    },
 }
 
 config.typeHomes = {

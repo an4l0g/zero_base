@@ -286,7 +286,7 @@ RegisterCommand('wl', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') and args[1] then
+    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') and args[1] then
         local nUser = parseInt(args[1])
         if (nUser) then
             exports['zero']:setWhitelisted(nUser, true)
@@ -1709,7 +1709,7 @@ local Toogle = {
         blip = { name = 'DEIC', view = { ['Paramedico'] = true, ['Policia'] = true, ['Deic'] = true } },
         webhook = 'https://discord.com/api/webhooks/1141426122660261988/Qr_S_oy9DTpjdTPjeMAB7VRdmLtCnvzKnU09Js4sXW7gW9L_asrkqxA3K2C8wedVoUX1',
         toggleCoords = {
-            { coord = vector3(535.3187, -2767.648, 6.448364), radius = 70 },
+            { coord = vector3(480.5011, 4539.547, 79.96411), radius = 70 },
         }
     },
     ['ZeroMecanica'] = { 

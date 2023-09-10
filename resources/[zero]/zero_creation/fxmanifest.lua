@@ -8,7 +8,7 @@ description 'Zero Character'
 version '0.1'
 
 -- ui_page "http://localhost:5173"
-ui_page "http://104.234.189.131:8503"
+ui_page "http://189.127.164.160:8503"
 
 client_scripts { 'client/*.lua' }
 server_scripts { 'server/*.lua' }

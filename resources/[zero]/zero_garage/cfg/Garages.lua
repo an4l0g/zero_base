@@ -622,6 +622,13 @@ config.vehicles = {
     ['trdcoreamarok'] = { name = 'Amarok COE', maker = 'Volkswagen', price = 1000000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = false },
     ['fpacehm'] = { name = 'GOT ', maker = 'Jaguar', price = 1000000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = false },
     ['bmheli'] = { name = 'Helicóptero', maker = 'Polícia', price = 1000, trunk = 100, glove = 0, type = 'work', class = 'helicopters', banned = true },
+    ['wrsamarok'] = { name = 'Amarok', maker = 'Polícia', price = 1000, trunk = 150, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['wrsrs7'] = { name = 'Audi', maker = 'Polícia', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['wryukon'] = { name = 'Yukon', maker = 'Polícia', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['B412'] = { name = 'B412', maker = 'Polícia', price = 1000, trunk = 100, glove = 15, type = 'work', class = 'helicopters', banned = true },
+    ['ghispo2'] = { name = 'Maserati', maker = 'Polícia', price = 1000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['nd911'] = { name = '911r', maker = 'Polícia', price = 1000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['wrxc90'] = { name = 'volvo', maker = 'Polícia', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
 }
 
 config.blips = {
@@ -662,7 +669,40 @@ config.garages = {
             vector4(-1843.741, -1218.897, 12.34583, 291.9685),
         },
     },
-    -- --
+    -- [DEIC PESSOAL] --
+    {
+        coords = vector3(466.2462, 4544.123, 80.33484), 
+        points = {
+            vector4(467.8813, 4537.424, 79.93042, 277.7953),
+        },
+    },
+    -- [DEIC VIP] --
+    {
+        coords = vector3(490.3121, 4532.861, 79.9978), 
+        permission = 'vippm.permissao',
+        points = {
+            vector4(485.1297, 4534.694, 79.98096, 68.03149),
+        },
+        vehicles = { 'wrbmwx6', 'ndagera' }
+    },
+    -- [DEIC VTR] --
+    {
+        coords = vector3(487.622, 4545.547, 79.9978), 
+        permission = 'deic.permissao',
+        points = {
+            vector4(482.3868, 4542.198, 79.96411, 96.37794),
+        },
+        vehicles = { 'wrsamarok', 'wrsrs7', 'WRyukon', 'ghispo2', 'nd911', 'WRxc90' }
+    },
+    -- [DEIC HELI] --
+    {
+        coords = vector3(349.9648, 4434.989, 63.35022), 
+        permission = 'deic.permissao',
+        points = {
+            vector4(355.5824, 4441.859, 63.65344, 212.5984),
+        },
+        vehicles = { 'b412' }
+    },
     -- [Hospital] --
     {
         coords = vector3(-861.666, -1226.189, 6.195557), 

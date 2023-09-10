@@ -5,7 +5,7 @@ lua54 'yes'
 fx_version "bodacious"
 game "gta5"
 
-ui_page "http://104.234.189.131:8507"
+ui_page "http://189.127.164.160:8507"
 -- ui_page "http://localhost:5173"
 
 client_script {
