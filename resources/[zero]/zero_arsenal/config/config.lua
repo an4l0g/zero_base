@@ -176,10 +176,10 @@ config.arsenal = {
 
 config.locs = {
     { 
-        ['coord'] = vector3(505.5824, -2756.149, 3.061523), 
+        ['coord'] = vector3(485.0638, 4521.824, 80.36853), 
         ['config'] = 'Deic', 
         ['ped'] = {
-            ['coord'] = vector4(505.5824, -2756.149, 3.061523, 53.85),
+            ['coord'] = vector4(485.0638, 4521.824, 80.36853, 266.4567),
             ['skin'] = 's_m_m_fiboffice_01'
         },
         ['perm'] = 'deic.permissao'

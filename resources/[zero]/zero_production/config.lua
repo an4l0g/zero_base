@@ -444,6 +444,7 @@ configs.productions = {
         type = 'production',
         coords = vector3(-1486.299, 835.8461, 176.9854), 
         products = configs.products.guns, 
+        buff = true,
         label = 'Produção de Armas', 
         webhook = 'https://discord.com/api/webhooks/1146573638867365940/gSWhlBz5xsvN88rh2nX9uwX44vmbWarvprny4YiaBsixlCC247KyqAwfSJGl4WffqpcQ' 
     },
