@@ -625,7 +625,7 @@ config.vehicles = {
     ['wrsamarok'] = { name = 'Amarok', maker = 'Polícia', price = 1000, trunk = 150, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['wrsrs7'] = { name = 'Audi', maker = 'Polícia', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['wryukon'] = { name = 'Yukon', maker = 'Polícia', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
-    ['B412'] = { name = 'B412', maker = 'Polícia', price = 1000, trunk = 100, glove = 15, type = 'work', class = 'helicopters', banned = true },
+    ['b412'] = { name = 'B412', maker = 'Polícia', price = 1000, trunk = 100, glove = 15, type = 'work', class = 'helicopters', banned = true },
     ['ghispo2'] = { name = 'Maserati', maker = 'Polícia', price = 1000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['nd911'] = { name = '911r', maker = 'Polícia', price = 1000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['wrxc90'] = { name = 'volvo', maker = 'Polícia', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
@@ -692,12 +692,13 @@ config.garages = {
         points = {
             vector4(482.3868, 4542.198, 79.96411, 96.37794),
         },
-        vehicles = { 'wrsamarok', 'wrsrs7', 'WRyukon', 'ghispo2', 'nd911', 'WRxc90' }
+        vehicles = { 'wrsamarok', 'wrsrs7', 'ghispo2', 'nd911', 'wrxc90' }
     },
     -- [DEIC HELI] --
     {
         coords = vector3(349.9648, 4434.989, 63.35022), 
         permission = 'deic.permissao',
+        marker = 'heli',
         points = {
             vector4(355.5824, 4441.859, 63.65344, 212.5984),
         },
@@ -1043,6 +1044,7 @@ config.garages = {
     {
         coords = vector3(-1644.158, -989.4989, 13.00293), 
         rule = 'carOnly',
+        marker = 'bike',
         points = {
             vector4(-1641.996, -990.6857, 13.00293, 232.4409),
             vector4(-1640.44, -989.011, 13.00293, 232.4409),
@@ -1054,6 +1056,7 @@ config.garages = {
     {
         coords = vector3(-1653.758, -1001.407, 13.00293), 
         rule = 'carOnly',
+        marker = 'bike',
         points = {
             vector4(-1652.057, -1002.778, 13.00293, 232.4409),
             vector4(-1653.574, -1004.624, 13.00293, 232.4409),
@@ -1342,6 +1345,7 @@ config.garages = {
     -- [PRISAO] --
     {
         coords = vector3(1852.365, 2601.706, 45.65784),
+        marker = 'bike',
         points = {
             vector4(1854.105, 2607.046, 45.05127, 274.9606),
         },

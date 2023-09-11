@@ -49,5 +49,10 @@ cInventory.closeInventory = function(data)
     })
 
     if (LocalPlayer.state.Revistar) then TriggerServerEvent('zero_inventory:closeRevistar'); end;
+    if (LocalPlayer.state.Saquear) then TriggerServerEvent('zero_inventory:closeSaquear'); end;
 end
 exports('closeInventory', cInventory.closeInventory)
+
+cInventory.GetVehicleClass = function(vehicle)
+    return GetVehicleClass(vehicle)
+end

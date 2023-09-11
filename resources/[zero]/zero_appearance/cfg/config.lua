@@ -1731,18 +1731,22 @@ config.locs = {
     { coord = vector4(554.5055, -2770.563, 6.077637-0.97, 141.7323), config = 'all', type = 'barbershop' },
     
     -- [Helipa] -- 
-    { coord = vector4(297.1385, 1862.545, 209.6403, 93.5433), config = 'all', type = 'barbershop' },
-    { coord = vector4(298.8264, 1859.13, 209.6403, 45.35433), config = 'all', type = 'skinshop' },
-    { coord = vector4(295.8462, 1864.629, 209.6403, 232.4409), config = 'all', type = 'tattooshop' },
+    { coord = vector4(297.1385, 1862.545, 209.6403-0.97, 93.5433), config = 'all', type = 'barbershop' },
+    { coord = vector4(298.8264, 1859.13, 209.6403-0.97, 45.35433), config = 'all', type = 'skinshop' },
+    { coord = vector4(295.8462, 1864.629, 209.6403-0.97, 232.4409), config = 'all', type = 'tattooshop' },
+    
     -- [Polonia] -- 
-    { coord = vector4(2861.842, 2682.092, 98.83594, 28.34646), config = 'all', type = 'barbershop' },
-    { coord = vector4(2992.998, 2675.13, 75.56628, 42.51968), config = 'all', type = 'skinshop' },
-    { coord = vector4(2859.653, 2687.222, 98.83594, 246.6142), config = 'all', type = 'tattooshop' },
+    { coord = vector4(2861.842, 2682.092, 98.83594-0.97, 28.34646), config = 'all', type = 'barbershop' },
+    { coord = vector4(2992.998, 2675.13, 75.56628-0.97, 42.51968), config = 'all', type = 'skinshop' },
+    { coord = vector4(2859.653, 2687.222, 98.83594-0.97, 246.6142), config = 'all', type = 'tattooshop' },
     
     -- [Russia] -- 
-    { coord = vector4(1314.448, -699.9033, 73.20728, 252.2835), config = 'all', type = 'barbershop' },
-    { coord = vector4(1332.237, -686.7165, 73.12305, 161.5748), config = 'all', type = 'skinshop' },
-    { coord = vector4(1334.743, -678.1318, 73.08936, 342.9921), config = 'all', type = 'tattooshop' },
+    { coord = vector4(1314.448, -699.9033, 73.20728-0.97, 252.2835), config = 'all', type = 'barbershop' },
+    { coord = vector4(1332.237, -686.7165, 73.12305-0.97, 161.5748), config = 'all', type = 'skinshop' },
+    { coord = vector4(1334.743, -678.1318, 73.08936-0.97, 342.9921), config = 'all', type = 'tattooshop' },
+
+    -- [Policia] --
+    { coord = vector4(-2306.36, 353.9341, 174.5927-0.97, 22.67716), config = 'all', type = 'skinshop' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

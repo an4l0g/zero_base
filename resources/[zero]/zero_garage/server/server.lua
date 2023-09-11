@@ -317,8 +317,9 @@ srv.spawnVehicle = function(vehicle, id, token)
                                     exports.zero_bank:extrato(user_id, 'IPVA', -priceTax)
                                     zero.execute('zero_garage/setIPVA', { user_id = user_id, vehicle = vehicle, ipva = os.time() })
                                     TriggerClientEvent('notify', source, 'Garagem', 'O <b>pagamento</b> foi efetuado com sucesso.')
+                                else
+                                    TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
                                 end
-                                TriggerClientEvent('notify', source, 'Garagem', 'Você não possui <b>dinheiro</b> suficiente para este pagamento.')
                             end
                             return
                         end

@@ -37,10 +37,10 @@ srv.checkDismantle = function(index)
                     return false
                 end
 
-                if (parseInt(veh.service) > 0) then
-                    TriggerClientEvent('notify', source, 'Desmanche', 'Você não pode desmanchar veículo de <b>trabalho</b>.')
-                    return false
-                end
+                -- if (parseInt(veh.service) > 0) then
+                --     TriggerClientEvent('notify', source, 'Desmanche', 'Você não pode desmanchar veículo de <b>trabalho</b>.')
+                --     return false
+                -- end
 
                 if (parseInt(veh.detained) > 0) then
                     TriggerClientEvent('notify', source, 'Desmanche', 'Este veículo encontra-se <b>apreendido</b>.')
