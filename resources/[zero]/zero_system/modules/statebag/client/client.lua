@@ -17,6 +17,7 @@ LocalPlayer.state:set('Prison', false, true)
 LocalPlayer.state:set('Asylum', false, true)
 LocalPlayer.state:set('GPS', false, true)
 LocalPlayer.state:set('Revistar', false, true)
+LocalPlayer.state:set('Saquear', false, true)
 LocalPlayer.state:set('Appearance', false, true)
 
 local disableActions = function(ply)

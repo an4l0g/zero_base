@@ -21,7 +21,7 @@ const Item = React.forwardRef(
         return (
           <S.OptionImage
             loading="lazy"
-            src={`http://104.234.189.131/zero_appearance/${shop}/${appearance[shop].sex}/${tattooImage}.png`}
+            src={`http://189.127.164.160/zero_appearance/${shop}/${appearance[shop].sex}/${tattooImage}.png`}
             onError={() => setImageError(true)}
           />
         );
@@ -29,7 +29,7 @@ const Item = React.forwardRef(
       return (
         <S.OptionImage
           loading="lazy"
-          src={`http://104.234.189.131/zero_appearance/${shop}/${appearance[shop].sex}/${labelType}/${index}.png`}
+          src={`http://189.127.164.160/zero_appearance/${shop}/${appearance[shop].sex}/${labelType}/${index}.png`}
           onError={() => setImageError(true)}
         />
       );

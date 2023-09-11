@@ -61,26 +61,29 @@ config.items = {
         usable = true,
         weight = 2, 
         interaction = function(source, user_id)
-            if bandagemCooldown[user_id] then 
-                TriggerClientEvent('notify', source, 'Bandagem', 'Você ainda não pode utilizar a bandagem...')
-            else 
-                if zero.tryGetInventoryItem(user_id, "bandagem", 1) then
-                    local countHeal = 0
-                    TriggerClientEvent('progressBar', source, 'Utilizando bandagem...', 5000)
-                    Player(source).state.BlockTasks = true
-                    zeroClient._playAnim(source, true, {{'amb@world_human_gardener_plant@male@idle_a','idle_a'}}, false)
-                    while countHeal < 3 do
-                        if countHeal == 1 then
-                            ClearPedTasks(source)
-                            Player(source).state.BlockTasks = false
-                        end
-                        zeroClient.varyHealth(source, 20)
-                        countHeal = countHeal + 1
-                        cInventory.closeInventory(source)
-                        Wait(5000)
-                    end
-                    threadBandagem(user_id, 600000) -- 10 minutos
+            local health = GetEntityHealth(GetPlayerPed(source))
+            if (health > 100) then
+                if (health == 200) then
+                    TriggerClientEvent('notify', source, 'Bandagem', 'Você já se encontra com a <b>vida</b> cheia!')
+                    return
                 end
+
+                if (bandagemCooldown[user_id]) then 
+                    TriggerClientEvent('notify', source, 'Bandagem', 'Aguarde <b>'..bandagemCooldown[user_id]..' segundos</b> para utilizar a bandagem novamente!')
+                    return
+                end
+                threadBandagem(user_id, 300)
+
+                Player(source).state.BlockTasks = true
+                zeroClient._CarregarObjeto(source, 'amb@world_human_clipboard@male@idle_a', 'idle_c', 'v_ret_ta_firstaid', 49, 60309)
+                TriggerClientEvent('progressBar', source, 'Utilizando a bandagem...', 20000)
+                Citizen.SetTimeout(20000, function()
+                    Player(source).state.BlockTasks = false
+                    zeroClient._setHealth(source, parseInt(health + 60))
+                    zeroClient._DeletarObjeto(source)
+                    zero.tryGetInventoryItem(user_id, 'bandagem', 1)
+                    TriggerClientEvent('notify', source, 'Bandagem', 'A <b>bandagem</b> foi utilizada com sucesso!')
+                end)
             end
         end 
     },
@@ -477,6 +480,8 @@ config.items = {
 ----------------------------------------------------------------------------
 -- LEGAL
 ----------------------------------------------------------------------------
+    ['cordas'] = { name = 'Cordas', type = 'common', weight = 0.5 },
+    ['m-hp'] = { name = 'M. Hospital', type = 'common', weight = 1 },
     ['radio'] = { name = 'Rádio', type = 'common', weight = 0.5, arrest = true },
     ['gps'] = { name = 'GPS', type = 'common', weight = 2.5, usable = true, 
         interaction = function(source, user_id)
@@ -584,6 +589,7 @@ config.items = {
             exports['zero_core']:removeSpray(source)
         end
     },
+    
 ----------------------------------------------------------------------------
 -- POLICIA
 ----------------------------------------------------------------------------
@@ -591,6 +597,7 @@ config.items = {
     ['spike'] = { name = 'Spike', type = 'common', weight = 5.0 },
     ['barreira'] = { name = 'Barreira', type = 'common', weight = 5.0 },
     ['cone'] = { name = 'Cone', type = 'common', weight = 2.5 },
+
 ----------------------------------------------------------------------------
 -- ILEGAL
 ----------------------------------------------------------------------------
@@ -647,7 +654,14 @@ config.items = {
                         return
                     end
                     
-                    if (exports['zero_garage']:carDoor(source, 1.5, 'door_dside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_dside_r') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_r')) then
+                    local allow_2;
+                    if (cInventory.GetVehicleClass(source, vehicle) == 8) then
+                        allow_2 = true
+                    else
+                        allow_2 = (exports['zero_garage']:carDoor(source, 1.5, 'door_dside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_dside_r') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_f') or exports['zero_garage']:carDoor(source, 1.5, 'door_pside_r'))
+                    end
+
+                    if (allow_2) then
                         local isPolice = zero.hasPermission(user_id, 'policia.permissao')
                         
                         local allow;
@@ -682,7 +696,7 @@ config.items = {
                             end
 
                             exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(source, 'https://discord.com/api/webhooks/1136116707883237526/iRQQrUdANFOk2HFDV_IqWA1LImcD4dfWIZyeejwG7I6fkisMXHz8MjteR4fiqJ4f5Pgz', 
-                            {
+                                {
                                     encoding = 'jpg',
                                     quality = 0.80
                                 },

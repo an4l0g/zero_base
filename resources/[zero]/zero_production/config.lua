@@ -337,9 +337,28 @@ configs.products = {
             }
         },
     },
+    ['hospital'] = {
+        ['bandagem'] = {
+            order = 1,
+            name = 'Bandagem',
+            amount = 1,
+            delay = 5000,
+            materials = {
+                ['m-hp'] = { name = 'M. Hospital', amount = 1 },
+            }
+        },
+    }
 }
 
 configs.productions = {
+    ['hospital'] = {
+        label = 'Produção de Hospital', 
+        type = 'production',
+        coords = vector3(-803.3275, -1205.749, 7.324585),
+        products = configs.products.hospital, 
+        permission = 'hospital.permissao',
+        webhook = 'https://discord.com/api/webhooks/1150567600674316358/HAOk-sHKVgALJ-FCxvbuuAEoqn6kdzPLOGROyIgI_ooyYpMAoAQKXf7pyOsbXjYkGgu2'
+    },
     ['zerofome1'] = { 
         type = 'production',
         coords = vector3(-1843.661, -1186.18, 14.30042), 
@@ -497,7 +516,6 @@ configs.productions = {
         type = 'sellDrugs',
         coords = vector3(206.5451, -1851.521, 27.47693), 
         label = 'Vender drogas', 
-        type = 'sellDrugs',
         permission = 'droga.permissao',
         webhook = 'https://discord.com/api/webhooks/1145972996822007848/4PBMQVms1ppXl3RFnz-Fe205ooQapAvQt-5u38SH2W1qxllTD4Yjsx8Q3IFBze2jf-xO' 
     },

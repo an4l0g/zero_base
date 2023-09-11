@@ -68,8 +68,8 @@ config.location = {
     { coord = vector3(-776.9143, 319.622, 85.6593-0.97), config = 'eclipse', }, -- perm = { 'staff.permissao' } },
     { coord = vector3(-768.8176, 336.778, 243.3737-0.97), config = 'eclipse', }, -- perm = { 'staff.permissao' } },
 
-    { coord = vector3(-305.0242, -721.1605, 28.01611-0.97), config = 'cobertura', }, -- perm = { 'staff.permissao' } },
-    { coord = vector3(-288.2769, -722.4264, 125.4586-0.97), config = 'cobertura', }, -- perm = { 'staff.permissao' } },
+    { coord = vector3(-305.0242, -721.1605, 28.01611-0.97), config = 'cobertura' }, -- perm = { 'staff.permissao' } },
+    { coord = vector3(-288.2769, -722.4264, 125.4586-0.97), config = 'cobertura' }, -- perm = { 'staff.permissao' } },
 
     { coord = vector3(-2268.356, 378.5934, 188.7466-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },
     { coord = vector3(-2276.308, 346.8396, 174.5927-0.97), config = 'pm' }, -- perm = { 'staff.permissao' } },

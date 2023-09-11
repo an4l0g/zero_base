@@ -138,6 +138,12 @@ drivingVehicle = function(model)
 
                 if (GetPedInVehicleSeat(vehicle, -1) == ped or GetPedInVehicleSeat(vehicle, 0) == ped) then
                     idle = 1
+
+                    -- P1 NÃO ATIRAR
+                    if (GetPedInVehicleSeat(vehicle, -1) == ped) then
+                        DisablePlayerFiring(ped, true)
+                    end
+
                     -- RETIRAR O CHUTE DA MOTO
                     if (GetVehicleClass(vehicle) == 8) then
                         DisableControlAction(0, 345, true)
