@@ -104,7 +104,7 @@ config.arsenal = {
             { ['spawn'] = 'weapon_carbinerifle_mk2', ['name'] = 'M4A4', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_militaryrifle', ['name'] = 'AUG', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_tacticalrifle', ['name'] = 'M16', ['ammo'] = 250, ['perm'] = nil, price = 50 },
-            { ['spawn'] = 'm_weapon_sniperrifle', ['name'] = 'M16', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
+            { ['spawn'] = 'weapon_sniperrifle', ['name'] = 'AWP', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
         },
         ['utilitarys'] =  {
             ['cooldownUtilitarys']  = { ['time'] = 30, ['noCooldown'] = 'vippm.permissao', price = 50 },
@@ -113,6 +113,7 @@ config.arsenal = {
             { ['spawn'] = 'barreira', ['name'] = 'Barreira', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'mochila-pequena', ['name'] = 'Mochila Pequena', ['quantity'] = 1, ['perm'] = nil, price = 500 },
             { ['spawn'] = 'cone', ['name'] = 'Cone', ['quantity'] = 1, ['perm'] = nil, price = 50 },
+            { ['spawn'] = 'celular', ['name'] = 'Celular', ['quantity'] = 1, ['perm'] = nil, price = 900 },
             { ['spawn'] = 'algema', ['name'] = 'Algema', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'colete-militar', ['name'] = 'Colete Militar', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             -- { ['spawn'] = 'gadget_parachute', ['name'] = 'Paraquedas', ['quantity'] = 1, ['perm'] = nil, price = 50 },
@@ -146,7 +147,7 @@ config.arsenal = {
             { ['spawn'] = 'weapon_carbinerifle_mk2', ['name'] = 'M4A4', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_militaryrifle', ['name'] = 'AUG', ['ammo'] = 250, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'weapon_tacticalrifle', ['name'] = 'M16', ['ammo'] = 250, ['perm'] = nil, price = 50 },
-            { ['spawn'] = 'm_weapon_sniperrifle', ['name'] = 'M16', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
+            { ['spawn'] = 'weapon_sniperrifle', ['name'] = 'AWP', ['ammo'] = 250, ['perm'] = 'vippm.permissao', price = 50 },
         },
         ['utilitarys'] =  {
             ['cooldownUtilitarys']  = { ['time'] = 30, ['noCooldown'] = 'vippm.permissao', price = 50 },
@@ -154,6 +155,7 @@ config.arsenal = {
             { ['spawn'] = 'spike', ['name'] = 'Spike', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'barreira', ['name'] = 'Barreira', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'cone', ['name'] = 'Cone', ['quantity'] = 1, ['perm'] = nil, price = 50 },
+             { ['spawn'] = 'celular', ['name'] = 'Celular', ['quantity'] = 1, ['perm'] = nil, price = 900 },
             { ['spawn'] = 'colete-militar', ['name'] = 'Colete Militar', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             -- { ['spawn'] = 'gadget_parachute', ['name'] = 'Paraquedas', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['type'] = 'arma', ['spawn'] = 'WEAPON_NIGHTSTICK', ['name'] = 'Cassetete', ['ammo'] = 0, ['perm'] = nil, price = 50 },

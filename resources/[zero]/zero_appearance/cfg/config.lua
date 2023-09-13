@@ -1726,9 +1726,9 @@ config.locs = {
     { blip = true, coord = vector4(-293.1165, 6200.558, 31.48718-0.97, 161.5748), config = 'all', type = 'tattooshop' },
     
     -- [ Deic ] --
-    { coord = vector4(567.3231, -2779.464, 6.077637-0.97, 51.02362), config = 'all', type = 'skinshop' },
-    { coord = vector4(555.5341, -2773.279, 6.077637-0.97, 51.02362), config = 'all', type = 'tattooshop' },
-    { coord = vector4(554.5055, -2770.563, 6.077637-0.97, 141.7323), config = 'all', type = 'barbershop' },
+    { coord = vector4(474.3297, 4520.98, 80.33484-0.97, 172.9134), config = 'all', type = 'skinshop' },
+    { coord = vector4(476.2022, 4520.822, 80.33484-0.97, 164.4095), config = 'all', type = 'tattooshop' },
+    { coord = vector4(478.6022, 4520.69, 80.35168-0.97, 161.5748), config = 'all', type = 'barbershop' },
     
     -- [Helipa] -- 
     { coord = vector4(297.1385, 1862.545, 209.6403-0.97, 93.5433), config = 'all', type = 'barbershop' },
@@ -1747,6 +1747,9 @@ config.locs = {
 
     -- [Policia] --
     { coord = vector4(-2306.36, 353.9341, 174.5927-0.97, 22.67716), config = 'all', type = 'skinshop' },
+
+    -- [Prefeitura] --
+    { coord = vector4(-567.6528, -196.1011, 38.21021-0.97, 206.9291), config = 'all', type = 'skinshop' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

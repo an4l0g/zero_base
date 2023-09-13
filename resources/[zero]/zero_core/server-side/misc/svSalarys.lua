@@ -21,6 +21,17 @@ local salarys = {
     { name = '[VIP] Diamante', value = 5000, perm = '@Vips.Diamante' },
     { name = '[VIP] Zero', value = 7500, perm = '@Vips.Zero' },
     ----------------------------------
+    -- Jurídico
+    ----------------------------------
+    { name = '[Jurídico] Estagiário', value = 500, perm = '@Juridico.Estagiario' },
+    { name = '[Jurídico] Advogado Jr', value = 1000, perm = '@Juridico.AdvogadoJunior' },
+    { name = '[Jurídico] Advogado Pleno', value = 1500, perm = '@Juridico.AdvogadoPleno' },
+    { name = '[Jurídico] Advogado Senior', value = 2000, perm = '@Juridico.AdvogadoSenior' },
+    { name = '[Jurídico] Secretário Adjunto', value = 2500, perm = '@Juridico.SecretarioAdjunto' },
+    { name = '[Jurídico] Secretário Geral', value = 3500, perm = '@Juridico.SecretarioGeral' },
+    { name = '[Jurídico] Vice-Presidente', value = 4000, perm = '@Juridico.VicePresidente' },
+    { name = '[Jurídico] Presidente', value = 6000, perm = '@Juridico.Presidente' },
+    ----------------------------------
     -- Policia
     ----------------------------------
     { name = '[Policia] Soldado', value = 3250, perm = '@Policia.Soldado' },
@@ -53,19 +64,27 @@ local salarys = {
     { name = '[CMZ] Diretora', value = 25000, perm = '@Hospital.Diretor' },
 }
 
-srv.giveSalary = function()
-    local source = source
-    zero.antiflood(source, 'give:salary', 2)
-    local user_id = zero.getUserId(source)
-    if (user_id) then
+giveSalary = function(source, user_id)
+    if (source and user_id) then
         for k, v in pairs(salarys) do
             local value = v.value
             if (zero.hasPermission(user_id, v.perm)) then
-                TriggerClientEvent('zero_sound:source', source, 'coins', 0.5)
+                if (string.find(v.perm, '@Policia') or string.find(v.perm, '@Deic')) and zero.hasPermission(user_id, 'vippm.permissao') then value = parseInt(value + 5000); end;
                 zero.giveBankMoney(user_id, value)
-                exports.zero_bank:extrato(user_id, 'Salário', value)
+                exports.zero_bank:extrato(user_id, 'Salário ', value)
+
+                TriggerClientEvent('zero_sound:source', source, 'coins', 0.5)
                 TriggerClientEvent('notify', source, 'Salário', 'Olá! Seu salário ('..v.name..') de <b>R$'..zero.format(value)..'</b> foi depositado em sua conta bancária.')
             end
         end
     end
 end
+
+Citizen.CreateThread(function()
+    while (true) do
+        Citizen.Wait(30 * 60 * 1000)
+        for user_id, source in pairs(zero.getUsers()) do
+            giveSalary(source, user_id)
+        end  
+    end
+end)

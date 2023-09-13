@@ -7,8 +7,9 @@ Clothes = {
         ['Ouro'] = 4,
         ['Rubi'] = 5,
         ['Ametista'] = 5,
+        ['VipPolicia'] = 6,
         ['Safira'] = 10,
         ['Diamante'] = 10,
-        ['Zero'] = 10,
+        ['Zero'] = 10
     }
 }

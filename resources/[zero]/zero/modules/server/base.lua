@@ -77,9 +77,6 @@ zero.format = function(n)
 end
 vRP.format = zero.format
 
-zero.getUsers = function() return {} end
-vRP.getUsers = zero.getUsers
-
 zero.isBanned = function(user_id)
 	return exports['zero_core']:isBanned(user_id)
 end

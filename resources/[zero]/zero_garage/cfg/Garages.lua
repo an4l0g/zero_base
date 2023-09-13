@@ -820,16 +820,6 @@ config.garages = {
         vehicles = { 'ndbmws1000', 'wra45', 'wrm5', 'wrsubaru' }
     },
     {
-        coords = vector3(496.9319, -2761.015, 3.061523), 
-        rule = 'carOnly',
-        permission = 'vippm.permissao',
-        points = {
-            vector4(496.3253, -2741.842, 3.061523, 53.85827),
-            vector4(487.4769, -2756.334, 3.061523, 51.02362)
-        },
-        vehicles = { 'wrbmwx6', 'ndagera' }
-    },
-    {
         coords = vector3(560.0308, -2799.204, 6.077637), 
         rule = 'carOnly',
         permission = 'deic.permissao',
@@ -1386,6 +1376,32 @@ config.garages = {
         points = {
             vector4(-2595.178, 1930.602, 166.9092, 277.7953)
         }
+    },
+    {
+        coords = vector3(-504.4352, -255.6791, 35.66589),
+        showBlip = true,
+        rule = 'carOnly',
+        points = {
+            vector4(-505.978, -259.7407, 35.07617, 110.5512)
+        }
+    },
+    {
+        coords = vector3(-574.9583, -248.9143, 35.90186),
+        permission = '+Juridico.AdvogadoJunior',
+        rule = 'carOnly',
+        points = {
+            vector4(-579.3362, -247.3187, 35.73328, 209.7638)
+        },
+        vehicles = { 'xls2' }
+    },
+    {
+        coords = vector3(-577.0813, -245.3539, 36.01978),
+        permission = 'juridico.permissao',
+        rule = 'carOnly',
+        points = {
+            vector4(-579.3362, -247.3187, 35.73328, 209.7638)
+        },
+        vehicles = { 'premier' }
     },
 }
 

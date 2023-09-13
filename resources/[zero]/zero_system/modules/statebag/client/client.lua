@@ -43,7 +43,9 @@ local disableActions = function(ply)
     DisableControlAction(0, 288, true)
     DisableControlAction(0, 289, true)
     DisableControlAction(0, 311, true)
-    DisableControlAction(0, 344, true)		
+    DisableControlAction(0, 344, true)	
+    DisableControlAction(0, 75, true)	
+    DisableControlAction(0, 23, true)	
     DisablePlayerFiring(ply, true)
     DisableControlAction(0,24,true) -- disable attack
     DisableControlAction(0,25,true) -- disable aim

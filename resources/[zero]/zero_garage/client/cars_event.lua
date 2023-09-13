@@ -116,7 +116,13 @@ RegisterCommand('-drift', function()
 end)
 
 local weaponLock = {
-    [GetHashKey('kuruma2')] = true
+    [GetHashKey('kuruma2')] = true,
+    [GetHashKey('monalisa')] = true,
+    [GetHashKey('foxct')] = true,
+    [GetHashKey('6x6')] = true,
+    [GetHashKey('p1lbwk')] = true,
+    [GetHashKey('6x6ev')] = true,
+    [GetHashKey('x6mf962')] = true
 }
 
 drivingVehicle = function(model)
@@ -125,9 +131,7 @@ drivingVehicle = function(model)
             local ped = PlayerPedId()
             local idle = 1000
             inVehicle = IsPedInAnyVehicle(ped)
-            if (inVehicle) then
-                idle = 1000
-                
+            if (inVehicle) then                
                 local vehicle = GetVehiclePedIsIn(ped)
                 if (weaponLock[model]) then SetPlayerCanDoDriveBy(PlayerId(), false); end;
                 

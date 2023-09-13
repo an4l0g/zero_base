@@ -222,6 +222,7 @@ create table business(
     business_name varchar(50) not null,
     business_owner int not null,
     business_safe int not null,
+    business_rental varchar(50) not null,
     primary key(business_name)
 );
 

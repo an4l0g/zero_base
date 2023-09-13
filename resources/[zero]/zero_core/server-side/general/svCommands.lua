@@ -1667,16 +1667,18 @@ RegisterCommand('detido', function(source)
                 local vehState = exports.zero_garage:getVehicleData(vnetid)
                 if (vehState.user_id) then
                     local veh = zero.query('zero_dismantle/getVehicleInfo', { user_id = vehState.user_id, vehicle = vehState.model })[1]
-                    if (parseInt(veh.detained) > 0) then
-                        TriggerClientEvent('notify', source, 'Detido', 'Este <b>veículo</b> já se encontra detido.')
-                    else
-                        local nplayer = zero.getUserSource(vehState.user_id)
-                        if (nplayer) then TriggerClientEvent('notify', nplayer, 'Detido', 'Seu veículo ('..zero.vehicleName(vehState.model)..') foi <b>detido</b>.', 10000); end;
+                    if (veh) then
+                        if (parseInt(veh.detained) > 0) then
+                            TriggerClientEvent('notify', source, 'Detido', 'Este <b>veículo</b> já se encontra detido.')
+                        else
+                            local nplayer = zero.getUserSource(vehState.user_id)
+                            if (nplayer) then TriggerClientEvent('notify', nplayer, 'Detido', 'Seu veículo ('..zero.vehicleName(vehState.model)..') foi <b>detido</b>.', 10000); end;
 
-                        zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
-                        TriggerClientEvent('notify', source, 'Detido', 'O <b>veículo</b> foi apreendido com sucesso.')
-                        zero.execute('zero_garage/setDetained', { detained = 2, user_id = vehState.user_id, vehicle = vehState.model })
-                        zero.webhook('Detido', '```prolog\n[/DETIDO]\n[OFFICER]: '..user_id..'\n[VEHICLE]: '..vehState.model..'\n[VEHICLE OWNER]: '..vehState.user_id..'\n[REASON]: '..prompt..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                            zeroClient.playSound(source, 'Hack_Success', 'DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS')
+                            TriggerClientEvent('notify', source, 'Detido', 'O <b>veículo</b> foi apreendido com sucesso.')
+                            zero.execute('zero_garage/setDetained', { detained = 2, user_id = vehState.user_id, vehicle = vehState.model })
+                            zero.webhook('Detido', '```prolog\n[/DETIDO]\n[OFFICER]: '..user_id..'\n[VEHICLE]: '..vehState.model..'\n[VEHICLE OWNER]: '..vehState.user_id..'\n[REASON]: '..prompt..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                        end
                     end
                 end
             end
@@ -1693,6 +1695,7 @@ local _ToogleStaff = 'https://discord.com/api/webhooks/1144381802459447496/XE3lT
 local Toogle = {
     ['Policia'] = { 
         blip = { name = 'Policia', view = { ['Policia'] = true, ['Paramedico'] = true } },
+        clearWeapons = true,
         webhook = 'https://discord.com/api/webhooks/1144480658899619860/BZXGIS4sb1q9yagZJiMjkGauApmkPsIS_DcY0FiaLUZAa0oQPU6HG1xh0rVG61qARbPP',
         toggleCoords = {
             { coord = vector3(-2286.699, 356.0967, 174.5927), radius = 70 },
@@ -1707,6 +1710,7 @@ local Toogle = {
     },
     ['Deic'] = { 
         blip = { name = 'DEIC', view = { ['Paramedico'] = true, ['Policia'] = true, ['Deic'] = true } },
+        clearWeapons = true,
         webhook = 'https://discord.com/api/webhooks/1141426122660261988/Qr_S_oy9DTpjdTPjeMAB7VRdmLtCnvzKnU09Js4sXW7gW9L_asrkqxA3K2C8wedVoUX1',
         toggleCoords = {
             { coord = vector3(480.5011, 4539.547, 79.96411), radius = 70 },
@@ -1720,10 +1724,42 @@ local Toogle = {
     },
 }
 
+local getPoliceWeapons = {
+    'weapon_pistol_mk2',
+    'm_weapon_pistol_mk2',
+    'weapon_combatpistol',
+    'm_weapon_combatpistol',
+    'weapon_smg_mk2',
+    'm_weapon_smg_mk2',
+    'weapon_combatpdw',
+    'm_weapon_combatpdw',
+    'weapon_assaultsmg',
+    'm_weapon_assaultsmg',
+    'weapon_pumpshotgun_mk2',
+    'm_weapon_pumpshotgun_mk2',
+    'weapon_combatshotgun',
+    'm_weapon_combatshotgun',
+    'weapon_carbinerifle_mk2',
+    'm_weapon_carbinerifle_mk2',
+    'weapon_militaryrifle',
+    'm_weapon_militaryrifle',
+    'weapon_tacticalrifle',
+    'm_weapon_tacticalrifle',
+    'weapon_sniperrifle',
+    'm_weapon_sniperrifle',
+    'weapon_nightstick',
+    'weapon_stungun',
+    'colete-militar'
+}
+
+local givePoliceWeapons = {
+    ['weapon_combatpistol'] = 1,
+    ['m_weapon_combatpistol'] = 50
+}
+
 RegisterCommand('toogle', function(source)
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-
     for k, v in pairs(Toogle) do
         local inGroup, inGrade = zero.hasGroup(user_id, k)
 		if (inGroup) then
@@ -1753,7 +1789,33 @@ RegisterCommand('toogle', function(source)
 					TriggerClientEvent('notify', source, 'Toogle', '<b>'..groupName..'</b> | Você saiu de serviço.')
 					logmsg = '[STATUS]: LEAVE'
 					if (v.blip) then TriggerEvent('sw-blips:unTracePlayer', source); end;
-				end
+                    
+                    if (v.clearWeapons) then
+                        local weapons = zeroClient.replaceWeapons(source, {}, GlobalState.weaponToken)
+                        zero.setKeyDataTable(user_id, 'weapons', {})
+
+                        for k, v in pairs(weapons) do
+                            local weapon = k:lower()
+                            zero.giveInventoryItem(user_id, weapon, 1)
+                            if (v.ammo > 0) then
+                                zero.giveInventoryItem(user_id, 'm_'..weapon, v.ammo)
+                            end
+                        end
+
+                        for _, item in pairs(getPoliceWeapons) do
+                            local amount = zero.getInventoryItemAmount(user_id, item)
+                            if (amount > 0) then
+                                zero.tryGetInventoryItem(user_id, item, amount)
+                                TriggerClientEvent('notify', source, 'Toogle', 'Retiramos <b>'..math.floor(amount)..'x</b> de <b>'..zero.itemNameList(item)..'</b> da sua mochila!')
+                            end
+                        end
+
+                        for item, amount in pairs(givePoliceWeapons) do
+                            zero.giveInventoryItem(user_id, item, amount)
+                            TriggerClientEvent('notify', source, 'Toogle', 'Você recebeu <b>'..amount..'x</b> de <b>'..zero.itemNameList(item)..'</b>')
+                        end                        
+                    end
+                end
 
                 zero.webhook((v.webhook ~= '' and v.webhook or _ToogleDefault), '```prolog\n[/TOOGLE]\n[JOB]: '..string.upper(k)..' - '..string.upper(inGrade)..'\n[USER]: '..user_id..'# '..identity.firstname..' '..identity.lastname..'\n'..logmsg..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
             else

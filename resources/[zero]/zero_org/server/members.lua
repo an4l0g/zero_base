@@ -7,8 +7,8 @@ vRP._prepare("members/getAllMembers", "select * from user_groups where groupId =
 vRP._prepare("members/countAllMembers", "select COUNT(*) from user_groups where groupId = @fac")
 
 --======================================================================================================================
-local webhook_enterBlack = "https://discord.com/api/webhooks/1067163058255962212/u2wY13I1RFwOVwxdri8etmUsVZ21xwkJo1BKu-Ex3cQPciTzz4Nh8RFxIwW3WaHfUsir"
-local webhook_exitBlack = "https://discord.com/api/webhooks/1067163135854788628/RoEUQ0t6eaaYzTUSNarZhGV99FX1pKzLiI04no07SoMCmzpS-sdqhONaTeZKHL1p3YyD"
+local webhook_enterBlack = "https://discord.com/api/webhooks/1151367537737609216/SQvQJpCCupPTEcsf2hr6d8c1t-wBQBv5vusspjEhDVr1EuKIcGdc_BVCsWzLzcw_UQ-P"
+local webhook_exitBlack = "https://discord.com/api/webhooks/1151367637054529587/DRt1kRhR1CxHg5UKE0ByP2hCpiQBOrHrHj1Mo-UvBfUkAI3d_ahif_84MYP9dffNS8G2"
 
 vRP._prepare("members/getBlacklist", "SELECT * FROM facs_blacklist WHERE user_id = @user_id")
 vRP._prepare("members/setBlacklist", "REPLACE INTO facs_blacklist(user_id,org,expires) VALUES(@user_id,@org,@expires)")

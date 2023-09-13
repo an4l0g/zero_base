@@ -5,6 +5,7 @@ import { IoIosBody } from "react-icons/io";
 import { LuCar } from "react-icons/lu";
 import { BsFillHouseFill } from "react-icons/bs";
 import { FaTshirt } from "react-icons/fa";
+import { FaBalanceScaleLeft } from "react-icons/fa";
 import { RiShieldFill } from "react-icons/ri";
 
 const interactions = [
@@ -88,6 +89,14 @@ const interactions = [
     category: "main",
     value: "mechanic",
     permission: "mecanica",
+  },
+  {
+    title: "Judiciário",
+    icon: <FaBalanceScaleLeft />,
+    type: "category",
+    category: "main",
+    value: "judge",
+    permission: "juridico",
   },
 ];
 
