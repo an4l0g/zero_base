@@ -1661,8 +1661,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'simple',
-            ['simple'] = { value = 10000 },
-            ['motel'] = { value = 10000 }
+            ['simple'] = { value = 50000 },
+            ['motel'] = { value = 100000 }
         },
     },
     ['modern'] = {
@@ -1683,9 +1683,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'single',
-            ['single'] = { value = 10000 },
-            ['high_01'] = { value = 10000 },
-            ['high_02'] = { value = 10000 }
+            ['single'] = { value = 50000 },
+            ['high_01'] = { value = 100000 },
+            ['high_02'] = { value = 150000 }
         },
     },
     ['high'] = {
@@ -1706,8 +1706,8 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'high_01',
-            ['high_01'] = { value = 10000 },
-            ['high_02'] = { value = 10000 }
+            ['high_01'] = { value = 50000 },
+            ['high_02'] = { value = 100000 }
         },
     },
     ['apartament'] = {
@@ -1728,9 +1728,9 @@ config.typeHomes = {
         },
         ['interior'] = {
             _default = 'apartment_01',
-            ['apartment_01'] = { value = 10000 },
-            ['apartment_02'] = { value = 10000 },
-            ['eclip_penthouse'] = { decoration = true, value = 10000 },
+            ['apartment_01'] = { value = 50000 },
+            ['apartment_02'] = { value = 100000 },
+            ['eclip_penthouse'] = { decoration = true, value = 150000 },
         },
     },
 }

@@ -133,75 +133,123 @@ WeaponsHash = function()
 end
 exports('WeaponsHash', WeaponsHash)
 
-local Holster = false
-local LastWeapon = nil
+-- [ Animação antiga ] --
 
-local _disableActions = false
-local disableActions = function(bool)
-    _disableActions = bool
-    while (_disableActions == true) do
-        if (not LocalPlayer.state.SafeZone) then DisablePlayerFiring(PlayerPedId(), true); end;
-        DisableControlAction(0, 140, true) 
-        DisableControlAction(0, 263, true)
-        Citizen.Wait(1)
-    end
-end
-RegisterNetEvent('disableActionsWeapon', disableActions)
+-- local Holster = false
+-- local LastWeapon = nil
+
+-- local _disableActions = false
+-- local disableActions = function(bool)
+--     _disableActions = bool
+--     while (_disableActions == true) do
+--         if (not LocalPlayer.state.SafeZone) then DisablePlayerFiring(PlayerPedId(), true); end;
+--         DisableControlAction(0, 140, true) 
+--         DisableControlAction(0, 263, true)
+--         Citizen.Wait(1)
+--     end
+-- end
+-- RegisterNetEvent('disableActionsWeapon', disableActions)
+
+-- Citizen.CreateThread(function()
+-- 	while (true) do
+--         local ped = PlayerPedId()
+--         if (GetEntityHealth(ped) > 100) then
+--             if (not IsPedInAnyVehicle(ped)) then
+--                 if (Weapons[GetSelectedPedWeapon(ped)]) then
+--                     zero.CarregarAnim('reaction@intimidation@1h')
+--                     if (not Holster and LastWeapon ~= GetHashKey(Weapons[GetSelectedPedWeapon(ped)]) and GetSelectedPedWeapon(ped) == GetHashKey(Weapons[GetSelectedPedWeapon(ped)])) then
+--                         if (not LocalPlayer.state.Armed) then LocalPlayer.state.Armed = true; end;
+--                         LocalPlayer.state.BlockTasks = true
+--                         LastWeapon = GetHashKey(Weapons[GetSelectedPedWeapon(ped)])
+--                         TriggerEvent('disableActionsWeapon', true)
+--                         SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
+--                         TaskPlayAnim(ped, 'reaction@intimidation@1h', 'intro', 8.0,8.0,-1,48,10,0,0,0)
+--                         Citizen.Wait(1200)
+--                         SetCurrentPedWeapon(ped, LastWeapon, true)
+--                         Citizen.Wait(1300)
+-- 					    ClearPedTasks(ped)
+--                         TriggerEvent('disableActionsWeapon', false)
+--                         Holster = true
+--                         LocalPlayer.state.BlockTasks = false
+--                     end
+
+--                     if (Holster and LastWeapon ~= GetHashKey(Weapons[GetSelectedPedWeapon(ped)])) then
+--                         if (GetSelectedPedWeapon(ped) == GetHashKey('WEAPON_UNARMED')) then
+--                             Holster = true
+--                         else
+--                             Holster = false
+--                         end
+--                     end
+--                 else
+--                     if (Holster and GetSelectedPedWeapon(ped) == GetHashKey('WEAPON_UNARMED')) then
+--                         if (LocalPlayer.state.Armed) then LocalPlayer.state.Armed = false; end;
+--                         LocalPlayer.state.BlockTasks = true
+--                         TriggerEvent('disableActionsWeapon', true)
+--                         SetCurrentPedWeapon(ped, LastWeapon, true)
+--                         TaskPlayAnim(ped, 'reaction@intimidation@1h', 'outro', 8.0,8.0,-1,48,10,0,0,0)
+--                         Citizen.Wait(1400)
+--                         SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
+--                         Citizen.Wait(600)
+-- 					    ClearPedTasks(ped)
+--                         LastWeapon = nil
+--                         TriggerEvent('disableActionsWeapon', false)
+--                         Holster = false
+--                         LocalPlayer.state.BlockTasks = false
+--                     end
+--                 end 
+--             else
+--                 if (Holster) then LastWeapon = nil; Holster = false; end;
+--             end
+--         else
+--             if (Holster) then LastWeapon = nil; Holster = false; end;
+--             SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
+--         end
+-- 		Citizen.Wait(100)
+-- 	end
+-- end)
+
+local Holster = false
 
 Citizen.CreateThread(function()
-	while (true) do
+    while (true) do
+        local idle = 300
         local ped = PlayerPedId()
         if (GetEntityHealth(ped) > 100) then
             if (not IsPedInAnyVehicle(ped)) then
                 if (Weapons[GetSelectedPedWeapon(ped)]) then
-                    zero.CarregarAnim('reaction@intimidation@1h')
-                    if (not Holster and LastWeapon ~= GetHashKey(Weapons[GetSelectedPedWeapon(ped)]) and GetSelectedPedWeapon(ped) == GetHashKey(Weapons[GetSelectedPedWeapon(ped)])) then
+                    if (not Holster) then
                         if (not LocalPlayer.state.Armed) then LocalPlayer.state.Armed = true; end;
-                        LocalPlayer.state.BlockTasks = true
-                        LastWeapon = GetHashKey(Weapons[GetSelectedPedWeapon(ped)])
-                        TriggerEvent('disableActionsWeapon', true)
-                        SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
-                        TaskPlayAnim(ped, 'reaction@intimidation@1h', 'intro', 8.0,8.0,-1,48,10,0,0,0)
-                        Citizen.Wait(1200)
-                        SetCurrentPedWeapon(ped, LastWeapon, true)
-                        Citizen.Wait(1300)
-					    ClearPedTasks(ped)
-                        TriggerEvent('disableActionsWeapon', false)
-                        Holster = true
-                        LocalPlayer.state.BlockTasks = false
-                    end
-
-                    if (Holster and LastWeapon ~= GetHashKey(Weapons[GetSelectedPedWeapon(ped)])) then
-                        if (GetSelectedPedWeapon(ped) == GetHashKey('WEAPON_UNARMED')) then
-                            Holster = true
-                        else
-                            Holster = false
+                        if (not IsEntityPlayingAnim(ped, 'amb@world_human_sunbathe@female@back@idle_a', 'idle_a', 3)) then
+                            loadAnimDict('rcmjosh4')
+                            TaskPlayAnim(ped, 'rcmjosh4', 'josh_leadout_cop2', 3.0, 2.0, -1, 48, 10, 0, 0, 0)
+                            Citizen.Wait(450)
+                            ClearPedTasks(ped)
                         end
+                        Holster = true
                     end
                 else
-                    if (Holster and GetSelectedPedWeapon(ped) == GetHashKey('WEAPON_UNARMED')) then
+                    if (Holster) then
                         if (LocalPlayer.state.Armed) then LocalPlayer.state.Armed = false; end;
-                        LocalPlayer.state.BlockTasks = true
-                        TriggerEvent('disableActionsWeapon', true)
-                        SetCurrentPedWeapon(ped, LastWeapon, true)
-                        TaskPlayAnim(ped, 'reaction@intimidation@1h', 'outro', 8.0,8.0,-1,48,10,0,0,0)
-                        Citizen.Wait(1400)
-                        SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
-                        Citizen.Wait(600)
-					    ClearPedTasks(ped)
-                        LastWeapon = nil
-                        TriggerEvent('disableActionsWeapon', false)
+                        if (not IsEntityPlayingAnim(ped, 'amb@world_human_sunbathe@female@back@idle_a', 'idle_a', 3)) then
+                            loadAnimDict('weapons@pistol@')
+                            TaskPlayAnim(ped, 'weapons@pistol@', 'aim_2_holster', 3.0, 2.0, -1, 48, 10, 0, 0, 0)
+                            Citizen.Wait(450)
+                            ClearPedTasks(ped)
+                        end
                         Holster = false
-                        LocalPlayer.state.BlockTasks = false
                     end
-                end 
-            else
-                if (Holster) then LastWeapon = nil; Holster = false; end;
+                end
             end
         else
-            if (Holster) then LastWeapon = nil; Holster = false; end;
-            SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true)
+            if (Holster) then if (LocalPlayer.state.Armed) then LocalPlayer.state.Armed = false; end; Holster = false; SetCurrentPedWeapon(ped, GetHashKey('WEAPON_UNARMED'), true); end;
         end
-		Citizen.Wait(100)
-	end
+        Citizen.Wait(idle)
+    end
 end)
+
+loadAnimDict = function(dict)
+	while (not HasAnimDictLoaded(dict)) do
+		RequestAnimDict(dict)
+		Citizen.Wait(10)
+	end
+end

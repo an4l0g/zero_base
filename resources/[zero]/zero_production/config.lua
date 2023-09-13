@@ -4,9 +4,9 @@ zero = Proxy.getInterface('zero')
 
 configs = {}
 
-configs.moneyPerFiscal = 20000
-configs.governTax = 0.30
-configs.governTaxWithBuff = 0.20
+configs.moneyPerFiscal = 100000
+configs.governTax = 0.39
+configs.governTaxWithBuff = 0.38
 configs.blipDistance = 3
 
 configs.products = {

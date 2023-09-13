@@ -95,7 +95,7 @@ sProduction.moneyLaundry = function(production)
                 end
             end
         else 
-            TriggerClientEvent('notify', _source, 'Lavagem de Dinheiro', 'O valor inserido precisa ser multiplo de 1000. Exemplos: 10000, 20000, 50000...', 20000);
+            TriggerClientEvent('notify', _source, 'Lavagem de Dinheiro', 'O valor inserido precisa ser multiplo de 100000. Exemplos: 100000, 200000, 500000...', 20000);
         end
     end
 end

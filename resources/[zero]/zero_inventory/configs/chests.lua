@@ -26,7 +26,7 @@ config.chests = {
     ['cla:Egito'] = { title = 'Baú', type = 'cla', permission = 'egito.permissao', weight = 1000, cds = { vector3(1296.672, -169.7143, 100.0491) }, log = 'https://discord.com/api/webhooks/1145903706810884146/iTo3Q-cF-jXmpAR45QpHVu48OT6pYqyPrjyevHeNbRvi6etqtuSQFHQReL0FC_vE9r_h' },
     ['cla:Polonia'] = { title = 'Baú', type = 'cla', permission = 'polonia.permissao', weight = 1000, cds = { vector3(2908.18, 2719.807, 72.85352) }, log = 'https://discord.com/api/webhooks/1145854179940769853/CUc3qlPT50G_aLORSirlBMf-0Nc1FBiiCFsxOaBaTb8nKEZBh1NTY83wLJq9Kh98XVIY' },
     ['cla:LiderPolonia'] = { title = 'Baú', type = 'cla', permission = '+Polonia.ViceLider', weight = 1000, cds = { vector3(2860.602, 2681.684, 102.1384) }, log = 'https://discord.com/api/webhooks/1146970576074838046/ssMfCzgajfPvYAe-MhM_4c4c0URINHKROvFUjsmDM5Zpf9FUrv5OnNv2QeSIJBRAqSQP' },
-    ['cla:LiderCanada'] = { title = 'Baú', type = 'cla', permission = '+Canada.Gerente', weight = 1000, cds = { vector3(-1822.76, 424.8659, 118.348) }, log = 'https://discord.com/api/webhooks/1146970576074838046/ssMfCzgajfPvYAe-MhM_4c4c0URINHKROvFUjsmDM5Zpf9FUrv5OnNv2QeSIJBRAqSQP' },
+    ['cla:LiderCanada'] = { title = 'Baú', type = 'cla', permission = '+Canada.Gerente', weight = 1000, cds = { vector3(-1822.76, 424.8659, 118.348) }, log = 'https://discord.com/api/webhooks/1151178179071971401/xOJ2tSrBI6qN2l03H7JNFAOxWfZNOgUJNsr9jNVktaoGk5k1lvRUKObNRQEFptiW0MS8' },
 
     -- [ CASAS ] --
     ['cla:Malibu'] = { title = 'Baú', type = 'cla', home = 'Malibu', weight = 1000, cds = { vector3(-3217.754, 783.5209, 14.09814) }, log = 'https://discord.com/api/webhooks/1146460866523443210/gGm5evE26lMxMJNNOBaCFWdLKLUVsqPt2ranT-DpRFh61fF4nufatE0iVG-FjHemND3w' },

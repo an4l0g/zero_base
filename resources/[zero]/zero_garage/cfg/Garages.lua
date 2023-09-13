@@ -13,6 +13,7 @@ config.vehicles = {
 -- EXCLUSIVO
 ------------------------------------------------------------------------------------------------------------------------
     ['dcd'] = { name = 'Dodge', maker = 'Charger', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'super', banned = false },
+    ['ESDUCATI2K22'] = { name = 'Juca', maker = 'Ducati', price = 1000000, trunk = 15, glove = 0, type = 'vip', class = 'motocycle', banned = false },
 
 ------------------------------------------------------------------------------------------------------------------------
 -- VIP
@@ -1052,6 +1053,15 @@ config.garages = {
             vector4(-1637.591, -985.9648, 13.00293, 235.2756)
         },
         vehicles = { 'bmx' }
+    },
+    {
+        coords = vector3(-309.6132, -731.1033, 28.01611), 
+        rule = 'carOnly',
+        home = 'Cobertura',
+        points = {
+            vector4(-314.7692, -734.2681, 28.01611, 342.9921),
+            vector4(-312.633, -728.3472, 27.35901, 340.1575),
+        }
     },
     {
         coords = vector3(-1653.758, -1001.407, 13.00293), 

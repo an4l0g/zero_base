@@ -76,11 +76,9 @@ exports('nearestHomes', nearestHomes)
 
 homesAdd = function(source)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
-
+    if (user_id) then
         local prompt = zero.prompt(source, { 'Nome da Residência', 'Passaporte' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local nUser = tonumber(prompt[2])
         local nIdentity = zero.getUserIdentity(nUser)
@@ -89,7 +87,6 @@ homesAdd = function(source)
             if (response) then
                 local homesCount = zero.query('zero_homes/countPermissions', { home = homeName })[1]
                 if (homesCount.qtd > homeConfig.residents) then
-                    homesActions[user_id] = nil
                     serverNotify(source, 'A sua residência <b>'..homeName..'</b> atingiu o máximo de moradores.')
                     return false
                 end
@@ -128,17 +125,15 @@ homesAdd = function(source)
             local text = (nUser == user_id and 'Você não pode se adicionar na <b>residência</b>.' or 'Este <b>passaporte</b> não existe em nossa cidade.')
             serverNotify(source, text)
         end      
-        homesActions[user_id] = nil
     end
 end
 exports('homesAdd', homesAdd)
 
 homesRem = function(source)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
+    if (user_id) then
         local prompt = zero.prompt(source, { 'Nome da Residência', 'Passaporte' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local nUser = tonumber(prompt[2])
         local nIdentity = zero.getUserIdentity(nUser)
@@ -163,7 +158,6 @@ homesRem = function(source)
             local text = (nUser == user_id and 'Você não pode se remover da <b>residência</b>.' or 'Este <b>passaporte</b> não existe em nossa cidade.')
             serverNotify(source, text)
         end
-        homesActions[user_id] = nil
     end
 end
 exports('homesRem', homesRem)
@@ -225,10 +219,9 @@ exports('homesTrancar', homesTrancar)
 
 homesTrans = function(source)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
+    if (user_id) then
         local prompt = zero.prompt(source, { 'Nome da Residência', 'Passaporte' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local nUser = tonumber(prompt[2])
         local nIdentity = zero.getUserIdentity(nUser)
@@ -236,7 +229,6 @@ homesTrans = function(source)
             local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
             if (response) then
                 if (homeType == 'mlo' or homeConsult.vip > 0) then 
-                    homesActions[user_id] = nil
                     serverNotify(source, 'Você não pode realizar esta interação numa residência <b>VIP</b>.') 
                     return
                 end
@@ -254,25 +246,22 @@ homesTrans = function(source)
             local text = (nUser == user_id and 'Você não pode transferir a <b>residência</b> para si mesmo.' or 'Este <b>passaporte</b> não existe em nossa cidade.')
             serverNotify(source, text)
         end
-        homesActions[user_id] = nil
     end
 end
 exports('homesTrans', homesTrans)
 
 homesVender = function(source)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
+    if (user_id) then
 
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
             local homePrice = parseInt(homeConfig.price * generalConfig.percentageSell)
 
             if (homeType == 'mlo' or homeConsult.vip > 0) then 
-                homesActions[user_id] = nil
                 serverNotify(source, 'Você não pode realizar esta interação numa residência <b>VIP</b>.') 
                 return
             end
@@ -290,18 +279,16 @@ homesVender = function(source)
                 serverNotify(source, 'Você vendeu a residência <b>'..homeName..'</b> para a prefeitura por R$'..zero.format(homePrice)..'.')                    
             end
         end
-        homesActions[user_id] = nil
     end
 end
 exports('homesVender', homesVender)
 
 homesChecar = function(source)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
+    if (user_id) then
 
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
@@ -318,18 +305,15 @@ homesChecar = function(source)
             end
             serverNotify(source, 'Moradores da residência <b>'..homeName..'</b>: <br><br>'..permList, 10000)
         end            
-        homesActions[user_id] = nil
     end
 end
 exports('homesChecar', homesChecar)
 
 homesTax = function(source)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
-
+    if (user_id) then
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
@@ -349,7 +333,6 @@ homesTax = function(source)
                 end
             end
         end            
-        homesActions[user_id] = nil
     end
 end
 exports('homesTax', homesTax)
@@ -397,11 +380,9 @@ exports('homesInterior', homesInterior)
 
 updateInterior = function(source, interior)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
-
+    if (user_id) then
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
@@ -434,7 +415,6 @@ updateInterior = function(source, interior)
                 serverNotify(source, 'Você não pode utilizar este interior numa residência <b>'..homeType:upper()..'</b>.')
             end
         end
-        homesActions[user_id] = nil
     end
 end
 exports('updateInterior', updateInterior)
@@ -444,7 +424,7 @@ homesDecoration = function(source)
     if (user_id) then
 
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
@@ -468,11 +448,9 @@ exports('homesDecoration', homesDecoration)
 
 updateDecoration = function(source, decoration)
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
-
+    if (user_id) then
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
@@ -507,7 +485,6 @@ updateDecoration = function(source, decoration)
                 serverNotify(source, 'O interior atual de sua residência <b>'..homeName..'</b> não possui <b>decoração</b>. Saiba qual interior de sua residência possui <b>decoração</b> na lista de interiores.')
             end
         end
-        homesActions[user_id] = nil
     end
 end
 exports('updateDecoration', updateDecoration)
@@ -515,10 +492,8 @@ exports('updateDecoration', updateDecoration)
 homesBau = function(source)
     local user_id = zero.getUserId(source)
     if (user_id) then
-        homesActions[user_id] = true
-
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
@@ -556,7 +531,6 @@ homesBau = function(source)
                 serverNotify(source, 'Você não tem <b>permissão</b> para aumentar o baú da sua residência.')
             end
         end
-        homesActions[user_id] = nil
     end
 end
 exports('homesBau', homesBau)
@@ -566,11 +540,9 @@ homesGaragem = function(source)
     if (inside) then serverNotify(source, 'Você não pode adicionar garagem dentro da sua <b>residência</b>.') return; end;
 
     local user_id = zero.getUserId(source)
-    if (user_id) and not homesActions[user_id] then
-        homesActions[user_id] = true
-        
+    if (user_id) then        
         local prompt = zero.prompt(source, { 'Nome da Residência' })
-        if (not prompt) then homesActions[user_id] = nil; return; end;
+        if (not prompt) then return; end;
 
         local response, homeName, homeConfig, homesType, homeType, homeConsult = checkHomeOwner(user_id, prompt[1])
         if (response) then
@@ -606,7 +578,6 @@ homesGaragem = function(source)
                 serverNotify(source, 'Você não pode adicionar garagem nesta residência <b>'..homeName..'</b>.')
             end
         end
-        homesActions[user_id] = nil
     end
 end
 exports('homesGaragem', homesGaragem)
