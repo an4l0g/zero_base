@@ -1750,6 +1750,9 @@ config.locs = {
 
     -- [Prefeitura] --
     { coord = vector4(-567.6528, -196.1011, 38.21021-0.97, 206.9291), config = 'all', type = 'skinshop' },
+
+    -- [ Playboy ] --
+    { coord = vector4(-1534.127, 148.3912, 60.78906-0.97, 229.6063), config = 'all', type = 'skinshop' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

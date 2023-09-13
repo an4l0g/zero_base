@@ -4,8 +4,8 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
-            payment = 100000,
-            cooldown = 3600,
+            payment = 150000,
+            cooldown = 1800,
             seconds = 60,
             task = true,
             lspd = 7
@@ -15,7 +15,7 @@ Robberys = {
                 ['weapon_crowbar'] = 2,
             },
             payment = 100000,
-            cooldown = 3600,
+            cooldown = 1800,
             seconds = 60,
             task = true,
             lspd = 6

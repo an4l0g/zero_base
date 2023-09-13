@@ -168,7 +168,7 @@ Doors = {
     { text = true, hash = 39269536, coord = vector3(-1536.224, 108.1714, 56.77881), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 39269536, coord = vector3(-1537.371, 119.5517, 56.77881), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 39269536, coord = vector3(-1537.503, 126.1846, 56.77881), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = false, hash = 346577218, coord = vector3(-1536.738, 130.9319, 57.36853), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = 346577218, coord = vector3(-1536.738, 130.9319, 57.36853), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
     { text = true, hash = 653721055, coord = vector3(-1522.339, 143.3539, 55.64978), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
 
     -- [ HOMEM DE FERRO ] --

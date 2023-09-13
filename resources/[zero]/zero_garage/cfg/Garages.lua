@@ -296,7 +296,7 @@ config.vehicles = {
     ['coquette'] = { name = 'Coquette', maker = 'Invetero', price = 250000, trunk = 30, glove = 15, type = 'car', class = 'sports', banned = false },
     ['zr350'] = { name = 'zr350', maker = 'Annis', price = 400000, trunk = 30, glove = 15, type = 'car', class = 'Sports', banned = false },
     ['phantom3'] = { name = 'Phantom', maker = 'Jobuilt', price = 1000000, trunk = 0, glove = 15, type = 'car', class = 'commercial', banned = false },
-    ['rallytruck'] = { name = 'RallyTruck', maker = 'MTL', price = 260000, trunk = 400, glove = 15, type = 'car', class = 'service', banned = false },
+    ['rallytruck'] = { name = 'RallyTruck', maker = 'MTL', price = 2000000, trunk = 500, glove = 15, type = 'car', class = 'service', banned = false },
     ['dukes'] = { name = 'Dukes', maker = 'Imponte', price = 150000, trunk = 40, glove = 15, type = 'car', class = 'muscle', banned = false },
     ['picador'] = { name = 'Picador', maker = 'Cheval', price = 150000, trunk = 90, glove = 15, type = 'car', class = 'muscle', banned = false },
     ['slamvan3'] = { name = 'Slamvan3', maker = 'Vapid', price = 230000, trunk = 100, glove = 15, type = 'car', class = 'muscle', banned = false },
@@ -1402,6 +1402,22 @@ config.garages = {
             vector4(-579.3362, -247.3187, 35.73328, 209.7638)
         },
         vehicles = { 'premier' }
+    },
+    {
+        coords = vector3(-1521.93, 79.95165, 56.76196),
+        rule = 'carOnly',
+        home = 'Playboy',
+        points = {
+            vector4(-1520.809, 87.11209, 56.44177, 260.7874)
+        },
+    },
+    {
+        coords = vector3(-1391.578, 6746.466, 11.89087),
+        rule = 'heliOnly',
+        marker = 'heli',
+        points = {
+            vector4(-1389.27, 6742.615, 12.64905, 257.9528)
+        },
     },
 }
 

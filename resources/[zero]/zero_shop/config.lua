@@ -5,6 +5,57 @@ zero = Proxy.getInterface('zero')
 config = {}
 
 config.general = {
+    ['comidas_bebidas'] = {
+        ['hotdog'] = {
+            name = 'Hotdog', index = 'hotdog',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['sanduiche'] = {
+            name = 'Sanduiche', index = 'sanduiche',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['donut'] = {
+            name = 'Donut', index = 'donut',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['pirulito'] = {
+            name = 'Pirulito', index = 'pirulito',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['cola'] = {
+            name = 'Cola', index = 'cola',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['agua'] = {
+            name = 'Agua', index = 'agua',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+        ['soda'] = {
+            name = 'Soda', index = 'soda',
+            price = {
+                buy = 250,
+            },
+            method = 'legal'
+        },
+    },
     ['departament'] = {
         ['cordas'] = {
             name = 'Corda', index = 'cordas',
@@ -94,13 +145,6 @@ config.general = {
             name = 'GPS', index = 'gps',
             price = {
                 buy = 10000,
-            },
-            method = 'legal'
-        },
-        ['hotdog'] = {
-            name = 'Hotdog', index = 'hotdog',
-            price = {
-                buy = 250,
             },
             method = 'legal'
         },
@@ -284,11 +328,14 @@ config.shops = {
     { name = 'Supermarket', type = 'buy', coord = vector3(1392.462, 3604.945, 34.9751), config = 'departament', blip = true },
     { name = 'Supermarket', type = 'buy', coord = vector3(-3040.101, 585.4418, 7.897461), config = 'departament', blip = true },
     -- [Helipa] --
-    { name = 'Supermarket', type = 'buy', coord = vector3(240.7253, 1870.787, 189.8923), config = 'departament', blip = false },
+    { name = 'Supermarket', type = 'buy', coord = vector3(240.7253, 1870.787, 189.8923), config = 'departament' },
     -- [Polonia] --
-    { name = 'Supermarket', type = 'buy', coord = vector3(3019.767, 2709.415, 74.42053), config = 'departament', blip = false },
+    { name = 'Supermarket', type = 'buy', coord = vector3(3019.767, 2709.415, 74.42053), config = 'departament' },
     -- [Russia] --
-    { name = 'Supermarket', type = 'buy', coord = vector3(1338.475, -689.9604, 73.08936), config = 'departament', blip = false },
+    { name = 'Supermarket', type = 'buy', coord = vector3(1338.475, -689.9604, 73.08936), config = 'departament' },
+
+    -- [ Iate Mohammed ] --
+    { name = 'Iate', type = 'buy', coord = vector3(-1403.512, 6749.235, 11.89087), config = 'comidas_bebidas' },
 
     { name = 'Ammunation', type = 'buy', coord = vector3(1692.62, 3759.481, 34.6886), config = 'ammu', blip = true },
     { name = 'Ammunation', type = 'buy', coord = vector3(252.8703, -49.25275, 69.92163), config = 'ammu', blip = true },
@@ -301,12 +348,13 @@ config.shops = {
     { name = 'Ammunation', type = 'buy', coord = vector3(-3172.695, 1087.094, 20.82129), config = 'ammu', blip = true },
     { name = 'Ammunation', type = 'buy', coord = vector3(21.29671, -1106.453, 29.7854), config = 'ammu', blip = true },
     { name = 'Ammunation', type = 'buy', coord = vector3(811.1736, -2157.679, 29.59998), config = 'ammu', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(1166.07, 2709.297, 38.14282), config = 'bebidas', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(-2967.956, 390.7385, 15.04175), config = 'bebidas', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(1135.648, -982.1406, 46.39929), config = 'bebidas', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(-1486.919, -379.3846, 40.14795), config = 'bebidas', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(-1222.998, -907.2132, 12.31213), config = 'bebidas', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(127.7934, -1284.593, 29.26306), config = 'bebidas', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(-560.2286, 286.1011, 82.17139), config = 'bebidas', blip = true },
-    { name = "Perls", type = 'buy', coord = vector3(1985.71, 3053.802, 47.20801), config = 'bebidas', blip = true },
+
+    { name = 'Perls', type = 'buy', coord = vector3(1166.07, 2709.297, 38.14282), config = 'bebidas', blip = true },
+    { name = 'Perls', type = 'buy', coord = vector3(-2967.956, 390.7385, 15.04175), config = 'bebidas', blip = true },
+    { name = 'Perls', type = 'buy', coord = vector3(1135.648, -982.1406, 46.39929), config = 'bebidas', blip = true },
+    { name = 'Perls', type = 'buy', coord = vector3(-1486.919, -379.3846, 40.14795), config = 'bebidas', blip = true },
+    { name = 'Perls', type = 'buy', coord = vector3(-1222.998, -907.2132, 12.31213), config = 'bebidas', blip = true },
+    { name = 'Perls', type = 'buy', coord = vector3(127.7934, -1284.593, 29.26306), config = 'bebidas', blip = true },
+    { name = 'Perls', type = 'buy', coord = vector3(-560.2286, 286.1011, 82.17139), config = 'bebidas', blip = true },
+    { name = 'Perls', type = 'buy', coord = vector3(1985.71, 3053.802, 47.20801), config = 'bebidas', blip = true },
 }

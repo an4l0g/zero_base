@@ -173,7 +173,6 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
     Citizen.Wait(1000)
     local query = zero.query('getUserBusiness', { user_id = user_id })
     for k, v in pairs(query) do
-        print(k, json.encode(v))
         if (parseInt(v.business_rental) >= 0) and (os.time() >= parseInt(v.business_rental + (businessExpire * 24 * 60 * 60))) then
             delBusiness(user_id,  v.business_name)
             TriggerClientEvent('notify', source, 'Empresa', 'Infelizmente o seu tempo com a empresa <b>'..config[v.business_name].name..'</b> terminou. Você deve renová-la o novamente em nossa <b>loja VIP</b>.', 10000)
