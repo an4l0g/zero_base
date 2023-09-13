@@ -505,3 +505,31 @@ RegisterNetEvent('zero_interactions:homesLacrar', function(value)
     local source = source    
     exports['zero_homes']:homesLacrar(source)
 end)
+
+local porte = 'https://discord.com/api/webhooks/1151322402219892776/7kxoXel96Cn-Ns3CyQzFsitXR8dcmt7CnTt9nWtrTfmmhEHAR-bbqxJhY3TgxD-2Vqf_'
+
+RegisterNetEvent('zero_interactions:porte', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+
+    local prompt = exports.zero_hud:prompt(source, {
+        'Nome do Personagem', 'Passaporte do Jogador', 'Número de Telefone', 'Motivo para Pedido de Reabilitação criminal: (Por favor, forneça uma explicação detalhada do motivo pelo qual seu personagem precisa de Reabilitação criminal).', 'Informações Adicionais: (Qualquer informação adicional que você deseja fornecer para justificar o pedido de Reabilitação criminal).'
+    })
+    if (not prompt) then TriggerClientEvent('notify', source, 'Porte de Arma', 'Você precisa preencher o <b>formulário</b>.') return; end;
+
+    exports.zero:webhook(porte, '```prolog\n[PEDIDO - PORTE DE ARMAS]\n[ADVOGADO]: '..user_id..'\n[NOME DO PERSONAGEM]: '..prompt[1]..'\n[PASSAPORTE DO JOGADOR]: '..prompt[2]..'\n[NÚMERO DE TELEFONE]: '..prompt[3]..'\n[MOTIVO]: '..prompt[4]..'\n[INFORMAÇÕES ADICIONAIS]: '..prompt[5]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+end)
+
+local ficha = 'https://discord.com/api/webhooks/1151349939306254406/o6zL8ujCeQE-E9z3Oe9GgZogx28hqo1pp0S04voaG7ICtwWJSpxYJ1r_j9NMOUppLdy-'
+
+RegisterNetEvent('zero_interactions:fichasuja', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+
+    local prompt = exports.zero_hud:prompt(source, {
+        'Nome do Personagem', 'Passaporte do Jogador', 'Número de Telefone', 'Motivo para Pedido de Reabilitação criminal: (Por favor, forneça uma explicação detalhada do motivo pelo qual seu personagem precisa de Reabilitação criminal).', 'Informações Adicionais: (Qualquer informação adicional que você deseja fornecer para justificar o pedido de Reabilitação criminal).'
+    })
+    if (not prompt) then TriggerClientEvent('notify', source, 'Porte de Arma', 'Você precisa preencher o <b>formulário</b>.') return; end;
+
+    exports.zero:webhook(ficha, '```prolog\n[PEDIDO - LIMPAR A FICHA]\n[ADVOGADO]: '..user_id..'\n[NOME DO PERSONAGEM]: '..prompt[1]..'\n[PASSAPORTE DO JOGADOR]: '..prompt[2]..'\n[NÚMERO DE TELEFONE]: '..prompt[3]..'\n[MOTIVO]: '..prompt[4]..'\n[INFORMAÇÕES ADICIONAIS]: '..prompt[5]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
+end)

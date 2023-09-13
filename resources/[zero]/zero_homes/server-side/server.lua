@@ -22,7 +22,7 @@ local _home = {
             
             local taxTime = (ownerConsult.tax == -1 and ownerConsult.tax or parseInt(ownerConsult.tax))
             if (taxTime >= 0) then
-                if (os.time() >= parseInt((taxTime + generalConfig.lateFee) * 24 * 60 * 60)) then
+                if (os.time() >= parseInt(taxTime + (generalConfig.lateFee * 24 * 60 * 60))) then
                     serverNotify(source, 'O <b>IPTU</b> da residência se encontra atrasado.')
                     return false
                 end
@@ -116,7 +116,7 @@ local _home = {
             
             local taxTime = (ownerConsult.tax == -1 and ownerConsult.tax or parseInt(ownerConsult.tax))
             if (taxTime >= 0) then
-                if (os.time() >= parseInt((taxTime + generalConfig.lateFee) * 24 * 60 * 60)) then
+                if (os.time() >= parseInt(taxTime + (generalConfig.lateFee * 24 * 60 * 60))) then
                     serverNotify(source, 'O <b>IPTU</b> da residência se encontra atrasado.')
                     return false
                 end
@@ -208,7 +208,7 @@ local _home = {
 
             local taxTime = (ownerConsult.tax == -1 and ownerConsult.tax or parseInt(ownerConsult.tax))
             if (taxTime >= 0) then
-                if (os.time() >= parseInt((taxTime + generalConfig.lateFee) * 24 * 60 * 60)) then
+                if (os.time() >= parseInt(taxTime + (generalConfig.lateFee * 24 * 60 * 60))) then
                     serverNotify(source, 'O <b>IPTU</b> da residência se encontra atrasado.')
                     return false
                 end
@@ -412,7 +412,7 @@ AddEventHandler('vRP:playerSpawn', function(user_id, source)
                 if (v.home_owner == 1) then
                     local taxTime = parseInt(v.tax)
                     if (taxTime > 0) then
-                        if (os.time() > parseInt(taxTime + generalConfig.wonFee * 24 * 60 * 60)) then
+                        if (os.time() > parseInt(taxTime + (generalConfig.wonFee * 24 * 60 * 60))) then
                             local homeConfig = json.decode(v.configs)
                             local items = exports['zero_inventory']:getBag('homes:'..homeName)
                             serverNotify(source, 'Você não pagou o <b>IPTU</b> de sua residência <b>'..homeName..'</b> e sua residencia foi liquidada.', 10000)
@@ -443,7 +443,7 @@ Citizen.CreateThread(function()
         local homeName = v.home
         local taxTime = parseInt(v.tax)
         if (taxTime) and taxTime > 0 then
-            if (os.time() > parseInt(taxTime + generalConfig.wonFee * 24 * 60 * 60)) then
+            if (os.time() > parseInt(taxTime + (generalConfig.wonFee * 24 * 60 * 60))) then
                 local homeConfig = json.decode(v.configs)
                 local items = exports['zero_inventory']:getBag('homes:'..homeName)
                 zero.execute('zero_homes/sellHome', { home = homeName })

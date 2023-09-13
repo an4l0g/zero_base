@@ -379,6 +379,33 @@ config.groups = {
 		'zeromecanica.permissao'
 	},
 
+	['Juridico'] = {
+		information = { 
+			title = 'Jurídico', 
+			groupType = 'job', 
+			grades = {
+				['Estagiario'] = { title = 'Estagiário', level = 1 },
+				['AdvogadoJunior'] = { title = 'Advogado Jr', level = 2 },
+				['AdvogadoPleno'] = { title = 'Advogado Pleno', level = 3 },
+				['AdvogadoSenior'] = { title = 'Advogado Senior', level = 4 },
+				['SecretarioAdjunto'] = { title = 'Secretário Adjunto', level = 5 },
+				['SecretarioGeral'] = { title = 'Secretário Geral', level = 6 },
+				['VicePresidente'] = { title = 'Vice-Presidente', level = 7 },
+				['Presidente'] = { title = 'Presidente', level = 8 },
+			},
+			grades_default = 'Estagiario',
+		},
+		'juridico.permissao'
+	},
+
+	['VipPolicia'] = {
+		information = { 
+			title = 'VIP Polícia', 
+		},
+		'attachs2.permissao',
+		'vippm.permissao'
+	},
+
 	['Policia'] = {
 		information = { 
 			title = 'Polícia', 

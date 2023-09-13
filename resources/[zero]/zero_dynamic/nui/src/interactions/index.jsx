@@ -13,6 +13,7 @@ import Mechanic from "./cat_mechanic";
 import Homes from "./cat_homes";
 import Medic from "./cat_medic";
 import Staff from "./cat_staff";
+import Judge from "./cat_judge";
 import { RiPlayFill } from "react-icons/ri";
 
 export const AllInteractions = () => {
@@ -39,6 +40,7 @@ export const AllInteractions = () => {
       ...(dynamic.permissions.mecanica ? Mechanic : []),
       ...(dynamic.permissions.hospital ? Medic : []),
       ...(dynamic.permissions.staff ? Staff : []),
+      ...(dynamic.permissions.juridico ? Judge : []),
     ];
   }, [dynamic]);
 

@@ -7,7 +7,7 @@ config.roles = {
     hospital = { full_permissions = 'Diretor', half_permissions = 'Supervisor' },
     mecanica = { full_permissions = { 'Lider', 'ViceLider' }, half_permissions = 'Gerente' },
     restaurante = { full_permissions = { 'Dono', 'Socio' }, half_permissions = 'Gerente' },
-    judiciario = { full_permissions = 'Lider', half_permissions = 'PresidenteOAB' },
+    judiciario = { full_permissions = 'Presidente', half_permissions = 'VicePresidente' },
 }
 
 
@@ -65,12 +65,14 @@ config.grades = {
         'Novato',
     },
     judiciario = {
-        'Lider',
-        'PresidenteOAB',
-        'Juiz',
-        'Promotor',
-        'Policial',
-        'Advogado',
+        'Presidente',
+        'VicePresidente',
+        'SecretarioGeral',
+        'SecretarioAdjunto',
+        'AdvogadoSenior',
+        'AdvogadoPleno',
+        'AdvogadoJunior',
+        'Estagiario',
     },
 }
 
@@ -81,6 +83,12 @@ config.facs = {
         serviceCheck = 'active',
         grades = config.grades.policia,
         roles = config.roles.policia
+    },
+    ['Juridico'] = {
+        vagas = 500,
+        serviceCheck = 'online',
+        grades = config.grades.judiciario,
+        roles = config.roles.judiciario
     },
     ['Deic'] = {
         vagas = 500,
@@ -209,4 +217,5 @@ config.facs = {
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
     },
+    
 }

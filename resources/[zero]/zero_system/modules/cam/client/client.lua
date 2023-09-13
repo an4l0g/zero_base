@@ -462,11 +462,14 @@ function TogglePointing(flag)
 end
 
 function ApplyFilter(filterIndex)
+    print('Apply', filterIndex)
     SetTimecycleModifier(Cam.filterList[filterIndex])
     currFilter = filterIndex
 end
 
 function ChangeFilterIntensity(intensityIndex)
+    print('Change', intensityIndex)
+
     SetTimecycleModifier(Cam.filterList[currFilter])
     SetTimecycleModifierStrength(tonumber(filterInten[intensityIndex]))
     currFilterIntensity = intensityIndex

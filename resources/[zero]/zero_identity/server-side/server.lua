@@ -65,7 +65,7 @@ getUserRG = function(source, nUser, args)
             table.id = nUser
             table.fullname = getUserFullname(nUser)
             table.image = getUserPhoto(nUser)
-            table.job = nil
+            table.job = getUserJob(nUser)
             table.rg = getUserRegistration(nUser)
             table.wallet = zero.getMoney(nUser)
             table.bank = nil
@@ -176,6 +176,7 @@ end
 getUserGunlicense = function(user_id)
     return nil
 end
+
 --------------------------------------------------------------------------------------
 -- TROCAR ID
 --------------------------------------------------------------------------------------

@@ -39,7 +39,25 @@ local markerThread = function()
     end)
 end
 
+local BlipBusiness = function()
+	local BuyedBusiness = vSERVER.getBuyedBusiness()
+	for k, v in pairs(BuyedBusiness) do
+		local BusinessBlip = config.empresa[k]
+		if (BusinessBlip) then
+			local blip = AddBlipForCoord(BusinessBlip.coords.enter.x, BusinessBlip.coords.enter.y, BusinessBlip.coords.enter.z)
+			SetBlipSprite(blip, 351)
+			SetBlipAsShortRange(blip, true)
+			SetBlipColour(blip, 36)
+			SetBlipScale(blip, 0.5)
+			BeginTextCommandSetBlipName('STRING')
+			AddTextComponentString('Empresa de '..v.owner)
+			EndTextCommandSetBlipName(blip)
+		end
+	end
+end
+
 Citizen.CreateThread(function()
+	BlipBusiness()
     while (true) do
         local ped = PlayerPedId()
         local pCoord = GetEntityCoords(ped)

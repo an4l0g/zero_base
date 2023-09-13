@@ -24,6 +24,7 @@ cDynamic.openOrUpdateNui = function()
             policia = sDynamic.checkPermission('policia.permissao'),
             staff = sDynamic.checkPermission('staff.permissao'),
             mecanica = sDynamic.checkPermission('zeromecanica.permissao'),
+            juridico = sDynamic.checkPermission('juridico.permissao'),
         }
     })
 end
