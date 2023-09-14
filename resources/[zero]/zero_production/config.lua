@@ -377,7 +377,7 @@ configs.productions = {
     },
     ['zeromec1'] = { 
         type = 'production',
-        coords = vector3(-310.8, -113.433, 39.0022), 
+        coords = vector3(134.8747, -3050.611, 7.038086), 
         label = 'Produção de Mecânica', 
         permission = 'zeromecanica.permissao',
         products = configs.products.mec, 
@@ -385,7 +385,7 @@ configs.productions = {
     },
     ['zeromec2'] = { 
         type = 'production',
-        coords = vector3(-322.7736, -146.3473, 39.0022), 
+        coords = vector3(138.8967, -3050.756, 7.038086), 
         label = 'Produção de Mecânica', 
         permission = 'zeromecanica.permissao',
         products = configs.products.mec, 

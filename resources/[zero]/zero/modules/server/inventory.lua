@@ -80,7 +80,7 @@ zero.clearInventory = function(user_id)
 
 		if (Alianca) then zero.giveInventoryItem(user_id, 'alianca-casamento', 1); end;
 		
-		if (not zero.hasPermission(user_id,'mochila.permissao')) then
+		if (not zero.hasPermission(user_id,'+Vips.Ouro')) then
 			zero.setInventoryMaxWeight(user_id, 6)
 		end		
 

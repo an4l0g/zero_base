@@ -83,6 +83,14 @@ export default [
     category: "acessorios",
   },
   {
+    title: "Fechar perímetro",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "fecharperimetro",
+    category: "police",
+    closeLater: true,
+  },
+  {
     title: "Retirar do veículo",
     icon: <RiPlayFill />,
     type: "action",
