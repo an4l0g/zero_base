@@ -57,8 +57,17 @@ config.peds = {
     },
     -- [ Mecanica ] --
     {
-        coord = vector4(-352.0879, -172.2198, 39.0022, 303.3071),
+        coord = vector4(146.5451, -3007.952, 7.038086, 274.9606),
         hash = 's_m_m_gaffer_01',
+        anim = {
+            'anim@heists@heist_corona@single_team',
+            'single_team_loop_boss'
+        }
+    },
+    -- [ Zero Fome ] --
+    {
+        coord = vector4(-1837.451, -1185.31, 14.30042, 328.8189),
+        hash = 's_m_m_movspace_01',
         anim = {
             'anim@heists@heist_corona@single_team',
             'single_team_loop_boss'

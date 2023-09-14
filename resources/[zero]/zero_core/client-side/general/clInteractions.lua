@@ -198,3 +198,28 @@ RegisterNetEvent('syncdoors', function(index, door)
 		end
 	end
 end)
+
+local BlipsPerimetro = {}
+
+RegisterNetEvent('BlipPerimetro', function(id, coords, distance, open)
+	if (open) then
+		BlipsPerimetro[id] = {}
+
+		BlipsPerimetro[id][1] = AddBlipForRadius(coords, (distance + 0.0))
+		SetBlipColour(BlipsPerimetro[id][1], 3)
+		SetBlipAlpha(BlipsPerimetro[id][1], 90)
+		SetBlipDisplay(BlipsPerimetro[id][1], 8)
+
+		BlipsPerimetro[id][2] = AddBlipForCoord(coords)
+		SetBlipSprite(BlipsPerimetro[id][2], 58)
+		SetBlipAsShortRange(BlipsPerimetro[id][2], true)
+		SetBlipColour(BlipsPerimetro[id][2], 0)
+		SetBlipScale(BlipsPerimetro[id][2], 0.5)
+		BeginTextCommandSetBlipName('STRING')
+		AddTextComponentString('Perímetro Fechado') 
+		EndTextCommandSetBlipName(BlipsPerimetro[id][2])
+	else
+		RemoveBlip(BlipsPerimetro[id][1]) 
+		RemoveBlip(BlipsPerimetro[id][2]) 
+	end
+end)

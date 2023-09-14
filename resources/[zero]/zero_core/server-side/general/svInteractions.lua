@@ -533,3 +533,37 @@ RegisterNetEvent('zero_interactions:fichasuja', function()
 
     exports.zero:webhook(ficha, '```prolog\n[PEDIDO - LIMPAR A FICHA]\n[ADVOGADO]: '..user_id..'\n[NOME DO PERSONAGEM]: '..prompt[1]..'\n[PASSAPORTE DO JOGADOR]: '..prompt[2]..'\n[NÚMERO DE TELEFONE]: '..prompt[3]..'\n[MOTIVO]: '..prompt[4]..'\n[INFORMAÇÕES ADICIONAIS]: '..prompt[5]..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
 end)
+
+local Perimetros = {}
+local perimetroWebhook = 'https://discord.com/api/webhooks/1151693759214538846/50j3tshQN2SDvGOxilBoxDefNnwIAxMND58P8KwId4b3pQqP65K1OEPDNjNHx09364bF'
+
+RegisterNetEvent('zero_interactions:fecharperimetro', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) and zero.hasPermission(user_id, 'policia.permissao') then
+        local identity = zero.getUserIdentity(user_id)
+        
+        if (Perimetros[user_id]) then
+            return TriggerClientEvent('notify', source, 'Perímetro', 'Você já fechou um <b>perímetro</b>.')
+        end
+
+        local prompt = exports.zero_hud:prompt(source, {
+            'Nome do perímetro', 'Distância do perímetro', 'Tempo de perímetro fechado (segundos)'
+        })
+        if (not prompt) then return; end;
+        Perimetros[user_id] = true;
+
+        local name = prompt[1]
+        local distance = parseInt(prompt[2])
+        local time = parseInt(prompt[3])
+        
+        TriggerClientEvent('announcement', -1, 'Policia Zero', 'O perímetro <b>'..name..'</b> foi fechado, se afastem imediatamente do local.', identity.firstname, true, 15000)
+        TriggerClientEvent('BlipPerimetro', -1, user_id, GetEntityCoords(GetPlayerPed(source)), distance, true)
+        exports.zero:webhook(perimetroWebhook, '```prolog\n[FECHAR PERIMETRO]\n[OFFICER]: '..user_id..'\n[NAME]: '..name..'\n[DISTANCE]: '..distance..'\n[TIME]: '..time..'\n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..'\n```')
+        Citizen.SetTimeout(time * 1000, function()
+            TriggerClientEvent('announcement', -1, 'Policia Zero', 'O perímetro <b>'..name..'</b> foi aberto.', identity.firstname, true, 15000)
+            TriggerClientEvent('BlipPerimetro', -1, user_id, 0, 0, false)
+            Perimetros[user_id] = nil
+        end)
+    end
+end)
