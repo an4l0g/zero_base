@@ -684,7 +684,7 @@ config.garages = {
         points = {
             vector4(485.1297, 4534.694, 79.98096, 68.03149),
         },
-        vehicles = { 'wrbmwx6', 'ndagera' }
+        vehicles = { 'wrbmwx6', 'ndagera', 'wrbmwx7' }
     },
     -- [DEIC VTR] --
     {
@@ -745,7 +745,7 @@ config.garages = {
             vector4(-2284.22, 407.2088, 174.4579, 124.7244),
             vector4(-2286.725, 410.2154, 174.4579, 136.063),
         },
-        vehicles = { 'wrbmwx6', 'ndagera' }
+        vehicles = { 'wrbmwx6', 'ndagera', 'wrbmwx7' }
     },
     {
         coords = vector3(-2292.356, 420.1451, 174.5927), 

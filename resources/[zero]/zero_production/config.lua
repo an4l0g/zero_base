@@ -402,9 +402,9 @@ configs.productions = {
     ['Russia'] = { 
         type = 'production',
         coords = vector3(1368.026, -707.5121, 68.20288), 
-        label = 'Produção de Drogas', 
+        label = 'Produção de Munições', 
         buff = true,
-        products = configs.products.drugs, 
+        products = configs.products.wammos, 
         permission = 'russia.permissao',
         webhook = 'https://discord.com/api/webhooks/1146572562705432637/JKZuwm-jQS8onvAfxpBzKMF9fDFDRHsmfRbiUx3XpUAMoUktbRqqh65_r0Nt7chbsP8J' 
     },
@@ -491,9 +491,9 @@ configs.productions = {
     ['Helipa'] = { 
         type = 'production',
         coords = vector3(284.7297, 1863.442, 212.825), 
-        label = 'Produção de Drogas', 
+        label = 'Produção de Armas', 
         buff = true,
-        products = configs.products.drugs, 
+        products = configs.products.guns, 
         permission = 'helipa.permissao',
         webhook = 'https://discord.com/api/webhooks/1146572659921010709/-dqTAYOSMBkJrhJvOGua6HBajiQavdSX5zTbPWO8spQexuwb4Q-kDQsQ5oHup5nqFuAM' 
     },

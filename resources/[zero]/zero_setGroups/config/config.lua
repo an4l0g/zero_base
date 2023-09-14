@@ -148,7 +148,7 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'russia.permissao',
-		'droga.permissao'
+		'municao.permissao'
 	},
 
 	['Cosanostra'] = {
@@ -212,7 +212,7 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'helipa.permissao',
-		'droga.permissao'
+		'arma.permissao'
 	},
 
 	['Egito'] = {
