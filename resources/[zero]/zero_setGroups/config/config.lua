@@ -116,7 +116,7 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'holanda.permissao',
-		'droga.permissao'
+		'arma.permissao'
 	},
 
 	['Polonia'] = {
@@ -385,13 +385,15 @@ config.groups = {
 			groupType = 'job', 
 			grades = {
 				['Estagiario'] = { title = 'Estagiário', level = 1 },
-				['AdvogadoJunior'] = { title = 'Advogado Jr', level = 2 },
-				['AdvogadoPleno'] = { title = 'Advogado Pleno', level = 3 },
-				['AdvogadoSenior'] = { title = 'Advogado Senior', level = 4 },
-				['SecretarioAdjunto'] = { title = 'Secretário Adjunto', level = 5 },
-				['SecretarioGeral'] = { title = 'Secretário Geral', level = 6 },
-				['VicePresidente'] = { title = 'Vice-Presidente', level = 7 },
-				['Presidente'] = { title = 'Presidente', level = 8 },
+				['Seguranca'] = { title = 'Segurança', level = 2 },
+				['ChefeSeguranca'] = { title = 'Chefe da Segurança', level = 3 },
+				['AdvogadoJunior'] = { title = 'Advogado Jr', level = 4 },
+				['AdvogadoPleno'] = { title = 'Advogado Pleno', level = 5 },
+				['AdvogadoSenior'] = { title = 'Advogado Senior', level = 6 },
+				['SecretarioAdjunto'] = { title = 'Secretário Adjunto', level = 7 },
+				['SecretarioGeral'] = { title = 'Secretário Geral', level = 8 },
+				['VicePresidente'] = { title = 'Vice-Presidente', level = 9 },
+				['Presidente'] = { title = 'Presidente', level = 10 },
 			},
 			grades_default = 'Estagiario',
 		},

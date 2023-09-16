@@ -617,9 +617,84 @@ config.items = {
     ['pendrive'] = { name = 'Pen Drive', type = 'common', weight = 0.5, arrest = true },
     ['c4'] = { name = 'C4', type = 'common', weight = 1.0, arrest = true },
     ['keycard'] = { name = 'Keycard', type = 'common', weight = 0.5, arrest = true },
-    ['maconha'] = { name = 'Maconha', type = 'common', weight = 0.3, arrest = true },
-    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 0.3, arrest = true },
-    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 0.3, arrest = true },
+    ['maconha'] = { name = 'Maconha', type = 'common', weight = 1, arrest = true, usable = true,
+        interaction = function(source, user_id)
+            cInventory.closeInventory(source)
+
+            Player(source).state.BlockTasks = true
+            zeroClient._playAnim(source, true, {
+                { 'mp_player_int_uppersmoke', 'mp_player_int_smoke' }
+            }, true)
+
+            TriggerClientEvent('progressBar', source, 'Fumando maconha...', 10000)
+            Citizen.SetTimeout(10000, function()
+                Player(source).state.BlockTasks = false
+
+                local ped = GetPlayerPed(source)
+                ClearPedTasks(ped)
+
+                zeroClient.setHealth(source, (GetEntityHealth(ped) + 5))
+                zero.varyHunger(user_id, 40)
+                zero.varyThirst(user_id, 20)
+                zero.tryGetInventoryItem(user_id, 'maconha', 1)
+                TriggerClientEvent('notify', source, 'Mochila', 'Você terminou de fumar <b>Maconha</b>!')
+            end)
+        end    
+    },
+    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1, arrest = true },
+    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1, arrest = true, usable = true,
+        interaction = function(source, user_id)
+            cInventory.closeInventory(source)
+
+            Player(source).state.BlockTasks = true
+            zeroClient._playAnim(source, true, {
+                { 'mp_player_int_uppersmoke', 'mp_player_int_smoke' }
+            }, true)
+
+            TriggerClientEvent('progressBar', source, 'Cheirando um pó...', 3500)
+            Citizen.SetTimeout(3500, function()
+                Player(source).state.BlockTasks = false
+                Player(source).state.Energetico = true
+
+                local ped = GetPlayerPed(source)
+                ClearPedTasks(ped)
+
+                zero.varyHunger(user_id, 40)
+                zero.varyThirst(user_id, 20)
+                zero.tryGetInventoryItem(user_id, 'cocaina', 1)
+                TriggerClientEvent('notify', source, 'Mochila', 'Você terminou de cheirar a <b>Cocaína</b>!')
+            end)
+
+            Citizen.SetTimeout(30000, function()
+                Player(source).state.Energetico = false
+                TriggerClientEvent('notify', source, 'Mochila', 'O efeito do <b>pó</b> acabou =(.')
+            end)
+        end    
+    },
+    ['lanca-perfume'] = { name = 'Lança Perfume', type = 'common', weight = 1, arrest = true, usable = true,
+        interaction = function(source, user_id)
+            cInventory.closeInventory(source)
+
+            Player(source).state.BlockTasks = true
+            zeroClient._playAnim(source, true, {
+                { 'mp_player_int_uppersmoke', 'mp_player_int_smoke' }
+            }, true)
+
+            TriggerClientEvent('progressBar', source, 'Cheirando o perfume...', 10000)
+            Citizen.SetTimeout(10000, function()
+                Player(source).state.BlockTasks = false
+
+                local ped = GetPlayerPed(source)
+                ClearPedTasks(ped)
+
+                SetPedArmour(ped, (GetPedArmour(ped) + 5))
+                zero.varyHunger(user_id, 40)
+                zero.varyThirst(user_id, 20)
+                zero.tryGetInventoryItem(user_id, 'lanca-perfume', 1)
+                TriggerClientEvent('notify', source, 'Mochila', 'Você terminou de cheirar o <b>Perfume</b>!')
+            end)
+        end  
+    },
     ['dinheirosujo'] = { name = 'Dinheiro Sujo', type = 'common', weight = 0, arrest = true },
     ['nota-fiscal'] = { name = 'Nota fiscal', type = 'common', weight = 0.5, arrest = true },
     ['lockpick'] = { 
@@ -764,7 +839,13 @@ config.items = {
     ['m_weapon_minismg'] = { name = 'M. S VZ 61', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_compactrifle'] = { name = 'K. Compact', type = 'weapon', weight = 5.0, arrest = true },
     ['m_weapon_compactrifle'] = { name = 'M. K. Compact', type = 'wammo', weight = 0.2, arrest = true },
+<<<<<<< HEAD
     ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 5.0, arrest = true },
+=======
+    ['weapon_specialcarbine_mk2'] = { name = 'H&K G36C', type = 'weapon', weight = 1, arrest = true },
+    ['m_weapon_specialcarbine_mk2'] = { name = 'M. H&K G36C', type = 'wammo', weight = 0.2, arrest = true },
+    ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 1, arrest = true },
+>>>>>>> 6e11fe72b4434f13721659ea495dd42bfcc0dc13
     ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_bullpuprifle_mk2'] = { name = 'Type-97', type = 'weapon', weight = 5.0, arrest = true },
     ['m_weapon_bullpuprifle_mk2'] = { name = 'M. Type-97', type = 'wammo', weight = 0.2, arrest = true },
