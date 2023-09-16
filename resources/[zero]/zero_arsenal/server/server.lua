@@ -114,7 +114,14 @@ srv.giveUtilitary = function(utilitarys, _config)
                     TriggerClientEvent('notifyArsenal', _source, 'Você já possui esse <b>armamento</b> em seu inventário.')
                 end
             else
-                if (getInventoryItemAmount(_userId, _spawn) < utilitarys['quantity']) then 
+                local check;
+                if (not utilitarys.infinityBuy) then
+                    check = getInventoryItemAmount(_userId, _spawn) < utilitarys['quantity']
+                else
+                    check = true
+                end
+                
+                if (check) then 
                     if (zero.tryFullPayment(_userId, utilitarys.price)) then
                         giveInventoryItem(_userId, _spawn, utilitarys['quantity'])
                         webhookConfig['utilitaryItem'](_source, _config['webhooks']['utilitarys'], _config['name'], _userId, _spawn, utilitarys['name'], utilitarys['quantity'])

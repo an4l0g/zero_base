@@ -114,7 +114,7 @@ config.arsenal = {
             { ['spawn'] = 'mochila-pequena', ['name'] = 'Mochila Pequena', ['quantity'] = 1, ['perm'] = nil, price = 500 },
             { ['spawn'] = 'cone', ['name'] = 'Cone', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'celular', ['name'] = 'Celular', ['quantity'] = 1, ['perm'] = nil, price = 900 },
-            { ['spawn'] = 'energetico', ['name'] = 'Energético', ['quantity'] = 1, ['perm'] = nil, price = 850 },
+            { ['spawn'] = 'energetico', ['name'] = 'Energético', ['quantity'] = 1, ['perm'] = nil, price = 850, infinityBuy = true },
             { ['spawn'] = 'algema', ['name'] = 'Algema', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             { ['spawn'] = 'colete-militar', ['name'] = 'Colete Militar', ['quantity'] = 1, ['perm'] = nil, price = 50 },
             -- { ['spawn'] = 'gadget_parachute', ['name'] = 'Paraquedas', ['quantity'] = 1, ['perm'] = nil, price = 50 },
