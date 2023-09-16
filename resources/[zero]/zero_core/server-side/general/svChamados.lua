@@ -64,6 +64,11 @@ local callType = {
         zeroClient.DeletarObjeto(source)
     end,
     ['hp'] = function(source, user_id, cooldown, pCoord, identity)
+        if (GetEntityHealth(GetPlayerPed(source)) <= 100) then
+            TriggerClientEvent('notify', source, 'Chamados', 'Você não pode realizar um <b>chamado</b> morto!')
+            return false
+        end
+
         local answered = false
         local answeredBy = false
 
@@ -126,6 +131,11 @@ local callType = {
         zeroClient.DeletarObjeto(source)
     end,
     ['pm'] = function(source, user_id, cooldown, pCoord, identity)
+        if (GetEntityHealth(GetPlayerPed(source)) <= 100) then
+            TriggerClientEvent('notify', source, 'Chamados', 'Você não pode realizar um <b>chamado</b> morto!')
+            return false
+        end
+
         local answered = false
         local answeredBy = false
 
@@ -188,6 +198,11 @@ local callType = {
         zeroClient.DeletarObjeto(source)
     end,
     ['mec'] = function(source, user_id, cooldown, pCoord, identity)
+        if (GetEntityHealth(GetPlayerPed(source)) <= 100) then
+            TriggerClientEvent('notify', source, 'Chamados', 'Você não pode realizar um <b>chamado</b> morto!')
+            return false
+        end
+
         local answered = false
         local answeredBy = false
 
@@ -250,6 +265,11 @@ local callType = {
         zeroClient.DeletarObjeto(source)
     end,
     ['zerofome'] = function(source, user_id, cooldown, pCoord, identity)
+        if (GetEntityHealth(GetPlayerPed(source)) <= 100) then
+            TriggerClientEvent('notify', source, 'Chamados', 'Você não pode realizar um <b>chamado</b> morto!')
+            return false
+        end
+        
         local answered = false
         local answeredBy = false
 

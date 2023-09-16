@@ -131,7 +131,7 @@ end
 exports('tryDeposit', zero.tryDeposit)
 
 zero.tryFullPayment = function(user_id, value)
-	if (user_id and value >= 0) then
+	if (user_id and value) and value >= 0 then
 		if (zero.getMoney(user_id) >= value) then
 			return zero.tryPayment(user_id, value)
 		elseif (zero.getBankMoney(user_id) >= value) then

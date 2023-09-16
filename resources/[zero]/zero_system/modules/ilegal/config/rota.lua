@@ -253,6 +253,6 @@ Routes = {
         { coord = vector3(28.45715, -2669.842, 12.04248), config = 'Arma', cooldown = 300, perm = 'arma.permissao' },
         { coord = vector3(-317.0769, -2778.752, 4.999268), config = 'Municao', cooldown = 300, perm = 'municao.permissao' },
         { coord = vector3(146.611, -3007.859, 7.038086), config = 'Mecanica', cooldown = 300, perm = 'zeromecanica.permissao' },
-        { coord = vector3(-1086.646, -247.8461, 37.75537), config = 'Lavagem', cooldown = 300, perm = 'lavagem.permissao' },
+        { coord = vector3(-1086.646, -247.8461, 37.75537), config = 'Lavagem', cooldown = 300, perm = { '+Hospital.Medico', 'lavagem.permissao' } },
     }
 }

@@ -520,4 +520,11 @@ configs.productions = {
         permission = 'droga.permissao',
         webhook = 'https://discord.com/api/webhooks/1145972996822007848/4PBMQVms1ppXl3RFnz-Fe205ooQapAvQt-5u38SH2W1qxllTD4Yjsx8Q3IFBze2jf-xO' 
     },
+    ['hpLavagem'] = { 
+        coords = vector3(-827.5385, -1233.745, 7.324585), 
+        label = 'Lavagem de dinheiro', 
+        type = 'moneyLaundry',
+        permission = '+Hospital.Medico',
+        webhook = 'https://discord.com/api/webhooks/1146573268162191491/hZMZIybnTjkfQnn25p9ig0g8_sDqpCaw4fAd0770Al5mREV4qdMO6dLZIkRJwEoM-PGl' 
+    },
 }

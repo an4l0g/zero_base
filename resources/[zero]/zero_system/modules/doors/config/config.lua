@@ -165,16 +165,16 @@ Doors = {
     { text = true, hash = -52575179, coord = vector3(1390.101, 1162.312, 114.3209), door_1 = vector3(1389.917, 1162.8, 114.3209), door_2 = vector3(1390.022, 1161.811, 114.3209), lock = true, distance = 5.0, autoLock = 20000, other = -1032171637, perm = { 'staff.permissao'} },
 
     -- [ PLAYBOY ] --
-    { text = true, hash = -1859471240, coord = vector3(-1461.692, 65.39341, 52.90332), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = -1859471240, coord = vector3(-1434.119, 235.8198, 60.01392), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = -1859471240, coord = vector3(-1579.226, 153.3626, 58.66589), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = -1765292598, coord = vector3(-1613.38, 77.92088, 61.56409), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 346577218, coord = vector3(-1500.646, 103.3714, 55.64978), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 39269536, coord = vector3(-1536.224, 108.1714, 56.77881), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 39269536, coord = vector3(-1537.371, 119.5517, 56.77881), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 39269536, coord = vector3(-1537.503, 126.1846, 56.77881), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 346577218, coord = vector3(-1536.738, 130.9319, 57.36853), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
-    { text = true, hash = 653721055, coord = vector3(-1522.339, 143.3539, 55.64978), lock = true, distance = 5.0, autoLock = 20000, perm = { 'staff.permissao'} },
+    { text = true, hash = -1859471240, coord = vector3(-1461.692, 65.39341, 52.90332), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = -1859471240, coord = vector3(-1434.119, 235.8198, 60.01392), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = -1859471240, coord = vector3(-1579.226, 153.3626, 58.66589), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = -1765292598, coord = vector3(-1613.38, 77.92088, 61.56409), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = 346577218, coord = vector3(-1500.646, 103.3714, 55.64978), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = 39269536, coord = vector3(-1536.224, 108.1714, 56.77881), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = 39269536, coord = vector3(-1537.371, 119.5517, 56.77881), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = 39269536, coord = vector3(-1537.503, 126.1846, 56.77881), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = 346577218, coord = vector3(-1536.738, 130.9319, 57.36853), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
+    { text = true, hash = 653721055, coord = vector3(-1522.339, 143.3539, 55.64978), lock = true, distance = 5.0, autoLock = 20000, home = 'Playboy' },
 
     -- [ HOMEM DE FERRO ] --
     { text = true, hash = -111944488, coord = vector3(-3127.424, 1800.963, 34.35168), door_1 = vector3(-3127.398, 1797.666, 34.35168), door_2 = vector3(-3127.187, 1804.563, 34.35168), lock = true, distance = 5.0, autoLock = 20000, other = -111944488, perm = { 'staff.permissao'} },

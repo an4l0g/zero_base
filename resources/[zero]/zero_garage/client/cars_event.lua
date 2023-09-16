@@ -135,9 +135,11 @@ drivingVehicle = function(model)
                 local vehicle = GetVehiclePedIsIn(ped)
                 if (weaponLock[model]) then SetPlayerCanDoDriveBy(PlayerId(), false); end;
                 
-                if (IsPedShooting(ped) and not IsPedInAnyHeli(ped)) then
-                    idle = 1
-                    ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.3)
+                if (IsPedShooting(ped)) then
+                    if (not IsPedInAnyHeli(ped)) then
+                        idle = 1
+                        ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', 0.3)
+                    end
                 end
 
                 if (GetPedInVehicleSeat(vehicle, -1) == ped or GetPedInVehicleSeat(vehicle, 0) == ped) then

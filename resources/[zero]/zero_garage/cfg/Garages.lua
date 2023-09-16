@@ -703,7 +703,7 @@ config.garages = {
         points = {
             vector4(355.5824, 4441.859, 63.65344, 212.5984),
         },
-        vehicles = { 'b412' }
+        vehicles = { 'bmheli' }
     },
     -- [Hospital] --
     {
@@ -727,14 +727,22 @@ config.garages = {
         vehicles = { 'jaguarhospital', 'wrspeedoems', '404_r1200' }
     },
     {
-        coords = vector3(-349.2791, -148.7077, 39.0022), 
+        coords = vector3(167.6308, -2986.932, 5.875488), 
         rule = 'carOnly',
         permission = 'zeromecanica.permissao',
         points = {
-            vector4(-340.4308, -149.0242, 39.08643, 289.1339),
-            vector4(-339.5209, -152.5055, 39.08643, 291.9685)
+            vector4(165.5077, -2989.833, 5.875488, 269.2914),
+            vector4(166.4967, -2993.051, 5.875488, 269.2914)
         },
         vehicles = { 'flatbed3', 'raptor150' }
+    },
+    {
+        coords = vector3(164.9011, -3012.804, 5.892334), 
+        rule = 'carOnly',
+        points = {
+            vector4(165.1253, -3009.297, 5.892334, 272.126),
+            vector4(164.9011, -3006.092, 5.892334, 274.9606)
+        },
     },
     {
         coords = vector3(-2281.081, 401.644, 174.5927), 
@@ -1333,15 +1341,6 @@ config.garages = {
             vector4(1277.604, -215.6044, 99.62781, 172.9134) 
         }
     },
-    {
-        coords = vector3(-374.967, -147.9692, 38.68201),
-        rule = 'carOnly',
-        points = {
-            vector4(-374.4791, -145.0945, 38.68201, 300.4724),
-            vector4(-376.6418, -142.1538, 38.68201, 300.4724),
-            vector4(-378.2374, -139.0154, 38.68201, 300.4724)
-        }
-    },
     -- [PRISAO] --
     {
         coords = vector3(1852.365, 2601.706, 45.65784),
@@ -1418,6 +1417,24 @@ config.garages = {
         points = {
             vector4(-1389.27, 6742.615, 12.64905, 257.9528)
         },
+    },
+    {
+        coords = vector3(-1800.33, 451.0945, 128.5084),
+        rule = 'heliOnly',
+        marker = 'heli',
+        points = {
+            vector4(-1807.134, 456.8308, 128.2726, 87.87402)
+        },
+    },
+    {
+        coords = vector3(-779.8154, -1221.191, 15.54724),
+        rule = 'heliOnly',
+        marker = 'heli',
+        permission = 'hospital.permissao',
+        points = {
+           vector4(-788.2154, -1229.143, 15.54724, 42.51968)
+        },
+        vehicles = { 'wrvolito' }
     },
 }
 

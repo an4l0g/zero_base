@@ -1719,7 +1719,7 @@ local Toogle = {
     ['ZeroMecanica'] = { 
         -- webhook = 'https://discord.com/api/webhooks/1141426122660261988/Qr_S_oy9DTpjdTPjeMAB7VRdmLtCnvzKnU09Js4sXW7gW9L_asrkqxA3K2C8wedVoUX1',
         toggleCoords = {
-            { coord = vector3(-337.4769, -106.5758, 39.32239), radius = 70 },
+            { coord = vector3(138.1582, -3029.723, 7.02124), radius = 70 },
         }
     },
 }
@@ -1810,10 +1810,10 @@ RegisterCommand('toogle', function(source)
                             end
                         end
 
-                        for item, amount in pairs(givePoliceWeapons) do
-                            zero.giveInventoryItem(user_id, item, amount)
-                            TriggerClientEvent('notify', source, 'Toogle', 'Você recebeu <b>'..amount..'x</b> de <b>'..zero.itemNameList(item)..'</b>')
-                        end                        
+                        -- for item, amount in pairs(givePoliceWeapons) do
+                        --     zero.giveInventoryItem(user_id, item, amount)
+                        --     TriggerClientEvent('notify', source, 'Toogle', 'Você recebeu <b>'..amount..'x</b> de <b>'..zero.itemNameList(item)..'</b>')
+                        -- end                        
                     end
                 end
 

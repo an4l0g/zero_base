@@ -1753,6 +1753,9 @@ config.locs = {
 
     -- [ Playboy ] --
     { coord = vector4(-1534.127, 148.3912, 60.78906-0.97, 229.6063), config = 'all', type = 'skinshop' },
+
+    -- [ Hospital ] --
+    { coord = vector4(-824.2813, -1236.989, 7.324585-0.97, 314.6457), config = 'all', type = 'skinshop' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

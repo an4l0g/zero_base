@@ -5,7 +5,6 @@ zero = Proxy.getInterface('zero')
 config = {}
 
 config.general = {
-<<<<<<< HEAD
     ['comidas_bebidas'] = {
         ['hotdog'] = {
             name = 'Hotdog', index = 'hotdog',
@@ -53,39 +52,35 @@ config.general = {
             name = 'Soda', index = 'soda',
             price = {
                 buy = 250,
-=======
+            },
+            method = 'legal'
+        },
+    },
     ['zerofome'] = {
         ['combo-camarao'] = {
             name = 'Camarão de Laurinha', index = 'combo-camarao',
             price = {
-                buy = 1000,
+                buy = 500,
             },
             method = 'legal'
         },
         ['combo-milho'] = {
             name = 'Larissa Manuela', index = 'combo-milho',
             price = {
-                buy = 1000,
+                buy = 500,
             },
             method = 'legal'
         },
         ['combo-chocolate'] = {
             name = 'Tudo isso, aceito o desafio', index = 'combo-chocolate',
             price = {
-                buy = 1000,
+                buy = 500,
             },
             method = 'legal'
         },
         ['combo-caviar'] = {
             name = 'Pra aralho', index = 'combo-caviar',
             price = {
-                buy = 1000,
-            },
-            method = 'legal'
-        },
-        ['energetico'] = {
-            name = 'Energético', index = 'energetico',
-            price = {
                 buy = 500,
             },
             method = 'legal'
@@ -93,15 +88,14 @@ config.general = {
         ['energetico'] = {
             name = 'Energético', index = 'energetico',
             price = {
-                buy = 500,
+                buy = 250,
             },
             method = 'legal'
         },
         ['cafe'] = {
             name = 'Café', index = 'cafe',
             price = {
-                buy = 350,
->>>>>>> caf9200269b0920e9a980b64758b1724edab2990
+                buy = 250,
             },
             method = 'legal'
         },
@@ -379,17 +373,11 @@ config.shops = {
     { name = 'Supermarket', type = 'buy', coord = vector3(-3040.101, 585.4418, 7.897461), config = 'departament', blip = true },
     
     -- [Helipa] --
-<<<<<<< HEAD
     { name = 'Supermarket', type = 'buy', coord = vector3(240.7253, 1870.787, 189.8923), config = 'departament' },
+
     -- [Polonia] --
+
     { name = 'Supermarket', type = 'buy', coord = vector3(3019.767, 2709.415, 74.42053), config = 'departament' },
-=======
-    { name = 'Supermarket', type = 'buy', coord = vector3(240.7253, 1870.787, 189.8923), config = 'departament', blip = false },
-    
-    -- [Polonia] --
-    { name = 'Supermarket', type = 'buy', coord = vector3(3019.767, 2709.415, 74.42053), config = 'departament', blip = false },
-    
->>>>>>> caf9200269b0920e9a980b64758b1724edab2990
     -- [Russia] --
     { name = 'Supermarket', type = 'buy', coord = vector3(1338.475, -689.9604, 73.08936), config = 'departament' },
 
@@ -407,11 +395,7 @@ config.shops = {
     { name = 'Ammunation', type = 'buy', coord = vector3(-3172.695, 1087.094, 20.82129), config = 'ammu', blip = true },
     { name = 'Ammunation', type = 'buy', coord = vector3(21.29671, -1106.453, 29.7854), config = 'ammu', blip = true },
     { name = 'Ammunation', type = 'buy', coord = vector3(811.1736, -2157.679, 29.59998), config = 'ammu', blip = true },
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> caf9200269b0920e9a980b64758b1724edab2990
     { name = 'Perls', type = 'buy', coord = vector3(1166.07, 2709.297, 38.14282), config = 'bebidas', blip = true },
     { name = 'Perls', type = 'buy', coord = vector3(-2967.956, 390.7385, 15.04175), config = 'bebidas', blip = true },
     { name = 'Perls', type = 'buy', coord = vector3(1135.648, -982.1406, 46.39929), config = 'bebidas', blip = true },
@@ -420,9 +404,6 @@ config.shops = {
     { name = 'Perls', type = 'buy', coord = vector3(127.7934, -1284.593, 29.26306), config = 'bebidas', blip = true },
     { name = 'Perls', type = 'buy', coord = vector3(-560.2286, 286.1011, 82.17139), config = 'bebidas', blip = true },
     { name = 'Perls', type = 'buy', coord = vector3(1985.71, 3053.802, 47.20801), config = 'bebidas', blip = true },
-<<<<<<< HEAD
-=======
 
     { name = 'Zero Fome', type = 'buy', coord = vector3(-1836.738, -1184.083, 14.30042), config = 'zerofome' },
->>>>>>> caf9200269b0920e9a980b64758b1724edab2990
 }
