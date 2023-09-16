@@ -65,9 +65,9 @@ configs.products = {
                 ['p-armas'] = { name = 'P. Armas', amount = 35 },
             }
         },
-        ['weapon_compactrifle'] = { 
+        ['weapon_specialcarbine_mk2'] = { 
             order = 7,
-            name = 'K. Compact',
+            name = 'H&K G36C',
             amount = 1,
             delay = 10000,
             materials = {
@@ -337,6 +337,39 @@ configs.products = {
             }
         },
     },
+    ['lanca'] = {
+        ['lanca-perfume'] = {
+            order = 1,
+            name = 'Lança Perfume',
+            amount = 28,
+            delay = 10000,
+            materials = {
+                ['m-droga'] = { name = 'Material para Drogas', amount = 14 },
+            }
+        },
+    },
+    ['maconha'] = {
+        ['maconha'] = {
+            order = 1,
+            name = 'Maconha',
+            amount = 28,
+            delay = 10000,
+            materials = {
+                ['m-droga'] = { name = 'Material para Drogas', amount = 14 },
+            }
+        },
+    },
+    ['cocaina'] = {
+        ['cocaina'] = {
+            order = 1,
+            name = 'Cocaína',
+            amount = 28,
+            delay = 10000,
+            materials = {
+                ['m-droga'] = { name = 'Material para Drogas', amount = 14 },
+            }
+        },
+    },
     ['hospital'] = {
         ['bandagem'] = {
             order = 1,
@@ -466,9 +499,9 @@ configs.productions = {
     ['Inglaterra'] = { 
         type = 'production',
         coords = vector3(-282.3956, 1564.246, 361.5247), 
-        label = 'Produção de Drogas', 
+        label = 'Produção de Maconha', 
         buff = true,
-        products = configs.products.drugs, 
+        products = configs.products.maconha, 
         permission = 'inglaterra.permissao',
         webhook = 'https://discord.com/api/webhooks/1146572784181452871/09uB5rzjOEl9VDME0SWjBF0A5yTi_K0DJifX6jBYQI2ac2p4GMMWf4U3HIUj3_djU2Ib' 
     },
@@ -482,8 +515,8 @@ configs.productions = {
     ['Holanda'] = { 
         type = 'production',
         coords = vector3(1793.578, 447.4154, 172.537), 
-        label = 'Produção de Drogas', 
-        products = configs.products.drugs, 
+        label = 'Produção de Arma', 
+        products = configs.products.guns, 
         permission = 'holanda.permissao',
         webhook = 'https://discord.com/api/webhooks/1146571754756653096/Ymap_XGACoPMm5HcgFog-pm4qdy_iK10bPds6m_nz6NuRn1kuJwdorWPBG6Y7nqeJOgB' 
     },
@@ -507,8 +540,8 @@ configs.productions = {
     ['Polonia'] = { 
         type = 'production',
         coords = vector3(3028.299, 2705.987, 73.91504), 
-        label = 'Produção de Drogas', 
-        products = configs.products.drugs, 
+        label = 'Produção de Lança', 
+        products = configs.products.lanca, 
         permission = 'polonia.permissao',
         webhook = 'https://discord.com/api/webhooks/1146573369270079638/fQXruk51nszSAMwRErXjW0L2pYtcOBq6NwbGByudJYd9L7TgyhTzj2R1x-fcYNo2CA-k' 
     },

@@ -206,36 +206,26 @@ srv.depositar = function(value)
     end
 end
 
-local _Cooldown = {}
-srv.giveRendimento = function()
-    local source = source
-    local user_id = zero.getUserId(source)
-    if (user_id == 1) then
-        local users = zero.getUsers()
-        for k, v in pairs(users) do
-            local bankMoney = zero.getBankMoney(k)
-            local rendimento = parseInt(bankMoney * configGeneral.income)
-            if (rendimento > 0 and not _Cooldown[user_id]) then
-                Cooldown(user_id)
-                zero.giveBankMoney(k, rendimento)
-                registerRendimento(k, rendimento)
-                registerTrans(k, 'Rendimento', rendimento)
-                TriggerClientEvent('bank_notify', v, 'sucesso', 'Poupança', 'Você recebeu R$'..zero.format(rendimento)..' pelos os seus investimentos.')
-                zero.webhook('Income', '```prolog\n[ZERO BANK]\n[ACTION]: (RECEIVED INCOME)\n[USER]: '..user_id..'\n[VALUE RECEIVED]: '..zero.format(rendimento)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
-            end
-        end
+giveRendimento = function(source, user_id)
+    local bankMoney = zero.getBankMoney(user_id)
+    local rendimento = parseInt(bankMoney * configGeneral.income)
+    if (rendimento > 0) then
+        zero.giveBankMoney(user_id, rendimento)
+        registerRendimento(user_id, rendimento)
+        registerTrans(user_id, 'Rendimento', rendimento)
+        TriggerClientEvent('bank_notify', source, 'sucesso', 'Poupança', 'Você recebeu R$'..zero.format(rendimento)..' pelos os seus investimentos.')
+        zero.webhook('Income', '```prolog\n[ZERO BANK]\n[ACTION]: (RECEIVED INCOME)\n[USER]: '..user_id..'\n[VALUE RECEIVED]: '..zero.format(rendimento)..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..'\n```')
     end
 end
 
-Cooldown = function(user_id)
-    Citizen.CreateThread(function()
-        _Cooldown[user_id] = true
-        while (true) do
-            Citizen.Wait(60 * 60 * 1000)
-            _Cooldown[user_id] = false
-        end
-    end)
-end
+Citizen.CreateThread(function()
+    while (true) do
+        Citizen.Wait(60 * 60 * 1000)
+        for user_id, source in pairs(zero.getUsers()) do
+            giveRendimento(source, user_id)
+        end  
+    end
+end)
 
 srv.getRendimento = function()
     local source = source

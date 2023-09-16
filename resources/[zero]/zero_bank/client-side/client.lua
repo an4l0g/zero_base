@@ -154,13 +154,6 @@ RegisterNetEvent('bank_notify', function(type, title, message)
     })
 end)
 
-Citizen.CreateThread(function()
-    while (true) do
-        Citizen.Wait(60 * 60 * 1000)
-        vSERVER.giveRendimento()
-    end
-end)
-
 addBlips = function()
     for _, v in pairs(configBank) do
         if (v.blip) then

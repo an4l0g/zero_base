@@ -148,14 +148,12 @@ local addVehicles = {
 --     end
 -- end)
 
-local allVehicles = false
-
 srv.getStock = function()
     local query = zero.query('zero_dealership/getAll')
     if (query) then
-        if (not allVehicles) then
-            allVehicles = {}
-            for _, v in pairs(query) do
+        local allVehicles = {}
+        for _, v in pairs(query) do
+            if (v.stock > 0) then
                 local vehicleInfos = { vname = vehicleName(v.car), vmaker = vehicleMaker(v.car), vtype = vehicleType(v.car), vtrunk = vehicleSize(v.car), price = vehiclePrice(v.car), engine = 1000, body = 1000, fuel = 100 }
                 table.insert(allVehicles, {
                     type = vehicleInfos.vtype,

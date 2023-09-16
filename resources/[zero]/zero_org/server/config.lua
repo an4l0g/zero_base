@@ -72,6 +72,8 @@ config.grades = {
         'AdvogadoSenior',
         'AdvogadoPleno',
         'AdvogadoJunior',
+        'ChefeSeguranca',
+        'Seguranca',
         'Estagiario',
     },
 }

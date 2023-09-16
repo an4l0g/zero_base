@@ -24,6 +24,8 @@ local salarys = {
     -- Jurídico
     ----------------------------------
     { name = '[Jurídico] Estagiário', value = 500, perm = '@Juridico.Estagiario' },
+    { name = '[Jurídico] Segurança', value = 3000, perm = '@Juridico.Seguranca' },
+    { name = '[Jurídico] Chefe da Segurança', value = 4000, perm = '@Juridico.ChefeSeguranca' },
     { name = '[Jurídico] Advogado Jr', value = 1000, perm = '@Juridico.AdvogadoJunior' },
     { name = '[Jurídico] Advogado Pleno', value = 1500, perm = '@Juridico.AdvogadoPleno' },
     { name = '[Jurídico] Advogado Senior', value = 2000, perm = '@Juridico.AdvogadoSenior' },
