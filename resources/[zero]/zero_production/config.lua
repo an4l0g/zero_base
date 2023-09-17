@@ -5,8 +5,8 @@ zero = Proxy.getInterface('zero')
 configs = {}
 
 configs.moneyPerFiscal = 100000
-configs.governTax = 0.39
-configs.governTaxWithBuff = 0.38
+configs.governTax = 0.35
+configs.governTaxWithBuff = 0.35
 configs.blipDistance = 3
 
 configs.products = {
@@ -38,9 +38,9 @@ configs.products = {
                 ['p-armas'] = { name = 'P. Armas', amount = 21 },
             }
         },
-        ['weapon_tecpistol'] = { 
+        ['weapon_assaultsmg'] = { 
             order = 4,
-            name = 'Uzi',
+            name = 'MTAR-21',
             amount = 1,
             delay = 10000,
             materials = {
@@ -507,9 +507,10 @@ configs.productions = {
         webhook = 'https://discord.com/api/webhooks/1146572784181452871/09uB5rzjOEl9VDME0SWjBF0A5yTi_K0DJifX6jBYQI2ac2p4GMMWf4U3HIUj3_djU2Ib' 
     },
     ['Tropa'] = { 
-        coords = vector3(-221.8286, -284.0308, 29.24609), 
-        label = 'Lavagem de dinheiro', 
-        type = 'moneyLaundry',
+        coords = vector3(2230.945, 84.4088, 241.537), 
+        label = 'Produção de Cocaína', 
+        type = 'production',
+        products = configs.products.cocaina,
         permission = 'tropa.permissao',
         webhook = 'https://discord.com/api/webhooks/1146573268162191491/hZMZIybnTjkfQnn25p9ig0g8_sDqpCaw4fAd0770Al5mREV4qdMO6dLZIkRJwEoM-PGl' 
     },

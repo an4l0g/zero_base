@@ -101,7 +101,7 @@ sProduction.moneyLaundry = function(production)
 end
 
 sProduction.openSellDrugs = function(production)
-    local drugs = {'maconha', 'metanfetamina', 'cocaina'}
+    local drugs = {'maconha', 'metanfetamina', 'cocaina', 'lanca-perfume'}
     local _source = source
     local user_id = zero.getUserId(_source)
 

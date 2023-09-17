@@ -665,7 +665,7 @@ config.items = {
                 TriggerClientEvent('notify', source, 'Mochila', 'Você terminou de cheirar a <b>Cocaína</b>!')
             end)
 
-            Citizen.SetTimeout(30000, function()
+            Citizen.SetTimeout(60000, function()
                 Player(source).state.Energetico = false
                 TriggerClientEvent('notify', source, 'Mochila', 'O efeito do <b>pó</b> acabou =(.')
             end)
@@ -839,13 +839,10 @@ config.items = {
     ['m_weapon_minismg'] = { name = 'M. S VZ 61', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_compactrifle'] = { name = 'K. Compact', type = 'weapon', weight = 5.0, arrest = true },
     ['m_weapon_compactrifle'] = { name = 'M. K. Compact', type = 'wammo', weight = 0.2, arrest = true },
-<<<<<<< HEAD
     ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 5.0, arrest = true },
-=======
     ['weapon_specialcarbine_mk2'] = { name = 'H&K G36C', type = 'weapon', weight = 1, arrest = true },
     ['m_weapon_specialcarbine_mk2'] = { name = 'M. H&K G36C', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 1, arrest = true },
->>>>>>> 6e11fe72b4434f13721659ea495dd42bfcc0dc13
     ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_bullpuprifle_mk2'] = { name = 'Type-97', type = 'weapon', weight = 5.0, arrest = true },
     ['m_weapon_bullpuprifle_mk2'] = { name = 'M. Type-97', type = 'wammo', weight = 0.2, arrest = true },

@@ -196,7 +196,7 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'tropa.permissao',
-		'lavagem.permissao'
+		'droga.permissao'
 	},
 
 	['Helipa'] = {

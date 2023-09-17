@@ -1427,6 +1427,13 @@ config.garages = {
         },
     },
     {
+        coords = vector3(2199.93, 109.5692, 229.0007),
+        rule = 'carOnly',
+        points = {
+            vector4(2196.87, 109.7802, 228.967, 334.4882)
+        },
+    },
+    {
         coords = vector3(-779.8154, -1221.191, 15.54724),
         rule = 'heliOnly',
         marker = 'heli',
