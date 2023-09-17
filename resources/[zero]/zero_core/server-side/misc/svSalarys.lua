@@ -24,15 +24,6 @@ local salarys = {
     -- Jurídico
     ----------------------------------
     { name = '[Jurídico] Estagiário', value = 500, perm = '@Juridico.Estagiario' },
-<<<<<<< HEAD
-    { name = '[Jurídico] Advogado Jr', value = 3000, perm = '@Juridico.AdvogadoJunior' },
-    { name = '[Jurídico] Advogado Pleno', value = 3500, perm = '@Juridico.AdvogadoPleno' },
-    { name = '[Jurídico] Advogado Senior', value = 4000, perm = '@Juridico.AdvogadoSenior' },
-    { name = '[Jurídico] Secretário Adjunto', value = 4500, perm = '@Juridico.SecretarioAdjunto' },
-    { name = '[Jurídico] Secretário Geral', value = 5000, perm = '@Juridico.SecretarioGeral' },
-    { name = '[Jurídico] Vice-Presidente', value = 5500, perm = '@Juridico.VicePresidente' },
-    { name = '[Jurídico] Presidente', value = 7500, perm = '@Juridico.Presidente' },
-=======
     { name = '[Jurídico] Segurança', value = 3000, perm = '@Juridico.Seguranca' },
     { name = '[Jurídico] Chefe da Segurança', value = 4000, perm = '@Juridico.ChefeSeguranca' },
     { name = '[Jurídico] Advogado Jr', value = 1000, perm = '@Juridico.AdvogadoJunior' },
@@ -42,7 +33,6 @@ local salarys = {
     { name = '[Jurídico] Secretário Geral', value = 3500, perm = '@Juridico.SecretarioGeral' },
     { name = '[Jurídico] Vice-Presidente', value = 4000, perm = '@Juridico.VicePresidente' },
     { name = '[Jurídico] Presidente', value = 6000, perm = '@Juridico.Presidente' },
->>>>>>> 6e11fe72b4434f13721659ea495dd42bfcc0dc13
     ----------------------------------
     -- Policia
     ----------------------------------
