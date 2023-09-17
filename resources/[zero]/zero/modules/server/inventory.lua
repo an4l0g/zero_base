@@ -74,6 +74,7 @@ zero.clearInventory = function(user_id)
 	local source = zero.getUserSource(user_id)
 	if source then
 		local items = exports.zero_inventory:getBag('bag:'..user_id)
+		local maxWeight = zero.getInventoryMaxWeight(user_id)
 		local Alianca = (zero.getInventoryItemAmount(user_id, 'alianca-casamento') > 0)
 
 		exports.zero_inventory:clearInventory(user_id)
@@ -82,6 +83,9 @@ zero.clearInventory = function(user_id)
 		
 		if (not zero.hasPermission(user_id, '+Vips.Ouro')) then
 			zero.setInventoryMaxWeight(user_id, 6)
+		else
+			zero.execute('zero_inventory:insertBag', { slots = json.encode({}), bag_type = 'bag:'..user_id, weight = maxWeight })
+        	zero.execute('zero_inventory:insertBag', { slots = json.encode({}), bag_type = 'hotbar:'..user_id, weight = 0 })
 		end		
 
 		zero.webhook(clearInventory, '```prolog\n[CLEAR INVENTORY]\n[USER_ID]: '..user_id..'\n[ITEMS]: '..json.encode(items, { indent = true })..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
