@@ -13,7 +13,12 @@ RegisterNetEvent('zero_core:shoting', function(coord)
             local nSource = zero.getUserSource(parseInt(v))
             if (nSource) then
                 async(function()
-                    TriggerClientEvent('announcement', nSource, 'Disparos de arma de fogo', 'Atenção <b>unidades</b> foram avistados disparos de arma de fogo próximo as suas regiões, tomem cuidado!', 'Delegacia Zero', true, 10000)
+                    TriggerClientEvent('notifypush', nSource, {
+                        code = 'QRU',
+                        title = 'Disparos de arma de fogo',
+                        description = 'Denúncia Anônima',
+                        coords = coord
+                    })
                     TriggerClientEvent('zero_core:shotingBlip', nSource, coord, user_id)
                 end)
             end

@@ -12,7 +12,13 @@ local callPolice = function(coord, name)
         if (source) then
             async(function()
                 TriggerClientEvent('zero_robberys:Blip', source, coord, name)
-                TriggerClientEvent('announcement', source, 'Roubo em andamento', 'Roubo ao(a) <b>'..name..'</b>', 'Delegacia Zero', true, 10000)
+                TriggerClientEvent('notifypush', source, {
+                    code = 'QRU',
+                    title = name,
+                    description = 'Denúncia Anônima',
+                    coords = coord
+                })
+                -- TriggerClientEvent('announcement', source, 'Roubo em andamento', 'Roubo ao(a) <b>'..name..'</b>', 'Delegacia Zero', true, 10000)
             end)
         end
     end
@@ -79,7 +85,13 @@ srv.cancelRobbery = function(name)
         if (source) then
             async(function()
                 TriggerClientEvent('zero_robberys:Blip', source, coord, name)
-                TriggerClientEvent('announcement', source, 'Assaltante fugiu', 'Do roubo ao(a) <b>'..name..'</b>', 'Delegacia Zero', true, 10000)
+                TriggerClientEvent('notifypush', source, {
+                    code = 'QRU',
+                    title = 'Assaltante fugiu',
+                    description = 'Denúncia Anônima',
+                    coords = GetEntityCoords(GetPlayerPed(source))
+                })
+                -- TriggerClientEvent('announcement', source, 'Assaltante fugiu', 'Do roubo ao(a) <b>'..name..'</b>', 'Delegacia Zero', true, 10000)
             end)
         end
     end

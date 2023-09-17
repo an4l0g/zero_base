@@ -16,47 +16,119 @@ local cooldown = {}
 
 local codes = {
     [1] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QTH - Localização', identity.firstname..' '..identity.lastname..'  acabou de atualizar o QTH.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QTH',
+            title = 'Localização',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QTH - Localização', identity.firstname..' '..identity.lastname..'  acabou de atualizar o QTH.', 'Delegacia Zero', true, 10000)
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 77, 'QTH - Localização', 0.5, true)
     end,
     [2] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QRR - Reforço solicitado', identity.firstname..' '..identity.lastname..'  acabou de pedir QRR.', 'Delegacia Zero', true, 10000)                
+        TriggerClientEvent('notifypush', source, {
+            code = 'QRR',
+            title = 'Reforço solicitado',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QRR - Reforço solicitado', identity.firstname..' '..identity.lastname..'  acabou de pedir QRR.', 'Delegacia Zero', true, 10000)                
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 51, 'QRR - Reforço solicitado', 0.5, true)
     end,
     [3] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QRU - Ocorrência', identity.firstname..' '..identity.lastname..'  acabou de reportar uma ocorrência.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QRU',
+            title = 'Ocorrência',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QRU - Ocorrência', identity.firstname..' '..identity.lastname..'  acabou de reportar uma ocorrência.', 'Delegacia Zero', true, 10000)
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 59, 'QRU - Ocorrência', 0.5, true)
     end,
     [4] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QTI - A caminho', identity.firstname..' '..identity.lastname..' está a caminho.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QTI',
+            title = 'A caminho',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QTI - A caminho', identity.firstname..' '..identity.lastname..' está a caminho.', 'Delegacia Zero', true, 10000)
     end,
     [5] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QTA - Cancelar última mensagem', identity.firstname..' '..identity.lastname..'  acabou de cancelar a última mensagem.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QTA',
+            title = 'Cancelar última mensagem',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QTA - Cancelar última mensagem', identity.firstname..' '..identity.lastname..'  acabou de cancelar a última mensagem.', 'Delegacia Zero', true, 10000)
     end,
     [6] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QSM - Mensagem com interferência', identity.firstname..' '..identity.lastname..'  acabou de enviar uma mensagem com interferência.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QSM',
+            title = 'Mensagem com interferência',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QSM - Mensagem com interferência', identity.firstname..' '..identity.lastname..'  acabou de enviar uma mensagem com interferência.', 'Delegacia Zero', true, 10000)
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 61, 'QSM - Mensagem com interferência', 0.5, true)
     end,
     ['qth'] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QTH - Localização', identity.firstname..' '..identity.lastname..'  acabou de atualizar o QTH.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QTH',
+            title = 'Localização',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QTH - Localização', identity.firstname..' '..identity.lastname..'  acabou de atualizar o QTH.', 'Delegacia Zero', true, 10000)
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 77, 'QTH - Localização', 0.5, true)
     end,
     ['qrr'] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QRR - Reforço solicitado', identity.firstname..' '..identity.lastname..'  acabou de pedir QRR.', 'Delegacia Zero', true, 10000)                
+        TriggerClientEvent('notifypush', source, {
+            code = 'QRR',
+            title = 'Reforço solicitado',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QRR - Reforço solicitado', identity.firstname..' '..identity.lastname..'  acabou de pedir QRR.', 'Delegacia Zero', true, 10000)                
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 51, 'QRR - Reforço solicitado', 0.5, true)
     end,
     ['qru'] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QRU - Ocorrência', identity.firstname..' '..identity.lastname..'  acabou de reportar uma ocorrência.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QRU',
+            title = 'Ocorrência',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QRU - Ocorrência', identity.firstname..' '..identity.lastname..'  acabou de reportar uma ocorrência.', 'Delegacia Zero', true, 10000)
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 59, 'QRU - Ocorrência', 0.5, true)
     end,
     ['qti'] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QTI - A caminho', identity.firstname..' '..identity.lastname..' está a caminho.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QTI',
+            title = 'A caminho',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QTI - A caminho', identity.firstname..' '..identity.lastname..' está a caminho.', 'Delegacia Zero', true, 10000)
     end,
     ['qta'] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QTA - Cancelar última mensagem', identity.firstname..' '..identity.lastname..'  acabou de cancelar a última mensagem.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QTA',
+            title = 'Cancelar última mensagem',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QTA - Cancelar última mensagem', identity.firstname..' '..identity.lastname..'  acabou de cancelar a última mensagem.', 'Delegacia Zero', true, 10000)
     end,
     ['qsm'] = function(identity, coord, ids, player)
-        TriggerClientEvent('announcement', player, 'QSM - Mensagem com interferência', identity.firstname..' '..identity.lastname..'  acabou de enviar uma mensagem com interferência.', 'Delegacia Zero', true, 10000)
+        TriggerClientEvent('notifypush', source, {
+            code = 'QSM',
+            title = 'Mensagem com interferência',
+            officer = identity.firstname..' '..identity.lastname,
+            coords = coord
+        })
+        -- TriggerClientEvent('announcement', player, 'QSM - Mensagem com interferência', identity.firstname..' '..identity.lastname..'  acabou de enviar uma mensagem com interferência.', 'Delegacia Zero', true, 10000)
         blips[ids] = zeroClient.addBlip(player, coord.x, coord.y, coord.z, 622, 61, 'QSM - Mensagem com interferência', 0.5, true)
     end,
 }
