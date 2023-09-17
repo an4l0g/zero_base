@@ -21,6 +21,13 @@ config.groups = {
 		'player.noclip'
 	},
 
+	['Porte'] = {
+		information = {
+			title = 'Porte de Arma',
+		},
+		'porte.permissao'
+	},
+
 	['Vips'] = {
 		information = {
 			title = 'Vips',
