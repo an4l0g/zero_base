@@ -146,7 +146,12 @@ srv.callPolice = function(porcentage, name)
             if (nSource) then
                 async(function()
                     TriggerClientEvent('zero_routes:Blip', nSource, pCoord, user_id)
-                    TriggerClientEvent('announcement', nSource, 'Tráfico avistado', 'Atenção <b>unidades</b> foram avistados tráficos de drogas próximo as suas regiões, tomem cuidado!', 'Delegacia Zero', true, 10000)
+                    TriggerClientEvent('notifypush', nSource, {
+                        code = 'QRU',
+                        title = 'Tráfico avistado',
+                        description = 'Denúncia Anônima',
+                        coords = pCoord
+                    })
                 end)
             end
         end
