@@ -36,12 +36,21 @@ local salarys = {
     ----------------------------------
     -- Policia
     ----------------------------------
-    { name = '[Policia] Soldado', value = 3250, perm = '@Policia.Soldado' },
-    { name = '[Policia] Graduado', value = 5000, perm = '@Policia.Graduado' },
-    { name = '[Policia] Oficial', value = 6250, perm = '@Policia.Oficial' },
-    { name = '[Policia] A. Escalão', value = 7500, perm = '@Policia.AltoEscalao' },
-    { name = '[Policia] S. CMD', value = 8750, perm = '@Policia.SubComandante' },
-    { name = '[Policia] CMD', value = 10000, perm = '@Policia.Comandante' },
+    { name = '[Policia] Soldado E.V', value = 3250, perm = '@Policia.SoldadoEV' },
+    { name = '[Policia] Soldado E.P', value = 3500, perm = '@Policia.SoldadoEP' },
+    { name = '[Policia] Cabo', value = 4000, perm = '@Policia.Cabo' },
+    { name = '[Policia] 3° Sargento', value = 4500, perm = '@Policia.Sargento3' },
+    { name = '[Policia] 2° Sargento', value = 4600, perm = '@Policia.Sargento2' },
+    { name = '[Policia] 1° Sargento', value = 4700, perm = '@Policia.Sargento1' },
+    { name = '[Policia] Subtenente', value = 4800, perm = '@Policia.SubTenente' },
+    { name = '[Policia] Aspirante a Oficial', value = 5000, perm = '@Policia.Aspirante' },
+    { name = '[Policia] 2° Tenente', value = 6000, perm = '@Policia.Tenente2' },
+    { name = '[Policia] 1° Tenente', value = 6500, perm = '@Policia.Tenente1' },
+    { name = '[Policia] Capitão', value = 7500, perm = '@Policia.Capitao' },
+    { name = '[Policia] Major', value = 8500, perm = '@Policia.Major' },
+    { name = '[Policia] Tenente-Coronel', value = 10000, perm = '@Policia.TenenteCoronel' },
+    { name = '[Policia] Coronel', value = 12000, perm = '@Policia.Coronel' },
+    { name = '[Policia] General', value = 15000, perm = '@Policia.General' },
     ----------------------------------
     -- DEIC
     ----------------------------------

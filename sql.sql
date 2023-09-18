@@ -234,3 +234,11 @@ create table reputations(
     createdAt datetime not null,
     primary key(id)
 );
+
+create table courses(
+    id int unsigned auto_increment not null,
+    course varchar(50) not null,
+    user_id int not null,
+    course_type varchar(50) not null,
+    primary key(id)
+);

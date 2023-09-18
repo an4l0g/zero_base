@@ -192,7 +192,7 @@ config.groups = {
 
 	['Tropa'] = {
 		information = { 
-			title = 'Tropa +5511', 
+			title = 'Bélgica', 
 			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
@@ -256,7 +256,7 @@ config.groups = {
 
 	['Camorra'] = {
 		information = { 
-			title = 'Camorra', 
+			title = 'Braznx', 
 			groupType = 'job', 
 			grades = {
 				['Membro'] = { title = 'Membro', level = 1 },
@@ -420,12 +420,31 @@ config.groups = {
 			title = 'Polícia', 
 			groupType = 'job', 
 			grades = {
-				['Soldado'] = { title = 'Soldado', level = 1 },
-				['Graduado'] = { title = 'Graduado', level = 2 },
-				['Oficial'] = { title = 'Oficial', level = 3 },
-				['AltoEscalao'] = { title = 'Alto Escalão', level = 4 },
-				['SubComandante'] = { title = 'Sub-Comandante', level = 5 },
-				['Comandante'] = { title = 'Comandante', level = 6 }
+				-- ['Soldado'] = { title = 'Soldado', level = 1 },
+				-- ['Graduado'] = { title = 'Graduado', level = 2 },
+				-- ['Oficial'] = { title = 'Oficial', level = 3 },
+				-- ['AltoEscalao'] = { title = 'Alto Escalão', level = 4 },
+				-- ['SubComandante'] = { title = 'Sub-Comandante', level = 5 },
+				-- ['Comandante'] = { title = 'Comandante', level = 6 }
+
+				['SoldadoEV'] = { title = 'Soldado E.V', level = 1 },
+				['SoldadoEP'] = { title = 'Soldado E.P', level = 2 },
+
+				['Cabo'] = { title = 'Cabo', level = 4 },
+				['Sargento3'] = { title = '3° Sargento', level = 3 },
+				['Sargento2'] = { title = '2° Sargento', level = 4 },
+				['Sargento1'] = { title = '1° Sargento', level = 5 },
+				['SubTenente'] = { title = 'Subtenente', level = 6 },
+
+				['Aspirante'] = { title = 'Aspirante a Oficial', level = 7 },
+				['Tenente2'] = { title = '2° Tenente', level = 8 },
+				['Tenente1'] = { title = '1° Tenente', level = 9 },
+
+				['Capitao'] = { title = 'Capitão', level = 10 },
+				['Major'] = { title = 'Major', level = 11 },
+				['TenenteCoronel'] = { title = 'Tenente-Coronel', level = 12 },
+				['Coronel'] = { title = 'Coronel', level = 13 },
+				['General'] = { title = 'General', level = 14 },
 			},
 			grades_default = 'Policia',
 		},

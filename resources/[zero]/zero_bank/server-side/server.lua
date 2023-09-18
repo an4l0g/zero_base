@@ -36,7 +36,7 @@ RegisterCommand('multar', function(source)
             local Value = parseInt(prompt[4])
 
             local nIdentity = zero.getUserIdentity(nUser)
-            local request = exports.zero_hud:request(source, 'Você tem certeza que desja multar o '..nIdentity.firstname..' '..nIdentity.lastname..' em R$'..zero.format(Value)..'?', 60000)
+            local request = exports.zero_hud:request(source, 'Você tem certeza que deseja multar o '..nIdentity.firstname..' '..nIdentity.lastname..' em R$'..zero.format(Value)..'?', 60000)
             if (request) then
                 multarPlayer(nUser, Reason, Value, Description)
 
@@ -64,7 +64,7 @@ RegisterNetEvent('zero_interactions:multar', function()
             local Value = parseInt(prompt[4])
 
             local nIdentity = zero.getUserIdentity(user_id)
-            local request = exports.zero_hud:request(source, 'Você tem certeza que desja multar o '..nIdentity.firstname..' '..nIdentity.lastname..' em R$'..zero.format(Value)..'?', 60000)
+            local request = exports.zero_hud:request(source, 'Você tem certeza que deseja multar o '..nIdentity.firstname..' '..nIdentity.lastname..' em R$'..zero.format(Value)..'?', 60000)
             if (request) then
                 multarPlayer(nUser, Reason, Value, Description)
 

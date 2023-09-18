@@ -121,9 +121,9 @@ configs.products = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 7 },
             }
         },
-        ['m_weapon_tecpistol'] = { 
+        ['m_weapon_assaultsmg'] = { 
             order = 4,
-            name = 'M. Uzi',
+            name = 'M. MTAR-21',
             amount = 50,
             delay = 10000,
             materials = {
@@ -148,9 +148,9 @@ configs.products = {
                 ['m-municoes'] = { name = 'M. Munições', amount = 14 },
             }
         },
-        ['m_weapon_compactrifle'] = { 
+        ['m_weapon_specialcarbine_mk2'] = { 
             order = 7,
-            name = 'M. K. Compact',
+            name = 'M. H&K G36C',
             amount = 50,
             delay = 10000,
             materials = {

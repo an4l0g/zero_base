@@ -2,7 +2,7 @@ config = {}
 
 config.roles = {
     ilegal = { full_permissions = {'Lider', 'ViceLider'}, half_permissions = 'Gerente' },
-    policia = { full_permissions = { 'Comandante' }, half_permissions = { 'SubComandante' }  },    
+    policia = { full_permissions = { 'General', 'Coronel', 'TenenteCoronel', 'Major' }, half_permissions = {  'Capitao' }  },    
     deic = { full_permissions = { 'Diretor' }, half_permissions = { 'Diretor' }  },    
     hospital = { full_permissions = 'Diretor', half_permissions = 'Supervisor' },
     mecanica = { full_permissions = { 'Lider', 'ViceLider' }, half_permissions = 'Gerente' },
@@ -31,12 +31,20 @@ config.grades = {
         'Acadepol'
     },
     policia = {
-        'Comandante',
-        'SubComandante',
-        'AltoEscalao',
-        'Oficial',
-        'Graduado',
-        'Soldado'
+        'Coronel',
+        'TenenteCoronel',
+        'Major',
+        'Capitao',
+        'Tenente1',
+        'Tenente2',
+        'Aspirante',
+        'SubTenente',
+        'Sargento1',
+        'Sargento2',
+        'Sargento3',
+        'Cabo',
+        'SoldadoEP',
+        'SoldadoEV'
     },
     hospital = {
         'Diretor',
