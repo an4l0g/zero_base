@@ -693,7 +693,7 @@ config.garages = {
         points = {
             vector4(482.3868, 4542.198, 79.96411, 96.37794),
         },
-        vehicles = { 'wrsamarok', 'wrsrs7', 'ghispo2', 'nd911', 'wrxc90' }
+        vehicles = { 'wrsamarok', 'ghispo2', 'nd911', 'wrxc90' }
     },
     -- [DEIC HELI] --
     {
@@ -1378,12 +1378,12 @@ config.garages = {
     },
     {
         coords = vector3(-574.9583, -248.9143, 35.90186),
-        permission = '+Juridico.AdvogadoJunior',
+        permission = '+Juridico.Seguranca',
         rule = 'carOnly',
         points = {
             vector4(-579.3362, -247.3187, 35.73328, 209.7638)
         },
-        vehicles = { 'xls2' }
+        vehicles = { 'wrsrs7' }
     },
     {
         coords = vector3(-577.0813, -245.3539, 36.01978),

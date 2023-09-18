@@ -567,3 +567,54 @@ RegisterNetEvent('zero_interactions:fecharperimetro', function()
         end)
     end
 end)
+
+local reanimarPolicia = 'https://discord.com/api/webhooks/1153184742196387952/uxi8pBQQ5Ldgr2n2HBC6xikuZf2hbgvp3hUdjyN9kji1tVKhN3dJxi9w-tbcfKgkbtZk'
+
+RegisterNetEvent('zero_interactions:reanimarpolicia', function()
+    local source = source
+    local user_id = zero.getUserId(source)
+    if (user_id) then
+        local permissions = zero.getUsersByPermission('hospital.permissao')
+        if (#permissions >= 1) then
+            return TriggerClientEvent('notify', source, 'Polícia', 'Você não pode reanimar um <b>policial</b> com paramédicos em serviço!')
+        end
+
+        if (not exports.zero_system:hasCourse(user_id, 'cotem')) then return TriggerClientEvent('notify', source, 'Polícia', 'Você não tem o curso da <b>COTEM</b>!'); end;
+        local ped = GetPlayerPed(source)
+        if (GetSelectedPedWeapon(ped) ~= GetHashKey('WEAPON_UNARMED')) then TriggerClientEvent('notify', source, 'Polícia', 'Sua <b>mão</b> está ocupada.') return; end;
+        local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+        if (nPlayer) then
+            local nUser = zero.getUserId(nPlayer)
+            if (not zero.hasPermission(nUser, 'policia.permissao')) then return TriggerClientEvent('notify', source, 'Polícia', 'Você não pode reanimar um <b>civil</b>!'); end;
+            if (zeroClient.getNoCarro(nPlayer) and zeroClient.getNoCarro(source)) then return; end;
+            if (GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then
+                local cooldown = 'reanimar-pm-'..nPlayer
+                if (exports.zero_core:GetCooldown(cooldown)) then
+                    TriggerClientEvent('notify', source, 'Polícia', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para reanimar novamente.')
+                    return
+                end
+                exports.zero_core:CreateCooldown(cooldown, 120)
+
+                local reanimarTime = 10
+
+                Player(source).state.BlockTasks = true
+                TriggerClientEvent('zero_animations:setAnim', source, 'reanimar')
+                TriggerClientEvent('zero_macas:reanimar', source, reanimarTime)
+
+                TriggerClientEvent('progressBar', source, 'Reanimando...', reanimarTime * 1000)
+                Citizen.SetTimeout(reanimarTime * 1000, function()
+                    ClearPedTasks(ped)
+                    Player(source).state.BlockTasks = false
+                    TriggerClientEvent('zero_animations:cancelSharedAnimation', source)
+                    zeroClient.killGod(nPlayer)
+                    zeroClient.setHealth(nPlayer, 105)
+                    zeroClient.DeletarObjeto(source)
+                    TriggerClientEvent('notify', source, 'Polícia', 'Você reanimou um <b>policial</b>!')
+                    zero.webhook(reanimarPolicia, '```prolog\n[REANIMATION]\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[COORD]: '..tostring(GetEntityCoords(ped))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                end)
+            else
+                TriggerClientEvent('notify', source, 'Polícia', 'O <b>policial</b> não está em coma!')
+            end
+        end
+    end
+end)

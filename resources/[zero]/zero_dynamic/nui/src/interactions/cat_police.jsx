@@ -118,4 +118,11 @@ export default [
     action: "tirarprisao",
     category: "police",
   },
+  {
+    title: "Reanimar",
+    icon: <RiPlayFill />,
+    type: "action",
+    action: "reanimarpolicia",
+    category: "police",
+  },
 ];

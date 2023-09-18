@@ -41,6 +41,7 @@ local callType = {
 
                                     zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
                                     TriggerClientEvent('notify', source, 'Chamados', 'O seu chamado foi atendido por <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>, aguarde no local.')
+                                    zeroClient._setGPS(nSource, pCoord.x, pCoord.y)
                                 else
                                     TriggerClientEvent('notify', nSource, 'Chamados', 'Este <b>chamado</b> ja foi atendido por outro staff.')
 									zeroClient.playSound(nSource, 'CHECKPOINT_MISSED', 'HUD_MINI_GAME_SOUNDSET')
@@ -103,6 +104,7 @@ local callType = {
 
                                     zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
                                     TriggerClientEvent('notify', source, 'Chamados', 'O seu chamado foi atendido por <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>, aguarde no local.')
+                                    zeroClient._setGPS(nSource, pCoord.x, pCoord.y)
                                 else
                                     TriggerClientEvent('notify', nSource, 'Chamados', 'Este <b>chamado</b> ja foi atendido por outro paramédico.')
 									zeroClient.playSound(nSource, 'CHECKPOINT_MISSED', 'HUD_MINI_GAME_SOUNDSET')
@@ -165,6 +167,7 @@ local callType = {
 
                                     zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
                                     TriggerClientEvent('notify', source, 'Chamados', 'O seu chamado foi atendido por <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>, aguarde no local.')
+                                    zeroClient._setGPS(nSource, pCoord.x, pCoord.y)
                                 else
                                     TriggerClientEvent('notify', nSource, 'Chamados', 'Este <b>chamado</b> ja foi atendido por outro policial.')
 									zeroClient.playSound(nSource, 'CHECKPOINT_MISSED', 'HUD_MINI_GAME_SOUNDSET')
@@ -227,6 +230,7 @@ local callType = {
 
                                     zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
                                     TriggerClientEvent('notify', source, 'Chamados', 'O seu chamado foi atendido por <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>, aguarde no local.')
+                                    zeroClient._setGPS(nSource, pCoord.x, pCoord.y)
                                 else
                                     TriggerClientEvent('notify', nSource, 'Chamados', 'Este <b>chamado</b> ja foi atendido por outro mecânico.')
 									zeroClient.playSound(nSource, 'CHECKPOINT_MISSED', 'HUD_MINI_GAME_SOUNDSET')
@@ -289,6 +293,7 @@ local callType = {
 
                                     zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
                                     TriggerClientEvent('notify', source, 'Chamados', 'O seu chamado foi atendido por <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>, aguarde no local.')
+                                    zeroClient._setGPS(nSource, pCoord.x, pCoord.y)
                                 else
                                     TriggerClientEvent('notify', nSource, 'Chamados', 'Este <b>chamado</b> ja foi atendido por outro atendente.')
 									zeroClient.playSound(nSource, 'CHECKPOINT_MISSED', 'HUD_MINI_GAME_SOUNDSET')
@@ -306,6 +311,69 @@ local callType = {
             Citizen.SetTimeout(35000, function()
                 if (not answeredBy) then answeredBy = 'Não atendido'; end;
                 zero.webhook('Chamados', '```prolog\n[CHAMADOS]\n[CALL TYPE]: (ZERO FOME)\n[USER]: '..user_id..'\n[SERVERD BY]: '..answeredBy..'\n[ATENDENTS IN SERVICE]: '..#perm..' \n[COORD]: '..tostring(pCoord)..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+            end)
+        end
+
+        zeroClient.DeletarObjeto(source)
+    end,
+    ['adv'] = function(source, user_id, cooldown, pCoord, identity)
+        local answered = false
+        local answeredBy = false
+
+        zeroClient._CarregarObjeto(source, 'cellphone@', 'cellphone_call_to_text', 'prop_amb_phone', 50, 28422)
+
+        local prompt = exports.zero_hud:prompt(source, { 
+            'Descrição do chamado'
+        })
+
+        if (prompt) then
+            prompt = tostring(prompt[1])
+
+            exports[GetCurrentResourceName()]:CreateCooldown(cooldown, 300)
+
+            local perm = zero.getUsersByPermission('juridico.permissao')
+            if (#perm == 0) then
+                TriggerClientEvent('notify', source, 'Chamados', 'Não há <b>ADVOGADOS</b> em serviço no momento.')
+            else
+                zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
+                TriggerClientEvent('notify', source, 'Chamados', 'O <b>chamado</b> foi enviado com sucesso!')
+                
+                for k, v in pairs(perm) do
+                    local nSource = zero.getUserSource(parseInt(v))
+                    if (nSource) then
+                        local nUser = zero.getUserId(nSource)
+                        local nIdentity = zero.getUserIdentity(nUser)
+
+                        async(function()
+                            zeroClient.playSound(nSource, 'Out_Of_Area', 'DLC_Lowrider_Relay_Race_Sounds')
+                            TriggerClientEvent('chatMessage', nSource, '[CHAMADO JURÍDICO] '..user_id..' | '..identity.firstname..' '..identity.lastname, {0, 153, 255}, tostring(prompt))
+                            
+                            local request = exports.zero_hud:request(nSource, 'Você deseja aceitar o chamado de '..identity.firstname..' '..identity.lastname..'?', 15000)
+                            if (request) then
+                                if (not answered) then
+                                    answered = true
+                                    answeredBy = nUser
+
+                                    zeroClient.playSound(source, 'Event_Message_Purple', 'GTAO_FM_Events_Soundset')
+                                    TriggerClientEvent('notify', source, 'Chamados', 'O seu chamado foi atendido por <b>'..nIdentity.firstname..' '..nIdentity.lastname..'</b>, aguarde no local.')
+                                    zeroClient._setGPS(nSource, pCoord.x, pCoord.y)
+                                else
+                                    TriggerClientEvent('notify', nSource, 'Chamados', 'Este <b>chamado</b> ja foi atendido por outro advogado.')
+									zeroClient.playSound(nSource, 'CHECKPOINT_MISSED', 'HUD_MINI_GAME_SOUNDSET')
+                                end
+                            end
+
+                            local id = idgens:gen()
+							callBlips[id] = zeroClient.addBlip(nSource, pCoord.x, pCoord.y, pCoord.z, 358, 71, 'Chamado ~b~OAZ~w~', 0.6, false)
+							Citizen.SetTimeout(30000, function() zeroClient.removeBlip(nSource, callBlips[id]) idgens:free(id) end)
+                        end)
+                    end
+                end
+            end
+
+            Citizen.SetTimeout(35000, function()
+                if (not answeredBy) then answeredBy = 'Não atendido'; end;
+                zero.webhook('Chamados', '```prolog\n[CHAMADOS]\n[CALL TYPE]: (JURÍDICO)\n[USER]: '..user_id..'\n[SERVERD BY]: '..answeredBy..'\n[ADVOGADOS IN SERVICE]: '..#perm..' \n[COORD]: '..tostring(pCoord)..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
             end)
         end
 
@@ -329,10 +397,10 @@ RegisterCommand('call', function(source, args)
 
                 callType[call](source, user_id, cooldown, pCoord, identity)
             else
-                TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm<br>- /call mec<br>- /call hp<br>- /call pm')
+                TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm<br>- /call mec<br>- /call hp<br>- /call pm<br>- /call zerofome<br>- /call adv')
             end
         else
-            TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm<br>- /call mec<br>- /call hp<br>- /call pm')
+            TriggerClientEvent('notify', source, 'Chamados', 'Você tentou iniciar um <b>chamado</b> para um número inexistente.<br><br>Tente novamente digitando: <b><br>- /call adm<br>- /call mec<br>- /call hp<br>- /call pm<br>- /call zerofome<br>- /call adv')
         end
     end
 end)

@@ -17,6 +17,7 @@ radios = {
 	{ name = 'CMZ', permissions = { 'hospital.permissao' } },
 	{ name = 'CMZ Ronda', permissions = { 'hospital.permissao' } },
 	{ name = 'Mecânica', permissions = { 'hospital.permissao' } },
+	{ name = 'OAZ', permissions = { 'juridico.permissao' } },
 
 	-- FACS
 	{ name = 'Rússia', permissions = { 'russia.permissao' } },

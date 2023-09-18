@@ -156,7 +156,7 @@ RegisterCommand('re', function(source)
                     zero.giveBankMoney(user_id, reanimarPayment)
                     exports.zero_bank:extrato(user_id, 'Reanimar', reanimarPayment)
                     TriggerClientEvent('notify', source, 'Hospital', 'Você reanimou um cidadão e recebeu <b>R$'..zero.format(reanimarPayment)..'</b>!')
-                    zero.webhook('Reanimar', '```prolog\n[REANIMATION]\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[VALUE RECEIVED]: R$'..zero.format(reanimarPayment)..'\n[COORDENADA]: '..tostring(GetEntityCoords(ped))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    zero.webhook('Reanimar', '```prolog\n[REANIMATION]\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[VALUE RECEIVED]: R$'..zero.format(reanimarPayment)..'\n[COORD]: '..tostring(GetEntityCoords(ped))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                 end)
             else
                 TriggerClientEvent('notify', source, 'Hospital', 'O <b>paciente</b> não está em coma!')

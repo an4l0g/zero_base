@@ -242,6 +242,15 @@ configs.products = {
                 ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 7350 },
             }
         },
+        ['adrenalina'] = {
+            order = 5,
+            name = 'Adrenalina',
+            amount = 1,
+            delay = 1000,
+            materials = {
+                ['dinheirosujo'] = { name = 'Dinheiro Sujo', amount = 4500 },
+            }
+        },
         ['weapon_crowbar'] = {
             order = 5,
             name = 'Pé de cabra',

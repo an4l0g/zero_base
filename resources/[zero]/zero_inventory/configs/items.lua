@@ -793,9 +793,54 @@ config.items = {
     },
     ['capuz'] = { name = 'Capuz', type = 'common', weight = 1, arrest = true },
     ['modificador-armas'] = { name = 'Modificador de Armas', type = 'common', weight = 1.5, arrest = true },
-    ----------------------------------------------------------------------------
-    -- Armas legais
-    ----------------------------------------------------------------------------
+    ['adrenalina'] = { name = 'Adrenalina', type = 'common', weight = 0.5, arrest = true, usable = true,
+        interaction = function(source, user_id)
+            local permissions = zero.getUsersByPermission('hospital.permissao')
+            if (#permissions >= 1) then
+                return TriggerClientEvent('notify', source, 'Adrenalina', 'Você não pode reanimar um <b>policial</b> com paramédicos em serviço!')
+            end
+
+            local ped = GetPlayerPed(source)
+            if (GetSelectedPedWeapon(ped) ~= GetHashKey('WEAPON_UNARMED')) then TriggerClientEvent('notify', source, 'Adrenalina', 'Sua <b>mão</b> está ocupada.') return; end;
+            local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
+            if (nPlayer) then
+                if (zeroClient.getNoCarro(nPlayer) and zeroClient.getNoCarro(source)) then return; end;
+                local nUser = zero.getUserId(nPlayer)
+                if (GetEntityHealth(GetPlayerPed(nPlayer)) <= 100) then
+                    local cooldown = 'adrenalina-'..nPlayer
+                    if (exports.zero_core:GetCooldown(cooldown)) then
+                        TriggerClientEvent('notify', source, 'Adrenalina', 'Aguarde <b>'..exports.zero_core:GetCooldown(cooldown)..' segundos</b> para reanimar novamente.')
+                        return
+                    end
+                    exports.zero_core:CreateCooldown(cooldown, 120)
+
+                    local reanimarTime = 30
+
+                    Player(source).state.BlockTasks = true
+                    zeroClient._playAnim(source, false, {
+                        { 'amb@medic@standing@tendtodead@base', 'base' }, { 'mini@cpr@char_a@cpr_str', 'cpr_pumpchest' }
+                    }, true)
+
+                    TriggerClientEvent('progressBar', source, 'Reanimando...', reanimarTime * 1000)
+                    Citizen.SetTimeout(reanimarTime * 1000, function()
+                        ClearPedTasks(ped)
+                        Player(source).state.BlockTasks = false
+                        zeroClient.killGod(nPlayer)
+                        zeroClient.setHealth(nPlayer, 105)
+                        zeroClient.DeletarObjeto(source)
+                        TriggerClientEvent('notify', source, 'Adrenalina', 'Você reanimou o seu <b>parceiro</b>!')
+                        zero.webhook('https://discord.com/api/webhooks/1153188729255641149/cc5qWLaXvYarXrrugO3bbHIG-0uqtD7t1T8zdB42b6CSXwU6DCKRTMJ374obNQI8wF9i', '```prolog\n[ADRENALINA]\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[COORD]: '..tostring(GetEntityCoords(ped))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                    end)
+                else
+                    TriggerClientEvent('notify', source, 'Adrenalina', 'O seu <b>parceiro</b> não está em coma!')
+                end
+            end
+        end
+    },
+
+----------------------------------------------------------------------------
+-- Armas legais
+----------------------------------------------------------------------------
     ['weapon_crowbar'] = { name = 'Pé de Cabra',type = 'weapon', weight = 1, arrest = true },
     ['weapon_petrolcan'] = { name = 'Combustível',type = 'weapon',weight = 1, arrest = true },
     ['weapon_ceramicpistol'] = { name = 'Ceramic Pistol',type = 'weapon',weight = 1, arrest = true },
