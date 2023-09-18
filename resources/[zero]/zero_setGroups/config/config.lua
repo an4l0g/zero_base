@@ -123,7 +123,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'holanda.permissao',
-		'arma.permissao'
+		'arma.permissao',
+		'ilegal.permissao'
 	},
 
 	['Polonia'] = {
@@ -139,7 +140,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'polonia.permissao',
-		'droga.permissao'
+		'droga.permissao',
+		'ilegal.permissao'
 	},
 
 	['Russia'] = {
@@ -156,6 +158,7 @@ config.groups = {
 		},
 		'russia.permissao',
 		'municao.permissao'
+		'ilegal.permissao'
 	},
 
 	['Cosanostra'] = {
@@ -171,7 +174,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'cosanostra.permissao',
-		'droga.permissao'
+		'droga.permissao',
+		'ilegal.permissao'
 	},
 
 	['Inglaterra'] = {
@@ -187,7 +191,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'inglaterra.permissao',
-		'droga.permissao'
+		'droga.permissao',
+		'ilegal.permissao'
 	},
 
 	['Tropa'] = {
@@ -204,6 +209,7 @@ config.groups = {
 		},
 		'tropa.permissao',
 		'droga.permissao'
+		'ilegal.permissao'
 	},
 
 	['Helipa'] = {
@@ -219,24 +225,10 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'helipa.permissao',
-		'arma.permissao'
+		'arma.permissao',
+		'ilegal.permissao'
 	},
 
-	['Egito'] = {
-		information = { 
-			title = 'Egito', 
-			groupType = 'job', 
-			grades = {
-				['Membro'] = { title = 'Membro', level = 1 },
-				['Gerente'] = { title = 'Gerente', level = 2 },
-				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
-				['Lider'] = { title = 'Líder', level = 4 },
-			},
-			grades_default = 'Membro',
-		},
-		'egito.permissao',
-		'droga.permissao'
-	},
 
 	['Finish'] = {
 		information = { 
@@ -251,7 +243,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'finish.permissao',
-		'droga.permissao'
+		'droga.permissao',
+		'ilegal.permissao'
 	},
 
 	['Camorra'] = {
@@ -267,38 +260,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'camorra.permissao',
-		'lavagem.permissao'
-	},
-
-	['Mafia'] = {
-		information = { 
-			title = 'Máfia', 
-			groupType = 'job', 
-			grades = {
-				['Membro'] = { title = 'Membro', level = 1 },
-				['Gerente'] = { title = 'Gerente', level = 2 },
-				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
-				['Lider'] = { title = 'Líder', level = 4 },
-			},
-			grades_default = 'Membro',
-		},
-		'mafia.permissao',
-		'lavagem.permissao'
-	},
-
-	['DuKaraio'] = {
-		information = { 
-			title = 'DuKaraio', 
-			groupType = 'job', 
-			grades = {
-				['Membro'] = { title = 'Membro', level = 1 },
-				['Gerente'] = { title = 'Gerente', level = 2 },
-				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
-				['Lider'] = { title = 'Líder', level = 4 },
-			},
-			grades_default = 'Membro',
-		},
-		'dukaraio.permissao'
+		'lavagem.permissao',
+		'ilegal.permissao'
 	},
 
 	['Colombia'] = {
@@ -314,7 +277,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'colombia.permissao',
-		'arma.permissao'
+		'arma.permissao',
+		'ilegal.permissao'
 	},
 
 	['Espanha'] = {
@@ -330,7 +294,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'espanha.permissao',
-		'arma.permissao'
+		'arma.permissao',
+		'ilegal.permissao'
 	},
 
 	['Canada'] = {
@@ -346,7 +311,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'canada.permissao',
-		'municao.permissao'
+		'municao.permissao',
+		'ilegal.permissao'
 	},
 
 	['Alemanha'] = {
@@ -362,7 +328,8 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'alemanha.permissao',
-		'municao.permissao'
+		'municao.permissao',
+		'ilegal.permissao'
 	},
 
 	['ZeroMecanica'] = {
@@ -383,7 +350,8 @@ config.groups = {
 		},
 		'mecanica.permissao',
 		'mecanico.permissao',
-		'zeromecanica.permissao'
+		'zeromecanica.permissao',
+		'ilegal.permissao'
 	},
 
 	['Juridico'] = {

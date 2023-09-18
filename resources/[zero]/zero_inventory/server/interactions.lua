@@ -44,7 +44,7 @@ end)
 
 RegisterCommand('saquear', function(source)
     local user_id = zero.getUserId(source)
-    if (user_id) then
+    if (user_id) and zero.checkPermissions(user_id, { 'ilegal.permissao' }) then
         local nPlayer = zeroClient.getNearestPlayer(source, 2.0)
         if (nPlayer) then
             local nUser = zero.getUserId(nPlayer)

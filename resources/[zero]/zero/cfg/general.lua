@@ -9,7 +9,7 @@ config.priorityGroups = {
   ['Priority10'] = 10
 }
 
-config.maintenanceMode = false
+config.maintenanceMode = true
 config.maintenanceGroups = {
   ['Staff'] = true
 }

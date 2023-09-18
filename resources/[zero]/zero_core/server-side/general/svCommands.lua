@@ -2024,7 +2024,7 @@ RegisterCommand('apreender', function(source)
                         TriggerClientEvent('notify', source, 'Apreensão', 'Você <b>apreendeu</b> todos os itens ilegais do cidadão!')
                         TriggerClientEvent('radio:outServers', nPlayer)
                         
-                        zero.webhook(apreenderWebhook, 'prolog\n[APREENSÃO]\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[ITENS]: '..json.encode(itens, { indent = true })..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r')
+                        zero.webhook(apreenderWebhook, '```prolog\n[APREENSÃO]\n[OFFICER]: '..user_id..'\n[TARGET]: '..nUser..'\n[ITENS]: '..json.encode(itens, { indent = true })..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                     end
                 end
             else

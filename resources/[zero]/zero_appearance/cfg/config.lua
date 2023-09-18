@@ -1756,6 +1756,9 @@ config.locs = {
 
     -- [ Hospital ] --
     { coord = vector4(-824.2813, -1236.989, 7.324585-0.97, 314.6457), config = 'all', type = 'skinshop' },
+
+    -- [Estudio] --
+    { coord = vector4(343.8989, 5565.033, -74.12744-0.97, 240.9449), config = 'all', type = 'skinshop' },
 }
 
 Tunnel = module('zero', 'lib/Tunnel')

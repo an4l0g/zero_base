@@ -174,7 +174,8 @@ getUserDrivelicense = function(user_id)
 end
 
 getUserGunlicense = function(user_id)
-    return nil
+    local perm = zero.hasPermission(user_id, 'porte.permissao')
+    return (perm and 'Possui' or 'Não possui')
 end
 
 --------------------------------------------------------------------------------------
