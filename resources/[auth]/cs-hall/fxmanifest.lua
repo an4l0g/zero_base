@@ -29,6 +29,7 @@ files {
 ui_page 'client/ui/index.html'
 
 shared_scripts {
+    '@zero/lib/utils.lua',
     'enums.lua',
     'helpers.lua',
     'config.lua' 

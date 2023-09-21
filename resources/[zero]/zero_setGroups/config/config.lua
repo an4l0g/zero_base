@@ -157,7 +157,7 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'russia.permissao',
-		'municao.permissao'
+		'municao.permissao',
 		'ilegal.permissao'
 	},
 
@@ -208,7 +208,7 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'tropa.permissao',
-		'droga.permissao'
+		'droga.permissao',
 		'ilegal.permissao'
 	},
 

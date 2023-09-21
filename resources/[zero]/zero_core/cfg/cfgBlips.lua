@@ -26,7 +26,7 @@ config.blips = {
     { coords = vector3(-308.8484, 213.7451, 87.96777), sprite = 614, color = 3, nome = 'Lux Nightclub', scale = 0.5 },
     
     -- [ Joalheria ] -- 
-    { coords = vector3(-631.6747, -237.7451, 38.05859), sprite = 617, color = 30, nome = 'Joalheria', scale = 0.8 }
+    { coords = vector3(-631.6747, -237.7451, 38.05859), sprite = 617, color = 30, nome = 'Joalheria', scale = 0.8 },
 
     -- [ Estúdio ] --
     { coords = vector3(3.916484, 220.3385, 107.7664), sprite = 184, color = 0, nome = 'Estúdio', scale = 0.5 },

@@ -14,6 +14,7 @@ config.vehicles = {
 ------------------------------------------------------------------------------------------------------------------------
     ['dcd'] = { name = 'Dodge', maker = 'Charger', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'super', banned = false },
     ['ESDUCATI2K22'] = { name = 'Juca', maker = 'Ducati', price = 1000000, trunk = 15, glove = 0, type = 'vip', class = 'motocycle', banned = false },
+    ['esc21'] = { name = 'Juca', maker = 'Cadillac', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'suvs', banned = false },
 
 ------------------------------------------------------------------------------------------------------------------------
 -- VIP

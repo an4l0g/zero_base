@@ -8,8 +8,8 @@ local Webhooks = {
 }
 
 local Courses = {
-    -- ['cotem'] = { 'policia', 0.1, { '+Policia.TenenteCoronel', '@Staff.COO' } },
-    ['cotem'] = { 'policia', 0.1, { '+Staff.COO' } },
+    ['cotem'] = { 'policia', 0.1, { '+Policia.TenenteCoronel', '+Staff.COO' } },
+    -- ['cotem'] = { 'policia', 0.1, { '+Staff.COO' } },
 }
 
 local Commands = {

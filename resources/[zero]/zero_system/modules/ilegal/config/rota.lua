@@ -167,7 +167,7 @@ Routes = {
             },
             itens = {
                 item = 'm-municoes',
-                quantity = 2
+                quantity = 5
             },
             texts = {
                 text = '~b~E~w~ - Pegar',

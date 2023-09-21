@@ -56,7 +56,7 @@ srv.checkDismantle = function(index)
                 if (vtype) then
                     registerDismantleTime(index, _config.cooldown)
                     vCLIENT.generateParts(source, vehicle, vtype, vehState.model, vehState.plate)
-                    zero.execute('zero_bennys/setCustom', { user_id = vehState.user_id, plate = vehState.plate, custom = json.encode({}) })
+                    -- zero.execute('zero_bennys/setCustom', { user_id = vehState.user_id, plate = vehState.plate, custom = json.encode({}) })
                     zero.execute('zero_garage/setDetained', { detained = 1, user_id = vehState.user_id, vehicle = vehState.model })
                     zero.webhook(_config.webhook, '```prolog\n[DISMANTLE]\n[ACTION]: (DISMANTLED VEHICLE)\n[USER]: '..user_id..' \n[VEHICLE MODEL]: '..vehState.model..'\n[OWNER VEHICLE]: '..vehState.user_id..' \n[COORDS]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..' '..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
                     return true

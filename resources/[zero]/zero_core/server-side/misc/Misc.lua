@@ -25,3 +25,24 @@ RegisterNetEvent('zero_core:shoting', function(coord)
         end
     end
 end)
+
+local blacklistAnti = 'https://discord.com/api/webhooks/1154152630470332527/UGKg-PC_hjgr5lkMJOpjP40rjX_r8z4PkbsmjnpGqDSUSpIcsbKyh58qkkQWJeNtq_bh'
+
+local AntiCheat = {
+    ['vehicles'] = function(source, user_id, identity, model)
+        zero.kick(source,'Você foi banido da cidade pelo AntiCheat.\nMotivo: spawn de veículos.\nSeu passaporte: #'..user_id..'.')    
+        zero.setBanned(user_id, true)
+        exports.zero_core:insertBanRecord(user_id, true, -1, '[BLACKLIST] spawn de veículo!')
+        zero.webhook(blacklistAnti, '```prolog\n[ZERO CITY - BLACKLIST]\n[ACTION]: (SPAWN VEHICLE)\n[VEHICLE]: '..model..'\n[HACK]: '..user_id..' | '..identity.firstname..' '..identity.lastname..'\n[COORD]: '..tostring(GetEntityCoords(GetPlayerPed(source)))..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+    end
+}
+
+RegisterNetEvent('zero_anticheat', function(detected, model)
+    local source = source
+    local user_id = zero.getUserId(source)
+    local identity = zero.getUserIdentity(user_id)
+
+    if (AntiCheat[detected]) then
+        AntiCheat[detected](source, user_id, identity, model)
+    end
+end)

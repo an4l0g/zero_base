@@ -175,7 +175,7 @@ end
 
 getUserGunlicense = function(user_id)
     local perm = zero.hasPermission(user_id, 'porte.permissao')
-    return (perm and 'Possui' or 'Não possui')
+    return (perm and true or false)
 end
 
 --------------------------------------------------------------------------------------

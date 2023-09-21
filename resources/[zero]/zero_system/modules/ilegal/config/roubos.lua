@@ -5,7 +5,7 @@ Robberys = {
                 ['pendrive'] = 1,
                 ['keycard'] = 1,
             },
-            payment = 300000,
+            payment = 670000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -16,7 +16,7 @@ Robberys = {
                 ['pendrive'] = 1,
                 ['keycard'] = 1,
             },
-            payment = 550000,
+            payment = 1000000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -26,7 +26,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
-            payment = 100000,
+            payment = 170000,
             cooldown = 1800,
             seconds = 60,
             task = true,
@@ -36,7 +36,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
-            payment = 150000,
+            payment = 250000,
             cooldown = 1800,
             seconds = 60,
             task = true,
@@ -46,7 +46,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
-            payment = 150000,
+            payment = 250000,
             cooldown = 1800,
             seconds = 60,
             task = true,
@@ -56,7 +56,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
-            payment = 100000,
+            payment = 170000,
             cooldown = 1800,
             seconds = 60,
             task = true,
@@ -66,7 +66,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
-            payment = 150000,
+            payment = 170000,
             cooldown = 1800,
             seconds = 60,
             task = true,
@@ -86,7 +86,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2,
             },
-            payment = 150000,
+            payment = 170000,
             cooldown = 1800,
             seconds = 60,
             task = true,
@@ -97,7 +97,7 @@ Robberys = {
                 ['pendrive'] = 1,
                 ['keycard'] = 1,
             },
-            payment = 200000,
+            payment = 417000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -108,7 +108,7 @@ Robberys = {
                 ['pendrive'] = 1,
                 ['keycard'] = 1,
             },
-            payment = 250000,
+            payment = 670000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -119,7 +119,7 @@ Robberys = {
                 ['pendrive'] = 1,
                 ['keycard'] = 1,
             },
-            payment = 225000,
+            payment = 640000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -129,7 +129,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2
             },
-            payment = 160000,
+            payment = 340000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -139,7 +139,7 @@ Robberys = {
             requireItens = {
                 ['weapon_crowbar'] = 2
             },
-            payment = 160000,
+            payment = 340000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -150,7 +150,7 @@ Robberys = {
                 ['pendrive'] = 1,
                 ['keycard'] = 1
             },
-            payment = 450000,
+            payment = 1180000,
             cooldown = 3600,
             seconds = 60,
             task = true,
@@ -170,7 +170,7 @@ Robberys = {
             requireItens = {
                 ['c4'] = 1
             },
-            payment = 2500,
+            payment = 5000,
             cooldown = 1800,
             seconds = 60,
             task = true,

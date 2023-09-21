@@ -617,7 +617,7 @@ config.items = {
     ['pendrive'] = { name = 'Pen Drive', type = 'common', weight = 0.5, arrest = true },
     ['c4'] = { name = 'C4', type = 'common', weight = 1.0, arrest = true },
     ['keycard'] = { name = 'Keycard', type = 'common', weight = 0.5, arrest = true },
-    ['maconha'] = { name = 'Maconha', type = 'common', weight = 1, arrest = true, usable = true,
+    ['maconha'] = { name = 'Maconha', type = 'common', weight = 0.5, arrest = true, usable = true,
         interaction = function(source, user_id)
             cInventory.closeInventory(source)
 
@@ -641,8 +641,8 @@ config.items = {
             end)
         end    
     },
-    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 1, arrest = true },
-    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 1, arrest = true, usable = true,
+    ['metanfetamina'] = { name = 'Metanfetamina', type = 'common', weight = 0.5, arrest = true },
+    ['cocaina'] = { name = 'Cocaína', type = 'common', weight = 0.5, arrest = true, usable = true,
         interaction = function(source, user_id)
             cInventory.closeInventory(source)
 
@@ -671,7 +671,7 @@ config.items = {
             end)
         end    
     },
-    ['lanca-perfume'] = { name = 'Lança Perfume', type = 'common', weight = 1, arrest = true, usable = true,
+    ['lanca-perfume'] = { name = 'Lança Perfume', type = 'common', weight = 0.5, arrest = true, usable = true,
         interaction = function(source, user_id)
             cInventory.closeInventory(source)
 
@@ -828,6 +828,7 @@ config.items = {
                         zeroClient.setHealth(nPlayer, 105)
                         zeroClient.DeletarObjeto(source)
                         TriggerClientEvent('notify', source, 'Adrenalina', 'Você reanimou o seu <b>parceiro</b>!')
+                        zero.tryGetInventoryItem(user_id, 'adrenalina', 1)
                         zero.webhook('https://discord.com/api/webhooks/1153188729255641149/cc5qWLaXvYarXrrugO3bbHIG-0uqtD7t1T8zdB42b6CSXwU6DCKRTMJ374obNQI8wF9i', '```prolog\n[ADRENALINA]\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[COORD]: '..tostring(GetEntityCoords(ped))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                     end)
                 else
@@ -885,10 +886,9 @@ config.items = {
     ['weapon_compactrifle'] = { name = 'K. Compact', type = 'weapon', weight = 5.0, arrest = true },
     ['m_weapon_compactrifle'] = { name = 'M. K. Compact', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 5.0, arrest = true },
+    ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_specialcarbine_mk2'] = { name = 'H&K G36C', type = 'weapon', weight = 1, arrest = true },
     ['m_weapon_specialcarbine_mk2'] = { name = 'M. H&K G36C', type = 'wammo', weight = 0.2, arrest = true },
-    ['weapon_heavyrifle'] = { name = 'FN Scar', type = 'weapon', weight = 1, arrest = true },
-    ['m_weapon_heavyrifle'] = { name = 'M. FN Scar', type = 'wammo', weight = 0.2, arrest = true },
     ['weapon_bullpuprifle_mk2'] = { name = 'Type-97', type = 'weapon', weight = 5.0, arrest = true },
     ['m_weapon_bullpuprifle_mk2'] = { name = 'M. Type-97', type = 'wammo', weight = 0.2, arrest = true },
 

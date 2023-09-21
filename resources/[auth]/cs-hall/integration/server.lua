@@ -6,25 +6,17 @@
 -- Alternatively to Ace permissions in the default integration, you can add any player identifiers to the array playerIdentifiersAsControllers below to allow specific players to perform controller duties in all areas.
 -- You can keep the default integration and edit the default CanAccessControllerInterface function and return true / false based on your conditions.
 
+Tunnel = module('zero', 'lib/Tunnel')
+Proxy = module('zero', 'lib/Proxy')
+zero = Proxy.getInterface('zero')
+
 local playerIdentifiersAsControllers = {
     'steam:000000000000000', -- Example Steam player identifier.
     'fivem:000000', -- Example FiveM player identifier.
 }
 
 function CanAccessControllerInterface(source, area)
-    if (IsPlayerAceAllowed(source, 'cs-hall.control')) then
-        return true
-    end
-
-    for i = 1, #playerIdentifiersAsControllers do
-        for ii, identifier in ipairs(GetPlayerIdentifiers(source)) do
-            if (string.lower(identifier) == string.lower(playerIdentifiersAsControllers[i])) then
-                return true
-            end
-        end
-    end
-
-    return false
+    return zero.hasPermission(zero.getUserId(source), 'staff.permissao')
 end
 
 RegisterNetEvent('cs-hall:integration:toggleControllerInterface', function(area)

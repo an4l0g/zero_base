@@ -197,7 +197,7 @@ config.facs = {
         roles = config.roles.ilegal
     },
     ['Helipa'] = {
-        vagas = 40,
+        vagas = 50,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
         roles = config.roles.ilegal

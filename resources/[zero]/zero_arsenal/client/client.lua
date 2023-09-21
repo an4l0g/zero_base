@@ -159,7 +159,8 @@ local renderWeapons = function(config)
             quantity = value['quantity'],
             ammo = value['ammo'],
             perm = permEntry.perm,
-            price = value['price']
+            price = value['price'],
+            infinityBuy = value['infinityBuy']
         }
         table.insert(utilitaryList[configuration], utilitaryEntry)
     end
