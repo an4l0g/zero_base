@@ -1,4 +1,4 @@
-local shootingWebhook = 'https://discord.com/api/webhooks/1147712991643582474/ESs65wF2eSWa-N855upmTxOj-UBoo8sFV7x3155-jHmGTodkpy36lDzmTH-msNA6LFw8'
+local shootingWebhook = 'https://discord.com/api/webhooks/1154658878663954432/ocG9Q30f5VFilx1YEOexJOEU4LLPZb4fHxdfFTbhOCLXuDFEUnc2FsNFWjfTlDafAs_4'
 
 RegisterNetEvent('zero_core:shoting', function(coord)
     local source = source
@@ -26,7 +26,7 @@ RegisterNetEvent('zero_core:shoting', function(coord)
     end
 end)
 
-local blacklistAnti = 'https://discord.com/api/webhooks/1154152630470332527/UGKg-PC_hjgr5lkMJOpjP40rjX_r8z4PkbsmjnpGqDSUSpIcsbKyh58qkkQWJeNtq_bh'
+local blacklistAnti = 'https://discord.com/api/webhooks/1154627263225151509/n4bw6elo7e28K0e7XR4TW3PT3s7IstFnfoE6qtIc9yRi-NQHA1ZCa9c14McA4Y3iS3lJ'
 
 local AntiCheat = {
     ['vehicles'] = function(source, user_id, identity, model)

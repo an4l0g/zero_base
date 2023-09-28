@@ -128,10 +128,10 @@ config.arsenal = {
             ['perm'] = nil 
         },
         ['webhooks'] = {
-            ['weapons'] = 'https://discord.com/api/webhooks/1144487701572231260/OhjqS-c6N0SFySxbhRQ4ufvrOXgnCNUMeRFYabyw4OGKe7VgsXCKdku3pt23JAMJb4rz',
-            ['utilitarys'] = 'https://discord.com/api/webhooks/1144487883101716572/2XiVVPl2WBg2xG62MK-EuU4YFZjkN5kjSun0P-ecFvvQbd7-GQARocQDZZ-xzrOoXP1E',
-            ['kits'] = 'https://discord.com/api/webhooks/1144488253471330394/pzXdlIFTisu13914mrhXusOoVSDjfL7XWMPKfAsZhiIp-86DQ-V_lKtTckjamkQGaO-2',
-            ['ammo'] = 'https://discord.com/api/webhooks/1144488454936350780/gtySgevhYIFaNsqFJFxY8chBgQw24i5OC2FBCpy64S3gBrfKnIuoTb1X9-WJf6wdOBZc'
+            ['weapons'] = 'https://discord.com/api/webhooks/1154980125721505812/cVhrBslhWc5lKy6eq4xGrrSdhl9OhUDVyOSkQoFvvPlOxGo_PAs86mdV8O3GVKDABy1A',
+            ['utilitarys'] = 'https://discord.com/api/webhooks/1154980703541415938/v3ORz_GGv7mZpmuXkkQ49uhKQIEBTnOQd8N0q23ojDvmvMGhT0rZJqpzaxHTaxOzMl4T',
+            ['kits'] = 'https://discord.com/api/webhooks/1154981137513467975/EjFMR_YslbBvBu0IYK5lC_-GLF6-H42UAP6W90K8z19et_-TWY3US1H2PsDiToZr8YR_',
+            ['ammo'] = 'https://discord.com/api/webhooks/1154991787392389180/pvNjHDHeadkmzUvgNLKLyAWBgxSfkVJzk38F5lTK9WMOkJREwJD1JlAW3o-cmluMm9Nh'
         }
     },
     ['Deic'] = {
@@ -170,10 +170,10 @@ config.arsenal = {
             ['perm'] = nil 
         },
         ['webhooks'] = {
-            ['weapons'] = 'https://discord.com/api/webhooks/1141425927121809478/oWQ_11ZCbQJ-5bPqpN7CiqwzLukt3EP07zmtz_N18nEPlkIQ-M3IiZXEQbYbhUfXccU_',
-            ['utilitarys'] = 'https://discord.com/api/webhooks/1141425927121809478/oWQ_11ZCbQJ-5bPqpN7CiqwzLukt3EP07zmtz_N18nEPlkIQ-M3IiZXEQbYbhUfXccU_',
-            ['kits'] = 'https://discord.com/api/webhooks/1141425927121809478/oWQ_11ZCbQJ-5bPqpN7CiqwzLukt3EP07zmtz_N18nEPlkIQ-M3IiZXEQbYbhUfXccU_',
-            ['ammo'] = 'https://discord.com/api/webhooks/1141425927121809478/oWQ_11ZCbQJ-5bPqpN7CiqwzLukt3EP07zmtz_N18nEPlkIQ-M3IiZXEQbYbhUfXccU_'
+            ['weapons'] = 'https://discord.com/api/webhooks/1154980125721505812/cVhrBslhWc5lKy6eq4xGrrSdhl9OhUDVyOSkQoFvvPlOxGo_PAs86mdV8O3GVKDABy1A',
+            ['utilitarys'] = 'https://discord.com/api/webhooks/1154980703541415938/v3ORz_GGv7mZpmuXkkQ49uhKQIEBTnOQd8N0q23ojDvmvMGhT0rZJqpzaxHTaxOzMl4T',
+            ['kits'] = 'https://discord.com/api/webhooks/1154981137513467975/EjFMR_YslbBvBu0IYK5lC_-GLF6-H42UAP6W90K8z19et_-TWY3US1H2PsDiToZr8YR_',
+            ['ammo'] = 'https://discord.com/api/webhooks/1154991787392389180/pvNjHDHeadkmzUvgNLKLyAWBgxSfkVJzk38F5lTK9WMOkJREwJD1JlAW3o-cmluMm9Nh'
         }
     }
 }

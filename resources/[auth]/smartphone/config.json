@@ -3,7 +3,7 @@
   "client": {
     "bankType": "blue",
     "bankLogo": "https://cdn.discordapp.com/attachments/1098816084917891092/1144070172534112256/BR_Bank3_1.png",
-    "uploadServer": "https://discord.com/api/webhooks/1140439539807166504/YDeqj82Ws4O1iTovEcNDS7oBe4bprIuQ0CXtfsCumv2y7ygWKMGHUPjCZN7URAUKsOxO",
+    "uploadServer": "https://discord.com/api/webhooks/1154968687523147867/Oc7O2urwOJvZQwIXi8qxh_BkmDaJsW2EsA6Lk2xiAZrQLckp6ejwHTXMtOjPbP5S3-N7",
     "allowUnsafeURL": true,
     "videoServer": "ws://167.114.185.18:29873/zerocity",
     "isAndroid": true,
@@ -28,7 +28,7 @@
     "disabledApps": []
   },
   "call_mode": "pma-voice",
-  "webhookURL": "https://discord.com/api/webhooks/1140437829822971924/fwcth6U7dbMhavvHThW67iU-x_sZ42H8GYE3X-K-_i-ilHJRDha4qOKWmVQju1_41JRp",
+  "webhookURL": "https://discord.com/api/webhooks/1154968629641756783/L0OVvLmPlu-PLgEcECh0yH-VG2KlNYrsrSjtClUrz0qJvIq8qzXwSNP3rhlnm-cChSkn",
   "instagram_verify": "instagram.permissao",
   "instagram_accounts": {
     "*": 1,

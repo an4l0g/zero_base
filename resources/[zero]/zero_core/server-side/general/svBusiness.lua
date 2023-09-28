@@ -14,10 +14,10 @@ zero.prepare('getAllBusiness', 'select * from business')
 local businessExpire = 30 -- expira em 30 dias
 
 local webhooks = {
-    ['salario'] = 'https://discord.com/api/webhooks/1145784458121838723/2UvfV02Hp3y8GFvek0cNTVl-bhWtc5OIZ_osDTRaLPQZEnZgCa1VbO5Wai-Sc0MIMZAY',
-    ['renovar'] = 'https://discord.com/api/webhooks/1145784804210638918/lZJ7tmy0FtckmoUpVr4JagRppyoSAR7g-RMHQUAOixI_PPch-zIjn2gr18rZ783aXby3',
-    ['add'] = 'https://discord.com/api/webhooks/1145784942241005759/BfA7hskNPdaxn99buFg1ZrjnaoOs9EdUphFKueSXpv2Gx7f40m8zaervDbMACGPhbiKY',
-    ['del'] = 'https://discord.com/api/webhooks/1151368379601535036/0nVCjU72KEsA1mR7u9elVDZTcl3WKjEkAzLOA_z8TnEmaImWnD0_BY2PD2i0o6ItSs8j'
+    ['salario'] = 'https://discord.com/api/webhooks/1154966638333005906/hBCr-8yWjy9-ab6K7C6z44fNFA0YjdVnlUKE6snetBLNx4MlkglJAI29FsQ9hvviP_5f',
+    ['renovar'] = 'https://discord.com/api/webhooks/1154966708654714910/rpwyvFB9WKOU37UElMSygzFNgQVwNgPceZguF6pyhDimpw1EiTwMQLQ1HDG5SGfBzEE3',
+    ['add'] = 'https://discord.com/api/webhooks/1154966763658813460/XEwCeZwCoOcCXJ8__QlogxbT-8jWrQ812bWXRgvzd5EZVfaSdpbljzBbDTh0S2oPpP8V',
+    ['del'] = 'https://discord.com/api/webhooks/1154966826128781422/wnMogV-kjPfBT_HyxV9Sl8vm2tq_WqLbJ8BwlOEtkw1_p5BqI6quPjr7ljKURcfoHhu7'
 }
 
 local  tempBusiness = {}

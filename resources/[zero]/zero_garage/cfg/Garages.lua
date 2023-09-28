@@ -15,6 +15,7 @@ config.vehicles = {
     ['dcd'] = { name = 'Dodge', maker = 'Charger', price = 1000000, trunk = 30, glove = 15, type = 'vip', class = 'super', banned = false },
     ['ESDUCATI2K22'] = { name = 'Juca', maker = 'Ducati', price = 1000000, trunk = 15, glove = 0, type = 'vip', class = 'motocycle', banned = false },
     ['esc21'] = { name = 'Juca', maker = 'Cadillac', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'suvs', banned = false },
+    ['hycadeevo'] = { name = 'Bueno 2', maker = 'Mitsubishi', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'super', banned = false },
 
 ------------------------------------------------------------------------------------------------------------------------
 -- VIP
@@ -106,7 +107,7 @@ config.vehicles = {
     ['remus'] = { name = 'Remus', maker = 'Annis', price = 150000, trunk = 30, glove = 15, type = 'car', class = 'compacts', banned = false },
     ['savestra'] = { name = 'Savestra', maker = 'Annis', price = 150000, trunk = 30, glove = 15, type = 'car', class = 'compacts', banned = false },
     ['entity3'] = { name = 'Entity 3', maker = 'MT', price = 400000, trunk = 20, glove = 15, type = 'car', class = 'sports', banned = false },
-    ['rcbandito'] = { name = 'RC Bandito', maker = 'Rockstar', price = 1000000, trunk = 1000, glove = 15, type = 'rental', class = 'offroad', banned = false },
+    ['rcbandito'] = { name = 'RC Bandito', maker = 'Rockstar', price = 1000000, trunk = 500, glove = 15, type = 'rental', class = 'offroad', banned = false },
     ['kuruma'] = { name = 'Kuruma', maker = 'Karin', price = 375000, trunk = 50, glove = 15, type = 'car', class = 'sports', banned = false },
     ['sultan2'] = { name = 'Sultan 2', maker = 'Karin', price = 500000, trunk = 20, glove = 15, type = 'car', class = 'sports', banned = false },
     ['trophytruck2'] = { name = 'Trophytruck2', maker = 'Vapid', price = 400000, trunk = 20, glove = 15, type = 'car', class = 'offroad', banned = false },
@@ -437,7 +438,7 @@ config.vehicles = {
     ['issi3'] = { name = 'Issi3', maker = 'Weeny', price = 190000, trunk = 20, glove = 15, type = 'car', class = 'compacts', banned = false },
     ['stretch'] = { name = 'Stretch', maker = 'Dundreary', price = 1000000, trunk = 60, glove = 15, type = 'car', class = 'sedans', banned = false },
     ['vamos'] = { name = 'Vamos', maker = 'Declasse', price = 185000, trunk = 60, glove = 15, type = 'car', class = 'muscle', banned = false },
-    ['benson'] = { name = 'Benson', maker = 'Vapid', price = 1000000, trunk = 1000, glove = 15, type = 'car', class = 'commercial', banned = false },
+    ['benson'] = { name = 'Benson', maker = 'Vapid', price = 1000000, trunk = 500, glove = 15, type = 'car', class = 'commercial', banned = false },
     ['neon'] = { name = 'Neon', maker = 'Pfister', price = 370000, trunk = 30, glove = 15, type = 'car', class = 'sports', banned = false },
     ['freecrawler'] = { name = 'Freecrawler', maker = 'Canis', price = 350000, trunk = 50, glove = 15, type = 'car', class = 'offroad', banned = false },
     ['rentalbus'] = { name = 'Ônibus Escolinha', maker = 'Brute', price = 0, trunk = 100, glove = 15, type = 'car', class = 'service', banned = false },
@@ -517,14 +518,14 @@ config.vehicles = {
     ------------------------------------------------------------------------------------------------------------------------
     -- PLANES
     ------------------------------------------------------------------------------------------------------------------------
-    ['maverick'] = { name = 'Maverick', maker = 'Western company', price = 100000, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopter', banned = true },
-    ['swift2'] = { name = 'Swift 2', maker = 'Buckingham', price = 0, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopter', banned = false },
-    ['swift'] = { name = 'Swift', maker = 'Buckingham', price = 0, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopter', banned = false },
-    ['frogger'] = { name = 'Frogger', maker = 'Maibatsu', price = 1000000, trunk = 0, glove = 15, type = 'helicopter', class = 'helicopters', banned = true },
-    ['supervolito'] = { name = 'Supervolito', maker = 'Buckingham', price = 1000, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
-    ['cargobob'] = { name = 'CSC Cargobob', maker = 'Western company', price = 1000000, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
-    ['buzzard2'] = { name = 'Buzzard 2', maker = 'Nagasaki', price = 1000000, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
-    ['cargobob2'] = { name = 'Cargo Bob', maker = 'Western company', price = 1000000, trunk = 1000, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
+    ['maverick'] = { name = 'Maverick', maker = 'Western company', price = 100000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopter', banned = true },
+    ['swift2'] = { name = 'Swift 2', maker = 'Buckingham', price = 0, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopter', banned = false },
+    ['swift'] = { name = 'Swift', maker = 'Buckingham', price = 0, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopter', banned = false },
+    ['frogger'] = { name = 'Frogger', maker = 'Maibatsu', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = true },
+    ['supervolito'] = { name = 'Supervolito', maker = 'Buckingham', price = 1000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
+    ['cargobob'] = { name = 'CSC Cargobob', maker = 'Western company', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
+    ['buzzard2'] = { name = 'Buzzard 2', maker = 'Nagasaki', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
+    ['cargobob2'] = { name = 'Cargo Bob', maker = 'Western company', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
     ------------------------------------------------------------------------------------------------------------------------
     -- WORK
 ------------------------------------------------------------------------------------------------------------------------
@@ -556,7 +557,7 @@ config.vehicles = {
     ['cruiser'] = { name = 'Cruiser', maker = 'Bmx', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'cycles', banned = true },
     ['polmav'] = { name = 'Polmav', maker = 'Buckingham', price = 0, trunk = 0, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['speeder'] = { name = 'Speeder', maker = 'Pegassi', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
-    ['supervolito2'] = { name = 'Supervolito2', maker = 'Buckingham', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'helicopters', banned = true },
+    ['supervolito2'] = { name = 'Supervolito2', maker = 'Buckingham', price = 1000, trunk = 500, glove = 15, type = 'work', class = 'helicopters', banned = true },
     ['btype'] = { name = 'Btype', maker = 'Albany', price = 200000, trunk = 40, glove = 15, type = 'work', class = 'sportsclassics', banned = false },
     ['boxville4'] = { name = 'BoxVille4', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'vans', banned = true },
     ['squalo'] = { name = 'Squalo', maker = 'Grotti', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
@@ -565,7 +566,7 @@ config.vehicles = {
     ['tornado5'] = { name = 'Tornado5', maker = 'Declasse', price = 200000, trunk = 60, glove = 15, type = 'work', class = 'sportsclassics', banned = false },
     ['gburrito'] = { name = 'GBurrito', maker = 'Declasse', price = 500000, trunk = 100, glove = 15, type = 'work', class = 'vans', banned = false },
     ['trailerlogs'] = { name = 'Woods', maker = 'Brute', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'utility', banned = true },
-    ['volatus'] = { name = 'Volatus', maker = 'Buckingham', price = 1000000, trunk = 1000, glove = 15, type = 'work', class = 'helicopters', banned = true },
+    ['volatus'] = { name = 'Volatus', maker = 'Buckingham', price = 1000000, trunk = 500, glove = 15, type = 'work', class = 'helicopters', banned = true },
     ['seashark3'] = { name = 'Seashark3', maker = 'Speedophile', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
     ['fbi2'] = { name = 'Granger FBI', maker = 'Declasse', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['marquis'] = { name = 'Marquis', maker = 'Dinka', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
@@ -1443,6 +1444,15 @@ config.garages = {
            vector4(-788.2154, -1229.143, 15.54724, 42.51968)
         },
         vehicles = { 'wrvolito' }
+    },
+    -- cobertura vermelho
+    {
+        coords = vector3(-274.8264, -724.8923, 131.8616), 
+        rule = 'heliOnly',
+        marker = 'heli',
+        points = {
+            vector4(-269.578, -729.8901, 132.249, 255.1181)
+        },
     },
 }
 

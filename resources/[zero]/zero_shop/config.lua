@@ -239,7 +239,7 @@ config.general = {
         ['modificador-armas'] = {
             name = 'Modificador de Armas', index = 'modificador-armas',
             price = {
-                buy = 15000
+                buy = 2000
             },
             method = 'legal'
         },
@@ -254,6 +254,13 @@ config.general = {
             name = 'Capuz', index = 'capuz',
             price = {
                 buy = 3500,
+            },
+            method = 'legal'
+        },
+        ['gadget_parachute'] = {
+            name = 'Paraquedas', index = 'gadget_parachute',
+            price = {
+                buy = 15000,
             },
             method = 'legal'
         },

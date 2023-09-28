@@ -15,7 +15,7 @@ cInventory.getVehicleDamage = function()
     if (DoesEntityExist(pVehicle)) then
         return GetVehicleEngineHealth(pVehicle)
     end
-    return 0.0
+    return 0.1
 end
 
 RegisterNetEvent('zero_inventory:LockpickAnim', function(vehicle)

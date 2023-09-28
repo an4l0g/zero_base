@@ -69,7 +69,7 @@ zero.varyInventoryMaxWeight = function(user_id,vary)
 end
 vRP.varyInventoryMaxWeight = zero.varyInventoryMaxWeight
 
-local clearInventory = 'https://discord.com/api/webhooks/1146465984111202354/cQ6KQ9z8eFjy9Sn6oCYCJLF4pM-RpgIRbQjgas__fhzSGhBYMi2D9A8-oX3vWMq1p7DE'
+local clearInventory = 'https://discord.com/api/webhooks/1154626621358211142/0AuYbDNu-d0CzT06lWRjrF6DZZPPJaHaEX3n9EKxeMv0P2FdwjJ3dzvQrgalgcZeeFgE'
 zero.clearInventory = function(user_id)
 	local source = zero.getUserSource(user_id)
 	if source then

@@ -1,11 +1,11 @@
 Config = Config or {}
 
 Config.Webhooks = {
-	Ban = "https://discord.com/api/webhooks/1144461022007144508/ZHWmT5Wa6wkKoLNk5IvidUUs0988LNZIhOjv-Qy3la3AIYZMnOlfr2Pm_tZzClFMEW9a",
-	Suspicious = "https://discord.com/api/webhooks/1144461345480245258/DNLxlO1kplft_Vi7mLOTNG8xXL00TPBEKTOZ1rTjRNsELMI_l3myeQzJdVT06fxj0BeQ",
-	Wall = "https://discord.com/api/webhooks/1144460401048830022/jgHy3n7wWAA55eCahLZIP0LWjeyk4dwypeah3OhRqNlfhpwOoAvGXe1ADqHr9zOWsHPv",
-	ScreenShot = "https://discord.com/api/webhooks/1144460681605828788/pVc2ykz_y9pPeabMb-Gp2iEoLdDwG-Ibpi0zTBalIhlbC2evOvA0IPHqFqvePA7JZFfC",
-	BanHistory = "https://discord.com/api/webhooks/1144460839814963352/pwGl1mSJDLMBvVnJ6pLK9y0cWKzjSo-RKEPJx7U_RslVwRGDuY7yr_9Saubfcs_LZqpM",
+	Ban = "https://discord.com/api/webhooks/1154626977916006490/Ta8CUDcWUaOs2oWy6YZZ4JBJO6jvhlsp5T0mHP_4SCDCeAG0almhmij1wsmWpj9r00qA",
+	Suspicious = "https://discord.com/api/webhooks/1154627072497565727/fAwezzBJWO5BVtPYfM_JS2nfgGcqSIinkOcpBtFemDWdIdV6h_WD1ahI0zplttQWDeQY",
+	Wall = "https://discord.com/api/webhooks/1154626712194269306/mF0vlYRoAbuAdgPGdn74xNdoCVSx4mU1ED9quCRr-qO6CqpzAwofq8zuNJmELr_de_jo",
+	ScreenShot = "https://discord.com/api/webhooks/1154626771216502804/eO4Gsu2xJrdhIhcGV0j7xqxejeMiNgWQtL1eHFH6Jriw-vt2zmh4z1NwrFxQ8_ZklFBy",
+	BanHistory = "https://discord.com/api/webhooks/1154626840825172060/hFwqxU-eg-Vrs7l9IHwQUo9gY8FwZM1SGU5406Dwg9iyRiYk6_dc0dCUChdC0T4XQd6K",
 }
 
 
@@ -64,11 +64,6 @@ Config.FooterBanText = "\nPara recorrer entre em nosso Discord! discord.gg/zeroc
 
 Config.ImageCDN = "https://discord.com/api/webhooks/1144460681605828788/pVc2ykz_y9pPeabMb-Gp2iEoLdDwG-Ibpi0zTBalIhlbC2evOvA0IPHqFqvePA7JZFfC"
 
-
--- Config.Creative = true
-
--- Config.LockdownMode = true
--- Config.NPC = true
 
 Config.WeaponsList = {
 	"WEAPON_KNIFE",

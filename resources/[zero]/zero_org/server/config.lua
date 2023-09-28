@@ -125,7 +125,7 @@ config.facs = {
         roles = config.roles.mecanica
     },
     ['Russia'] = {
-        vagas = 36,
+        vagas = 46,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
@@ -143,7 +143,7 @@ config.facs = {
         roles = config.roles.ilegal
     },
     ['Canada'] = {
-        vagas = 30,
+        vagas = 40,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
         roles = config.roles.ilegal
@@ -167,7 +167,7 @@ config.facs = {
         roles = config.roles.ilegal
     },
     ['Tropa'] = {
-        vagas = 25,
+        vagas = 35,
         serviceCheck = 'online',
         grades = config.grades.ilegal,
         roles = config.roles.ilegal

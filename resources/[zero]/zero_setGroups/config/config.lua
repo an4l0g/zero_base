@@ -161,23 +161,6 @@ config.groups = {
 		'ilegal.permissao'
 	},
 
-	['Cosanostra'] = {
-		information = { 
-			title = 'Cosanostra', 
-			groupType = 'job', 
-			grades = {
-				['Membro'] = { title = 'Membro', level = 1 },
-				['Gerente'] = { title = 'Gerente', level = 2 },
-				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
-				['Lider'] = { title = 'Líder', level = 4 },
-			},
-			grades_default = 'Membro',
-		},
-		'cosanostra.permissao',
-		'droga.permissao',
-		'ilegal.permissao'
-	},
-
 	['Inglaterra'] = {
 		information = { 
 			title = 'Inglaterra', 
@@ -229,24 +212,6 @@ config.groups = {
 		'ilegal.permissao'
 	},
 
-
-	['Finish'] = {
-		information = { 
-			title = 'Finish', 
-			groupType = 'job', 
-			grades = {
-				['Membro'] = { title = 'Membro', level = 1 },
-				['Gerente'] = { title = 'Gerente', level = 2 },
-				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
-				['Lider'] = { title = 'Líder', level = 4 },
-			},
-			grades_default = 'Membro',
-		},
-		'finish.permissao',
-		'droga.permissao',
-		'ilegal.permissao'
-	},
-
 	['Camorra'] = {
 		information = { 
 			title = 'Braznx', 
@@ -260,7 +225,7 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'camorra.permissao',
-		'lavagem.permissao',
+		'droga.permissao',
 		'ilegal.permissao'
 	},
 
@@ -277,23 +242,6 @@ config.groups = {
 			grades_default = 'Membro',
 		},
 		'colombia.permissao',
-		'arma.permissao',
-		'ilegal.permissao'
-	},
-
-	['Espanha'] = {
-		information = { 
-			title = 'Espanha', 
-			groupType = 'job', 
-			grades = {
-				['Membro'] = { title = 'Membro', level = 1 },
-				['Gerente'] = { title = 'Gerente', level = 2 },
-				['ViceLider'] = { title = 'Vice-Líder', level = 3 },
-				['Lider'] = { title = 'Líder', level = 4 },
-			},
-			grades_default = 'Membro',
-		},
-		'espanha.permissao',
 		'arma.permissao',
 		'ilegal.permissao'
 	},

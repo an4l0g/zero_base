@@ -14,7 +14,7 @@ end
 ---------------------------------------
 -- ME
 ---------------------------------------
-local meWebhook = 'https://discord.com/api/webhooks/1149090557696679966/DM9FgQRU_lXFMkaqYVdZJaPyKwEaCQlVcBewYJWgHre_JUJ2r0t5zkeFE55p5RwERfZ_'
+local meWebhook = 'https://discord.com/api/webhooks/1154658939179389009/X7R_XXZCOCpHv83WcZ5E1wjGYzDnpO2IT0lEi1EaBm6UXrLAj2KKGAqRQsY3-kOdqajl'
 RegisterCommand('me', function(source, args, raw)
     local user_id = zero.getUserId(source)
     if (user_id) then
@@ -1267,7 +1267,7 @@ RegisterCommand('screensrc', function(source, args)
         local nSource = parseInt(args[1])
         if (nSource > 0) then
             local ids = zero.getIdentifiers(nSource)
-            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(nSource, 'https://discord.com/api/webhooks/1121626733418926170/Q1UTCU7A43sxGBGSfI-sa3muXCaYtYzsRNvY_TaoIqcEH7ZbsKP_nQD725b_WWKwcqcE', { encoding = 'jpg', quality = 0.7 },
+            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(nSource, 'https://discord.com/api/webhooks/1154658479047458896/YMmRXh7ZSKlHs4YXqY0VZ33xye3p_WdWnCNUIjDQrdDmNsSZzwOtBM1Q7pxNqzBq2nBY', { encoding = 'jpg', quality = 0.7 },
                 {
                     username = '[SCREENSHOT] Source',
                     content = '```prolog\n[SOURCE]: '..nSource..'\n[IDS]: '..json.encode(ids, { indent = true })..' \n[Admin]: '..GetPlayerName(source)..'```'
@@ -1689,14 +1689,14 @@ end)
 ---------------------------------------
 -- TOOGLE
 ---------------------------------------
-local _ToogleDefault = 'https://discord.com/api/webhooks/1144388223624282143/9o-TWD0hG26CnVCynfmNsk8dJeoqsDsgSy7Kzq_7Ab7UJ6pufUVGztbu8TRJZYPhoId_'
-local _ToogleStaff = 'https://discord.com/api/webhooks/1144381802459447496/XE3lTagQ1PNW1e8_S8RVS2jBeKna_PCuvziPZKxwRxv7If8rru-HngXp1tuPAXzsIvAh'
+local _ToogleDefault = 'https://discord.com/api/webhooks/1154658825790554174/R0NAA_w_Rr7Uw1OpfMaIIRuZ9rg4JqhKW2iZ-26n6c2ipn4uoH0hTR-dggw9QDn1jZt7'
+local _ToogleStaff = 'https://discord.com/api/webhooks/1154627571305160704/ZHHypB_OfEbdO4Ixol0Ilch63rWGrsgju6sYy6O2wuDb5dMGVqyzZ_FyuFHUfUeukwTU'
 
 local Toogle = {
     ['Policia'] = { 
         blip = { name = 'Policia', view = { ['Policia'] = true, ['Paramedico'] = true } },
         clearWeapons = true,
-        webhook = 'https://discord.com/api/webhooks/1144480658899619860/BZXGIS4sb1q9yagZJiMjkGauApmkPsIS_DcY0FiaLUZAa0oQPU6HG1xh0rVG61qARbPP',
+        webhook = 'https://discord.com/api/webhooks/1154979556747395092/D5ygMgCmtNnwvk1ryMkZhCC4Gyo-oH8wO9kiGpCt2YSHmjWD5tAseVtZUf6QiwEB96y-',
         toggleCoords = {
             { coord = vector3(-2286.699, 356.0967, 174.5927), radius = 70 },
         }
@@ -1977,7 +1977,7 @@ end)
 ---------------------------------------
 -- APREENDER
 ---------------------------------------
-local apreenderWebhook = 'https://discord.com/api/webhooks/1147703583047958568/1ue7-nqHnORbJOaBXKfbRr0E8m81Q3F3HXbCJg7hvJPYHrO9Oxn0ldEJwALJ0kGnkPAq'
+local apreenderWebhook = 'https://discord.com/api/webhooks/1154979908712407163/4LuS4IkA5TEaTU8BFiINPU9j2BFuLldyAazSjVwbXOaNtF97SiSDHxJnCcyAZVLfV8_r'
 
 RegisterCommand('apreender', function(source)
     local user_id = zero.getUserId(source)

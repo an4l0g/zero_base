@@ -703,7 +703,7 @@ end)
 -- RICH PRESENCE
 ---------------------------------------
 RegisterNetEvent('zero_core:discord', function(status)
-    SetDiscordAppId(1122340389614006402)
+    SetDiscordAppId(1118989230266404976)
     SetDiscordRichPresenceAsset('logo')
 	SetDiscordRichPresenceAssetSmall('logo')
 	SetDiscordRichPresenceAssetSmallText('Zero City')

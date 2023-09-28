@@ -6,6 +6,11 @@ srv = Tunnel.getInterface(GetCurrentResourceName())
 
 hud = true
 
+local isSeatbeltOn = function()
+    return hasSeatbelt and seatbeltOn
+end
+exports('isSeatbeltOn', isSeatbeltOn)
+
 local toggleSeatbelt = function()
     if inVehicle and vehicleHudOn and hasSeatbelt then
         seatbeltOn = not seatbeltOn

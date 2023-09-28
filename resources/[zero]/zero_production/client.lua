@@ -63,11 +63,7 @@ local markerThread = function()
             local _cache = nearestBlips
             for index, dist in pairs(_cache) do
                 local _config = configs.productions[index]
-                if _config.type == 'shop' or _config.type == 'sellDrugs' then
-                    TextFloating('~b~[E]~w~ - Negociar', _config.coords)
-                else
-                    TextFloating('~b~[E]~w~ - Produzir', _config.coords)
-                end
+                TextFloating('~b~[E]~w~ - '.._config.label, _config.coords)
                 if (dist <= 1.2 and IsControlJustPressed(0, 38) and GetEntityHealth(ped) > 100 and not IsPedInAnyVehicle(ped)) then
                     if (sProduction.hasPermission(_config.permission)) then
                         if (_config.type == 'moneyLaundry') then
@@ -80,6 +76,10 @@ local markerThread = function()
 
                         if (_config.type == 'sellDrugs') then
                             sProduction.openSellDrugs(_config)
+                        end
+
+                        if (_config.type == 'sellGuns') then
+                            sProduction.openSellGuns(_config)
                         end
 
                         if _config.type == 'shop' then

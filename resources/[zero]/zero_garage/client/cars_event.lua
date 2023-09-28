@@ -146,9 +146,9 @@ drivingVehicle = function(model)
                     idle = 1
 
                     -- P1 NÃO ATIRAR
-                    if (GetPedInVehicleSeat(vehicle, -1) == ped) then
-                        DisablePlayerFiring(ped, true)
-                    end
+                    -- if (GetPedInVehicleSeat(vehicle, -1) == ped) then
+                    --     DisablePlayerFiring(ped, true)
+                    -- end
 
                     -- RETIRAR O CHUTE DA MOTO
                     if (GetVehicleClass(vehicle) == 8) then
@@ -1022,3 +1022,20 @@ FindVehicleByPlate = function(plate) -- Search existing vehicles enumerated abov
 		end
 	end
 end
+
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(500)
+        local player = PlayerPedId()
+
+        
+        if IsPedInAnyVehicle(player, false) and exports.zero_hud:isSeatbeltOn() then
+            SetPedCanBeKnockedOffVehicle(player, true)
+            SetEntityInvincible(player, true)
+        else
+            SetPedCanBeKnockedOffVehicle(player, false)
+            SetEntityInvincible(player, false)
+        end
+    end
+end)

@@ -535,7 +535,7 @@ RegisterNetEvent('zero_interactions:fichasuja', function()
 end)
 
 local Perimetros = {}
-local perimetroWebhook = 'https://discord.com/api/webhooks/1151693759214538846/50j3tshQN2SDvGOxilBoxDefNnwIAxMND58P8KwId4b3pQqP65K1OEPDNjNHx09364bF'
+local perimetroWebhook = 'https://discord.com/api/webhooks/1154659127805616148/D1LJKkSF4oggvJr6GoWhKzXnevGBf89IZSkYx308R9Sce_lHMv7pjosHcYRKn3l_KbQo'
 
 RegisterNetEvent('zero_interactions:fecharperimetro', function()
     local source = source
@@ -568,7 +568,7 @@ RegisterNetEvent('zero_interactions:fecharperimetro', function()
     end
 end)
 
-local reanimarPolicia = 'https://discord.com/api/webhooks/1153184742196387952/uxi8pBQQ5Ldgr2n2HBC6xikuZf2hbgvp3hUdjyN9kji1tVKhN3dJxi9w-tbcfKgkbtZk'
+local reanimarPolicia = 'https://discord.com/api/webhooks/1154980066841866250/OVVqhz55FhH-y-pf_p1CFVg-Wzq76AExrKyTVylF3XI7Ol31qk8bd9CiL9rBEidMR_2S'
 
 RegisterNetEvent('zero_interactions:reanimarpolicia', function()
     local source = source

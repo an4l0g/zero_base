@@ -11,8 +11,17 @@ configs.blipDistance = 3
 
 configs.products = {
     ['guns'] = {
-        ['weapon_pistol_mk2'] = { 
+        ['m-belico'] = { 
             order = 1,
+            name = 'M. Bélico',
+            amount = 1,
+            delay = 10000,
+            materials = {
+                ['p-armas'] = { name = 'P. Armas', amount = 14 },
+            }
+        },
+        ['weapon_pistol_mk2'] = { 
+            order = 2,
             name = 'Five-SeveN',
             amount = 1,
             delay = 10000,
@@ -21,7 +30,7 @@ configs.products = {
             }
         },
         ['weapon_snspistol_mk2'] = { 
-            order = 2,
+            order = 3,
             name = 'HK 45',
             amount = 1,
             delay = 10000,
@@ -30,7 +39,7 @@ configs.products = {
             }
         },
         ['weapon_revolver_mk2'] = { 
-            order = 3,
+            order = 5,
             name = 'R8',
             amount = 1,
             delay = 10000,
@@ -39,7 +48,7 @@ configs.products = {
             }
         },
         ['weapon_assaultsmg'] = { 
-            order = 4,
+            order = 6,
             name = 'MTAR-21',
             amount = 1,
             delay = 10000,
@@ -48,7 +57,7 @@ configs.products = {
             }
         },
         ['weapon_machinepistol'] = { 
-            order = 5,
+            order = 7,
             name = 'Tec-9',
             amount = 1,
             delay = 10000,
@@ -57,7 +66,7 @@ configs.products = {
             }
         },
         ['weapon_minismg'] = { 
-            order = 6,
+            order = 8,
             name = 'S VZ 61',
             amount = 1,
             delay = 10000,
@@ -66,7 +75,7 @@ configs.products = {
             }
         },
         ['weapon_specialcarbine_mk2'] = { 
-            order = 7,
+            order = 9,
             name = 'H&K G36C',
             amount = 1,
             delay = 10000,
@@ -75,7 +84,7 @@ configs.products = {
             }
         },
         ['weapon_heavyrifle'] = { 
-            order = 7,
+            order = 10,
             name = 'FN Scar',
             amount = 1,
             delay = 10000,
@@ -84,7 +93,7 @@ configs.products = {
             }
         },
         ['weapon_bullpuprifle_mk2'] = { 
-            order = 7,
+            order = 11,
             name = 'Type-97',
             amount = 1,
             delay = 10000,
@@ -94,8 +103,17 @@ configs.products = {
         },
     },
     ['wammos'] = {
-        ['m_weapon_pistol_mk2'] = { 
+        ['m-belico'] = { 
             order = 1,
+            name = 'M. Bélico',
+            amount = 1,
+            delay = 10000,
+            materials = {
+                ['m-municoes'] = { name = 'M. Munições', amount = 14 },
+            }
+        },
+        ['m_weapon_pistol_mk2'] = { 
+            order = 2,
             name = 'M. Five-SeveN',
             amount = 50,
             delay = 10000,
@@ -104,7 +122,7 @@ configs.products = {
             }
         },
         ['m_weapon_snspistol_mk2'] = { 
-            order = 2,
+            order = 3,
             name = 'M. HK 45',
             amount = 50,
             delay = 10000,
@@ -113,7 +131,7 @@ configs.products = {
             }
         },
         ['m_weapon_revolver_mk2'] = { 
-            order = 3,
+            order = 4,
             name = 'M. R8',
             amount = 50,
             delay = 10000,
@@ -122,7 +140,7 @@ configs.products = {
             }
         },
         ['m_weapon_assaultsmg'] = { 
-            order = 4,
+            order = 5,
             name = 'M. MTAR-21',
             amount = 50,
             delay = 10000,
@@ -131,7 +149,7 @@ configs.products = {
             }
         },
         ['m_weapon_machinepistol'] = { 
-            order = 5,
+            order = 6,
             name = 'M. Tec-9',
             amount = 50,
             delay = 10000,
@@ -140,7 +158,7 @@ configs.products = {
             }
         },
         ['m_weapon_minismg'] = { 
-            order = 6,
+            order = 7,
             name = 'M. S VZ 61',
             amount = 50,
             delay = 10000,
@@ -149,7 +167,7 @@ configs.products = {
             }
         },
         ['m_weapon_specialcarbine_mk2'] = { 
-            order = 7,
+            order = 8,
             name = 'M. H&K G36C',
             amount = 50,
             delay = 10000,
@@ -158,7 +176,7 @@ configs.products = {
             }
         },
         ['m_weapon_heavyrifle'] = { 
-            order = 7,
+            order = 9,
             name = 'M. FN Scar',
             amount = 50,
             delay = 10000,
@@ -167,7 +185,7 @@ configs.products = {
             }
         },
         ['m_weapon_bullpuprifle_mk2'] = { 
-            order = 7,
+            order = 10,
             name = 'M. Type-97',
             amount = 50,
             delay = 10000,
@@ -399,7 +417,7 @@ configs.productions = {
         coords = vector3(-803.3275, -1205.749, 7.324585),
         products = configs.products.hospital, 
         permission = 'hospital.permissao',
-        webhook = 'https://discord.com/api/webhooks/1150567600674316358/HAOk-sHKVgALJ-FCxvbuuAEoqn6kdzPLOGROyIgI_ooyYpMAoAQKXf7pyOsbXjYkGgu2'
+        webhook = 'https://discord.com/api/webhooks/1154967811534377032/ugJbRbvacb1W4-Z-AJiMv83U7yjf7_nsoYflvjKjpGE1bXrPPbPdBqM4tlXxelOCbedX'
     },
     ['zerofome1'] = { 
         type = 'production',
@@ -459,28 +477,12 @@ configs.productions = {
         webhook = 'https://discord.com/api/webhooks/1146573704155910305/5AeOVpXX7ujnX4t_T-nj4kpsTUP2ZaU_Pg8zr6mzRlzGfnUJIe7QYxhBob9S8hmk_TXN' 
     },
     ['Camorra'] = { 
-        type = 'moneyLaundry',
+        type = 'production',
         coords = vector3(95.4066, -1293.257, 29.75171), 
-        label = 'Lavagem de dinheiro', 
-        products = configs.products.drugs, 
+        label = 'Produção de drogas', 
+        products = configs.products.maconha, 
         permission = 'camorra.permissao',
         webhook = 'https://discord.com/api/webhooks/1146572334614974565/q9HxlTNB73FF8ftNp6k6kkU6q_L7C1seHUBzTO0XgPluyuvbbp3TsMumJcoKynATWTdz' 
-    },
-    ['Cosanostra'] = { 
-        type = 'production',
-        coords = vector3(1645.411, -2119.45, 102.2227), 
-        label = 'Produção de Drogas', 
-        products = configs.products.drugs, 
-        permission = 'cosanostra.permissao',
-        webhook = 'https://discord.com/api/webhooks/1146573156627267655/SJ_mOs8jRRs6zIVjn0RE1lorWEWwW39LQ1SMzxPrRHCeQPjzsiGfOLh_HXgYPHdC3Bge' 
-    },
-    ['Finish'] = { 
-        type = 'production',
-        coords = vector3(1281.059, -1016.743, 51.30261), 
-        label = 'Produção de Drogas', 
-        products = configs.products.drugs, 
-        permission = 'finish.permissao',
-        webhook = 'https://discord.com/api/webhooks/1146572015977910282/MxhXmTxGFsYtr48UE5NHS9eZcBlLmRCLjmFY5A-cXNdic3Dl62_BFpJ-LuS42vFNcds7' 
     },
     ['Colombia'] = { 
         type = 'production',
@@ -519,6 +521,7 @@ configs.productions = {
         coords = vector3(2230.945, 84.4088, 241.537), 
         label = 'Produção de Cocaína', 
         type = 'production',
+        buff = true,
         products = configs.products.cocaina,
         permission = 'tropa.permissao',
         webhook = 'https://discord.com/api/webhooks/1146573268162191491/hZMZIybnTjkfQnn25p9ig0g8_sDqpCaw4fAd0770Al5mREV4qdMO6dLZIkRJwEoM-PGl' 
@@ -563,11 +566,17 @@ configs.productions = {
         permission = 'droga.permissao',
         webhook = 'https://discord.com/api/webhooks/1145972996822007848/4PBMQVms1ppXl3RFnz-Fe205ooQapAvQt-5u38SH2W1qxllTD4Yjsx8Q3IFBze2jf-xO' 
     },
-    ['hpLavagem'] = { 
-        coords = vector3(-827.5385, -1233.745, 7.324585), 
-        label = 'Lavagem de dinheiro', 
+    ['Lavagem'] = { 
         type = 'moneyLaundry',
-        permission = '+Hospital.Medico',
-        webhook = 'https://discord.com/api/webhooks/1146573268162191491/hZMZIybnTjkfQnn25p9ig0g8_sDqpCaw4fAd0770Al5mREV4qdMO6dLZIkRJwEoM-PGl' 
+        coords = vector3(-1063.925, -246.1451, 44.00659), 
+        label = 'Lavagem de dinheiro', 
+        webhook = 'https://discord.com/api/webhooks/1156437895582855208/NIJr_QNUHM2XKS58vvvcDudrwCPXlh_weKO98SSlfMozgh1NIsfUlgqznVCjf9Uj1EVl' 
+    },
+    ['sellGuns'] = { 
+        type = 'sellGuns',
+        coords = vector3(13.95165, -1106.387, 29.7854), 
+        products = configs.products.sellGuns, 
+        label = 'Vender material bélico', 
+        webhook = 'https://discord.com/api/webhooks/1156443961372712970/7iwfufFQcey4KsSOVz_JZsNlJs-uFVSE09uQb7py5NG2mXZ_cgTGnD-qO7flSMI4uVeR' 
     },
 }

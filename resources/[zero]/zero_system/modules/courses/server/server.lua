@@ -3,8 +3,8 @@ zero.prepare('InsertCourseUser', 'insert ignore into courses (course, user_id, c
 zero.prepare('DeleteCourseUser', 'delete from courses where user_id = @user_id and course = @course')
 
 local Webhooks = {
-    ['add'] = 'https://discord.com/api/webhooks/1153178158665830461/7ORy_e2IG8MSDCvSIRrrhaby-Wz9K1IYawy53zwprfbWSO8McFk1mlsCKGkjlOSSPUcV',
-    ['rem'] = 'https://discord.com/api/webhooks/1153178380347388004/AuaTccnouODQaNcXS5wXZ4CyD1aamIC0_tsHQipsWy_os9yTq-00Fp264SHH8PnsSoYn'
+    ['add'] = 'https://discord.com/api/webhooks/1154979959635452016/xYXu3KqKiQyRlUh3JxtoJ5yJMHBFAJwYKmCi71BRL7L9xX_XGwYdL08so7EuLaCbm4ud',
+    ['rem'] = 'https://discord.com/api/webhooks/1154980014127861921/V4I6IQ6xgm2vdcku8pgl_VbDLzdtQgRJMfDsrVvgndwiDTm-Yyts5yhS9staBkHTVdZ4'
 }
 
 local Courses = {

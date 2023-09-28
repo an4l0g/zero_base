@@ -35,7 +35,7 @@ local getColorType = function(color)
 	return false
 end
 
-local isWheelType = function(type)
+local isWheelType = function(vehicle, type)
 	local type = wheeltype[type]
 	local bool = false
 	local wheel = 0
@@ -117,7 +117,10 @@ getVehicleMods = function(veh)
 
 	rodaatual = GetVehicleMod(veh, mod['dianteira'])
 	
-	for k in pairs(wheeltype) do mods[k] = { isWheelType(k) }; end;
+	for k in pairs(wheeltype) do 
+		-- print(isWheelType(k))
+		mods[k] = { isWheelType(veh, k) }; 
+	end;
 
 	SetVehicleMod(veh, mod['dianteira'], rodaatual)
 	

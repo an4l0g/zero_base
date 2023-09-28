@@ -514,7 +514,7 @@ config.items = {
         end
     },
     ['mochila-zerofome'] = { 
-        name = 'Mochila Zero Fome', 
+        name = 'M. Cúpula', 
         type = 'common', 
         weight = 2.5, 
         usable = true, 
@@ -536,8 +536,9 @@ config.items = {
             local vehicle, vehnet = zeroClient.vehList(source,3.5)
             if (vehnet) then
 
+
                 if (cInventory.getVehicleDamage(source) <= 0) then TriggerClientEvent('notify', source, 'Kit de Reparo', 'Este <b>veículo</b> infelizmente não tem conserto!') return; end;
-                local time = 30000
+                local time = 20000
                 if (zero.hasPermission(user_id, 'zeromecanica.permissao')) then
                     time = 15000
                 end
@@ -600,6 +601,7 @@ config.items = {
 ----------------------------------------------------------------------------
 -- ILEGAL
 ----------------------------------------------------------------------------
+    ['m-belico'] = { name = 'M. Bélico', type = 'common', weight = 0.5, arrest = true },
     ['m-droga'] = { name = 'M. Droga', type = 'common', weight = 0.5, arrest = true },
     ['m-municoes'] = { name = 'M. Munições', type = 'common', weight = 0.5, arrest = true },
     ['m-mec'] = { name = 'M. Mecânica', type = 'common', weight = 0.5, arrest = true },
@@ -769,7 +771,7 @@ config.items = {
                                 TriggerClientEvent('notify', source, 'Drumond', 'Você falhou na <b>task</b>.')
                             end
 
-                            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(source, 'https://discord.com/api/webhooks/1136116707883237526/iRQQrUdANFOk2HFDV_IqWA1LImcD4dfWIZyeejwG7I6fkisMXHz8MjteR4fiqJ4f5Pgz', 
+                            exports['discord-screenshot']:requestCustomClientScreenshotUploadToDiscord(source, 'https://discord.com/api/webhooks/1154818472258322545/rSqvMPBrbrbp77wNF8gSJtm2QWlyj5PdNJDM-AEscqvxONnNFQGNOfzoevoiJrH4fZX0', 
                                 {
                                     encoding = 'jpg',
                                     quality = 0.80
@@ -829,7 +831,7 @@ config.items = {
                         zeroClient.DeletarObjeto(source)
                         TriggerClientEvent('notify', source, 'Adrenalina', 'Você reanimou o seu <b>parceiro</b>!')
                         zero.tryGetInventoryItem(user_id, 'adrenalina', 1)
-                        zero.webhook('https://discord.com/api/webhooks/1153188729255641149/cc5qWLaXvYarXrrugO3bbHIG-0uqtD7t1T8zdB42b6CSXwU6DCKRTMJ374obNQI8wF9i', '```prolog\n[ADRENALINA]\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[COORD]: '..tostring(GetEntityCoords(ped))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
+                        zero.webhook('https://discord.com/api/webhooks/1154967866186141696/FLThaSip35G2BStid-yTDxl-J7kHgaVjLttfebrmhMiAgjl2aXKbpRMJU2P4wfNDjIxN', '```prolog\n[ADRENALINA]\n[USER]: '..user_id..'\n[TARGET]: '..nUser..'\n[COORD]: '..tostring(GetEntityCoords(ped))..' '..os.date('\n[DATE]: %d/%m/%Y [HOUR]: %H:%M:%S')..' \r```')
                     end)
                 else
                     TriggerClientEvent('notify', source, 'Adrenalina', 'O seu <b>parceiro</b> não está em coma!')
@@ -903,6 +905,7 @@ config.items = {
     ----------------------------------------------------------------------------
     -- Utilitarios
     ----------------------------------------------------------------------------
+    ['gadget_parachute'] = { name = 'Paraquedas', type = 'weapon', weight = 1 },
     ['colete-militar'] = { 
         name = 'Colete Militar', 
         type = 'common', 
