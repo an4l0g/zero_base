@@ -242,3 +242,10 @@ create table courses(
     course_type varchar(50) not null,
     primary key(id)
 );
+
+create table rewards(
+    user_id int not null,
+    online_time int not null,
+    rewards int not null,
+    primary key(user_id)
+)

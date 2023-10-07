@@ -20,6 +20,18 @@ config.vehicles = {
 ------------------------------------------------------------------------------------------------------------------------
 -- VIP
 ------------------------------------------------------------------------------------------------------------------------
+    ['22m5'] = { name = 'Bmw M5', maker = 'Bmw', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['918spyder'] = { name = '918 Spyder', maker = 'Porsche', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['bmwm4custom'] = { name = 'Bmw M4', maker = 'Bmw', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['eclipse'] = { name = 'Eclipse', maker = 'Mitsubishi', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['gtrc'] = { name = 'Gtr R35', maker = 'Nissan', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['huraperfospyr'] = { name = 'Hurcacan', maker = 'Lamborghini', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['imola'] = { name = 'Imola', maker = 'Pagani', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['laferrari17'] = { name = 'Laferrari', maker = 'Ferrari', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['mansamgt21'] = { name = 'Amg Gt', maker = 'Mercedes', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['pcx'] = { name = 'Pcx', maker = 'Honda', price = 1000000, trunk = 0, glove = 15, type = 'vip', class = 'motocycle', banned = false },
+    ['z15tribal'] = { name = 'Silvia S15', maker = 'Nissan', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'sports', banned = false },
+    ['zl2017'] = { name = 'Camaro', maker = 'Chevrolet', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'sports', banned = false },
     ['foxevo'] = { name = 'Lamborghini Evo', maker = 'Lamborghini', price = 1000000, trunk = 20, glove = 15, type = 'vip', class = 'sports', banned = false }, 
     ['gtr502'] = { name = 'GTR 50', maker = 'Nissan', price = 1000000, trunk = 50, glove = 15, type = 'vip', class = 'super', banned = false },
     ['h2carb'] = { name = 'Ninja H2 Carb.', maker = 'Kawasaki', price = 1000000, trunk = 20, glove = 0, type = 'vip', class = 'motocycle', banned = false },
@@ -523,6 +535,7 @@ config.vehicles = {
     ['swift'] = { name = 'Swift', maker = 'Buckingham', price = 0, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopter', banned = false },
     ['frogger'] = { name = 'Frogger', maker = 'Maibatsu', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = true },
     ['supervolito'] = { name = 'Supervolito', maker = 'Buckingham', price = 1000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
+    ['supervolito2'] = { name = 'Supervolito2', maker = 'Buckingham', price = 1000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
     ['cargobob'] = { name = 'CSC Cargobob', maker = 'Western company', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
     ['buzzard2'] = { name = 'Buzzard 2', maker = 'Nagasaki', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
     ['cargobob2'] = { name = 'Cargo Bob', maker = 'Western company', price = 1000000, trunk = 500, glove = 15, type = 'helicopter', class = 'helicopters', banned = false },
@@ -557,7 +570,6 @@ config.vehicles = {
     ['cruiser'] = { name = 'Cruiser', maker = 'Bmx', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'cycles', banned = true },
     ['polmav'] = { name = 'Polmav', maker = 'Buckingham', price = 0, trunk = 0, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['speeder'] = { name = 'Speeder', maker = 'Pegassi', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
-    ['supervolito2'] = { name = 'Supervolito2', maker = 'Buckingham', price = 1000, trunk = 500, glove = 15, type = 'work', class = 'helicopters', banned = true },
     ['btype'] = { name = 'Btype', maker = 'Albany', price = 200000, trunk = 40, glove = 15, type = 'work', class = 'sportsclassics', banned = false },
     ['boxville4'] = { name = 'BoxVille4', maker = 'Brute', price = 1000, trunk = 70, glove = 15, type = 'work', class = 'vans', banned = true },
     ['squalo'] = { name = 'Squalo', maker = 'Grotti', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'boats', banned = true },
@@ -632,6 +644,10 @@ config.vehicles = {
     ['ghispo2'] = { name = 'Maserati', maker = 'Polícia', price = 1000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['nd911'] = { name = '911r', maker = 'Polícia', price = 1000, trunk = 30, glove = 15, type = 'work', class = 'emergency', banned = true },
     ['wrxc90'] = { name = 'volvo', maker = 'Polícia', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['m4cs'] = { name = 'Bmw M4', maker = 'Bmw', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['jettagli'] = { name = 'Jetta', maker = 'Volkswagen', price = 1000, trunk = 50, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['wrtiger900'] = { name = 'Tiger', maker = 'Triumph', price = 1000, trunk = 0, glove = 15, type = 'work', class = 'emergency', banned = true },
+    ['amarokcore'] = { name = 'Amarok', maker = 'Volkswagen', price = 1000, trunk = 100, glove = 15, type = 'work', class = 'emergency', banned = true },
 }
 
 config.blips = {
@@ -755,7 +771,7 @@ config.garages = {
             vector4(-2284.22, 407.2088, 174.4579, 124.7244),
             vector4(-2286.725, 410.2154, 174.4579, 136.063),
         },
-        vehicles = { 'wrbmwx6', 'ndagera', 'wrbmwx7' }
+        vehicles = { 'wrbmwx6', 'ndagera', 'wrbmwx7', 'ndbmws1000' }
     },
     {
         coords = vector3(-2292.356, 420.1451, 174.5927), 
@@ -766,7 +782,7 @@ config.garages = {
             vector4(-2292.58, 414.4088, 174.4579, 150.2362),
             vector4(-2289.534, 412.2198, 174.4579, 144.5669),
         },
-        vehicles = { 'ndbmws1000', 'wra45', 'wrm5', 'wrsubaru', 'fpacehm' }
+        vehicles = { 'wrm5', 'wrsubaru', 'fpacehm', 'wrtiger900', 'amarokcore', 'trdcoreamarok', 'm4cs', 'jettagli' }
     },
     {
         coords = vector3(-2267.776, 386.4396, 193.2117), 

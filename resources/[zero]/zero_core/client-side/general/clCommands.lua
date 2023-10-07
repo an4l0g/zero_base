@@ -425,11 +425,12 @@ end
 -- DELNPCS
 ---------------------------------------
 RegisterNetEvent('zero_core:delnpcs', function()
-    for _, ped in ipairs(GetGamePool('CPed')) do
-        if (not IsPedAPlayer(ped)) then
-			TriggerServerEvent('trydeleteped', PedToNet(ped))
-		end
-    end
+	print("not deleting npc")
+--     for _, ped in ipairs(GetGamePool('CPed')) do
+--         if (not IsPedAPlayer(ped)) then
+-- 			TriggerServerEvent('trydeleteped', PedToNet(ped))
+-- 		end
+--     end
 end)
 
 ---------------------------------------

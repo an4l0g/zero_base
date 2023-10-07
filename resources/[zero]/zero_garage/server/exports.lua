@@ -130,6 +130,15 @@ addVehicle = function(user_id, vehicle, service)
 end
 exports('addVehicle', addVehicle)
 
+hasVehicle = function(user_id, vehicle)
+	local query = zero.query('zero_garage/getVehiclePlate', { user_id = user_id, vehicle = vehicle })[1]
+	if query then
+		return true
+	end
+	return false
+end
+exports('hasVehicle', hasVehicle)
+
 delVehicle = function(user_id, vehicle)
 	zero.execute('zero_garage/delVehicle', { user_id = user_id, vehicle = vehicle })
 end

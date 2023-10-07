@@ -105,7 +105,7 @@ RegisterCommand('godarea', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         local radius = zero.prompt(source, { 'Distancia' })
         radius[1] = parseInt(radius[1])
         if (radius[1]) and radius[1] > 0 then
@@ -125,7 +125,7 @@ end)
 RegisterCommand('freeze', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
             if (nSource) then
@@ -147,7 +147,7 @@ end)
 RegisterCommand('unfreeze', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
             if (nSource) then
@@ -172,7 +172,7 @@ end)
 RegisterCommand('ney', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
             if (nSource) then
@@ -340,7 +340,7 @@ RegisterCommand('unban', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Manager') and args[1] then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') and args[1] then
         local nUser = parseInt(args[1])
         if (nUser > 0) then
             if (not zero.isBanned(nUser)) then TriggerClientEvent('notify', source, 'Desbanimento', 'Este <b>jogador</b> não está banido seu noia!') return; end;
@@ -627,7 +627,7 @@ end)
 ---------------------------------------
 RegisterCommand('arma', function(source, args)
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         if (args[1]) then
             args[1] = string.upper(args[1])
             zeroClient.giveWeapons(source, { [args[1]] = { ammo = 250 } }, false, GlobalState.weaponToken)
@@ -901,7 +901,7 @@ RegisterCommand('adm', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity =  zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         local message = zero.prompt(source, { 'Mensagem' })
         if (message) then
             message = message[1]
@@ -932,7 +932,7 @@ RegisterCommand('carcolor', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         local vehicle = zeroClient.getNearestVehicle(source, 7.0)
         if (vehicle) then
             local prompt = zero.prompt(source, { 'Primary Color RGB (255, 255, 255)', 'Secondary Color RGB (255, 255, 255)' })
@@ -966,7 +966,7 @@ end)
 RegisterCommand('uncuff', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         if (args[1]) then
             local nSource = zero.getUserSource(parseInt(args[1]))
             if (zeroClient.isHandcuffed(nSource)) then
@@ -1091,7 +1091,7 @@ RegisterCommand('tuning', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.COO') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         TriggerClientEvent('zero_core:tuning', source)
         zero.webhook('Tuning', '```prolog\n[/TUNING]\n[STAFF]: #'..user_id..' '..identity.firstname..' '..identity.lastname..os.date('\n[DATA]: %d/%m/%Y [HORA]: %H:%M:%S')..' \r```')
     end
@@ -1842,7 +1842,7 @@ RegisterCommand('staff',function(source)
     local identity = zero.getUserIdentity(user_id)
 	local groupName, groupInfo = zero.getUserGroupByType(user_id, 'staff')
     if (groupName) then
-        if (#(GetEntityCoords(GetPlayerPed(source)) - prefeituraCoord) <= 50) then
+        if (#(GetEntityCoords(GetPlayerPed(source)) - prefeituraCoord) <= 50 or zero.hasPermission(user_id, "+Staff.Manager")) then
             zero.setGroupActive(user_id, groupName, (not groupInfo.active))
 
             local logmsg = ''
@@ -1929,7 +1929,7 @@ end)
 ---------------------------------------
 RegisterCommand('admon', function(source)
     local user_id = zero.getUserId(source)
-    if (user_id and zero.checkPermissions(user_id, { '+Staff.Manager' })) then
+    if (user_id and zero.checkPermissions(user_id, { '+Staff.Administrador' })) then
         local count = 0
         local name = ''
         for k, v in pairs(zero.getUsersByPermission('staff.permissao')) do

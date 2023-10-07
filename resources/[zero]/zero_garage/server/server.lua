@@ -497,7 +497,7 @@ RegisterCommand('dvall', function(source)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, 'staff.permissao') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
         TriggerClientEvent('announcement', -1, 'Garagem', 'Todos os <b>veículos</b> que não possuem alguém dentro, serão deletados em <b>60 segundos</b>.', 'Prefeitura', true, 10000)
         Citizen.Wait(30000)
         TriggerClientEvent('announcement', -1, 'Garagem', 'Todos os <b>veículos</b> que não possuem alguém dentro, serão deletados em <b>30 segundos</b>.', 'Prefeitura', true, 10000)
@@ -563,7 +563,7 @@ RegisterCommand('car', function(source, args)
     local source = source
     local user_id = zero.getUserId(source)
     local identity = zero.getUserIdentity(user_id)
-    if (user_id) and zero.hasPermission(user_id, '+Staff.Administrador') then
+    if (user_id) and zero.hasPermission(user_id, '+Staff.Moderador') then
         if (args[1]) then
             local spawn = string.lower(args[1])
             local loadModel = vCLIENT.loadModel(source, spawn, 30000, 60000)
